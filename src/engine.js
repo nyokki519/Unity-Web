@@ -2,7 +2,11 @@ import { randomBytes,randomInt,randomUUID,createHash,timingSafeEqual } from 'nod
 import { modes } from './modes/index.js';
 import { drawQuestion,pool,catalog } from './questions.js';
 import { summarize } from './summary.js';
-export class GameError extends Error {constructor(code) {super(code);this.code=code;}}
+import {GameError} from './errors.js';
+export {GameError} from './errors.js';
+import {createEvent,executeEvent,tickEvent} from './events/flow.js';
+import {eventView} from './events/view.js';
+import {optionsFor} from './events/catalog.js';
 const fail=code=>{throw new GameError(code);};
 const hash=token=>createHash('sha256').update(token).digest('hex');
 const TTL=24*3600000;
@@ -13,6 +17,7 @@ export function settingsFrom(input={}) {
   const count=Object.keys(modes).filter(m=>value.mode==='MIX'||m===value.mode).reduce((n,m)=>n+pool(value,m).length,0);
   if(!count) fail('EMPTY_POOL');
   value.rounds=Math.min(value.rounds,count);
+  if(input.eventGame){optionsFor(input.eventGame,input.eventOptions);value.eventGame=input.eventGame;value.eventOptions=input.eventOptions||{};}
   return value;
 }
 export class GameEngine {
@@ -76,6 +81,8 @@ export class GameEngine {
   execute(code,id,msg) {
     const room=this.get(code),player=room.players[id];if(!player||player.left) fail('BAD_SESSION');
     const action=msg.action;
+    if(action?.startsWith('event_')){executeEvent(room,id,msg,this.now());this.changed(room);return;}
+    if(room.event&&room.phase==='EVENT'&&!['ready','leave'].includes(action))fail('BAD_PHASE');
     if(action==='ready'){if(typeof msg.ready!=='boolean')fail('BAD_COMMAND');player.ready=msg.ready;}
     else if(action==='answer') {
       if(room.phase!=='ANSWER'||room.paused) fail('NOT_ANSWERING');
@@ -99,7 +106,7 @@ export class GameEngine {
           if(room.phase!=='LOBBY') fail('NOT_LOBBY');
           const online=Object.values(room.players).filter(p=>p.connected&&!p.left);
           if(online.length<2)fail('NEED_PLAYERS');if(online.some(p=>!p.ready)) fail('NOT_READY');
-          room.history=[];room.used=[];room.index=0;room.startedAt=this.now();room.endedAt=null;this.beginRound(room);break;
+          room.history=[];room.used=[];room.index=0;room.startedAt=this.now();room.endedAt=null;if(room.settings.eventGame){room.round=null;room.event=createEvent(room.settings.eventGame,room.settings.eventOptions);room.phase='EVENT';}else {room.event=null;this.beginRound(room);}break;
         }
         case 'reveal': if(room.phase!=='ANSWER'||room.paused)fail('NOT_ANSWERING');this.reveal(room);break;
         case 'next': if(room.phase!=='TALK'||room.paused) fail('NOT_TALK');room.index++;if(room.index>=room.settings.rounds)this.finish(room);else this.beginRound(room);break;
@@ -123,7 +130,7 @@ export class GameEngine {
           if(room.settings.autoReveal&&this.allAnswered(room))this.reveal(room);break;
         }
         case 'end': if(room.phase==='LOBBY')fail('BAD_PHASE');this.finish(room);break;
-        case 'again': if(room.phase!=='FINAL')fail('BAD_PHASE');room.phase='LOBBY';room.round=null;room.paused=false;room.history=[];room.used=[];room.index=0;room.startedAt=null;room.endedAt=null;for(const p of Object.values(room.players))p.ready=false;break;
+        case 'again': if(room.phase!=='FINAL')fail('BAD_PHASE');room.phase='LOBBY';room.event=null;room.round=null;room.paused=false;room.history=[];room.used=[];room.index=0;room.startedAt=null;room.endedAt=null;for(const p of Object.values(room.players))p.ready=false;break;
         default:fail('BAD_COMMAND');
       }
     }
@@ -138,7 +145,7 @@ export class GameEngine {
   tick() {
     for(const room of this.rooms.values()) {
       if(room.expiresAt<=this.now()){this.rooms.delete(room.code);this.store.remove(room.code);this.onChange({...room,expired:true});continue;}
-      let changed=false;
+      let changed=tickEvent(room,this.now());
       if(room.hostOfflineAt!==null&&this.now()-room.hostOfflineAt>=this.hostGraceMs)changed=this.transferHost(room)||changed;
       if(room.phase==='COUNTDOWN'&&!room.paused&&this.now()>=room.revealAt){room.round.result=modes[room.round.question.mode].result(room.round.question,room.round,room.players);room.history.push(structuredClone(room.round));room.phase='TALK';room.revealAt=null;changed=true;}
       if(changed)this.changed(room);
@@ -151,6 +158,7 @@ export class GameEngine {
       players:Object.values(room.players).filter(p=>!p.left).map(p=>({id:p.id,name:p.name,ready:p.ready,connected:p.connected,host:p.id===room.hostId,participating:round?.participants.includes(p.id)||false,answered:round?Object.hasOwn(round.answers,p.id):false})),
       progress:{current:room.index+1,total:room.settings.rounds,completed:room.history.length},
       round:round?{id:round.id,question:{id:round.question.id,mode:round.question.mode,category:round.question.category,depth:round.question.depth,question:round.question.question,choices:round.question.choices,talkPrompt:round.question.talkPrompt},targetId:round.targetId,participantCount:round.participants.length,answeredCount:round.participants.filter(pid=>Object.hasOwn(round.answers,pid)).length,ownAnswer:own,participating:round.participants.includes(id),revealAt:room.revealAt,result:room.phase==='TALK'||room.phase==='FINAL'?round.result:null}:null,
-      summary:room.phase==='FINAL'?summarize(room,id,this.now()):null};
+      event:eventView(room,id,this.now()),
+      summary:!room.event&&room.phase==='FINAL'?summarize(room,id,this.now()):null};
   }
 }

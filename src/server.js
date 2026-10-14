@@ -4,11 +4,12 @@ import { fileURLToPath } from 'node:url';
 import { resolve,extname,sep } from 'node:path';
 import { WebSocketServer,WebSocket } from 'ws';
 import QRCode from 'qrcode';
+import {games} from './events/catalog.js';
 import { GameEngine,GameError } from './engine.js';
 import { RoomStore } from './store.js';
 import { catalog,questions } from './questions.js';
 
-const ERROR_TEXT={ROOM_NOT_FOUND:'このルームは見つかりません。コードを確認するか、新しいルームを作ってください。',BAD_NAME:'名前を1〜20文字で入力してください。',ROOM_FULL:'このルームは定員（24人）に達しました。',BAD_SESSION:'参加情報が見つかりません。名前を入力して参加し直してください。',BAD_SETTINGS:'設定を確認してください。',EMPTY_POOL:'このモード・深さ・カテゴリの組合せにはお題がありません。カテゴリを広げてください。',SERVER_FULL:'ただいまルームを作れません。少し待ってからお試しください。',HOST_ONLY:'この操作はホストだけができます。',WAIT_ANSWERS:'まだ回答していない人がいます。全員の回答を待ってください。',NEED_PLAYERS:'準備できた参加者が2人以上必要です。',NOT_READY:'全員の準備ができてからスタートしてください。',ALREADY_ANSWERED:'このお題の回答は、すでに受け付けています。',STALE_ROUND:'お題が変わりました。現在のお題に回答してください。',INVALID_ANSWER:'回答を確認してください。配分は合計100、順位は全項目が必要です。',SPECTATING:'次のお題から参加できます。',NOT_ANSWERING:'今は回答を受け付けていません。',NOT_LOBBY:'この操作は待合室で行ってください。',NOT_TALK:'結果公開のあとに次へ進めます。',BAD_PHASE:'今はこの操作を行えません。',BAD_COMMAND:'操作を確認して、もう一度お試しください。',RATE_LIMIT:'操作が続いています。少し待ってからお試しください。',EXPIRED:'このルームは終了しました。',SERVER_ERROR:'うまくつながりませんでした。少し待って、もう一度お試しください。'};
+const ERROR_TEXT={STALE_STATE:'画面が更新されました。現在の画面から操作してください。',SELF_VOTE:'自分の回答には投票できません。',CAPTAIN_ONLY:'この操作はチーム代表だけができます。',ALREADY_VOTED:'予想は受理済みです。',BUDGET_EXCEEDED:'予算を超えています。案を見直してください。',ROOM_NOT_FOUND:'このルームは見つかりません。コードを確認するか、新しいルームを作ってください。',BAD_NAME:'名前を1〜20文字で入力してください。',ROOM_FULL:'このルームは定員（24人）に達しました。',BAD_SESSION:'参加情報が見つかりません。名前を入力して参加し直してください。',BAD_SETTINGS:'設定を確認してください。',EMPTY_POOL:'このモード・深さ・カテゴリの組合せにはお題がありません。カテゴリを広げてください。',SERVER_FULL:'ただいまルームを作れません。少し待ってからお試しください。',HOST_ONLY:'この操作はホストだけができます。',WAIT_ANSWERS:'まだ回答していない人がいます。全員の回答を待ってください。',NEED_PLAYERS:'準備できた参加者が2人以上必要です。',NOT_READY:'全員の準備ができてからスタートしてください。',ALREADY_ANSWERED:'このお題の回答は、すでに受け付けています。',STALE_ROUND:'お題が変わりました。現在のお題に回答してください。',INVALID_ANSWER:'回答を確認してください。配分は合計100、順位は全項目が必要です。',SPECTATING:'次のお題から参加できます。',NOT_ANSWERING:'今は回答を受け付けていません。',NOT_LOBBY:'この操作は待合室で行ってください。',NOT_TALK:'結果公開のあとに次へ進めます。',BAD_PHASE:'今はこの操作を行えません。',BAD_COMMAND:'操作を確認して、もう一度お試しください。',RATE_LIMIT:'操作が続いています。少し待ってからお試しください。',EXPIRED:'このルームは終了しました。',SERVER_ERROR:'うまくつながりませんでした。少し待って、もう一度お試しください。'};
 export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.sqlite'),countdownMs=3000,hostGraceMs=12000}={}) {
   const root=resolve(fileURLToPath(new URL('../public/',import.meta.url)));
   const store=new RoomStore(database),engine=new GameEngine(store,{countdownMs,hostGraceMs});
@@ -26,7 +27,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
     try {
       const url=new URL(req.url,'http://local');
       if(url.pathname==='/api/health'&&req.method==='GET')return json(res,{status:'ok',product:'UNITY MIX'});
-      if(url.pathname==='/api/catalog'&&req.method==='GET')return json(res,{...catalog,questionCount:questions.length,hosting:{ephemeral:process.env.EPHEMERAL_STORAGE==='true'}});
+      if(url.pathname==='/api/catalog'&&req.method==='GET')return json(res,{...catalog,eventGames:games,questionCount:questions.length,hosting:{ephemeral:process.env.EPHEMERAL_STORAGE==='true'}});
       if(url.pathname==='/api/qr'&&req.method==='GET') {
         const room=engine.get(url.searchParams.get('room'));
         const target=`${baseUrl(req)}/?room=${room.code}`;
