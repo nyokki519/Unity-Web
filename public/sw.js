@@ -1,5 +1,5 @@
-const CACHE='unity-mix-shell-v1';
-const SHELL=['/','/style.css','/js/app.js','/js/dom.js','/js/realtime.js','/js/home.js','/js/lobby.js','/js/answer.js','/js/results.js','/js/game.js','/js/final.js','/js/share.js','/assets/unity-mark.webp','/assets/fonts/cormorant-garamond-latin.woff'];
+const CACHE='unity-mix-shell-v2';
+const SHELL=['/js/events/screen.js','/js/events/individual.js','/js/events/guessing.js','/js/events/teams.js','/js/events/editor.js','/js/events/host.js','/','/style.css','/js/app.js','/js/dom.js','/js/realtime.js','/js/home.js','/js/lobby.js','/js/answer.js','/js/results.js','/js/game.js','/js/final.js','/js/share.js','/assets/unity-mark.webp','/assets/fonts/cormorant-garamond-latin.woff'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
 self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(e.request.method!=='GET'||url.origin!==location.origin||url.pathname.startsWith('/api/')||url.pathname==='/ws')return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const clone=r.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));}return r;}).catch(()=>caches.match(e.request).then(c=>c||(e.request.mode==='navigate'?caches.match('/'):Response.error()))));});

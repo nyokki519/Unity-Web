@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {fixture} from './events-flow.test.js';
+import test from 'node:test';import assert from 'node:assert/strict';import {fixture} from './events-helper.js';
 for(const game of ['WHO','STORY'])test(`${game}: anonymous answers, own-vote rejection, guesses, solution and hide`,()=>{
  const f=fixture(6,game);try{
  f.cmd('event_begin');for(let i=0;i<3;i++)f.cmd('event_answer',{value:game==='WHO'?`秘密${i}`:{title:`見出し${i}`,text:'体験談'.repeat(50)}},f.sessions[i]);

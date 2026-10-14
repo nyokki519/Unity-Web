@@ -1,7 +1,7 @@
 export const $ = (selector,root=document)=>root.querySelector(selector);
 export function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 export function button(text,callback,cls='button'){const n=el('button',cls,text);n.type='button';n.addEventListener('click',callback);return n;}
-export function field(label,input){const wrap=el('label','field');wrap.append(el('span','field-label',label),input);return wrap;}
+export function field(label,input){if(!input.hasAttribute('aria-label'))input.setAttribute('aria-label',label);const wrap=el('label','field');wrap.append(el('span','field-label',label),input);return wrap;}
 export function input(name,placeholder='',value=''){const n=el('input');n.name=name;n.placeholder=placeholder;n.value=value;return n;}
 export function eyebrow(text){return el('p','eyebrow',text);}
 export function title(kicker,heading,description){const n=el('div','screen-heading');n.append(eyebrow(kicker),el('h1','',heading));if(description)n.append(el('p','muted',description));return n;}

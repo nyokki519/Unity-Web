@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {fixture} from './events-flow.test.js';import {eventQuestions,games} from '../src/events/catalog.js';
+import {fixture} from './events-helper.js';import {eventQuestions,games} from '../src/events/catalog.js';
 test('each game has 15 ready prompts and quest has five per difficulty',()=>{
  for(const game of Object.keys(games))assert.ok(eventQuestions.filter(q=>q.game===game).length>=15);
  for(const d of ['気軽','ひと工夫','じっくり'])assert.ok(eventQuestions.filter(q=>q.game==='QUEST'&&q.difficulty===d).length>=5);

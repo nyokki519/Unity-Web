@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {fixture} from './events-flow.test.js';
+import test from 'node:test';import assert from 'node:assert/strict';import {fixture} from './events-helper.js';
 for(const n of [6,15])for(const game of ['QUEST','CAFE'])test(`${game} ${n} people: teams, private draft, captain, budgets, approval`,()=>{
  const f=fixture(n,game);try{
  f.cmd('event_teams',{count:3});assert.equal(f.room.event.teams.length,3);f.cmd('event_begin');assert.equal(f.room.event.phase,'CONSULT');

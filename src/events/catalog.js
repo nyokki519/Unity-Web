@@ -27,6 +27,6 @@ export function validateEventQuestion(input){
 export const eventQuestions=JSON.parse(readFileSync(new URL('../../data/event-questions.json',import.meta.url))).map(validateEventQuestion);
 export function questionsFor(event,gameId){return event.questions.filter(q=>q.game===gameId&&q.enabled&&(!event.options.difficulty||event.options.difficulty==='すべて'||q.difficulty===event.options.difficulty));}
 export function optionsFor(gameId,input={}){
- if(!games[gameId])fail('BAD_SETTINGS');const o={roundLimit:input.roundLimit??3,seconds:input.seconds??games[gameId].seconds,guessSeconds:input.guessSeconds??45,teamCount:input.teamCount??2,difficulty:input.difficulty??'すべて'};
- if(!Number.isInteger(o.roundLimit)||o.roundLimit<1||o.roundLimit>15||!Number.isInteger(o.seconds)||o.seconds<30||o.seconds>600||!Number.isInteger(o.guessSeconds)||o.guessSeconds<30||o.guessSeconds>600||!Number.isInteger(o.teamCount)||o.teamCount<2||o.teamCount>4||!['すべて','気軽','ひと工夫','じっくり'].includes(o.difficulty))fail('BAD_SETTINGS');return o;
+ if(!games[gameId])fail('BAD_SETTINGS');const o={roundLimit:input.roundLimit??(guessGame(gameId)?1:3),itemLimit:input.itemLimit??(gameId==='STORY'?4:6),seconds:input.seconds??games[gameId].seconds,guessSeconds:input.guessSeconds??45,teamCount:input.teamCount??2,difficulty:input.difficulty??'すべて'};
+ if(!Number.isInteger(o.itemLimit)||o.itemLimit<1||o.itemLimit>15||!Number.isInteger(o.roundLimit)||o.roundLimit<1||o.roundLimit>15||!Number.isInteger(o.seconds)||o.seconds<30||o.seconds>600||!Number.isInteger(o.guessSeconds)||o.guessSeconds<30||o.guessSeconds>600||!Number.isInteger(o.teamCount)||o.teamCount<2||o.teamCount>4||!['すべて','気軽','ひと工夫','じっくり'].includes(o.difficulty))fail('BAD_SETTINGS');return o;
 }

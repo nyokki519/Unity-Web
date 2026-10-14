@@ -22,7 +22,7 @@ export class Realtime extends EventTarget {
       this.timer=setTimeout(()=>this.open(),Math.min(8000,700*2**this.retry++)+Math.random()*300);
     });
   }
-  send(action,data={}){if(!this.socket||this.socket.readyState!==WebSocket.OPEN){this.emit('error',{code:'OFFLINE',message:'接続を確認しています。回答は送信されていません。再接続後に送ってください。'});return false;}this.socket.send(JSON.stringify({action,requestId:crypto.randomUUID?.()||String(Date.now()),...data}));return true;}
+  send(action,data={}){if(!this.socket||this.socket.readyState!==WebSocket.OPEN){this.emit('error',{code:'OFFLINE',message:'接続を確認しています。回答は送信されていません。再接続後に送ってください。'});return false;}const requestId=crypto.randomUUID?.()||String(Date.now());this.socket.send(JSON.stringify({action,requestId,...data}));return requestId;}
   stop(){this.stopped=true;clearTimeout(this.timer);if(this.socket){const s=this.socket;this.socket=null;s.close();}}
 }
 export async function api(path,data){const res=await fetch(path,{method:data?'POST':'GET',headers:data?{'Content-Type':'application/json'}:undefined,body:data?JSON.stringify(data):undefined});const result=await res.json();if(!res.ok)throw new Error(result.message||'うまく接続できませんでした。もう一度お試しください。');return result;}

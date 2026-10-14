@@ -66,8 +66,10 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
     ws.on('pong',()=>{ws.alive=true;});
     ws.on('error',()=>{});
     ws.on('message',buffer=>{
+      let requestId;
       try {
         const msg=JSON.parse(buffer.toString());
+        requestId=typeof msg?.requestId==='string'&&msg.requestId.length<=100?msg.requestId:undefined;
         if(!msg||typeof msg!=='object'||Array.isArray(msg))throw new GameError('BAD_COMMAND');
         if(!ws.session) {
           if(msg.action!=='auth')throw new GameError('BAD_SESSION');
@@ -82,7 +84,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
         const s=ws.session;if(!rate(`cmd:${s.key}`,100))throw new GameError('RATE_LIMIT');
         engine.command(s.code,s.id,msg);send(ws,{type:'ack',action:msg.action,requestId:msg.requestId});
         if(msg.action==='leave')ws.close(1000);
-      }catch(error){send(ws,{type:'error',code:error instanceof GameError?error.code:'BAD_COMMAND',message:ERROR_TEXT[error.code]||ERROR_TEXT.BAD_COMMAND});}
+      }catch(error){send(ws,{type:'error',requestId,code:error instanceof GameError?error.code:'BAD_COMMAND',message:ERROR_TEXT[error.code]||ERROR_TEXT.BAD_COMMAND});}
     });
     ws.on('close',()=>{clearTimeout(authTimer);const s=ws.session;if(s&&sockets.get(s.key)===ws){sockets.delete(s.key);if(!shuttingDown)engine.disconnect(s.code,s.id);}});
   });
