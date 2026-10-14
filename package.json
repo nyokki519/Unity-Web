@@ -1,0 +1,20 @@
+{
+  "name": "unity-mix",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Unity's real-time conversation game: 遊ぶほど、その人が見えてくる。",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/*.test.js",
+    "check:questions": "node tools/check-questions.js"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4",
+    "ws": "8.22.0"
+  }
+}

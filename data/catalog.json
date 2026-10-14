@@ -1,0 +1,27 @@
+{
+  "categories": {
+    "LIGHT": "気軽に",
+    "LIFE": "暮らし",
+    "LOVE": "大切な人",
+    "FRIENDS": "友達",
+    "WORK": "仕事",
+    "MONEY": "お金",
+    "FUTURE": "これから",
+    "MORAL": "大切にすること",
+    "CHAOS": "もしも",
+    "DEEP": "じっくり"
+  },
+  "values": {
+    "freedom": "自由",
+    "connection": "人とのつながり",
+    "stability": "安心",
+    "money": "お金",
+    "health": "健康",
+    "curiosity": "学び",
+    "time": "余白・時間",
+    "achievement": "達成",
+    "kindness": "思いやり",
+    "creativity": "創造",
+    "adventure": "新しい体験"
+  }
+}
