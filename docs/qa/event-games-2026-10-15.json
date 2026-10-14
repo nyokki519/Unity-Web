@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-15",
+  "nodeTests": {
+    "passed": 39,
+    "failed": 0,
+    "skipped": 0
+  },
+  "questions": {
+    "legacy": 252,
+    "event": 90
+  },
+  "independentBrowserRuns": {
+    "runs": [
+      {
+        "people": 6,
+        "games": [
+          "VALUES",
+          "WHO",
+          "BOUNDARY",
+          "QUEST",
+          "CAFE",
+          "STORY"
+        ],
+        "roundsPerGame": 2,
+        "width": 390,
+        "hostTakeover": true,
+        "errors": []
+      },
+      {
+        "people": 15,
+        "games": [
+          "VALUES",
+          "WHO",
+          "BOUNDARY",
+          "QUEST",
+          "CAFE",
+          "STORY"
+        ],
+        "roundsPerGame": 2,
+        "width": 390,
+        "hostTakeover": true,
+        "errors": []
+      }
+    ],
+    "errors": []
+  },
+  "postReviewTeamRuns": {
+    "runs": [
+      {
+        "people": 6,
+        "games": [
+          "QUEST",
+          "CAFE"
+        ],
+        "roundsPerGame": 2,
+        "width": 390,
+        "hostTakeover": true,
+        "errors": []
+      },
+      {
+        "people": 15,
+        "games": [
+          "QUEST",
+          "CAFE"
+        ],
+        "roundsPerGame": 2,
+        "width": 390,
+        "hostTakeover": true,
+        "errors": []
+      }
+    ],
+    "errors": []
+  },
+  "realDeadlineControls": {
+    "editor": true,
+    "addition": true,
+    "realDeadlineSeconds": 30,
+    "unanswered": true,
+    "emojiBoundary120": true,
+    "reloadAcceptedAnswer": true,
+    "moderation": true,
+    "reducedMotion": true,
+    "rankPointerAndButtons": true,
+    "errors": []
+  },
+  "postReviewControls": {
+    "editor": true,
+    "addition": true,
+    "realDeadlineSeconds": 0,
+    "unanswered": true,
+    "emojiBoundary120": true,
+    "reloadAcceptedAnswer": true,
+    "moderation": true,
+    "reducedMotion": true,
+    "rankPointerAndButtons": true,
+    "lateJoinNextRound": true,
+    "errors": []
+  },
+  "review": {
+    "critical": 0,
+    "importantFound": 4,
+    "importantFixed": 4,
+    "deferredMinor": 0
+  },
+  "unverified": [
+    "physical iPhone/Android",
+    "venue Wi-Fi",
+    "production HTTPS/WSS",
+    "OS sharing",
+    "fresh-task restoration"
+  ]
+}

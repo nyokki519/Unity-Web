@@ -12,12 +12,12 @@ const hash=token=>createHash('sha256').update(token).digest('hex');
 const TTL=24*3600000;
 const validName=name=>{if(typeof name!=='string') fail('BAD_NAME');const value=name.replace(/[\u0000-\u001f\u007f]/g,'').replace(/\s+/g,' ').trim();if(!value||[...value].length>20) fail('BAD_NAME');return value;};
 export function settingsFrom(input={}) {
+  if(input.eventGame){const eventOptions=optionsFor(input.eventGame,input.eventOptions);return{mode:'MIX',depth:'LIGHT',category:'ALL',rounds:eventOptions.roundLimit,autoReveal:false,eventGame:input.eventGame,eventOptions};}
   const value={mode:input.mode||'MIX',depth:input.depth||'LIGHT',category:input.category||'ALL',rounds:input.rounds??12,autoReveal:input.autoReveal!==false};
   if(!['MIX',...Object.keys(modes)].includes(value.mode)||!['LIGHT','BALANCED','DEEP'].includes(value.depth)||!['ALL',...Object.keys(catalog.categories)].includes(value.category)||!Number.isInteger(value.rounds)||value.rounds<1||value.rounds>30) fail('BAD_SETTINGS');
   const count=Object.keys(modes).filter(m=>value.mode==='MIX'||m===value.mode).reduce((n,m)=>n+pool(value,m).length,0);
   if(!count) fail('EMPTY_POOL');
   value.rounds=Math.min(value.rounds,count);
-  if(input.eventGame){optionsFor(input.eventGame,input.eventOptions);value.eventGame=input.eventGame;value.eventOptions=input.eventOptions||{};}
   return value;
 }
 export class GameEngine {

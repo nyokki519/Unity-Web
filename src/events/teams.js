@@ -6,7 +6,7 @@ export function assignTeams(room,count,assignments){
  if(assignments){if(typeof assignments!=='object'||Array.isArray(assignments)||members.some(id=>!Number.isInteger(assignments[id])||assignments[id]<0||assignments[id]>=count)||Object.keys(assignments).some(id=>!members.includes(id)))fail('BAD_SETTINGS');}
  members.forEach((id,i)=>teams[assignments?assignments[id]:i%count].memberIds.push(id));if(teams.some(t=>!t.memberIds.length))fail('BAD_SETTINGS');for(const t of teams)t.captainId=t.memberIds[0];return teams;
 }
-export function refreshCaptains(room){let changed=false;for(const t of room.event?.teams||[]){if(!room.players[t.captainId]?.connected||room.players[t.captainId]?.left){const next=t.memberIds.find(id=>room.players[id]?.connected&&!room.players[id].left);if(next&&next!==t.captainId){t.captainId=next;changed=true;}}}return changed;}
+export function refreshCaptains(room){let changed=false;for(const t of room.event?.teams||[]){if(!room.players[t.captainId]?.connected||room.players[t.captainId]?.left){const next=t.memberIds.find(id=>room.players[id]?.connected&&!room.players[id].left&&!room.event.passes?.[id]);if(next&&next!==t.captainId){t.captainId=next;changed=true;}}}return changed;}
 export function prepareTeams(room){
  const e=room.event;if(!e.teams.length){e.teams=assignTeams(room,Math.min(e.options.teamCount,e.participants.length));return;}
  for(const t of e.teams){t.memberIds=t.memberIds.filter(id=>e.participants.includes(id));t.draft=null;}

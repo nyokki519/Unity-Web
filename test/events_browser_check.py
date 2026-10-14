@@ -2,7 +2,7 @@
 import argparse,json,time
 from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
-p=argparse.ArgumentParser();p.add_argument('--url',default='http://127.0.0.1:3100');p.add_argument('--output',default='/tmp/unity-event-qa');p.add_argument('--people',type=int,nargs='+',default=[6,15]);args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--url',default='http://127.0.0.1:3100');p.add_argument('--output',default='/tmp/unity-event-qa');p.add_argument('--games',nargs='+',choices=['VALUES','WHO','BOUNDARY','QUEST','CAFE','STORY']);p.add_argument('--people',type=int,nargs='+',default=[6,15]);args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
 games={'VALUES':'価値観ランキング','WHO':'この回答、誰でしょう？','BOUNDARY':'みんなの境界線','QUEST':'共通点クエスト','CAFE':'架空のカフェ会議','STORY':'エピソードの持ち主'}
 report={'runs':[],'errors':[]}
 def phase(page,value):expect(page.locator('.event-screen')).to_have_attribute('data-phase',value,timeout=10000)
@@ -25,10 +25,17 @@ with sync_playwright() as pw:
   expect(host.locator('#start-button')).to_be_enabled();host.locator('#start-button').click();phase(host,'RULES');configure(host)
   completed=[]
   for key,label in games.items():
+   if args.games and key not in args.games:continue
    if key!='VALUES':switch(host,key)
    for rnd in range(2):
     phase(host,'RULES');action(host,'回答・相談を始める');expected='CONSULT' if key in ['QUEST','CAFE'] else 'ANSWER'
     for page in pages:phase(page,expected)
+    if key=='CAFE' and rnd==0:
+     # A personally passed member must not become representative on failover.
+     action(pages[3],'今回はパス');contexts[1].set_offline(True)
+     try:pages[1].reload(timeout=2000)
+     except Exception:pass
+     expect(pages[5].locator('#event-submit')).to_be_visible(timeout=10000)
     # Leave one participant unanswered in individual games; explicit skip is separate.
     for i,page in enumerate(pages):
      if key in ['QUEST','CAFE'] and not page.locator('#event-submit').is_visible():continue
@@ -48,6 +55,8 @@ with sync_playwright() as pw:
       action(page,'下書きをチームに共有');expect(page.locator('#event-submit')).to_be_enabled()
      page.locator('#event-submit').click();expect(page.locator('.answer-saved')).to_be_visible()
      if rnd==0 and key=='VALUES' and i==1:page.reload();expect(page.locator('.answer-saved')).to_be_visible()
+    if key=='CAFE' and rnd==0:
+     contexts[1].set_offline(False);pages[1].goto(args.url+'/?room='+code);expect(pages[1].locator('.answer-saved')).to_be_visible();assert pages[1].locator('.event-saved-value').count()==0
     action(host,'回答を締め切る');phase(host,'CLOSED');action(host,'回答を公開する')
     if key in ['WHO','STORY']:
      for item in range(2):

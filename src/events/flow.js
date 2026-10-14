@@ -5,8 +5,8 @@ import {fail} from '../errors.js';
 import {eventQuestions,optionsFor,questionsFor,teamGame,guessGame,validateEventQuestion} from './catalog.js';
 import {validateNarrative,collectGuessItems,openGuess,closeGuess,revealSolution,nextGuessItem,vote} from './guessing.js';
 import {validateIndividual,individualResult} from './individual.js';
-export function createEvent(gameId,options={},questions=eventQuestions){return{gameId,options:optionsFor(gameId,options),questions:structuredClone(questions),revision:0,phase:'RULES',roundId:randomUUID(),roundIndex:0,deadlineAt:null,answers:{},passes:{},participants:[],teams:[],history:[],used:[],question:null,result:null};}
-function rules(e){e.phase='RULES';e.roundId=randomUUID();e.deadlineAt=null;e.answers={};e.passes={};e.result=null;e.question=null;e.items=[];e.votes={};e.itemIndex=0;}
+export function createEvent(gameId,options={},questions=eventQuestions){return{gameId,options:optionsFor(gameId,options),questions:structuredClone(questions),revision:0,phase:'RULES',roundId:randomUUID(),roundIndex:0,deadlineAt:null,answers:{},passes:{},submittedBy:{},participants:[],teams:[],history:[],used:[],question:null,result:null};}
+function rules(e){e.phase='RULES';e.roundId=randomUUID();e.deadlineAt=null;e.answers={};e.passes={};e.submittedBy={};e.result=null;e.question=null;e.items=[];e.votes={};e.itemIndex=0;}
 function end(room,now){room.event.phase='FINAL';room.event.deadlineAt=null;room.phase='FINAL';room.endedAt=now;room.expiresAt=now+3600000;}
 export function executeEvent(room,id,msg,now){
  const e=room.event;if(!e)fail('BAD_PHASE');
@@ -17,7 +17,7 @@ export function executeEvent(room,id,msg,now){
  }
  if(msg.action==='event_answer'){
   if(!['ANSWER','CONSULT'].includes(e.phase)||now>=e.deadlineAt)fail('NOT_ANSWERING');if(!e.participants.includes(id))fail('SPECTATING');if(teamGame(e.gameId)&&msg.skip&&e.teams.find(t=>t.memberIds.includes(id))?.captainId!==id){if(e.passes?.[id])fail('ALREADY_ANSWERED');(e.passes||={})[id]={skip:true};return;}const key=teamGame(e.gameId)?captainTeam(room,id).id:id;if(Object.hasOwn(e.answers,key))fail('ALREADY_ANSWERED');
-  let value;if(!msg.skip){try{value=teamGame(e.gameId)?validateTeamAnswer(e.gameId,e.question,msg.value):guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):validateIndividual(e.question,msg.value);}catch(error){if(error.code==='BUDGET_EXCEEDED')throw error;fail('INVALID_ANSWER');}}e.answers[key]=msg.skip?{skip:true}:{value};return;
+  let value;if(!msg.skip){try{value=teamGame(e.gameId)?validateTeamAnswer(e.gameId,e.question,msg.value):guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):validateIndividual(e.question,msg.value);}catch(error){if(error.code==='BUDGET_EXCEEDED')throw error;fail('INVALID_ANSWER');}}e.answers[key]=msg.skip?{skip:true}:{value};if(teamGame(e.gameId))(e.submittedBy||={})[key]=id;return;
  }
  if(room.hostId!==id)fail('HOST_ONLY');if(msg.revision!==e.revision)fail('STALE_STATE');
  switch(msg.action){
@@ -38,7 +38,7 @@ export function executeEvent(room,id,msg,now){
   case 'event_next_item':nextGuessItem(e,now);break;
   case 'event_hide':{
    if(teamGame(e.gameId)){if(!['CLOSED','TALK'].includes(e.phase))fail('BAD_PHASE');const t=e.teams.find(t=>t.id===msg.teamId);if(!t||!e.answers[t.id])fail('BAD_COMMAND');e.answers[t.id]={hidden:true};t.draft=null;if(e.result){const approvals=new Map(e.result.teams.map(t=>[t.id,t.approved]));e.result=teamResult(e);for(const row of e.result.teams)row.approved=approvals.get(row.id)||false;}break;}
-   if(!guessGame(e.gameId)||!['CLOSED','GUESS','GUESS_CLOSED','SOLUTION','TALK'].includes(e.phase))fail('BAD_PHASE');const item=e.items?.find(i=>i.id===msg.itemId);if(!item||item.hidden)fail('BAD_COMMAND');item.hidden=true;item.text='';item.title='';e.answers[item.ownerId]={hidden:true};if(e.items[e.itemIndex]?.id===item.id){e.phase='SOLUTION';e.deadlineAt=null;e.votes={};}break;
+   if(!guessGame(e.gameId)||!['CLOSED','GUESS','GUESS_CLOSED','SOLUTION','TALK'].includes(e.phase))fail('BAD_PHASE');const item=e.items?.find(i=>i.id===msg.itemId);if(!item||item.hidden)fail('BAD_COMMAND');item.hidden=true;item.text='';item.title='';e.answers[item.ownerId]={hidden:true};if(['GUESS','GUESS_CLOSED','SOLUTION'].includes(e.phase)&&e.items[e.itemIndex]?.id===item.id){e.phase='SOLUTION';e.deadlineAt=null;e.votes={};}break;
   }
   case 'event_next':if(e.phase!=='TALK')fail('BAD_PHASE');e.roundIndex++;if(e.roundIndex>=e.options.roundLimit)end(room,now);else rules(e);break;
   case 'event_end':end(room,now);break;
