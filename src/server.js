@@ -89,7 +89,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
   engine.onChange=room=>{
     for(const ws of sockets.values())if(ws.session.code===room.code){
       if(room.expired){send(ws,{type:'error',code:'EXPIRED',message:ERROR_TEXT.EXPIRED});ws.close(4004);}
-      else send(ws,{type:'state',state:engine.view(room,ws.session.id)});
+      else if(room.players[ws.session.id]?.left){send(ws,{type:'error',code:'BAD_SESSION',message:'司会によって退出されました。'});ws.close(4003);}else send(ws,{type:'state',state:engine.view(room,ws.session.id)});
     }
   };
   const clock=setInterval(()=>engine.tick(),100);clock.unref();

@@ -1,3 +1,5 @@
+import {assignTeams,prepareTeams,refreshCaptains,captainTeam} from './teams.js';
+import {validateTeamAnswer,teamResult} from './team-games.js';
 import {randomUUID,randomInt} from 'node:crypto';
 import {fail} from '../errors.js';
 import {eventQuestions,optionsFor,questionsFor,teamGame,guessGame,validateEventQuestion} from './catalog.js';
@@ -10,22 +12,28 @@ export function executeEvent(room,id,msg,now){
  const e=room.event;if(!e)fail('BAD_PHASE');
  if(msg.roundId!==e.roundId)fail('STALE_ROUND');
  if(msg.action==='event_vote'){vote(e,id,msg,now);return;}
+ if(msg.action==='event_cafe_draft'){
+  if(e.gameId!=='CAFE'||e.phase!=='CONSULT'||now>=e.deadlineAt)fail('BAD_PHASE');if(!e.participants.includes(id))fail('SPECTATING');const t=captainTeam(room,id);if(e.answers[t.id])fail('ALREADY_ANSWERED');t.draft=validateTeamAnswer(e.gameId,e.question,msg.value,true);return;
+ }
  if(msg.action==='event_answer'){
-  if(e.phase!=='ANSWER'||now>=e.deadlineAt)fail('NOT_ANSWERING');if(!e.participants.includes(id))fail('SPECTATING');if(Object.hasOwn(e.answers,id))fail('ALREADY_ANSWERED');
-  let value;if(!msg.skip){try{value=guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):validateIndividual(e.question,msg.value);}catch{fail('INVALID_ANSWER');}}e.answers[id]=msg.skip?{skip:true}:{value};return;
+  if(!['ANSWER','CONSULT'].includes(e.phase)||now>=e.deadlineAt)fail('NOT_ANSWERING');if(!e.participants.includes(id))fail('SPECTATING');const key=teamGame(e.gameId)?captainTeam(room,id).id:id;if(Object.hasOwn(e.answers,key))fail('ALREADY_ANSWERED');
+  let value;if(!msg.skip){try{value=teamGame(e.gameId)?validateTeamAnswer(e.gameId,e.question,msg.value):guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):validateIndividual(e.question,msg.value);}catch(error){if(error.code==='BUDGET_EXCEEDED')throw error;fail('INVALID_ANSWER');}}e.answers[key]=msg.skip?{skip:true}:{value};return;
  }
  if(room.hostId!==id)fail('HOST_ONLY');if(msg.revision!==e.revision)fail('STALE_STATE');
  switch(msg.action){
+  case 'event_teams':if(e.phase!=='RULES')fail('BAD_PHASE');e.teams=assignTeams(room,msg.count,msg.assignments);e.options.teamCount=msg.count;break;
+  case 'event_kick':{const p=room.players[msg.playerId];if(!p||p.left||p.id===room.hostId)fail('BAD_COMMAND');p.left=true;p.connected=false;p.ready=false;refreshCaptains(room);break;}
+  case 'event_approve':if(e.phase!=='TALK'||e.gameId!=='QUEST')fail('BAD_PHASE');{const t=e.result.teams.find(t=>t.id===msg.teamId);if(!t)fail('BAD_COMMAND');t.approved=true;}break;
   case 'event_question':{
    if(e.phase!=='RULES')fail('BAD_PHASE');if(e.questions.length>=200&&!e.questions.some(q=>q.id===msg.question?.id))fail('BAD_SETTINGS');const q=validateEventQuestion(msg.question);const i=e.questions.findIndex(v=>v.id===q.id);if(i<0)e.questions.push(q);else e.questions[i]=q;break;
   }
   case 'event_begin':{
    if(e.phase!=='RULES')fail('BAD_PHASE');const players=Object.values(room.players).filter(p=>p.connected&&p.ready&&!p.left);if(players.length<2)fail('NEED_PLAYERS');
    const available=questionsFor(e,e.gameId).filter(q=>!e.used.includes(q.id));if(!available.length)fail('EMPTY_POOL');const q=msg.questionId?available.find(q=>q.id===msg.questionId):available[randomInt(available.length)];if(!q)fail('BAD_SETTINGS');
-   e.question=structuredClone(q);e.used.push(q.id);e.participants=players.map(p=>p.id);e.phase=teamGame(e.gameId)?'CONSULT':'ANSWER';e.deadlineAt=now+e.options.seconds*1000;break;
+   e.question=structuredClone(q);e.used.push(q.id);e.participants=players.map(p=>p.id);if(teamGame(e.gameId))prepareTeams(room);e.phase=teamGame(e.gameId)?'CONSULT':'ANSWER';e.deadlineAt=now+e.options.seconds*1000;break;
   }
   case 'event_close':if(e.phase==='GUESS'){closeGuess(e);break;}if(!['ANSWER','CONSULT'].includes(e.phase))fail('BAD_PHASE');e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);break;
-  case 'event_reveal':if(e.phase!=='CLOSED')fail('BAD_PHASE');if(guessGame(e.gameId)){e.items||=collectGuessItems(e);e.itemIndex=0;while(e.items[e.itemIndex]?.hidden)e.itemIndex++;if(e.itemIndex<e.items.length)openGuess(e,now);else e.phase='TALK';}else{e.result=individualResult(e.question,e.answers);e.phase='TALK';}e.history.push({gameId:e.gameId,questionId:e.question.id});break;
+  case 'event_reveal':if(e.phase!=='CLOSED')fail('BAD_PHASE');if(guessGame(e.gameId)){e.items||=collectGuessItems(e);e.itemIndex=0;while(e.items[e.itemIndex]?.hidden)e.itemIndex++;if(e.itemIndex<e.items.length)openGuess(e,now);else e.phase='TALK';}else{e.result=teamGame(e.gameId)?teamResult(e):individualResult(e.question,e.answers);e.phase='TALK';}e.history.push({gameId:e.gameId,questionId:e.question.id});break;
   case 'event_solution':revealSolution(e);break;
   case 'event_next_item':nextGuessItem(e,now);break;
   case 'event_hide':{
@@ -39,4 +47,4 @@ export function executeEvent(room,id,msg,now){
  }
  e.revision++;
 }
-export function tickEvent(room,now){const e=room.event;if(!e)return false;if(['ANSWER','CONSULT','GUESS'].includes(e.phase)&&e.deadlineAt!==null&&now>=e.deadlineAt){if(e.phase==='GUESS')closeGuess(e);else{e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);}e.revision++;return true;}return false;}
+export function tickEvent(room,now){const e=room.event;if(!e)return false;let changed=refreshCaptains(room);if(changed)e.revision++;if(['ANSWER','CONSULT','GUESS'].includes(e.phase)&&e.deadlineAt!==null&&now>=e.deadlineAt){if(e.phase==='GUESS')closeGuess(e);else{e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);}e.revision++;return true;}return changed;}
