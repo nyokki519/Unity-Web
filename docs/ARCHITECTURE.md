@@ -102,3 +102,11 @@ HTTPSでシェルをキャッシュできるPWA。リアルタイムのゲーム
 CSP、同一originの確認、HTTP/接続/操作のレート制限、8KB受信上限、heartbeatを実装。入力はDOMのtextContentで表示する。カード画像とQRはローカルの処理で生成し、外部解析や広告サービスを使わない。
 
 実際のiPhone Safari・Android、PWAのインストール、OSの共有シート、外部ドメインでのHTTPS/WSSとQRの検証は本番公開後の確認項目。Dockerfileはビルド・コンテナの通し検証済み。GitHub Actionsのリモート実行は別途確認が必要。
+
+## イベントゲーム拡張
+
+イベント状態はroom.eventに保持し、既存のround/history/summaryから分離する。`src/events/flow.js`は説明・収集・締切・公開・終了、`individual.js`は既存RANK／LINEの再利用、`guessing.js`は匿名表示ID・投票・現在一件の正解、`teams.js`はチーム代表引継ぎ、`team-games.js`は費用計算・確定・チーム限定ビュー、`catalog.js`はお題・設定検証、`view.js`は公開するデータだけを組み立てる。
+
+司会の状態変更はroundIdとrevisionの一致を要求し、二重進行と古い確認ダイアログからの操作を拒否する。個人回答・投票は同時操作を妨げないよう全体revisionではなくroundId／itemIdと一人一回の受理を検証する。応答にrequestIdを付けて送信中・受理・エラーを対応づける。
+
+イベントの最終表示は公開ラウンド数だけで、匿名体験談を性格分析や既存YOUR MIXへ混ぜない。履歴に回答者対応表を配信せず、現在一件だけを正解公開する。チームのカフェ下書きだけが締切前の同チーム共有の例外。詳細はEVENT-GAMES.md参照。

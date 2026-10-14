@@ -10,7 +10,7 @@ def action(page,name):
  page.get_by_role('button',name=name,exact=True).click()
  time.sleep(.7) # Respect the production per-player operation limit.
 def configure(host):
- host.get_by_text('時間・ラウンド・難易度を設定',exact=True).click();host.locator('input[name=roundLimit]').fill('2');action(host,'設定を保存');phase(host,'RULES')
+ host.get_by_text('時間・ラウンド・難易度を設定',exact=True).click();host.locator('input[name=roundLimit]').fill('2');action(host,'設定を保存');phase(host,'RULES');expect(host.locator('#event-status')).to_contain_text('/ 2')
 def switch(host,key):
  host.get_by_text('司会の管理',exact=True).click();host.get_by_label('切り替えるゲーム',exact=True).select_option(key);action(host,'ゲームを切り替える');action(host,'続ける');phase(host,'RULES');configure(host)
 with sync_playwright() as pw:
@@ -69,6 +69,7 @@ with sync_playwright() as pw:
   except Exception:pass
   expect(pages[1].get_by_text('司会の進行',exact=True)).to_be_visible(timeout=35000);contexts[0].set_offline(False);host.goto(args.url+'/?room='+code);phase(host,'FINAL');assert host.get_by_text('司会の進行',exact=True).count()==0
   report['runs'].append({'people':n,'games':completed,'roundsPerGame':2,'width':390,'hostTakeover':True,'errors':errors})
+  (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
   for c in contexts:c.close()
  browser.close()
 (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print('PASS independent browser event flows and host takeover',flush=True)
