@@ -1,0 +1,2042 @@
+[
+  {
+    "id": "values-01",
+    "game": "VALUES",
+    "prompt": "休日に大切にしたいもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "休息"
+      },
+      {
+        "id": "c1",
+        "label": "友達"
+      },
+      {
+        "id": "c2",
+        "label": "新しい体験"
+      },
+      {
+        "id": "c3",
+        "label": "趣味"
+      }
+    ]
+  },
+  {
+    "id": "values-02",
+    "game": "VALUES",
+    "prompt": "カフェ選びで重視するもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "味"
+      },
+      {
+        "id": "c1",
+        "label": "価格"
+      },
+      {
+        "id": "c2",
+        "label": "雰囲気"
+      },
+      {
+        "id": "c3",
+        "label": "立地"
+      }
+    ]
+  },
+  {
+    "id": "values-03",
+    "game": "VALUES",
+    "prompt": "旅で楽しみなこと",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "景色"
+      },
+      {
+        "id": "c1",
+        "label": "食事"
+      },
+      {
+        "id": "c2",
+        "label": "人との出会い"
+      },
+      {
+        "id": "c3",
+        "label": "ゆっくりする"
+      }
+    ]
+  },
+  {
+    "id": "values-04",
+    "game": "VALUES",
+    "prompt": "友達にしてもらうとうれしいこと",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "話を聞く"
+      },
+      {
+        "id": "c1",
+        "label": "一緒に遊ぶ"
+      },
+      {
+        "id": "c2",
+        "label": "応援する"
+      },
+      {
+        "id": "c3",
+        "label": "気にかける"
+      }
+    ]
+  },
+  {
+    "id": "values-05",
+    "game": "VALUES",
+    "prompt": "暮らしに欲しいもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "時間"
+      },
+      {
+        "id": "c1",
+        "label": "便利さ"
+      },
+      {
+        "id": "c2",
+        "label": "自然"
+      },
+      {
+        "id": "c3",
+        "label": "にぎやかさ"
+      }
+    ]
+  },
+  {
+    "id": "values-06",
+    "game": "VALUES",
+    "prompt": "仕事を選ぶ基準",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "やりがい"
+      },
+      {
+        "id": "c1",
+        "label": "安定"
+      },
+      {
+        "id": "c2",
+        "label": "自由"
+      },
+      {
+        "id": "c3",
+        "label": "仲間"
+      }
+    ]
+  },
+  {
+    "id": "values-07",
+    "game": "VALUES",
+    "prompt": "贈り物で重視するもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "実用性"
+      },
+      {
+        "id": "c1",
+        "label": "思い出"
+      },
+      {
+        "id": "c2",
+        "label": "意外性"
+      },
+      {
+        "id": "c3",
+        "label": "手作り"
+      }
+    ]
+  },
+  {
+    "id": "values-08",
+    "game": "VALUES",
+    "prompt": "週末にしたいこと",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "散歩"
+      },
+      {
+        "id": "c1",
+        "label": "料理"
+      },
+      {
+        "id": "c2",
+        "label": "映画"
+      },
+      {
+        "id": "c3",
+        "label": "おしゃべり"
+      }
+    ]
+  },
+  {
+    "id": "values-09",
+    "game": "VALUES",
+    "prompt": "自分を回復させるもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "睡眠"
+      },
+      {
+        "id": "c1",
+        "label": "運動"
+      },
+      {
+        "id": "c2",
+        "label": "音楽"
+      },
+      {
+        "id": "c3",
+        "label": "会話"
+      }
+    ]
+  },
+  {
+    "id": "values-10",
+    "game": "VALUES",
+    "prompt": "新しい街で探すもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "カフェ"
+      },
+      {
+        "id": "c1",
+        "label": "公園"
+      },
+      {
+        "id": "c2",
+        "label": "本屋"
+      },
+      {
+        "id": "c3",
+        "label": "友達"
+      }
+    ]
+  },
+  {
+    "id": "values-11",
+    "game": "VALUES",
+    "prompt": "学びたいこと",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "料理"
+      },
+      {
+        "id": "c1",
+        "label": "語学"
+      },
+      {
+        "id": "c2",
+        "label": "写真"
+      },
+      {
+        "id": "c3",
+        "label": "楽器"
+      }
+    ]
+  },
+  {
+    "id": "values-12",
+    "game": "VALUES",
+    "prompt": "イベントで楽しみなこと",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "初対面"
+      },
+      {
+        "id": "c1",
+        "label": "再会"
+      },
+      {
+        "id": "c2",
+        "label": "企画"
+      },
+      {
+        "id": "c3",
+        "label": "食事"
+      }
+    ]
+  },
+  {
+    "id": "values-13",
+    "game": "VALUES",
+    "prompt": "大切にしたい時間",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "一人の時間"
+      },
+      {
+        "id": "c1",
+        "label": "家族の時間"
+      },
+      {
+        "id": "c2",
+        "label": "友達の時間"
+      },
+      {
+        "id": "c3",
+        "label": "挑戦する時間"
+      }
+    ]
+  },
+  {
+    "id": "values-14",
+    "game": "VALUES",
+    "prompt": "部屋に欲しいもの",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "大きな机"
+      },
+      {
+        "id": "c1",
+        "label": "植物"
+      },
+      {
+        "id": "c2",
+        "label": "本棚"
+      },
+      {
+        "id": "c3",
+        "label": "ソファ"
+      }
+    ]
+  },
+  {
+    "id": "values-15",
+    "game": "VALUES",
+    "prompt": "予定を決めるときの基準",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      {
+        "id": "c0",
+        "label": "気分"
+      },
+      {
+        "id": "c1",
+        "label": "予算"
+      },
+      {
+        "id": "c2",
+        "label": "相手"
+      },
+      {
+        "id": "c3",
+        "label": "天気"
+      }
+    ]
+  },
+  {
+    "id": "boundary-01",
+    "game": "BOUNDARY",
+    "prompt": "待ち合わせに何分早く着きたい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      "0分",
+      "100分"
+    ]
+  },
+  {
+    "id": "boundary-02",
+    "game": "BOUNDARY",
+    "prompt": "初対面で話しかける積極性は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-03",
+    "game": "BOUNDARY",
+    "prompt": "休日は予定を埋めたい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-04",
+    "game": "BOUNDARY",
+    "prompt": "カフェのBGMはにぎやかな方が好き？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-05",
+    "game": "BOUNDARY",
+    "prompt": "旅行は計画を固めたい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-06",
+    "game": "BOUNDARY",
+    "prompt": "新メニューを試したい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-07",
+    "game": "BOUNDARY",
+    "prompt": "買い物はじっくり比較する？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-08",
+    "game": "BOUNDARY",
+    "prompt": "部屋はものが少ない方が好き？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-09",
+    "game": "BOUNDARY",
+    "prompt": "朝の時間をゆったり取りたい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-10",
+    "game": "BOUNDARY",
+    "prompt": "映画の感想をすぐ話したい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-11",
+    "game": "BOUNDARY",
+    "prompt": "サプライズはうれしい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-12",
+    "game": "BOUNDARY",
+    "prompt": "友達と趣味が違うのは楽しい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-13",
+    "game": "BOUNDARY",
+    "prompt": "同じお店に何度も通いたい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-14",
+    "game": "BOUNDARY",
+    "prompt": "雨の日のお出かけは好き？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "boundary-15",
+    "game": "BOUNDARY",
+    "prompt": "イベント後にもう少し話したい？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "choices": [
+      "あまりそう思わない",
+      "とてもそう思う"
+    ]
+  },
+  {
+    "id": "who-01",
+    "game": "WHO",
+    "prompt": "最近ちょっと笑ったことは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "who-02",
+    "game": "WHO",
+    "prompt": "好きなカフェメニューは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "who-03",
+    "game": "WHO",
+    "prompt": "休日の小さな楽しみは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "who-04",
+    "game": "WHO",
+    "prompt": "最近買ってよかったものは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "who-05",
+    "game": "WHO",
+    "prompt": "一日だけ得意になりたいことは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "who-06",
+    "game": "WHO",
+    "prompt": "子どものころ好きだった遊びは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "who-07",
+    "game": "WHO",
+    "prompt": "つい集めてしまうものは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "who-08",
+    "game": "WHO",
+    "prompt": "今行ってみたい街は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "who-09",
+    "game": "WHO",
+    "prompt": "気分が上がる音楽は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "who-10",
+    "game": "WHO",
+    "prompt": "お気に入りの朝ごはんは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "who-11",
+    "game": "WHO",
+    "prompt": "おすすめの気分転換は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "who-12",
+    "game": "WHO",
+    "prompt": "雨の日の過ごし方は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "who-13",
+    "game": "WHO",
+    "prompt": "意外に好きな家事は？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "who-14",
+    "game": "WHO",
+    "prompt": "最近覚えたことは？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "who-15",
+    "game": "WHO",
+    "prompt": "自分を動物にたとえるなら？",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "quest-01",
+    "game": "QUEST",
+    "prompt": "みんなが好きな飲み物を探す",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "quest-02",
+    "game": "QUEST",
+    "prompt": "全員が行ってみたい場所を探す",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "quest-03",
+    "game": "QUEST",
+    "prompt": "好きな季節の共通点を探す",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "quest-04",
+    "game": "QUEST",
+    "prompt": "最近うれしかった小さなことの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "quest-05",
+    "game": "QUEST",
+    "prompt": "休日にやっていることの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "quest-06",
+    "game": "QUEST",
+    "prompt": "持ち物の意外な共通点を探す",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "quest-07",
+    "game": "QUEST",
+    "prompt": "子どものころの遊びの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "quest-08",
+    "game": "QUEST",
+    "prompt": "得意でないけれど好きなことの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "quest-09",
+    "game": "QUEST",
+    "prompt": "いつか挑戦したいことの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "quest-10",
+    "game": "QUEST",
+    "prompt": "食べ方の小さなこだわりの共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "quest-11",
+    "game": "QUEST",
+    "prompt": "最近変わった習慣の共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "quest-12",
+    "game": "QUEST",
+    "prompt": "居心地がいい場所に求める共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "quest-13",
+    "game": "QUEST",
+    "prompt": "自分たちだけの不思議な共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "quest-14",
+    "game": "QUEST",
+    "prompt": "大切にしている言葉の共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "quest-15",
+    "game": "QUEST",
+    "prompt": "違う趣味の奥にある共通点",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "cafe-01",
+    "game": "CAFE",
+    "prompt": "読書好きが集まるカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-02",
+    "game": "CAFE",
+    "prompt": "雨の日が楽しみになるカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-03",
+    "game": "CAFE",
+    "prompt": "朝の散歩の帰りに寄るカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-04",
+    "game": "CAFE",
+    "prompt": "初対面でも話しやすいカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-05",
+    "game": "CAFE",
+    "prompt": "旅行者に街を紹介するカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-06",
+    "game": "CAFE",
+    "prompt": "夜に静かに過ごすカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-07",
+    "game": "CAFE",
+    "prompt": "友達の誕生日を祝うカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-08",
+    "game": "CAFE",
+    "prompt": "植物を楽しむカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-09",
+    "game": "CAFE",
+    "prompt": "アートに触れるカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-10",
+    "game": "CAFE",
+    "prompt": "お仕事帰りに回復するカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-11",
+    "game": "CAFE",
+    "prompt": "週末の小さな冒険になるカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-12",
+    "game": "CAFE",
+    "prompt": "昔ながらの街になじむカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-13",
+    "game": "CAFE",
+    "prompt": "一人でも安心して入れるカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-14",
+    "game": "CAFE",
+    "prompt": "季節を味わうカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cafe-15",
+    "game": "CAFE",
+    "prompt": "みんなの趣味を持ち寄るカフェ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true,
+    "budget": 100,
+    "categories": [
+      {
+        "id": "location",
+        "label": "立地",
+        "options": [
+          {
+            "id": "park",
+            "label": "公園の近く",
+            "cost": 20
+          },
+          {
+            "id": "station",
+            "label": "駅前",
+            "cost": 50
+          },
+          {
+            "id": "lane",
+            "label": "静かな路地",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "メニュー",
+        "options": [
+          {
+            "id": "coffee",
+            "label": "コーヒーと焼き菓子",
+            "cost": 20
+          },
+          {
+            "id": "food",
+            "label": "お食事と自家製スイーツ",
+            "cost": 40
+          },
+          {
+            "id": "tea",
+            "label": "紅茶と季節のお菓子",
+            "cost": 30
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "label": "内装",
+        "options": [
+          {
+            "id": "simple",
+            "label": "木の机と落ち着いた照明",
+            "cost": 20
+          },
+          {
+            "id": "garden",
+            "label": "植物とゆったりしたソファ",
+            "cost": 40
+          },
+          {
+            "id": "art",
+            "label": "アートを飾る空間",
+            "cost": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "story-01",
+    "game": "STORY",
+    "prompt": "思いがけない親切を受けた話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "story-02",
+    "game": "STORY",
+    "prompt": "初めて挑戦してみた話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "story-03",
+    "game": "STORY",
+    "prompt": "旅先で起きた小さな出来事",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "story-04",
+    "game": "STORY",
+    "prompt": "カフェで印象に残った出来事",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "story-05",
+    "game": "STORY",
+    "prompt": "失敗が笑い話になった経験",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "気軽",
+    "enabled": true
+  },
+  {
+    "id": "story-06",
+    "game": "STORY",
+    "prompt": "友達と距離が縮まった瞬間",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "story-07",
+    "game": "STORY",
+    "prompt": "子どものころの不思議な思い出",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "story-08",
+    "game": "STORY",
+    "prompt": "好きなものに出会ったきっかけ",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "story-09",
+    "game": "STORY",
+    "prompt": "苦手だと思っていたことが変わった話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "story-10",
+    "game": "STORY",
+    "prompt": "忘れられない一杯や一皿の話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "ひと工夫",
+    "enabled": true
+  },
+  {
+    "id": "story-11",
+    "game": "STORY",
+    "prompt": "予定外が楽しかった日の話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "story-12",
+    "game": "STORY",
+    "prompt": "何気ない言葉に助けられた話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "story-13",
+    "game": "STORY",
+    "prompt": "新しい場所になじんだ経験",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "story-14",
+    "game": "STORY",
+    "prompt": "自分の小さな成長を感じた話",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  },
+  {
+    "id": "story-15",
+    "game": "STORY",
+    "prompt": "人の見方が少し変わった出来事",
+    "talkPrompt": "選んだ理由や、聞いて気づいたことを話してみよう。パスしても大丈夫。",
+    "difficulty": "じっくり",
+    "enabled": true
+  }
+]

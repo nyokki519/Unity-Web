@@ -1,0 +1,8084 @@
+[
+  {
+    "id": "align-001",
+    "mode": "ALIGN",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "休日の朝、まずしたいのは？",
+    "choices": [
+      "ゆっくり朝ごはん",
+      "外へ散歩に出る"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-002",
+    "mode": "PREDICT",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "休日の朝、まずしたいのは？",
+    "choices": [
+      "ゆっくり朝ごはん",
+      "外へ散歩に出る"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-003",
+    "mode": "ALIGN",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "カフェで選ぶなら？",
+    "choices": [
+      "いつもの一杯",
+      "初めてのメニュー"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-004",
+    "mode": "PREDICT",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "カフェで選ぶなら？",
+    "choices": [
+      "いつもの一杯",
+      "初めてのメニュー"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-005",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達と過ごすなら？",
+    "choices": [
+      "少人数でじっくり",
+      "大人数でにぎやかに"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-006",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達と過ごすなら？",
+    "choices": [
+      "少人数でじっくり",
+      "大人数でにぎやかに"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-007",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "空いた一時間、どちらに使う？",
+    "choices": [
+      "ひとりでリセット",
+      "誰かとおしゃべり"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-008",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "空いた一時間、どちらに使う？",
+    "choices": [
+      "ひとりでリセット",
+      "誰かとおしゃべり"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-009",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "次に覚えてみたいのは？",
+    "choices": [
+      "料理",
+      "楽器"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-010",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "次に覚えてみたいのは？",
+    "choices": [
+      "料理",
+      "楽器"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-011",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "同じ値段なら、どちらを買う？",
+    "choices": [
+      "長く使える定番",
+      "気分が上がる新作"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-012",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "同じ値段なら、どちらを買う？",
+    "choices": [
+      "長く使える定番",
+      "気分が上がる新作"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-013",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "作業するなら？",
+    "choices": [
+      "静かな場所",
+      "少し音のあるカフェ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-014",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "作業するなら？",
+    "choices": [
+      "静かな場所",
+      "少し音のあるカフェ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-015",
+    "mode": "ALIGN",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一日だけ手に入るなら？",
+    "choices": [
+      "どこでもドア",
+      "一日を二回楽しめる時計"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-016",
+    "mode": "PREDICT",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一日だけ手に入るなら？",
+    "choices": [
+      "どこでもドア",
+      "一日を二回楽しめる時計"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-017",
+    "mode": "ALIGN",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "旅行の楽しみは？",
+    "choices": [
+      "おいしいもの",
+      "見たことのない景色"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-018",
+    "mode": "PREDICT",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "旅行の楽しみは？",
+    "choices": [
+      "おいしいもの",
+      "見たことのない景色"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-019",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "待ち合わせまで30分。",
+    "choices": [
+      "本を読んで待つ",
+      "近くを歩いてみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-020",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "待ち合わせまで30分。",
+    "choices": [
+      "本を読んで待つ",
+      "近くを歩いてみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-021",
+    "mode": "ALIGN",
+    "category": "LOVE",
+    "depth": "LIGHT",
+    "question": "大切な人と過ごすなら？",
+    "choices": [
+      "一緒に何かをつくる",
+      "ゆっくり話す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "creativity"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-022",
+    "mode": "PREDICT",
+    "category": "LOVE",
+    "depth": "LIGHT",
+    "question": "大切な人と過ごすなら？",
+    "choices": [
+      "一緒に何かをつくる",
+      "ゆっくり話す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "creativity"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-023",
+    "mode": "ALIGN",
+    "category": "MORAL",
+    "depth": "LIGHT",
+    "question": "人にすすめるなら？",
+    "choices": [
+      "自分が大好きなもの",
+      "相手に合いそうなもの"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-024",
+    "mode": "PREDICT",
+    "category": "MORAL",
+    "depth": "LIGHT",
+    "question": "人にすすめるなら？",
+    "choices": [
+      "自分が大好きなもの",
+      "相手に合いそうなもの"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-025",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "部屋にひとつ増やすなら？",
+    "choices": [
+      "大きな本棚",
+      "心地よいソファ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-026",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "部屋にひとつ増やすなら？",
+    "choices": [
+      "大きな本棚",
+      "心地よいソファ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-027",
+    "mode": "ALIGN",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一週間だけ住むなら？",
+    "choices": [
+      "海の見える家",
+      "森の中の家"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-028",
+    "mode": "PREDICT",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一週間だけ住むなら？",
+    "choices": [
+      "海の見える家",
+      "森の中の家"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-029",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "新しい趣味を始めるなら？",
+    "choices": [
+      "一人で試してみる",
+      "友達を誘ってみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-030",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "新しい趣味を始めるなら？",
+    "choices": [
+      "一人で試してみる",
+      "友達を誘ってみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-031",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "ちょっとしたご褒美なら？",
+    "choices": [
+      "お気に入りの物を買う",
+      "体験に使う"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "money"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-032",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "ちょっとしたご褒美なら？",
+    "choices": [
+      "お気に入りの物を買う",
+      "体験に使う"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "money"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-033",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "ひらめきやすいのは？",
+    "choices": [
+      "一人で考える時間",
+      "誰かと話す時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "creativity"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-034",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "ひらめきやすいのは？",
+    "choices": [
+      "一人で考える時間",
+      "誰かと話す時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "creativity"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-035",
+    "mode": "ALIGN",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "今日は気分を変えたい。",
+    "choices": [
+      "初めての店へ行く",
+      "いつもの店で違う注文"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-036",
+    "mode": "PREDICT",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "今日は気分を変えたい。",
+    "choices": [
+      "初めての店へ行く",
+      "いつもの店で違う注文"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-037",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "働き方を選べるなら？",
+    "choices": [
+      "好きな仕事・収入はほどほど",
+      "興味は薄い仕事・収入は多い"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-038",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "働き方を選べるなら？",
+    "choices": [
+      "好きな仕事・収入はほどほど",
+      "興味は薄い仕事・収入は多い"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-039",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "理想の一週間は？",
+    "choices": [
+      "予定がしっかりある",
+      "余白がたくさんある"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-040",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "理想の一週間は？",
+    "choices": [
+      "予定がしっかりある",
+      "余白がたくさんある"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-041",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "友達との旅行、どちらがいい？",
+    "choices": [
+      "一緒にすべて行動",
+      "自由時間も大切に"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-042",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "友達との旅行、どちらがいい？",
+    "choices": [
+      "一緒にすべて行動",
+      "自由時間も大切に"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-043",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "余裕ができたら？",
+    "choices": [
+      "将来のために貯める",
+      "今しかできない体験に使う"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-044",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "余裕ができたら？",
+    "choices": [
+      "将来のために貯める",
+      "今しかできない体験に使う"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-045",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "暮らす場所で優先するなら？",
+    "choices": [
+      "便利さ",
+      "心地よさ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-046",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "暮らす場所で優先するなら？",
+    "choices": [
+      "便利さ",
+      "心地よさ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-047",
+    "mode": "ALIGN",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "相手にしてもらうなら？",
+    "choices": [
+      "気持ちを言葉で伝える",
+      "行動で気にかける"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-048",
+    "mode": "PREDICT",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "相手にしてもらうなら？",
+    "choices": [
+      "気持ちを言葉で伝える",
+      "行動で気にかける"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-049",
+    "mode": "ALIGN",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "意見が違ったときは？",
+    "choices": [
+      "自分の考えを伝える",
+      "まず相手の理由を聞く"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-050",
+    "mode": "PREDICT",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "意見が違ったときは？",
+    "choices": [
+      "自分の考えを伝える",
+      "まず相手の理由を聞く"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-051",
+    "mode": "ALIGN",
+    "category": "DEEP",
+    "depth": "BALANCED",
+    "question": "何かを選ぶとき、大切なのは？",
+    "choices": [
+      "後悔しない安心感",
+      "自分で決めた納得感"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-052",
+    "mode": "PREDICT",
+    "category": "DEEP",
+    "depth": "BALANCED",
+    "question": "何かを選ぶとき、大切なのは？",
+    "choices": [
+      "後悔しない安心感",
+      "自分で決めた納得感"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-053",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "頼まれごとが重なったら？",
+    "choices": [
+      "できる範囲を決める",
+      "まず助けられる方法を探す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-054",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "頼まれごとが重なったら？",
+    "choices": [
+      "できる範囲を決める",
+      "まず助けられる方法を探す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-055",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "忙しい時期に守りたいのは？",
+    "choices": [
+      "休む時間",
+      "人と会う時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-056",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "忙しい時期に守りたいのは？",
+    "choices": [
+      "休む時間",
+      "人と会う時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "health"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-057",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "友達に相談するなら？",
+    "choices": [
+      "解決策を一緒に考えてほしい",
+      "まず話を聞いてほしい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-058",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "友達に相談するなら？",
+    "choices": [
+      "解決策を一緒に考えてほしい",
+      "まず話を聞いてほしい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-059",
+    "mode": "ALIGN",
+    "category": "CHAOS",
+    "depth": "BALANCED",
+    "question": "一年だけ違う暮らしをするなら？",
+    "choices": [
+      "海外の街で暮らす",
+      "日本の小さな町で暮らす"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-060",
+    "mode": "PREDICT",
+    "category": "CHAOS",
+    "depth": "BALANCED",
+    "question": "一年だけ違う暮らしをするなら？",
+    "choices": [
+      "海外の街で暮らす",
+      "日本の小さな町で暮らす"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-061",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "時間か、お金か。",
+    "choices": [
+      "出費して時間をつくる",
+      "時間をかけて節約する"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-062",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "時間か、お金か。",
+    "choices": [
+      "出費して時間をつくる",
+      "時間をかけて節約する"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-063",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "始めるタイミングは？",
+    "choices": [
+      "準備が整ってから",
+      "まず小さく始めてみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-064",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "始めるタイミングは？",
+    "choices": [
+      "準備が整ってから",
+      "まず小さく始めてみる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "stability"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-065",
+    "mode": "ALIGN",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "二人の休日は？",
+    "choices": [
+      "一緒に予定を決める",
+      "お互いの自由も残す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-066",
+    "mode": "PREDICT",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "二人の休日は？",
+    "choices": [
+      "一緒に予定を決める",
+      "お互いの自由も残す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-067",
+    "mode": "ALIGN",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "間違えたときに大事なのは？",
+    "choices": [
+      "きちんと振り返る",
+      "次の行動を変える"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-068",
+    "mode": "PREDICT",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "間違えたときに大事なのは？",
+    "choices": [
+      "きちんと振り返る",
+      "次の行動を変える"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-069",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "チームで嬉しいのは？",
+    "choices": [
+      "成果が出たとき",
+      "信頼が深まったとき"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-070",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "チームで嬉しいのは？",
+    "choices": [
+      "成果が出たとき",
+      "信頼が深まったとき"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-071",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "新しいことに挑戦するなら？",
+    "choices": [
+      "得意なことを広げる",
+      "苦手でも気になることを試す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-072",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "新しいことに挑戦するなら？",
+    "choices": [
+      "得意なことを広げる",
+      "苦手でも気になることを試す"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-073",
+    "mode": "ALIGN",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "今の自分に必要なのは？",
+    "choices": [
+      "立ち止まる余白",
+      "踏み出すきっかけ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-074",
+    "mode": "PREDICT",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "今の自分に必要なのは？",
+    "choices": [
+      "立ち止まる余白",
+      "踏み出すきっかけ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "time"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-075",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "数年後に残したいものは？",
+    "choices": [
+      "形になる成果",
+      "人との関係"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-076",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "数年後に残したいものは？",
+    "choices": [
+      "形になる成果",
+      "人との関係"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-077",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "長く続けたい働き方は？",
+    "choices": [
+      "一つの専門を深める",
+      "いろいろな分野をつなぐ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-078",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "長く続けたい働き方は？",
+    "choices": [
+      "一つの専門を深める",
+      "いろいろな分野をつなぐ"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-079",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "満たされたと感じるのは？",
+    "choices": [
+      "自分らしく過ごせた日",
+      "誰かの役に立てた日"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-080",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "満たされたと感じるのは？",
+    "choices": [
+      "自分らしく過ごせた日",
+      "誰かの役に立てた日"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-081",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "お金の安心感は？",
+    "choices": [
+      "選択肢が増えること",
+      "予想外に備えられること"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-082",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "お金の安心感は？",
+    "choices": [
+      "選択肢が増えること",
+      "予想外に備えられること"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-083",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "長く続く友情で大切なのは？",
+    "choices": [
+      "会う時間をつくる",
+      "会えなくても信頼する"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-084",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "長く続く友情で大切なのは？",
+    "choices": [
+      "会う時間をつくる",
+      "会えなくても信頼する"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-085",
+    "mode": "ALIGN",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "関係を育てるなら？",
+    "choices": [
+      "小さな気持ちを伝える",
+      "一緒に新しい体験をする"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-086",
+    "mode": "PREDICT",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "関係を育てるなら？",
+    "choices": [
+      "小さな気持ちを伝える",
+      "一緒に新しい体験をする"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-087",
+    "mode": "ALIGN",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "大切な選択で迷ったら？",
+    "choices": [
+      "自分の納得を優先",
+      "周りへの影響を優先"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-088",
+    "mode": "PREDICT",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "大切な選択で迷ったら？",
+    "choices": [
+      "自分の納得を優先",
+      "周りへの影響を優先"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-089",
+    "mode": "ALIGN",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "頑張りたい理由は？",
+    "choices": [
+      "自分の可能性を試したい",
+      "大切な人といい時間を過ごしたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-090",
+    "mode": "PREDICT",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "頑張りたい理由は？",
+    "choices": [
+      "自分の可能性を試したい",
+      "大切な人といい時間を過ごしたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-091",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "変わっていくことに対して？",
+    "choices": [
+      "変化を楽しみたい",
+      "変わらない軸を持ちたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-092",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "変わっていくことに対して？",
+    "choices": [
+      "変化を楽しみたい",
+      "変わらない軸を持ちたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-093",
+    "mode": "ALIGN",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "成功の実感は？",
+    "choices": [
+      "できることが増えた",
+      "信頼してくれる人が増えた"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-094",
+    "mode": "PREDICT",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "成功の実感は？",
+    "choices": [
+      "できることが増えた",
+      "信頼してくれる人が増えた"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-095",
+    "mode": "ALIGN",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "自分を大切にするとは？",
+    "choices": [
+      "やりたいことを選ぶ",
+      "無理をしないで休む"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-096",
+    "mode": "PREDICT",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "自分を大切にするとは？",
+    "choices": [
+      "やりたいことを選ぶ",
+      "無理をしないで休む"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "freedom"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-097",
+    "mode": "ALIGN",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "意見の違う友人とは？",
+    "choices": [
+      "違いを話して理解したい",
+      "違いを残したまま付き合いたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-098",
+    "mode": "PREDICT",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "意見の違う友人とは？",
+    "choices": [
+      "違いを話して理解したい",
+      "違いを残したまま付き合いたい"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-099",
+    "mode": "ALIGN",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "未来への投資なら？",
+    "choices": [
+      "学ぶことに使う",
+      "暮らしの土台を整える"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-100",
+    "mode": "PREDICT",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "未来への投資なら？",
+    "choices": [
+      "学ぶことに使う",
+      "暮らしの土台を整える"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "curiosity"
+      ],
+      "b": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-101",
+    "mode": "ALIGN",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "大切な人に望むのは？",
+    "choices": [
+      "本音を話せること",
+      "お互いの世界を尊重すること"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-102",
+    "mode": "PREDICT",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "大切な人に望むのは？",
+    "choices": [
+      "本音を話せること",
+      "お互いの世界を尊重すること"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-103",
+    "mode": "ALIGN",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "選択に自信が持てないとき？",
+    "choices": [
+      "相談して考えを整理する",
+      "自分で試して確かめる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-104",
+    "mode": "PREDICT",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "選択に自信が持てないとき？",
+    "choices": [
+      "相談して考えを整理する",
+      "自分で試して確かめる"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "connection"
+      ],
+      "b": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-105",
+    "mode": "ALIGN",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "大切にしたい成長は？",
+    "choices": [
+      "できることが増える",
+      "自分の心地よさを知る"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-106",
+    "mode": "PREDICT",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "大切にしたい成長は？",
+    "choices": [
+      "できることが増える",
+      "自分の心地よさを知る"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "achievement"
+      ],
+      "b": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "align-107",
+    "mode": "ALIGN",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これからの暮らしで増やしたいのは？",
+    "choices": [
+      "新しい体験",
+      "長く付き合える人との時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "predict-108",
+    "mode": "PREDICT",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これからの暮らしで増やしたいのは？",
+    "choices": [
+      "新しい体験",
+      "長く付き合える人との時間"
+    ],
+    "talkPrompt": "選んだ理由を、話せる範囲で聞いてみよう。意外だった答えはあった？",
+    "valueTags": {
+      "a": [
+        "adventure"
+      ],
+      "b": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-109",
+    "mode": "LINE",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "休日の予定、どのくらい決めておきたい？",
+    "choices": [
+      "何も決めない",
+      "全部決める"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-110",
+    "mode": "LINE",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達との集まり、理想の人数は？",
+    "choices": [
+      "少人数",
+      "たくさん"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "connection"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-111",
+    "mode": "LINE",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "初めてのメニューに挑戦する？",
+    "choices": [
+      "いつもの味が安心",
+      "新しい味が好き"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-112",
+    "mode": "LINE",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "新しい趣味を始めたい気持ちは？",
+    "choices": [
+      "今の楽しみで十分",
+      "すぐ何か始めたい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-113",
+    "mode": "LINE",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "作業中の環境は？",
+    "choices": [
+      "完全に静か",
+      "話し声や音がある"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "time"
+      ],
+      "high": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-114",
+    "mode": "LINE",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "旅先で迷ったら？",
+    "choices": [
+      "予定を守る",
+      "寄り道を楽しむ"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-115",
+    "mode": "LINE",
+    "category": "LOVE",
+    "depth": "LIGHT",
+    "question": "一緒に過ごす休日、どちらが近い？",
+    "choices": [
+      "家でのんびり",
+      "外で新しい体験"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "time"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-116",
+    "mode": "LINE",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "買う前にどれくらい調べる？",
+    "choices": [
+      "直感で決める",
+      "じっくり比較"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-117",
+    "mode": "LINE",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "暮らしで優先したいのは？",
+    "choices": [
+      "自由に使える時間",
+      "しっかりした収入"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "time"
+      ],
+      "high": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-118",
+    "mode": "LINE",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "仕事の変化、どのくらい欲しい？",
+    "choices": [
+      "安定が好き",
+      "変化が好き"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-119",
+    "mode": "LINE",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "友達との距離感は？",
+    "choices": [
+      "頻繁に会いたい",
+      "たまに会うのが心地いい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "connection"
+      ],
+      "high": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-120",
+    "mode": "LINE",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "お互いの一人時間は？",
+    "choices": [
+      "一緒の時間が多い方がいい",
+      "一人の時間もたくさん欲しい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "connection"
+      ],
+      "high": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-121",
+    "mode": "LINE",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "今、どちらを育てたい？",
+    "choices": [
+      "生活の安心感",
+      "新しい可能性"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-122",
+    "mode": "LINE",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "ご褒美の使い道は？",
+    "choices": [
+      "物に使いたい",
+      "体験に使いたい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "money"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-123",
+    "mode": "LINE",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "意見の違いがあったら？",
+    "choices": [
+      "自分の軸を守る",
+      "相手に合わせて考える"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-124",
+    "mode": "LINE",
+    "category": "DEEP",
+    "depth": "BALANCED",
+    "question": "頑張る時間と休む時間、今の気分は？",
+    "choices": [
+      "しっかり休みたい",
+      "思い切り頑張りたい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "health"
+      ],
+      "high": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-125",
+    "mode": "LINE",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "今の人生に増やしたいものは？",
+    "choices": [
+      "余白",
+      "挑戦"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "time"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-126",
+    "mode": "LINE",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "働くうえで大切にしたいのは？",
+    "choices": [
+      "自分の納得",
+      "周りへの貢献"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-127",
+    "mode": "LINE",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "変わることへの気持ちは？",
+    "choices": [
+      "落ち着いた土台を保ちたい",
+      "新しい自分を試したい"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "stability"
+      ],
+      "high": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-128",
+    "mode": "LINE",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "人とつながるときの自分は？",
+    "choices": [
+      "聞く時間が好き",
+      "話す時間が好き"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "kindness"
+      ],
+      "high": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-129",
+    "mode": "LINE",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "未来と今なら？",
+    "choices": [
+      "今の体験を大事に",
+      "先の安心を大事に"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "adventure"
+      ],
+      "high": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-130",
+    "mode": "LINE",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "大切な人と共有したいのは？",
+    "choices": [
+      "日常の小さな時間",
+      "特別な新しい体験"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "connection"
+      ],
+      "high": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-131",
+    "mode": "LINE",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "将来の理想は？",
+    "choices": [
+      "場所に縛られない暮らし",
+      "一つの場所で関係を育てる"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "line-132",
+    "mode": "LINE",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "大事な判断で頼るのは？",
+    "choices": [
+      "自分の実感",
+      "人の知恵や経験"
+    ],
+    "talkPrompt": "位置が離れていた人は、どんな場面を思い浮かべた？数字を言うのは自由です。",
+    "valueTags": {
+      "low": [
+        "freedom"
+      ],
+      "high": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-133",
+    "mode": "RANK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "休日に大切にしたいのは？",
+    "choices": [
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "time": [
+        "time"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "health": [
+        "health"
+      ],
+      "creativity": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-134",
+    "mode": "RANK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達との時間で嬉しいのは？",
+    "choices": [
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "connection": [
+        "connection"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "time": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-135",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "今週末、欲しいものは？",
+    "choices": [
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "time": [
+        "time"
+      ],
+      "health": [
+        "health"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-136",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "始めたいことを選ぶ基準は？",
+    "choices": [
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "curiosity": [
+        "curiosity"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-137",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "毎日の暮らしで大切なのは？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "money": [
+        "money"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "freedom": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-138",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "仕事を選ぶなら何を大切にする？",
+    "choices": [
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "achievement": [
+        "achievement"
+      ],
+      "money": [
+        "money"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-139",
+    "mode": "RANK",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "余裕ができたときの使い道は？",
+    "choices": [
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-140",
+    "mode": "RANK",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "大切な人との関係で重視するのは？",
+    "choices": [
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "kindness": [
+        "kindness"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-141",
+    "mode": "RANK",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "これからの人生で大切にしたいのは？",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "stability": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-142",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "数年後の自分に残したいものは？",
+    "choices": [
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-143",
+    "mode": "RANK",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "人と関わるときに大切にしたいのは？",
+    "choices": [
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-144",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "今後の働き方で守りたいものは？",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      }
+    ],
+    "talkPrompt": "自分の1位とグループの1位を比べてみよう。その順位にした理由は？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "money": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-145",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "理想の一週間に、100ポイントを配るなら？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-146",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "これから増やしたい時間に、100ポイントを。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-147",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "今の自分が大切にしたいものへ、100ポイント。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-148",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "心地よい日常のために、100ポイントを分けよう。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-149",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "理想の一週間に、100ポイントを配るなら？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-150",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "これから増やしたい時間に、100ポイントを。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-151",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "今の自分が大切にしたいものへ、100ポイント。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-152",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "心地よい日常のために、100ポイントを分けよう。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-153",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "理想の一週間に、100ポイントを配るなら？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-154",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これから増やしたい時間に、100ポイントを。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-155",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "今の自分が大切にしたいものへ、100ポイント。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-156",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "心地よい日常のために、100ポイントを分けよう。",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番多く配ったものについて話そう。もう10ポイントあったら、どこに足す？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "money": [
+        "money"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "quick-157",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "最近買って、よかったものは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-158",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "今、行ってみたいカフェは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-159",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "一週間お休みがあったら、何をする？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-160",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "人にすすめたい一冊は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-161",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "最近の小さな楽しみは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-162",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "得意な料理、またはつくってみたい料理は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-163",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "一度は訪れてみたい場所は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-164",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "最近知って、面白かったことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-165",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "今の気分に合う一曲は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-166",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "子どものころ好きだった遊びは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-167",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "今日、ちょっとよかったことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-168",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "友達に教えたい、お気に入りのお店は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-169",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "BALANCED",
+    "question": "休日に大事にしている習慣は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-170",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "最近、新しく始めたことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-171",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "忙しいとき、どうやって休んでいる？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-172",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "友達から言われて嬉しかったことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-173",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "BALANCED",
+    "question": "働く中で、少し楽しいと感じる瞬間は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-174",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "今、学んでみたいことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-175",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "最近、自分らしいなと思った選択は？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-176",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "初めての場所で、まずすることは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-177",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "BALANCED",
+    "question": "時間ができたら、もう一度やりたいことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-178",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "人と話すとき、大切にしていることは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-179",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "日常にひとつ足すなら、何を足したい？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-180",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "今の暮らしで気に入っているところは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-181",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "DEEP",
+    "question": "これからの自分に、どんな時間を贈りたい？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-182",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "最近、考え方が少し変わったことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-183",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "自分にとって、心地よい距離感とは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-184",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "長く大切にしているものは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-185",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "DEEP",
+    "question": "今まで続けてきて、よかったことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-186",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "頑張る自分に、どんな声をかけたい？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-187",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "自分らしくいられるのは、どんなとき？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-188",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これから少し大切にしたいことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-189",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "DEEP",
+    "question": "数年後にも続けていたい楽しみは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-190",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "人と過ごす時間から、最近気づいたことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-191",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "今の自分が、昔の自分にすすめたいことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-192",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "今日ここに来て、誰かに聞いてみたいことは？",
+    "choices": [],
+    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-01",
+    "mode": "RANK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "楽しい週末のために優先するのは？",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-01",
+    "mode": "AUCTION",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "楽しい週末のために優先するのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-02",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "ご機嫌な一日に必要なのは？",
+    "choices": [
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-02",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "ご機嫌な一日に必要なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-03",
+    "mode": "RANK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達とのお出かけで大切にしたいのは？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-03",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "友達とのお出かけで大切にしたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-04",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "新しい趣味を選ぶときに大切なのは？",
+    "choices": [
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-04",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "新しい趣味を選ぶときに大切なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-05",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "気持ちよく作業できる条件は？",
+    "choices": [
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-05",
+    "mode": "AUCTION",
+    "category": "WORK",
+    "depth": "LIGHT",
+    "question": "気持ちよく作業できる条件は 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-06",
+    "mode": "RANK",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "ちょっとしたご褒美で満たしたいのは？",
+    "choices": [
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-06",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "LIGHT",
+    "question": "ちょっとしたご褒美で満たしたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-07",
+    "mode": "RANK",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一日だけ自由な時間が増えたら、大切にしたいのは？",
+    "choices": [
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-07",
+    "mode": "AUCTION",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "一日だけ自由な時間が増えたら、大切にしたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-08",
+    "mode": "RANK",
+    "category": "LOVE",
+    "depth": "LIGHT",
+    "question": "大切な人との休日で優先したいのは？",
+    "choices": [
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-08",
+    "mode": "AUCTION",
+    "category": "LOVE",
+    "depth": "LIGHT",
+    "question": "大切な人との休日で優先したいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-09",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "心地よい部屋づくりで大切なのは？",
+    "choices": [
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-09",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "心地よい部屋づくりで大切なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-light-10",
+    "mode": "RANK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "集まりの帰り道に、嬉しいと感じるのは？",
+    "choices": [
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-light-10",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "集まりの帰り道に、嬉しいと感じるのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-01",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "忙しい一週間でも守りたいものは？",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-01",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "忙しい一週間でも守りたいものは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-02",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "理想の職場で優先したいものは？",
+    "choices": [
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-02",
+    "mode": "AUCTION",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "理想の職場で優先したいものは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-03",
+    "mode": "RANK",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "余裕をつくるなら、何から整えたい？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-03",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "BALANCED",
+    "question": "余裕をつくるなら、何から整えたい 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-04",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "来年の自分に増やしてあげたいのは？",
+    "choices": [
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-04",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "来年の自分に増やしてあげたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-05",
+    "mode": "RANK",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "長く付き合う友人との関係で大切なのは？",
+    "choices": [
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-05",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "BALANCED",
+    "question": "長く付き合う友人との関係で大切なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-06",
+    "mode": "RANK",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "一緒に過ごす毎日に必要なのは？",
+    "choices": [
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-06",
+    "mode": "AUCTION",
+    "category": "LOVE",
+    "depth": "BALANCED",
+    "question": "一緒に過ごす毎日に必要なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-07",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "暮らす街を選ぶときに大切なのは？",
+    "choices": [
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-07",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "BALANCED",
+    "question": "暮らす街を選ぶときに大切なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-08",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "新しいことに挑戦する理由は？",
+    "choices": [
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-08",
+    "mode": "AUCTION",
+    "category": "WORK",
+    "depth": "BALANCED",
+    "question": "新しいことに挑戦する理由は 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-09",
+    "mode": "RANK",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "迷ったときの選び方で重視したいのは？",
+    "choices": [
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-09",
+    "mode": "AUCTION",
+    "category": "MORAL",
+    "depth": "BALANCED",
+    "question": "迷ったときの選び方で重視したいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-balanced-10",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "今から身につけたいものを選ぶ基準は？",
+    "choices": [
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-balanced-10",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "BALANCED",
+    "question": "今から身につけたいものを選ぶ基準は 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-01",
+    "mode": "RANK",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "自分らしい暮らしの中心に置きたいのは？",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-01",
+    "mode": "AUCTION",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "自分らしい暮らしの中心に置きたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-02",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これからの10年で育てたいものは？",
+    "choices": [
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-02",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "これからの10年で育てたいものは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-03",
+    "mode": "RANK",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "働く意味として大切にしたいのは？",
+    "choices": [
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-03",
+    "mode": "AUCTION",
+    "category": "WORK",
+    "depth": "DEEP",
+    "question": "働く意味として大切にしたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-04",
+    "mode": "RANK",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "自分を大切にするために必要なのは？",
+    "choices": [
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-04",
+    "mode": "AUCTION",
+    "category": "LIFE",
+    "depth": "DEEP",
+    "question": "自分を大切にするために必要なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-05",
+    "mode": "RANK",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "大切な人と長くつながるために守りたいのは？",
+    "choices": [
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-05",
+    "mode": "AUCTION",
+    "category": "FRIENDS",
+    "depth": "DEEP",
+    "question": "大切な人と長くつながるために守りたいのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-06",
+    "mode": "RANK",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "お金が十分あっても、求め続けるものは？",
+    "choices": [
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "curiosity": [
+        "curiosity"
+      ],
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-06",
+    "mode": "AUCTION",
+    "category": "MONEY",
+    "depth": "DEEP",
+    "question": "お金が十分あっても、求め続けるものは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-07",
+    "mode": "RANK",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "自分の選択に納得するために大切なのは？",
+    "choices": [
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "adventure": [
+        "adventure"
+      ],
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-07",
+    "mode": "AUCTION",
+    "category": "MORAL",
+    "depth": "DEEP",
+    "question": "自分の選択に納得するために大切なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-08",
+    "mode": "RANK",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "お互いの人生を尊重するうえで大事なのは？",
+    "choices": [
+      {
+        "id": "achievement",
+        "label": "達成"
+      },
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "achievement": [
+        "achievement"
+      ],
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-08",
+    "mode": "AUCTION",
+    "category": "LOVE",
+    "depth": "DEEP",
+    "question": "お互いの人生を尊重するうえで大事なのは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-09",
+    "mode": "RANK",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "これから少し手放したくないものは？",
+    "choices": [
+      {
+        "id": "money",
+        "label": "お金"
+      },
+      {
+        "id": "creativity",
+        "label": "創造"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "money": [
+        "money"
+      ],
+      "creativity": [
+        "creativity"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "time": [
+        "time"
+      ],
+      "curiosity": [
+        "curiosity"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-09",
+    "mode": "AUCTION",
+    "category": "DEEP",
+    "depth": "DEEP",
+    "question": "これから少し手放したくないものは 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "rank-extra-deep-10",
+    "mode": "RANK",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "未来の自分が喜びそうな選択は？",
+    "choices": [
+      {
+        "id": "kindness",
+        "label": "思いやり"
+      },
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "kindness": [
+        "kindness"
+      ],
+      "freedom": [
+        "freedom"
+      ],
+      "health": [
+        "health"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "adventure": [
+        "adventure"
+      ]
+    },
+    "enabled": true
+  },
+  {
+    "id": "auction-extra-deep-10",
+    "mode": "AUCTION",
+    "category": "FUTURE",
+    "depth": "DEEP",
+    "question": "未来の自分が喜びそうな選択は 100ポイントで表してみよう。",
+    "choices": [
+      {
+        "id": "freedom",
+        "label": "自由"
+      },
+      {
+        "id": "connection",
+        "label": "人とのつながり"
+      },
+      {
+        "id": "health",
+        "label": "健康"
+      },
+      {
+        "id": "time",
+        "label": "余白・時間"
+      },
+      {
+        "id": "stability",
+        "label": "安心"
+      },
+      {
+        "id": "curiosity",
+        "label": "学び"
+      },
+      {
+        "id": "adventure",
+        "label": "新しい体験"
+      },
+      {
+        "id": "achievement",
+        "label": "達成"
+      }
+    ],
+    "talkPrompt": "一番大切にしたものと、その理由を話してみよう。違う選び方に、なるほどと思った？",
+    "valueTags": {
+      "freedom": [
+        "freedom"
+      ],
+      "connection": [
+        "connection"
+      ],
+      "health": [
+        "health"
+      ],
+      "time": [
+        "time"
+      ],
+      "stability": [
+        "stability"
+      ],
+      "curiosity": [
+        "curiosity"
+      ],
+      "adventure": [
+        "adventure"
+      ],
+      "achievement": [
+        "achievement"
+      ]
+    },
+    "enabled": true
+  }
+]

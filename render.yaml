@@ -1,0 +1,16 @@
+# Free-tier deployment. No paid disk or paid instance is requested.
+services:
+  - type: web
+    name: unity-mix
+    runtime: docker
+    plan: free
+    repo: https://github.com/nyokki519/Unity-Web
+    branch: deploy/unity-mix
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    numInstances: 1
+    envVars:
+      - key: EPHEMERAL_STORAGE
+        value: "true"
+      - key: DATA_PATH
+        value: /app/.data/rooms.sqlite
