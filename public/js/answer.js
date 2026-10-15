@@ -1,9 +1,13 @@
+import {sliderScale,formatScaleValue,scaleEndpoint} from './scale.js';
 import {el,button,field} from './dom.js';
 const binary=(q,draft,submit)=>{
  const wrap=el('div','binary-options');['a','b'].forEach((key,i)=>{const choice=button('',()=>{draft.value=key;wrap.querySelectorAll('button').forEach(b=>{const chosen=b.dataset.choice===key;b.classList.toggle('selected',chosen);b.setAttribute('aria-pressed',String(chosen));b.lastElementChild.textContent=chosen?'✓':'↗';});submit.disabled=false;},'choice-button');choice.dataset.choice=key;choice.setAttribute('aria-pressed',String(draft.value===key));choice.classList.toggle('selected',draft.value===key);choice.append(el('span','choice-letter serif',key.toUpperCase()),el('span','',q.choices[i]),el('span','choice-check',draft.value===key?'✓':'↗'));wrap.append(choice);});submit.disabled=!['a','b'].includes(draft.value);return wrap;
 };
 const line=(q,draft,submit)=>{
- const wrap=el('div','line-input'),value=el('output','line-value serif',String(draft.value??50));const slider=el('input');slider.type='range';slider.min='0';slider.max='100';slider.step='1';slider.value=draft.value??50;slider.setAttribute('aria-label',q.question);draft.value=Number(slider.value);const labels=el('div','line-labels');labels.append(el('span','',`0 / ${q.choices[0]}`),el('span','',`100 / ${q.choices[1]}`));slider.addEventListener('input',()=>{draft.value=Number(slider.value);value.textContent=slider.value;});wrap.append(value,slider,labels,el('p','small muted','位置は匿名で公開されます。自分の数字を話すかは自由です。'));submit.disabled=false;return wrap;
+ const s=sliderScale(q),wrap=el('div','line-input'),value=el('output','line-value serif');
+ const slider=el('input');slider.type='range';slider.min=String(s.min);slider.max=String(s.max);slider.step=String(s.step);slider.value=String(draft.value??(s.min+Math.round((s.max-s.min)/s.step/2)*s.step));slider.setAttribute('aria-label',q.question||q.prompt);draft.value=Number(slider.value);
+ const update=()=>{draft.value=Number(slider.value);value.textContent=formatScaleValue(q,draft.value);slider.setAttribute('aria-valuetext',value.textContent);};
+ const labels=el('div','line-labels');labels.append(el('span','',scaleEndpoint(q,0)),el('span','',scaleEndpoint(q,1)));slider.addEventListener('input',update);update();wrap.append(value,slider,labels,el('p','small muted','位置は匿名で公開されます。自分の数字を話すかは自由です。'));submit.disabled=false;return wrap;
 };
 const rank=(q,draft,submit)=>{
  const wrap=el('div','rank-input');draft.value??=q.choices.map(c=>c.id);const list=el('ol','rank-list');

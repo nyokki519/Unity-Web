@@ -28,7 +28,8 @@ with sync_playwright() as p:
   expect(host.locator('.game-top .eyebrow')).to_contain_text(mode,timeout=6000);expect(guest.locator('#submit-answer')).to_be_visible();
   for page,variant in [(host,0),(guest,1)]:
    if mode in ['ALIGN','PREDICT']:page.locator('.choice-button').nth(variant).click()
-   elif mode=='LINE':page.locator('input[type=range]').fill('15' if not variant else '85')
+   elif mode=='LINE':
+    slider=page.locator('input[type=range]');slider.fill(slider.get_attribute('min') if not variant else slider.get_attribute('max'))
    elif mode=='RANK':
     # Accessible reordering controls; pointer drag is checked separately below.
     page.locator('.rank-controls button').nth(1).click()

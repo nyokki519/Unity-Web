@@ -1,0 +1,13 @@
+import {formatScaleValue,scaleEndpoint} from '../public/js/scale.js';
+import test from 'node:test';import assert from 'node:assert/strict';
+import LINE from '../src/modes/line.js';import {validateEventQuestion} from '../src/events/catalog.js';import {fixture} from './events-helper.js';
+const q={id:'numeric-people',game:'BOUNDARY',question:'友達との集まり、理想の人数は？',prompt:'友達との集まり、理想の人数は？',talkPrompt:'その人数で何をしたい？',difficulty:'気軽',choices:['2人','15人'],scale:{min:2,max:15,step:1,unit:'人'},valueTags:{low:[],high:[]}};
+test('numeric slider validates its actual unit range instead of 0–100',()=>{assert.equal(LINE.validate(q,2),2);assert.equal(LINE.validate(q,15),15);for(const bad of [1,16,50,2.5,'5'])assert.throws(()=>LINE.validate(q,bad));});
+test('numeric results preserve fractional means and domain metadata',()=>{const result=LINE.result(q,{participants:['a','b'],answers:{a:{value:2},b:{value:15}}},{a:{},b:{}});assert.equal(result.average,8.5);assert.deepEqual(result.scale,q.scale);assert.deepEqual(result.positions,[2,15]);});
+test('LINE scores normalize numeric units before value aggregation',()=>{const tagged={...q,valueTags:{low:['freedom'],high:['connection']}};assert.deepEqual(LINE.scores(tagged,2),{freedom:100,connection:0});assert.deepEqual(LINE.scores(tagged,15),{freedom:0,connection:100});});
+test('event question edits retain validated scale metadata',()=>{assert.deepEqual(validateEventQuestion(q).scale,q.scale);for(const scale of [{min:10,max:2,step:1,unit:'人'},{min:0,max:30,step:0,unit:'分'},{min:0,max:30,step:1,unit:''}])assert.throws(()=>validateEventQuestion({...q,scale}));});
+test('numeric event question round-trip projects units and rejects outside-domain submissions',()=>{const f=fixture(6,'BOUNDARY');try{f.cmd('event_question',{question:q});f.cmd('event_begin',{questionId:q.id});assert.deepEqual(f.engine.view(f.room,f.host.playerId).event.question.scale,q.scale);assert.throws(()=>f.cmd('event_answer',{value:90}),e=>e.code==='INVALID_ANSWER');f.cmd('event_answer',{value:2});f.cmd('event_answer',{value:15},f.sessions[1]);f.cmd('event_close');f.cmd('event_reveal');assert.equal(f.room.event.result.average,8.5);}finally{f.store.close();}});
+
+test('decimal units are not rounded away in inputs and endpoints',()=>{const decimal={choices:['ゼロ','上限'],scale:{min:0,max:0.05,step:0.01,unit:'km'}};assert.equal(formatScaleValue(decimal,0.03),'0.03km');assert.equal(scaleEndpoint(decimal,1),'0.05km / 上限');});
+
+test('numeric averages retain precision for editable decimal scales',()=>{const decimal={...q,scale:{min:0,max:0.05,step:0.01,unit:'km'}};const result=LINE.result(decimal,{participants:['a','b'],answers:{a:{value:0.01},b:{value:0.02}}},{a:{},b:{}});assert.equal(result.average,0.015);});

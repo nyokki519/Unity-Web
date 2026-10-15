@@ -12,5 +12,5 @@ export function toast(text){const n=$('#toast');n.textContent=text;n.hidden=fals
 export function modal(heading,...nodes){$('#modal-title').textContent=heading;$('#modal-body').replaceChildren(...nodes);if(!$('#modal').open)$('#modal').showModal();}
 export async function copy(text){try{await navigator.clipboard.writeText(text);toast('コピーしました。');}catch{const box=input('copy','',text);box.readOnly=true;modal('この文字列をコピーしてください',box);box.select();}}
 export function labeledSelect(label,options,value,onChange){const n=el('select');for(const [id,text]of options){const o=el('option','',text);o.value=id;n.append(o);}n.value=value;if(onChange)n.addEventListener('change',()=>onChange(n.value));return field(label,n);}
-export const modeNames={MIX:'おまかせ MIX',ALIGN:'価値観の二択',PREDICT:'あの人ならどっち？',LINE:'0〜100の距離',RANK:'大切なものの順位',AUCTION:'人生100ポイント',QUICK:'話して、知る'};
+export const modeNames={MIX:'おまかせ MIX',ALIGN:'価値観の二択',PREDICT:'あの人ならどっち？',LINE:'数字で見る違い',RANK:'大切なものの順位',AUCTION:'100ポイントの配分',QUICK:'話して、知る'};
 export const modeDescription={MIX:'6つのモードを、少しずつ。',ALIGN:'選んだ理由に、その人らしさ。',PREDICT:'イメージと、本当の答えの違い。',LINE:'同じ問いでも、感じ方はさまざま。',RANK:'あなたの1位は、みんなの何位？',AUCTION:'限られた100ポイントを、何に使う？',QUICK:'答えよりも、そこから広がる会話。'};

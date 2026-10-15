@@ -42,7 +42,8 @@ with sync_playwright() as pw:
      if key not in ['QUEST','CAFE'] and i==n-1:continue
      if key in ['WHO','STORY'] and i>1:action(page,'今回はパス');continue
      if key=='VALUES':page.locator('.rank-controls button').nth(1).click()
-     elif key=='BOUNDARY':page.locator('input[type=range]').fill(str(i*6))
+     elif key=='BOUNDARY':
+      slider=page.locator('input[type=range]');minimum=float(slider.get_attribute('min'));maximum=float(slider.get_attribute('max'));step=float(slider.get_attribute('step'));value=minimum+round((maximum-minimum)*i/(n-1)/step)*step;slider.fill(format(value,'.10g'))
      elif key=='WHO':page.locator('textarea[name=event-text]').fill(f'匿名の答え{i}：週末はカフェで本を読む')
      elif key=='STORY':
       page.locator('input[name=story-title]').fill(f'新しい街での出会い{i}');page.locator('textarea[name=event-text]').fill('あいうえお'*120)

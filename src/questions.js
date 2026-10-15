@@ -1,3 +1,4 @@
+import {validateScale} from '../public/js/scale.js';
 import { readFileSync } from 'node:fs';
 import { randomInt } from 'node:crypto';
 import { modes } from './modes/index.js';
@@ -7,7 +8,7 @@ export function validateQuestions() {
   const ids = new Set();
   for (const q of questions) {
     if (ids.has(q.id) || !q.id || !modes[q.mode] || !catalog.categories[q.category] || !['LIGHT','BALANCED','DEEP'].includes(q.depth) || !q.question || !Array.isArray(q.choices) || !q.talkPrompt || !q.valueTags) throw new Error(`Invalid question: ${q.id}`);
-    ids.add(q.id);
+    ids.add(q.id);if(q.scale!==undefined){if(q.mode!=='LINE')throw new Error('Scale on non-LINE question '+q.id);validateScale(q.scale);}
     if (['ALIGN','PREDICT','LINE'].includes(q.mode) && q.choices.length !== 2) throw new Error(`Two choices needed: ${q.id}`);
     if (['RANK','AUCTION'].includes(q.mode) && (q.choices.length < 3 || new Set(q.choices.map(c=>c.id)).size!==q.choices.length)) throw new Error(`Invalid items: ${q.id}`);
     for (const tag of Object.values(q.valueTags).flat()) if (!catalog.values[tag]) throw new Error(`Invalid value tag: ${tag}`);
