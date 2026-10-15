@@ -11,10 +11,13 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "node --test test/*.test.js",
-    "check:questions": "node tools/check-questions.js"
+    "check:questions": "node tools/check-questions.js",
+    "vendor:three": "node tools/vendor-three.js",
+    "test:abyss": "node --test test/abyss-*.test.js"
   },
   "dependencies": {
     "qrcode": "1.5.4",
+    "three": "0.180.0",
     "ws": "8.22.0"
   }
 }
