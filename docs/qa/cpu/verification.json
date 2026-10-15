@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-15",
+  "nodeTests": {
+    "total": 76,
+    "passed": 76,
+    "failed": 0
+  },
+  "questionValidation": {
+    "legacy": 252,
+    "events": 90
+  },
+  "cpuEventTotals": [
+    2,
+    6,
+    15
+  ],
+  "realBrowser": {
+    "humans": 1,
+    "cpu": 5,
+    "legacyModes": 6,
+    "eventGames": 6,
+    "eventRounds": 2,
+    "widths": [
+      375,
+      390,
+      414
+    ]
+  },
+  "humanOnlyControls": "passed: real deadline, editor, moderation, reload, emoji, reduced motion",
+  "unverified": [
+    "Physical iPhone Safari",
+    "Production deployment Live status"
+  ]
+}
