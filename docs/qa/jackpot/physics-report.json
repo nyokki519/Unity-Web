@@ -1,0 +1,86 @@
+{
+  "ownedFiles": [
+    "public/js/bonus/config.js",
+    "public/js/bonus/physics.js",
+    "public/js/bonus/model.js",
+    "test/bonus-physics.test.js"
+  ],
+  "contract": "docs/bonus/CONTRACT.md preserved; additional model.fireInterval seconds (.45 practice, 1.5 normal/hard)",
+  "exports": {
+    "config": [
+      "WIDTH",
+      "HEIGHT",
+      "BALL_RADIUS",
+      "FIXED_DT",
+      "DIFFICULTIES",
+      "getBoard"
+    ],
+    "physics": [
+      "sweepCircle",
+      "moveBoard",
+      "moveTray"
+    ],
+    "model": [
+      "createGame"
+    ]
+  },
+  "tdd": "Observed missing modules RED, scatter preservation RED, distinct tray geometry RED, transfer canvas bounds RED, then GREEN; power-zero/finite-stock and stalled/nonfinite recovery RED then GREEN",
+  "tests": {
+    "focused": "18/18 passing",
+    "fullSuite": "npm test94/94 passing",
+    "coverage": [
+      "swept pins/walls/holes",
+      "all tray debug win/miss",
+      "natural seeds",
+      "equivalent dt chunks",
+      "100-ball ledger, drain, event bounds",
+      "pause, quit, rate, 12 active cap",
+      "debug protection",
+      "visible transfer bounds"
+    ]
+  },
+  "naturalSeeds": {
+    "practice": {
+      "seed": "cafe",
+      "jackpotSeconds": 6.2666666667
+    },
+    "normal": {
+      "seed": "2",
+      "jackpotSeconds": 6.15
+    },
+    "hard": {
+      "seed": "26",
+      "jackpotSeconds": 6.2833333333
+    }
+  },
+  "seedSample": "300 independent first shots (cafe and numeric1..299), power55; practice298, normal35, hard9 jackpots; indicative deterministic sample, not probability promise",
+  "defaultCafe100BallSessions": {
+    "practice": {
+      "elapsedSeconds": 67.95,
+      "jackpots": 99,
+      "lost": 1
+    },
+    "normal": {
+      "elapsedSeconds": 155.3333333,
+      "jackpots": 8,
+      "lost": 92
+    },
+    "hard": {
+      "elapsedSeconds": 151.5666667,
+      "jackpots": 1,
+      "lost": 99
+    }
+  },
+  "physics": "Fixed dt1/240, swept solid pin/wall and visible hole geometry; bowl center spring2.8 and drag1 apply uniformly to all balls; only RNG is initial launch velocity and tangent scatter; no win draws or desired hole attraction",
+  "transfers": "0.6 seconds. Source transferFromX/Y; dest(cx+96,cy+(entryOffset||0)*scaleY). x=lerp(sourceX,destX,t)+sin(pi*t)*amplitude; y=lerp(sourceY,destY,t). amplitude110 for stages2/3; stage1 min(110,400-max(sourceX,destX)). Renderer agent informed.",
+  "limits": [
+    "Balls do not collide with each other",
+    "Tray rim uses radial contact projection, pins/walls/holes use swept contacts",
+    "Bowl spring is deliberately visible-topology center gravity, not a target-hole force",
+    "Debug win placement guarantees the chosen stage only; subsequent stages remain natural",
+    "Auto-fire fastest normal/hard session is about2.5 minutes plus player aiming time"
+  ],
+  "recovery": "Ball age>60sec or nonfinite x/y/vx/vy: retire once as lost, recover event with visible Japanese explanatory message; never awards jackpots. Root adding visible rules.",
+  "initialBalls": "Finite floor clamped0..1000; NaN/Infinity/-Infinity fallback100",
+  "power": "Finite numeric power clamped0..100, including legitimate zero; nonfinite fallback55"
+}

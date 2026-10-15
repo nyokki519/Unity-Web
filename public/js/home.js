@@ -1,5 +1,5 @@
 import {el,button,title,eyebrow,field,input,labeledSelect,modeNames,modeDescription,logo} from './dom.js';
-export function home({create,join,resume,session}){
+export function home({create,join,resume,session,bonus}){
  const screen=el('div','home screen');const intro=el('div','home-copy');
  intro.append(eyebrow('UNITY / A LITTLE CLOSER, EVERY ROUND'),el('p','display-name','UNITY MIX.'),el('h1','','遊ぶほど、\nその人が見えてくる。'),el('p','home-description','同じ問いに、違う答え。\nその理由を聞く時間が、いちばん面白い。'));
  const actions=el('div','actions');actions.append(button('ルームをつくる ↗',create),button('ルームに参加する',join,'button secondary'));intro.append(actions,el('p','small muted','2〜24人 · 登録不要 · それぞれのスマートフォンで'));
@@ -9,7 +9,7 @@ export function home({create,join,resume,session}){
  const options=el('div','sample-options');options.append(el('p','','A　いつもの一杯'),el('p','','B　初めてのメニュー'));card.append(options,el('p','small muted','答えは、みんなが選んでから。'));visual.append(card,el('p','home-caption','違いが見つかる。会話がはじまる。'),logo());
  const modes=el('section','home-modes');modes.append(eyebrow('SIX WAYS TO MEET EACH OTHER'),el('h2','','知り方も、いろいろ。'));
  const grid=el('div','mode-overview');Object.keys(modeNames).filter(k=>k!=='MIX').forEach((key,i)=>{const row=el('div');row.append(el('span','small muted',`0${i+1}`),el('h3','serif',key==='QUICK'?'Quick Mix':key[0]+key.slice(1).toLowerCase()),el('p','',modeDescription[key]));grid.append(row);});modes.append(grid);
- screen.append(intro,visual,modes);return screen;
+ const extra=el('section','home-bonus');extra.append(eyebrow('おまけ / ひとりで遊ぶ'),el('h2','','琥珀の三段塔'),el('p','small muted','100球で、三つの皿の大穴を狙う。登録・ルーム不要のカフェ遊技台。'),button('大穴チャレンジで遊ぶ',bonus));screen.append(intro,visual,modes,extra);return screen;
 }
 export function setup({catalog,submit,back,initial={}}){
  const screen=el('div','screen narrow');screen.append(button('← ホーム','function'===typeof back?back:()=>{},'quiet-button'),title('CREATE A ROOM','今日のMIXを、つくろう。','初めてなら、LIGHTとおまかせMIXがおすすめです。'));
