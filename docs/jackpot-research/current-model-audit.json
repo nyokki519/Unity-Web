@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "sourceCommit": "4dd581ea33a879779450404d3c38ec5fb833c848",
+  "machineMeasurement": false,
+  "modes": [
+    {
+      "mode": "easy",
+      "units": "legacy logical units; mm conversion not established",
+      "ballDiameter": 11,
+      "boardToBall": [
+        90.9091,
+        145.4545
+      ],
+      "pinDiameterRange": [
+        10,
+        12.7
+      ],
+      "minimumPinSurfaceGap": 17.8776,
+      "entryToBall": 22.7273,
+      "fireInterval": 0.1,
+      "trays": [
+        {
+          "diameter": 220,
+          "bowlToBall": 20,
+          "holes": 3,
+          "rpm": 12,
+          "winHoleDiameter": 48.4,
+          "winHoleToBall": 4.4
+        },
+        {
+          "diameter": 180,
+          "bowlToBall": 16.3636,
+          "holes": 3,
+          "rpm": -16,
+          "winHoleDiameter": 39.6,
+          "winHoleToBall": 3.6
+        },
+        {
+          "diameter": 150,
+          "bowlToBall": 13.6364,
+          "holes": 3,
+          "rpm": 20,
+          "winHoleDiameter": 33,
+          "winHoleToBall": 3
+        }
+      ]
+    },
+    {
+      "mode": "normal",
+      "units": "legacy logical units; mm conversion not established",
+      "ballDiameter": 11,
+      "boardToBall": [
+        90.9091,
+        145.4545
+      ],
+      "pinDiameterRange": [
+        10,
+        12.7
+      ],
+      "minimumPinSurfaceGap": 17.8776,
+      "entryToBall": 14.0909,
+      "fireInterval": 0.1,
+      "trays": [
+        {
+          "diameter": 220,
+          "bowlToBall": 20,
+          "holes": 3,
+          "rpm": 12,
+          "winHoleDiameter": 36.784,
+          "winHoleToBall": 3.344
+        },
+        {
+          "diameter": 180,
+          "bowlToBall": 16.3636,
+          "holes": 3,
+          "rpm": -16,
+          "winHoleDiameter": 30.096,
+          "winHoleToBall": 2.736
+        },
+        {
+          "diameter": 150,
+          "bowlToBall": 13.6364,
+          "holes": 3,
+          "rpm": 20,
+          "winHoleDiameter": 25.08,
+          "winHoleToBall": 2.28
+        }
+      ]
+    },
+    {
+      "mode": "abyss",
+      "units": "legacy logical units; mm conversion not established",
+      "ballDiameter": 11,
+      "boardToBall": [
+        90.9091,
+        145.4545
+      ],
+      "pinDiameterRange": [
+        10,
+        12.7
+      ],
+      "minimumPinSurfaceGap": 17.8776,
+      "entryToBall": 8.6364,
+      "fireInterval": 0.1,
+      "trays": [
+        {
+          "diameter": 220,
+          "bowlToBall": 20,
+          "holes": 3,
+          "rpm": 12,
+          "winHoleDiameter": 26.62,
+          "winHoleToBall": 2.42
+        },
+        {
+          "diameter": 180,
+          "bowlToBall": 16.3636,
+          "holes": 3,
+          "rpm": -16,
+          "winHoleDiameter": 21.78,
+          "winHoleToBall": 1.98
+        },
+        {
+          "diameter": 150,
+          "bowlToBall": 13.6364,
+          "holes": 3,
+          "rpm": 20,
+          "winHoleDiameter": 18.15,
+          "winHoleToBall": 1.65
+        }
+      ]
+    }
+  ],
+  "highSpeedHoleCrossing": {
+    "speed": 20000,
+    "accepted": true,
+    "win": true,
+    "verticalDynamicsEvaluated": false
+  },
+  "launch": [
+    {
+      "power": 1,
+      "firstBoard": {
+        "time": 0.25,
+        "x": 858.9144,
+        "y": 1155.222,
+        "zone": "board"
+      }
+    },
+    {
+      "power": 55,
+      "firstBoard": {
+        "time": 0.19583333333333333,
+        "x": 858.2119,
+        "y": 1142.8077,
+        "zone": "board"
+      }
+    },
+    {
+      "power": 100,
+      "firstBoard": {
+        "time": 0.1625,
+        "x": 859.2951,
+        "y": 1143.0759,
+        "zone": "board"
+      }
+    }
+  ]
+}
