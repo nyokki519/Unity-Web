@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "nodeTests": {
+    "passed": 94,
+    "failed": 0
+  },
+  "questionValidation": {
+    "legacy": 252,
+    "events": 90
+  },
+  "lifecycleBrowserTests": {
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      "catalog failure standalone",
+      "delayed navigation",
+      "keyboard release after focus change",
+      "cleanup/reentry"
+    ]
+  },
+  "bonusBrowser": "passed:375/390/414px; hold, burst, keyboard, audio toggle, reduced motion, resize, natural3-stage jackpot in all difficulties, eachstage win/miss, empty/result/retry",
+  "legacyBrowser": "passed:7 widths,6modes,2contexts,reload,share,replay,host takeover",
+  "cpuBrowser": "passed:all12modes,1human+5CPU,3widths,CPU6/15lobby counts/reload",
+  "limitations": [
+    "Native OS/tab background events not reproduced in headless Chromium; blur-handler injection tested",
+    "Physical iPhone Safari untested",
+    "Actual speaker audibility untested",
+    "Production Live status unverified",
+    "2D bowls and independent balls; no ball-ball collisions"
+  ]
+}

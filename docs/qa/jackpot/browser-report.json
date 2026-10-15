@@ -1,0 +1,43 @@
+{
+  "widths": [
+    {
+      "width": 375,
+      "overflow": false,
+      "hold": true,
+      "pause": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "hold": true,
+      "pause": true
+    },
+    {
+      "width": 414,
+      "overflow": false,
+      "hold": true,
+      "pause": true
+    }
+  ],
+  "errors": [],
+  "roomRequests": [],
+  "keyboardBurstLifecycleEventResizeAudio": true,
+  "naturalWins": [
+    {
+      "mode": "practice",
+      "seed": "cafe",
+      "allThreeStages": true
+    },
+    {
+      "mode": "normal",
+      "seed": "2",
+      "allThreeStages": true
+    },
+    {
+      "mode": "hard",
+      "seed": "26",
+      "allThreeStages": true
+    }
+  ],
+  "debugFlow": true
+}
