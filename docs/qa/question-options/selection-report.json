@@ -1,0 +1,23 @@
+[
+  {
+    "width": 375,
+    "overlap": false,
+    "longText": true,
+    "cardTap": true,
+    "keyboard": true
+  },
+  {
+    "width": 390,
+    "overlap": false,
+    "longText": true,
+    "cardTap": true,
+    "keyboard": true
+  },
+  {
+    "width": 414,
+    "overlap": false,
+    "longText": true,
+    "cardTap": true,
+    "keyboard": true
+  }
+]

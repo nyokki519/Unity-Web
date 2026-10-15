@@ -1,0 +1,30 @@
+[
+  {
+    "game": "LINE",
+    "values": [
+      2,
+      15
+    ],
+    "unit": "人",
+    "average": "8.5人",
+    "positions": [
+      "0%",
+      "100%"
+    ],
+    "contexts": 2
+  },
+  {
+    "game": "BOUNDARY",
+    "values": [
+      15,
+      30
+    ],
+    "unit": "分",
+    "average": "22.5分",
+    "positions": [
+      "50%",
+      "100%"
+    ],
+    "contexts": 2
+  }
+]

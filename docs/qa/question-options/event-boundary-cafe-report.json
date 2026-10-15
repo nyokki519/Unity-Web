@@ -1,0 +1,27 @@
+{
+  "runs": [
+    {
+      "people": 6,
+      "games": [
+        "BOUNDARY",
+        "CAFE"
+      ],
+      "roundsPerGame": 2,
+      "width": 390,
+      "hostTakeover": true,
+      "errors": []
+    },
+    {
+      "people": 15,
+      "games": [
+        "BOUNDARY",
+        "CAFE"
+      ],
+      "roundsPerGame": 2,
+      "width": 390,
+      "hostTakeover": true,
+      "errors": []
+    }
+  ],
+  "errors": []
+}

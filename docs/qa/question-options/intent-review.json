@@ -1,0 +1,4508 @@
+[
+  {
+    "id": "align-001",
+    "subject": "休日の朝",
+    "intent": "朝食と散歩の過ごし方の好み",
+    "conversation": "朝を気持ちよく始める過ごし方",
+    "decision": "changed",
+    "reason": "朝食と散歩はいずれも穏やかな活動。散歩だけを新しい体験とみなさない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-002",
+    "subject": "休日の朝",
+    "intent": "朝食と散歩の過ごし方の好み",
+    "conversation": "朝を気持ちよく始める過ごし方",
+    "decision": "changed",
+    "reason": "朝食と散歩はいずれも穏やかな活動。散歩だけを新しい体験とみなさない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-003",
+    "subject": "カフェの注文",
+    "intent": "慣れた飲み物と未知のメニューの選好",
+    "conversation": "いつもの注文と新しい注文を選ぶきっかけ",
+    "decision": "retained",
+    "reason": "安心と新しいものを試す好みが直接対応する。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-004",
+    "subject": "カフェの注文",
+    "intent": "慣れた飲み物と未知のメニューの選好",
+    "conversation": "いつもの注文と新しい注文を選ぶきっかけ",
+    "decision": "retained",
+    "reason": "安心と新しいものを試す好みが直接対応する。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-005",
+    "subject": "友達の集まり",
+    "intent": "少人数と大人数の集まりの好み",
+    "conversation": "人数で変わる会話の楽しさ",
+    "decision": "changed",
+    "reason": "どちらも人とのつながり。人数だけから冒険心を判定しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-006",
+    "subject": "友達の集まり",
+    "intent": "少人数と大人数の集まりの好み",
+    "conversation": "人数で変わる会話の楽しさ",
+    "decision": "changed",
+    "reason": "どちらも人とのつながり。人数だけから冒険心を判定しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-007",
+    "subject": "空き時間",
+    "intent": "一人で休むか誰かと話すか",
+    "conversation": "気分転換に必要な時間",
+    "decision": "retained",
+    "reason": "選択肢が同じ一時間の使い道として比較できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-008",
+    "subject": "空き時間",
+    "intent": "一人で休むか誰かと話すか",
+    "conversation": "気分転換に必要な時間",
+    "decision": "retained",
+    "reason": "選択肢が同じ一時間の使い道として比較できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-009",
+    "subject": "習いたい技能",
+    "intent": "料理と楽器への興味",
+    "conversation": "挑戦したい料理や楽器",
+    "decision": "changed",
+    "reason": "料理は健康目的とは限らず楽器だけが創造とも限らない。好みとして残す。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-010",
+    "subject": "習いたい技能",
+    "intent": "料理と楽器への興味",
+    "conversation": "挑戦したい料理や楽器",
+    "decision": "changed",
+    "reason": "料理は健康目的とは限らず楽器だけが創造とも限らない。好みとして残す。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-011",
+    "subject": "買い物",
+    "intent": "定番の長期利用と新作の楽しみ",
+    "conversation": "長く愛用したい物と新作の魅力",
+    "decision": "changed",
+    "reason": "価格条件は揃っている。新作購入は学びを意味しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-012",
+    "subject": "買い物",
+    "intent": "定番の長期利用と新作の楽しみ",
+    "conversation": "長く愛用したい物と新作の魅力",
+    "decision": "changed",
+    "reason": "価格条件は揃っている。新作購入は学びを意味しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-013",
+    "subject": "作業場所",
+    "intent": "静寂と適度な音の好み",
+    "conversation": "集中できる環境",
+    "decision": "changed",
+    "reason": "音環境と安心・創造性の関係は回答から断定できない。場所の種類も揃える。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-014",
+    "subject": "作業場所",
+    "intent": "静寂と適度な音の好み",
+    "conversation": "集中できる環境",
+    "decision": "changed",
+    "reason": "音環境と安心・創造性の関係は回答から断定できない。場所の種類も揃える。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-015",
+    "subject": "一日の道具",
+    "intent": "瞬間移動と一日の再体験の魅力",
+    "conversation": "道具を使ってしたいこと",
+    "decision": "changed",
+    "reason": "瞬間移動の目的は新体験とは限らない。時間の再利用は時間に対応する。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-016",
+    "subject": "一日の道具",
+    "intent": "瞬間移動と一日の再体験の魅力",
+    "conversation": "道具を使ってしたいこと",
+    "decision": "changed",
+    "reason": "瞬間移動の目的は新体験とは限らない。時間の再利用は時間に対応する。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-017",
+    "subject": "旅行の楽しみ",
+    "intent": "食と景色の魅力",
+    "conversation": "旅先で印象に残った食や景色",
+    "decision": "changed",
+    "reason": "おいしさを健康と同一視しない。未知の景色は新しい体験に対応。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-018",
+    "subject": "旅行の楽しみ",
+    "intent": "食と景色の魅力",
+    "conversation": "旅先で印象に残った食や景色",
+    "decision": "changed",
+    "reason": "おいしさを健康と同一視しない。未知の景色は新しい体験に対応。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-019",
+    "subject": "待ち時間",
+    "intent": "読書と近所歩きの選好",
+    "conversation": "短い待ち時間の使い方",
+    "decision": "changed",
+    "reason": "状況文を問いにし、読書も散歩も目的不明の価値タグを除く。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-020",
+    "subject": "待ち時間",
+    "intent": "読書と近所歩きの選好",
+    "conversation": "短い待ち時間の使い方",
+    "decision": "changed",
+    "reason": "状況文を問いにし、読書も散歩も目的不明の価値タグを除く。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-021",
+    "subject": "大切な人との時間",
+    "intent": "共同制作と会話の好み",
+    "conversation": "一緒につくりたいものや話したいこと",
+    "decision": "retained",
+    "reason": "双方具体的な行動で選びやすい。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-022",
+    "subject": "大切な人との時間",
+    "intent": "共同制作と会話の好み",
+    "conversation": "一緒につくりたいものや話したいこと",
+    "decision": "retained",
+    "reason": "双方具体的な行動で選びやすい。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-023",
+    "subject": "人へのおすすめ",
+    "intent": "自分の好きと相手の好みの重視",
+    "conversation": "おすすめを選ぶときの手がかり",
+    "decision": "changed",
+    "reason": "自分の好みをすすめることだけで自由を推測しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-024",
+    "subject": "人へのおすすめ",
+    "intent": "自分の好きと相手の好みの重視",
+    "conversation": "おすすめを選ぶときの手がかり",
+    "decision": "changed",
+    "reason": "自分の好みをすすめることだけで自由を推測しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-025",
+    "subject": "部屋の家具",
+    "intent": "本棚とソファへの好み",
+    "conversation": "家に欲しい居場所",
+    "decision": "changed",
+    "reason": "家具の用途は人それぞれで、購入だけから学びや余白は推測できない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-026",
+    "subject": "部屋の家具",
+    "intent": "本棚とソファへの好み",
+    "conversation": "家に欲しい居場所",
+    "decision": "changed",
+    "reason": "家具の用途は人それぞれで、購入だけから学びや余白は推測できない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-027",
+    "subject": "一週間の住まい",
+    "intent": "海と森の景観の好み",
+    "conversation": "そこで過ごしたい一日",
+    "decision": "changed",
+    "reason": "海と森はどちらも落ち着く場合も冒険になる場合もある。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-028",
+    "subject": "一週間の住まい",
+    "intent": "海と森の景観の好み",
+    "conversation": "そこで過ごしたい一日",
+    "decision": "changed",
+    "reason": "海と森はどちらも落ち着く場合も冒険になる場合もある。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-029",
+    "subject": "趣味の始め方",
+    "intent": "一人で試すか友達と始めるか",
+    "conversation": "始めやすい誘い方や試し方",
+    "decision": "retained",
+    "reason": "自分のペースと共同体験の比較として自然。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-030",
+    "subject": "趣味の始め方",
+    "intent": "一人で試すか友達と始めるか",
+    "conversation": "始めやすい誘い方や試し方",
+    "decision": "retained",
+    "reason": "自分のペースと共同体験の比較として自然。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-031",
+    "subject": "ご褒美",
+    "intent": "物と体験への支出の好み",
+    "conversation": "欲しい物とやりたい体験",
+    "decision": "changed",
+    "reason": "物を買うことはお金を重視することとは異なる。体験も新しいとは限らない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-032",
+    "subject": "ご褒美",
+    "intent": "物と体験への支出の好み",
+    "conversation": "欲しい物とやりたい体験",
+    "decision": "changed",
+    "reason": "物を買うことはお金を重視することとは異なる。体験も新しいとは限らない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-033",
+    "subject": "発想の場",
+    "intent": "一人の思考と対話の発想しやすさ",
+    "conversation": "実際にひらめいた場面",
+    "decision": "changed",
+    "reason": "どちらも創造の方法で、片方だけ創造性を加点しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-034",
+    "subject": "発想の場",
+    "intent": "一人の思考と対話の発想しやすさ",
+    "conversation": "実際にひらめいた場面",
+    "decision": "changed",
+    "reason": "どちらも創造の方法で、片方だけ創造性を加点しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-035",
+    "subject": "気分転換",
+    "intent": "新しい店と馴染みの店での新注文",
+    "conversation": "どこまで変えると楽しいか",
+    "decision": "changed",
+    "reason": "問いを補い、双方の新規性を認めて定番側への安心の断定を外す。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-036",
+    "subject": "気分転換",
+    "intent": "新しい店と馴染みの店での新注文",
+    "conversation": "どこまで変えると楽しいか",
+    "decision": "changed",
+    "reason": "問いを補い、双方の新規性を認めて定番側への安心の断定を外す。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-037",
+    "subject": "仕事と収入",
+    "intent": "仕事への興味と収入の交換条件",
+    "conversation": "働き方で譲れない条件",
+    "decision": "changed",
+    "reason": "好きな仕事が達成志向とは限らない。収入条件の文型を揃える。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-038",
+    "subject": "仕事と収入",
+    "intent": "仕事への興味と収入の交換条件",
+    "conversation": "働き方で譲れない条件",
+    "decision": "changed",
+    "reason": "好きな仕事が達成志向とは限らない。収入条件の文型を揃える。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-039",
+    "subject": "一週間の予定",
+    "intent": "予定と余白の好み",
+    "conversation": "予定がある安心と空白の楽しさ",
+    "decision": "retained",
+    "reason": "同じ期間について両端を比較できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-040",
+    "subject": "一週間の予定",
+    "intent": "予定と余白の好み",
+    "conversation": "予定がある安心と空白の楽しさ",
+    "decision": "retained",
+    "reason": "同じ期間について両端を比較できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-041",
+    "subject": "友達との旅行",
+    "intent": "同行中心と自由時間を含む旅",
+    "conversation": "自由時間にしたいこと",
+    "decision": "changed",
+    "reason": "全行程同行の極端さを弱め、二つの旅程方針を対等にする。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "predict-042",
+    "subject": "友達との旅行",
+    "intent": "同行中心と自由時間を含む旅",
+    "conversation": "自由時間にしたいこと",
+    "decision": "changed",
+    "reason": "全行程同行の極端さを弱め、二つの旅程方針を対等にする。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "align-043",
+    "subject": "余裕資金",
+    "intent": "貯蓄と今の体験の優先度",
+    "conversation": "今だからしたいことと備えたいこと",
+    "decision": "changed",
+    "reason": "金銭の余裕という条件を明示する。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "predict-044",
+    "subject": "余裕資金",
+    "intent": "貯蓄と今の体験の優先度",
+    "conversation": "今だからしたいことと備えたいこと",
+    "decision": "changed",
+    "reason": "金銭の余裕という条件を明示する。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "align-045",
+    "subject": "住む場所",
+    "intent": "利便性と心地よさの重視",
+    "conversation": "便利さと心地よさの具体例",
+    "decision": "changed",
+    "reason": "便利さは必ずしも時間、心地よさは必ずしも健康ではない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-046",
+    "subject": "住む場所",
+    "intent": "利便性と心地よさの重視",
+    "conversation": "便利さと心地よさの具体例",
+    "decision": "changed",
+    "reason": "便利さは必ずしも時間、心地よさは必ずしも健康ではない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-047",
+    "subject": "愛情の受け取り方",
+    "intent": "言葉と行動での気遣いの好み",
+    "conversation": "嬉しい言葉や具体的な気遣い",
+    "decision": "changed",
+    "reason": "受け取る側を問う文と選択肢の主語を一致させる。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "predict-048",
+    "subject": "愛情の受け取り方",
+    "intent": "言葉と行動での気遣いの好み",
+    "conversation": "嬉しい言葉や具体的な気遣い",
+    "decision": "changed",
+    "reason": "受け取る側を問う文と選択肢の主語を一致させる。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "align-049",
+    "subject": "意見の不一致",
+    "intent": "伝えることと聞くことの最初の一歩",
+    "conversation": "意見が違うときの話し始め方",
+    "decision": "changed",
+    "reason": "両方実行できるので最初の行動を問う。伝えることを自由と断定しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-050",
+    "subject": "意見の不一致",
+    "intent": "伝えることと聞くことの最初の一歩",
+    "conversation": "意見が違うときの話し始め方",
+    "decision": "changed",
+    "reason": "両方実行できるので最初の行動を問う。伝えることを自由と断定しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-051",
+    "subject": "選択の基準",
+    "intent": "安心と自己決定の納得",
+    "conversation": "選択してよかったと思う理由",
+    "decision": "retained",
+    "reason": "安心と自己決定の価値が明確で自然。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-052",
+    "subject": "選択の基準",
+    "intent": "安心と自己決定の納得",
+    "conversation": "選択してよかったと思う理由",
+    "decision": "retained",
+    "reason": "安心と自己決定の価値が明確で自然。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-053",
+    "subject": "頼まれごとの重なり",
+    "intent": "引き受ける範囲と支援方法の最初の検討",
+    "conversation": "無理のない助け方",
+    "decision": "changed",
+    "reason": "両方できるため最初に考えることを明示。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "predict-054",
+    "subject": "頼まれごとの重なり",
+    "intent": "引き受ける範囲と支援方法の最初の検討",
+    "conversation": "無理のない助け方",
+    "decision": "changed",
+    "reason": "両方できるため最初に考えることを明示。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "align-055",
+    "subject": "繁忙期の時間",
+    "intent": "休息と人に会う時間の優先",
+    "conversation": "忙しいときの回復方法",
+    "decision": "retained",
+    "reason": "どちらも具体的で時間という軸が一致。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-056",
+    "subject": "繁忙期の時間",
+    "intent": "休息と人に会う時間の優先",
+    "conversation": "忙しいときの回復方法",
+    "decision": "retained",
+    "reason": "どちらも具体的で時間という軸が一致。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-057",
+    "subject": "相談への期待",
+    "intent": "解決策と傾聴の希望",
+    "conversation": "相談するときに助かる関わり方",
+    "decision": "changed",
+    "reason": "解決策の希望を達成志向と断定しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-058",
+    "subject": "相談への期待",
+    "intent": "解決策と傾聴の希望",
+    "conversation": "相談するときに助かる関わり方",
+    "decision": "changed",
+    "reason": "解決策の希望を達成志向と断定しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-059",
+    "subject": "一年の暮らし",
+    "intent": "海外の街と日本の小さな町の好み",
+    "conversation": "一年をどんなふうに過ごすか",
+    "decision": "changed",
+    "reason": "居住地だけで冒険と安心を分けない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-060",
+    "subject": "一年の暮らし",
+    "intent": "海外の街と日本の小さな町の好み",
+    "conversation": "一年をどんなふうに過ごすか",
+    "decision": "changed",
+    "reason": "居住地だけで冒険と安心を分けない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-061",
+    "subject": "時間と節約",
+    "intent": "支出で時間を確保するか時間をかけて節約するか",
+    "conversation": "時間を買いたい場面",
+    "decision": "changed",
+    "reason": "選択肢が交換条件を示すので問いも明確にする。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "predict-062",
+    "subject": "時間と節約",
+    "intent": "支出で時間を確保するか時間をかけて節約するか",
+    "conversation": "時間を買いたい場面",
+    "decision": "changed",
+    "reason": "選択肢が交換条件を示すので問いも明確にする。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "align-063",
+    "subject": "着手の時期",
+    "intent": "準備と小さな試行の重視",
+    "conversation": "始めやすくなる準備や一歩",
+    "decision": "retained",
+    "reason": "行動の違いが具体的で自然。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-064",
+    "subject": "着手の時期",
+    "intent": "準備と小さな試行の重視",
+    "conversation": "始めやすくなる準備や一歩",
+    "decision": "retained",
+    "reason": "行動の違いが具体的で自然。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-065",
+    "subject": "二人の休日",
+    "intent": "共有予定と自由な時間の配分",
+    "conversation": "二人で予定を決めるときの工夫",
+    "decision": "changed",
+    "reason": "予定を一緒に決めることと自由は両立するため時間配分で揃える。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "predict-066",
+    "subject": "二人の休日",
+    "intent": "共有予定と自由な時間の配分",
+    "conversation": "二人で予定を決めるときの工夫",
+    "decision": "changed",
+    "reason": "予定を一緒に決めることと自由は両立するため時間配分で揃える。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "align-067",
+    "subject": "間違いからの学び",
+    "intent": "振り返りと次の実践への重視",
+    "conversation": "次に生かせた経験",
+    "decision": "retained",
+    "reason": "同時に大事でも優先の比較として理解できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-068",
+    "subject": "間違いからの学び",
+    "intent": "振り返りと次の実践への重視",
+    "conversation": "次に生かせた経験",
+    "decision": "retained",
+    "reason": "同時に大事でも優先の比較として理解できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-069",
+    "subject": "チームの喜び",
+    "intent": "成果と信頼の喜び",
+    "conversation": "チームで嬉しかった瞬間",
+    "decision": "retained",
+    "reason": "どちらも肯定的な経験で価値も明確。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-070",
+    "subject": "チームの喜び",
+    "intent": "成果と信頼の喜び",
+    "conversation": "チームで嬉しかった瞬間",
+    "decision": "retained",
+    "reason": "どちらも肯定的な経験で価値も明確。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-071",
+    "subject": "挑戦の方向",
+    "intent": "得意分野の拡張と苦手でも気になる分野",
+    "conversation": "挑戦したい具体的なこと",
+    "decision": "changed",
+    "reason": "得意分野を広げるだけで達成を断定しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-072",
+    "subject": "挑戦の方向",
+    "intent": "得意分野の拡張と苦手でも気になる分野",
+    "conversation": "挑戦したい具体的なこと",
+    "decision": "changed",
+    "reason": "得意分野を広げるだけで達成を断定しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-073",
+    "subject": "今必要なもの",
+    "intent": "休止と前進のきっかけ",
+    "conversation": "今の気分に合う支え",
+    "decision": "retained",
+    "reason": "両端とも簡潔で対等な比喩。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-074",
+    "subject": "今必要なもの",
+    "intent": "休止と前進のきっかけ",
+    "conversation": "今の気分に合う支え",
+    "decision": "retained",
+    "reason": "両端とも簡潔で対等な比喩。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-075",
+    "subject": "数年後に残すもの",
+    "intent": "成果と関係の重視",
+    "conversation": "残したい成果や関係",
+    "decision": "retained",
+    "reason": "成果と人との関係が明確に対応。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-076",
+    "subject": "数年後に残すもの",
+    "intent": "成果と関係の重視",
+    "conversation": "残したい成果や関係",
+    "decision": "retained",
+    "reason": "成果と人との関係が明確に対応。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-077",
+    "subject": "専門と横断",
+    "intent": "一分野の深化と分野間の接続",
+    "conversation": "深めたい分野やつなげたい分野",
+    "decision": "changed",
+    "reason": "どちらも学びになり一方を達成と決めない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-078",
+    "subject": "専門と横断",
+    "intent": "一分野の深化と分野間の接続",
+    "conversation": "深めたい分野やつなげたい分野",
+    "decision": "changed",
+    "reason": "どちらも学びになり一方を達成と決めない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-079",
+    "subject": "充足感",
+    "intent": "自分らしさと他者への貢献",
+    "conversation": "満たされた日の具体例",
+    "decision": "retained",
+    "reason": "双方肯定的で自然に比較できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-080",
+    "subject": "充足感",
+    "intent": "自分らしさと他者への貢献",
+    "conversation": "満たされた日の具体例",
+    "decision": "retained",
+    "reason": "双方肯定的で自然に比較できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-081",
+    "subject": "お金による安心",
+    "intent": "選択肢と不測への備え",
+    "conversation": "お金があると安心する場面",
+    "decision": "retained",
+    "reason": "金銭の量でなく安心の理由を問えている。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-082",
+    "subject": "お金による安心",
+    "intent": "選択肢と不測への備え",
+    "conversation": "お金があると安心する場面",
+    "decision": "retained",
+    "reason": "金銭の量でなく安心の理由を問えている。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-083",
+    "subject": "友情の維持",
+    "intent": "会う行動と会えない時の信頼",
+    "conversation": "会えない期間のつながり方",
+    "decision": "changed",
+    "reason": "会わずに信頼することを安心という一般価値に置き換えない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-084",
+    "subject": "友情の維持",
+    "intent": "会う行動と会えない時の信頼",
+    "conversation": "会えない期間のつながり方",
+    "decision": "changed",
+    "reason": "会わずに信頼することを安心という一般価値に置き換えない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-085",
+    "subject": "関係を育てる方法",
+    "intent": "気持ちの共有と新体験",
+    "conversation": "これから一緒にしてみたいこと",
+    "decision": "retained",
+    "reason": "両方とも関係を育てる具体策。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-086",
+    "subject": "関係を育てる方法",
+    "intent": "気持ちの共有と新体験",
+    "conversation": "これから一緒にしてみたいこと",
+    "decision": "retained",
+    "reason": "両方とも関係を育てる具体策。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-087",
+    "subject": "重要な選択",
+    "intent": "自己納得と周囲への影響",
+    "conversation": "周りへの配慮と自分の納得の調整",
+    "decision": "retained",
+    "reason": "両方肯定的で価値の葛藤が明確。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-088",
+    "subject": "重要な選択",
+    "intent": "自己納得と周囲への影響",
+    "conversation": "周りへの配慮と自分の納得の調整",
+    "decision": "retained",
+    "reason": "両方肯定的で価値の葛藤が明確。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-089",
+    "subject": "努力の動機",
+    "intent": "可能性への挑戦と大切な人との時間",
+    "conversation": "努力の先に欲しいもの",
+    "decision": "retained",
+    "reason": "動機として同じ粒度で答えられる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-090",
+    "subject": "努力の動機",
+    "intent": "可能性への挑戦と大切な人との時間",
+    "conversation": "努力の先に欲しいもの",
+    "decision": "retained",
+    "reason": "動機として同じ粒度で答えられる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-091",
+    "subject": "変化への姿勢",
+    "intent": "変化を楽しむことと軸の維持",
+    "conversation": "残したい軸と変えたいもの",
+    "decision": "changed",
+    "reason": "文を問いとして自然に整える。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "predict-092",
+    "subject": "変化への姿勢",
+    "intent": "変化を楽しむことと軸の維持",
+    "conversation": "残したい軸と変えたいもの",
+    "decision": "changed",
+    "reason": "文を問いとして自然に整える。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "align-093",
+    "subject": "成功の実感",
+    "intent": "技能の増加と信頼の増加",
+    "conversation": "成功を実感した小さな出来事",
+    "decision": "retained",
+    "reason": "両方とも増えたものとして揃う。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-094",
+    "subject": "成功の実感",
+    "intent": "技能の増加と信頼の増加",
+    "conversation": "成功を実感した小さな出来事",
+    "decision": "retained",
+    "reason": "両方とも増えたものとして揃う。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-095",
+    "subject": "自分の大切にし方",
+    "intent": "希望の選択と無理のない休息",
+    "conversation": "自分のために選びたい行動",
+    "decision": "retained",
+    "reason": "二つの肯定的な行動で比較できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-096",
+    "subject": "自分の大切にし方",
+    "intent": "希望の選択と無理のない休息",
+    "conversation": "自分のために選びたい行動",
+    "decision": "retained",
+    "reason": "二つの肯定的な行動で比較できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-097",
+    "subject": "意見の違う友人",
+    "intent": "違いの対話と違いを保つ関係",
+    "conversation": "違っていても付き合える理由",
+    "decision": "changed",
+    "reason": "違いを残すことだけで思いやりは推測しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-098",
+    "subject": "意見の違う友人",
+    "intent": "違いの対話と違いを保つ関係",
+    "conversation": "違っていても付き合える理由",
+    "decision": "changed",
+    "reason": "違いを残すことだけで思いやりは推測しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-099",
+    "subject": "未来への投資",
+    "intent": "学びと生活基盤への支出",
+    "conversation": "今から準備したいこと",
+    "decision": "retained",
+    "reason": "学びと暮らしの安心が明確。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-100",
+    "subject": "未来への投資",
+    "intent": "学びと生活基盤への支出",
+    "conversation": "今から準備したいこと",
+    "decision": "retained",
+    "reason": "学びと暮らしの安心が明確。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-101",
+    "subject": "大切な人への希望",
+    "intent": "本音の共有と互いの世界の尊重",
+    "conversation": "話せる関係と自由の保ち方",
+    "decision": "retained",
+    "reason": "双方肯定的で自然。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-102",
+    "subject": "大切な人への希望",
+    "intent": "本音の共有と互いの世界の尊重",
+    "conversation": "話せる関係と自由の保ち方",
+    "decision": "retained",
+    "reason": "双方肯定的で自然。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-103",
+    "subject": "迷うときの確かめ方",
+    "intent": "相談と試行の好み",
+    "conversation": "相談しやすい人や試して確かめたいこと",
+    "decision": "retained",
+    "reason": "関係を使う方法と自分で学ぶ方法が具体的。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-104",
+    "subject": "迷うときの確かめ方",
+    "intent": "相談と試行の好み",
+    "conversation": "相談しやすい人や試して確かめたいこと",
+    "decision": "retained",
+    "reason": "関係を使う方法と自分で学ぶ方法が具体的。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "align-105",
+    "subject": "成長の実感",
+    "intent": "技能向上と心地よさの理解",
+    "conversation": "自分を知ったと思えた経験",
+    "decision": "changed",
+    "reason": "心地よさの理解を健康と断定しない。",
+    "mode": "ALIGN",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "predict-106",
+    "subject": "成長の実感",
+    "intent": "技能向上と心地よさの理解",
+    "conversation": "自分を知ったと思えた経験",
+    "decision": "changed",
+    "reason": "心地よさの理解を健康と断定しない。",
+    "mode": "PREDICT",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "align-107",
+    "subject": "これからの暮らし",
+    "intent": "新体験と長い人間関係の時間",
+    "conversation": "これから増やしたい具体的な時間",
+    "decision": "retained",
+    "reason": "同じ暮らしに増やすものとして比較できる。",
+    "mode": "ALIGN",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "predict-108",
+    "subject": "これからの暮らし",
+    "intent": "新体験と長い人間関係の時間",
+    "conversation": "これから増やしたい具体的な時間",
+    "decision": "retained",
+    "reason": "同じ暮らしに増やすものとして比較できる。",
+    "mode": "PREDICT",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-109",
+    "subject": "休日の計画",
+    "intent": "予定の事前決定の程度",
+    "conversation": "決めておきたい予定と余白",
+    "decision": "retained",
+    "reason": "何も決めないから全部決めるまで連続量として自然。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-110",
+    "subject": "集まりの人数",
+    "intent": "友達の集まりで心地よい人数",
+    "conversation": "その人数で楽しみたい集まり方",
+    "decision": "changed",
+    "reason": "人数を尋ねるため2〜15人の実人数にする。大人数を冒険心と解釈しない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "scale",
+      "talkPrompt",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-111",
+    "subject": "メニューの新規性",
+    "intent": "いつもの味から新しい味への選好",
+    "conversation": "新しい味に挑戦したくなるとき",
+    "decision": "retained",
+    "reason": "安心と新しい味の探索という連続軸が通る。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-112",
+    "subject": "新しい趣味への意欲",
+    "intent": "現状の満足からすぐ始めたい意欲",
+    "conversation": "始めたい趣味と今の楽しみ",
+    "decision": "changed",
+    "reason": "今の趣味への満足は安定価値の証拠ではない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-113",
+    "subject": "作業の音環境",
+    "intent": "静かな場所から音のある場所の好み",
+    "conversation": "集中しやすい音や環境",
+    "decision": "changed",
+    "reason": "音量の好みから時間や対人志向を推測しない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-114",
+    "subject": "旅先の寄り道",
+    "intent": "予定優先と寄り道への柔軟さ",
+    "conversation": "予定を変えたくなる寄り道",
+    "decision": "changed",
+    "reason": "道に迷う意味との曖昧さを解消する。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "line-115",
+    "subject": "一緒の休日",
+    "intent": "家で休むことと外で新体験の好み",
+    "conversation": "一緒に過ごしてみたい休日",
+    "decision": "retained",
+    "reason": "両端が具体的な過ごし方で自然。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-116",
+    "subject": "購入前の検討",
+    "intent": "即決から比較検討の程度",
+    "conversation": "買い物で調べたくなること",
+    "decision": "changed",
+    "reason": "直感を自由、比較を安心と断定しない。問いに合う調査量の両端に揃える。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-117",
+    "subject": "時間と収入",
+    "intent": "自由時間と収入の優先度",
+    "conversation": "今の暮らしに必要な余裕",
+    "decision": "retained",
+    "reason": "時間と収入の比較が明確。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-118",
+    "subject": "仕事の変化",
+    "intent": "変化の少ない仕事から多い仕事の好み",
+    "conversation": "望んでいる仕事の変化",
+    "decision": "changed",
+    "reason": "変化量を問うので両端を同じ量の表現にする。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "choices"
+    ]
+  },
+  {
+    "id": "line-119",
+    "subject": "友達と会う頻度",
+    "intent": "頻繁な交流から時々の交流の好み",
+    "conversation": "心地よい会うペース",
+    "decision": "changed",
+    "reason": "会う頻度が少ないだけで自由志向とは言えない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-120",
+    "subject": "二人と一人の時間",
+    "intent": "共に過ごす時間と一人の時間の配分",
+    "conversation": "一人の時間にしたいこと",
+    "decision": "retained",
+    "reason": "両端は時間配分として自然。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-121",
+    "subject": "今育てたいもの",
+    "intent": "暮らしの安心と新しい可能性",
+    "conversation": "今の可能性とは何か",
+    "decision": "changed",
+    "reason": "新しい可能性は学びとは限らない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-122",
+    "subject": "ご褒美への支出",
+    "intent": "物と体験への支出の好み",
+    "conversation": "手に入れたい物や体験",
+    "decision": "changed",
+    "reason": "物への支出はお金の重視ではなく、体験も新しいとは限らない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-123",
+    "subject": "意見への向き合い方",
+    "intent": "自分の軸と相手の視点の重視",
+    "conversation": "意見を聞いて変わったこと",
+    "decision": "changed",
+    "reason": "相手に合わせることを善としないよう、相手の視点を取り入れるという対等な表現にする。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-124",
+    "subject": "休息と努力",
+    "intent": "今の休みたい気分と頑張りたい気分",
+    "conversation": "どんな休みや頑張りが必要か",
+    "decision": "retained",
+    "reason": "今の気分に限定され答えやすい。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-125",
+    "subject": "今増やしたいもの",
+    "intent": "余白と挑戦の希望",
+    "conversation": "具体的に増やしたい余白や挑戦",
+    "decision": "retained",
+    "reason": "簡潔な両端が同じ問いに答えている。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-126",
+    "subject": "働く価値",
+    "intent": "自己納得と周囲への貢献",
+    "conversation": "納得できる仕事と貢献の形",
+    "decision": "retained",
+    "reason": "双方肯定的な仕事の価値で自然。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-127",
+    "subject": "変化への希望",
+    "intent": "土台の維持と新しい自分の試行",
+    "conversation": "守りたい土台と試したいこと",
+    "decision": "retained",
+    "reason": "両端とも前向きで比較可能。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-128",
+    "subject": "会話の役割",
+    "intent": "聞く時間と話す時間の好み",
+    "conversation": "聞くとき話すときの楽しさ",
+    "decision": "changed",
+    "reason": "傾聴の好みを思いやり、発話の好みをつながりと断定しない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-129",
+    "subject": "今と未来",
+    "intent": "現在の体験と将来の備えの重視",
+    "conversation": "今したい体験と先に備えたいこと",
+    "decision": "changed",
+    "reason": "現在の体験を新体験と断定しない。質問も選択肢と同じ順に揃える。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "question",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "line-130",
+    "subject": "大切な人との共有",
+    "intent": "日常時間と特別な新体験の重視",
+    "conversation": "共有したい日常や新体験",
+    "decision": "retained",
+    "reason": "二つの共有の形として自然。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-131",
+    "subject": "将来の住まい方",
+    "intent": "移動の自由と定住して育つ関係",
+    "conversation": "暮らしたい場所と育てたい関係",
+    "decision": "retained",
+    "reason": "自由とつながりの違いを具体的に問える。",
+    "mode": "LINE",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "line-132",
+    "subject": "判断の手がかり",
+    "intent": "実感と他者の経験への依拠",
+    "conversation": "判断の助けになった知恵",
+    "decision": "changed",
+    "reason": "自分の実感を使うだけで自由志向とは限らない。",
+    "mode": "LINE",
+    "changed": true,
+    "changedFields": [
+      "valueTags"
+    ]
+  },
+  {
+    "id": "rank-133",
+    "subject": "休日の過ごし方",
+    "intent": "休息・交流・探索・運動・制作の優先度",
+    "conversation": "一位にした過ごし方は、最近足りている？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「休息・交流・探索・運動・制作の優先度」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-134",
+    "subject": "友達と過ごす喜び",
+    "intent": "共有・配慮・新鮮さ・共同制作・気楽さ",
+    "conversation": "最近そんな嬉しさを感じたのは、どんな場面？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「共有・配慮・新鮮さ・共同制作・気楽さ」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-135",
+    "subject": "今週末に補いたい時間",
+    "intent": "休息・体調・知識・交流・体験の不足",
+    "conversation": "一位をかなえるなら、週末に何をしてみたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「休息・体調・知識・交流・体験の不足」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-136",
+    "subject": "新しく始める活動",
+    "intent": "知識・制作・体験・仲間・健康の動機",
+    "conversation": "一位の基準に合う活動を、一つ挙げるなら？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「知識・制作・体験・仲間・健康の動機」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-137",
+    "subject": "日常生活の優先事項",
+    "intent": "健康・時間・家計・関係・裁量",
+    "conversation": "忙しい日も守りたい一位は、どう確保している？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「健康・時間・家計・関係・裁量」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-138",
+    "subject": "仕事選び",
+    "intent": "達成・収入・時間・継続性・成長",
+    "conversation": "一位の条件があれば、どんな働き方をしたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「達成・収入・時間・継続性・成長」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-139",
+    "subject": "余剰資金の使途",
+    "intent": "備え・学習・経験・健康・交流",
+    "conversation": "一位に少額だけ使うなら、何にする？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「備え・学習・経験・健康・交流」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-140",
+    "subject": "大切な人との関係",
+    "intent": "配慮・対話・自立・信頼・新鮮さ",
+    "conversation": "一位を大切にするために、お互いに何ができそう？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「配慮・対話・自立・信頼・新鮮さ」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-141",
+    "subject": "人生の軸",
+    "intent": "自己決定・関係・健康・達成・安心",
+    "conversation": "今の一位は、以前から変わった？話せる範囲で聞かせて。",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「自己決定・関係・健康・達成・安心」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-142",
+    "subject": "数年後に残す蓄積",
+    "intent": "知識・成果・関係・基盤・経験",
+    "conversation": "一位を残すために、今できる小さなことは？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「知識・成果・関係・基盤・経験」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-143",
+    "subject": "人と関わる姿勢",
+    "intent": "配慮・尊重・親密さ・信頼・理解",
+    "conversation": "一位の姿勢を感じるのは、相手のどんな行動？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「配慮・尊重・親密さ・信頼・理解」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-144",
+    "subject": "今後も守る働き方",
+    "intent": "裁量・健康・余白・達成・収入",
+    "conversation": "一位を守るために、変えたい働き方はある？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「裁量・健康・余白・達成・収入」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-145",
+    "subject": "来週の過ごし方",
+    "intent": "活動に使いたい時間の配分",
+    "conversation": "一番時間を使いたい活動は、来週いつできそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「活動に使いたい時間の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-146",
+    "subject": "来月始める習慣",
+    "intent": "新しい習慣に向ける力の配分",
+    "conversation": "一番力を入れたい習慣を、小さく始めるなら？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「新しい習慣に向ける力の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-147",
+    "subject": "臨時収入の使途",
+    "intent": "少額の余裕資金の配分",
+    "conversation": "一番多く使いたい先で、具体的に何を選ぶ？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「少額の余裕資金の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "auction-148",
+    "subject": "友達との一日",
+    "intent": "一緒に過ごす活動の配分",
+    "conversation": "一番多く配った過ごし方を、友達にどう提案したい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「一緒に過ごす活動の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-149",
+    "subject": "暮らしを整える一か月",
+    "intent": "生活改善の取り組み配分",
+    "conversation": "一番力を入れたいことが整うと、毎日はどう変わりそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「生活改善の取り組み配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-150",
+    "subject": "一年の成長計画",
+    "intent": "育てたい力への配分",
+    "conversation": "一番育てたい力を、一年後どう使っていたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「育てたい力への配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-151",
+    "subject": "毎月の余裕資金",
+    "intent": "継続的な支出と貯蓄の配分",
+    "conversation": "一番多く配った使い道は、今の家計でも増やせそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「継続的な支出と貯蓄の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt",
+      "valueTags"
+    ]
+  },
+  {
+    "id": "auction-152",
+    "subject": "友人関係の育て方",
+    "intent": "友人との関わりに使う力の配分",
+    "conversation": "一番大切にした関わり方は、友人に伝わっていると思う？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「友人との関わりに使う力の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-153",
+    "subject": "生活の立て直し",
+    "intent": "変化の後に守る生活基盤の配分",
+    "conversation": "一番守りたいものがあると、何が支えになりそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「変化の後に守る生活基盤の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-154",
+    "subject": "十年後への投資",
+    "intent": "長期的に育てる資源への配分",
+    "conversation": "十年後、一番多く配ったものが育っていたらどう感じそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「長期的に育てる資源への配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-155",
+    "subject": "お金の役割",
+    "intent": "経済的余裕から得たいものの配分",
+    "conversation": "一番多く配ったものは、お金以外でも近づけそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「経済的余裕から得たいものの配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-156",
+    "subject": "長く続く友情への取り組み",
+    "intent": "関係を支える行動の配分",
+    "conversation": "一番多く配った行動を、これからどう続けたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「関係を支える行動の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quick-157",
+    "subject": "買ってよかった物",
+    "intent": "最近の購入で満足した物",
+    "conversation": "買ってよかった理由",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な買ってよかった物を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-158",
+    "subject": "行きたいカフェ",
+    "intent": "興味のあるカフェ",
+    "conversation": "その店で過ごしたい時間",
+    "decision": "changed",
+    "reason": "店名を知らなくても好みのカフェ像で参加できる補助を加える。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "question"
+    ]
+  },
+  {
+    "id": "quick-159",
+    "subject": "一週間の休暇",
+    "intent": "まとまった休みにしたいこと",
+    "conversation": "理想の一週間",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な一週間の休暇を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-160",
+    "subject": "すすめたい本",
+    "intent": "他人に紹介したい一冊",
+    "conversation": "心に残ったところ",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的なすすめたい本を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-161",
+    "subject": "小さな楽しみ",
+    "intent": "最近の日常の楽しみ",
+    "conversation": "楽しみにしている瞬間",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な小さな楽しみを尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-162",
+    "subject": "料理",
+    "intent": "得意な料理や試したい料理",
+    "conversation": "その料理の好きなところ",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な料理を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-163",
+    "subject": "訪れたい場所",
+    "intent": "一度行きたい場所",
+    "conversation": "そこで見たいものやしたいこと",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な訪れたい場所を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-164",
+    "subject": "最近の発見",
+    "intent": "知って面白かったこと",
+    "conversation": "面白いと思った理由",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な最近の発見を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-165",
+    "subject": "気分に合う曲",
+    "intent": "現在の気分を表す曲",
+    "conversation": "その曲を聴きたい場面",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な気分に合う曲を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-166",
+    "subject": "子どものころの遊び",
+    "intent": "幼少期の遊びの記憶",
+    "conversation": "遊びの楽しさや思い出",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な子どものころの遊びを尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-167",
+    "subject": "今日の良いこと",
+    "intent": "今日の小さな良い出来事",
+    "conversation": "嬉しかった瞬間",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な今日の良いことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-168",
+    "subject": "お気に入りの店",
+    "intent": "友達に紹介したい店",
+    "conversation": "すすめたいポイント",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的なお気に入りの店を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-169",
+    "subject": "休日の習慣",
+    "intent": "休みに大切にする行動",
+    "conversation": "習慣にしている理由",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な休日の習慣を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-170",
+    "subject": "新しく始めたこと",
+    "intent": "最近の新しい取り組み",
+    "conversation": "始めたきっかけ",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な新しく始めたことを尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-171",
+    "subject": "忙しいときの休み方",
+    "intent": "繁忙時の休息の工夫",
+    "conversation": "短い休みで回復する方法",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な忙しいときの休み方を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-172",
+    "subject": "嬉しかった言葉",
+    "intent": "友達の言葉で嬉しかった経験",
+    "conversation": "その言葉が嬉しかった理由",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な嬉しかった言葉を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-173",
+    "subject": "仕事の楽しさ",
+    "intent": "働く中の小さな楽しみ",
+    "conversation": "楽しいと感じた具体的な瞬間",
+    "decision": "changed",
+    "reason": "就業していない参加者も日々の役割について答えられるようにする。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category",
+      "question"
+    ]
+  },
+  {
+    "id": "quick-174",
+    "subject": "学びたいこと",
+    "intent": "今興味のある学び",
+    "conversation": "学んでみたい理由",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な学びたいことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-175",
+    "subject": "自分らしい選択",
+    "intent": "最近自分らしいと感じた選択",
+    "conversation": "その選択に表れた好み",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な自分らしい選択を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-176",
+    "subject": "初めての場所",
+    "intent": "未知の場所で最初にする行動",
+    "conversation": "初めての場所での過ごし方",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な初めての場所を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-177",
+    "subject": "もう一度したいこと",
+    "intent": "時間があれば再開したい活動",
+    "conversation": "もう一度したくなる魅力",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的なもう一度したいことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-178",
+    "subject": "対話で大切なこと",
+    "intent": "会話で意識していること",
+    "conversation": "話しやすいと感じる関わり方",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な対話で大切なことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-179",
+    "subject": "日常に足したいもの",
+    "intent": "暮らしに加えたいことや物",
+    "conversation": "足すと変わりそうなこと",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な日常に足したいものを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-180",
+    "subject": "今の暮らしの良さ",
+    "intent": "現在の生活のお気に入り",
+    "conversation": "暮らしで続けたいこと",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な今の暮らしの良さを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-181",
+    "subject": "未来の自分への時間",
+    "intent": "これから自分に用意したい時間",
+    "conversation": "その時間の過ごし方",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な未来の自分への時間を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-182",
+    "subject": "考え方の変化",
+    "intent": "最近変化した見方",
+    "conversation": "変化のきっかけ",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な考え方の変化を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-183",
+    "subject": "心地よい距離",
+    "intent": "自分に合う人との距離感",
+    "conversation": "心地よい関わり方",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な心地よい距離を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-184",
+    "subject": "長く大切なもの",
+    "intent": "長く保持する大事なもの",
+    "conversation": "大切になった経緯",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な長く大切なものを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-185",
+    "subject": "続けてよかったこと",
+    "intent": "継続して意味を感じたこと",
+    "conversation": "続ける支えになったもの",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な続けてよかったことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-186",
+    "subject": "自分への言葉",
+    "intent": "努力する自分へかけたい言葉",
+    "conversation": "自分に必要な励まし",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的な自分への言葉を尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-187",
+    "subject": "自分らしくいられる場面",
+    "intent": "自然体でいられる状況",
+    "conversation": "その場面の安心や楽しさ",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な自分らしくいられる場面を尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-188",
+    "subject": "これから大切にしたいこと",
+    "intent": "少し増やしたい価値や行動",
+    "conversation": "まずできそうな小さなこと",
+    "decision": "retained",
+    "reason": "自由回答なので選択肢は不要。具体的なこれから大切にしたいことを尋ね、各自の経験や希望で答えられる。",
+    "mode": "QUICK",
+    "changed": false,
+    "changedFields": []
+  },
+  {
+    "id": "quick-189",
+    "subject": "続けたい楽しみ",
+    "intent": "数年後にも続けたい楽しみ",
+    "conversation": "長く楽しむための工夫",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な続けたい楽しみを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-190",
+    "subject": "人と過ごしての気づき",
+    "intent": "交流から得た最近の発見",
+    "conversation": "印象に残ったやり取り",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な人と過ごしての気づきを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-191",
+    "subject": "昔の自分へのおすすめ",
+    "intent": "現在の視点から過去の自分にすすめたいこと",
+    "conversation": "今だからわかる良さ",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的な昔の自分へのおすすめを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "quick-192",
+    "subject": "ここで聞きたいこと",
+    "intent": "参加者に尋ねたいこと",
+    "conversation": "互いに知ってみたい一面",
+    "decision": "changed",
+    "reason": "自由回答なので選択肢は不要。具体的なここで聞きたいことを尋ね、各自の経験や希望で答えられる。 話題フィルターも実際の内容に合わせる。",
+    "mode": "QUICK",
+    "changed": true,
+    "changedFields": [
+      "category"
+    ]
+  },
+  {
+    "id": "rank-extra-light-01",
+    "subject": "週末の計画",
+    "intent": "自由・体調・見通し・新鮮さ・予算",
+    "conversation": "週末の予定を一つ立てるなら、何から決める？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「自由・体調・見通し・新鮮さ・予算」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-01",
+    "subject": "週末を楽しむ準備",
+    "intent": "週末の楽しみ方の比重",
+    "conversation": "一番多く配ったことを、今週末どう実現したい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「週末の楽しみ方の比重」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-02",
+    "subject": "一日の満足",
+    "intent": "交流・余白・発見・完了・親切",
+    "conversation": "一位のことがあった日は、どんな気分になる？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「交流・余白・発見・完了・親切」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-02",
+    "subject": "ご機嫌な一日の過ごし方",
+    "intent": "一日を満たす活動の配分",
+    "conversation": "一番多く配った活動をするなら、一日のいつがいい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「一日を満たす活動の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-03",
+    "subject": "友達との外出",
+    "intent": "体力・段取り・発見・予算・工夫",
+    "conversation": "行き先が違っても、一位だけは大切にしたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「体力・段取り・発見・予算・工夫」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-03",
+    "subject": "友達との外出計画",
+    "intent": "外出の準備で重視する条件",
+    "conversation": "一番大切な条件を友達と合わせるなら、どう相談する？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「外出の準備で重視する条件」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-04",
+    "subject": "趣味選び",
+    "intent": "時間負担・学習・上達・貢献・自由度",
+    "conversation": "一位の条件に合う趣味を、思いつく？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「時間負担・学習・上達・貢献・自由度」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-04",
+    "subject": "新しい趣味の条件",
+    "intent": "続けたい趣味に求める要素",
+    "conversation": "一番多く配った条件に合う趣味を、一つ挙げるなら？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「続けたい趣味に求める要素」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-05",
+    "subject": "作業環境",
+    "intent": "見通し・変化・費用・工夫・相談",
+    "conversation": "一位の条件は、今の作業場所にある？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「見通し・変化・費用・工夫・相談」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-05",
+    "subject": "気持ちよい作業の条件",
+    "intent": "作業環境にほしい要素",
+    "conversation": "一番多く配った条件を、今の場所に足すなら？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「作業環境にほしい要素」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-06",
+    "subject": "小さなご褒美",
+    "intent": "発見・達成実感・親切・自由・回復",
+    "conversation": "最近、一位に近いご褒美を自分にあげた？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「発見・達成実感・親切・自由・回復」。選択肢IDは維持し、タグは回答内容に対応させる。 行動で答えられるよう質問文も最小限修正。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-06",
+    "subject": "ご褒美に使う夜",
+    "intent": "小さなご褒美の時間配分",
+    "conversation": "一番楽しみなご褒美は、どんな場面で味わいたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「小さなご褒美の時間配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-07",
+    "subject": "増えた自由時間",
+    "intent": "体験・収入・制作・交流・休息",
+    "conversation": "一位のために丸一日使うなら、何をする？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「体験・収入・制作・交流・休息」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-07",
+    "subject": "増えた自由時間の用途",
+    "intent": "余った一日の活動配分",
+    "conversation": "一番多く配ったことは、一日あったら何をしたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「余った一日の活動配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-08",
+    "subject": "大切な人との休日",
+    "intent": "達成・配慮・自立・健康・段取り",
+    "conversation": "一位を大切にした休日を、どう過ごしたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「達成・配慮・自立・健康・段取り」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-08",
+    "subject": "大切な人との休日の条件",
+    "intent": "二人の休日の楽しみ方",
+    "conversation": "一番多く配った過ごし方を、相手にどう提案したい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「二人の休日の楽しみ方」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-09",
+    "subject": "部屋づくり",
+    "intent": "予算・制作・来客・手間・知識",
+    "conversation": "一位をかなえるために、部屋を一つ変えるなら？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「予算・制作・来客・手間・知識」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-09",
+    "subject": "部屋の使い方",
+    "intent": "部屋に設けたい用途の比重",
+    "conversation": "一番多く配った用途のために、どんな場所を作りたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「部屋に設けたい用途の比重」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-light-10",
+    "subject": "集まり後の満足",
+    "intent": "配慮・自立・体力・安心・新鮮さ",
+    "conversation": "そんな帰り道に、また会いたいと思う？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「配慮・自立・体力・安心・新鮮さ」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-light-10",
+    "subject": "集まりの満足",
+    "intent": "集まりから持ち帰りたい気持ち",
+    "conversation": "一番多く配った気持ちになれた集まりは、どんなもの？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「集まりから持ち帰りたい気持ち」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-01",
+    "subject": "忙しい週の優先事項",
+    "intent": "裁量・健康・予測可能性・新鮮さ・家計",
+    "conversation": "忙しさが増したとき、一位をどう守りたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「裁量・健康・予測可能性・新鮮さ・家計」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-01",
+    "subject": "忙しい週に残すもの",
+    "intent": "忙しさの中で守る生活要素",
+    "conversation": "一番多く配ったものを守るために、何を調整できそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「忙しさの中で守る生活要素」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-02",
+    "subject": "理想の職場",
+    "intent": "関係・時間・学習・達成・配慮",
+    "conversation": "一位の条件を、職場でどう見分けたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「関係・時間・学習・達成・配慮」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-02",
+    "subject": "理想の職場の条件",
+    "intent": "職場に望む条件の重み",
+    "conversation": "一番多く配った条件を、どう見極めたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「職場に望む条件の重み」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-03",
+    "subject": "余裕をつくる出発点",
+    "intent": "健康・安定・気分転換・家計・工夫",
+    "conversation": "一位を整える最初の一歩は、何になりそう？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「健康・安定・気分転換・家計・工夫」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-03",
+    "subject": "余裕をつくる取り組み",
+    "intent": "生活に余裕を生む方法の配分",
+    "conversation": "一番多く配った取り組みを、明日一つ始めるなら？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「生活に余裕を生む方法の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-04",
+    "subject": "来年に増やす資源",
+    "intent": "余白・知識・成果・貢献・裁量",
+    "conversation": "一年かけて一位を増やすなら、何から始める？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「余白・知識・成果・貢献・裁量」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-04",
+    "subject": "来年に増やすもの",
+    "intent": "一年をかけた資源づくり",
+    "conversation": "一番多く配ったものが増えた来年は、どう変わりそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「一年をかけた資源づくり」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-05",
+    "subject": "長い友人関係",
+    "intent": "信頼・新鮮さ・金銭配慮・工夫・接点",
+    "conversation": "一位を守るために、友人と何を相談できそう？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「信頼・新鮮さ・金銭配慮・工夫・接点」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-05",
+    "subject": "長い友人関係の条件",
+    "intent": "関係を続けるための重視点",
+    "conversation": "一番大切な条件を、友人と話したことはある？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「関係を続けるための重視点」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-06",
+    "subject": "一緒に暮らす日々",
+    "intent": "理解・共同達成・配慮・自立・健康",
+    "conversation": "一位のために、どんな日々の習慣を作りたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「理解・共同達成・配慮・自立・健康」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-06",
+    "subject": "一緒に過ごす毎日の工夫",
+    "intent": "共同生活に向ける力の配分",
+    "conversation": "一番多く配った工夫を、どんな習慣にしたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「共同生活に向ける力の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-07",
+    "subject": "暮らす街の条件",
+    "intent": "探索・費用・文化制作・関係・移動時間",
+    "conversation": "一位を満たす街では、どんな一日を送りたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「探索・費用・文化制作・関係・移動時間」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-07",
+    "subject": "暮らす街の条件",
+    "intent": "居住地の選択基準の比重",
+    "conversation": "一番多く配った条件がある街で、どんな日常を送りたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「居住地の選択基準の比重」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-08",
+    "subject": "挑戦する動機",
+    "intent": "達成・貢献・選択肢・健康・備え",
+    "conversation": "一位の理由で、今試してみたいことはある？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「達成・貢献・選択肢・健康・備え」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-08",
+    "subject": "挑戦の動機",
+    "intent": "挑戦で得たいものの比重",
+    "conversation": "一番多く配ったものを得るために、何を試したい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「挑戦で得たいものの比重」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-09",
+    "subject": "迷ったときの基準",
+    "intent": "費用・独創・関係・時間・理解",
+    "conversation": "最近の迷いに、一位の基準を当てはめるなら？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「費用・独創・関係・時間・理解」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-09",
+    "subject": "迷いの整理",
+    "intent": "選択を支える判断基準",
+    "conversation": "一番多く配った基準は、どんな迷いで役立ちそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「選択を支える判断基準」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-balanced-10",
+    "subject": "身につける力の選択",
+    "intent": "貢献・自立・健康・安定・体験",
+    "conversation": "一位に合う知識や技術を、一つ挙げるなら？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「貢献・自立・健康・安定・体験」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-balanced-10",
+    "subject": "身につける力の目的",
+    "intent": "学ぶ対象を選ぶ動機の配分",
+    "conversation": "一番多く配った目的に合う力は、どんなもの？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「学ぶ対象を選ぶ動機の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-01",
+    "subject": "自分らしい暮らしの核",
+    "intent": "裁量・健康・安心・冒険・経済",
+    "conversation": "一位が暮らしの中心にあると、どんな日々になりそう？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「裁量・健康・安心・冒険・経済」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-01",
+    "subject": "暮らしの中心に置くもの",
+    "intent": "人生の軸の配分",
+    "conversation": "一番多く配った軸があると、どんな暮らしになりそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「人生の軸の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-02",
+    "subject": "十年かけて育てるもの",
+    "intent": "関係・余白・知識・達成・配慮",
+    "conversation": "十年後、一位が育ったと気づくのはどんなとき？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「関係・余白・知識・達成・配慮」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-02",
+    "subject": "十年で育てるもの",
+    "intent": "長期的な蓄積の配分",
+    "conversation": "十年後、一番育てたいものをどう確かめたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「長期的な蓄積の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-03",
+    "subject": "働く意味",
+    "intent": "健康・基盤・体験・収入・制作",
+    "conversation": "一位の意味を感じられた仕事や活動はある？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「健康・基盤・体験・収入・制作」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-03",
+    "subject": "働く意味の配分",
+    "intent": "仕事に求める意味の重み",
+    "conversation": "一番多く配った意味を、今の活動で感じることはある？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「仕事に求める意味の重み」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-04",
+    "subject": "自分を大切にする方法",
+    "intent": "休息・理解・自信・慈愛・裁量",
+    "conversation": "一位が必要だと気づくのは、どんなとき？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「休息・理解・自信・慈愛・裁量」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-04",
+    "subject": "自分を大切にする行動",
+    "intent": "セルフケアの方法の配分",
+    "conversation": "一番多く配った行動が必要だと気づくのは、どんなとき？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「セルフケアの方法の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-05",
+    "subject": "長く続くつながり",
+    "intent": "信頼・新鮮さ・金銭境界・工夫・交流",
+    "conversation": "一位を大切にしたいと思った経験はある？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「信頼・新鮮さ・金銭境界・工夫・交流」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-05",
+    "subject": "長く続くつながりの行動",
+    "intent": "関係を保つ実践への配分",
+    "conversation": "一番多く配った行動を、今後どんな形で続けたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「関係を保つ実践への配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-06",
+    "subject": "経済的充足後の望み",
+    "intent": "学習・達成・貢献・自立・健康",
+    "conversation": "お金の心配がなければ、一位のために何をしたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「学習・達成・貢献・自立・健康」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-06",
+    "subject": "お金以外の望み",
+    "intent": "経済的充足後の優先度",
+    "conversation": "一番多く配った望みは、今から少しずつ近づけそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「経済的充足後の優先度」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-07",
+    "subject": "選択への納得",
+    "intent": "体験・費用・工夫・関係・熟考",
+    "conversation": "一位を守れた選択を、話せる範囲で聞かせて。",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「体験・費用・工夫・関係・熟考」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-07",
+    "subject": "選択に納得する条件",
+    "intent": "意思決定で守る基準の重み",
+    "conversation": "一番多く配った基準を守れた選択は、どんなもの？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「意思決定で守る基準の重み」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-08",
+    "subject": "相互の人生の尊重",
+    "intent": "応援・配慮・自立・健康・信頼",
+    "conversation": "一位を行動にすると、相手に何を伝えたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「応援・配慮・自立・健康・信頼」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-08",
+    "subject": "互いの人生を尊重する行動",
+    "intent": "尊重を示す実践の配分",
+    "conversation": "一番多く配った行動を、相手から受けたらどう感じそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「尊重を示す実践の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-09",
+    "subject": "これからも残したいもの",
+    "intent": "資金・表現・関係・時間・探究",
+    "conversation": "一位を残すために、今後どんな選び方をしたい？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「資金・表現・関係・時間・探究」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-09",
+    "subject": "これからも守るもの",
+    "intent": "手放したくない資源の配分",
+    "conversation": "一番多く配ったものを、今後どう守っていきたい？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「手放したくない資源の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "rank-extra-deep-10",
+    "subject": "未来の自分への贈り物",
+    "intent": "貢献・自立・健康・基盤・体験",
+    "conversation": "未来の自分は、一位について何と言ってくれそう？",
+    "decision": "rewrite",
+    "reason": "抽象的な価値名を設問への直接的な回答に具体化。比較する軸は「貢献・自立・健康・基盤・体験」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "RANK",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "auction-extra-deep-10",
+    "subject": "未来の自分を支える行動",
+    "intent": "未来に向けた選択の配分",
+    "conversation": "未来の自分は、一番多く配った行動に何と言ってくれそう？",
+    "decision": "rewrite",
+    "reason": "配分先を同じ文脈の行動・条件に統一し、100ポイントの対象を明記。比較する軸は「未来に向けた選択の配分」。選択肢IDは維持し、タグは回答内容に対応させる。",
+    "mode": "AUCTION",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "question",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-01",
+    "subject": "休日に大切にしたいもの",
+    "intent": "休日に満たしたい欲求",
+    "conversation": "理想の休日を一日思い浮かべて、何を満たしたいか話してみよう。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-02",
+    "subject": "カフェ選びで重視するもの",
+    "intent": "カフェ選びの優先順位",
+    "conversation": "よく行くカフェを思い浮かべて、通いたくなる理由を話してみよう。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-03",
+    "subject": "旅で楽しみなこと",
+    "intent": "旅で求める体験",
+    "conversation": "旅先で一つだけ時間をたっぷり使えるなら、何を楽しみたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-04",
+    "subject": "友達にしてもらうとうれしいこと",
+    "intent": "友達からうれしい関わり",
+    "conversation": "どんな場面でその行動がうれしいか、話せる範囲で教えて。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-05",
+    "subject": "暮らしに欲しいもの",
+    "intent": "暮らしに足したい豊かさ",
+    "conversation": "今の暮らしに一つ足せるなら、毎日がどう変わりそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-06",
+    "subject": "仕事を選ぶ基準",
+    "intent": "仕事選びの優先順位",
+    "conversation": "仕事や活動を選ぶなら、その基準を大切にしたい理由は？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-07",
+    "subject": "贈り物で重視するもの",
+    "intent": "贈り物で届けたい価値",
+    "conversation": "贈る相手を一人思い浮かべて、喜んでもらえそうな理由を話そう。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-08",
+    "subject": "週末にしたいこと",
+    "intent": "週末の行動の好み",
+    "conversation": "その週末の過ごし方なら、誰とどこで楽しみたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-09",
+    "subject": "自分を回復させるもの",
+    "intent": "疲れたときの回復方法",
+    "conversation": "少し疲れた日に、それがどんなふうに助けになりそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-10",
+    "subject": "新しい街で探すもの",
+    "intent": "新しい街での居場所",
+    "conversation": "その街で暮らし始めたら、何が見つかると安心できそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-11",
+    "subject": "学びたいこと",
+    "intent": "身につけたい技能",
+    "conversation": "できるようになったら、最初に何をしてみたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-12",
+    "subject": "イベントで楽しみなこと",
+    "intent": "イベントで楽しみたい場面",
+    "conversation": "楽しみな場面を一つ想像して、どんな時間にしたいか話そう。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-13",
+    "subject": "大切にしたい時間",
+    "intent": "増やしたい時間の使い方",
+    "conversation": "今より少し増やせるなら、その時間に何をしたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-14",
+    "subject": "部屋に欲しいもの",
+    "intent": "部屋で実現したい過ごし方",
+    "conversation": "その家具や植物を置いたら、部屋での過ごし方はどう変わりそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "values-15",
+    "subject": "予定を決めるときの基準",
+    "intent": "予定作りでの判断基準",
+    "conversation": "誰かと予定を立てる場面で、その基準をどう生かしたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "四つの選択肢を同じ問いへの直接的な行動・判断基準として比較できる自然な表現に整えた。",
+    "mode": "VALUES",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-01",
+    "subject": "待ち合わせに何分早く着きたい？",
+    "intent": "待ち合わせの到着余裕を分数で表す",
+    "conversation": "場所や相手によって、早く着きたい時間は変わる？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "「何分」に数値で答えられる0〜30分・1分刻みの尺度と、時刻に対応する端点を設定した。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "scale",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-02",
+    "subject": "初対面で話しかける積極性は？",
+    "intent": "初対面で声をかける主導性",
+    "conversation": "初対面でも話しかけやすくなるきっかけはある？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-03",
+    "subject": "休日は予定を埋めたい？",
+    "intent": "休日の予定密度",
+    "conversation": "どんな休日だと、ちょうどよく満たされそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-04",
+    "subject": "カフェのBGMはにぎやかな方が好き？",
+    "intent": "カフェで好むBGMのにぎやかさ",
+    "conversation": "読書やおしゃべりなど、することによって好みは変わる？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-05",
+    "subject": "旅行は計画を固めたい？",
+    "intent": "旅行を事前に決める度合い",
+    "conversation": "旅の中で決めておきたいことと、自由にしたいことは？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-06",
+    "subject": "新メニューを試したい？",
+    "intent": "新メニューへの挑戦意欲",
+    "conversation": "新しいメニューを試したくなるのは、どんなとき？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-07",
+    "subject": "買い物はじっくり比較する？",
+    "intent": "購入前の比較の丁寧さ",
+    "conversation": "買う物や金額によって、比較する時間は変わる？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-08",
+    "subject": "部屋はものが少ない方が好き？",
+    "intent": "部屋に置きたい物の量",
+    "conversation": "部屋に置いておきたい物や、すっきりさせたい場所は？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-09",
+    "subject": "朝の時間をゆったり取りたい？",
+    "intent": "朝に確保したいゆとり",
+    "conversation": "朝に余裕があったら、何に時間を使いたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-10",
+    "subject": "映画の感想をすぐ話したい？",
+    "intent": "映画後に感想を共有するタイミング",
+    "conversation": "どんな映画だと、誰かとすぐ話したくなる？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-11",
+    "subject": "サプライズはうれしい？",
+    "intent": "サプライズの予告の好み",
+    "conversation": "うれしいと感じるサプライズの範囲を話してみよう。 パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-12",
+    "subject": "友達と趣味が違うのは楽しい？",
+    "intent": "友達との趣味の共通性の好み",
+    "conversation": "趣味が違う友達と、どんな楽しみ方ができそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-13",
+    "subject": "同じお店に何度も通いたい？",
+    "intent": "開拓と再訪の好み",
+    "conversation": "何度も通いたくなるお店には、どんな魅力がある？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-14",
+    "subject": "雨の日のお出かけは好き？",
+    "intent": "雨の日の外出意欲",
+    "conversation": "雨だからこそ楽しめることや、避けたいことはある？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "boundary-15",
+    "subject": "イベント後にもう少し話したい？",
+    "intent": "イベント後の交流の希望",
+    "conversation": "イベントの後は、どんな過ごし方だと心地よさそう？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "問いに直接答える固有の両端を設定し、賛否の定型文を解釈する負担をなくした。",
+    "mode": "BOUNDARY",
+    "changed": true,
+    "changedFields": [
+      "choices",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-01",
+    "subject": "最近ちょっと笑ったことは？",
+    "intent": "最近の笑った出来事",
+    "conversation": "何があって笑ったのか、一言で話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-02",
+    "subject": "好きなカフェメニューは？",
+    "intent": "好みのカフェメニュー",
+    "conversation": "そのメニューの好きなところも、教えてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-03",
+    "subject": "休日の小さな楽しみは？",
+    "intent": "休日の小さな楽しみ",
+    "conversation": "どんなときに楽しんでいるか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-04",
+    "subject": "最近買ってよかったものは？",
+    "intent": "買ってよかった物",
+    "conversation": "買ってから何が便利になったか、話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-05",
+    "subject": "一日だけ得意になりたいことは？",
+    "intent": "体験したい得意分野",
+    "conversation": "得意になった一日で何をしたいか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-06",
+    "subject": "子どものころ好きだった遊びは？",
+    "intent": "子ども時代の遊び",
+    "conversation": "どこで誰と遊んでいたか、話せる範囲で聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-07",
+    "subject": "つい集めてしまうものは？",
+    "intent": "集める物と好み",
+    "conversation": "集めたくなるポイントや、お気に入りを聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-08",
+    "subject": "今行ってみたい街は？",
+    "intent": "訪れたい街",
+    "conversation": "その街でしたいことを、一つ聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-09",
+    "subject": "気分が上がる音楽は？",
+    "intent": "気分が上がる音楽",
+    "conversation": "どんな場面で聴くと元気になるか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-10",
+    "subject": "お気に入りの朝ごはんは？",
+    "intent": "好きな朝食",
+    "conversation": "その朝ごはんが好きな理由や、食べる場面を聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-11",
+    "subject": "おすすめの気分転換は？",
+    "intent": "実践している気分転換",
+    "conversation": "どんな気分のときに試すとよさそうか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-12",
+    "subject": "雨の日の過ごし方は？",
+    "intent": "雨の日の行動",
+    "conversation": "雨の日ならではの楽しみがあるか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-13",
+    "subject": "意外に好きな家事は？",
+    "intent": "好きな家事の作業",
+    "conversation": "その家事のどの作業が好きか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-14",
+    "subject": "最近覚えたことは？",
+    "intent": "最近の学び",
+    "conversation": "覚えるきっかけや、役立った場面を聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "who-15",
+    "subject": "自分を動物にたとえるなら？",
+    "intent": "動物に例えた自分らしさ",
+    "conversation": "どんなところがその動物に似ているか、聞いてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人の自由回答を維持し、回答者の体験や好みを聞く問いに合わせて会話補助を具体化した。",
+    "mode": "WHO",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-01",
+    "subject": "みんなが好きな飲み物を探す",
+    "intent": "共通する好きな飲み物",
+    "conversation": "飲み物の名前を出し合い、全員が好きな一つを探そう。見つからなければ、似ている好みを話そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-02",
+    "subject": "全員が行ってみたい場所を探す",
+    "intent": "共通する行きたい場所や体験",
+    "conversation": "行きたい場所と理由を出し合おう。同じ場所がなければ、そこでやりたいことの共通点を探そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-03",
+    "subject": "好きな季節の共通点を探す",
+    "intent": "季節が好きな理由の共通点",
+    "conversation": "好きな季節とその理由を話そう。季節が違っても、好きな過ごし方に共通点はある？ パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-04",
+    "subject": "最近うれしかった小さなことの共通点",
+    "intent": "喜びを感じる要素の共通点",
+    "conversation": "小さなうれしかったことを一つずつ話し、何がうれしかったのか比べてみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-05",
+    "subject": "休日にやっていることの共通点",
+    "intent": "休日の行動の共通点",
+    "conversation": "休日によくすることを出し合い、行動や過ごし方の共通点を探そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-06",
+    "subject": "持ち物の意外な共通点を探す",
+    "intent": "持ち物や選び方の共通点",
+    "conversation": "見せてもよい持ち物や、その選び方を話そう。中身を見せたり個人情報を話したりする必要はないよ。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-07",
+    "subject": "子どものころの遊びの共通点",
+    "intent": "幼いころの遊び方の共通点",
+    "conversation": "子どものころの遊びを出し合おう。遊びの名前が違っても、楽しみ方が似ているかも。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-08",
+    "subject": "得意でないけれど好きなことの共通点",
+    "intent": "技能と別に楽しむ理由の共通点",
+    "conversation": "得意でなくても楽しんでいることと、その好きなところを出し合おう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-09",
+    "subject": "いつか挑戦したいことの共通点",
+    "intent": "挑戦したい動機の共通点",
+    "conversation": "いつか挑戦したいことを話して、始めたい理由や楽しみにしていることを比べよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-10",
+    "subject": "食べ方の小さなこだわりの共通点",
+    "intent": "食べ方のこだわりの共通点",
+    "conversation": "好きな食べる順番や味付けなどを話して、似ているこだわりを探そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-11",
+    "subject": "最近変わった習慣の共通点",
+    "intent": "習慣の変化と動機の共通点",
+    "conversation": "最近変えた習慣ときっかけを出し合おう。変えた習慣がなければ、変えてみたいことでも大丈夫。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-12",
+    "subject": "居心地がいい場所に求める共通点",
+    "intent": "居心地を生む要素の共通点",
+    "conversation": "居心地のいい場所を一つずつ思い浮かべて、音・明るさ・人との距離などを比べよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-13",
+    "subject": "自分たちだけの不思議な共通点",
+    "intent": "このメンバーならではの意外な共通点",
+    "conversation": "これまで話していない好きなものや習慣を出し合い、このメンバーで見つかった意外な共通点を言葉にしよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-14",
+    "subject": "大切にしている言葉の共通点",
+    "intent": "大切な言葉が支える気持ちの共通点",
+    "conversation": "大切にしている言葉と、その理由を話そう。言葉自体が違っても、支えられる気持ちに共通点はある？ パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "quest-15",
+    "subject": "違う趣味の奥にある共通点",
+    "intent": "異なる趣味に共通する楽しさ",
+    "conversation": "それぞれの趣味の楽しい部分を説明しよう。達成感や没頭する時間など、奥にある共通点を探そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "自由記述を維持し、同じ答えを強要せず理由や楽しみ方まで共通点を探せる会話補助にした。",
+    "mode": "QUEST",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-01",
+    "subject": "読書好きが集まるカフェ",
+    "intent": "読書への集中と読書交流の両立",
+    "conversation": "静かに読む時間と、本の話をする時間をどう両立したい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-02",
+    "subject": "雨の日が楽しみになるカフェ",
+    "intent": "雨の日のアクセスと雨を楽しむ体験",
+    "conversation": "雨の日の来やすさと、雨を楽しむ仕掛けのどちらに予算を使いたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-03",
+    "subject": "朝の散歩の帰りに寄るカフェ",
+    "intent": "散歩の休憩と朝食の両立",
+    "conversation": "散歩の流れで短く寄る人と、朝食を楽しむ人にどう応えたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-04",
+    "subject": "初対面でも話しやすいカフェ",
+    "intent": "初対面の会話を支える環境",
+    "conversation": "集まりやすさ、話すきっかけ、周囲を気にせず話せることの何を優先する？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-05",
+    "subject": "旅行者に街を紹介するカフェ",
+    "intent": "街の魅力を旅行者に伝える方法",
+    "conversation": "初めて来た旅行者に、この街の何を持ち帰ってほしい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-06",
+    "subject": "夜に静かに過ごすカフェ",
+    "intent": "夜の静けさと帰りやすさ",
+    "conversation": "夜の静けさと帰りやすさを、どんな組み合わせで実現する？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-07",
+    "subject": "友達の誕生日を祝うカフェ",
+    "intent": "集まりやすさと祝う特別感",
+    "conversation": "みんなの集まりやすさと、お祝いの特別感にどう予算を配分する？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-08",
+    "subject": "植物を楽しむカフェ",
+    "intent": "植物を観察・味覚・体験で楽しむ方法",
+    "conversation": "植物を眺める・味わう・育てるうち、どの体験を中心にしたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-09",
+    "subject": "アートに触れるカフェ",
+    "intent": "鑑賞と制作の入口",
+    "conversation": "作品を観る人と作る人が、どんなふうにアートに出会う店にしたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-10",
+    "subject": "お仕事帰りに回復するカフェ",
+    "intent": "帰宅途中の回復の方法",
+    "conversation": "仕事帰りに必要なのは、短い一息、食事、それとも長く休める場所？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-11",
+    "subject": "週末の小さな冒険になるカフェ",
+    "intent": "場所・味・体験の新しさ",
+    "conversation": "初めての場所、味、体験のどれで小さな冒険を届けたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-12",
+    "subject": "昔ながらの街になじむカフェ",
+    "intent": "地域の日常と歴史へのなじみ方",
+    "conversation": "街の昔からの良さを、立地・味・空間のどこで伝えたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-13",
+    "subject": "一人でも安心して入れるカフェ",
+    "intent": "一人客の入店と滞在の安心",
+    "conversation": "入る前の安心感と、入ってからの過ごしやすさをどう整えたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-14",
+    "subject": "季節を味わうカフェ",
+    "intent": "四季を景色・味・空間で伝える方法",
+    "conversation": "景色、食材、飾りのどれで季節の変化を感じてもらいたい？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "cafe-15",
+    "subject": "みんなの趣味を持ち寄るカフェ",
+    "intent": "趣味の作業と共有の両立",
+    "conversation": "それぞれが作業する時間と、趣味を紹介し合う時間をどう両立する？ パスしても大丈夫。",
+    "decision": "選択肢と会話補助を修正",
+    "reason": "このコンセプト専用に立地・メニュー・内装を各三案作り、優先順位を話せる異なる利点を設けた。費用と予算の制約は維持した。",
+    "mode": "CAFE",
+    "changed": true,
+    "changedFields": [
+      "categories",
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-01",
+    "subject": "思いがけない親切を受けた話",
+    "intent": "親切を受けた場面と気持ち",
+    "conversation": "どんな親切で、そのときどう感じたか、話せる範囲で教えて。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-02",
+    "subject": "初めて挑戦してみた話",
+    "intent": "挑戦のきっかけと感想",
+    "conversation": "挑戦したきっかけと、やってみて感じたことを話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-03",
+    "subject": "旅先で起きた小さな出来事",
+    "intent": "旅やお出かけでの記憶",
+    "conversation": "どこで何が起きて、なぜ覚えているのかを話してみよう。近所へのお出かけでも大丈夫。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-04",
+    "subject": "カフェで印象に残った出来事",
+    "intent": "カフェで印象に残った体験",
+    "conversation": "お店でどんなことがあり、何が印象に残ったかを話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-05",
+    "subject": "失敗が笑い話になった経験",
+    "intent": "今は笑える失敗と乗り切り方",
+    "conversation": "今なら笑って話せる範囲で、何が起きてどう乗り切ったかを教えて。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-06",
+    "subject": "友達と距離が縮まった瞬間",
+    "intent": "友情が近づいたきっかけ",
+    "conversation": "どんなやり取りがきっかけで、距離が縮まったと感じたかを話そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-07",
+    "subject": "子どものころの不思議な思い出",
+    "intent": "子ども時代の不思議な記憶",
+    "conversation": "覚えている場面と、当時不思議だと思ったことを話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-08",
+    "subject": "好きなものに出会ったきっかけ",
+    "intent": "好きなものとの出会い",
+    "conversation": "最初に出会った場面と、好きになった理由を話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-09",
+    "subject": "苦手だと思っていたことが変わった話",
+    "intent": "苦手意識が変化したきっかけ",
+    "conversation": "印象が変わったきっかけと、今どう感じているかを話せる範囲で教えて。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-10",
+    "subject": "忘れられない一杯や一皿の話",
+    "intent": "食べ物と結びついた記憶",
+    "conversation": "味や一緒にいた人、そのときの気持ちなど、覚えていることを話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-11",
+    "subject": "予定外が楽しかった日の話",
+    "intent": "予定外の出来事の楽しさ",
+    "conversation": "予定と違って何が起きて、どんなところが楽しかったかを話そう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-12",
+    "subject": "何気ない言葉に助けられた話",
+    "intent": "助けになった言葉と場面",
+    "conversation": "どんな場面で、その言葉がどう助けになったかを話せる範囲で教えて。言葉はぼかしても大丈夫。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-13",
+    "subject": "新しい場所になじんだ経験",
+    "intent": "新しい場所になじむ過程",
+    "conversation": "最初の気持ちと、なじむきっかけになった出来事を話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-14",
+    "subject": "自分の小さな成長を感じた話",
+    "intent": "小さな成長への気づき",
+    "conversation": "以前と比べて少しできるようになったことと、気づいた場面を話してみよう。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  },
+  {
+    "id": "story-15",
+    "subject": "人の見方が少し変わった出来事",
+    "intent": "人への印象が変化した場面",
+    "conversation": "どんな出来事で、相手の見え方がどう変わったかを話せる範囲で教えて。 パスしても大丈夫。",
+    "decision": "自由回答を維持・会話補助を修正",
+    "reason": "個人のエピソードを自由に話す形式を維持し、場面や気持ちを引き出す専用の会話補助にした。",
+    "mode": "STORY",
+    "changed": true,
+    "changedFields": [
+      "talkPrompt"
+    ]
+  }
+]

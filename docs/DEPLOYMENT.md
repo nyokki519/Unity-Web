@@ -4,7 +4,7 @@
 
 ## 準備済みの内容
 
-- `deploy/unity-mix` ブランチにアプリと `render.yaml` を配置する。
+- `main` ブランチにアプリと `render.yaml` を配置する。
 - 設定は `plan: free`。有料ディスク・有料インスタンスを要求しない。
 - 無料版の保存領域は一時的。サーバーの再起動・再配置でルームが失われる。その制約をアプリ内にも表示する。
 - `RENDER_EXTERNAL_URL` を使って、実際に割り当てられたHTTPS URLへQR参加を誘導する。架空の本番URLを指定しない。
@@ -13,7 +13,11 @@
 
 無料枠の利用可否・休止条件・利用上限はRenderの申し込み画面で確認する。無料枠が利用できない場合に、有料プランへ自動で切り替えない。
 
-## アシスタントに公開を実行させる場合
+## 既存サービスを更新する場合
+
+既存のRenderサービスの対象ブランチを `main` に合わせ、Auto-Deployが有効ならmainの更新を待つ。無効ならManual Deployから最新コミットを指定する。サービスの削除・作り直しやAPIキーの再発行は不要。
+
+## 管理APIを新たに接続する場合（任意）
 
 1. https://dashboard.render.com/ でRenderに登録またはログインする。
 2. Account Settings → API KeysでAPIキーを作成する。
@@ -25,7 +29,7 @@ API通信の許可先は `api.render.com`。実サイトの検証には、サー
 
 ## Renderの画面から公開する場合
 
-RenderのNew → BlueprintでGitHubリポジトリ `nyokki519/Unity-Web` を連携し、ブランチ `deploy/unity-mix` の `render.yaml` を使用する。作成内容が無料Web Serviceで、有料ディスクがないことを確認する。画面が異なる場合はNew → Web Serviceから同じリポジトリ・ブランチ、Docker、Free、ヘルスチェック `/api/health` を指定する。
+RenderのNew → BlueprintでGitHubリポジトリ `nyokki519/Unity-Web` を連携し、ブランチ `main` の `render.yaml` を使用する。作成内容が無料Web Serviceで、有料ディスクがないことを確認する。画面が異なる場合はNew → Web Serviceから同じリポジトリ・ブランチ、Docker、Free、ヘルスチェック `/api/health` を指定する。
 
 サービスが割り当てた実際のURLが本番URLになる。GitHubリポジトリのURLはゲームを遊ぶURLではない。
 

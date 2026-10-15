@@ -1,3 +1,4 @@
+import {formatScaleValue} from './scale.js';
 import {el,button,title,eyebrow,logo,modeNames,labeledSelect,modal} from './dom.js';
 import {answerRenderers} from './answer.js';
 import {resultRenderers} from './results.js';
@@ -20,7 +21,7 @@ export function game({state,send,catalog,draft}){
   screen.append(title(`${q.mode} / REVEAL`,q.question));const result=state.round.result;screen.append(resultRenderers[q.mode](result,state));const talk=el('section','talk-prompt');talk.append(eyebrow('LET’S TALK'),el('h2','',q.talkPrompt),el('p','small muted','スマートフォンを少し置いて、目の前の人の話を。理由を話すのも、パスするのも自由です。'));screen.append(talk);
   if(host)screen.append(button(state.progress.current>=state.progress.total?'今日のMIXを見る →':'次のお題へ →',()=>send('next'),'button wide next-button'));else screen.append(el('p','small muted center','話したら、ホストが次へ進めます。'));
  }else if(!round.participating){screen.append(logo(),title('JOINED THE ROOM','次のお題から、一緒に。','いまは、みんなの会話を楽しんでください。'));const self=state.players.find(p=>p.id===state.selfId);screen.append(button(self.ready?'次のお題の準備OK ✓':'次のお題への準備OK',()=>send('ready',{ready:!self.ready}),self.ready?'button secondary':'button'));}
- else if(round.ownAnswer){screen.append(logo(),title('ANSWER SAVED','答えを、預かりました。','みんなの答えが揃うまで、少しだけ。'));const own=el('div','own-answer');own.append(eyebrow('YOUR ANSWER / ONLY YOU'));const value=round.ownAnswer;if(value.skip)own.append(el('p','','今回はパス'));else if(['ALIGN','PREDICT'].includes(q.mode))own.append(el('p','',`${value.value.toUpperCase()} / ${q.choices[value.value==='a'?0:1]}`));else if(q.mode==='QUICK')own.append(el('p','',value.value||'口頭で話します'));else if(q.mode==='LINE')own.append(el('p','serif',String(value.value)));else own.append(el('p','small','回答を保存しました。公開後に、あなたの結果を確認できます。'));screen.append(own);}
+ else if(round.ownAnswer){screen.append(logo(),title('ANSWER SAVED','答えを、預かりました。','みんなの答えが揃うまで、少しだけ。'));const own=el('div','own-answer');own.append(eyebrow('YOUR ANSWER / ONLY YOU'));const value=round.ownAnswer;if(value.skip)own.append(el('p','','今回はパス'));else if(['ALIGN','PREDICT'].includes(q.mode))own.append(el('p','',`${value.value.toUpperCase()} / ${q.choices[value.value==='a'?0:1]}`));else if(q.mode==='QUICK')own.append(el('p','',value.value||'口頭で話します'));else if(q.mode==='LINE')own.append(el('p','serif',formatScaleValue(q,value.value)));else own.append(el('p','small','回答を保存しました。公開後に、あなたの結果を確認できます。'));screen.append(own);}
  else {
   const target=state.players.find(p=>p.id===round.targetId);let description;
   if(q.mode==='PREDICT')description=round.targetId===state.selfId?'あなたが今回のターゲット。自分の答えを秘密で選んでください。':`${target?.name||'この人'}さんなら、どちらを選ぶ？本人の答えを予想してみよう。`;

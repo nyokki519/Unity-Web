@@ -5,7 +5,7 @@ services:
     runtime: docker
     plan: free
     repo: https://github.com/nyokki519/Unity-Web
-    branch: deploy/unity-mix
+    branch: main
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
     numInstances: 1
