@@ -1,0 +1,44 @@
+[
+  {
+    "difficulty": "easy",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 0,
+    "lost": 60,
+    "active": 0
+  },
+  {
+    "difficulty": "normal",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 0,
+    "lost": 60,
+    "active": 0
+  },
+  {
+    "difficulty": "abyss",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 0,
+    "lost": 60,
+    "active": 0
+  }
+]

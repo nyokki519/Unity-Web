@@ -77,7 +77,7 @@ export function mountAbyss({ onBack }) {
     lastEvent = 0,
     finishSaved = false;
   const volumes = { master: 0.5, effects: 0.7, ambience: 0.2 };
-  let power = 55,
+  let power = 35,
     angle = -90,
     timeScale = 1,
     mode = "normal",
@@ -132,6 +132,13 @@ export function mountAbyss({ onBack }) {
     HEIGHT,
     center,
   });
+  const quickViews=el("div","abyss-quick-views");
+  quickViews.setAttribute("aria-label","盤面の見方");
+  for(const [value,label] of [["auto","自動"],["forest","釘"],["cradle1","皿1"],["cradle2","皿2"],["cradle3","皿3"],["overview","全体"]]){
+    const control=button(label,()=>{camera=value;view.body.querySelector('select[aria-label="カメラ"]').value=value;for(const b of quickViews.children)b.setAttribute("aria-pressed",String(b===control));},"button secondary");
+    control.setAttribute("aria-pressed",String(camera===value));quickViews.append(control);
+  }
+  center.append(quickViews);
   const {
     current,
     status,
@@ -380,7 +387,7 @@ export function mountAbyss({ onBack }) {
           try {
             await saveRecord("presets", {
               version: 2,
-              physicsVersion: "si-1",
+              physicsVersion: "si-2",
               kind: "preset",
               difficulty: difficultyValue(),
               seed: seed.value,
@@ -483,7 +490,7 @@ export function mountAbyss({ onBack }) {
     return cfg;
   }
   function resetConfigFields() {
-    const defaults = { gravity: 9.80665, restitution: .48, friction: .18,
+    const defaults = { gravity: 9.80665, restitution: .68, friction: .18,
       fireInterval: .6, launchVariance: .012, gatePeriod: 3,
       gateOpenDuration: 2, holeScale: 1 };
     for (const [k, v] of Object.entries(defaults))
@@ -491,7 +498,7 @@ export function mountAbyss({ onBack }) {
   }
   function currentSettings() {
     return {
-      physicsVersion: "si-1",
+      physicsVersion: "si-2",
       difficulty: difficultyValue(),
       seed: seed.value,
       power,
@@ -503,7 +510,7 @@ export function mountAbyss({ onBack }) {
     };
   }
   function applyPreset(record) {
-    if (record.physicsVersion !== "si-1") throw new Error("旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。");
+    if (record.physicsVersion !== "si-2") throw new Error("旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。");
     if (record.difficulty)
       difficulty.querySelector("select").value = record.difficulty;
     if (record.seed) seed.value = record.seed;
@@ -769,7 +776,7 @@ export function mountAbyss({ onBack }) {
     const c = game.stats?.contacts || {};
     contacts.textContent = `接触：釘 ${c.pin || 0} / 壁 ${c.wall || 0} / 玉 ${c.ball || 0} / ゲート ${c.gate || 0} / 皿縁 ${c.rim || 0}`;
     const st = game.stats || {};
-    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} ${game.board.physicsVersion === "si-1" ? "m/s" : "旧版単位/秒"} / 平均滞留：${(
+    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} ${game.board.physicsVersion === "si-2" ? "m/s" : "旧版単位/秒"} / 平均滞留：${(
       st.dwellTotals || []
     )
       .slice(0, 4)
@@ -1062,7 +1069,7 @@ export function mountAbyss({ onBack }) {
   loadSettings()
     .then((value) => {
       if (!value || destroyed || game) return;
-      if (value.physicsVersion !== "si-1") { message("旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。"); return; }
+      if (value.physicsVersion !== "si-2") { message("旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。"); return; }
       applyPreset(value);
       if (Number.isFinite(value.power)) setPower(value.power);
       if (Number.isFinite(value.angle)) {

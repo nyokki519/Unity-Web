@@ -742,3 +742,5 @@
     padding-bottom: 6px;
   }
 }
+
+.abyss-quick-views{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:8px 0}.abyss-quick-views .button{min-height:44px;padding:8px 2px;font-size:13px}.abyss-quick-views [aria-pressed=true]{background:#c5a360;color:#071a16;border-color:#edcf91}

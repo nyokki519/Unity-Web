@@ -15,7 +15,7 @@ export function basisRotation(x,y,z){
  else {const i=m[0]>m[4]&&m[0]>m[8]?0:m[4]>m[8]?1:2,j=(i+1)%3,k=(i+2)%3,s=Math.sqrt(1+m[i*3+i]-m[j*3+j]-m[k*3+k])*2,a=[0,0,0];a[i]=s/4;a[j]=(m[j*3+i]+m[i*3+j])/s;a[k]=(m[k*3+i]+m[i*3+k])/s;q={x:a[0],y:a[1],z:a[2],w:(m[k*3+j]-m[j*3+k])/s};}return q;
 }
 export function box(parts,id,tag,position,halfExtents,rotation=identity(),extra={}){const p={id,tag,kind:'box',position,halfExtents,rotation,...extra};parts.push(p);return p;}
-export function rod(parts,id,tag,a,b,radius,extra={}){const d=sub(b,a);const p={id,tag,kind:'capsule',position:mul(add(a,b),.5),rotation:fromY(d),radius,halfHeight:norm(d)/2,...extra};parts.push(p);return p;}
+export function rod(parts,id,tag,a,b,radius,extra={}){const d=sub(b,a);const p={id,tag,kind:'capsule',position:mul(add(a,b),.5),rotation:fromY(d),radius,halfHeight:norm(d)/2,start:a,end:b,...extra};parts.push(p);return p;}
 export function chute(parts,id,points,width=.026){
  const path=[points[0]];
  for(let i=1;i<points.length-1;i++){
@@ -31,9 +31,9 @@ export function chute(parts,id,points,width=.026){
  for(let i=0;i<path.length-1;i++){const a=i*4,b=a+4;indices.push(a,b,a+1,a+1,b,b+1,a,a+2,b,a+2,b+2,b,a+1,b+1,a+3,a+3,b+1,b+3);}
  parts.push({id,kind:'mesh',tag:'chute',position:vec(),rotation:identity(),vertices:new Float32Array(vertices),indices:new Uint32Array(indices),friction:.06,restitution:.04});
 }
-export function bowlHeight(t,x,z){const r=Math.hypot(x,z),v=t.valleyRadius;
- const h=r>=v?t.depth*((r-v)/(t.radius-v))**2:t.centerRise*(1-r/v)**2;
- return t.cy-t.depth+h+t.tilt*x;
+export function bowlHeight(t,x,z){
+ const r=Math.hypot(x,z);
+ return t.cy-t.depth+t.depth*(r/t.radius)+t.tilt*x+(t.tiltZ||0)*z;
 }
 export function bowlMesh(t){
  const coords=[],starts=[],N=72;
@@ -42,7 +42,7 @@ export function bowlMesh(t){
  let indices=earcut(coords,starts,2),vertices=[];
  for(let i=0;i<coords.length;i+=2)vertices.push([coords[i],coords[i+1]]);
  // Subdivide the same triangle topology for curved rendering AND curved collision.
- for(let pass=0;pass<2;pass++){
+ for(let pass=0;pass<3;pass++){
   const cache=new Map(),next=[];function middle(a,b){const key=a<b?`${a},${b}`:`${b},${a}`;if(cache.has(key))return cache.get(key);const p=vertices[a],q=vertices[b],i=vertices.push([(p[0]+q[0])/2,(p[1]+q[1])/2])-1;cache.set(key,i);return i;}
   for(let i=0;i<indices.length;i+=3){const[a,b,c]=indices.slice(i,i+3),ab=middle(a,b),bc=middle(b,c),ca=middle(c,a);next.push(a,ab,ca,ab,b,bc,ca,bc,c,ab,bc,ca);}indices=next;
  }
@@ -54,7 +54,7 @@ export function bowlMesh(t){
 export function shaftMesh(t,h){
  const vertices=[],indices=[],N=24,top=bowlHeight(t,h.x,h.z);
  // Open, bevelled collar; never cap the hole.
- for(let row=0;row<3;row++){const radius=h.r+(row===0?0:.0006),y=top-row*.004;for(let i=0;i<N;i++){const a=i*2*Math.PI/N;vertices.push(t.cx+h.x+radius*Math.cos(a),y,t.cz+h.z+radius*Math.sin(a));}}
+ for(let row=0;row<3;row++){const radius=h.r+row*.0015;for(let i=0;i<N;i++){const a=i*2*Math.PI/N,y=bowlHeight(t,h.x+h.r*Math.cos(a),h.z+h.r*Math.sin(a))-row*.006;vertices.push(t.cx+h.x+radius*Math.cos(a),y,t.cz+h.z+radius*Math.sin(a));}}
  for(let row=0;row<2;row++)for(let i=0;i<N;i++){const a=row*N+i,b=row*N+(i+1)%N,c=a+N,d=b+N;indices.push(a,c,b,b,c,d);}
  return{vertices:new Float32Array(vertices),indices:new Uint32Array(indices)};
 }

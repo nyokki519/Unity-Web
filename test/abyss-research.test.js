@@ -53,7 +53,7 @@ test("session export replay preserves tick inputs and physical outcome", () => {
   assert.equal(replay.finished, true);
   assert.equal(g.inputs[0].type, "fire");
   assert.equal(record.version, 2);
-  assert.equal(record.physicsVersion, "si-1");
+  assert.equal(record.physicsVersion, "si-2");
   assert.equal(record.inputs[0].angle, -90);
   replay.dispose();
   g.dispose();
@@ -264,4 +264,8 @@ test("SI default cadence is independent of legacy default cadence", () => {
       assert.doesNotThrow(()=>validateImport({...record,inputs:[record.inputs[0],{...record.inputs[1],tick:minimum}]}));
     } finally { g.dispose?.(); }
   }
+});
+
+test('previous SI version replays with its frozen contact geometry',async()=>{
+ const {createSimulation:previous}=await import('../public/js/abyss/si-v1/si-engine.js');const g=previous({seed:'previous-si',initialBalls:2});try{g.fire(55);g.step(2);const record=exportSession(g),r=createReplay(record);assert.equal(record.physicsVersion,'si-1');r.step(g.tick);assert.deepEqual(r.game.snapshot(),g.snapshot());}finally{g.dispose();}
 });

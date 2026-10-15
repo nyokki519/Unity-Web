@@ -1,0 +1,120 @@
+{
+  "note": "Original provisional easy geometry; these are seeded test outcomes, not real-machine probabilities.",
+  "results": [
+    {
+      "seed": "abyss",
+      "shots": 100,
+      "jackpots": 1,
+      "lost": 99,
+      "gate": 23,
+      "entries": [
+        7,
+        1,
+        1
+      ],
+      "passes": [
+        1,
+        1,
+        1
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "seed": "0",
+      "shots": 100,
+      "jackpots": 1,
+      "lost": 99,
+      "gate": 26,
+      "entries": [
+        6,
+        1,
+        1
+      ],
+      "passes": [
+        1,
+        1,
+        1
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "seed": "1",
+      "shots": 100,
+      "jackpots": 0,
+      "lost": 100,
+      "gate": 23,
+      "entries": [
+        8,
+        0,
+        0
+      ],
+      "passes": [
+        0,
+        0,
+        0
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "seed": "2",
+      "shots": 100,
+      "jackpots": 1,
+      "lost": 99,
+      "gate": 21,
+      "entries": [
+        2,
+        1,
+        1
+      ],
+      "passes": [
+        1,
+        1,
+        1
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "seed": "3",
+      "shots": 100,
+      "jackpots": 0,
+      "lost": 100,
+      "gate": 27,
+      "entries": [
+        7,
+        0,
+        0
+      ],
+      "passes": [
+        0,
+        0,
+        0
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    }
+  ]
+}

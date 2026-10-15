@@ -1,0 +1,52 @@
+{
+  "widths": [
+    {
+      "width": 375,
+      "overflow": false,
+      "quickViews": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "quickViews": true
+    },
+    {
+      "width": 414,
+      "overflow": false,
+      "quickViews": true
+    }
+  ],
+  "outcomes": [
+    [
+      1,
+      "win",
+      true
+    ],
+    [
+      2,
+      "win",
+      true
+    ],
+    [
+      3,
+      "win",
+      true
+    ],
+    [
+      1,
+      "miss",
+      true
+    ],
+    [
+      2,
+      "miss",
+      true
+    ],
+    [
+      3,
+      "miss",
+      true
+    ]
+  ],
+  "errors": []
+}

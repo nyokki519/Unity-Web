@@ -135,7 +135,7 @@ export function createLabPanel({ configInputs, handlers }) {
     configGrid = el("div", "abyss-settings-grid");
   for (const [key, label, value, min, max, step] of [
     ["gravity", "重力（m/s²）", 9.80665, 1, 15, .01],
-    ["restitution", "反発係数", .48, 0, .9, .01],
+    ["restitution", "反発係数", .68, 0, .9, .01],
     ["friction", "接触摩擦", .18, .01, 1, .01],
     ["fireInterval", "発射間隔（秒）", .6, .1, 3, .05],
     ["launchVariance", "発射速度のばらつき（比率）", .012, 0, .1, .001],
@@ -185,7 +185,7 @@ export function createLabPanel({ configInputs, handlers }) {
     el(
       "p",
       "abyss-note",
-      "玉は直径11mm・質量5.5g。盤面・皿は未実測のオリジナル仮設計です。Rapierの3D接触計算で進みます。LABは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。",
+      "玉は直径11mm・質量5.5g。盤面・皿は未実測のオリジナル仮設計です。Rapierの3D接触計算で進みます。LABは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。玉の通路幅を保つため、釘の位置を自動補正する場合があります。",
     ),
     configGrid,
     button("設定を適用して開始", handlers.onApply, "button"),
