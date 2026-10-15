@@ -9,5 +9,5 @@ export function guessingScreen(state,send,draft){const e=state.event,g=e.guess,w
  else if(g.canVote){
   draft.vote??='';const select=labeledSelect('誰の回答だと思う？',[['','選んでください'],...g.candidates.map(c=>[c.id,c.name])],draft.vote,v=>{draft.vote=v;submit.disabled=!v;});select.querySelector('select').name='guess-person';const submit=button('予想を送る',()=>send('event_vote',{itemId:g.item.id,value:draft.vote}));submit.id='event-vote';submit.disabled=!draft.vote;wrap.append(select,submit,button('予想をパス',()=>send('event_vote',{itemId:g.item.id,skip:true}),'quiet-button'));
  }else wrap.append(el('p','muted',e.participating?'自分の回答には投票できません。正解公開を待ちましょう。':'今回は見学です。次のラウンドから参加できます。'));
- wrap.append(el('p','small muted',`予想済み ${g.voteCount}人。回答者情報は正解公開後に表示されます。`));return wrap;
+ const progress=el('p','small muted',`予想済み ${g.voteCount}人。回答者情報は正解公開後に表示されます。`);progress.id='guess-progress';progress.setAttribute('role','status');wrap.append(progress);return wrap;
 }

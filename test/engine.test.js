@@ -7,7 +7,7 @@ import {GameEngine,GameError,settingsFrom} from '../src/engine.js';
 import {RoomStore} from '../src/store.js';
 import {validateQuestions,questions} from '../src/questions.js';
 import {modes} from '../src/modes/index.js';
-function answerFor(q,variant=0){switch(q.mode){case'ALIGN':case'PREDICT':return variant?'b':'a';case'LINE':return variant?90:10;case'RANK':return q.choices.map(c=>c.id)[variant?'reverse':'slice']();case'AUCTION':return Object.fromEntries(q.choices.map((c,i)=>[c.id,i===variant?100:0]));case'QUICK':return '話したいこと';}}
+function answerFor(q,variant=0){switch(q.mode){case'ALIGN':case'PREDICT':return variant?'b':'a';case'LINE':return q.scale?(variant?q.scale.max:q.scale.min):(variant?90:10);case'RANK':return q.choices.map(c=>c.id)[variant?'reverse':'slice']();case'AUCTION':return Object.fromEntries(q.choices.map((c,i)=>[c.id,i===variant?100:0]));case'QUICK':return '話したいこと';}}
 function setup(mode='ALIGN',autoReveal=true){let now=Date.now();const store=new RoomStore(':memory:'),engine=new GameEngine(store,{now:()=>now,countdownMs:3000,hostGraceMs:12000});const host=engine.create('ホスト',{mode,depth:'LIGHT',rounds:3,autoReveal});const guest=engine.join(host.code,'ゲスト');for(const s of[host,guest]){engine.connect(s.code,s.playerId);engine.command(s.code,s.playerId,{action:'ready',ready:true});}engine.command(host.code,host.playerId,{action:'start'});return{store,engine,host,guest,room:engine.get(host.code),advance:ms=>{now+=ms;engine.tick();}};}
 test('full question catalog, complete mode/depth pools and safe schemas',()=>{assert.ok(validateQuestions()>=192);for(const mode of Object.keys(modes))for(const depth of['LIGHT','BALANCED','DEEP'])assert.ok(questions.some(q=>q.mode===mode&&q.depth===depth));});
 for(const mode of Object.keys(modes))test(`${mode}: three real rounds, private answers, reveal, talk, own/group summaries`,()=>{
@@ -24,7 +24,7 @@ for(const mode of Object.keys(modes))test(`${mode}: three real rounds, private a
   engine.command(host.code,host.playerId,{action:'answer',roundId,value:answerFor(q)});
   assert.equal(room.phase,'COUNTDOWN');assert.equal(engine.view(room,guest.playerId).round.result,null);
   advance(3000);assert.equal(room.phase,'TALK');assert.ok(room.round.result);assert.ok(q.talkPrompt);
-  if(mode==='LINE'){assert.deepEqual(room.round.result.positions,[10,90]);assert.equal(room.round.result.average,50);assert.ok(!JSON.stringify(room.round.result).includes(guest.playerId));}
+  if(mode==='LINE'){const expected=q.scale?[q.scale.min,q.scale.max]:[10,90];assert.deepEqual(room.round.result.positions,expected);assert.equal(room.round.result.average,(expected[0]+expected[1])/2);assert.ok(!JSON.stringify(room.round.result).includes(guest.playerId));}
   if(mode==='ALIGN')assert.deepEqual(room.round.result.counts,[1,1]);
   if(mode==='AUCTION')assert.equal(room.round.result.allocation.reduce((s,r)=>s+r.average,0),100);
   engine.command(host.code,host.playerId,{action:'next'});

@@ -35,8 +35,9 @@ test('ten independent players synchronize LINE without exposing private identiti
   const host=await post('/api/rooms',{name:'HOST',settings:{mode:'LINE',rounds:1}});const sessions=[host,...await Promise.all(Array.from({length:9},(_,i)=>post(`/api/rooms/${host.code}/join`,{name:`参加者${i+1}`})))];
   for(const s of sessions)clients.push(new Client(base.replace('http','ws')+'/ws',s));await wait(()=>clients.every(c=>c.state?.players.filter(p=>p.connected).length===10));
   clients.forEach(c=>c.send('ready',{ready:true}));await wait(()=>clients[0].state.players.every(p=>p.ready));clients[0].send('start');await wait(()=>clients.every(c=>c.state.phase==='ANSWER'));
-  for(let i=0;i<9;i++)clients[i].send('answer',{roundId:clients[i].state.round.id,value:i*10});await wait(()=>clients[9].state.round.answeredCount===9);assert.equal(clients[9].state.round.result,null);assert.equal(clients[9].state.round.ownAnswer,null);
-  clients[9].send('answer',{roundId:clients[9].state.round.id,value:90});await wait(()=>clients.every(c=>c.state.phase==='TALK'));assert.equal(clients[0].state.round.result.average,45);assert.deepEqual(clients[0].state.round.result.positions,[0,10,20,30,40,50,60,70,80,90]);
+  const scale=clients[0].state.round.question.scale;const inputs=Array.from({length:10},(_,i)=>scale?Number((scale.min+Math.round((scale.max-scale.min)/scale.step*i/9)*scale.step).toPrecision(15)):i*10);
+  for(let i=0;i<9;i++)clients[i].send('answer',{roundId:clients[i].state.round.id,value:inputs[i]});await wait(()=>clients[9].state.round.answeredCount===9);assert.equal(clients[9].state.round.result,null);assert.equal(clients[9].state.round.ownAnswer,null);
+  clients[9].send('answer',{roundId:clients[9].state.round.id,value:inputs[9]});await wait(()=>clients.every(c=>c.state.phase==='TALK'));const mean=inputs.reduce((a,b)=>a+b,0)/inputs.length;assert.equal(clients[0].state.round.result.average,scale?Number(mean.toFixed(10)):Math.round(mean));assert.deepEqual(clients[0].state.round.result.positions,inputs);
   const publicResult=JSON.stringify(clients[0].state.round.result);for(const s of sessions)assert.ok(!publicResult.includes(s.playerId));
   clients[0].send('next');await wait(()=>clients.every(c=>c.state.phase==='FINAL'));assert.equal(clients[0].state.summary.people,10);
  }finally{for(const c of clients)c.ws.close();await app.close();}

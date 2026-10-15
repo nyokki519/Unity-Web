@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "width": 375,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    },
+    {
+      "legacyMode": "ALIGN",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "legacyMode": "PREDICT",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "legacyMode": "LINE",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "legacyMode": "RANK",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "legacyMode": "AUCTION",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "legacyMode": "QUICK",
+      "human": 1,
+      "cpu": 5,
+      "revealed": true
+    },
+    {
+      "game": "VALUES",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "game": "WHO",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "game": "BOUNDARY",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "game": "QUEST",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "game": "CAFE",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "game": "STORY",
+      "human": 1,
+      "cpu": 5,
+      "rounds": 2,
+      "end": true
+    },
+    {
+      "width": 414,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

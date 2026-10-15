@@ -1,3 +1,4 @@
+import {configureCpu,tickCpu} from './cpu.js';
 import { randomBytes,randomInt,randomUUID,createHash,timingSafeEqual } from 'node:crypto';
 import { modes } from './modes/index.js';
 import { drawQuestion,pool,catalog } from './questions.js';
@@ -24,7 +25,7 @@ export class GameEngine {
   constructor(store,{now=()=>Date.now(),countdownMs=3000,hostGraceMs=12000}={}) {
     this.store=store;this.now=now;this.countdownMs=countdownMs;this.hostGraceMs=hostGraceMs;this.rooms=new Map();this.onChange=()=>{};
     for(const room of store.load()) {
-      for(const p of Object.values(room.players)) {p.connected=false;p.disconnectedAt=this.now();}
+      for(const p of Object.values(room.players)) {p.connected=!!p.cpu&&!p.left;p.disconnectedAt=p.connected?null:this.now();}
       room.hostOfflineAt=this.now();
       if(room.phase==='COUNTDOWN') {room.phase='ANSWER';room.revealAt=null;}
       this.rooms.set(room.code,room);
@@ -52,10 +53,10 @@ export class GameEngine {
   authenticate(code,token) {
     if(typeof token!=='string'||!/^[a-f0-9]{64}$/.test(token)) fail('BAD_SESSION');
     const room=this.get(code),digest=Buffer.from(hash(token),'hex');
-    const player=Object.values(room.players).find(p=>!p.left&&timingSafeEqual(Buffer.from(p.tokenHash,'hex'),digest));
+    const player=Object.values(room.players).find(p=>!p.left&&!p.cpu&&timingSafeEqual(Buffer.from(p.tokenHash,'hex'),digest));
     if(!player) fail('BAD_SESSION');return {room,player};
   }
-  connect(code,id) {const room=this.get(code),p=room.players[id];if(!p||p.left) fail('BAD_SESSION');p.connected=true;p.disconnectedAt=null;if(room.hostId===id) room.hostOfflineAt=null;this.changed(room);}
+  connect(code,id) {const room=this.get(code),p=room.players[id];if(!p||p.left||p.cpu) fail('BAD_SESSION');p.connected=true;p.disconnectedAt=null;if(room.hostId===id) room.hostOfflineAt=null;this.changed(room);}
   disconnect(code,id) {let room;try{room=this.get(code);}catch{return;}const p=room.players[id];if(!p) return;p.connected=false;p.disconnectedAt=this.now();if(room.hostId===id) room.hostOfflineAt=this.now();this.changed(room);}
   active(room) {return Object.values(room.players).filter(p=>p.connected&&p.ready&&!p.left);}
   beginRound(room) {
@@ -101,6 +102,7 @@ export class GameEngine {
     } else {
       if(room.hostId!==id) fail('HOST_ONLY');
       switch(action) {
+        case 'cpu_add':case 'cpu_clear':configureCpu(room,msg);break;
         case 'settings': if(room.phase!=='LOBBY') fail('NOT_LOBBY');room.settings=settingsFrom(msg.settings);break;
         case 'start': {
           if(room.phase!=='LOBBY') fail('NOT_LOBBY');
@@ -130,7 +132,7 @@ export class GameEngine {
           if(room.settings.autoReveal&&this.allAnswered(room))this.reveal(room);break;
         }
         case 'end': if(room.phase==='LOBBY')fail('BAD_PHASE');this.finish(room);break;
-        case 'again': if(room.phase!=='FINAL')fail('BAD_PHASE');room.phase='LOBBY';room.event=null;room.round=null;room.paused=false;room.history=[];room.used=[];room.index=0;room.startedAt=null;room.endedAt=null;for(const p of Object.values(room.players))p.ready=false;break;
+        case 'again': if(room.phase!=='FINAL')fail('BAD_PHASE');room.phase='LOBBY';room.event=null;room.round=null;room.paused=false;room.history=[];room.used=[];room.index=0;room.startedAt=null;room.endedAt=null;for(const p of Object.values(room.players))p.ready=!!p.cpu;break;
         default:fail('BAD_COMMAND');
       }
     }
@@ -138,7 +140,7 @@ export class GameEngine {
   }
   transferHost(room) {
     if(room.players[room.hostId]?.connected) return;
-    const next=Object.values(room.players).filter(p=>p.connected&&!p.left).sort((a,b)=>a.joinedAt-b.joinedAt)[0];
+    const next=Object.values(room.players).filter(p=>p.connected&&!p.left&&!p.cpu).sort((a,b)=>a.joinedAt-b.joinedAt)[0];
     if(next){room.hostId=next.id;room.hostOfflineAt=null;room.notice=`${next.name}さんがホストを引き継ぎました。`;return true;}
     return false;
   }
@@ -146,6 +148,7 @@ export class GameEngine {
     for(const room of this.rooms.values()) {
       if(room.expiresAt<=this.now()){this.rooms.delete(room.code);this.store.remove(room.code);this.onChange({...room,expired:true});continue;}
       let changed=tickEvent(room,this.now());
+      changed=tickCpu(this,room,this.now())||changed;
       if(room.hostOfflineAt!==null&&this.now()-room.hostOfflineAt>=this.hostGraceMs)changed=this.transferHost(room)||changed;
       if(room.phase==='COUNTDOWN'&&!room.paused&&this.now()>=room.revealAt){room.round.result=modes[room.round.question.mode].result(room.round.question,room.round,room.players);room.history.push(structuredClone(room.round));room.phase='TALK';room.revealAt=null;changed=true;}
       if(changed)this.changed(room);
@@ -155,7 +158,7 @@ export class GameEngine {
     const round=room.round;
     const own=round?.answers[id]||null;
     return {code:room.code,hostId:room.hostId,selfId:id,settings:room.settings,phase:room.phase,paused:room.paused,notice:room.notice,hostOffline:!room.players[room.hostId]?.connected,hostGraceMs:this.hostGraceMs,serverTime:this.now(),expiresAt:room.expiresAt,
-      players:Object.values(room.players).filter(p=>!p.left).map(p=>({id:p.id,name:p.name,ready:p.ready,connected:p.connected,host:p.id===room.hostId,participating:round?.participants.includes(p.id)||false,answered:round?Object.hasOwn(round.answers,p.id):false})),
+      players:Object.values(room.players).filter(p=>!p.left).map(p=>({id:p.id,name:p.name,cpu:!!p.cpu,ready:p.ready,connected:p.connected,host:p.id===room.hostId,participating:round?.participants.includes(p.id)||false,answered:round?Object.hasOwn(round.answers,p.id):false})),
       progress:{current:room.index+1,total:room.settings.rounds,completed:room.history.length},
       round:round?{id:round.id,question:{id:round.question.id,mode:round.question.mode,category:round.question.category,depth:round.question.depth,question:round.question.question,choices:round.question.choices,scale:round.question.scale,talkPrompt:round.question.talkPrompt},targetId:round.targetId,participantCount:round.participants.length,answeredCount:round.participants.filter(pid=>Object.hasOwn(round.answers,pid)).length,ownAnswer:own,participating:round.participants.includes(id),revealAt:room.revealAt,result:room.phase==='TALK'||room.phase==='FINAL'?round.result:null}:null,
       event:eventView(room,id,this.now()),

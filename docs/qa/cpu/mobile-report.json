@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "width": 375,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    },
+    {
+      "width": 414,
+      "addRemove": true,
+      "reload": true,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}
