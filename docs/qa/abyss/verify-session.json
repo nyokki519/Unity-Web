@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "difficulty": "easy",
+  "seed": "abyss",
+  "initialBalls": 100,
+  "config": {},
+  "inputs": [
+    {
+      "tick": 168,
+      "type": "fire",
+      "power": 55,
+      "angle": -103
+    }
+  ],
+  "elapsed": 1.3,
+  "status": "paused",
+  "endReason": null,
+  "result": {
+    "score": 0,
+    "lost": 0,
+    "jackpots": 0,
+    "fired": 1
+  }
+}

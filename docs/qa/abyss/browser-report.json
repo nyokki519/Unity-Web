@@ -1,0 +1,97 @@
+{
+  "widths": [
+    {
+      "width": 375,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1278.703125,
+          "bottom": -717.109375
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 661.890625,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 6 FPS"
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1302.703125,
+          "bottom": -717.109375
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 685.890625,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 6 FPS"
+    },
+    {
+      "width": 414,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1291.703125,
+          "bottom": -697.703125
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 694.296875,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 6 FPS"
+    }
+  ],
+  "errors": [],
+  "checks": {
+    "mobileBasic": true,
+    "replayBlurResumeNoError": true,
+    "sessionJSONImportReplayPlayStep": true,
+    "nestedSettingsReloadPresetSaveListRead": true,
+    "labEachStageWinMissEmptyResult": true,
+    "approximate1000Complete": true,
+    "approximateMillionPauseResumeCancel": true,
+    "physical1000StartedCancelledOnly": true
+  },
+  "limitations": [
+    "Chromium SwiftShader on cloud CPU; no iPhone Safari or hardware GPU measurements."
+  ],
+  "natural": {
+    "status": "finished",
+    "fired": 100,
+    "lost": 99,
+    "jackpots": 1,
+    "passes": [
+      3,
+      1,
+      1
+    ],
+    "elapsed": 63.8,
+    "ledger": true
+  }
+}

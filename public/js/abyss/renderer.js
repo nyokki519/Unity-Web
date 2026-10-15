@@ -1,6 +1,16 @@
 import * as THREE from "../../vendor/three/three.module.js";
 import { holesAt, gateAt } from "./config.js";
 
+const deepestBall = (balls) =>
+  balls.reduce(
+    (best, b) =>
+      !best ||
+      b.stage > best.stage ||
+      (b.stage === best.stage && b.id > best.id)
+        ? b
+        : best,
+    null,
+  );
 const W = 1000,
   H = 1600;
 const center = (t) => ({ x: t.cx ?? t.x ?? 500, y: t.cy ?? t.y ?? 1000 });
@@ -80,8 +90,12 @@ function fallback(canvas, board) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.fillStyle = "#03090e";
       ctx.fillRect(0, 0, width, height);
-      const b = camera === "follow" ? (game.balls || []).at(-1) : null,
-        z = view.zoom * (b ? 1.7 : 1),
+      const candidate = deepestBall(game.balls || []);
+      const b =
+          camera === "follow" || (camera === "auto" && candidate?.stage > 0)
+            ? candidate
+            : null,
+        z = view.zoom * (b ? (b.stage ? 2.4 + b.stage * 0.6 : 1.7) : 1),
         cx = (b?.renderX ?? 500) - view.panX,
         cy = (b?.renderY ?? 800) - view.panY,
         scale = Math.min(width / W, height / H) * z;
@@ -115,7 +129,7 @@ function fallback(canvas, board) {
           ctx.beginPath();
           ctx.arc(c.x + h.x, c.y + h.y, h.r, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = h.win ? "#65ddbc" : "#c2a15c";
+          ctx.strokeStyle = h.win ? "#f5d77a" : "#566775";
           ctx.lineWidth = 3;
           ctx.stroke();
         }
@@ -511,8 +525,8 @@ export function createRenderer(canvas, board) {
       const hx = h.x,
         hy = h.y;
       mesh(
-        new THREE.TorusGeometry(h.r + 0.8, 1.35, 8, 40),
-        h.win ? winning : brass,
+        new THREE.TorusGeometry(h.r + (h.win ? 3.1 : .8), h.win ? 3 : .7, 8, 40),
+        h.win ? winning : edge,
         hx,
         hy,
         1 + (12 * (hx * hx + hy * hy)) / (r * r),
@@ -664,6 +678,7 @@ export function createRenderer(canvas, board) {
     lastFrameAt = 0,
     frameAverage = 16.7,
     qualitySamples = 0,
+    focusZoom = 1,
     lastJackpots = 0,
     jackpotAt = -Infinity;
   function resize() {
@@ -917,13 +932,29 @@ export function createRenderer(canvas, board) {
         line.geometry.setDrawRange(0, points.length);
         line.material = item.success ? traceGreen : traceBlue;
       });
-      const followed = cameraMode === "follow" ? active.at(-1) : null;
+      const candidate = deepestBall(active);
+      const followed =
+        cameraMode === "follow" ||
+        (cameraMode === "auto" && candidate?.stage > 0)
+          ? candidate
+          : null;
       const tx = (followed?.renderX ?? 500) - view.panX,
         ty = (followed?.renderY ?? 800) - view.panY;
-      focus.lerp(new THREE.Vector2(tx, ty), reducedMotion ? 1 : 0.12);
-      camera.position.set(focus.x, -focus.y - 320, 2500);
+      const easing = reducedMotion
+        ? 1
+        : 1 - Math.exp(-3.5 * Math.min(0.2, frameAverage / 1000));
+      focus.lerp(new THREE.Vector2(tx, ty), easing);
+      camera.position.set(
+        focus.x,
+        -focus.y - (followed?.stage ? 850 : 320),
+        2500,
+      );
       camera.lookAt(focus.x, -focus.y, 0);
-      camera.zoom = view.zoom * (followed ? 1.7 : 1);
+      const targetZoom =
+        view.zoom *
+        (followed ? (followed.stage ? 2.4 + followed.stage * 0.6 : 1.7) : 1);
+      focusZoom += (targetZoom - focusZoom) * easing;
+      camera.zoom = focusZoom;
       camera.updateProjectionMatrix();
       renderer.render(scene, camera);
     },

@@ -1,0 +1,164 @@
+{
+  "approximate": {
+    "type": "result",
+    "id": 1,
+    "mode": "approximate",
+    "label": "近似：ユーザー仮定の独立確率（実測物理成功率ではありません）",
+    "completed": 1000000,
+    "total": 1000000,
+    "timeouts": 0,
+    "policy": null,
+    "counts": {
+      "reached": [
+        1000000,
+        10144,
+        1920,
+        647,
+        151
+      ],
+      "passed": [
+        10144,
+        1920,
+        647,
+        151,
+        29
+      ],
+      "shots": 1000000
+    },
+    "rows": [
+      {
+        "label": "入口",
+        "reached": 1000000,
+        "passed": 10144,
+        "rate": 0.010144,
+        "low": 0.009949474366163974,
+        "high": 0.010342289142682804
+      },
+      {
+        "label": "周期ゲート",
+        "reached": 10144,
+        "passed": 1920,
+        "rate": 0.1892744479495268,
+        "low": 0.18176959992763495,
+        "high": 0.19701454588492642
+      },
+      {
+        "label": "1段目",
+        "reached": 1920,
+        "passed": 647,
+        "rate": 0.33697916666666666,
+        "low": 0.3161804876003686,
+        "high": 0.3584288742418826
+      },
+      {
+        "label": "2段目",
+        "reached": 647,
+        "passed": 151,
+        "rate": 0.23338485316846985,
+        "low": 0.20242399523118543,
+        "high": 0.2674929940381675
+      },
+      {
+        "label": "3段目",
+        "reached": 151,
+        "passed": 29,
+        "rate": 0.19205298013245034,
+        "low": 0.13717928928278125,
+        "high": 0.2622063745548756
+      },
+      {
+        "label": "全体（発射あたり）",
+        "reached": 1000000,
+        "passed": 29,
+        "rate": 2.9e-05,
+        "low": 2.0192731417856165e-05,
+        "high": 4.1648489842333076e-05
+      }
+    ],
+    "seconds": 0.2715,
+    "progress": 3,
+    "pauseResume": true
+  },
+  "approximateRepeatIdentical": true,
+  "physical": {
+    "type": "result",
+    "id": 1,
+    "mode": "physics",
+    "label": "固定刻みの物理試行",
+    "completed": 1000,
+    "total": 1000,
+    "timeouts": 0,
+    "policy": "Independent single-ball trials; seeded launch phase uniformly sampled over gate period; 120 second settling limit",
+    "counts": {
+      "reached": [
+        1000,
+        164,
+        163,
+        76,
+        42
+      ],
+      "passed": [
+        164,
+        163,
+        76,
+        42,
+        2
+      ],
+      "jackpots": 2,
+      "shots": 1000
+    },
+    "rows": [
+      {
+        "label": "入口",
+        "reached": 1000,
+        "passed": 164,
+        "rate": 0.164,
+        "low": 0.14234418773548693,
+        "high": 0.18822739396680613
+      },
+      {
+        "label": "周期ゲート",
+        "reached": 164,
+        "passed": 163,
+        "rate": 0.9939024390243902,
+        "low": 0.9662737492602963,
+        "high": 0.9989228186095372
+      },
+      {
+        "label": "1段目",
+        "reached": 163,
+        "passed": 76,
+        "rate": 0.4662576687116564,
+        "low": 0.39133423915437776,
+        "high": 0.5427349060224107
+      },
+      {
+        "label": "2段目",
+        "reached": 76,
+        "passed": 42,
+        "rate": 0.5526315789473685,
+        "low": 0.4410051506448649,
+        "high": 0.6591934193482787
+      },
+      {
+        "label": "3段目",
+        "reached": 42,
+        "passed": 2,
+        "rate": 0.047619047619047616,
+        "low": 0.013157524908905607,
+        "high": 0.15789852396958842
+      },
+      {
+        "label": "全体（発射あたり）",
+        "reached": 1000,
+        "passed": 2,
+        "rate": 0.002,
+        "low": 0.000548643588120728,
+        "high": 0.007262807863492177
+      }
+    ],
+    "seconds": 2.672199999988079,
+    "progress": 119,
+    "pauseResume": true
+  }
+}

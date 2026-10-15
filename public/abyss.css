@@ -1,0 +1,744 @@
+/* PROJECT ABYSS: isolated arcade palette; multiplayer keeps its cafe theme. */
+.abyss-screen {
+  --bg: #080a0e;
+  --paper: #11151c;
+  --ink: #f4f1e8;
+  --muted: #a0aaba;
+  --olive: #d4af37;
+  --dark: #d4af37;
+  --pale: #192128;
+  --border: #303943;
+  max-width: none;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 30px clamp(14px, 3vw, 48px) 60px;
+  min-height: 100dvh;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.abyss-heading {
+  max-width: 1500px;
+  margin: 0 auto 28px;
+}
+.abyss-heading .quiet-button {
+  padding-left: 0;
+  color: #a6b0bd;
+  font-size: 12px;
+}
+.abyss-brand,
+.abyss-kicker {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #d4af37;
+}
+.abyss-brand {
+  margin: 22px 0 8px;
+}
+.abyss-heading h1 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 5vw, 65px);
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  color: #f4f1e8;
+}
+.abyss-tagline {
+  font-size: 17px;
+  letter-spacing: 0.25em;
+  color: #c8c2ad;
+  margin: 12px 0 6px;
+}
+.abyss-intro {
+  font-size: 12px;
+  color: #a0aaba;
+}
+.abyss-note {
+  font-size: 11px;
+  color: #a0aaba;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.abyss-screen .field {
+  margin: 0 0 14px;
+}
+.abyss-screen .field-label {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  margin: 0 0 6px;
+  color: #b8c0ca;
+}
+.abyss-screen input,
+.abyss-screen select {
+  background: #0b1017;
+  border-color: #35404d;
+  color: #f4f1e8;
+  font-size: 16px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 44px;
+  border-radius: 5px;
+  padding: 8px 10px;
+}
+.abyss-screen input[type="range"] {
+  background: transparent;
+  accent-color: #d4af37;
+  border: 0;
+  min-height: 34px;
+  padding: 0;
+  touch-action: pan-y;
+}
+.abyss-screen input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin: 0;
+  accent-color: #d4af37;
+}
+.abyss-screen .button {
+  background: linear-gradient(145deg, #e0c268, #b18c32);
+  color: #11130e;
+  border: 1px solid #d4af37;
+  border-radius: 6px;
+  min-height: 46px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 11px 14px;
+  gap: 8px;
+  white-space: normal;
+  line-height: 1.6;
+}
+.abyss-screen .button:hover:not(:disabled) {
+  background: #efcf70;
+}
+.abyss-screen .button.secondary {
+  background: #151d27;
+  color: #e4e8ed;
+  border-color: #3c4755;
+}
+.abyss-screen .button.secondary:hover:not(:disabled) {
+  background: #25303c;
+}
+.abyss-screen .quiet-button {
+  color: #b7c0cc;
+}
+.abyss-screen :focus-visible {
+  outline-color: #f5d77a;
+  outline-offset: 3px;
+}
+.abyss-setup {
+  max-width: 1500px;
+  margin: 0 auto 26px;
+  background: linear-gradient(120deg, #151c25, #0f141c);
+  padding: 22px;
+  border: 1px solid #303943;
+  border-radius: 10px;
+  grid-template-columns: 1fr 1fr 1fr minmax(160px, 0.7fr);
+  gap: 20px;
+  align-items: end;
+}
+.abyss-setup > .button {
+  grid-column: auto;
+  max-width: none;
+  width: 100%;
+  margin-bottom: 14px;
+}
+.abyss-setup > .abyss-note {
+  grid-column: 1/-1;
+}
+.abyss-layout {
+  display: grid;
+  grid-template-columns: minmax(175px, 230px) minmax(300px, 650px) minmax(
+      220px,
+      300px
+    );
+  gap: 24px;
+  max-width: 1500px;
+  margin: auto;
+  align-items: start;
+  justify-content: center;
+}
+.abyss-telemetry,
+.abyss-controls {
+  min-width: 0;
+}
+.abyss-telemetry {
+  padding-top: 18px;
+}
+.abyss-center {
+  min-width: 0;
+}
+.abyss-machine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #9aa5b2;
+}
+.abyss-render-badge {
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: #73bbae;
+}
+.abyss-machine {
+  position: relative;
+  background: #03090e;
+  border: 1px solid #687078;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 5px #151c23,
+    0 16px 60px #0009,
+    0 0 70px #68b7ad0b;
+  width: 100%;
+  aspect-ratio: 5/8;
+}
+.abyss-machine canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: pan-y;
+}
+.abyss-machine:fullscreen {
+  height: 100dvh;
+  width: auto;
+  aspect-ratio: 5/8;
+  max-width: 100vw;
+  margin: auto;
+  background: #03090e;
+}
+.abyss-machine-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.03em;
+  padding: 14px 4px;
+  color: #6f808d;
+  gap: 10px;
+}
+.abyss-controls {
+  padding: 20px;
+  background: linear-gradient(160deg, #141a23, #0d121a);
+  border: 1px solid #303943;
+  border-radius: 10px;
+  margin-top: 35px;
+}
+.abyss-controls > .abyss-kicker {
+  margin-bottom: 14px;
+}
+.abyss-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 12px;
+  margin: 20px 0;
+}
+.abyss-stats dd {
+  font: 34px/1.2 var(--serif);
+  font-variant-numeric: tabular-nums;
+  color: #f4f1e8;
+  margin-top: 5px;
+}
+.abyss-stats dt {
+  font-size: 10px;
+  color: #8993a4;
+}
+.abyss-stats > div:first-child dd {
+  color: #f5d77a;
+  font-size: 48px;
+}
+.abyss-stats > div {
+  border-color: #27313a;
+  padding-bottom: 10px;
+}
+.abyss-current {
+  font: 10px/1.7 monospace;
+  color: #36d7b7;
+  margin: 22px 0 12px;
+}
+.abyss-passes > div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #252e38;
+  padding: 10px 0;
+  font: 10px/1.7 monospace;
+  color: #8e9aa9;
+}
+.abyss-passes strong {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d9c17b;
+}
+.abyss-message {
+  min-height: 70px;
+  background: #131e25;
+  color: #b9d0cf;
+  border-left: 2px solid #d4af37;
+  font-size: 12px;
+  padding: 14px;
+  margin: 22px 0;
+}
+.abyss-log {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 24px;
+  max-height: 220px;
+  overflow: auto;
+  font-size: 10px;
+  color: #8597a1;
+  font-variant-numeric: tabular-nums;
+}
+.abyss-log li {
+  border-bottom: 1px solid #1e2730;
+  padding: 8px 0;
+}
+.abyss-log li:first-child {
+  color: #c9d8db;
+}
+.abyss-strength {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.abyss-strength > .button {
+  min-height: 40px;
+  padding: 6px;
+  font-size: 20px;
+}
+.abyss-range {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  gap: 8px;
+  align-items: center;
+  margin: 4px 0 14px;
+}
+.abyss-range .field {
+  margin: 0;
+}
+.abyss-range output {
+  text-align: right;
+  font: 14px/1.5 monospace;
+  color: #f5d77a;
+}
+.abyss-strength .abyss-range {
+  margin: 0;
+  grid-template-columns: minmax(0, 1fr) 25px;
+  gap: 4px;
+}
+.abyss-strength .field-label {
+  font-size: 10px;
+}
+.abyss-screen .bonus-shot-actions {
+  gap: 8px;
+}
+.abyss-screen .bonus-shot-actions .button {
+  font-size: 12px;
+  padding: 12px 5px;
+  min-height: 48px;
+}
+.abyss-screen .bonus-hold[aria-pressed="true"] {
+  background: #38493a;
+  outline: 2px solid #f5d77a;
+  color: #f5d77a;
+}
+.abyss-section {
+  border-top: 1px solid #303943;
+  margin-top: 18px;
+  padding-top: 8px;
+  min-width: 0;
+}
+.abyss-section summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #b9c2ce;
+  list-style: none;
+  gap: 10px;
+}
+.abyss-section summary:before {
+  content: "+";
+  color: #d4af37;
+  font: 16px monospace;
+}
+.abyss-section[open] > summary:before {
+  content: "−";
+}
+.abyss-section-body {
+  padding-top: 12px;
+  min-width: 0;
+}
+.abyss-section-body > .button,
+.abyss-section-body > .quiet-button {
+  margin: 5px 4px 5px 0;
+}
+.abyss-section-body > .field:has(input[type="checkbox"]) {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.abyss-section-body > .field:has(input[type="checkbox"]) .field-label {
+  margin: 0;
+}
+.abyss-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 10px;
+  table-layout: fixed;
+  margin: 6px 0 12px;
+}
+.abyss-table th,
+.abyss-table td {
+  padding: 9px 4px;
+  border-bottom: 1px solid #2b3540;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  font-weight: 400;
+}
+.abyss-table thead {
+  color: #d4af37;
+}
+.abyss-table td:last-child {
+  color: #9bbab5;
+  font-variant-numeric: tabular-nums;
+}
+.abyss-settings-grid {
+  display: grid;
+  gap: 4px;
+}
+.abyss-test-mark {
+  max-width: 1500px;
+  margin: 0 auto 24px;
+  border-color: #c82333;
+  color: #f2c9c4;
+  background: #32191d;
+}
+.abyss-result {
+  max-width: 1500px;
+  margin: 30px auto 0;
+  padding: 26px;
+  border: 1px solid #d4af37;
+  background: linear-gradient(135deg, #272517, #11151c);
+  color: #f4f1e8;
+  border-radius: 10px;
+}
+.abyss-result .bonus-result-score {
+  font: 54px var(--serif);
+  color: #f5d77a;
+  margin: 14px 0;
+}
+.abyss-screen > .abyss-section {
+  max-width: 1500px;
+  margin: 28px auto 0;
+}
+.abyss-screen > .abyss-section p {
+  font-size: 12px;
+  color: #a0aaba;
+  margin-bottom: 14px;
+}
+.abyss-inline-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.abyss-reduced * {
+  animation: none !important;
+  transition: none !important;
+}
+@media (min-width: 1700px) {
+  .abyss-layout {
+    grid-template-columns: 240px minmax(500px, 680px) 330px;
+  }
+}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .abyss-layout {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 22px;
+  }
+  .abyss-telemetry {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 10px 24px;
+  }
+  .abyss-telemetry > .abyss-kicker,
+  .abyss-telemetry > .abyss-log {
+    display: none;
+  }
+  .abyss-stats {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-column: 1/-1;
+    margin: 0;
+  }
+  .abyss-current {
+    margin: 0;
+  }
+  .abyss-passes {
+    display: flex;
+    gap: 18px;
+  }
+  .abyss-passes > div {
+    flex: 1;
+    gap: 12px;
+  }
+  .abyss-message {
+    margin: 0;
+    min-height: 40px;
+  }
+  .abyss-telemetry > .abyss-section {
+    margin: 0;
+    grid-column: 2;
+    grid-row: 2/4;
+  }
+  .abyss-setup {
+    grid-template-columns: 1fr 1fr;
+  }
+  .abyss-center {
+    grid-column: 1;
+  }
+  .abyss-controls {
+    grid-column: 2;
+  }
+}
+@media (max-width: 760px) {
+  .abyss-screen {
+    padding: 16px 12px calc(200px + env(safe-area-inset-bottom));
+    font-size: 12px;
+  }
+  .abyss-heading {
+    margin-bottom: 20px;
+  }
+  .abyss-brand {
+    font-size: 8px;
+    margin-top: 14px;
+  }
+  .abyss-heading h1 {
+    font-size: 35px;
+    letter-spacing: 0.07em;
+  }
+  .abyss-tagline {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+  .abyss-intro {
+    font-size: 11px;
+  }
+  .abyss-setup {
+    padding: 16px;
+    gap: 12px;
+    grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+  .abyss-setup > .button {
+    margin: 0;
+  }
+  .abyss-setup .field {
+    margin: 0;
+  }
+  .abyss-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .abyss-center {
+    order: 1;
+    width: 100%;
+  }
+  .abyss-telemetry {
+    order: 2;
+    width: 100%;
+    padding: 14px 4px 0;
+  }
+  .abyss-controls {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    padding: 18px;
+  }
+  .abyss-machine {
+    max-width: 540px;
+    border-radius: 12px;
+    scroll-margin-top: 10px;
+    margin: auto;
+  }
+  .abyss-machine-top,
+  .abyss-machine-bottom {
+    max-width: 540px;
+    margin: auto;
+    font-size: 8px;
+  }
+  .abyss-machine-top {
+    min-height: 30px;
+  }
+  .abyss-telemetry > .abyss-kicker {
+    display: none;
+  }
+  .abyss-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 8px;
+  }
+  .abyss-stats dd {
+    font-size: 29px;
+  }
+  .abyss-stats > div:first-child dd {
+    font-size: 35px;
+  }
+  .abyss-current {
+    margin: 10px 0;
+  }
+  .abyss-passes {
+    display: flex;
+    gap: 12px;
+  }
+  .abyss-passes > div {
+    flex: 1;
+    gap: 8px;
+    font-size: 9px;
+  }
+  .abyss-message {
+    min-height: 45px;
+    margin: 12px 0;
+  }
+  .abyss-log {
+    max-height: 110px;
+    margin-bottom: 12px;
+  }
+  .abyss-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px max(14px, env(safe-area-inset-left))
+      calc(12px + env(safe-area-inset-bottom));
+    background: #101721f5;
+    border-top: 1px solid #bda15a;
+    box-shadow: 0 -8px 25px #0005;
+    z-index: 40;
+    backdrop-filter: blur(12px);
+    display: grid;
+    gap: 6px;
+  }
+  .abyss-strength {
+    margin: 0;
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    max-width: 540px;
+    width: 100%;
+    justify-self: center;
+  }
+  .abyss-strength .abyss-range {
+    grid-template-columns: minmax(0, 1fr) 32px;
+  }
+  .abyss-strength .field-label {
+    margin: 0;
+    font-size: 10px;
+  }
+  .abyss-strength input[type="range"] {
+    min-height: 28px;
+  }
+  .abyss-screen .bonus-shot-actions {
+    max-width: 540px;
+    width: 100%;
+    justify-self: center;
+  }
+  .abyss-screen .bonus-shot-actions .button {
+    min-height: 44px;
+    padding: 9px;
+  }
+  .abyss-controls > .abyss-kicker {
+    display: none;
+  }
+  .abyss-controls .bonus-pause-actions {
+    margin: 0 0 14px;
+  }
+  .abyss-table {
+    font-size: 11px;
+  }
+  .abyss-table th,
+  .abyss-table td {
+    padding: 10px 8px;
+  }
+  .abyss-test-mark {
+    font-size: 11px;
+    padding: 12px;
+  }
+  .abyss-result {
+    padding: 20px;
+  }
+  .abyss-result h2 {
+    font-size: 24px;
+  }
+}
+.abyss-jackpot {
+  animation: abyss-award 2.4s ease-out;
+}
+.abyss-jackpot:after {
+  content: "ABYSS CLEARED";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 45%;
+  text-align: center;
+  font: clamp(18px, 3vw, 36px) / 1.4 var(--serif);
+  letter-spacing: 0.15em;
+  color: #f5d77a;
+  background: #080a0ee0;
+  padding: 16px 8px;
+  border-block: 1px solid #d4af37;
+  pointer-events: none;
+  animation: abyss-award-label 3s forwards;
+}
+@keyframes abyss-award {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 5px #151c23,
+      0 16px 60px #0009;
+  }
+  25% {
+    box-shadow:
+      0 0 0 5px #d4af37,
+      0 0 60px #d4af3766;
+  }
+}
+@keyframes abyss-award-label {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  15%,
+  75% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .abyss-jackpot {
+    animation: none;
+  }
+  .abyss-jackpot:after {
+    display: none;
+  }
+}
+.abyss-reduced .abyss-jackpot:after {
+  display: none;
+}
+@media (max-width: 760px) {
+  .abyss-machine {
+    width: min(100%, calc((100svh - 250px) * 0.625));
+    scroll-margin-bottom: 180px;
+  }
+  .abyss-center {
+    padding-bottom: 6px;
+  }
+}

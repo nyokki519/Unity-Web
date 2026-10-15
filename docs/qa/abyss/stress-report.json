@@ -1,0 +1,15 @@
+{
+  "fired": 10000,
+  "lost": 9985,
+  "jackpots": 15,
+  "elapsed": 1593.0708333333332,
+  "maxActive": 32,
+  "events": 512,
+  "traces": 0,
+  "successRoutes": 10,
+  "inputs": 10000,
+  "seconds": 57.059315584,
+  "ledger": true,
+  "finite": true,
+  "limitations": "Headless physical logic stress only; not a hardware GPU memory or thermal test."
+}
