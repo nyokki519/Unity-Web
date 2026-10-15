@@ -1,4 +1,5 @@
-import { createSimulation } from "./engine.js";
+let createSimulation;
+const engineReady = import("./engine.js").then(module => { createSimulation = module.createSimulation; });
 import { FIXED_DT } from "./config.js";
 import { summarize } from "./analysis.js";
 export function randomFromSeed(seed) {
@@ -82,6 +83,7 @@ function chunk() {
           });
           j.counts.jackpots = (j.counts.jackpots || 0) + j.sim.jackpots;
           j.completed++;
+          j.sim.dispose?.();
           j.sim = null;
         }
       }
@@ -90,13 +92,15 @@ function chunk() {
     if (j.completed === j.total) job = null;
     else setTimeout(chunk, 0);
   } catch (error) {
+    j.sim?.dispose?.();
     postMessage({ type: "error", id: j.id, message: error.message });
     job = null;
   }
 }
 if (typeof self !== "undefined")
-  self.onmessage = ({ data }) => {
+  self.onmessage = async ({ data }) => {
     try {
+      await engineReady;
       if (data.type === "pause") {
         if (job) job.paused = true;
         return;
@@ -110,11 +114,12 @@ if (typeof self !== "undefined")
       }
       if (data.type === "cancel") {
         report("cancelled");
+        job?.sim?.dispose?.();
         job = null;
         return;
       }
       if (data.type !== "start") return;
-      if (job) throw new Error("Research already running");
+      if (job) { job.sim?.dispose?.(); job = null; }
       if (![1000, 10000, 100000, 1000000].includes(data.trials))
         throw new Error("Unsupported trial count");
       if (!["approximate", "physics"].includes(data.mode))

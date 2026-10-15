@@ -1,0 +1,80 @@
+{
+  "widths": [
+    {
+      "width": 375,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1312.703125,
+          "bottom": -751.109375
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 661.890625,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 16 FPS"
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1336.703125,
+          "bottom": -751.109375
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 685.890625,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 15 FPS"
+    },
+    {
+      "width": 414,
+      "overflow": false,
+      "fireHoldPauseBlur": true,
+      "geometry": {
+        "machine": {
+          "top": -1306.703125,
+          "bottom": -712.703125
+        },
+        "dock": {
+          "top": 718.5,
+          "bottom": 844,
+          "position": "fixed"
+        },
+        "bodyPadding": "200px"
+      },
+      "initialPlay": {
+        "machineBottom": 694.296875,
+        "dockTop": 718.5
+      },
+      "fpsBadge": "3D / 14 FPS"
+    }
+  ],
+  "errors": [],
+  "checks": {
+    "mobileBasic": true,
+    "replayBlurResumeNoError": true,
+    "sessionJSONImportReplayPlayStep": true,
+    "nestedSettingsReloadPresetSaveListRead": true
+  },
+  "limitations": [
+    "Chromium SwiftShader on cloud CPU; no iPhone Safari or hardware GPU measurements."
+  ]
+}

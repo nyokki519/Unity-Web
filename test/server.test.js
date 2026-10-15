@@ -14,6 +14,7 @@ test('real HTTP + WebSocket: private answers, multiple rounds, reload, QR and fi
  try{
   const post=async(path,body)=>{const r=await fetch(base+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});assert.equal(r.status,201);return r.json();};
   assert.equal((await fetch(base+'/')).status,200);assert.equal((await fetch(base+'/js/app.js')).headers.get('content-type'),'text/javascript');
+  const wasmModule=await fetch(base+'/vendor/rapier/rapier.mjs');assert.equal(wasmModule.status,200);assert.equal(wasmModule.headers.get('content-type'),'text/javascript');assert.match(wasmModule.headers.get('content-security-policy'),/script-src 'self' 'wasm-unsafe-eval'/);assert.ok(!wasmModule.headers.get('content-security-policy').includes("'unsafe-eval'"));
   assert.equal((await fetch(base+'/api/rooms/0000/join',{method:'POST',body:JSON.stringify({name:'X'})})).status,404);
   const host=await post('/api/rooms',{name:'同じ名前',settings:{mode:'ALIGN',depth:'LIGHT',rounds:3,autoReveal:false}}),guest=await post(`/api/rooms/${host.code}/join`,{name:'同じ名前'});
   const qr=await fetch(base+`/api/qr?room=${host.code}`);assert.equal(qr.status,200);assert.ok((await qr.text()).includes('<svg'));

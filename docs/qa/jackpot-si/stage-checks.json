@@ -1,0 +1,35 @@
+{
+  "stages": [
+    [
+      1,
+      "win",
+      true
+    ],
+    [
+      2,
+      "win",
+      true
+    ],
+    [
+      3,
+      "win",
+      true
+    ],
+    [
+      1,
+      "miss",
+      true
+    ],
+    [
+      2,
+      "miss",
+      true
+    ],
+    [
+      3,
+      "miss",
+      true
+    ]
+  ],
+  "errors": []
+}

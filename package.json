@@ -13,9 +13,12 @@
     "test": "node --test test/*.test.js",
     "check:questions": "node tools/check-questions.js",
     "vendor:three": "node tools/vendor-three.js",
-    "test:abyss": "node --test test/abyss-*.test.js"
+    "test:abyss": "node --test test/abyss-*.test.js",
+    "vendor:physics": "node tools/vendor-physics.js"
   },
   "dependencies": {
+    "@dimforge/rapier3d-compat": "0.21.0",
+    "earcut": "3.2.4",
     "qrcode": "1.5.4",
     "three": "0.180.0",
     "ws": "8.22.0"

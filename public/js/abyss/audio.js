@@ -250,7 +250,7 @@ export function createAudio() {
     if (collision) lastHit.set("collision", now);
     const energy = Math.max(
       0.12,
-      Math.min(1, Math.sqrt(Math.max(0, Number(event?.energy) || 0)) / 150),
+      Math.min(1, Math.sqrt(Math.max(0, (Number.isFinite(event?.energyJ) ? event.energyJ * 22500000 : Number(event?.energy)) || 0)) / 150),
     );
     const v = voice(effects, type === "jackpot" ? 2 : 0.85);
     if (!v) return;

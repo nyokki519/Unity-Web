@@ -45,6 +45,10 @@ export function createViewPanel({ reduceMotion, handlers }) {
         ["auto", "見どころを自動追跡"],
         ["overview", "盤面全体"],
         ["follow", "最深部の玉を追う"],
+        ["rail", "発射レール"], ["forest", "釘の流路"],
+        ["gate", "入口ゲート"], ["cradle1", "1段目の皿"],
+        ["cradle2", "2段目の皿"], ["cradle3", "3段目の皿"],
+        ["free", "自由に拡大・移動"],
       ],
       "auto",
       handlers.onCamera,
@@ -130,17 +134,14 @@ export function createLabPanel({ configInputs, handlers }) {
   const settings = section("LAB / 盤面設定"),
     configGrid = el("div", "abyss-settings-grid");
   for (const [key, label, value, min, max, step] of [
-    ["gravity", "重力", 760, 100, 3000, 50],
-    ["restitution", "反発係数", 0.66, 0, 0.95, 0.05],
-    ["friction", "接触摩擦", 0.16, 0, 0.5, 0.01],
-    ["fireInterval", "発射間隔（秒）", 0.35, 0.1, 2, 0.05],
-    ["launchVariance", "発射角のばらつき（度）", 1, 0, 12, 0.25],
-    ["gatePeriod", "ゲート周期（秒）", 3, 0.5, 10, 0.1],
-    ["gateOpenDuration", "ゲート開放（秒）", 1.5, 0.1, 9, 0.1],
-    ["holeScale", "穴サイズ倍率", 1, 0.35, 1.5, 0.05],
-    ["rpm0", "1段目の回転（rpm）", 12, -40, 40, 1],
-    ["rpm1", "2段目の回転（rpm）", -16, -40, 40, 1],
-    ["rpm2", "3段目の回転（rpm）", 20, -40, 40, 1],
+    ["gravity", "重力（m/s²）", 9.80665, 1, 15, .01],
+    ["restitution", "反発係数", .48, 0, .9, .01],
+    ["friction", "接触摩擦", .18, .01, 1, .01],
+    ["fireInterval", "発射間隔（秒）", .6, .1, 3, .05],
+    ["launchVariance", "発射速度のばらつき（比率）", .012, 0, .1, .001],
+    ["gatePeriod", "ゲート周期（秒）", 3, .5, 15, .1],
+    ["gateOpenDuration", "ゲート開放（秒）", 2, .15, 12, .05],
+    ["holeScale", "穴サイズ倍率", 1, .7, 1.3, .05],
   ]) {
     const f = numberField(label, { value, min, max, step });
     configInputs[key] = f.input;
@@ -156,22 +157,22 @@ export function createLabPanel({ configInputs, handlers }) {
     "default",
   );
   configGrid.append(pinPreset);
-  const pinIndex = numberField("編集する釘番号（0〜299）", {
+  const pinIndex = numberField("編集する釘番号（0〜108）", {
       value: 0,
       min: 0,
-      max: 299,
+      max: 108,
       onChange: handlers.onPinSelect,
     }),
-    pinDX = numberField("釘の左右調整", {
+    pinDX = numberField("釘の左右調整（mm）", {
       value: 0,
-      min: -10,
-      max: 10,
+      min: -6,
+      max: 6,
       step: 0.5,
     }),
-    pinDY = numberField("釘の上下調整", {
+    pinDY = numberField("釘の上下調整（mm）", {
       value: 0,
-      min: -10,
-      max: 10,
+      min: -6,
+      max: 6,
       step: 0.5,
     });
   configGrid.append(
@@ -184,7 +185,7 @@ export function createLabPanel({ configInputs, handlers }) {
     el(
       "p",
       "abyss-note",
-      "LABは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。",
+      "玉は直径11mm・質量5.5g。盤面・皿は未実測のオリジナル仮設計です。Rapierの3D接触計算で進みます。LABは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。",
     ),
     configGrid,
     button("設定を適用して開始", handlers.onApply, "button"),
@@ -348,12 +349,12 @@ export function createRulesPanel() {
     el(
       "p",
       "",
-      "強さと角度を調整し、単発または長押しで発射します。300本の釘の森を抜けて入口へ入り、周期ゲートを通り、回転する3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破で10,000点。",
+      "強さを調整し、固定レールから単発または長押しで発射します。109本の釘の流路を抜け、開閉ゲートから固定された3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破で10,000点。",
     ),
     el(
       "p",
       "",
-      "釘・壁・玉同士の接触と、皿の傾斜・回転・減衰から軌道を計算します。皿は3次元剛体の完全な再現ではなく、専用の転がりモデルです。穴の位置と落下判定は描画と共有し、隠れた当落抽選は行いません。",
+      "玉径11mm・質量5.5g、重力9.80665m/s²。固定刻みの3D剛体計算で釘・壁・玉・皿に接触します。皿の開口と描画は同じ形状を使い、隠れた当落抽選は行いません。盤面寸法と機構は未実測のオリジナル仮設計で、実機の完全再現ではありません。35秒以上の皿内滞留・60秒以上の進行停滞は保護回収し、結果に含めます。",
     ),
     el(
       "p",
@@ -418,7 +419,7 @@ export function createSetupPanel({ params, difficulties, modes, handlers }) {
     el(
       "p",
       "abyss-intro",
-      "釘の森、動く門、三つの回転皿。突破を決めるのは、玉の軌道。",
+      "釘の流路、動く門、三つの固定皿。突破を決めるのは、玉の軌道。",
     ),
   );
   const setup = el("div", "bonus-setup abyss-setup");
@@ -461,7 +462,7 @@ export function createMachinePanel({ WIDTH, HEIGHT, center }) {
   canvas.setAttribute("role", "img");
   canvas.setAttribute(
     "aria-label",
-    "300本の釘、周期ゲート、3段の回転皿。金色の穴が成功、暗い穴が回収口。",
+    "109本の釘、開閉ゲート、3段の固定皿。金色の穴が成功、暗い穴が回収口。",
   );
   machine.append(canvas);
   const renderBadge = el("p", "abyss-render-badge", "立体描画を準備中");
@@ -524,9 +525,9 @@ export function createLaunchPanel({
     onChange: handlers.onSpeed,
   });
   right.append(speed.node);
-  const angleField = rangeField("発射角度（度）", {
+  const angleField = rangeField("発射方向（固定・度）", {
     value: angle,
-    min: -140,
+    min: -100,
     max: -80,
     onChange: handlers.onAngle,
   });

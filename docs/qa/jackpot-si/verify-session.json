@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "physicsVersion": "si-1",
+  "difficulty": "easy",
+  "seed": "abyss",
+  "initialBalls": 100,
+  "config": {},
+  "inputs": [
+    {
+      "tick": 204,
+      "type": "fire",
+      "power": 55,
+      "angle": -90
+    }
+  ],
+  "elapsed": 1.6,
+  "status": "paused",
+  "endReason": null,
+  "result": {
+    "score": 0,
+    "lost": 0,
+    "jackpots": 0,
+    "fired": 1
+  }
+}

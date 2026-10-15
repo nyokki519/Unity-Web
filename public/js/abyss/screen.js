@@ -78,7 +78,7 @@ export function mountAbyss({ onBack }) {
     finishSaved = false;
   const volumes = { master: 0.5, effects: 0.7, ambience: 0.2 };
   let power = 55,
-    angle = -103,
+    angle = -90,
     timeScale = 1,
     mode = "normal",
     camera = "auto",
@@ -94,7 +94,7 @@ export function mountAbyss({ onBack }) {
     researchRows = [],
     autoTarget = 100,
     autoBaseline = 0,
-    autoInterval = 0.35,
+    autoInterval = 0.6,
     lastAutoTime = -Infinity;
   let pinAdjustments = [],
     selectedPin = -1,
@@ -159,6 +159,7 @@ export function mountAbyss({ onBack }) {
           stopHolding();
           if (replay) {
             replay.pause();
+            replay.dispose?.();
             replay = null;
             game = null;
             setup.hidden = false;
@@ -195,6 +196,8 @@ export function mountAbyss({ onBack }) {
       },
     },
   });
+  angleField.input.disabled = true;
+  angleField.input.setAttribute("aria-description", "固定レールに沿って発射します。強さで飛距離を調整します。");
   right.append(autoSection.node);
   const { view, zoomRange, motion } = createViewPanel({
     reduceMotion,
@@ -263,8 +266,8 @@ export function mountAbyss({ onBack }) {
         pinAdjustments = pinAdjustments.filter((p) => p.index !== selectedPin);
         pinAdjustments.push({
           index: selectedPin,
-          dx: Number(pinDX.input.value),
-          dy: Number(pinDY.input.value),
+          dx: Number(pinDX.input.value) / 1000,
+          dy: Number(pinDY.input.value) / 1000,
         });
         message(
           `釘${selectedPin}の位置を設定しました。「設定を適用して開始」で反映します。`,
@@ -376,7 +379,8 @@ export function mountAbyss({ onBack }) {
         onPresetSave: async () => {
           try {
             await saveRecord("presets", {
-              version: 1,
+              version: 2,
+              physicsVersion: "si-1",
               kind: "preset",
               difficulty: difficultyValue(),
               seed: seed.value,
@@ -473,30 +477,21 @@ export function mountAbyss({ onBack }) {
     for (const [key, input] of Object.entries(configInputs)) {
       if (!key.startsWith("rpm")) cfg[key] = Number(input.value);
     }
-    cfg.trayRPM = [0, 1, 2].map((i) => Number(configInputs[`rpm${i}`].value));
+
     cfg.pinPreset = pinPreset.querySelector("select").value;
     cfg.pinAdjustments = pinAdjustments;
     return cfg;
   }
   function resetConfigFields() {
-    const defaults = {
-      gravity: 760,
-      restitution: 0.66,
-      friction: 0.16,
-      fireInterval: 0.35,
-      launchVariance: 1,
-      gatePeriod: 3,
-      gateOpenDuration: 1.5,
-      holeScale: 1,
-      rpm0: 12,
-      rpm1: -16,
-      rpm2: 20,
-    };
+    const defaults = { gravity: 9.80665, restitution: .48, friction: .18,
+      fireInterval: .6, launchVariance: .012, gatePeriod: 3,
+      gateOpenDuration: 2, holeScale: 1 };
     for (const [k, v] of Object.entries(defaults))
       configInputs[k].value = String(v);
   }
   function currentSettings() {
     return {
+      physicsVersion: "si-1",
       difficulty: difficultyValue(),
       seed: seed.value,
       power,
@@ -508,6 +503,7 @@ export function mountAbyss({ onBack }) {
     };
   }
   function applyPreset(record) {
+    if (record.physicsVersion !== "si-1") throw new Error("旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。");
     if (record.difficulty)
       difficulty.querySelector("select").value = record.difficulty;
     if (record.seed) seed.value = record.seed;
@@ -524,6 +520,7 @@ export function mountAbyss({ onBack }) {
     if (cfg.pinPreset) pinPreset.querySelector("select").value = cfg.pinPreset;
   }
   function refreshPreview() {
+    preview?.dispose?.();
     preview = createSimulation({
       difficulty: difficultyValue(),
       seed: seed.value,
@@ -583,6 +580,8 @@ export function mountAbyss({ onBack }) {
   }
   function startGame(custom = false) {
     stopHolding();
+    replay?.dispose?.();
+    game?.dispose?.();
     replay = null;
     game = createSimulation({
       difficulty: difficultyValue(),
@@ -667,7 +666,10 @@ export function mountAbyss({ onBack }) {
   }
   function openReplay(record) {
     stopHolding();
-    replay = createReplay(record);
+    const nextReplay = createReplay(record);
+    replay?.dispose?.();
+    game?.dispose?.();
+    replay = nextReplay;
     game = replay.game;
     lastRecord = record;
     setRenderer(game.board);
@@ -767,7 +769,7 @@ export function mountAbyss({ onBack }) {
     const c = game.stats?.contacts || {};
     contacts.textContent = `接触：釘 ${c.pin || 0} / 壁 ${c.wall || 0} / 玉 ${c.ball || 0} / ゲート ${c.gate || 0} / 皿縁 ${c.rim || 0}`;
     const st = game.stats || {};
-    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} 単位/秒 / 平均滞留：${(
+    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} ${game.board.physicsVersion === "si-1" ? "m/s" : "旧版単位/秒"} / 平均滞留：${(
       st.dwellTotals || []
     )
       .slice(0, 4)
@@ -815,6 +817,8 @@ export function mountAbyss({ onBack }) {
         button(
           "もう一度挑戦",
           () => {
+            replay?.dispose?.();
+            game?.dispose?.();
             game = null;
             replay = null;
             setup.hidden = false;
@@ -1006,7 +1010,7 @@ export function mountAbyss({ onBack }) {
           lastEvent = event.id;
           audio.play(event);
           if (
-            ["gate-pass", "hole-win", "hole-miss", "jackpot", "lost"].includes(
+            ["gate-pass", "hole-win", "hole-miss", "jackpot", "lost", "timeout", "invalid-state"].includes(
               event.type,
             )
           ) {
@@ -1019,7 +1023,7 @@ export function mountAbyss({ onBack }) {
                     ? `${event.stage}段目の回収口へ`
                     : event.type === "gate-pass"
                       ? "可動ゲートを通過"
-                      : "玉を回収";
+                      : event.type === "timeout" ? "滞留時間上限のため保護回収" : "玉を回収";
             const li = el("li", "", `${clock(event.at)}  ${text}`);
             log.prepend(li);
             while (log.children.length > 8) log.lastChild.remove();
@@ -1058,6 +1062,7 @@ export function mountAbyss({ onBack }) {
   loadSettings()
     .then((value) => {
       if (!value || destroyed || game) return;
+      if (value.physicsVersion !== "si-1") { message("旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。"); return; }
       applyPreset(value);
       if (Number.isFinite(value.power)) setPower(value.power);
       if (Number.isFinite(value.angle)) {
@@ -1104,6 +1109,9 @@ export function mountAbyss({ onBack }) {
       abort.abort();
       worker?.terminate();
       renderer?.dispose();
+      replay?.dispose?.();
+      game?.dispose?.();
+      preview?.dispose?.();
       audio.destroy();
     },
   };

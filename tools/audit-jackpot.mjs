@@ -1,8 +1,8 @@
 // Read-only inspection of the deployed model, not an assertion of real-machine dimensions.
 import {execFileSync} from 'node:child_process';
-import {createBoard,BALL_RADIUS,FIXED_DT} from '../public/js/abyss/config.js';
-import {createSimulation} from '../public/js/abyss/engine.js';
-import {moveTray} from '../public/js/abyss/physics.js';
+import {createBoard,BALL_RADIUS,FIXED_DT} from '../public/js/abyss/legacy/config.js';
+import {createSimulation} from '../public/js/abyss/legacy/engine.js';
+import {moveTray} from '../public/js/abyss/legacy/physics.js';
 const round=n=>Number(n.toFixed(4));
 const modes=['easy','normal','abyss'].map(mode=>{
  const b=createBoard(mode),d=BALL_RADIUS*2;

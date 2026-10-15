@@ -1,4 +1,4 @@
-import test from "node:test";
+import test, { afterEach } from "node:test";
 import assert from "node:assert/strict";
 import { wilson, summarize, toCSV } from "../public/js/abyss/analysis.js";
 import {
@@ -7,13 +7,19 @@ import {
   loadSettings,
   validateSettings,
 } from "../public/js/abyss/storage.js";
-import { createReplay } from "../public/js/abyss/replay.js";
-import { createSimulation } from "../public/js/abyss/engine.js";
+import { createReplay as rawCreateReplay } from "../public/js/abyss/replay.js";
+import { createSimulation as rawCreateSimulation } from "../public/js/abyss/engine.js";
+import { createSimulation as createLegacySimulation } from "../public/js/abyss/legacy/engine.js";
 import { FIXED_DT } from "../public/js/abyss/config.js";
 import {
   randomFromSeed,
   approximateTrial,
 } from "../public/js/abyss/research-worker.js";
+const liveResources = new Set();
+function createSimulation(options) { const g = rawCreateSimulation(options); liveResources.add(g); return g; }
+function createReplay(record) { const replay = rawCreateReplay(record); liveResources.add(replay); return replay; }
+afterEach(() => { for (const resource of liveResources) resource.dispose(); liveResources.clear(); });
+
 test("Wilson intervals and conditional denominators", () => {
   assert.deepEqual(wilson(0, 0), { low: 0, high: 1 });
   const interval = wilson(50, 100);
@@ -37,20 +43,27 @@ test("Wilson intervals and conditional denominators", () => {
 test("session export replay preserves tick inputs and physical outcome", () => {
   const g = createSimulation({ seed: "replay", initialBalls: 3 });
   g.fire(55, -103);
-  for (let i = 0; i < 40; i++) g.step(FIXED_DT);
+  for (let i = 0; i < 160; i++) g.step(FIXED_DT);
   g.fire(60, -100);
-  for (let i = 0; i < 1200; i++) g.step(FIXED_DT);
+  for (let i = 0; i < 320; i++) g.step(FIXED_DT);
   const record = exportSession(g),
     replay = createReplay(record);
   replay.step(g.tick);
   assert.deepEqual(replay.game.snapshot(), g.snapshot());
   assert.equal(replay.finished, true);
   assert.equal(g.inputs[0].type, "fire");
+  assert.equal(record.version, 2);
+  assert.equal(record.physicsVersion, "si-1");
+  assert.equal(record.inputs[0].angle, -90);
+  replay.dispose();
+  g.dispose();
 });
 test("import rejects malformed and unsafe schemas", () => {
-  const record = exportSession(createSimulation());
+  const empty = createSimulation();
+  const record = exportSession(empty);
+  empty.dispose();
   for (const change of [
-    { version: 2 },
+    { version: 3 },
     { seed: "x".repeat(129) },
     { config: { gravity: Infinity } },
     { config: { gravity: 3001 } },
@@ -191,7 +204,7 @@ test("replay rejects duplicate and too-close fire ticks and post-end inputs", ()
   );
 });
 test("replay refuses corrupted final counters and inputs rejected by capacity", () => {
-  const g = createSimulation({ initialBalls: 3 });
+  const g = createLegacySimulation({ initialBalls: 3 });
   g.fire(55, -103);
   g.step(0.2);
   const record = exportSession(g);
@@ -209,4 +222,46 @@ test("replay refuses corrupted final counters and inputs rejected by capacity", 
   };
   const blocked = createReplay(impossible);
   assert.throws(() => blocked.step(g.tick), /input rejected/);
+});
+
+
+test("legacy sessions retain their exact physics and angle", () => {
+  const g = createLegacySimulation({ seed: "legacy-exact", initialBalls: 3 });
+  g.fire(55, -103);
+  g.step(.2);
+  g.fire(60, -100);
+  g.step(2);
+  g.end();
+  const record = exportSession(g);
+  assert.equal(record.version, 1);
+  assert.equal(record.inputs[0].angle, -103);
+  const replay = createReplay(record);
+  replay.step(g.tick);
+  assert.deepEqual(replay.game.snapshot(), g.snapshot());
+  assert.equal(replay.game.board.physicsVersion, undefined);
+  replay.dispose();
+});
+
+test("SI import validates dimensional configuration and physics version", () => {
+  const preset = { version: 2, physicsVersion: "si-1", kind: "preset", seed: "si", difficulty: "custom", config: { gravity: 9.80665, pinAdjustments: [{index:108,dx:.006,dy:-.006,angle:15,restitution:.9}], cradleScale:1, cradleDepthScale:1 } };
+  assert.deepEqual(validateImport(preset), preset);
+  for (const config of [{gravity:760},{friction:0},{launchVariance:.11},{pinAdjustments:[{index:109}]},{pinAdjustments:[{index:0,dx:.007}]},{pinAdjustments:[{index:0,angle:16}]},{trayRPM:[0,0,0]},{cradleScale:1.21}])
+    assert.throws(() => validateImport({...preset,config}));
+  assert.throws(() => validateImport({...preset,physicsVersion:"future"}));
+  assert.doesNotThrow(() => validateSettings({physicsVersion:"si-1",angle:-90,config:{gravity:9.80665},quality:"auto",reduceMotion:true,volumes:{master:.5}}));
+  assert.throws(() => validateSettings({physicsVersion:"si-1",config:{gravity:760}}));
+});
+
+test("SI default cadence is independent of legacy default cadence", () => {
+  for (const [create,minimum] of [[createSimulation,144],[createLegacySimulation,24]]) {
+    const g=create({initialBalls:3});
+    try {
+      g.fire(55,-90);
+      g.step(.7);
+      g.fire(55,-90);
+      const record=exportSession(g);
+      assert.throws(()=>validateImport({...record,inputs:[record.inputs[0],{...record.inputs[1],tick:minimum-1}]}),/cadence/);
+      assert.doesNotThrow(()=>validateImport({...record,inputs:[record.inputs[0],{...record.inputs[1],tick:minimum}]}));
+    } finally { g.dispose?.(); }
+  }
 });

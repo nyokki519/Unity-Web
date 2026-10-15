@@ -1,10 +1,11 @@
 import { createSimulation } from "./engine.js";
+import { createSimulation as createLegacySimulation } from "./legacy/engine.js";
 import { FIXED_DT } from "./config.js";
 import { validateImport } from "./storage.js";
 export function createReplay(record) {
   const data = validateImport(record);
   if (data.kind) throw new Error("A session is required for replay");
-  const game = createSimulation(data);
+  const game = (data.version === 1 ? createLegacySimulation : createSimulation)(data);
   let cursor = 0,
     playing = false,
     speed = 1,
@@ -48,10 +49,16 @@ export function createReplay(record) {
     verify();
     return game;
   }
-  applyInputs();
-  verify();
+  try {
+    applyInputs();
+    verify();
+  } catch (error) {
+    game.dispose?.();
+    throw error;
+  }
   return {
     game,
+    dispose() { playing = false; game.dispose?.(); },
     play() {
       playing = true;
     },

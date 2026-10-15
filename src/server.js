@@ -23,7 +23,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
   const baseUrl=req=>publicUrl||`http://${req.headers.host}`;
   const server=http.createServer(async(req,res)=>{
     res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');res.setHeader('X-Frame-Options','DENY');res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=()');
-    res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ws: wss:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
+    res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ws: wss:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
     try {
       const url=new URL(req.url,'http://local');
       if(url.pathname==='/api/health'&&req.method==='GET')return json(res,{status:'ok',product:'UNITY MIX'});
@@ -50,7 +50,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       if(!file.startsWith(root+sep))return failResponse(res,'BAD_COMMAND',403);
       try{const info=await stat(file);if(!info.isFile())throw new Error('not file');}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
       const data=await readFile(file);
-      const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.svg':'image/svg+xml'};
+      const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.svg':'image/svg+xml'};
       res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':extname(file)==='.html'||file.endsWith('sw.js')?'no-cache':'public, max-age=3600'});
       res.end(req.method==='HEAD'?undefined:data);
     }catch(error){failResponse(res,error instanceof GameError?error.code:'SERVER_ERROR',error.code==='ROOM_NOT_FOUND'?404:400);}

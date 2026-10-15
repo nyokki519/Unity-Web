@@ -110,3 +110,11 @@ data/             質問とカテゴリ
 ```
 
 Unityのカップとハートの図柄は既存ロゴから余白のみを切り出しています。形を描き直したり、新しいロゴを生成したりしていません。オリジナル全体も `public/assets/unity-logo.webp` に保持しています。既存のCormorant GaramondはOFLライセンスとともに継承しています。旧HP専用の写真・ページ・紹介文はゲームから取り除いています。
+
+## おまけのSI・3D物理版
+
+`npm ci` → `npm start`。ホームの「大穴チャレンジで遊ぶ」から登録なしで開始できます。強さを調整し、単発または長押しで発射します。練習は大きい穴、通常・高難度は狭い入口と小さい穴になります。LABでは各段の成功・失敗を確認できます。
+
+物理の調整場所は `public/js/abyss/si-config.js`（m・s・kg）。描画は同じ形状を使用します。依存物の再配置は `npm run vendor:physics`。追加のAPIキーや外部サービス設定は不要です。WebAssemblyを許可するCSPと`.mjs`のMIME設定はサーバーに含みます。
+
+[設計と根拠](docs/jackpot-research/JACKPOT_REDESIGN.md) / [寸法](docs/jackpot-research/JACKPOT_DIMENSIONS.md) / [検証・スクリーンショット](docs/qa/jackpot-si/README.md)。実機と同等の再現・物理iPhoneの動作確認を完了したものではありません。
