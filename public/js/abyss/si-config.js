@@ -1,5 +1,5 @@
 import{vec,identity,fromY,box,rod,chute,bowlMesh,shaftMesh,bowlHeight}from'./si-geometry.js';
-export const PHYSICS_VERSION='si-2',WIDTH=1000,HEIGHT=1600,FIXED_DT=1/240,BALL_RADIUS=.0055,BALL_MASS=.0055,PX_PER_METER=2000;
+export const PHYSICS_VERSION='si-3',WIDTH=1000,HEIGHT=1600,FIXED_DT=1/240,BALL_RADIUS=.0055,BALL_MASS=.0055,PX_PER_METER=2000;
 const clamp=(v,d,a,b)=>Number.isFinite(Number(v))?Math.min(b,Math.max(a,Number(v))):d;
 export function gateAt(g,time){const phase=((time+g.phase)%g.period+g.period)%g.period,ramp=Math.min(.25,g.openDuration/3),f=phase<g.openDuration&&ramp?Math.max(0,Math.min(1,phase/ramp,(g.openDuration-phase)/ramp)):0;return{position:vec(g.x+(g.width+.014)*f,g.y,g.z),rotation:identity(),open:f>.85,offset:(g.width+.014)*f};}
 export function holesAt(tray){return tray.holes;}
@@ -30,7 +30,7 @@ export function createBoard(difficulty='easy',overrides={}){
  const holeScale=clamp(overrides.holeScale,1,.7,1.3),counts=easy?[3,3,3]:[3,4,5];
  for(let i=0;i<3;i++){
   const radius=[.0675,.0625,.0575][i]*clamp(overrides.cradleScale,1,.8,1.2),cy=[.25,.145,.04][i],cz=.115+i*.005,ratio=easy?1.95:hard?1.3:1.55;
-  const t={stage:i+1,cx:.25,cy,cz,radius,diameter:radius*2,depth:.014*clamp(overrides.cradleDepthScale,1,.7,1.3),valleyRadius:radius*.47,centerRise:.007,tilt:-.006*Math.cos(2*Math.PI/counts[i]),tiltZ:-.006*Math.sin(2*Math.PI/counts[i]),rpm:0,omega:0,holes:[],evidence:'E: original conical fixed dish; not machine measurement'};
+  const t={profile:'curved',stage:i+1,cx:.25,cy,cz,radius,diameter:radius*2,depth:.014*clamp(overrides.cradleDepthScale,1,.7,1.3),valleyRadius:radius*.47,centerRise:.007,tilt:-.006*Math.cos(2*Math.PI/counts[i]),tiltZ:-.006*Math.sin(2*Math.PI/counts[i]),rpm:0,omega:0,holes:[],evidence:'E: original curved fixed dish; not machine measurement'};
   for(let j=0;j<counts[i];j++){const a=counts[i]===3?-Math.PI/3+(j-1)*2*Math.PI/3:(j-1)*2*Math.PI/(counts[i]-1),distance=j===0?0:radius*(easy?.5:.4);t.holes.push({id:j,x:distance*Math.cos(a),z:distance*Math.sin(a),r:easy?Math.max(BALL_RADIUS*1.16,Math.min(BALL_RADIUS*ratio*holeScale*(j===0?1.7:.72),radius*(j===0?.28:.12))):Math.min(BALL_RADIUS*ratio*holeScale,radius*.18),win:j===0});}
   const wallVertices=[],wallIndices=[];for(let j=0;j<=96;j++){const a=j*2*Math.PI/96;for(const y of[cy-.006,cy+.025])wallVertices.push(t.cx+radius*Math.cos(a),y,cz+radius*Math.sin(a));}for(let j=0;j<96;j++){const k=j*2;wallIndices.push(k,k+1,k+2,k+1,k+3,k+2);}p.push({id:`outer-wall-${i}`,kind:'mesh',tag:'rim',position:vec(),rotation:identity(),vertices:new Float32Array(wallVertices),indices:new Uint32Array(wallIndices),friction:.08,restitution:.05});
   board.trays.push(t);p.push({id:`bowl-${i}`,kind:'mesh',tag:'bowl',position:vec(),rotation:identity(),...bowlMesh(t),friction:Math.min(board.friction,.004),restitution:.08});

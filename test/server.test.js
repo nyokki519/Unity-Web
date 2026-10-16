@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {WebSocket} from 'ws';
 import {createApp} from '../src/server.js';
+import {questions, pool} from '../src/questions.js';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function wait(predicate){const start=Date.now();while(!predicate()){if(Date.now()-start>3000)throw new Error('State did not converge');await sleep(15);}}
 class Client{
@@ -13,10 +14,15 @@ test('real HTTP + WebSocket: private answers, multiple rounds, reload, QR and fi
  const app=createApp({database:':memory:',countdownMs:30,hostGraceMs:100});await new Promise(r=>app.server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${app.server.address().port}`;
  try{
   const post=async(path,body)=>{const r=await fetch(base+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});assert.equal(r.status,201);return r.json();};
-  assert.equal((await fetch(base+'/')).status,200);assert.equal((await fetch(base+'/js/app.js')).headers.get('content-type'),'text/javascript');
+  assert.equal((await fetch(base+'/')).status,200);assert.equal((await fetch(base+'/js/app.js')).headers.get('content-type'),'text/javascript');assert.equal((await fetch(base+'/js/app.js')).headers.get('cache-control'),'no-cache');assert.equal((await fetch(base+'/abyss.css')).headers.get('cache-control'),'no-cache');
   const wasmModule=await fetch(base+'/vendor/rapier/rapier.mjs');assert.equal(wasmModule.status,200);assert.equal(wasmModule.headers.get('content-type'),'text/javascript');assert.match(wasmModule.headers.get('content-security-policy'),/script-src 'self' 'wasm-unsafe-eval'/);assert.ok(!wasmModule.headers.get('content-security-policy').includes("'unsafe-eval'"));
   assert.equal((await fetch(base+'/api/rooms/0000/join',{method:'POST',body:JSON.stringify({name:'X'})})).status,404);
   const host=await post('/api/rooms',{name:'同じ名前',settings:{mode:'ALIGN',depth:'LIGHT',rounds:3,autoReveal:false}}),guest=await post(`/api/rooms/${host.code}/join`,{name:'同じ名前'});
+  // Keep the summary assertion deterministic: untagged questions intentionally produce no value scores.
+  const summaryQuestionIds=new Set(['align-003','align-007','align-011']);
+  const room=app.engine.get(host.code);
+  room.used=questions.filter(q=>!summaryQuestionIds.has(q.id)).map(q=>q.id);
+  assert.equal(pool(room.settings,'ALIGN',room.used).length,3);
   const qr=await fetch(base+`/api/qr?room=${host.code}`);assert.equal(qr.status,200);assert.ok((await qr.text()).includes('<svg'));
   const a=new Client(base.replace('http','ws')+'/ws',host),b=new Client(base.replace('http','ws')+'/ws',guest);await wait(()=>a.state?.players.length===2&&b.state);assert.equal(b.state.players.find(p=>p.id===guest.playerId).name,'同じ名前 · 2');
   a.send('ready',{ready:true});b.send('ready',{ready:true});await wait(()=>a.state.players.every(p=>p.ready));a.send('start');await wait(()=>a.state.phase==='ANSWER'&&b.state.phase==='ANSWER');

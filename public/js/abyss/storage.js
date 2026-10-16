@@ -35,7 +35,7 @@ export function validateImport(value) {
   safe(value);
   plain(value);
   const si = value.version === 2;
-  if (si && !["si-1","si-2"].includes(value.physicsVersion)) throw new Error("Unsupported physics version");
+  if (si && !["si-1","si-2","si-3"].includes(value.physicsVersion)) throw new Error("Unsupported physics version");
   if (value.kind === "preset") {
     if (
       Object.keys(value).some(
@@ -266,8 +266,8 @@ export function exportSession(game) {
   if (game.inputsTruncated)
     throw new Error("Replay input history was truncated");
   return validateImport({
-    version: ["si-1","si-2"].includes(game.board?.physicsVersion) ? 2 : 1,
-    ...(["si-1","si-2"].includes(game.board?.physicsVersion) ? { physicsVersion: game.board.physicsVersion } : {}),
+    version: ["si-1","si-2","si-3"].includes(game.board?.physicsVersion) ? 2 : 1,
+    ...(["si-1","si-2","si-3"].includes(game.board?.physicsVersion) ? { physicsVersion: game.board.physicsVersion } : {}),
     difficulty: game.difficulty || game.board?.difficulty || "easy",
     seed: String(game.seed ?? "abyss"),
     initialBalls: game.initialBalls ?? game.remaining + game.fired,
@@ -354,7 +354,7 @@ export async function saveSettings(value) {
     r.onsuccess = () => {
       const previous = r.result?.value;
       if (value.physicsVersion && previous && previous.physicsVersion !== value.physicsVersion)
-        s.put({ id: previous.physicsVersion === "si-1" ? -1 : 0, value: structuredClone(previous) });
+        s.put({ id: previous.physicsVersion === "si-2" ? -2 : previous.physicsVersion === "si-1" ? -1 : 0, value: structuredClone(previous) });
       s.put({ id: 1, value: structuredClone(value) });
     };
   });
@@ -382,7 +382,7 @@ export async function loadSettings() {
 export function validateSettings(value) {
   safe(value);
   plain(value);
-  const si = ["si-1","si-2"].includes(value.physicsVersion);
+  const si = ["si-1","si-2","si-3"].includes(value.physicsVersion);
   if (value.physicsVersion !== undefined && !si) throw new Error("Unsupported physics version");
   const ranges = {
     power: [1, 100],

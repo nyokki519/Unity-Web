@@ -33,7 +33,7 @@ export function chute(parts,id,points,width=.026){
 }
 export function bowlHeight(t,x,z){
  const r=Math.hypot(x,z);
- return t.cy-t.depth+t.depth*(r/t.radius)+t.tilt*x+(t.tiltZ||0)*z;
+ return t.cy-t.depth+t.depth*(t.profile==='curved'?(r/t.radius)**2:r/t.radius)+t.tilt*x+(t.tiltZ||0)*z;
 }
 export function bowlMesh(t){
  const coords=[],starts=[],N=72;

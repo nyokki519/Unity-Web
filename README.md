@@ -117,4 +117,4 @@ Unityのカップとハートの図柄は既存ロゴから余白のみを切り
 
 物理の調整場所は `public/js/abyss/si-config.js`（m・s・kg）。描画は同じ形状を使用します。依存物の再配置は `npm run vendor:physics`。追加のAPIキーや外部サービス設定は不要です。WebAssemblyを許可するCSPと`.mjs`のMIME設定はサーバーに含みます。
 
-[設計と根拠](docs/jackpot-research/JACKPOT_REDESIGN.md) / [寸法](docs/jackpot-research/JACKPOT_DIMENSIONS.md) / [検証・スクリーンショット](docs/qa/jackpot-si/README.md)。実機と同等の再現・物理iPhoneの動作確認を完了したものではありません。
+[設計と根拠](docs/jackpot-research/JACKPOT_REDESIGN.md) / [寸法](docs/jackpot-research/JACKPOT_DIMENSIONS.md) / [検証・スクリーンショット](docs/qa/jackpot-camera/README.md)。実機と同等の再現・物理iPhoneの動作確認を完了したものではありません。

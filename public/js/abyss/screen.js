@@ -134,11 +134,13 @@ export function mountAbyss({ onBack }) {
   });
   const quickViews=el("div","abyss-quick-views");
   quickViews.setAttribute("aria-label","盤面の見方");
-  for(const [value,label] of [["auto","自動"],["forest","釘"],["cradle1","皿1"],["cradle2","皿2"],["cradle3","皿3"],["overview","全体"]]){
+  for(const [value,label] of [["auto","自動拡大"],["forest","釘"],["cradle1","皿1"],["cradle2","皿2"],["cradle3","皿3"],["overview","全体"]]){
     const control=button(label,()=>{camera=value;view.body.querySelector('select[aria-label="カメラ"]').value=value;for(const b of quickViews.children)b.setAttribute("aria-pressed",String(b===control));},"button secondary");
+    control.dataset.camera=value;
     control.setAttribute("aria-pressed",String(camera===value));quickViews.append(control);
   }
   center.append(quickViews);
+  const focusLabel=el("p","abyss-focus-label","釘の流れと入口を見守る"),overviewLabel=el("span","abyss-overview-label","全体");overviewLabel.hidden=true;machine.append(focusLabel,overviewLabel);
   const {
     current,
     status,
@@ -211,6 +213,7 @@ export function mountAbyss({ onBack }) {
     handlers: {
       onCamera: (v) => {
         camera = v;
+        for(const button of quickViews.children)button.setAttribute("aria-pressed",String(button.dataset.camera===v));
       },
       onZoom: (v) => {
         zoom = v;
@@ -387,7 +390,7 @@ export function mountAbyss({ onBack }) {
           try {
             await saveRecord("presets", {
               version: 2,
-              physicsVersion: "si-2",
+              physicsVersion: "si-3",
               kind: "preset",
               difficulty: difficultyValue(),
               seed: seed.value,
@@ -498,7 +501,7 @@ export function mountAbyss({ onBack }) {
   }
   function currentSettings() {
     return {
-      physicsVersion: "si-2",
+      physicsVersion: "si-3",
       difficulty: difficultyValue(),
       seed: seed.value,
       power,
@@ -510,7 +513,7 @@ export function mountAbyss({ onBack }) {
     };
   }
   function applyPreset(record) {
-    if (record.physicsVersion !== "si-2") throw new Error("旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。");
+    if (record.physicsVersion !== "si-3") throw new Error("旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。");
     if (record.difficulty)
       difficulty.querySelector("select").value = record.difficulty;
     if (record.seed) seed.value = record.seed;
@@ -776,7 +779,7 @@ export function mountAbyss({ onBack }) {
     const c = game.stats?.contacts || {};
     contacts.textContent = `接触：釘 ${c.pin || 0} / 壁 ${c.wall || 0} / 玉 ${c.ball || 0} / ゲート ${c.gate || 0} / 皿縁 ${c.rim || 0}`;
     const st = game.stats || {};
-    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} ${game.board.physicsVersion === "si-2" ? "m/s" : "旧版単位/秒"} / 平均滞留：${(
+    dwell.textContent = `平均速度 ${st.speedSamples ? (st.speedSum / st.speedSamples).toFixed(1) : "—"} ${game.board.physicsVersion === "si-3" ? "m/s" : "旧版単位/秒"} / 平均滞留：${(
       st.dwellTotals || []
     )
       .slice(0, 4)
@@ -1004,12 +1007,14 @@ export function mountAbyss({ onBack }) {
     renderer?.render(active, {
       quality,
       reducedMotion: reduceMotion,
-      camera: reduceMotion ? "overview" : camera,
+      camera,
       heatmap,
       heatmapMode,
       trails,
       selectedPin: mode === "lab" ? selectedPin : -1,
     });
+    const renderedView=renderer?.getViewState?.();
+    if(renderedView){overviewLabel.hidden=!renderedView.focusedStage;const label=renderedView.focusedStage?`${renderedView.focusedStage}段目クルーン / ${camera==='auto'?'自動拡大':'拡大表示'}`:'釘の流れと入口を見守る';if(focusLabel.textContent!==label)focusLabel.textContent=label;}
     audio.update(active);
     if (game) {
       for (const event of game.events)
@@ -1069,7 +1074,7 @@ export function mountAbyss({ onBack }) {
   loadSettings()
     .then((value) => {
       if (!value || destroyed || game) return;
-      if (value.physicsVersion !== "si-2") { message("旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。"); return; }
+      if (value.physicsVersion !== "si-3") { message("旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。"); return; }
       applyPreset(value);
       if (Number.isFinite(value.power)) setPower(value.power);
       if (Number.isFinite(value.angle)) {

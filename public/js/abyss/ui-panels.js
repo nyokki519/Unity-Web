@@ -42,7 +42,7 @@ export function createViewPanel({ reduceMotion, handlers }) {
     labeledSelect(
       "カメラ",
       [
-        ["auto", "見どころを自動追跡"],
+        ["auto", "クルーン進入で自動ズーム"],
         ["overview", "盤面全体"],
         ["follow", "最深部の玉を追う"],
         ["rail", "発射レール"], ["forest", "釘の流路"],
@@ -75,9 +75,9 @@ export function createViewPanel({ reduceMotion, handlers }) {
     labeledSelect(
       "描画品質",
       [
-        ["auto", "自動"],
-        ["high", "高品質"],
-        ["low", "省電力"],
+        ["auto", "自動（スマホは高精細）"],
+        ["high", "高品質（画面密度を優先）"],
+        ["low", "省電力（解像度を下げる）"],
       ],
       "auto",
       handlers.onQuality,
@@ -88,7 +88,7 @@ export function createViewPanel({ reduceMotion, handlers }) {
     reduceMotion,
     handlers.onMotion,
   );
-  view.body.append(motion.node);
+  view.body.append(motion.node,el("p","abyss-note","動きを減らす設定では自動ズームを止めます。皿1〜3は手動で拡大できます。"));
   const heat = checkbox("通過密度ヒートマップ", false, handlers.onHeatmap);
   view.body.append(
     heat.node,

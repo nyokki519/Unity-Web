@@ -1,3 +1,5 @@
+> 以下の初期モデル仕様は履歴。現行SI-3の単位はm/s/kg、球半径.0055m、質量.0055kg、109本の釘、固定3D皿。`JACKPOT_REDESIGN.md` / `JACKPOT_FLOW_FIX.md` / `docs/qa/jackpot-camera/REFERENCE.md` を併読する。
+
 # PROJECT ABYSS
 
 ユーザー提供の開発指示書（2026-10-15）を今回の仕様とする。既存Unity MIXの交流ゲーム・CPU・サーバーは変更しない。`feat/jackpot-realism` の未コミット変更を引き継ぐ。
@@ -25,3 +27,9 @@
 ## 検証
 
 トンネリング、回転穴、ゲート、球同士、台帳、決定論、保存検証、統計分母をNodeで検証。ブラウザ375/390/414px、複数球、停止、リサイズ、保存・復元、リプレイ、研究の停止／再開を確認する。物理iPhone SafariとGPU性能は実機未確認として区別する。
+
+## SI-3での追加契約
+
+`board.physicsVersion='si-3'`、皿の`profile='curved'`は放物面を表す。`si-geometry.js`のbowlHeightとbowlMeshを衝突・描画で共有し、描画の法線と接地影も同じ曲面から計算する。既存のcreateSimulation外形、固定240Hz、台帳、dispose契約は維持する。`replay.js`はversion1をlegacy、version2のphysicsVersionでsi-v1/si-v2/現行を選ぶ。
+
+`presentation.js`は物理状態を変更せず、自動カメラの段選択・保持と画面密度の方針を担当する。rendererの`getViewState()`は表示状態の確認用。

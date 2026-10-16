@@ -1,0 +1,47 @@
+[
+  {
+    "physicsVersion": "si-3",
+    "difficulty": "easy",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 1,
+    "lost": 59,
+    "active": 0
+  },
+  {
+    "physicsVersion": "si-3",
+    "difficulty": "normal",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 0,
+    "lost": 60,
+    "active": 0
+  },
+  {
+    "physicsVersion": "si-3",
+    "difficulty": "abyss",
+    "stalls": [],
+    "timeouts": [
+      0,
+      0,
+      0
+    ],
+    "events": [],
+    "fired": 60,
+    "jp": 0,
+    "lost": 60,
+    "active": 0
+  }
+]

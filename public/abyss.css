@@ -744,3 +744,7 @@
 }
 
 .abyss-quick-views{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:8px 0}.abyss-quick-views .button{min-height:44px;padding:8px 2px;font-size:13px}.abyss-quick-views [aria-pressed=true]{background:#c5a360;color:#071a16;border-color:#edcf91}
+
+.abyss-focus-label{position:absolute;top:10px;left:10px;right:10px;margin:0;padding:7px 10px;border-radius:7px;background:#0c241ee6;color:#f5f0d9;font-size:12px;line-height:1.4;pointer-events:none;text-align:center;letter-spacing:.03em}.abyss-machine canvas{image-rendering:auto}
+
+.abyss-overview-label{position:absolute;bottom:13px;right:13px;color:#f5efd9;font-size:10px;line-height:1.4;pointer-events:none;background:#0b211cc9;padding:1px 5px;border-radius:3px}
