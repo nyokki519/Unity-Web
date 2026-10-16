@@ -35,11 +35,20 @@ export function validateImport(value) {
   safe(value);
   plain(value);
   const si = value.version === 2;
-  if (si && !["si-1","si-2","si-3"].includes(value.physicsVersion)) throw new Error("Unsupported physics version");
+  if (si && !["si-1", "si-2", "si-3", "si-4"].includes(value.physicsVersion))
+    throw new Error("Unsupported physics version");
   if (value.kind === "preset") {
     if (
       Object.keys(value).some(
-        (k) => !["version", "kind", "difficulty", "seed", "config", ...(si ? ["physicsVersion"] : [])].includes(k),
+        (k) =>
+          ![
+            "version",
+            "kind",
+            "difficulty",
+            "seed",
+            "config",
+            ...(si ? ["physicsVersion"] : []),
+          ].includes(k),
       ) ||
       (!si && value.version !== 1) ||
       !["easy", "normal", "abyss", "custom"].includes(value.difficulty) ||
@@ -48,7 +57,7 @@ export function validateImport(value) {
     )
       throw new Error("Invalid preset");
     plain(value.config);
-    validateConfig(value.config, si);
+    validateConfig(value.config, si, value.physicsVersion);
     return structuredClone(value);
   }
   const allowed = [
@@ -80,11 +89,14 @@ export function validateImport(value) {
   )
     throw new Error("Invalid ball count");
   plain(value.config);
-  validateConfig(value.config, si);
+  validateConfig(value.config, si, value.physicsVersion);
   if (!Array.isArray(value.inputs) || value.inputs.length > 1000000)
     throw new Error("Invalid inputs");
   const minimumFireTicks = Math.ceil(
-    (si ? createBoard : createLegacyBoard)(value.difficulty, value.config).fireInterval / FIXED_DT - 1e-7,
+    (si ? createBoard : createLegacyBoard)(value.difficulty, value.config)
+      .fireInterval /
+      FIXED_DT -
+      1e-7,
   );
   let last = -1,
     lastFire = -Infinity,
@@ -161,8 +173,8 @@ export function validateImport(value) {
     throw new Error("Invalid end reason");
   return structuredClone(value);
 }
-function validateConfig(v, si = false) {
-  if (si) return validateSIConfig(v);
+function validateConfig(v, si = false, physicsVersion) {
+  if (si) return validateSIConfig(v, physicsVersion);
   const ranges = {
     gravity: [0, 3000],
     restitution: [0, 1],
@@ -234,27 +246,64 @@ function validateConfig(v, si = false) {
       throw new Error("Invalid configuration: " + key);
   }
 }
-function validateSIConfig(v) {
-  const ranges = { gravity: [1,15], restitution: [0,.9], friction: [.01,1], fireInterval: [.1,3], maxBalls: [1,32], launchVariance: [0,.1], holeScale: [.7,1.3], gatePeriod: [.5,15], gateOpenDuration: [.15,12], cradleScale: [.8,1.2], cradleDepthScale: [.7,1.3] };
+function validateSIConfig(v, physicsVersion) {
+  const pinLimit = physicsVersion === "si-4" ? 177 : 109;
+  const ranges = {
+    gravity: [1, 15],
+    restitution: [0, 0.9],
+    friction: [0.01, 1],
+    fireInterval: [0.1, 3],
+    maxBalls: [1, 32],
+    launchVariance: [0, 0.1],
+    holeScale: [0.7, 1.3],
+    gatePeriod: [0.5, 15],
+    gateOpenDuration: [0.15, 12],
+    cradleScale: [0.8, 1.2],
+    cradleDepthScale: [0.7, 1.3],
+  };
   for (const [key, value] of Object.entries(v)) {
     if (key === "pinPreset") {
-      if (!["default","left","right"].includes(value)) throw new Error("Invalid pin preset");
+      if (!["default", "left", "right"].includes(value))
+        throw new Error("Invalid pin preset");
     } else if (key === "pinAdjustments") {
-      if (!Array.isArray(value) || value.length > 109) throw new Error("Invalid pin adjustments");
+      if (!Array.isArray(value) || value.length > pinLimit)
+        throw new Error("Invalid pin adjustments");
       const seen = new Set();
       for (const a of value) {
         plain(a);
-        if (Object.keys(a).some(k => !["index","dx","dy","angle","restitution"].includes(k)) || !Number.isInteger(a.index) || a.index < 0 || a.index >= 109 || seen.has(a.index)) throw new Error("Invalid pin adjustment");
+        if (
+          Object.keys(a).some(
+            (k) => !["index", "dx", "dy", "angle", "restitution"].includes(k),
+          ) ||
+          !Number.isInteger(a.index) ||
+          a.index < 0 ||
+          a.index >= pinLimit ||
+          seen.has(a.index)
+        )
+          throw new Error("Invalid pin adjustment");
         seen.add(a.index);
-        for (const [k,n] of Object.entries(a)) {
+        for (const [k, n] of Object.entries(a)) {
           if (k === "index") continue;
-          const [min,max] = {dx:[-.006,.006],dy:[-.006,.006],angle:[-15,15],restitution:[0,.9]}[k];
-          if (!Number.isFinite(n) || n < min || n > max) throw new Error("Invalid pin adjustment");
+          const [min, max] = {
+            dx: [-0.006, 0.006],
+            dy: [-0.006, 0.006],
+            angle: [-15, 15],
+            restitution: [0, 0.9],
+          }[k];
+          if (!Number.isFinite(n) || n < min || n > max)
+            throw new Error("Invalid pin adjustment");
         }
       }
     } else {
       const r = ranges[key];
-      if (!r || !Number.isFinite(value) || value < r[0] || value > r[1] || (key === "maxBalls" && !Number.isInteger(value))) throw new Error("Invalid configuration: " + key);
+      if (
+        !r ||
+        !Number.isFinite(value) ||
+        value < r[0] ||
+        value > r[1] ||
+        (key === "maxBalls" && !Number.isInteger(value))
+      )
+        throw new Error("Invalid configuration: " + key);
     }
   }
 }
@@ -266,8 +315,14 @@ export function exportSession(game) {
   if (game.inputsTruncated)
     throw new Error("Replay input history was truncated");
   return validateImport({
-    version: ["si-1","si-2","si-3"].includes(game.board?.physicsVersion) ? 2 : 1,
-    ...(["si-1","si-2","si-3"].includes(game.board?.physicsVersion) ? { physicsVersion: game.board.physicsVersion } : {}),
+    version: ["si-1", "si-2", "si-3", "si-4"].includes(
+      game.board?.physicsVersion,
+    )
+      ? 2
+      : 1,
+    ...(["si-1", "si-2", "si-3", "si-4"].includes(game.board?.physicsVersion)
+      ? { physicsVersion: game.board.physicsVersion }
+      : {}),
     difficulty: game.difficulty || game.board?.difficulty || "easy",
     seed: String(game.seed ?? "abyss"),
     initialBalls: game.initialBalls ?? game.remaining + game.fired,
@@ -353,8 +408,22 @@ export async function saveSettings(value) {
     const r = s.get(1);
     r.onsuccess = () => {
       const previous = r.result?.value;
-      if (value.physicsVersion && previous && previous.physicsVersion !== value.physicsVersion)
-        s.put({ id: previous.physicsVersion === "si-2" ? -2 : previous.physicsVersion === "si-1" ? -1 : 0, value: structuredClone(previous) });
+      if (
+        value.physicsVersion &&
+        previous &&
+        previous.physicsVersion !== value.physicsVersion
+      )
+        s.put({
+          id:
+            previous.physicsVersion === "si-3"
+              ? -3
+              : previous.physicsVersion === "si-2"
+                ? -2
+                : previous.physicsVersion === "si-1"
+                  ? -1
+                  : 0,
+          value: structuredClone(previous),
+        });
       s.put({ id: 1, value: structuredClone(value) });
     };
   });
@@ -382,8 +451,9 @@ export async function loadSettings() {
 export function validateSettings(value) {
   safe(value);
   plain(value);
-  const si = ["si-1","si-2","si-3"].includes(value.physicsVersion);
-  if (value.physicsVersion !== undefined && !si) throw new Error("Unsupported physics version");
+  const si = ["si-1", "si-2", "si-3", "si-4"].includes(value.physicsVersion);
+  if (value.physicsVersion !== undefined && !si)
+    throw new Error("Unsupported physics version");
   const ranges = {
     power: [1, 100],
     angle: [-175, -5],
@@ -396,7 +466,17 @@ export function validateSettings(value) {
     holeScale: [0.35, 1.5],
     volume: [0, 1],
   };
-  if (si) Object.assign(ranges, { angle: [-90,-90], interval:[.1,3], gravity:[1,15], restitution:[0,.9], friction:[.01,1], gatePeriod:[.5,15], gateOpenDuration:[.15,12], holeScale:[.7,1.3] });
+  if (si)
+    Object.assign(ranges, {
+      angle: [-90, -90],
+      interval: [0.1, 3],
+      gravity: [1, 15],
+      restitution: [0, 0.9],
+      friction: [0.01, 1],
+      gatePeriod: [0.5, 15],
+      gateOpenDuration: [0.15, 12],
+      holeScale: [0.7, 1.3],
+    });
   for (const [key, v] of Object.entries(value)) {
     if (key === "physicsVersion") continue;
     if (key === "volumes") {
@@ -410,7 +490,7 @@ export function validateSettings(value) {
         throw new Error("Invalid volumes");
     } else if (key === "config") {
       plain(v);
-      validateConfig(v, si);
+      validateConfig(v, si, value.physicsVersion);
     } else if (key === "difficulty") {
       if (!["easy", "normal", "abyss", "custom"].includes(v))
         throw new Error("Invalid difficulty");

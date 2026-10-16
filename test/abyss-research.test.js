@@ -53,7 +53,7 @@ test("session export replay preserves tick inputs and physical outcome", () => {
   assert.equal(replay.finished, true);
   assert.equal(g.inputs[0].type, "fire");
   assert.equal(record.version, 2);
-  assert.equal(record.physicsVersion, "si-3");
+  assert.equal(record.physicsVersion, "si-4");
   assert.equal(record.inputs[0].angle, -90);
   replay.dispose();
   g.dispose();

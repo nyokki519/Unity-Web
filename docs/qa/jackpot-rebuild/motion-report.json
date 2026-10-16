@@ -1,0 +1,15 @@
+{
+  "note": "12fps offline observation rendered from actual fixed-step simulation. Not real-time cloud or iPhone performance. No debug drops or imposed outcomes.",
+  "physics": "si-4",
+  "elapsed": 12.083333333333334,
+  "fired": 20,
+  "passes": [
+    0,
+    0,
+    0
+  ],
+  "jackpots": 0,
+  "debugUsed": false,
+  "ledger": true,
+  "errors": []
+}

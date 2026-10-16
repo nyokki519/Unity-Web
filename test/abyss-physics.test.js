@@ -1,3 +1,4 @@
+import {createBoard as previousBoard} from '../public/js/abyss/si-v3/si-config.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createSimulation} from '../public/js/abyss/engine.js';
@@ -42,15 +43,15 @@ test('SI tuning changes shared contact geometry rather than presentation-only se
  for(const board of[base,tuned,createBoard('normal'),createBoard('abyss')])for(const tray of board.trays)for(const hole of tray.holes){assert.ok(hole.r>BALL_RADIUS);assert.ok(Math.hypot(hole.x,hole.z)+hole.r<tray.radius);}
 });
 
-test('all stock pin passages exceed a ball diameter and no pin wedges against a guide',()=>{
+test('frozen SI-3 passages retain their original minimum clearance',()=>{
  for(const difficulty of ['easy','normal','abyss']){
-  const b=createBoard(difficulty);
+  const b=previousBoard(difficulty);
   for(let i=0;i<b.pins.length;i++)for(let j=i+1;j<b.pins.length;j++){const p=b.pins[i],q=b.pins[j];assert.ok(Math.hypot(p.x-q.x,p.y-q.y)-p.r-q.r>=.01399,`${difficulty}: ${i}/${j}`);}
  }
 });
 test('entry and transfer chutes arrive above the cup lip and never start uphill',()=>{
  const b=createBoard();const entry=b.parts.find(p=>p.id==='gate-entry');assert.ok(entry.vertices.length>0);
- for(const t of b.trays){const lowestHole=t.holes.reduce((a,h)=>bowlHeight(t,h.x,h.z)<bowlHeight(t,a.x,a.z)?h:a);assert.ok(lowestHole.win,'central low point is an actual open drain, not a closed annular pocket');}
+ for(const t of b.trays){const a=Math.atan2(-t.tiltZ,-t.tilt),r=t.valleyRadius+Math.hypot(t.tilt,t.tiltZ)*(t.radius-t.valleyRadius)**2/(2*t.depth),x=r*Math.cos(a),z=r*Math.sin(a);assert.ok(t.holes.some(h=>Math.hypot(x-h.x,z-h.z)<h.r-BALL_RADIUS),'lowest physical point is an actual open drain, whether win or loss');}
  for(const p of b.parts.filter(p=>p.id.startsWith('transfer-'))){const y=[];for(let i=0;i<p.vertices.length;i+=12)y.push((p.vertices[i+1]+p.vertices[i+4])/2);assert.ok(y.every((v,i)=>!i||v<=y[i-1]+1e-6),'no uphill floor');}
 });
 

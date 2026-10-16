@@ -1,15 +1,15 @@
 """Integrated ABYSS Chromium QA; software GPU is not mobile hardware validation."""
-import json
+import json,os
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
-OUT=Path('docs/qa/abyss');OUT.mkdir(parents=True,exist_ok=True)
+OUT=Path(os.environ.get('JACKPOT_QA_DIR','docs/qa/abyss'));OUT.mkdir(parents=True,exist_ok=True)
 report={'widths':[],'errors':[],'checks':{},'limitations':['Chromium SwiftShader on cloud CPU; no iPhone Safari or hardware GPU measurements.']}
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--enable-unsafe-swiftshader'])
  def open_page(width=390,debug=False):
   page=browser.new_page(viewport={'width':width,'height':844},accept_downloads=True)
   page.on('pageerror',lambda e:report['errors'].append(str(e)))
-  page.goto('http://127.0.0.1:3400/?bonus=jackpot'+('&debug=1' if debug else ''))
+  page.goto(os.environ.get('JACKPOT_QA_URL','http://127.0.0.1:3400')+'/?bonus=jackpot'+('&debug=1' if debug else ''))
   expect(page.locator('.abyss-screen')).to_be_visible(timeout=10000)
   page.get_by_role('button',name='チャレンジ開始',exact=True).click()
   page.wait_for_timeout(500)

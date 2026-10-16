@@ -349,7 +349,7 @@ export function createRulesPanel() {
     el(
       "p",
       "",
-      "強さを調整し、固定レールから単発または長押しで発射します。109本の釘の流路を抜け、開閉ゲートから固定された3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破で10,000点。",
+      "強さを調整し、固定レールから単発または長押しで発射します。散らし釘・道釘・こぼしの流路を抜け、開閉ゲートから固定された3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破で10,000点。",
     ),
     el(
       "p",
@@ -414,7 +414,7 @@ export function createSetupPanel({ params, difficulties, modes, handlers }) {
   heading.append(
     button("← Unity MIXへ戻る", handlers.onBack, "quiet-button"),
     el("div", "abyss-brand", "UNITY MIX  /  EXPERIMENTAL ARCADE"),
-    el("h1", "", "PROJECT ABYSS"),
+    el("h1", "", "CAFÉ ABYSS"),
     el("p", "abyss-tagline", "深淵へ、一球。"),
     el(
       "p",
@@ -462,7 +462,7 @@ export function createMachinePanel({ WIDTH, HEIGHT, center }) {
   canvas.setAttribute("role", "img");
   canvas.setAttribute(
     "aria-label",
-    "109本の釘、開閉ゲート、3段の固定皿。金色の穴が成功、暗い穴が回収口。",
+    "釘の道筋、開閉ゲート、3段の固定皿。金色の穴が成功、暗い穴が回収口。",
   );
   machine.append(canvas);
   const renderBadge = el("p", "abyss-render-badge", "立体描画を準備中");

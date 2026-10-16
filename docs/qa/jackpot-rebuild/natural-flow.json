@@ -1,0 +1,125 @@
+{
+  "note": "Original provisional easy geometry; these are seeded test outcomes, not real-machine probabilities.",
+  "results": [
+    {
+      "physicsVersion": "si-4",
+      "seed": "abyss",
+      "shots": 100,
+      "jackpots": 7,
+      "lost": 93,
+      "gate": 82,
+      "entries": [
+        49,
+        11,
+        10
+      ],
+      "passes": [
+        11,
+        10,
+        7
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "physicsVersion": "si-4",
+      "seed": "0",
+      "shots": 100,
+      "jackpots": 3,
+      "lost": 97,
+      "gate": 73,
+      "entries": [
+        39,
+        8,
+        7
+      ],
+      "passes": [
+        8,
+        7,
+        3
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "physicsVersion": "si-4",
+      "seed": "1",
+      "shots": 100,
+      "jackpots": 4,
+      "lost": 96,
+      "gate": 80,
+      "entries": [
+        46,
+        10,
+        10
+      ],
+      "passes": [
+        10,
+        10,
+        4
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "physicsVersion": "si-4",
+      "seed": "2",
+      "shots": 100,
+      "jackpots": 3,
+      "lost": 97,
+      "gate": 75,
+      "entries": [
+        41,
+        5,
+        5
+      ],
+      "passes": [
+        5,
+        5,
+        3
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    },
+    {
+      "physicsVersion": "si-4",
+      "seed": "3",
+      "shots": 100,
+      "jackpots": 2,
+      "lost": 98,
+      "gate": 81,
+      "entries": [
+        45,
+        3,
+        3
+      ],
+      "passes": [
+        3,
+        3,
+        2
+      ],
+      "timeouts": [
+        0,
+        0,
+        0
+      ],
+      "debugUsed": false
+    }
+  ]
+}

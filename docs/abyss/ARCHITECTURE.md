@@ -1,4 +1,6 @@
-> 以下の初期モデル仕様は履歴。現行SI-3の単位はm/s/kg、球半径.0055m、質量.0055kg、109本の釘、固定3D皿。`JACKPOT_REDESIGN.md` / `JACKPOT_FLOW_FIX.md` / `docs/qa/jackpot-camera/REFERENCE.md` を併読する。
+> 現行SI-4の仕様は末尾と `docs/qa/jackpot-rebuild/README.md` を参照。以下は初期モデルからの履歴。
+
+> 以下の初期モデル仕様は履歴。旧SI-3の単位はm/s/kg、球半径.0055m、質量.0055kg、109本の釘、固定3D皿。`JACKPOT_REDESIGN.md` / `JACKPOT_FLOW_FIX.md` / `docs/qa/jackpot-camera/REFERENCE.md` を併読する。
 
 # PROJECT ABYSS
 
@@ -33,3 +35,11 @@
 `board.physicsVersion='si-3'`、皿の`profile='curved'`は放物面を表す。`si-geometry.js`のbowlHeightとbowlMeshを衝突・描画で共有し、描画の法線と接地影も同じ曲面から計算する。既存のcreateSimulation外形、固定240Hz、台帳、dispose契約は維持する。`replay.js`はversion1をlegacy、version2のphysicsVersionでsi-v1/si-v2/現行を選ぶ。
 
 `presentation.js`は物理状態を変更せず、自動カメラの段選択・保持と画面密度の方針を担当する。rendererの`getViewState()`は表示状態の確認用。
+
+## SI-4: LANTERNAを参考にした独自盤面
+
+現行は`physicsVersion='si-4'`。`board-routes.js`が道釘・こぼし・散らし等177本と支持路、`tray-layout.js`が傾斜した環状の谷と3段の穴・移送路を生成する。配置・摩擦は未実測の独自設計。`orbital-mesh.js`の極座標メッシュと開口を衝突・描画で共有する。穴の縁も同じ高さ関数に沿わせる。固定240HzのRapier接触で判定し、当落を決める後付け乱数や玉の誘導はない。
+
+`cabinet.js`は手続き生成の筐体と装飾のみを所有する。`play-layout.js`は既存の操作を移動し、盤面・発射欄を分離、詳細設定を折り畳む。横向きの低い画面では盤面と操作を2列にする。
+
+旧SI-3の物理・描画は`si-v3/`へ凍結し、記録のphysicsVersionで切り替える。SI-4の玉数上限による発射拒否は乱数を消費しないため、未記録の失敗操作で再生が変わらない。検証・限界は`docs/qa/jackpot-rebuild/README.md`。

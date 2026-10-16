@@ -1,3 +1,4 @@
+import { createCabinet } from "./cabinet.js";
 import {
   createAutoCamera,
   renderPixelRatio,
@@ -64,8 +65,11 @@ function geometry(p, board) {
         z = a.getZ(i) - t.cz,
         r = Math.hypot(x, z) || 1,
         s =
-          (t.depth / t.radius) *
-          (t.profile === "curved" ? (2 * r) / t.radius : 1),
+          t.profile === "orbital"
+            ? (2 * t.depth * (r - t.valleyRadius)) /
+              (t.radius - t.valleyRadius) ** 2
+            : (t.depth / t.radius) *
+              (t.profile === "curved" ? (2 * r) / t.radius : 1),
         v = new THREE.Vector3(
           (-s * x) / r - t.tilt,
           1,
@@ -194,10 +198,10 @@ export function createRenderer(canvas, board) {
       side: THREE.DoubleSide,
     }),
     dish: new THREE.MeshStandardMaterial({
-      color: 0x91a49a,
-      metalness: 0.3,
-      roughness: 0.3,
-      envMapIntensity: 0.45,
+      color: 0xeee4cb,
+      metalness: 0.08,
+      roughness: 0.36,
+      envMapIntensity: 0.35,
       side: THREE.DoubleSide,
     }),
     shaft: new THREE.MeshStandardMaterial({
@@ -306,17 +310,28 @@ export function createRenderer(canvas, board) {
     });
   for (const t of board.trays || [])
     for (const h of t.holes) {
-      const geo = new THREE.TorusGeometry(h.r + 0.0004, 0.0005, 4, 32),
+      const rimPoints = Array.from({ length: 64 }, (_, i) => {
+        const a = (i * Math.PI * 2) / 64,
+          x = h.x + (h.r + 0.0004) * Math.cos(a),
+          z = h.z + (h.r + 0.0004) * Math.sin(a);
+        return new THREE.Vector3(
+          t.cx + x,
+          bowlHeight(t, x, z) + 0.0004,
+          t.cz + z,
+        );
+      });
+      const geo = new THREE.TubeGeometry(
+          new THREE.CatmullRomCurve3(rimPoints, true),
+          64,
+          0.0005,
+          4,
+          true,
+        ),
         ring = new THREE.Mesh(geo, h.win ? apertureGood : apertureMiss);
-      ring.rotation.x = Math.PI / 2;
-      ring.position.set(
-        t.cx + h.x,
-        bowlHeight(t, h.x, h.z) + 0.0004,
-        t.cz + h.z,
-      );
       scene.add(ring);
       resources.push(geo);
     }
+  const cabinet = createCabinet(scene, board);
   const ballMaterial = new THREE.MeshStandardMaterial({
     color: 0xf2ffff,
     metalness: 0.72,
@@ -497,8 +512,11 @@ export function createRenderer(canvas, board) {
           height < 0.025;
         if (!shadow.visible) continue;
         const slope =
-            (t.depth / t.radius) *
-            (t.profile === "curved" ? (2 * r) / t.radius : 1),
+            t.profile === "orbital"
+              ? (2 * t.depth * (r - t.valleyRadius)) /
+                (t.radius - t.valleyRadius) ** 2
+              : (t.depth / t.radius) *
+                (t.profile === "curved" ? (2 * r) / t.radius : 1),
           normal = new THREE.Vector3(
             (-slope * x) / (r || 1) - t.tilt,
             1,
@@ -522,21 +540,30 @@ export function createRenderer(canvas, board) {
       const mode = autoCamera.choose(game, opts),
         focus = deepest(balls);
       currentMode = mode;
-      target.set(0.25, 0.4, 0.05);
-      eye.set(0.25, 1.1, 1.2);
+      target.set(0.25, 0.405, 0.05);
+      const fullDistance = Math.max(
+        0.58 / (2 * Math.tan((38 * Math.PI) / 360) * camera.aspect),
+        0.91 / (2 * Math.tan((38 * Math.PI) / 360)),
+      );
+      eye.set(0.25, 0.405 + fullDistance * 0.1, 0.05 + fullDistance);
       const trayIndex = { cradle1: 0, cradle2: 1, cradle3: 2 }[mode];
       if (trayIndex !== undefined) {
         const t = board.trays?.[trayIndex];
         if (t) {
           target.set(t.cx, t.cy, t.cz);
           target.y -= 0.008;
-          const distance =
-            (2 * t.radius + 0.022) /
-            (2 * Math.tan((38 * Math.PI) / 360) * camera.aspect);
+          // Fit a sphere containing the rim and its wall in both axes.
+          // Horizontal-only fitting clips the dish on landscape phones.
+          const halfVertical = (38 * Math.PI) / 360;
+          const limitingHalfFov = Math.min(
+            halfVertical,
+            Math.atan(Math.tan(halfVertical) * camera.aspect),
+          );
+          const distance = (t.radius + 0.025) / Math.sin(limitingHalfFov);
           eye
             .copy(target)
             .add(
-              new THREE.Vector3(0, 0.95, 0.3)
+              new THREE.Vector3(0, 0.88, 0.47)
                 .normalize()
                 .multiplyScalar(distance),
             );
@@ -546,7 +573,14 @@ export function createRenderer(canvas, board) {
         eye.copy(target).add(new THREE.Vector3(0, 0.24, 0.4));
       } else if (mode === "forest") {
         target.set(0.235, 0.53, 0.007);
-        eye.set(0.235, 0.59, 0.94);
+        eye.set(
+          0.235,
+          0.57,
+          Math.max(
+            0.91,
+            0.52 / (2 * Math.tan((38 * Math.PI) / 360) * camera.aspect),
+          ),
+        );
       } else if (mode === "rail") {
         target.set(0.42, 0.43, 0.03);
         eye.set(0.72, 0.65, 0.8);
@@ -568,6 +602,7 @@ export function createRenderer(canvas, board) {
         : 2;
       for (const material of [
         ...Object.values(materials),
+        ...cabinet.materials,
         ballMaterial,
         apertureGood,
         apertureMiss,
@@ -682,6 +717,7 @@ export function createRenderer(canvas, board) {
         overviewCamera.updateProjectionMatrix();
         for (const m of [
           ...Object.values(materials),
+          ...cabinet.materials,
           ballMaterial,
           apertureGood,
           apertureMiss,
@@ -696,6 +732,7 @@ export function createRenderer(canvas, board) {
       }
     },
     dispose() {
+      cabinet.dispose();
       resources.forEach((g) => g.dispose());
       Object.values(materials).forEach((m) => m.dispose());
       ballMaterial.dispose();

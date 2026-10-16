@@ -1,3 +1,4 @@
+import {createSimulation as createSIv3} from "./si-v3/si-engine.js";
 import {createSimulation as createSIv2} from "./si-v2/si-engine.js";
 import {createSimulation as createSIv1} from "./si-v1/si-engine.js";
 import { createSimulation } from "./engine.js";
@@ -7,7 +8,7 @@ import { validateImport } from "./storage.js";
 export function createReplay(record) {
   const data = validateImport(record);
   if (data.kind) throw new Error("A session is required for replay");
-  const game = (data.version === 1 ? createLegacySimulation : data.physicsVersion === "si-1" ? createSIv1 : data.physicsVersion === "si-2" ? createSIv2 : createSimulation)(data);
+  const game = (data.version === 1 ? createLegacySimulation : data.physicsVersion === "si-1" ? createSIv1 : data.physicsVersion === "si-2" ? createSIv2 : data.physicsVersion === "si-3" ? createSIv3 : createSimulation)(data);
   let cursor = 0,
     playing = false,
     speed = 1,
