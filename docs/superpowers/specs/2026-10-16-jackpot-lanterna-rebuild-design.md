@@ -10,13 +10,15 @@
 
 ## 調査の根拠
 
-主参照：[takumayellow/lanterna-pachinko](https://github.com/takumayellow/lanterna-pachinko)、取得コミット723b71520f9607d3904c59805977e67f32682f97。作者の公開ページへの接続はプロキシCONNECT403で拒否。取得ソースを隔離コピーでVite起動し、デスクトップ／390pxの画面を確認する。公開サイトへ接続できたとは扱わない。
+主参照：[takumayellow/lanterna-pachinko](https://github.com/takumayellow/lanterna-pachinko)、取得コミット723b71520f9607d3904c59805977e67f32682f97。作者の公開ページへの接続はプロキシCONNECT403で拒否。取得ソースを隔離コピーでVite起動し、デスクトップ／390pxの画面を確認した。観測時の球メッシュ数は0であり、全経路を遊んで確認したとは扱わない。公開サイトへ接続できたとは扱わない。
 
 `src/sim/board.ts` は、天釘・風車・道釘・こぼし・ジャンプ釘・命釘・ワープを区別する。`physics.ts` は2D専用計算、表示はThree.js。道釘の一部は表示釘とは別の支持線分を使っている。これを隠れた衝突としてコピーせず、Unity MIXでは見える部品と接触形状を対応させる。
 
 `render/view.ts` とmaterialsは、筐体、盤面、ガラス、金属球、局所的な光、状態別カメラを分ける。`ui/hud.ts` はプレイを邪魔しない操作と詳細データの開閉を持つ。キャラクター・液晶映像・音声・固有意匠・ソースの直接流用はしない。リポジトリのLICENSE未確認という前回調査を維持する。
 
 補助参照は[公開シミュレーター調査](../../jackpot-research/public-simulator-survey/2026-10-16/README.md)：Rocoroは釘盤面と流路、Boqinggeは3段と段カメラ、RouletteSphereChaserは表示形状と衝突形状の共有、medal_webは曲面と穴跨ぎの計算を比較する。誘導力、確率的な弾き、時間切れで当たり穴へ送る処理は採用しない。
+
+観察画像と現行SI-3の自然発射36玉の計測は [改修前の観察記録](../../qa/jackpot-lanterna-reference/README.md) に保存した。強さ45では釘面の滞在が約0.22〜0.26秒、12玉合計で釘接触8回だった。反射回数だけを増やすのではなく、釘の流路と見える時間を改善する。
 
 ## 方式の比較と選択
 

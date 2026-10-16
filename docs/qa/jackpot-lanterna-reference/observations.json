@@ -1,0 +1,66 @@
+[
+  {
+    "width": 1100,
+    "state": {
+      "text": "通常\n大当たり\n0\n回\n現在\n0\n回転\n総回転\n0\nRUSH 最高\n0 連\n持ち玉\n125\n投資\n500 円\n収支\n0 円\nデータを消す\n■\n停止\n強さ 55\n右打ち自動\n玉貸\n500円\nPUSH\n♪\n⌕\n?",
+      "ballMeshes": 0,
+      "canvas": {
+        "width": 1100,
+        "height": 820
+      },
+      "controls": {
+        "x": 844,
+        "y": 565,
+        "width": 240,
+        "height": 239,
+        "top": 565,
+        "right": 1084,
+        "bottom": 804,
+        "left": 844
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 1100,
+        "height": 820,
+        "top": 0,
+        "right": 1100,
+        "bottom": 820,
+        "left": 0
+      }
+    },
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": {
+      "text": "■\n停止\n強さ 55\n右打ち自動\n玉貸\n500円\nPUSH\n♪\n⌕\n▤\n?",
+      "ballMeshes": 0,
+      "canvas": {
+        "width": 390,
+        "height": 662
+      },
+      "controls": {
+        "x": 8,
+        "y": 716,
+        "width": 374,
+        "height": 120,
+        "top": 716,
+        "right": 382,
+        "bottom": 836,
+        "left": 8
+      },
+      "stage": {
+        "x": 0,
+        "y": 64,
+        "width": 390,
+        "height": 662,
+        "top": 64,
+        "right": 390,
+        "bottom": 726,
+        "left": 0
+      }
+    },
+    "errors": []
+  }
+]
