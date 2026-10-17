@@ -45,3 +45,6 @@ Earlier statements about no commercial audio describe the earlier release only.
 2026-10-17 whisper update: user supplied audio/zawa.mp3 for playback while the
 bowl caption is visible. Existing community cup mark (/assets/unity-mark.webp)
 is reproduced on the project's fictional decorative notes.
+
+Current background decoration: procedurally drawn gold coins carrying the existing
+community cup mark replace the earlier fictional notes. No external coin asset added.

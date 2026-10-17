@@ -29,7 +29,6 @@ export class AudioEngine {
     const d = this.noiseBuf.getChannelData(0);
     for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     this.startAmbient();
-    this.startBowlLoop();
     this.samples.prepare(c);
   }
 
@@ -94,24 +93,6 @@ export class AudioEngine {
     const nf = c.createBiquadFilter(); nf.type = 'lowpass'; nf.frequency.value = 240;
     const ng = c.createGain(); ng.gain.value = 0.012;
     s.connect(nf); nf.connect(ng); ng.connect(this.master); s.start(t);
-  }
-
-  startBowlLoop() {
-    const c = this.ctx;
-    const s = c.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true;
-    this.bowlFilter = c.createBiquadFilter();
-    this.bowlFilter.type = 'bandpass'; this.bowlFilter.frequency.value = 420; this.bowlFilter.Q.value = 1.6;
-    this.bowlGain = c.createGain(); this.bowlGain.gain.value = 0;
-    s.connect(this.bowlFilter); this.bowlFilter.connect(this.bowlGain);
-    this.bowlGain.connect(this.master); s.start(c.currentTime);
-  }
-
-  // 皿内滚动声,speed 0..1
-  setBowlSpeed(sp) {
-    if (!this.ctx) return;
-    const t = this.ctx.currentTime;
-    this.bowlGain.gain.setTargetAtTime(Math.min(0.11, sp * 0.13), t, 0.08);
-    this.bowlFilter.frequency.setTargetAtTime(320 + sp * 900, t, 0.1);
   }
 
   // ---------- 事件音 ----------

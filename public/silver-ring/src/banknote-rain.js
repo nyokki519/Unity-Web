@@ -1,19 +1,21 @@
-// Decorative, non-redeemable Unity notes. Never consumes the simulation RNG.
+// Decorative, non-redeemable Unity gold coins. Never consumes the simulation RNG.
 export function createBanknoteRain(){
- const cv=document.createElement('canvas');cv.width=384;cv.height=176;const g=cv.getContext('2d');
- g.fillStyle='#c4b790';g.fillRect(0,0,384,176);g.strokeStyle='#52634b';g.lineWidth=6;g.strokeRect(10,10,364,156);g.lineWidth=2;g.strokeRect(20,20,344,136);
- g.fillStyle='#364b3c';g.textAlign='center';g.font='bold 31px serif';g.fillText('UNITY',192,60);g.font='bold 48px serif';g.fillText('1000',192,113);g.font='15px sans-serif';g.fillText('喫茶Unity · ゲーム内専用',192,146);
- for(const x of [58,326]){g.beginPath();g.ellipse(x,85,25,39,0,0,Math.PI*2);g.stroke();g.beginPath();g.moveTo(x,53);g.bezierCurveTo(x-22,77,x+22,93,x,117);g.stroke();}
- const layer=document.createElement('div');layer.id='unity-banknote-background';layer.setAttribute('aria-hidden','true');
+ const cv=document.createElement('canvas');cv.width=cv.height=256;const g=cv.getContext('2d');
+ const gold=g.createRadialGradient(82,70,10,128,128,126);gold.addColorStop(0,'#fff4b0');gold.addColorStop(.45,'#e3bb4b');gold.addColorStop(.8,'#98701a');gold.addColorStop(1,'#ffe59b');
+ g.fillStyle=gold;g.beginPath();g.arc(128,128,124,0,Math.PI*2);g.fill();g.strokeStyle='#785015';g.lineWidth=4;g.beginPath();g.arc(128,128,111,0,Math.PI*2);g.stroke();
+ g.fillStyle='#684818';g.textAlign='center';g.font='bold 24px serif';g.fillText('UNITY',128,220);
+ const layer=document.createElement('div');layer.id='unity-banknote-background';layer.dataset.decoration='gold-coins';layer.setAttribute('aria-hidden','true');
  let image=cv.toDataURL();
  for(let i=0;i<14;i++){
   const note=document.createElement('div');note.className='unity-note';note.dataset.side=i%2?'right':'left';
-  note.style.setProperty('--lane',String(Math.floor(i/2)%3));note.style.setProperty('--duration',`${12+(i%4)*1.7}s`);note.style.setProperty('--delay',`${-i*1.9}s`);note.style.backgroundImage=`url("${image}")`;layer.append(note);
+  note.style.setProperty('--lane',String(Math.floor(i/2)%3));note.style.setProperty('--duration',`${18+(i%4)*2}s`);note.style.setProperty('--delay',`${-i*1.9}s`);const coin=document.createElement('div');coin.className='unity-coin';
+  for(const side of ['front','back']){const face=document.createElement('div');face.className=`coin-face coin-${side}`;face.style.backgroundImage=`url("${image}")`;coin.append(face);}
+  note.append(coin);layer.append(note);
  }
  document.body.prepend(layer);
  // Use the existing community identity, never the game-engine company mark.
  if(typeof Image!=='undefined'){
-  const mark=new Image();mark.onload=()=>{g.globalCompositeOperation='multiply';g.drawImage(mark,28,32,65,110);g.drawImage(mark,291,32,65,110);g.globalCompositeOperation='source-over';image=cv.toDataURL();for(const note of layer.children)note.style.backgroundImage=`url("${image}")`;layer.dataset.icon='ready';};mark.src=new URL('../../assets/unity-mark.webp',import.meta.url).href;
+  const mark=new Image();mark.onload=()=>{g.globalCompositeOperation='multiply';g.drawImage(mark,73,37,110,152);g.globalCompositeOperation='source-over';image=cv.toDataURL();for(const face of layer.querySelectorAll('.coin-face'))face.style.backgroundImage=`url("${image}")`;layer.dataset.icon='ready';};mark.src=new URL('../../assets/unity-mark.webp',import.meta.url).href;
  }
  function excludeRect({left,right,top,bottom},width,height){
   const l=Math.max(0,Math.min(width,left-8)),r=Math.max(0,Math.min(width,right+8)),t=Math.max(0,Math.min(height,top-8)),b=Math.max(0,Math.min(height,bottom+8));

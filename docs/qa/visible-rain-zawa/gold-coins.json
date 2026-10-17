@@ -1,0 +1,11 @@
+[
+  {
+    "width": 390,
+    "initial": 60000,
+    "shotCost": 200,
+    "goldCoinsFallAndTurn": true,
+    "rollingNoiseRemoved": true,
+    "progressCaptionRemoved": true,
+    "errors": []
+  }
+]

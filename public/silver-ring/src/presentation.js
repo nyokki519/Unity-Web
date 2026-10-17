@@ -24,8 +24,6 @@ export function mountPresentation({fire,setPower,setCamera,setAngle,previewSound
   power.disabled=state.randPow||state.phase!=='play';$('randomState').hidden=!state.randPow;
   $('singleShot').disabled=state.phase!=='play'||state.jackpotLock;
   const stages=sim.balls.filter(b=>b.mode==='bowl').map(b=>b.bi),stage=stages.length?Math.max(...stages):-1;
-  const label=state.jackpotLock?'三段突破 · ボーナス':stage>=0?`${stage+1}段目を抽選中 · 金色の穴で次へ`:sim.liveCount()?'釘と回転盤を通過中':'釘と回転盤 → 入口 → 三段の皿';
   $('bowlWhisper').hidden=stage<0||state.phase!=='play'||state.jackpotLock;
-  if($('routeStatus').textContent!==label)$('routeStatus').textContent=label;
  }};
 }

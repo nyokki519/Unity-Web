@@ -66,3 +66,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 筐体外の紙幣表示と添付ざわざわ音は [VISIBLE-RAIN-ZAWA.md](VISIBLE-RAIN-ZAWA.md) を参照。
 
 省モーション時の停止修正と200クレジット調整は [RAIN-AND-ECONOMY-FIX.md](RAIN-AND-ECONOMY-FIX.md) を参照。
+
+背景をUnityのカップ刻印入り金貨へ変更。加速する低速落下とCSSの立体的な表裏回転を分離し、筐体外へのマスク・一時停止・省モーションを継続。画面下の進行説明とクルーンの連続合成ノイズを撤去。ざわざわ音・突破音・大当たり音は維持。確認画像は `docs/qa/gold-coins/live-390-844.png`。演出はスローな自由落下風であり、実物の空気抵抗を再現した物理計算ではない。

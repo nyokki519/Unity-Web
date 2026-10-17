@@ -539,14 +539,11 @@ function frame(now) {
 
   // 紧张度 → 运镜 / 霓虹 / 皿转速音
   fx.activeTiers.clear();
-  let maxSp = 0;
   for (const b of sim.balls) {
     if (b.mode === 'bowl') {
       fx.activeTiers.add(b.bi);
-      maxSp = Math.max(maxSp, Math.hypot(b.pvx, b.pvz));
     }
   }
-  audio.setBowlSpeed(Math.min(1, maxSp / 0.85));
   if (!S.jackpotLock) {
     fx.detailView=S.manualCamera.startsWith('cradle');
     fx.detailPose={pitch:S.cameraPitch,yaw:S.cameraYaw,zoom:S.cameraZoom};
