@@ -1,0 +1,24 @@
+[
+  {
+    "role": "jackpot",
+    "sourceVideo": "ScreenRecording_10-17-2026 19-39-56_1.mp4",
+    "sourceSHA256": "8da63d5526b3d015efe24e51f4d3dfe02245faced2d490ba35524dca5d57ee39",
+    "startSeconds": 1.33,
+    "endSeconds": 3.73,
+    "keptSeconds": 2.4,
+    "asset": "public/silver-ring/audio/jackpot.mp3",
+    "assetSHA256": "687cf727f8b09076c0f6e5ca9baa5248ed18eddb61bcf2de8ff4a65fd0e4b934",
+    "processing": "Keep original stereo/sample rate; remove recording intro and trailing control-centre/silence; 1ms in /15ms out edge fades only; no pitch/speed/normalization changes."
+  },
+  {
+    "role": "breakthrough",
+    "sourceVideo": "ScreenRecording_10-17-2026 19-40-41_1.mp4",
+    "sourceSHA256": "208f9272e52abfffd47e7e708bfa8502e98bc2ffc7e96b45a199489548a13e1e",
+    "startSeconds": 1.045,
+    "endSeconds": 2.645,
+    "keptSeconds": 1.6,
+    "asset": "public/silver-ring/audio/breakthrough.mp3",
+    "assetSHA256": "6645be482cc70a94e9ad4dd38b33987439af653515b4a752b53966c2bb784190",
+    "processing": "Keep original stereo/sample rate; remove recording intro and trailing control-centre/silence; 1ms in /15ms out edge fades only; no pitch/speed/normalization changes."
+  }
+]

@@ -13,6 +13,7 @@ with sync_playwright() as p:
    if w==390 and h==844:page.screenshot(path=str(OUT/'start-390-844.png'),timeout=45000)
    frame.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=45000)
    child=page.frames[1];child.wait_for_function("()=>window.SILVER_GAME?.S.phase==='play'",timeout=45000)
+   child.wait_for_function("()=>SILVER_GAME.refs.boardTex.userData.artwork==='ready'",timeout=30000)
    assert child.evaluate("(()=>{const g=SILVER_GAME,m=new g.refs.THREE.Matrix4();g.refs.pinsIM.getMatrixAt(0,m);return Math.abs(m.elements[12]-g.sim.pins[0].x)<1e-6&&Math.abs(m.elements[13]-g.sim.pins[0].y)<1e-6})()"),'Rendered pins must use the seeded physical layout'
    assert child.evaluate('SILVER_GAME.S.muted') is True
    assert child.evaluate('SILVER_GAME.audio.master.gain.value')==0,'Initial audio must be silent at the actual output gain'

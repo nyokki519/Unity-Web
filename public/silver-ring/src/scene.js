@@ -134,8 +134,9 @@ export function buildScene(canvas,layout=buildLayout()) {
   const B = CFG.board, COL = CFG.column;
 
   // ---------- 盘面背板(带凹龛开孔的画布纹理) ----------
-  const boardTex = canvasTex(1024, 1700, (g, w, h) => {
-    paintCabinetArt(g,w,h);
+  let boardArtwork=null;
+  const drawBoard=(g,w,h)=>{
+    paintCabinetArt(g,w,h,boardArtwork);
     // 底部沼泽绿光
     const rg = g.createRadialGradient(w / 2, h * 0.95, 40, w / 2, h * 0.95, 480);
     rg.addColorStop(0, 'rgba(28,220,120,0.17)'); rg.addColorStop(1, 'rgba(28,220,120,0)');
@@ -147,7 +148,12 @@ export function buildScene(canvas,layout=buildLayout()) {
     g.clearRect(343, 871, 338, 710);
     g.strokeStyle = 'rgba(217,174,84,0.5)'; g.lineWidth = 4;
     g.strokeRect(341, 869, 342, 714);
-  });
+  };
+  const boardTex=canvasTex(1024,1700,drawBoard);boardTex.userData.artwork='loading';
+  const artImage=new Image();artImage.decoding='async';
+  artImage.onload=()=>{boardArtwork=artImage;const cv=boardTex.image,g=cv.getContext('2d');g.clearRect(0,0,cv.width,cv.height);drawBoard(g,cv.width,cv.height);boardTex.needsUpdate=true;boardTex.userData.artwork='ready';};
+  artImage.onerror=()=>{boardTex.userData.artwork='error';};
+  artImage.src=new URL('../assets/infernal-backplate.webp',import.meta.url).href;
   const boardMesh = new THREE.Mesh(
     new THREE.PlaneGeometry(1.24, 2.06),
     new THREE.MeshStandardMaterial({ map: boardTex, emissiveMap:boardTex,emissive:0xffffff,emissiveIntensity:.35,transparent: true, alphaTest: 0.4, roughness: 0.85, metalness: 0 })
@@ -899,7 +905,7 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   return {
     THREE, renderer, scene, camera, composer, bloom, controls, banknoteRain,
-    machineG, boardG,
+    machineG, boardG, boardTex,
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG, gateLabel,
     swampUniforms, bubbleIM, sheen,

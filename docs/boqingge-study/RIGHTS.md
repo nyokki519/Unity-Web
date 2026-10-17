@@ -16,3 +16,10 @@
 参考作の漫画タイトル、組織名、キャラクター名、引用台詞、菱形ロゴ、看板文言はゲーム表示から除き、独自の「喫茶・銀環」とカップの図柄に変更する。機能上必要な釘・円盤・穴・段移送の配置と一般的なルールは維持する。作者許諾が第三者作品の固有表現を包括的に許諾するとは扱わない。
 
 現金・購入・換金・景品は扱わない。全てゲーム内コイン。主ゲームの物理は参考作と同じ近似モデルであり、SI剛体モデルとは別に記録する。入口の割込みと最終段の送風は宣言した選択ルールとし標準は切る。これは権利回避ではなく、公平性と利用者への説明のための変更。
+
+## 2026-10-17 recorded sound and artwork update
+User-supplied recordings are now trimmed into breakthrough/jackpot MP3 clips.
+User reported permission for embedding/redistribution; no independent written grant
+was reviewed. See `RECORDED-AUDIO-AND-CABINET.md` and QA trim hashes.
+The current cabinet backplate is newly AI-generated original ornamental artwork;
+it replaces the previous coffee-mask graphic. No supplied manga image is embedded.

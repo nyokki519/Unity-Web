@@ -1,18 +1,20 @@
+import{RecordedSounds}from'./recorded-sounds.js';
 import{playBreakthrough}from'./breakthrough-sound.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
-// 「沼」音频引擎 —— 全程序化合成,无外部素材
+// Audio: recorded breakthrough/jackpot clips plus synthesized physical effects.
 // ============================================================
 
 export class AudioEngine {
   constructor() {
     this.ctx = null;
     this.muted = false;
+    this.samples=new RecordedSounds();this.samples.preload().catch(()=>{});
     this.last = {};   // 限流时间戳
   }
 
   resume() {
-    if (this.ctx) { const resumed=this.ctx.resume();resumed?.catch(()=>{ /* Audio permission must not prevent the game from resuming. */ });return; }
+    if (this.ctx) { const resumed=this.ctx.resume();resumed?.catch(()=>{ /* Audio permission must not prevent the game from resuming. */ });this.samples.prepare(this.ctx);return; }
     const AC = window.AudioContext || window.webkitAudioContext;
     this.ctx = new AC();
     const c = this.ctx;
@@ -28,6 +30,7 @@ export class AudioEngine {
     for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     this.startAmbient();
     this.startBowlLoop();
+    this.samples.prepare(c);
   }
 
   setMute(m) {
@@ -169,7 +172,7 @@ export class AudioEngine {
       this.osc('square', 1900 - i * 300, null, t + i * 0.045, 0.03, 0.045);
   }
 
-  sinkWin(tier) { return playBreakthrough(this,tier); }
+  sinkWin(tier) { if(this.muted||!this.ctx)return false;if(this.samples.play('breakthrough',this.ctx,this.master))return true;return playBreakthrough(this,tier); }
 
   sinkLose() {
     if (!this.ctx) return;
@@ -262,7 +265,8 @@ export class AudioEngine {
   }
 
   fanfare() {
-    if (!this.ctx) return;
+    if (!this.ctx||this.muted) return;
+    if(this.samples.play('jackpot',this.ctx,this.master))return;
     const c = this.ctx, t = c.currentTime;
     // 冲击
     this.noise(t, 1.2, 0.18, 'highpass', 3000, 0.7);
@@ -282,6 +286,7 @@ export class AudioEngine {
   }
 
   coinTick(i) {
+    if(this.samples.active.jackpot.size)return;
     if (!this.ctx || !this.gate2('coin', 40)) return;
     const t = this.ctx.currentTime;
     this.osc('square', 2200 + (i % 7) * 180, null, t, 0.03, 0.035);

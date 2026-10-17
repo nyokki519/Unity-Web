@@ -29,8 +29,15 @@ PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
 ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Three.js and addons: MIT, see /vendor/three/LICENSE.
-No external image, sound or 3D model assets were imported from a manga/anime.
+No manga/anime images or 3D models are embedded. Audio provenance is listed below.
 
 2026-10-17 additions by this project: independently drawn coffee-mask cabinet artwork,
 decorative UNITY notes, bounded orbit-camera controls, and synthesized breakthrough SE.
-No original manga/anime cabinet artwork, banknote image or commercial-machine audio was imported.
+This earlier release used synthesized SE; current recorded audio is described below.
+
+Current cabinet replacement (2026-10-17): original AI-generated dark engraved
+backplate, replacing the earlier coffee-mask artwork. Decorative UNITY notes remain.
+The current breakthrough and jackpot MP3 clips are extracted from recordings supplied
+by the user, who reported permission for web embedding and redistribution. These are
+not original synthesized sounds. Source hashes and trims: docs/qa/recorded-sounds/trims.json.
+Earlier statements about no commercial audio describe the earlier release only.

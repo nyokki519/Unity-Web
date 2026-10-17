@@ -186,6 +186,7 @@ function toggleCam() {
 }
 function toggleMute() {
   S.muted = !S.muted;
+  if(!S.muted)audio.resume();
   audio.setMute(S.muted);
   ui.setMuteTag(S.muted);
 }

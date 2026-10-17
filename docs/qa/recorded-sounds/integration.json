@@ -1,0 +1,17 @@
+{
+  "durations": {
+    "breakthrough": {
+      "duration": 1.6,
+      "channels": 2
+    },
+    "jackpot": {
+      "duration": 2.4,
+      "channels": 2
+    }
+  },
+  "played": {
+    "breakthrough": 3,
+    "jackpot": 1
+  },
+  "art": "ready"
+}
