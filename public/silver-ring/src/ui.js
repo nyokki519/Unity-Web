@@ -102,12 +102,8 @@ export class UI {
   }
 
   toast(msg, cls = '') {
-    const d = document.createElement('div');
-    d.className = 'toast ' + cls;
-    d.textContent = msg;
-    this.el.toasts.appendChild(d);
-    while (this.el.toasts.children.length > 4) this.el.toasts.firstChild.remove();
-    setTimeout(() => { d.classList.add('out'); setTimeout(() => d.remove(), 400); }, 2200);
+    this.el.toasts.textContent = msg;
+    this.el.toasts.dataset.kind = cls;
   }
 
   big(text, cls = '', dur = 1400) {

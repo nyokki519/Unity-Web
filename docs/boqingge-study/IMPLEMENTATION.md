@@ -1,4 +1,4 @@
-# 喫茶・銀環 — 実装と検証
+# 喫茶Unity — 実装と検証
 
 ## 起動・操作
 
@@ -54,3 +54,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 `docs/qa/cafe-motor/comparison*.json` は一次開発のSIモデル比較記録。`comparison-normal-before.json` は調整前の失敗例であり、銀環の最終比較データとして扱わない。最終の同一条件比較は `authorized-reference-baseline.json` を使う。
 
 最終実行：`npm test` **171/171成功**（失敗0）。変更後の `silver_ring_outcomes.py` も成功。新しい有料サービス、外部AI、Renderサービス削除、APIキーの再発行、交流ゲームのデータ変更は行っていない。
+
+2026-10-17：基本機構を維持した [Café Noir UI改修](CAFE-NOIR-UI.md)。単発発射と威力調整は下部、ランダム・傾き・補助視点は「その他」、詳細数値は「プレイ記録」へ。

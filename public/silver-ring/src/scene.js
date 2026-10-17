@@ -24,7 +24,7 @@ function canvasTex(w, h, draw) {
   return t;
 }
 
-const GOLD = 0xd9ae54, DARKRED = 0x163d2b;
+const GOLD = 0xc9a66b, DARKRED = 0x163d2b;
 
 function goldMat(rough = 0.32) {
   return new THREE.MeshStandardMaterial({ color: GOLD, metalness: 0.95, roughness: rough, envMapIntensity: 1.1 });
@@ -61,14 +61,14 @@ export function buildScene(canvas,layout=buildLayout()) {
   renderer.shadowMap.type = qual >= 2 ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xe9e2d4);
-  scene.fog = new THREE.FogExp2(0xe9e2d4, 0.052);
+  scene.background = new THREE.Color(0x101b17);
+  scene.fog = new THREE.FogExp2(0x101b17, 0.04);
 
   // 明亮摄影棚环境:暖白主光 + 绯红/金条灯点缀 + 沼绿背光
   const pmrem = new THREE.PMREMGenerator(renderer);
   {
     const es = new THREE.Scene();
-    es.background = new THREE.Color(0xb8b2a4);
+    es.background = new THREE.Color(0x697167);
     const strip = (w, h, color, intensity, pos, rot) => {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
         new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(intensity), side: THREE.DoubleSide }));
@@ -76,7 +76,7 @@ export function buildScene(canvas,layout=buildLayout()) {
       es.add(m);
     };
     strip(5, 2.2, 0xfff1da, 2.6, [0, 5, 0], [Math.PI / 2, 0, 0]);
-    strip(1.2, 5, 0xff2848, 1.1, [-5, 2, 0], [0, Math.PI / 2, 0]);
+    strip(1.2, 5, 0xd9c39b, 0.65, [-5, 2, 0], [0, Math.PI / 2, 0]);
     strip(1.2, 5, 0xffb32e, 1.1, [5, 2, 0], [0, -Math.PI / 2, 0]);
     strip(2.5, 1.2, 0x22e090, 0.45, [0, 1.6, -5], [0, 0, 0]);
     strip(8, 8, 0x9a9488, 0.9, [0, -3, 0], [-Math.PI / 2, 0, 0]);
@@ -104,7 +104,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   const keyTgt = new THREE.Object3D(); keyTgt.position.set(0, 1.4, 0);
   scene.add(keyTgt); key.target = keyTgt;
   scene.add(key);
-  const fillP = new THREE.PointLight(0x8a6aff, 2.2, 9, 1.9);
+  const fillP = new THREE.PointLight(0xc1ccbc, 1.2, 9, 1.9);
   fillP.position.set(-2.4, 2.0, 1.6);
   scene.add(fillP);
   const warmP = new THREE.PointLight(0xff8855, 2.2, 7, 1.9);
@@ -114,7 +114,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   // ---------- 地板(浅色摄影棚) ----------
   const floor = new THREE.Mesh(
     new THREE.CircleGeometry(14, 48),
-    new THREE.MeshStandardMaterial({ color: 0xd6cfc0, roughness: 0.5, metalness: 0.05, envMapIntensity: 0.55 })
+    new THREE.MeshStandardMaterial({ color: 0x242e27, roughness: 0.65, metalness: 0.05, envMapIntensity: 0.55 })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
@@ -691,12 +691,12 @@ export function buildScene(canvas,layout=buildLayout()) {
     g.strokeStyle = 'rgba(217,174,84,0.35)'; g.lineWidth = 3; g.strokeRect(30, 30, w - 60, h - 60);
     // 大「沼」
     g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.shadowColor = '#ffde7a'; g.shadowBlur = 60;
+    g.shadowColor = '#ffde7a'; g.shadowBlur = 12;
     const tg = g.createLinearGradient(0, h * 0.12, 0, h * 0.88);
     tg.addColorStop(0, '#fff7d8'); tg.addColorStop(0.5, '#ffd35e'); tg.addColorStop(1, '#b87e14');
     g.fillStyle = tg;
-    g.font = '900 220px "Hiragino Mincho ProN", "Yu Mincho", serif';
-    g.fillText('銀環', w / 2, h / 2 + 18);
+    g.font = '700 140px "Hiragino Mincho ProN", "Yu Mincho", serif';
+    g.fillText('喫茶Unity', w / 2, h / 2 + 18);
     g.shadowBlur = 0;
     g.fillStyle = '#e8dcc0';
     g.font = '600 44px "Futura", "Avenir Next", sans-serif';
@@ -798,7 +798,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   const consoleTex=canvasTex(1024,512,(g,w,h)=>{
     g.fillStyle='#123b2a';g.fillRect(0,0,w,h);g.strokeStyle='#d6b972';g.lineWidth=7;g.strokeRect(18,18,w-36,h-36);
     g.beginPath();g.arc(w/2,205,100,0,Math.PI*2);g.stroke();g.lineWidth=12;g.beginPath();g.moveTo(w/2-45,183);g.lineTo(w/2-32,235);g.quadraticCurveTo(w/2,260,w/2+32,235);g.lineTo(w/2+45,183);g.closePath();g.stroke();g.beginPath();g.arc(w/2+49,205,21,-Math.PI/2,Math.PI/2);g.stroke();
-    g.fillStyle='#f2e8c7';g.font='bold 64px sans-serif';g.textAlign='center';g.fillText('喫茶・銀環',w/2,390);
+    g.fillStyle='#f2e8c7';g.font='bold 64px sans-serif';g.textAlign='center';g.fillText('喫茶Unity',w/2,390);
   });
   const consolePanel = new THREE.Mesh(new THREE.PlaneGeometry(1.48, 0.56),
     new THREE.MeshStandardMaterial({ map: consoleTex, roughness: 0.35, metalness: 0.3 }));
@@ -860,7 +860,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     { samples: qual >= 2 && renderer.getPixelRatio() < 1.5 ? 4 : 0, type: THREE.HalfFloatType });
   const composer = new EffectComposer(renderer, rt);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.55, 0.62, 0.92);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.35, 1.2);
   roundBloomKernel(bloom);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -893,7 +893,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     qual = Math.max(0, Math.min(2, l));
     renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP[qual]));
     key.castShadow = qual >= 1;
-    bloom.strength = qual >= 1 ? 0.55 : 0.40;
+    bloom.strength = qual >= 1 ? 0.22 : 0.15;
     resize();
     return qual;
   }
@@ -902,7 +902,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     THREE, renderer, scene, camera, composer, bloom, controls,
     machineG, boardG,
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
-    bowlRefs, pkRingMat, pocketG,
+    bowlRefs, pkRingMat, pocketG, gateLabel,
     swampUniforms, bubbleIM, sheen,
     neonMats, bulbIM, bulbN,
     handleG, hKnobG, ballsIM,

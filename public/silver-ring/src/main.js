@@ -9,6 +9,7 @@ import { buildScene, TOUCH } from './scene.js';
 import { FX } from './fx.js';
 import { AudioEngine } from './audio.js';
 import { UI } from './ui.js';
+import {mountPresentation} from './presentation.js';
 
 const canvas = document.getElementById('game');
 const runSeed=new URLSearchParams(location.search).get('seed')||'silver-'+crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
@@ -73,14 +74,12 @@ const sim = new Sim((ev, d) => {
     case 'railout': audio.railout(); break;
     case 'foul':
       S.funds += CFG.eco.ballCost;
-      ui.toast('威力不足で戻り玉。コインを返しました', 'gray');
       audio.foul();
       break;
     case 'gate':
       S.gates++;
       audio.gateIn();
       fx.gateBurst();
-      ui.toast('入口を通過！', 'gold');
       break;
     case 'bowlenter':
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); audio.zawa(); }
@@ -94,7 +93,6 @@ const sim = new Sim((ev, d) => {
         if (d.tier >= 1) slowmo(0.35, 0.6);
       } else {
         audio.sinkLose();
-        ui.toast(`第${['一', '二', '三'][d.tier]}皿・ハズレ…`, 'gray');
         if (d.tier === 2) { ui.big('あと一歩…', 'gray-big', 1600); audio.zawa(); }
       }
       break;
@@ -118,7 +116,7 @@ async function onJackpot() {
   audio.fanfare();
   fx.jackpotBurst();
   slowmo(0.30, 0.8);
-  ui.big('銀環、三段突破！', 'jackpot-big', 2400);
+  ui.big('喫茶Unity、三段突破！', 'jackpot-big', 2400);
   await ui.jackpotShow(CFG.eco.jackpot, (t) => audio.coinTick(Math.floor(t * 90)),()=>S.phase==='paused'||document.hidden);
   S.funds += CFG.eco.jackpot;
   while (S.pendingJack > 0) {
@@ -154,6 +152,8 @@ function fire(power) {
 function fireOne() {
   return fire(S.randPow ? sim.randomPower() : S.memory + (launchRng() - 0.5) * 0.03);
 }
+
+const presentation=mountPresentation({fire:fireOne,setPower:value=>{S.memory=value;ui.setPowerMark(value);},setCamera:value=>{S.freeCam=false;refs.controls.enabled=false;S.manualCamera=value;}});
 
 // ---------- 输入 ----------
 function startCharge() {
@@ -557,6 +557,7 @@ function frame(now) {
   S.display += (S.funds - S.display) * Math.min(1, dt * 5);
   document.getElementById('remainingVal').textContent=Math.floor(S.funds/CFG.eco.ballCost).toLocaleString('ja-JP');
   ui.setFunds(S.display, S.funds < CFG.eco.ballCost * 40);
+  presentation.update(S,sim);
   statT += dt;
   if (statT > 0.25) {
     statT = 0;
@@ -587,8 +588,8 @@ ui.showStart(() => {
   goImmersive();
   S.phase = 'play';
   fx.setCamMode('WIDE');
-  ui.toast('1発100枚。釘と回転盤の道を探しましょう', 'gold');
-  if (TOUCH) setTimeout(() => ui.toast('下の「傾き」で、体感操作も選べます', 'gold'), 3600);
+  ui.toast('1球100枚。下のボタンから発射できます。', 'gold');
+
 });
 
 requestAnimationFrame(frame);
@@ -610,7 +611,7 @@ window.SILVER_GAME = {
 
 // Unity MIX lifecycle/settings bridge. The parent is same-origin and checked.
 function publishState(){document.body.dataset.phase=S.phase;if(parent!==window)parent.postMessage({source:'silver-game',phase:S.phase,power:Math.round(S.memory*100)},location.origin);}
-function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';audio.resume();last=performance.now();}document.getElementById('paused').hidden=S.phase!=='paused';publishState();}
+function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';audio.resume();last=performance.now();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.source!=='silver-shell')return;const {type,value}=e.data;if(type==='pause')pauseGame(S.phase!=='paused');if(type==='suspend')pauseGame(true);if(type==='power'&&Number.isFinite(value)){S.memory=Math.max(.02,Math.min(1,value/100));ui.setPowerMark(S.memory);}
  if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
  if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value))S.manualCamera=value;if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);}});

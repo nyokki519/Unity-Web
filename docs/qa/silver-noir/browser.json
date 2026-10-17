@@ -1,0 +1,32 @@
+[
+  {
+    "width": 375,
+    "height": 844,
+    "errors": [],
+    "fired": 5
+  },
+  {
+    "width": 1360,
+    "height": 900,
+    "errors": [],
+    "fired": 3
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "errors": [],
+    "fired": 4
+  },
+  {
+    "width": 414,
+    "height": 844,
+    "errors": [],
+    "fired": 5
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "errors": [],
+    "fired": 4
+  }
+]

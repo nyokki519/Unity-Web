@@ -8,7 +8,7 @@ with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
  for width in [375,390,414]:
   context=b.new_context(viewport={'width':width,'height':844});page=context.new_page();page.on('pageerror',lambda e:report['errors'].append(str(e)));page.on('request',lambda r:report['roomRequests'].append(r.url) if '/api/rooms' in r.url or '/ws' in r.url else None)
-  page.goto(a.url);entry=page.get_by_role('button',name='大穴チャレンジで遊ぶ',exact=True);expect(entry).to_be_visible(timeout=6000)
+  page.goto(a.url);entry=page.get_by_role('button',name='喫茶Unityで遊ぶ',exact=True);expect(entry).to_be_visible(timeout=6000)
   if a.entry_only:continue
   entry.click();expect(page.locator('.bonus-screen')).to_be_visible();expect(page.get_by_role('heading',name='琥珀の三段塔',exact=True)).to_be_visible();page.get_by_label('難易度',exact=True).select_option('practice');page.get_by_role('button',name='チャレンジ開始',exact=True).click();expect(page.locator('#bonus-remaining')).to_have_text('100');expect(page.locator('#bonus-sound')).not_to_be_checked()
   page.get_by_label('発射の強さ',exact=True).fill('64');page.get_by_role('button',name='強さを上げる',exact=True).click();expect(page.get_by_label('発射の強さ',exact=True)).to_have_value('69');page.get_by_role('button',name='強さを下げる',exact=True).click()

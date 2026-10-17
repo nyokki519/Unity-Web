@@ -1,7 +1,7 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
 import json,os
-OUT=Path('docs/qa/silver-ring');OUT.mkdir(exist_ok=True,parents=True)
+OUT=Path(os.environ.get('SILVER_QA_DIR','docs/qa/silver-ring'));OUT.mkdir(exist_ok=True,parents=True)
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader'])
  page=b.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));expect.set_options(timeout=30000)

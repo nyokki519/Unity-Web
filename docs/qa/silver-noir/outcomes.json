@@ -1,0 +1,9 @@
+{
+  "practiceCap": 30,
+  "audioOnOff": true,
+  "jackpotReward": 1000000,
+  "gameoverRetry": true,
+  "reducedFlashOff": true,
+  "errors": [],
+  "note": "Explicit practice/debug operations for short outcome verification, not natural-launch odds."
+}

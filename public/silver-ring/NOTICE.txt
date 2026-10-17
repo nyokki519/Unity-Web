@@ -1,4 +1,4 @@
-喫茶・銀環 — Unity MIX adaptation
+喫茶Unity — Unity MIX adaptation
 
 Adapted from lampardrodgers/boqingge
 https://github.com/lampardrodgers/boqingge

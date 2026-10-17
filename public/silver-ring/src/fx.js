@@ -458,17 +458,18 @@ export class FX {
     R.sheen.material.map.offset.x = (t * 0.018) % 1;
 
     // ---- 霓虹 ----
+    R.gateLabel.visible = !this.detailView; // Hide only the decorative sign in the manual bowl closeup.
     const mode = this.neonMode;
     R.neonMats.forEach((m, i) => {
       if (mode === 'jackpot') {
-        this._c.setHSL((t * 0.9 + i * 0.22) % 1, 1, 0.55);
+        this._c.setRGB(1, 0.72, 0.3);
         m.color.setRGB(this._c.r * 2.0, this._c.g * 2.0, this._c.b * 2.0);
       } else if (mode === 'tension') {
         const b = 0.85 + 0.4 * Math.sin(t * 5.5 + i * 1.3);
         m.color.setRGB(1.6 * b, 1.0 * b, 0.22 * b);
       } else {
-        const b = 0.8 + 0.3 * Math.sin(t * 1.6 + i * 2.1);
-        m.color.setRGB(1.55 * b, 0.16 * b, 0.40 * b);
+        const b = 0.85 + 0.05 * Math.sin(t * 1.6 + i * 2.1);
+        m.color.setRGB(0.65 * b, 0.47 * b, 0.22 * b);
       }
     });
 
@@ -482,7 +483,7 @@ export class FX {
         const ph = 0.5 + 0.5 * Math.sin(i * (Math.PI * 2 / R.bulbN) * 3 - t * speed);
         const v = Math.pow(ph, 3);
         if (mode === 'jackpot') {
-          this._c.setHSL((i / R.bulbN + t * 0.7) % 1, 1, 0.5 + v * 0.3);
+          this._c.setRGB(1, 0.72 + v * 0.15, 0.28);
           this._c.multiplyScalar(0.6 + v * 2.4);
         } else {
           this._c.setRGB(0.35 + v * 2.0, 0.2 + v * 1.5, 0.05 + v * 0.5);
@@ -532,7 +533,7 @@ export class FX {
           // 竖屏时横向视野窄、纵向富余,特写机位整体往前收,皿才占得满
           const ck = Math.max(0.68, Math.min(1, R.camera.aspect / 0.95));
           tgt = [0, y - 0.02, -0.11];
-          dst = [0.30 * ck, tgt[1] + (this.detailView ? 0.85 : 0.26) * ck, tgt[2] + (this.detailView ? 0.95 : 1.19) * ck];
+          dst = [(this.detailView ? 0.12 : 0.30) * ck, tgt[1] + (this.detailView ? 1.1 : 0.26) * ck, tgt[2] + (this.detailView ? 1.0 : 1.19) * ck];
           break;
         }
         case 'JACKPOT':

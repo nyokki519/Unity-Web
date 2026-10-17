@@ -1,0 +1,41 @@
+/* Café Noir: quiet chrome, clear hierarchy, and a board-first control surface. */
+:root{--gold:#c9a66b;--gold-hi:#f5ead2;--ink:#151c19}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#f5efe5}
+.panel{background:#14251fef;border:1px solid #546156;box-shadow:0 3px 12px #0003;backdrop-filter:none}
+#hud-tl,body.touch #hud-tl{top:10px;left:10px;min-width:0;width:auto;padding:8px 12px;border-radius:3px;display:flex;flex-direction:column;gap:1px}
+#hud-tl .label{font-size:10px;letter-spacing:.08em;margin:0;color:#cfbc98}
+#fundsVal,body.touch #fundsVal{font-size:21px;text-shadow:none;line-height:1.3;color:#f5efe5}
+#roundDetails{position:fixed;z-index:16;right:58px;top:12px;font-size:11px;color:#e1d4be}
+#roundDetails>summary{cursor:pointer;padding:10px;min-height:40px;border:1px solid #7c816e;border-radius:3px;background:#162a22}
+#roundDetails #hud-tr,body.touch #roundDetails #hud-tr{position:absolute;top:46px;right:0;min-width:180px;padding:10px;font-size:12px}
+#mtop,body.touch #mtop{display:flex;position:fixed;right:10px;top:12px;z-index:16}
+#mtop .mbtn{border-radius:3px;height:40px;min-width:40px;background:#162a22}
+#powerWrap,#lamps,#hintBar,#mhint,body.touch #mhint{display:none!important}
+.play-dock{position:fixed;z-index:18;left:0;right:0;bottom:0;padding:8px max(12px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom));background:#11271ff5;border-top:1px solid #8c8062;box-shadow:0 -6px 24px #0002}
+.strength-row{display:flex;gap:12px;align-items:center;max-width:620px;margin:0 auto 7px;font-size:11px;color:#ddd1b9}
+.strength-row label{white-space:nowrap;display:flex;gap:6px;align-items:center}.strength-row output{min-width:32px;color:#f5efe5;font-variant-numeric:tabular-nums}
+#shotPower{flex:1;width:60px;height:24px;accent-color:#c9a66b;touch-action:pan-x}#randomState{color:#d5b277;font-size:10px;white-space:nowrap}
+#mbar,body.touch #mbar{position:static;display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;gap:7px;pointer-events:auto;max-width:620px;margin:auto;padding:0;transform:none}
+#mbar .mbtn,body.touch #mbar .mbtn{min-width:0;min-height:46px;height:46px;border-radius:4px;font-size:13px;letter-spacing:0;padding:5px;background:#223c30;border-color:#6a7765;box-shadow:none;animation:none;flex-direction:row;gap:2px}
+#mbar .primary-shot,body.touch #mbar .primary-shot{background:#d2b581;color:#182c23;border-color:#dfc99d;font-size:15px}
+#mbar .mbtn.on{background:#e0c594;color:#182c23;border-color:#e0c594}
+#mbar i{font-size:13px;margin:0;opacity:1}
+#toasts{position:static;transform:none;display:block;min-height:17px;max-width:620px;margin:5px auto 0;text-align:center;font-size:10px;line-height:1.4;color:#b9c7b8;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;pointer-events:none}
+#extraControls{position:fixed;z-index:19;bottom:140px;right:10px;left:10px;max-width:420px;margin-left:auto;padding:14px;background:#f1eadb;color:#18392b;border:1px solid #bca778;border-radius:5px;box-shadow:0 8px 40px #0008;max-height:45vh;overflow:auto;touch-action:pan-y}
+#extraControls[hidden]{display:none}.extra-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0}.extra-grid .mbtn{font-size:11px;letter-spacing:0;min-width:0;background:#254533;color:#f8f0e0;border-radius:4px}.extra-grid .mbtn.on{background:#c9a66b;color:#182d21}#extraControls p{font-size:11px;line-height:1.7}
+#routeStatus{position:fixed;bottom:137px;left:12px;right:12px;z-index:8;text-align:center;color:#f2e9d6;font-size:11px;text-shadow:0 1px 5px #000;background:#16271fbc;width:max-content;max-width:calc(100% - 24px);margin:auto;padding:5px 10px;border-radius:20px;pointer-events:none}
+#susWrap,body.touch #susWrap{bottom:180px;left:10px;padding:7px;max-width:150px}#susTrack{max-width:130px}
+#devPanel{top:100px;max-width:165px;font-size:10px}#devPanel summary{font-size:10px}
+.overlay{background:radial-gradient(ellipse at 50% 15%,#2a3e30,#111d18 80%)}
+.brand-mark{display:block;width:34px;height:auto;margin:8px auto 12px}.noir-label{font-size:10px;letter-spacing:.25em;color:#cfb27c;margin-bottom:9px}
+body.touch .ov-title,.ov-title{font-size:clamp(32px,9vw,72px)!important;letter-spacing:.12em;font-weight:500;color:#f4ead7;text-shadow:none}
+body.touch .ov-sub,.ov-sub{font-size:13px;letter-spacing:.15em;margin:12px 0 16px;color:#cfb27c}
+.ov-rules{background:#183225;border-color:#6c775c;text-align:left;border-radius:5px}.ov-rules label{margin-top:8px}.ov-keys{color:#c6cec0}
+body.touch .btn,.btn{font-size:15px;letter-spacing:.08em;border-radius:4px;box-shadow:none;background:#d0b582;color:#162c21}.btn.dark{background:#243e30;color:#f4ebd8}
+#vignette{opacity:.45}#bigText{display:none}#jack .jk-title{font-size:clamp(30px,9vw,64px)}#jack .jk-sub{font-size:16px;letter-spacing:.12em}
+@media(min-width:900px){.play-dock{left:50%;right:auto;width:640px;transform:translateX(-50%);border:1px solid #8c8062;border-radius:8px 8px 0 0}#routeStatus{bottom:136px}#extraControls{bottom:140px;right:calc(50% - 310px);left:auto;width:400px}}
+@media(max-height:450px){.play-dock{left:auto;right:8px;width:300px;border-radius:5px;padding:7px;bottom:8px}.strength-row{gap:8px;margin-bottom:5px}#mbar .mbtn{height:44px;min-height:44px;font-size:11px}#routeStatus{left:10px;right:auto;bottom:10px;max-width:calc(100% - 330px);font-size:10px}#extraControls{width:300px;left:auto;bottom:125px;max-height:45vh}#toasts{font-size:9px}#devPanel{top:95px}}
+
+#toasts[data-kind="red"]{white-space:normal;color:#ffceba}
+.overlay.show{animation:none}
+.ov-note{color:#b8c3b4;opacity:1}.ov-note a{color:#e0c594;text-decoration:underline}
