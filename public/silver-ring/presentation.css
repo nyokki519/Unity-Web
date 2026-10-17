@@ -57,15 +57,16 @@ body:has(#cameraControls:not([hidden])) #susWrap{bottom:288px}
 #paused{pointer-events:auto}#paused .btn{display:block;margin:12px auto 0;min-height:48px}
 #unity-banknote-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:4;background:transparent}
 #unity-banknote-background[hidden]{display:none}#game{z-index:1}
-.unity-note{--coin-size:clamp(112px,30vw,170px);position:absolute;top:0;width:var(--coin-size);height:var(--coin-size);perspective:650px;opacity:.96;will-change:transform}
+.unity-note{--coin-size:clamp(112px,30vw,170px);position:absolute;top:0;width:var(--coin-size);height:var(--coin-size);perspective:650px;transform-style:preserve-3d;opacity:1;will-change:transform}
 .unity-coin{width:100%;height:100%;position:relative;transform-style:preserve-3d;will-change:transform}
 .coin-flight{width:100%;height:100%;transform-style:preserve-3d}
 .coin-face{position:absolute;inset:0;border-radius:50%;background-size:100% 100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:inset 0 0 0 2px #e1b44c}
 .coin-front{transform:translateZ(3px)}.coin-back{transform:rotateY(180deg) translateZ(3px)}
 .coin-rim{position:absolute;left:50%;top:50%;width:calc(var(--coin-size)*.132);height:6px;background:repeating-linear-gradient(90deg,#e2b850 0px,#8e6217 1px,#d5a83b 2px,#ffdf7e 3px);transform:translate(-50%,-50%) rotateZ(var(--rim-angle)) translateY(calc(var(--coin-size)*.485)) rotateX(90deg);backface-visibility:visible}
 body:not(.reduced) .unity-coin{animation:coin-tumble var(--spin-time) linear infinite!important;animation-delay:var(--delay)!important}
+.reduced .unity-coin{animation:coin-tumble 24s linear infinite!important;animation-delay:var(--delay)!important}
 body:not(.reduced) .coin-flight{animation:coin-drift var(--duration) linear infinite!important;animation-delay:var(--delay)!important}
-@keyframes coin-drift{from{transform:translateX(var(--drift-from))}to{transform:translateX(var(--drift-to))}}
+@keyframes coin-drift{from{transform:translate3d(var(--drift-from),0,var(--depth-from))}to{transform:translate3d(var(--drift-to),0,var(--depth-to))}}
 @keyframes coin-tumble{from{transform:rotateZ(var(--tilt)) rotate3d(var(--axis-x),var(--axis-y),var(--axis-z),0deg)}to{transform:rotateZ(var(--tilt)) rotate3d(var(--axis-x),var(--axis-y),var(--axis-z),360deg)}}
 .unity-note[data-side=left]{left:calc(-38px + var(--lane)*12px)}.unity-note[data-side=right]{right:calc(-38px + var(--lane)*12px)}
 @keyframes unity-note-fall{from{transform:translate3d(0,-180px,0)}to{transform:translate3d(0,calc(100vh + 180px),0)}}

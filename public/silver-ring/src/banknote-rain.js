@@ -10,7 +10,7 @@ export function createBanknoteRain(){
  for(let i=0;i<14;i++){
   const note=document.createElement('div');note.className='unity-note';note.dataset.side=i%2?'right':'left';
   note.style.setProperty('--lane',String(Math.floor(i/2)%3));
-  for(const [key,value] of Object.entries({'--spin-time':`${3.8+(i%5)*.7}s`,'--axis-x':String(.3+(i%4)*.23),'--axis-y':String(.7+(i%3)*.17),'--axis-z':String(.15+(i%5)*.08),'--tilt':`${i*37%80-40}deg`,'--drift-from':`${i%3*8-12}px`,'--drift-to':`${i%2?12:-14}px`}))note.style.setProperty(key,value);note.style.setProperty('--duration',`${18+(i%4)*2}s`);note.style.setProperty('--delay',`${-i*1.9}s`);const coin=document.createElement('div');coin.className='unity-coin';
+  for(const [key,value] of Object.entries({'--depth-from':`${-150+(i%5)*45}px`,'--depth-to':`${-90+(i%4)*70}px`,'--spin-time':`${3.8+(i%5)*.7}s`,'--axis-x':String(.3+(i%4)*.23),'--axis-y':String(.7+(i%3)*.17),'--axis-z':String(.15+(i%5)*.08),'--tilt':`${i*37%80-40}deg`,'--drift-from':`${i%3*8-12}px`,'--drift-to':`${i%2?12:-14}px`}))note.style.setProperty(key,value);note.style.setProperty('--duration',`${18+(i%4)*2}s`);note.style.setProperty('--delay',`${-i*1.9}s`);const coin=document.createElement('div');coin.className='unity-coin';
   for(const side of ['front','back']){const face=document.createElement('div');face.className=`coin-face coin-${side}`;face.style.backgroundImage=`url("${image}")`;coin.append(face);}
   for(let j=0;j<24;j++){const rim=document.createElement('div');rim.className='coin-rim';rim.style.setProperty('--rim-angle',`${j*15}deg`);coin.append(rim);}
   const flight=document.createElement('div');flight.className='coin-flight';flight.append(coin);note.append(flight);layer.append(note);

@@ -158,7 +158,7 @@ const presentation=mountPresentation({previewSound:()=>{audio.sinkWin(0);ui.toas
 
 // ---------- 输入 ----------
 function startCharge() {
-  if (S.phase !== 'play' || S.freeCam) return;
+  if (S.phase !== 'play') return;
   if (S.randPow) { S.holdFire = true; return; }  // 随机力度:長押し：就连发,不用蓄力
   S.charging = true; S.chargeT = 0.04;
 }
@@ -182,7 +182,7 @@ function toggleCam() {
   S.charging = false; S.holdFire = false; tap = null;
   ui.setCamTag(S.freeCam);
   audio.uiBlip();
-  if (S.freeCam) ui.toast(`自由視点：${TOUCH ? 'ドラッグで回転・タップで' : 'ドラッグで回転・右クリックで'}単発発射`, 'gold');
+  if (S.freeCam) ui.toast('自由視点：ドラッグで回転。下の発射ボタンはそのまま使えます。', 'gold');
 }
 function toggleMute() {
   S.muted = !S.muted;
@@ -588,7 +588,7 @@ ui.setPowerScale(P_CLEAR, RAND_LO, RAND_HI);
 ui.setRandom(false);
 ui.showStart(() => {
   CFG.shutter.blockRate=document.getElementById('ruleInterference').checked?1.8:0;
-  CFG.bowls.air.chance=document.getElementById('ruleInterference').checked?.32:0;
+  CFG.bowls.air.chance=document.getElementById('ruleAir').checked?.32:0;
   document.getElementById('devPanel').hidden=!(new URLSearchParams(location.search).get('debug')==='1'||document.getElementById('practiceMode').checked);
   audio.resume();
   goImmersive();

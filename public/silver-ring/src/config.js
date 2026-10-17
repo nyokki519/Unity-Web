@@ -83,7 +83,7 @@ export const CFG = {
     capture: 0.019,        // 洞捕获半径
     vpass: 0.26,           // 高于此速度会滚过洞口
     sinkT: 0.32,           // 吞珠动画时长
-    air: { tier: 2, chance: 0, kick: 0.60 },  // 最終皿空气喷出装置
+    air: { tier: 2, chance: .32, kick: 0.60 },  // 最終皿空气喷出装置
     list: [
       { cy: 0.835, cz: -0.115, R: 0.165, ringR: 0.055, rot: 0,
         enter: { a: 150 * D2R, dir: +1, rr: 0.86, v: 0.95 },
@@ -116,7 +116,7 @@ export const CFG = {
 
   // 经济(赌博默示録・沼 规格)
   eco: {
-    start: 60000,        // 300 paid shots; seeded balance survey in docs/qa.
+    start: 50000,        // 250 paid shots; seeded balance survey in docs/qa.
     ballCost: 200,       // Virtual credits per accepted launch.
     jackpot: 1000000,    // 大当り ¥700,000,000
     borrow: 100000,      // 帝愛借款单位
