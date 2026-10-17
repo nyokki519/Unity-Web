@@ -1,0 +1,18 @@
+{
+  "quality": 2,
+  "locked": true,
+  "pixelRatio": 3,
+  "deviceRatio": 3,
+  "buffer": [
+    1170,
+    1932
+  ],
+  "viewport": [
+    390,
+    644
+  ],
+  "samples": 4,
+  "anisotropy": 16,
+  "manualSwitch": true,
+  "errors": []
+}

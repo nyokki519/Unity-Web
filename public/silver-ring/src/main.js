@@ -32,7 +32,7 @@ const S = {
   freeCam: false, muted: true, reduce:matchMedia("(prefers-reduced-motion:reduce)").matches, manualCamera:"auto", cameraPitch:50,cameraYaw:10,cameraZoom:1,banknotes:true,testUsed:false,
   jackpotLock: false, pendingJack: 0,
   timeScale: 1, slowT: 0, slowV: 1,
-  acc: 0, degrade: 0,
+  acc: 0, degrade: 0, qualityLocked:true,
 };
 
 // 力度刻度:突破线(低于它必成戻り玉)与随机力度区间
@@ -619,7 +619,7 @@ window.SILVER_GAME = {
 function publishState(){document.body.dataset.phase=S.phase;if(parent!==window)parent.postMessage({source:'silver-game',phase:S.phase,power:Math.round(S.memory*100)},location.origin);}
 function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';panHold=0;audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';last=performance.now();audio.resume();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.source!=='silver-shell')return;const {type,value}=e.data;if(type==='setPaused'&&typeof value==='boolean')pauseGame(value);if(type==='pause')pauseGame(S.phase!=='paused');if(type==='suspend')pauseGame(true);if(type==='power'&&Number.isFinite(value)){S.memory=Math.max(.02,Math.min(1,value/100));ui.setPowerMark(S.memory);}
- if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
+ if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';S.degrade=0;refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
  if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value)){S.manualCamera=value;S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);}if(type==='banknotes'){S.banknotes=!!value;refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}});
 document.getElementById('resumeGame').addEventListener('click',()=>pauseGame(false));
 addEventListener('blur',()=>{if(parent===window)pauseGame(true);});
