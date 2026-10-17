@@ -6,6 +6,7 @@ export function buildPinRoutes(board, overrides = {}) {
     clamp = (v, d, a, b) =>
       Number.isFinite(Number(v)) ? Math.max(a, Math.min(b, Number(v))) : d;
   const addPin = (x, y, role) => {
+    if(board.rotors?.some(r=>Math.hypot(x-r.x,y-r.y)<r.radius+.018))return;
     const id = board.pins.length,
       a = overrides.pinAdjustments?.find((v) => v.index === id);
     x +=

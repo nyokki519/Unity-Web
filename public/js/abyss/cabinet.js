@@ -108,10 +108,10 @@ export function createCabinet(scene, board) {
   ctx.fillStyle = "#a8b59a";
   ctx.textAlign = "center";
   ctx.font = "20px Georgia";
-  ctx.fillText("THE SILVER GARDEN", 512, 250);
+  ctx.fillText("銀の道を見守る", 512, 250);
   ctx.font = "11px sans-serif";
   ctx.fillStyle = "#879c7c";
-  ctx.fillText("SCATTER  ·  DRIFT  ·  RETURN", 512, 277);
+  ctx.fillText("散る  ·  巡る  ·  つながる", 512, 277);
   for (const route of board.routes || []) {
     const x = (v) => ((v - 0.03) / 0.44) * 1024,
       y = (v) => ((0.77 - v) / 0.44) * 1024;
@@ -131,11 +131,11 @@ export function createCabinet(scene, board) {
   const boardPlate = new THREE.Mesh(boardGeo, materials.boardArt);
   boardPlate.position.set(0.25, 0.55, 0.0003);
   root.add(boardPlate);
-  plate("CAFÉ ABYSS", 0.25, 0.772, 0.02, 0.255, 0.044, "#123f32");
-  plate("FOLLOW THE SILVER", 0.25, 0.693, 0.013, 0.19, 0.027, "#123f32");
+  plate("喫茶・銀環", 0.25, 0.772, 0.02, 0.255, 0.044, "#123f32");
+  plate("一玉の行方を追う", 0.25, 0.693, 0.013, 0.19, 0.027, "#123f32");
   for (const t of board.trays)
     plate(
-      `0${t.stage}  /  CRADLE`,
+      `${t.stage}段目`,
       t.cx + t.radius + 0.035,
       t.cy - 0.008,
       t.cz - 0.025,

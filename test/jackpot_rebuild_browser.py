@@ -10,7 +10,7 @@ with sync_playwright() as p:
  for w,h in json.loads(os.environ.get('JACKPOT_VIEWPORTS','[[375,844],[390,844],[414,844],[375,568],[844,390]]')):
   page=b.new_page(viewport={'width':w,'height':h},device_scale_factor=1);page.set_default_timeout(30000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   try:
-   page.goto(BASE+'/?bonus=jackpot',wait_until='domcontentloaded');page.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=45000)
+   page.goto(BASE+'/?bonus=jackpot&physics=1',wait_until='domcontentloaded');page.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=45000)
    expect(page.locator('.abyss-screen')).to_have_attribute('data-phase','running',timeout=45000)
    page.get_by_role('button',name='一時停止',exact=True).click()
    page.wait_for_timeout(1500)

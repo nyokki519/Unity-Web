@@ -1,3 +1,4 @@
+import { createChallengeControls } from "./challenge-controls.js";
 import { arrangePlay } from "./play-layout.js";
 import {
   createAutoPanel,
@@ -43,17 +44,17 @@ import {
 } from "./storage.js";
 import { createReplay } from "./replay.js";
 const difficulties = [
-  ["easy", "EASY / 練習"],
-  ["normal", "NORMAL / 通常"],
-  ["abyss", "ABYSS / 深淵"],
-  ["custom", "CUSTOM / 設定台"],
+  ["easy", "練習"],
+  ["normal", "通常"],
+  ["abyss", "高難度"],
+  ["custom", "設定台"],
 ];
 const modes = [
-  ["normal", "NORMAL / 手動"],
-  ["auto", "AUTO / 自動発射"],
-  ["lab", "LAB / 機構研究"],
-  ["monte", "MONTE CARLO / 確率分析"],
-  ["replay", "REPLAY / 軌跡再生"],
+  ["normal", "手動"],
+  ["auto", "自動発射"],
+  ["lab", "機構の検証"],
+  ["monte", "確率分析"],
+  ["replay", "記録の再生"],
 ];
 export function mountAbyss({ onBack }) {
   const params = new URL(location.href).searchParams,
@@ -344,7 +345,7 @@ export function mountAbyss({ onBack }) {
         ) {
           message("検証用の玉を投入しました。");
           update();
-        } else message("LABモードで開始するか、玉の残数を確認してください。");
+        } else message("検証モードで開始するか、玉の残数を確認してください。");
       },
       onEmpty: () => {
         game?.debugEmpty();
@@ -418,7 +419,7 @@ export function mountAbyss({ onBack }) {
           try {
             await saveRecord("presets", {
               version: 2,
-              physicsVersion: "si-4",
+              physicsVersion: "si-5",
               kind: "preset",
               difficulty: difficultyValue(),
               seed: seed.value,
@@ -492,7 +493,7 @@ export function mountAbyss({ onBack }) {
   const testMark = el(
     "p",
     "bonus-test-mark abyss-test-mark",
-    "LAB / 検証用セッション：通常プレイとは別の記録です。",
+    "検証 / 検証用セッション：通常プレイとは別の記録です。",
   );
   testMark.id = "bonus-test-mark";
   testMark.hidden = !debug;
@@ -516,6 +517,13 @@ export function mountAbyss({ onBack }) {
     pause,
     quit,
   });
+  const challenge = createChallengeControls({
+    node,
+    getGame: () => game,
+    getReplay: () => replay,
+    listen,
+  });
+
   let savedRecords = [];
   function message(text) {
     status.textContent = text;
@@ -542,14 +550,14 @@ export function mountAbyss({ onBack }) {
       launchVariance: 0.012,
       gatePeriod: 3,
       gateOpenDuration: 2,
-      holeScale: 1,
+      holeScale: 1,cradleOrientation:0,cradleTilt:.1,cradleFriction:.025,
     };
     for (const [k, v] of Object.entries(defaults))
       configInputs[k].value = String(v);
   }
   function currentSettings() {
     return {
-      physicsVersion: "si-4",
+      physicsVersion: "si-5",
       difficulty: difficultyValue(),
       seed: seed.value,
       power,
@@ -561,7 +569,7 @@ export function mountAbyss({ onBack }) {
     };
   }
   function applyPreset(record) {
-    if (record.physicsVersion !== "si-4")
+    if (record.physicsVersion !== "si-5")
       throw new Error(
         "旧版の盤面設定はSI物理へ変換できません。旧プレイ記録はREPLAYで再生できます。",
       );
@@ -618,9 +626,15 @@ export function mountAbyss({ onBack }) {
     powerRange.output.textContent = String(power);
     powerRange.input.setAttribute("aria-valuetext", String(power));
   }
+  function tryLaunch() {
+    const chosen = challenge.policy.peek(power, challenge.random);
+    const accepted = game?.fire(chosen, angle) || false;
+    challenge.policy.commit(accepted);
+    return accepted;
+  }
   function fire() {
     if (replay || !game || mode === "replay") return;
-    game.fire(power, angle);
+    tryLaunch();
     update();
   }
   function stopHolding() {
@@ -628,6 +642,7 @@ export function mountAbyss({ onBack }) {
     hold.setAttribute("aria-pressed", "false");
   }
   function togglePause() {
+    challenge.stop();
     stopHolding();
     if (replay) {
       if (replay.playing) replay.pause();
@@ -652,6 +667,7 @@ export function mountAbyss({ onBack }) {
         custom || difficultyValue() === "custom" ? readConfig() : undefined,
       debug: debug || mode === "lab",
     });
+    challenge.reset(game.seed);
     setRenderer(game.board);
     lastEvent = 0;
     last = performance.now();
@@ -677,7 +693,7 @@ export function mountAbyss({ onBack }) {
   function applyMode() {
     if (mode === "replay" && game && !replay) {
       game.pause();
-      message("REPLAY / 保存した記録またはJSONを読み込んでください。");
+      message("記録再生 / 保存した記録またはJSONを読み込んでください。");
     }
     autoSection.node.hidden = mode !== "auto";
     settings.node.hidden = mode !== "lab";
@@ -719,7 +735,9 @@ export function mountAbyss({ onBack }) {
     try {
       if (record.kind === "preset") {
         applyPreset(record);
-        message("プリセットを読み込みました。LABで設定を適用してください。");
+        message(
+          "プリセットを読み込みました。検証モードで設定を適用してください。",
+        );
       } else openReplay(record);
     } catch (e) {
       message(`記録を開けませんでした：${e.message}`);
@@ -733,6 +751,7 @@ export function mountAbyss({ onBack }) {
     replay = nextReplay;
     game = replay.game;
     lastRecord = record;
+    challenge.reset(game.seed);
     setRenderer(game.board);
     lastEvent = 0;
     last = performance.now();
@@ -746,7 +765,7 @@ export function mountAbyss({ onBack }) {
     applyMode();
     replay.pause();
     message(
-      "REPLAY / 入力とシードから再計算します。再生または1コマ進めるを押してください。",
+      "記録再生 / 入力とシードから再計算します。再生または1コマ進めるを押してください。",
     );
     update();
   }
@@ -802,6 +821,7 @@ export function mountAbyss({ onBack }) {
   }
   function update() {
     if (!game) return;
+    challenge.update(game, !!replay);
     node.dataset.phase = replay ? replay.status : game.status;
     for (const [key, value] of Object.entries(values))
       value.textContent =
@@ -812,8 +832,8 @@ export function mountAbyss({ onBack }) {
     );
     const stage = Math.max(0, ...game.balls.map((b) => b.stage));
     current.textContent = game.balls.length
-      ? `${stage ? `CRADLE ${stage}` : "FOREST / GATE"} / ${game.balls.length}球が進行中`
-      : "READY / 次の一球を";
+      ? `${stage ? `${stage}段目` : "釘・入口"} / ${game.balls.length}球が進行中`
+      : "次の一球を";
     pause.textContent = (replay ? !replay.playing : game.status === "paused")
       ? "再開する"
       : "一時停止";
@@ -860,9 +880,7 @@ export function mountAbyss({ onBack }) {
         el(
           "p",
           "abyss-kicker",
-          game.debugUsed || debug || mode === "lab"
-            ? "LAB RESULT"
-            : "SESSION COMPLETE",
+          game.debugUsed || debug || mode === "lab" ? "検証結果" : "プレイ終了",
         ),
         el(
           "h2",
@@ -1007,6 +1025,7 @@ export function mountAbyss({ onBack }) {
     }
   });
   function autoPause() {
+    challenge.stop();
     stopHolding();
     pointers.clear();
     replay?.pause();
@@ -1044,15 +1063,19 @@ export function mountAbyss({ onBack }) {
         message(`リプレイを停止しました：${e.message}`);
       }
     } else if (game?.status === "running") {
-      if (held) game.fire(power, angle);
+      if (held || challenge.auto) tryLaunch();
       else if (
         mode === "auto" &&
         game.fired - autoBaseline < autoTarget &&
         game.elapsed - lastAutoTime >= autoInterval - 1e-8
       ) {
-        if (game.fire(power, angle)) lastAutoTime = game.elapsed;
+        if (tryLaunch()) lastAutoTime = game.elapsed;
       }
-      game.step(dt * timeScale);
+      const slow =
+        challenge.slow &&
+        !reduceMotion &&
+        game.balls.some((b) => b.zone === "tray" && b.stage === 3);
+      game.step(dt * timeScale * (slow ? 0.35 : 1));
     }
     const active = game || preview;
     renderer?.render(active, {
@@ -1139,7 +1162,7 @@ export function mountAbyss({ onBack }) {
   loadSettings()
     .then((value) => {
       if (!value || destroyed || game) return;
-      if (value.physicsVersion !== "si-4") {
+      if (value.physicsVersion !== "si-5") {
         message(
           "旧版設定は保管したまま、SI物理の初期設定で開始します。旧プレイはREPLAYから再生できます。",
         );
@@ -1186,6 +1209,7 @@ export function mountAbyss({ onBack }) {
     node,
     destroy() {
       destroyed = true;
+      challenge.stop();
       stopHolding();
       cancelAnimationFrame(raf);
       abort.abort();

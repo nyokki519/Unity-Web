@@ -22,8 +22,9 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
   const json=(res,value,status=200)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(value));};
   const baseUrl=req=>publicUrl||`http://${req.headers.host}`;
   const server=http.createServer(async(req,res)=>{
-    res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');res.setHeader('X-Frame-Options','DENY');res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=()');
-    res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ws: wss:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
+    const embedGame=req.url?.split('?')[0]==='/silver-ring/index.html';
+    res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');res.setHeader('X-Frame-Options',embedGame?'SAMEORIGIN':'DENY');res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=()');
+    res.setHeader('Content-Security-Policy',`default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ws: wss:; object-src 'none'; frame-ancestors '${embedGame?'self':'none'}'; base-uri 'self'; form-action 'self'`);
     try {
       const url=new URL(req.url,'http://local');
       if(url.pathname==='/api/health'&&req.method==='GET')return json(res,{status:'ok',product:'UNITY MIX'});

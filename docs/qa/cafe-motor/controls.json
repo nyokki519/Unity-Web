@@ -1,0 +1,30 @@
+[
+  {
+    "width": 390,
+    "height": 844,
+    "rect": {
+      "canvas": {
+        "x": 8,
+        "y": 124.5,
+        "width": 374,
+        "height": 460,
+        "top": 124.5,
+        "right": 382,
+        "bottom": 584.5,
+        "left": 8
+      },
+      "dock": {
+        "x": 8,
+        "y": 638.5,
+        "width": 374,
+        "height": 199.75,
+        "top": 638.5,
+        "right": 382,
+        "bottom": 838.25,
+        "left": 8
+      },
+      "scroll": 390
+    },
+    "errors": []
+  }
+]

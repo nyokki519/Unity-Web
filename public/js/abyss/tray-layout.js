@@ -22,7 +22,8 @@ export function buildTrays(board, overrides = {}) {
       cy = [0.25, 0.145, 0.04][i],
       cz = 0.115 + i * 0.005,
       ratio = easy ? 1.95 : hard ? 1.3 : 1.55;
-    const drainAngle = i * 0.7 + (easy ? 0 : (2 * Math.PI) / counts[i]);
+    const orientation=clamp(overrides.cradleOrientation,0,-180,360)*Math.PI/180;
+    const drainAngle = i * 0.7 + orientation + (easy ? 0 : (2 * Math.PI) / counts[i]);
     const t = {
       profile: "orbital",
       stage: i + 1,
@@ -34,15 +35,15 @@ export function buildTrays(board, overrides = {}) {
       depth: 0.014 * clamp(overrides.cradleDepthScale, 1, 0.7, 1.3),
       valleyRadius: radius * 0.5,
       centerRise: 0.007,
-      tilt: -0.1 * Math.cos(drainAngle),
-      tiltZ: -0.1 * Math.sin(drainAngle),
+      tilt: -clamp(overrides.cradleTilt,easy?.1:0,0,.15) * Math.cos(drainAngle),
+      tiltZ: -clamp(overrides.cradleTilt,easy?.1:0,0,.15) * Math.sin(drainAngle),
       rpm: 0,
       omega: 0,
       holes: [],
       evidence: "E: original curved fixed dish; not machine measurement",
     };
     for (let j = 0; j < counts[i]; j++) {
-      const a = i * 0.7 + (j * 2 * Math.PI) / counts[i],
+      const a = i * 0.7 + orientation + (j * 2 * Math.PI) / counts[i],
         distance =
           t.valleyRadius -
           ((t.tilt * Math.cos(a) + t.tiltZ * Math.sin(a)) *
@@ -96,7 +97,7 @@ export function buildTrays(board, overrides = {}) {
       position: vec(),
       rotation: identity(),
       ...bowlMesh(t),
-      friction: 0.025,
+      friction: clamp(overrides.cradleFriction,easy?.025:.018,.005,.05),
       restitution: 0.08,
     });
     for (let j = 0; j < 72; j++) {

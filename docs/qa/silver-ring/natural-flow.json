@@ -1,0 +1,125 @@
+{
+  "note": "Authorized reference-derived near-physics model. 1000 attempts/seed, power45%,12Hz,240Hz step,30 live-ball cap; standard rule (air/block OFF). Stalls: <5% ball diameter displacement for5s. Not SI or real-machine odds.",
+  "results": [
+    {
+      "seed": "silver-0",
+      "attempts": 1000,
+      "fired": 351,
+      "rejected": 649,
+      "maxLive": 30,
+      "active": 0,
+      "elapsed": 107.11666666665141,
+      "counts": {
+        "railout": 351,
+        "clack": 847,
+        "shutter": 67,
+        "pin": 5743,
+        "wood": 760,
+        "disc": 219,
+        "swamp": 348,
+        "gate": 83,
+        "bowlenter": 118,
+        "sink": 118,
+        "rattle": 19,
+        "jackpot": 3
+      },
+      "entries": [
+        83,
+        26,
+        9
+      ],
+      "passes": [
+        26,
+        9,
+        3
+      ],
+      "meanTrayDwell": [
+        6.409638554215316,
+        5.851923076920915,
+        5.4810185185198845
+      ],
+      "stalledBalls": [],
+      "ledger": true
+    },
+    {
+      "seed": "silver-1",
+      "attempts": 1000,
+      "fired": 347,
+      "rejected": 653,
+      "maxLive": 30,
+      "active": 0,
+      "elapsed": 98.79166666665898,
+      "counts": {
+        "railout": 347,
+        "pin": 5568,
+        "clack": 821,
+        "shutter": 64,
+        "wood": 799,
+        "disc": 227,
+        "swamp": 346,
+        "gate": 75,
+        "bowlenter": 110,
+        "rattle": 15,
+        "sink": 110,
+        "jackpot": 1
+      },
+      "entries": [
+        75,
+        28,
+        7
+      ],
+      "passes": [
+        28,
+        7,
+        1
+      ],
+      "meanTrayDwell": [
+        6.475499999995207,
+        5.785863095235768,
+        5.300000000000366
+      ],
+      "stalledBalls": [],
+      "ledger": true
+    },
+    {
+      "seed": "silver-2",
+      "attempts": 1000,
+      "fired": 369,
+      "rejected": 631,
+      "maxLive": 30,
+      "active": 0,
+      "elapsed": 108.89999999998312,
+      "counts": {
+        "railout": 369,
+        "pin": 5899,
+        "clack": 998,
+        "shutter": 88,
+        "wood": 869,
+        "disc": 233,
+        "swamp": 367,
+        "gate": 73,
+        "bowlenter": 96,
+        "sink": 96,
+        "rattle": 13,
+        "jackpot": 2
+      },
+      "entries": [
+        73,
+        20,
+        3
+      ],
+      "passes": [
+        20,
+        3,
+        2
+      ],
+      "meanTrayDwell": [
+        6.409189497712192,
+        5.930624999998715,
+        5.223611111110921
+      ],
+      "stalledBalls": [],
+      "ledger": true
+    }
+  ]
+}

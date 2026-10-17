@@ -1,0 +1,32 @@
+喫茶・銀環 — Unity MIX adaptation
+
+Adapted from lampardrodgers/boqingge
+https://github.com/lampardrodgers/boqingge
+Source commit: 04d95bccea18ad8579a2773bed343ba67e52666d
+Original files: src/config.js, physics.js, scene.js, fx.js, audio.js, main.js, ui.js,
+                src/index.html (stylesheet structure).
+Original package.json declares SPDX license ISC; no separate copyright or LICENSE
+file was present in the inspected checkout. Source history identifies its contributors.
+The user explicitly stated on 2026-10-17 that the author permitted modification and
+publication. This is the permission information provided to this project, not a claim
+that an independent written grant has been reviewed.
+
+Modifications: original Japanese cafe branding, textures and UI; virtual coin economy;
+seeded geometry; explicit optional interference rules; pause/background handling;
+reduced motion; manual camera; practice tools; local Three.js 0.180 addons;
+isolated Unity MIX embedding and lifecycle. Manga titles, characters, company names,
+logos and quotations are not licensed by that statement and have been removed.
+
+ISC license text (as designated in upstream package metadata):
+Permission to use, copy, modify, and/or distribute this software for any purpose with
+or without fee is hereby granted, provided that the above copyright notice and this
+permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
+TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+Three.js and addons: MIT, see /vendor/three/LICENSE.
+No external image, sound or 3D model assets were imported from a manga/anime.

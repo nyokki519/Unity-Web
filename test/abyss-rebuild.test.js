@@ -4,7 +4,7 @@ import { createBoard } from "../public/js/abyss/si-config.js";
 import { createSimulation } from "../public/js/abyss/si-engine.js";
 test("rebuild exposes designed lanes and physical spill gaps instead of a sparse scatter", () => {
   const b = createBoard();
-  assert.equal(b.physicsVersion, "si-4");
+  assert.equal(b.physicsVersion, "si-5");
   for (const role of ["道釘", "こぼし", "ジャンプ釘", "天釘"])
     assert.ok(
       b.pins.some((p) => p.role === role),

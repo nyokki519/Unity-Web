@@ -218,6 +218,7 @@ export function createRenderer(canvas, board) {
       roughness: 0.1,
       metalness: 0.1,
     }),
+    motorFace:new THREE.MeshStandardMaterial({color:0x254e42,metalness:.45,roughness:.35}),
     chrome: new THREE.MeshStandardMaterial({
       color: 0xecf6ff,
       metalness: 1,
@@ -227,12 +228,13 @@ export function createRenderer(canvas, board) {
   };
   const buckets = new Map(),
     resources = [],
-    gates = [];
+    gates = [],
+    motors = [];
   for (const p of board.parts || []) {
     if (p.visible === false) continue;
     let g = geometry(p, board);
     const mat =
-      p.tag === "glass"
+      p.tag === "rotor" ? (p.id.endsWith("face")?"motorFace":"brass") : p.tag === "glass"
         ? "glass"
         : p.tag === "back"
           ? "back"
@@ -245,7 +247,7 @@ export function createRenderer(canvas, board) {
                 : p.tag === "pin"
                   ? "chrome"
                   : "steel";
-    if (p.tag === "gate") {
+    if (p.tag === "gate" || p.rotorId !== undefined) {
       const m = new THREE.Mesh(g, materials[mat]);
       m.position.copy(vector(p.position));
       if (p.rotation)
@@ -255,8 +257,13 @@ export function createRenderer(canvas, board) {
           p.rotation.z,
           p.rotation.w,
         );
+      if(p.rotorId!==undefined&&p.id.endsWith("face")){
+        const ringGeometry=new THREE.TorusGeometry(p.radius-.001,.0008,6,56);ringGeometry.rotateX(Math.PI/2);
+        const ring=new THREE.Mesh(ringGeometry,materials.brass);ring.position.y=.001; m.add(ring); resources.push(ringGeometry);
+      }
       scene.add(m);
-      gates.push(m);
+      if (p.rotorId !== undefined) motors.push({ mesh: m, part: p });
+      else gates.push(m);
       resources.push(g);
       continue;
     }
@@ -531,6 +538,34 @@ export function createRenderer(canvas, board) {
         shadow.material.opacity = 0.24 * (1 - height / 0.025);
       }
 
+      for (const { mesh, part } of motors) {
+        const r = game.rotorPoses?.[part.rotorId];
+        if (!r) continue;
+        const c = Math.cos(r.angle),
+          s = Math.sin(r.angle),
+          dx = part.position.x - r.x,
+          dy = part.position.y - r.y;
+        mesh.position.set(
+          r.x + c * dx - s * dy,
+          r.y + s * dx + c * dy,
+          part.position.z,
+        );
+        mesh.quaternion
+          .set(
+            part.rotation.x,
+            part.rotation.y,
+            part.rotation.z,
+            part.rotation.w,
+          )
+          .premultiply(
+            new THREE.Quaternion(
+              0,
+              0,
+              Math.sin(r.angle / 2),
+              Math.cos(r.angle / 2),
+            ),
+          );
+      }
       if (game.gatePose)
         for (const m of gates) {
           m.position.copy(vector(game.gatePose.position));

@@ -1,3 +1,4 @@
+import { rotorPoses } from "./rotor-mechanism.js";
 import R from "../../vendor/rapier/rapier.mjs";
 import {
   createBoard,
@@ -63,7 +64,7 @@ export function createSimulation({
     trayTimeouts: [0, 0, 0],
     dwellTotals: [0, 0, 0, 0, 0],
     dwellCounts: [0, 0, 0, 0, 0],
-    contacts: { pin: 0, wall: 0, ball: 0, gate: 0, rim: 0 },
+    contacts: { rotor: 0, pin: 0, wall: 0, ball: 0, gate: 0, rim: 0 },
     heatmap: Array(640).fill(0),
     stalled: Array(640).fill(0),
     heatmapCols: 20,
@@ -101,10 +102,29 @@ export function createSimulation({
     debugUsed: false,
     inputsTruncated: false,
     gatePose: gateAt(board.gate, 0),
+    rotorPoses: rotorPoses(board, 0),
+    tilt: 0,
+    suspicion: 0,
+    tiltLockUntil: 0,
+    setTilt(value) {
+      if (
+        disposed ||
+        g.status !== "running" ||
+        !Number.isFinite(value) ||
+        Math.abs(value) > 1 ||
+        (value !== 0 && g.elapsed < g.tiltLockUntil)
+      )
+        return false;
+      if (value !== g.tilt) {
+        g.tilt = value;
+        record({ tick: g.tick, type: "tilt", value });
+      }
+      return true;
+    },
     fire,
     step,
     pause() {
-      if (g.status === "running") g.status = "paused";
+      if (g.status === "running") {g.setTilt(0);g.status = "paused";}
     },
     resume() {
       if (g.status === "paused" && !disposed) g.status = "running";
@@ -166,6 +186,7 @@ export function createSimulation({
     },
   };
   let gateBody;
+  const motors = new Map();
   for (const part of board.parts) {
     let desc;
     if (part.kind === "box") {
@@ -198,7 +219,25 @@ export function createSimulation({
     if (part.tag === "pin")
       desc.setRestitutionCombineRule(R.CoefficientCombineRule.Max);
     let parent;
-    if (part.tag === "gate") {
+    if (part.rotorId !== undefined) {
+      const r = board.rotors[part.rotorId];
+      parent = motors.get(part.rotorId);
+      if (!parent) {
+        parent = world.createRigidBody(
+          R.RigidBodyDesc.kinematicPositionBased().setTranslation(
+            r.x,
+            r.y,
+            r.z,
+          ),
+        );
+        motors.set(part.rotorId, parent);
+      }
+      desc.setTranslation(
+        part.position.x - r.x,
+        part.position.y - r.y,
+        part.position.z - r.z,
+      );
+    } else if (part.tag === "gate") {
       gateBody = parent = world.createRigidBody(
         R.RigidBodyDesc.kinematicPositionBased().setTranslation(
           part.position.x,
@@ -383,6 +422,7 @@ export function createSimulation({
   }
   function end() {
     if (disposed || g.status === "finished") return;
+    g.setTilt(0);
     record({ tick: g.tick, type: "end" });
     for (const b of [...balls]) retire(b, false);
     g.status = "finished";
@@ -563,6 +603,34 @@ export function createSimulation({
     accumulator += Math.min(seconds, 60);
     while (accumulator + 1e-12 >= FIXED_DT && g.status === "running") {
       accumulator -= FIXED_DT;
+      g.suspicion = Math.max(
+        0,
+        Math.min(
+          1,
+          g.suspicion + FIXED_DT * (g.tilt ? Math.abs(g.tilt) * 0.18 : -0.1),
+        ),
+      );
+      if (g.suspicion >= 1 && g.tilt) {
+        g.tilt = 0;
+        g.tiltLockUntil = g.elapsed + 6;
+        emit("tilt-lock");
+      }
+      const tiltAngle = (g.tilt * 2 * Math.PI) / 180;
+      world.gravity = {
+        x: board.gravity * Math.sin(tiltAngle),
+        y: -board.gravity * Math.cos(tiltAngle),
+        z: 0,
+      };
+      g.rotorPoses = rotorPoses(board, (g.tick + 1) * FIXED_DT);
+      for (const [id, body] of motors) {
+        const a = g.rotorPoses[id].angle;
+        body.setNextKinematicRotation({
+          x: 0,
+          y: 0,
+          z: Math.sin(a / 2),
+          w: Math.cos(a / 2),
+        });
+      }
       g.gatePose = gateAt(board.gate, (g.tick + 1) * FIXED_DT);
       gateBody.setNextKinematicTranslation(g.gatePose.position);
       for (const b of balls) {
@@ -585,6 +653,7 @@ export function createSimulation({
           other = ball === ma ? mc : ma,
           b = ball && balls.find((b) => b.id === ball.id);
         if (!b) return;
+        if (other.tag === "rotor") stats.contacts.rotor++;
         const type =
           other.tag === "pin"
             ? "pin"
@@ -682,6 +751,10 @@ export function createSimulation({
   function snapshot() {
     return structuredClone({
       physicsVersion: g.physicsVersion,
+      tilt: g.tilt,
+      suspicion: g.suspicion,
+      tiltLockUntil: g.tiltLockUntil,
+      rotorPoses: g.rotorPoses,
       seed: g.seed,
       difficulty: g.difficulty,
       config: g.config,

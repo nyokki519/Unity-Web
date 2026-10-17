@@ -1,0 +1,215 @@
+{
+  "conditions": {
+    "seed": "comparison-20261017",
+    "shotsPerPower": 100,
+    "powers": [
+      35,
+      45,
+      55
+    ],
+    "spacingSeconds": 0.6,
+    "fixedStep": 0.004166666666666667,
+    "referenceCommit": "04d95bccea18ad8579a2773bed343ba67e52666d",
+    "note": "Normalized input power; different physical scales, RNG consumption and assistance. No debug injections. Five-second displacement below 5% of ball diameter stall detector; not identical trajectories or real-machine odds.",
+    "independentDifficulty": "normal",
+    "referenceDifficulty": "single original configuration",
+    "collisionCounterNote": "Reference disc/pin counters have impact-speed thresholds; independent counters count contact starts. Counts are not directly equivalent."
+  },
+  "results": [
+    {
+      "model": "reference",
+      "power": 35,
+      "fired": 100,
+      "elapsed": 81.9875000000076,
+      "active": 0,
+      "stalledBallIds": [],
+      "gate": 30,
+      "disc": 53,
+      "pin": 1630,
+      "jackpots": 0,
+      "entries": [
+        30,
+        5,
+        1
+      ],
+      "passes": [
+        5,
+        1,
+        0
+      ],
+      "dwell": [
+        196.63749999990333,
+        28.38749999999871,
+        5.062500000000033
+      ],
+      "meanTrayDwell": [
+        6.554583333330111,
+        5.677499999999742,
+        5.062500000000033
+      ]
+    },
+    {
+      "model": "si-5",
+      "power": 35,
+      "fired": 100,
+      "elapsed": 62.84166666666667,
+      "active": 0,
+      "gate": 39,
+      "disc": 179,
+      "pin": 2197,
+      "jackpots": 0,
+      "entries": [
+        31,
+        0,
+        0
+      ],
+      "passes": [
+        0,
+        0,
+        0
+      ],
+      "stalledBallIds": [],
+      "trayTimeouts": [
+        0,
+        0,
+        0
+      ],
+      "meanTrayDwell": [
+        1.9154569892479663,
+        null,
+        null
+      ],
+      "ledger": true
+    },
+    {
+      "model": "reference",
+      "power": 45,
+      "fired": 100,
+      "elapsed": 64.28333333335704,
+      "active": 0,
+      "stalledBallIds": [],
+      "gate": 22,
+      "disc": 52,
+      "pin": 1662,
+      "jackpots": 0,
+      "entries": [
+        22,
+        2,
+        1
+      ],
+      "passes": [
+        2,
+        1,
+        0
+      ],
+      "dwell": [
+        140.2749999999546,
+        11.40416666666634,
+        5.250000000000022
+      ],
+      "meanTrayDwell": [
+        6.376136363634299,
+        5.70208333333317,
+        5.250000000000022
+      ]
+    },
+    {
+      "model": "si-5",
+      "power": 45,
+      "fired": 100,
+      "elapsed": 63.516666666666666,
+      "active": 0,
+      "gate": 47,
+      "disc": 211,
+      "pin": 2213,
+      "jackpots": 0,
+      "entries": [
+        39,
+        0,
+        0
+      ],
+      "passes": [
+        0,
+        0,
+        0
+      ],
+      "stalledBallIds": [],
+      "trayTimeouts": [
+        0,
+        0,
+        0
+      ],
+      "meanTrayDwell": [
+        1.674465811966396,
+        null,
+        null
+      ],
+      "ledger": true
+    },
+    {
+      "model": "reference",
+      "power": 55,
+      "fired": 100,
+      "elapsed": 71.72083333335027,
+      "active": 0,
+      "stalledBallIds": [],
+      "gate": 7,
+      "disc": 94,
+      "pin": 1020,
+      "jackpots": 0,
+      "entries": [
+        7,
+        4,
+        1
+      ],
+      "passes": [
+        4,
+        1,
+        0
+      ],
+      "dwell": [
+        46.33333333334324,
+        23.12499999999901,
+        5.150000000000028
+      ],
+      "meanTrayDwell": [
+        6.619047619049034,
+        5.781249999999752,
+        5.150000000000028
+      ]
+    },
+    {
+      "model": "si-5",
+      "power": 55,
+      "fired": 100,
+      "elapsed": 62.69166666666666,
+      "active": 0,
+      "gate": 48,
+      "disc": 263,
+      "pin": 2147,
+      "jackpots": 0,
+      "entries": [
+        38,
+        0,
+        0
+      ],
+      "passes": [
+        0,
+        0,
+        0
+      ],
+      "stalledBallIds": [],
+      "trayTimeouts": [
+        0,
+        0,
+        0
+      ],
+      "meanTrayDwell": [
+        1.8014254385970152,
+        null,
+        null
+      ],
+      "ledger": true
+    }
+  ]
+}

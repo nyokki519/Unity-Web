@@ -21,7 +21,7 @@ export function arrangePlay({
   quit.textContent = "終了";
   head.append(
     back,
-    el("strong", "abyss-play-title", "CAFÉ ABYSS"),
+    el("strong", "abyss-play-title", "喫茶・銀環"),
     pause,
     quit,
   );
@@ -45,10 +45,10 @@ export function arrangePlay({
   node.insertBefore(advanced, dock.nextSibling);
   const sound = right.querySelector("#bonus-sound");
   const audio = button(
-    "音 OFF",
+    "音 切",
     () => {
       sound.click();
-      audio.textContent = sound.checked ? "音 ON" : "音 OFF";
+      audio.textContent = sound.checked ? "音 入" : "音 切";
       audio.setAttribute("aria-pressed", String(sound.checked));
     },
     "button secondary",
@@ -57,7 +57,7 @@ export function arrangePlay({
   audio.setAttribute("aria-pressed", "false");
   head.append(audio);
   sound.addEventListener("change", () => {
-    audio.textContent = sound.checked ? "音 ON" : "音 OFF";
+    audio.textContent = sound.checked ? "音 入" : "音 切";
     audio.setAttribute("aria-pressed", String(sound.checked));
   });
   return { advanced };

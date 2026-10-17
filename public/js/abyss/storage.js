@@ -35,7 +35,10 @@ export function validateImport(value) {
   safe(value);
   plain(value);
   const si = value.version === 2;
-  if (si && !["si-1", "si-2", "si-3", "si-4"].includes(value.physicsVersion))
+  if (
+    si &&
+    !["si-1", "si-2", "si-3", "si-4", "si-5"].includes(value.physicsVersion)
+  )
     throw new Error("Unsupported physics version");
   if (value.kind === "preset") {
     if (
@@ -104,21 +107,32 @@ export function validateImport(value) {
     shots = 0;
   for (const input of value.inputs) {
     plain(input);
-    const end = input.type === "end";
+    const end = input.type === "end",
+      tilt = input.type === "tilt";
     if (
       ended ||
       Object.keys(input).some(
         (k) =>
           !(
-            end ? ["tick", "type"] : ["tick", "type", "power", "angle"]
+            end
+              ? ["tick", "type"]
+              : tilt
+                ? ["tick", "type", "value"]
+                : ["tick", "type", "power", "angle"]
           ).includes(k),
       ) ||
       !Number.isInteger(input.tick) ||
       input.tick < 0 ||
       input.tick < last ||
       input.tick > 100000000 ||
-      (input.type !== undefined && !["fire", "end"].includes(input.type)) ||
+      (input.type !== undefined &&
+        !["fire", "end", "tilt"].includes(input.type)) ||
+      (tilt &&
+        (value.physicsVersion !== "si-5" ||
+          !Number.isFinite(input.value) ||
+          Math.abs(input.value) > 1)) ||
       (!end &&
+        !tilt &&
         (!Number.isFinite(input.power) ||
           input.power < 1 ||
           input.power > 100 ||
@@ -130,7 +144,7 @@ export function validateImport(value) {
       throw new Error("Invalid replay input");
     last = input.tick;
     if (end) ended = true;
-    else {
+    else if (!tilt) {
       if (input.tick - lastFire < minimumFireTicks)
         throw new Error("Invalid replay fire cadence");
       lastFire = input.tick;
@@ -247,7 +261,11 @@ function validateConfig(v, si = false, physicsVersion) {
   }
 }
 function validateSIConfig(v, physicsVersion) {
-  const pinLimit = physicsVersion === "si-4" ? 177 : 109;
+  const pinLimit = ["si-4", "si-5"].includes(physicsVersion)
+    ? physicsVersion === "si-5"
+      ? createBoard().pins.length
+      : 177
+    : 109;
   const ranges = {
     gravity: [1, 15],
     restitution: [0, 0.9],
@@ -261,6 +279,7 @@ function validateSIConfig(v, physicsVersion) {
     cradleScale: [0.8, 1.2],
     cradleDepthScale: [0.7, 1.3],
   };
+  if(physicsVersion==="si-5")Object.assign(ranges,{cradleOrientation:[-180,360],cradleTilt:[0,.15],cradleFriction:[.005,.05]});
   for (const [key, value] of Object.entries(v)) {
     if (key === "pinPreset") {
       if (!["default", "left", "right"].includes(value))
@@ -315,20 +334,26 @@ export function exportSession(game) {
   if (game.inputsTruncated)
     throw new Error("Replay input history was truncated");
   return validateImport({
-    version: ["si-1", "si-2", "si-3", "si-4"].includes(
+    version: ["si-1", "si-2", "si-3", "si-4", "si-5"].includes(
       game.board?.physicsVersion,
     )
       ? 2
       : 1,
-    ...(["si-1", "si-2", "si-3", "si-4"].includes(game.board?.physicsVersion)
+    ...(["si-1", "si-2", "si-3", "si-4", "si-5"].includes(
+      game.board?.physicsVersion,
+    )
       ? { physicsVersion: game.board.physicsVersion }
       : {}),
     difficulty: game.difficulty || game.board?.difficulty || "easy",
     seed: String(game.seed ?? "abyss"),
     initialBalls: game.initialBalls ?? game.remaining + game.fired,
     config: game.config || game.board,
-    inputs: game.inputs.map(({ tick, type, power, angle }) =>
-      type === "end" ? { tick, type } : { tick, type: "fire", power, angle },
+    inputs: game.inputs.map(({ tick, type, power, angle, value }) =>
+      type === "end"
+        ? { tick, type }
+        : type === "tilt"
+          ? { tick, type, value }
+          : { tick, type: "fire", power, angle },
     ),
     elapsed: game.elapsed,
     ...(game.status ? { status: game.status } : {}),
@@ -415,13 +440,15 @@ export async function saveSettings(value) {
       )
         s.put({
           id:
-            previous.physicsVersion === "si-3"
-              ? -3
-              : previous.physicsVersion === "si-2"
-                ? -2
-                : previous.physicsVersion === "si-1"
-                  ? -1
-                  : 0,
+            previous.physicsVersion === "si-4"
+              ? -4
+              : previous.physicsVersion === "si-3"
+                ? -3
+                : previous.physicsVersion === "si-2"
+                  ? -2
+                  : previous.physicsVersion === "si-1"
+                    ? -1
+                    : 0,
           value: structuredClone(previous),
         });
       s.put({ id: 1, value: structuredClone(value) });
@@ -451,7 +478,9 @@ export async function loadSettings() {
 export function validateSettings(value) {
   safe(value);
   plain(value);
-  const si = ["si-1", "si-2", "si-3", "si-4"].includes(value.physicsVersion);
+  const si = ["si-1", "si-2", "si-3", "si-4", "si-5"].includes(
+    value.physicsVersion,
+  );
   if (value.physicsVersion !== undefined && !si)
     throw new Error("Unsupported physics version");
   const ranges = {

@@ -34,3 +34,10 @@
 - [ ] Compare normalized35/45/55 power,0.6s spacing,240Hz samples; document denominators, unfinished balls and statistical limitations.
 - [ ] Fresh final review; fix important findings and rerun affected tests.
 - [ ] Publish independent implementation/docs to GitHub under existing authorization; distinguish main push from Render live confirmation and iPhone testing.
+
+### Task 2b: Authorized high-fidelity port (user-directed scope update)
+- [ ] Record user-reported author permission and original-source NOTICE.
+- [ ] Add reference-fixture trajectory test and primary-route browser test, observe RED.
+- [ ] Port reference source under public/silver-ring/src; replace all protected UI/art/text with original Japanese cafe design. Copy required Three addons from installed0.180 with licenses.
+- [ ] Add seed, declared optional interference rule, pause/background, reduced motion and manual camera controls. Keep SI-5 as explicit physics=1 lab route.
+- [ ] Browser-verify primary gameplay, exact baseline mechanics under same rule flags, mobile layout, all tiers/outcomes, retry, iframe teardown.

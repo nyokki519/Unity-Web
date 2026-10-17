@@ -1,3 +1,4 @@
+import { defineRotors, buildRotors } from "./rotor-mechanism.js";
 import { buildTrays } from "./tray-layout.js";
 import { buildPinRoutes } from "./board-routes.js";
 import {
@@ -11,7 +12,7 @@ import {
   shaftMesh,
   bowlHeight,
 } from "./si-geometry.js";
-export const PHYSICS_VERSION = "si-4",
+export const PHYSICS_VERSION = "si-5",
   WIDTH = 1000,
   HEIGHT = 1600,
   FIXED_DT = 1 / 240,
@@ -179,7 +180,9 @@ export function createBoard(difficulty = "easy", overrides = {}) {
     vec(0.421, 0.59, 0.007),
     0.0025,
   );
+  defineRotors(board);
   buildPinRoutes(board, overrides);
+  buildRotors(board);
   board.gate = {
     x: 0.25,
     y: 0.343,

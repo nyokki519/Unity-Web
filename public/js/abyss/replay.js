@@ -1,6 +1,7 @@
-import {createSimulation as createSIv3} from "./si-v3/si-engine.js";
-import {createSimulation as createSIv2} from "./si-v2/si-engine.js";
-import {createSimulation as createSIv1} from "./si-v1/si-engine.js";
+import { createSimulation as createSIv4 } from "./si-v4/si-engine.js";
+import { createSimulation as createSIv3 } from "./si-v3/si-engine.js";
+import { createSimulation as createSIv2 } from "./si-v2/si-engine.js";
+import { createSimulation as createSIv1 } from "./si-v1/si-engine.js";
 import { createSimulation } from "./engine.js";
 import { createSimulation as createLegacySimulation } from "./legacy/engine.js";
 import { FIXED_DT } from "./config.js";
@@ -8,7 +9,19 @@ import { validateImport } from "./storage.js";
 export function createReplay(record) {
   const data = validateImport(record);
   if (data.kind) throw new Error("A session is required for replay");
-  const game = (data.version === 1 ? createLegacySimulation : data.physicsVersion === "si-1" ? createSIv1 : data.physicsVersion === "si-2" ? createSIv2 : data.physicsVersion === "si-3" ? createSIv3 : createSimulation)(data);
+  const game = (
+    data.version === 1
+      ? createLegacySimulation
+      : data.physicsVersion === "si-1"
+        ? createSIv1
+        : data.physicsVersion === "si-2"
+          ? createSIv2
+          : data.physicsVersion === "si-3"
+            ? createSIv3
+            : data.physicsVersion === "si-4"
+              ? createSIv4
+              : createSimulation
+  )(data);
   let cursor = 0,
     playing = false,
     speed = 1,
@@ -22,7 +35,10 @@ export function createReplay(record) {
     ) {
       const input = data.inputs[cursor++];
       if (input.type === "end") game.end();
-      else if (!game.fire(input.power, input.angle))
+      else if (input.type === "tilt") {
+        if (!game.setTilt?.(input.value))
+          throw new Error("Replay tilt rejected");
+      } else if (!game.fire(input.power, input.angle))
         throw new Error("Replay input rejected at tick " + input.tick);
     }
   }
@@ -61,7 +77,10 @@ export function createReplay(record) {
   }
   return {
     game,
-    dispose() { playing = false; game.dispose?.(); },
+    dispose() {
+      playing = false;
+      game.dispose?.();
+    },
     play() {
       playing = true;
     },

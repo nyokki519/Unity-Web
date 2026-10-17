@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{createApp}from'../src/server.js';
+test('only the dedicated game document permits same-origin embedding',async()=>{
+ const app=createApp({database:':memory:'});await new Promise(r=>app.server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${app.server.address().port}`;try{for(const path of ['/','/silver-ring/index.html','/js/app.js']){const r=await fetch(base+path);assert.equal(r.status,200);const child=path==='/silver-ring/index.html';assert.equal(r.headers.get('x-frame-options'),child?'SAMEORIGIN':'DENY');assert.ok(r.headers.get('content-security-policy').includes(`frame-ancestors '${child?'self':'none'}'`));assert.ok(!r.headers.get('content-security-policy').includes("'unsafe-eval'"));if(child)assert.match(await r.text(),/id="btnStart"/);}}finally{await app.close();}
+});

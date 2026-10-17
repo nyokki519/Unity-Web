@@ -9,7 +9,7 @@ with sync_playwright() as pw:
  def open_page(width=390,debug=False):
   page=browser.new_page(viewport={'width':width,'height':844},accept_downloads=True)
   page.on('pageerror',lambda e:report['errors'].append(str(e)))
-  page.goto(os.environ.get('JACKPOT_QA_URL','http://127.0.0.1:3400')+'/?bonus=jackpot'+('&debug=1' if debug else ''))
+  page.goto(os.environ.get('JACKPOT_QA_URL','http://127.0.0.1:3400')+'/?bonus=jackpot&physics=1'+('&debug=1' if debug else ''))
   expect(page.locator('.abyss-screen')).to_be_visible(timeout=10000)
   page.get_by_role('button',name='チャレンジ開始',exact=True).click()
   page.wait_for_timeout(500)

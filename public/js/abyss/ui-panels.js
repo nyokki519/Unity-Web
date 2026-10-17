@@ -10,7 +10,7 @@ import {
 } from "./ui.js";
 
 export function createAutoPanel({ handlers }) {
-  const autoSection = section("AUTO / 自動発射設定", true);
+  const autoSection = section("自動発射設定", true);
   const autoCount = numberField("追加で発射する玉数", {
     value: 100,
     min: 1,
@@ -30,7 +30,7 @@ export function createAutoPanel({ handlers }) {
     el(
       "p",
       "abyss-note",
-      "AUTO中も実際の物理計算を続けます。停止は「一時停止」。発射数・残玉・同時玉数の上限を守ります。",
+      "自動発射中も実際の物理計算を続けます。停止は「一時停止」。発射数・残玉・同時玉数の上限を守ります。",
     ),
   );
   return { autoSection };
@@ -45,9 +45,12 @@ export function createViewPanel({ reduceMotion, handlers }) {
         ["auto", "クルーン進入で自動ズーム"],
         ["overview", "盤面全体"],
         ["follow", "最深部の玉を追う"],
-        ["rail", "発射レール"], ["forest", "釘の流路"],
-        ["gate", "入口ゲート"], ["cradle1", "1段目の皿"],
-        ["cradle2", "2段目の皿"], ["cradle3", "3段目の皿"],
+        ["rail", "発射レール"],
+        ["forest", "釘の流路"],
+        ["gate", "入口ゲート"],
+        ["cradle1", "1段目の皿"],
+        ["cradle2", "2段目の皿"],
+        ["cradle3", "3段目の皿"],
         ["free", "自由に拡大・移動"],
       ],
       "auto",
@@ -88,7 +91,14 @@ export function createViewPanel({ reduceMotion, handlers }) {
     reduceMotion,
     handlers.onMotion,
   );
-  view.body.append(motion.node,el("p","abyss-note","動きを減らす設定では自動ズームを止めます。皿1〜3は手動で拡大できます。"));
+  view.body.append(
+    motion.node,
+    el(
+      "p",
+      "abyss-note",
+      "動きを減らす設定では自動ズームを止めます。皿1〜3は手動で拡大できます。",
+    ),
+  );
   const heat = checkbox("通過密度ヒートマップ", false, handlers.onHeatmap);
   view.body.append(
     heat.node,
@@ -110,7 +120,7 @@ export function createViewPanel({ reduceMotion, handlers }) {
     ),
     checkbox("軌跡・成功ルートを重ねる", false, handlers.onTrails).node,
   );
-  const sound = checkbox("音を鳴らす（初期OFF）", false, handlers.onSound);
+  const sound = checkbox("音を鳴らす（初期は切）", false, handlers.onSound);
   sound.input.id = "bonus-sound";
   view.body.append(sound.node);
   for (const [group, label, value] of [
@@ -131,17 +141,20 @@ export function createViewPanel({ reduceMotion, handlers }) {
 }
 
 export function createLabPanel({ configInputs, handlers }) {
-  const settings = section("LAB / 盤面設定"),
+  const settings = section("検証 / 盤面設定"),
     configGrid = el("div", "abyss-settings-grid");
   for (const [key, label, value, min, max, step] of [
-    ["gravity", "重力（m/s²）", 9.80665, 1, 15, .01],
-    ["restitution", "反発係数", .68, 0, .9, .01],
-    ["friction", "接触摩擦", .18, .01, 1, .01],
-    ["fireInterval", "発射間隔（秒）", .6, .1, 3, .05],
-    ["launchVariance", "発射速度のばらつき（比率）", .012, 0, .1, .001],
-    ["gatePeriod", "ゲート周期（秒）", 3, .5, 15, .1],
-    ["gateOpenDuration", "ゲート開放（秒）", 2, .15, 12, .05],
-    ["holeScale", "穴サイズ倍率", 1, .7, 1.3, .05],
+    ["gravity", "重力（m/s²）", 9.80665, 1, 15, 0.01],
+    ["restitution", "反発係数", 0.68, 0, 0.9, 0.01],
+    ["friction", "接触摩擦", 0.18, 0.01, 1, 0.01],
+    ["fireInterval", "発射間隔（秒）", 0.6, 0.1, 3, 0.05],
+    ["launchVariance", "発射速度のばらつき（比率）", 0.012, 0, 0.1, 0.001],
+    ["gatePeriod", "ゲート周期（秒）", 3, 0.5, 15, 0.1],
+    ["gateOpenDuration", "ゲート開放（秒）", 2, 0.15, 12, 0.05],
+    ["holeScale", "穴サイズ倍率", 1, 0.7, 1.3, 0.05],
+    ["cradleOrientation","皿の向き（度）",0,-180,360,5],
+    ["cradleTilt","皿の傾斜",.1,0,.15,.005],
+    ["cradleFriction","皿の摩擦",.025,.005,.05,.001],
   ]) {
     const f = numberField(label, { value, min, max, step });
     configInputs[key] = f.input;
@@ -157,10 +170,10 @@ export function createLabPanel({ configInputs, handlers }) {
     "default",
   );
   configGrid.append(pinPreset);
-  const pinIndex = numberField("編集する釘番号（0〜108）", {
+  const pinIndex = numberField("編集する釘番号（0〜153）", {
       value: 0,
       min: 0,
-      max: 108,
+      max:153,
       onChange: handlers.onPinSelect,
     }),
     pinDX = numberField("釘の左右調整（mm）", {
@@ -185,7 +198,7 @@ export function createLabPanel({ configInputs, handlers }) {
     el(
       "p",
       "abyss-note",
-      "玉は直径11mm・質量5.5g。盤面・皿は未実測のオリジナル仮設計です。Rapierの3D接触計算で進みます。LABは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。玉の通路幅を保つため、釘の位置を自動補正する場合があります。",
+      "玉は直径11mm・質量5.5g。盤面・皿は未実測のオリジナル仮設計です。Rapierの3D接触計算で進みます。検証モードは検証用の別記録です。設定適用で新しいセッションを開始します。円形釘の角度には物理的な意味がないため、位置を調整します。回転盤の可動範囲を避けた配置です。釘の調整値は自動補正しません。",
     ),
     configGrid,
     button("設定を適用して開始", handlers.onApply, "button"),
@@ -195,7 +208,7 @@ export function createLabPanel({ configInputs, handlers }) {
 }
 
 export function createDebugPanel({ handlers }) {
-  const debugPanel = section("LAB / 関門から開始する検証");
+  const debugPanel = section("検証 / 関門から開始する検証");
   const testStage = labeledSelect(
     "確認する段",
     [
@@ -207,7 +220,7 @@ export function createDebugPanel({ handlers }) {
     "1",
   );
   debugPanel.body.append(
-    button("LABとして新規開始", handlers.onStart, "button secondary"),
+    button("検証として新規開始", handlers.onStart, "button secondary"),
     testStage,
     el(
       "p",
@@ -234,7 +247,7 @@ export function createResearchPanel({
   exportResearch,
   handlers,
 }) {
-  const research = section("MONTE CARLO / 大量試行", true);
+  const research = section("確率分析 / 大量試行", true);
   const trialCount = labeledSelect(
     "試行数",
     [
@@ -274,7 +287,7 @@ export function createResearchPanel({
 }
 
 export function createTelemetry({ left, values }) {
-  left.append(el("p", "abyss-kicker", "SESSION TELEMETRY"));
+  left.append(el("p", "abyss-kicker", "プレイの記録"));
   const stats = el("dl", "bonus-stats abyss-stats");
   for (const [key, label] of [
     ["remaining", "残り玉"],
@@ -298,7 +311,7 @@ export function createTelemetry({ left, values }) {
     const line = el("div"),
       n = el("strong", "", "0");
     n.id = `bonus-pass-${i}`;
-    line.append(el("span", "", `CRADLE ${String(i).padStart(2, "0")}`), n);
+    line.append(el("span", "", `${i}段目`), n);
     passes.append(line);
   }
   left.append(current, passes);
@@ -349,7 +362,7 @@ export function createRulesPanel() {
     el(
       "p",
       "",
-      "強さを調整し、固定レールから単発または長押しで発射します。散らし釘・道釘・こぼしの流路を抜け、開閉ゲートから固定された3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破で10,000点。",
+      "強さを調整し、固定レールから単発または長押しで発射します。散らし釘・道釘・こぼしの流路を抜け、開閉ゲートから固定された3段の皿の金色の穴を目指します。暗い穴は回収口です。3段突破でスコア10,000点、所持ポイント5,000を獲得。所持ポイントは初期1,000、発射成功ごとに10減ります。自動連射と35〜65のランダム威力に対応。傾き操作は警戒度が満ちると6秒休止します。",
     ),
     el(
       "p",
@@ -359,7 +372,7 @@ export function createRulesPanel() {
     el(
       "p",
       "",
-      "Space：発射、←→：強さ、P：停止。画面を離れると自動停止し、戻ったら再開します。盤面は拡大とドラッグ、対応端末ではピンチで位置を調整できます。音は初期OFF。動きを減らす設定で追跡・点滅を抑えられます。",
+      "スペース：発射、←→：強さ、P：停止、J/L：左右へ傾ける。画面を離れると自動停止し、戻ったら再開します。盤面は拡大とドラッグ、対応端末ではピンチで位置を調整できます。音は初期は切。動きを減らす設定で追跡・点滅を抑えられます。",
     ),
     el(
       "p",
@@ -413,16 +426,19 @@ export function createSetupPanel({ params, difficulties, modes, handlers }) {
   const heading = el("header", "abyss-heading");
   heading.append(
     button("← Unity MIXへ戻る", handlers.onBack, "quiet-button"),
-    el("div", "abyss-brand", "UNITY MIX  /  EXPERIMENTAL ARCADE"),
-    el("h1", "", "CAFÉ ABYSS"),
+    el("div", "abyss-brand", "Unity MIX  /  おまけの遊技室"),
+    el("h1", "", "喫茶・銀環"),
     el("p", "abyss-tagline", "深淵へ、一球。"),
     el(
       "p",
       "abyss-intro",
-      "釘の流路、動く門、三つの固定皿。突破を決めるのは、玉の軌道。",
+      "釘の森、二つの回転搬送盤、開閉する入口、三段の皿。一玉の軌道を見守る。",
     ),
   );
   const setup = el("div", "bonus-setup abyss-setup");
+  const tutorial=el("ol","cafe-tutorial");
+  for(const text of ["強さを変えて、釘と回転搬送盤を抜ける道を探します。","入口が開いたら三段の皿へ。金色の穴が次の段につながります。","自動連射・ランダム威力も選べます。傾きは警戒度に注意。所持ポイントは換金できません。"]){tutorial.append(el("li","",text));}
+  setup.append(tutorial);
   const difficulty = labeledSelect(
     "盤面の難易度",
     difficulties,
@@ -471,9 +487,9 @@ export function createMachinePanel({ WIDTH, HEIGHT, center }) {
   center.append(machineTop, machine);
   const machineBottom = el("div", "abyss-machine-bottom");
   machineBottom.append(
-    el("span", "", "01 FOREST"),
-    el("span", "", "02 GATE"),
-    el("span", "", "03 TRIPLE CRADLE"),
+    el("span", "", "釘の森"),
+    el("span", "", "開閉入口"),
+    el("span", "", "三段の皿"),
   );
   center.append(machineBottom);
   return { machine, canvas, renderBadge };
@@ -516,7 +532,7 @@ export function createLaunchPanel({
     quit = button("ここで終了", handlers.onQuit, "quiet-button");
   const actions = el("div", "bonus-pause-actions");
   actions.append(pause, quit);
-  right.append(el("p", "abyss-kicker", "LAUNCH CONTROL"), dock, actions);
+  right.append(el("p", "abyss-kicker", "発射操作"), dock, actions);
   const speed = rangeField("時間倍率", {
     value: 1,
     min: 0.25,
