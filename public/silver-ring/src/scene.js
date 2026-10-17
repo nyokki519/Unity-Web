@@ -3,6 +3,8 @@
 // 「沼」场景构建 —— 机体 / 盘面 / 三段皿 / 霓虹 / 材质
 // 返回 refs 对象供 fx.js 与 main.js 驱动
 // ============================================================
+import {paintCabinetArt} from './cabinet-art.js';
+import {createBanknoteRain} from './banknote-rain.js';
 import * as THREE from '../../vendor/three/three.module.js';
 import { EffectComposer } from '../../vendor/three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from '../../vendor/three/addons/postprocessing/RenderPass.js';
@@ -133,12 +135,7 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   // ---------- 盘面背板(带凹龛开孔的画布纹理) ----------
   const boardTex = canvasTex(1024, 1700, (g, w, h) => {
-    const gr = g.createLinearGradient(0, 0, 0, h);
-    gr.addColorStop(0, '#183f2d'); gr.addColorStop(0.55, '#0e2c21'); gr.addColorStop(1, '#081d15');
-    g.fillStyle = gr; g.fillRect(0, 0, w, h);
-    // Original cafe wood-grain and bean-ring texture.
-    g.strokeStyle='rgba(215,187,126,.08)';g.lineWidth=2;
-    for(let x=20;x<w;x+=44){g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+16,h*.3,x-12,h*.7,x+6,h);g.stroke();}
+    paintCabinetArt(g,w,h);
     // 底部沼泽绿光
     const rg = g.createRadialGradient(w / 2, h * 0.95, 40, w / 2, h * 0.95, 480);
     rg.addColorStop(0, 'rgba(28,220,120,0.17)'); rg.addColorStop(1, 'rgba(28,220,120,0)');
@@ -153,7 +150,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   });
   const boardMesh = new THREE.Mesh(
     new THREE.PlaneGeometry(1.24, 2.06),
-    new THREE.MeshStandardMaterial({ map: boardTex, transparent: true, alphaTest: 0.4, roughness: 0.75, metalness: 0.15 })
+    new THREE.MeshStandardMaterial({ map: boardTex, emissiveMap:boardTex,emissive:0xffffff,emissiveIntensity:.35,transparent: true, alphaTest: 0.4, roughness: 0.85, metalness: 0 })
   );
   boardMesh.position.set(0, 1.01, -0.004);
   boardG.add(boardMesh);
@@ -854,6 +851,8 @@ export function buildScene(canvas,layout=buildLayout()) {
   }));
   scene.add(dust);
 
+  const banknoteRain=createBanknoteRain(THREE,scene);
+
   // ---------- 后期 ----------
   // 高 DPR 下缓冲本身就是超采样,再叠 4× MSAA 只是白烧一倍填充率
   const rt = new THREE.WebGLRenderTarget(innerWidth, innerHeight,
@@ -899,7 +898,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   }
 
   return {
-    THREE, renderer, scene, camera, composer, bloom, controls,
+    THREE, renderer, scene, camera, composer, bloom, controls, banknoteRain,
     machineG, boardG,
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG, gateLabel,

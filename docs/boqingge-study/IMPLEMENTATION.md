@@ -56,3 +56,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 最終実行：`npm test` **171/171成功**（失敗0）。変更後の `silver_ring_outcomes.py` も成功。新しい有料サービス、外部AI、Renderサービス削除、APIキーの再発行、交流ゲームのデータ変更は行っていない。
 
 2026-10-17：基本機構を維持した [Café Noir UI改修](CAFE-NOIR-UI.md)。単発発射と威力調整は下部、ランダム・傾き・補助視点は「その他」、詳細数値は「プレイ記録」へ。
+
+2026-10-17追加：[直接操作の復帰・カメラ角度・Safari配置対策・盤面と札・突破音](CAMERA-ATMOSPHERE.md)。

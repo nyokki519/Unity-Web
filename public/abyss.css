@@ -1227,3 +1227,11 @@ body:has(.silver-shell)>.site-header,body:has(.silver-shell)>.site-footer{displa
 .silver-options select{color:#173d2b;background:#f5edd9}.silver-options .field{margin:0}.silver-options .field-label{white-space:nowrap}.silver-options .field select{min-width:110px}
 
 .silver-head .button.secondary{background:#183c2e;color:#f4edd9;border-color:#b6c4ab}.silver-head .button.secondary:hover:not(:disabled){background:#2c5140}
+/* Scrollable host reserves space outside the iframe for Safari's browser chrome. */
+html:has(.silver-shell){overflow-y:auto;touch-action:pan-y}body:has(.silver-shell){overflow-x:hidden;overflow-y:auto;touch-action:pan-y}
+.silver-shell{height:auto;min-height:calc(100svh + 96px);overflow:visible}.silver-head{position:sticky;top:0;z-index:40;background:#0b241bf5;flex:none}
+.silver-game{height:max(520px,calc(var(--silver-viewport,100svh) - 200px));min-height:520px;flex:none}
+.silver-scroll-hint{min-height:32px;flex:none;border:0;border-bottom:1px solid #59634f;background:#1c372a;color:#e1d3b4;font-size:11px;touch-action:pan-y}
+.silver-scroll-reserve{min-height:112px;padding:20px 12px max(48px,env(safe-area-inset-bottom));font-size:12px;text-align:center;color:#c6d0bb;flex:1;touch-action:pan-y}
+@media(min-width:900px){.silver-game{height:calc(var(--silver-viewport,100svh) - 104px);min-height:520px}.silver-scroll-hint{display:none}}
+@media(max-height:500px) and (min-width:600px){.silver-game{height:max(280px,calc(var(--silver-viewport,100svh) - 112px));min-height:280px}}

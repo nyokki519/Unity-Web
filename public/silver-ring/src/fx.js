@@ -2,6 +2,7 @@
 // ============================================================
 // 「沼」动态特效 —— 粒子 / 运镜 / 霓虹 / ざわざわ / 珠雨
 // ============================================================
+import {bowlCameraPose} from './camera-pose.js';
 import * as THREE from '../../vendor/three/three.module.js';
 import { CFG } from './config.js';
 import { bowlY, bowlSlope } from './physics.js';
@@ -249,7 +250,7 @@ export class FX {
       t.colorSpace = THREE.SRGBColorSpace;
       return t;
     };
-    const texes = [mkTex('ころん', 96), mkTex('あと一段', 72), mkTex('ころん', 120)];
+    const texes = [mkTex('ざわ…', 96), mkTex('ざわざわ…', 72), mkTex('ざわ…', 120)];
     this.zawas = [];
     for (let i = 0; i < 12; i++) {
       const mat = new THREE.SpriteMaterial({
@@ -276,7 +277,7 @@ export class FX {
     z.sp.visible = true;
   }
 
-  _updateZawa(dt, tension) { if(document.body.classList.contains('reduced'))return;
+  _updateZawa(dt, tension) { if(document.body.classList.contains('reduced')){for(const z of this.zawas)z.sp.visible=false;return;}
     if (tension > 0) {
       this.zawaTimer -= dt;
       const interval = [9, 2.4, 1.3, 0.55][tension];
@@ -356,6 +357,7 @@ export class FX {
   update(dt, sim, state) {
     this.t += dt;
     const R = this.R, t = this.t;
+    R.banknoteRain.update(dt,{reduced:document.body.classList.contains('reduced'),enabled:this.banknotesEnabled!==false});
 
     this.uDpr.value = R.renderer.getPixelRatio();   // 降档会改 DPR,点精灵跟着走
 
@@ -532,8 +534,8 @@ export class FX {
           const y = TIER_Y[this.camTier];
           // 竖屏时横向视野窄、纵向富余,特写机位整体往前收,皿才占得满
           const ck = Math.max(0.68, Math.min(1, R.camera.aspect / 0.95));
-          tgt = [0, y - 0.02, -0.11];
-          dst = [(this.detailView ? 0.12 : 0.30) * ck, tgt[1] + (this.detailView ? 1.1 : 0.26) * ck, tgt[2] + (this.detailView ? 1.0 : 1.19) * ck];
+          if(this.detailView){const pose=bowlCameraPose({height:y,aspect:R.camera.aspect,...this.detailPose});dst=pose.position;tgt=pose.target;}
+          else {tgt=[0,y-.02,-.11];dst=[.3*ck,tgt[1]+.26*ck,tgt[2]+1.19*ck];}
           break;
         }
         case 'JACKPOT':

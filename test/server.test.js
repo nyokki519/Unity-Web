@@ -21,7 +21,11 @@ test('real HTTP + WebSocket: private answers, multiple rounds, reload, QR and fi
   // Keep the summary assertion deterministic: untagged questions intentionally produce no value scores.
   const summaryQuestionIds=new Set(['align-003','align-007','align-011']);
   const room=app.engine.get(host.code);
-  room.used=questions.filter(q=>!summaryQuestionIds.has(q.id)).map(q=>q.id);
+  const excluded=questions.filter(q=>!summaryQuestionIds.has(q.id)).map(q=>q.id);
+  room.used=[...excluded];
+  // start intentionally clears used; install the fixture at first beginRound instead.
+  const beginRound=app.engine.beginRound.bind(app.engine);
+  app.engine.beginRound=r=>{if(r.code===host.code&&!r.history.length)r.used=[...excluded];return beginRound(r);};
   assert.equal(pool(room.settings,'ALIGN',room.used).length,3);
   const qr=await fetch(base+`/api/qr?room=${host.code}`);assert.equal(qr.status,200);assert.ok((await qr.text()).includes('<svg'));
   const a=new Client(base.replace('http','ws')+'/ws',host),b=new Client(base.replace('http','ws')+'/ws',guest);await wait(()=>a.state?.players.length===2&&b.state);assert.equal(b.state.players.find(p=>p.id===guest.playerId).name,'同じ名前 · 2');

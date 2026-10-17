@@ -30,3 +30,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Three.js and addons: MIT, see /vendor/three/LICENSE.
 No external image, sound or 3D model assets were imported from a manga/anime.
+
+2026-10-17 additions by this project: independently drawn coffee-mask cabinet artwork,
+decorative UNITY notes, bounded orbit-camera controls, and synthesized breakthrough SE.
+No original manga/anime cabinet artwork, banknote image or commercial-machine audio was imported.

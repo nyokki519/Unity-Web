@@ -29,7 +29,7 @@ const S = {
   randPow: false, holdFire: false, lastPower: 0.40,
   auto: false, autoAcc: 0,
   tiltIn: 0, tiltKey: 0, tiltBtn: 0, sus: 0, tiltLock: 0,
-  freeCam: false, muted: true, reduce:matchMedia("(prefers-reduced-motion:reduce)").matches, manualCamera:"auto", testUsed:false,
+  freeCam: false, muted: true, reduce:matchMedia("(prefers-reduced-motion:reduce)").matches, manualCamera:"auto", cameraPitch:50,cameraYaw:10,cameraZoom:1,banknotes:true,testUsed:false,
   jackpotLock: false, pendingJack: 0,
   timeScale: 1, slowT: 0, slowV: 1,
   acc: 0, degrade: 0,
@@ -82,6 +82,7 @@ const sim = new Sim((ev, d) => {
       fx.gateBurst();
       break;
     case 'bowlenter':
+      fx.spawnZawa();
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); audio.zawa(); }
       if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); audio.zawa(); fx.shake(0.015); }
       break;
@@ -153,7 +154,7 @@ function fireOne() {
   return fire(S.randPow ? sim.randomPower() : S.memory + (launchRng() - 0.5) * 0.03);
 }
 
-const presentation=mountPresentation({fire:fireOne,setPower:value=>{S.memory=value;ui.setPowerMark(value);},setCamera:value=>{S.freeCam=false;refs.controls.enabled=false;S.manualCamera=value;}});
+const presentation=mountPresentation({previewSound:()=>{audio.sinkWin(0);ui.toast(S.muted?'音をONにすると突破音を試せます。':'突破音の試聴です。');},fire:fireOne,setPower:value=>{S.memory=value;ui.setPowerMark(value);},setCamera:value=>{S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);S.manualCamera=value;},setAngle:(axis,delta)=>{S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);S[axis]=Math.max(axis==='cameraPitch'?35:-70,Math.min(axis==='cameraPitch'?75:70,S[axis]+delta));}});
 
 // ---------- 输入 ----------
 function startCharge() {
@@ -170,6 +171,7 @@ function releaseCharge() {
   fire(S.chargeT);
 }
 function panView(d) {
+  if(S.manualCamera.startsWith('cradle')){S.freeCam=false;refs.controls.enabled=false;S.cameraPitch=Math.max(35,Math.min(75,S.cameraPitch+d*80));return;}
   if (S.freeCam) return;
   fx.viewOffTarget = Math.max(-0.5, Math.min(0.95, fx.viewOffTarget + d));
 }
@@ -297,7 +299,7 @@ addEventListener('wheel', (e) => {
   S.memory = Math.max(0.02, Math.min(1, S.memory - Math.sign(e.deltaY) * 0.02));
   ui.setPowerMark(S.memory);
 }, { passive: true });
-addEventListener('blur', () => { S.charging = false; S.holdFire = false; S.tiltKey = 0; S.tiltBtn = 0; });
+addEventListener('blur', () => { S.charging = false; S.holdFire = false; S.tiltKey = 0; S.tiltBtn = 0; panHold=0; });
 
 ui.el.autoLamp.addEventListener('click', toggleAuto);
 ui.el.randLamp.addEventListener('click', toggleRandom);
@@ -347,7 +349,9 @@ function holdBtn(el, on, off) {
     if (el.setPointerCapture) el.setPointerCapture(e.pointerId);
     on();
   });
-  for (const t of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(t, off);
+  for (const t of ['pointerup', 'pointercancel', 'pointerleave','blur']) el.addEventListener(t, off);
+  el.addEventListener('keydown',e=>{if(['Space','Enter'].includes(e.code)){e.preventDefault();on();}});
+  el.addEventListener('keyup',e=>{if(['Space','Enter'].includes(e.code)){e.preventDefault();off();}});
 }
 let panHold = 0;
 holdBtn(ui.el.mLeft, () => { S.tiltBtn = -1; }, () => { S.tiltBtn = 0; });
@@ -544,6 +548,7 @@ function frame(now) {
   audio.setBowlSpeed(Math.min(1, maxSp / 0.85));
   if (!S.jackpotLock) {
     fx.detailView=S.manualCamera.startsWith('cradle');
+    fx.detailPose={pitch:S.cameraPitch,yaw:S.cameraYaw,zoom:S.cameraZoom};
     if(S.manualCamera.startsWith('cradle'))fx.setCamMode('CRUUNE',Number(S.manualCamera.at(-1))-1);
     else if(S.manualCamera==='wide'||S.reduce)fx.setCamMode('WIDE');
     else if (S.phase === 'title') fx.setCamMode('TITLE');
@@ -572,6 +577,7 @@ function frame(now) {
   } else goT = 0;
 
   if(S.reduce){fx.shakeAmp=0;fx.mouse.x=fx.mouse.y=0;}
+  fx.banknotesEnabled=S.banknotes;
   fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
   refs.composer.render();
 }
@@ -611,10 +617,10 @@ window.SILVER_GAME = {
 
 // Unity MIX lifecycle/settings bridge. The parent is same-origin and checked.
 function publishState(){document.body.dataset.phase=S.phase;if(parent!==window)parent.postMessage({source:'silver-game',phase:S.phase,power:Math.round(S.memory*100)},location.origin);}
-function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';audio.resume();last=performance.now();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
+function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';panHold=0;audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';audio.resume();last=performance.now();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.source!=='silver-shell')return;const {type,value}=e.data;if(type==='pause')pauseGame(S.phase!=='paused');if(type==='suspend')pauseGame(true);if(type==='power'&&Number.isFinite(value)){S.memory=Math.max(.02,Math.min(1,value/100));ui.setPowerMark(S.memory);}
  if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
- if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value))S.manualCamera=value;if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);}});
+ if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value)){S.manualCamera=value;S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);}if(type==='banknotes')S.banknotes=!!value;if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);}});
 addEventListener('blur',()=>{if(parent===window)pauseGame(true);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame(true);});
 setInterval(publishState,200);audio.setMute(true);ui.setMuteTag(true);document.body.classList.toggle('reduced',S.reduce);

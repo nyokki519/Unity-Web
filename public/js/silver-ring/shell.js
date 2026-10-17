@@ -12,10 +12,13 @@ export function mountSilver({onBack}){
  const lab=el('a','','旧版・接触物理の検証');lab.href='/?bonus=jackpot&physics=1';const power=el('input');power.type='range';power.min='2';power.max='100';power.value='40';power.addEventListener('input',()=>send('power',Number(power.value)),{signal:abort.signal});
  const strength=el('div','silver-strength');strength.append(button('−',()=>send('power',Math.max(2,Number(power.value)-2)),'button secondary'),field('発射威力',power),button('＋',()=>send('power',Math.min(100,Number(power.value)+2)),'button secondary'));
  const quality=labeledSelect('描画品質',[['auto','自動'],['high','精細'],['low','省電力']],'auto',value=>send('quality',value));
- options.append(camera,label,quality,strength,lab);
+ const notes=el('input');notes.type='checkbox';notes.checked=true;const noteLabel=el('label');noteLabel.append(notes,document.createTextNode('紙幣の背景演出'));notes.addEventListener('change',()=>send('banknotes',notes.checked),{signal:abort.signal});
+ options.append(camera,label,noteLabel,quality,strength,lab);
  window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==frame.contentWindow||e.data?.source!=='silver-game')return;if(e.data.power!==undefined&&document.activeElement!==power)power.value=String(e.data.power);pause.textContent=e.data.phase==='paused'?'再開する':'一時停止';pause.disabled=!['play','paused'].includes(e.data.phase);},{signal:abort.signal});
  window.addEventListener('blur',()=>{if(!document.hasFocus())send('suspend');},{signal:abort.signal});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)send('suspend');},{signal:abort.signal});
- frame.addEventListener('load',()=>send('motion',motion.checked),{signal:abort.signal});node.append(head,options,frame);
+ frame.addEventListener('load',()=>{send('motion',motion.checked);send('banknotes',notes.checked);},{signal:abort.signal});
+ const reserve=el('footer','silver-scroll-reserve','上下にスクロールして、押しやすい位置へ。'),alignControls=()=>{const viewport=window.visualViewport?.height||innerHeight;window.scrollTo({top:Math.max(0,scrollY+frame.getBoundingClientRect().bottom-viewport+112),behavior:motion.checked?'auto':'smooth'});},scrollHint=button('操作欄を上に移動 ↓',alignControls,'silver-scroll-hint');
+ const resizeViewport=()=>{if(!window.visualViewport||visualViewport.scale===1)node.style.setProperty('--silver-viewport',`${window.visualViewport?.height||innerHeight}px`);};resizeViewport();window.addEventListener('resize',resizeViewport,{signal:abort.signal});window.visualViewport?.addEventListener('resize',resizeViewport,{signal:abort.signal});node.append(head,scrollHint,options,frame,reserve);
  return{node,destroy(){abort.abort();frame.remove();}};
 }

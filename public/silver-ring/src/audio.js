@@ -1,3 +1,4 @@
+import{playBreakthrough}from'./breakthrough-sound.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」音频引擎 —— 全程序化合成,无外部素材
@@ -168,17 +169,7 @@ export class AudioEngine {
       this.osc('square', 1900 - i * 300, null, t + i * 0.045, 0.03, 0.045);
   }
 
-  sinkWin(tier) {
-    if (!this.ctx) return;
-    const t = this.ctx.currentTime;
-    const base = [660, 784, 988][tier] || 660;
-    [0, 4, 7, 12].forEach((st, i) => {
-      this.osc('triangle', base * Math.pow(2, st / 12), null, t + i * 0.07, 0.5, 0.11);
-    });
-    this.noise(t, 0.4, 0.04, 'highpass', 5000, 0.7);
-    // 深处的回响
-    this.osc('sine', base / 4, base / 8, t + 0.1, 0.7, 0.08);
-  }
+  sinkWin(tier) { return playBreakthrough(this,tier); }
 
   sinkLose() {
     if (!this.ctx) return;

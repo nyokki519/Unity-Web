@@ -39,3 +39,18 @@ body.touch .btn,.btn{font-size:15px;letter-spacing:.08em;border-radius:4px;box-s
 #toasts[data-kind="red"]{white-space:normal;color:#ffceba}
 .overlay.show{animation:none}
 .ov-note{color:#b8c3b4;opacity:1}.ov-note a{color:#e0c594;text-decoration:underline}
+/* Direct controls are restored; the document around the game can scroll. */
+html,body{touch-action:auto;overscroll-behavior:auto}.play-dock{touch-action:pan-y}
+#quickControls,#cameraControls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;max-width:620px;margin:6px auto 0}
+#quickControls .mbtn,#cameraControls .mbtn{min-width:0;min-height:44px;height:44px;padding:3px;font-size:11px;letter-spacing:0;border-radius:4px;background:#1d352b}
+#quickControls .mbtn.on{background:#dcc08a;color:#132c20}
+#cameraControls{grid-template-columns:repeat(4,minmax(0,1fr));position:relative;padding-bottom:16px}
+#cameraControls[hidden]{display:none}#cameraReadout{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#d2bea0}
+#routeStatus{bottom:190px}body:has(#cameraControls:not([hidden])) #routeStatus{bottom:256px}
+#bowlWhisper{position:fixed;z-index:9;pointer-events:none;right:14px;top:24%;font-family:"Yu Mincho",serif;font-size:clamp(21px,5vw,35px);font-weight:900;color:#e9ddc0;text-shadow:2px 2px 2px #13081e,-1px -1px #33243b;transform:rotate(-7deg);opacity:.72;animation:bowl-whisper 3s ease-in-out infinite}
+#bowlWhisper[hidden]{display:none}@keyframes bowl-whisper{50%{transform:translateY(4px) rotate(-4deg);opacity:.5}}
+#extraControls{bottom:190px}body:has(#cameraControls:not([hidden])) #extraControls{bottom:256px}
+body:has(#cameraControls:not([hidden])) #susWrap{bottom:288px}
+@media(max-height:450px){.play-dock{width:310px;max-height:calc(100% - 20px);overflow-y:auto;touch-action:pan-y}#routeStatus,body:has(#cameraControls:not([hidden])) #routeStatus{bottom:12px;max-width:calc(100% - 345px)}#bowlWhisper{right:335px;font-size:24px}}
+#mbar .mbtn.on,body.touch #mbar .mbtn.on{background:#e0c594;color:#172d22;border-color:#e0c594}
+#start #btnStart{position:sticky;bottom:4px;flex-shrink:0;z-index:2}

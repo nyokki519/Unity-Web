@@ -1,0 +1,34 @@
+{
+  "host": {
+    "scrollY": 62,
+    "scrollHeight": 746,
+    "viewport": 650,
+    "bottom": 538
+  },
+  "pitch": 53.4,
+  "yaw": 20,
+  "zawa": true,
+  "banknotesToggle": true,
+  "reducedStopsNotes": true,
+  "soundRouting": {
+    "calls": [
+      0,
+      1,
+      2
+    ],
+    "results": [
+      true,
+      true,
+      true
+    ],
+    "coinsUnchanged": true,
+    "activeGroups": 3
+  },
+  "offlineSound": {
+    "peak": 0.20558157563209534,
+    "rms": 0.019511380041132755,
+    "mutedReturned": false
+  },
+  "errors": [],
+  "limits": "Chromium software rendering; simulated short viewport, not physical iPhone Safari. Explicit stage and sink events test presentation/wiring, not natural jackpot odds."
+}
