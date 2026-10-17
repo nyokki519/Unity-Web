@@ -1,0 +1,2 @@
+import test from'node:test';import assert from'node:assert/strict';import{engravingPixels}from'../public/silver-ring/src/coin-engraving.js';
+test('paper background disappears and dark ink becomes transparent gold engraving',()=>{const p=new Uint8ClampedArray([224,221,216,255,55,47,40,255,255,255,255,0]);engravingPixels(p);assert.equal(p[3],0);assert.ok(p[7]>240);assert.equal(p[11],0);assert.deepEqual([...p.slice(4,7)],[100,66,15]);});
