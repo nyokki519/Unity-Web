@@ -58,3 +58,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 2026-10-17：基本機構を維持した [Café Noir UI改修](CAFE-NOIR-UI.md)。単発発射と威力調整は下部、ランダム・傾き・補助視点は「その他」、詳細数値は「プレイ記録」へ。
 
 2026-10-17追加：[直接操作の復帰・カメラ角度・Safari配置対策・盤面と札・突破音](CAMERA-ATMOSPHERE.md)。
+
+2026-10-17修正：[再開ボタン・左右の背景紙幣・指定音源の取得状況](RESUME-RAIN-FIX.md)。

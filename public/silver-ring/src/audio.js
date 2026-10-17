@@ -12,7 +12,7 @@ export class AudioEngine {
   }
 
   resume() {
-    if (this.ctx) { this.ctx.resume(); return; }
+    if (this.ctx) { const resumed=this.ctx.resume();resumed?.catch(()=>{ /* Audio permission must not prevent the game from resuming. */ });return; }
     const AC = window.AudioContext || window.webkitAudioContext;
     this.ctx = new AC();
     const c = this.ctx;

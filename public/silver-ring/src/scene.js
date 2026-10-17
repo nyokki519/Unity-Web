@@ -54,7 +54,7 @@ function roundBloomKernel(bloom) {
 export function buildScene(canvas,layout=buildLayout()) {
   let qual = TOUCH || (navigator.hardwareConcurrency || 8) <= 4 ? 1 : 2;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias: false, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP[qual]));
   renderer.setSize(innerWidth, innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -63,7 +63,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   renderer.shadowMap.type = qual >= 2 ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x101b17);
+  scene.background = null;renderer.setClearColor(0x101b17,0);
   scene.fog = new THREE.FogExp2(0x101b17, 0.04);
 
   // 明亮摄影棚环境:暖白主光 + 绯红/金条灯点缀 + 沼绿背光
@@ -851,7 +851,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   }));
   scene.add(dust);
 
-  const banknoteRain=createBanknoteRain(THREE,scene);
+  const banknoteRain=createBanknoteRain();
 
   // ---------- 后期 ----------
   // 高 DPR 下缓冲本身就是超采样,再叠 4× MSAA 只是白烧一倍填充率
