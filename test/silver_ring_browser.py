@@ -20,7 +20,7 @@ with sync_playwright() as p:
    frame.locator('#shotPower').press('ArrowRight');frame.locator('#singleShot').click();assert child.evaluate('SILVER_GAME.S.fired')==1
    assert not frame.locator('#extraControls').is_visible()
    frame.locator('#focusBowl').click();child.wait_for_function("()=>SILVER_GAME.S.manualCamera==='cradle1'");frame.locator('#focusBowl').click();child.wait_for_function("()=>SILVER_GAME.S.manualCamera==='auto'")
-   child.evaluate("()=>{const g=SILVER_GAME,text=g.ui.el.toasts.textContent,funds=g.S.funds,gates=g.S.gates;g.sim.emit('foul',{});if(g.S.funds!==funds+100)throw Error('Return must still refund coins');g.sim.emit('gate',{});if(g.ui.el.toasts.textContent!==text)throw Error('Routine events must not post notifications');g.S.funds=funds;g.S.gates=gates;}")
+   child.evaluate("()=>{const g=SILVER_GAME,text=g.ui.el.toasts.textContent,funds=g.S.funds,gates=g.S.gates;g.sim.emit('foul',{});if(g.S.funds!==funds+200)throw Error('Return must still refund coins');g.sim.emit('gate',{});if(g.ui.el.toasts.textContent!==text)throw Error('Routine events must not post notifications');g.S.funds=funds;g.S.gates=gates;}")
    assert not frame.locator('#hud-tr').is_visible()
    frame.locator('#roundDetails > summary').click();assert frame.locator('#hud-tr').is_visible();frame.locator('#roundDetails > summary').click()
    frame.locator('#moreControls').click();frame.locator('#mRand').click();frame.locator('#mRand').press('Escape');assert not frame.locator('#extraControls').is_visible();assert child.evaluate('SILVER_GAME.S.phase')=='play';frame.locator('#mAuto').click();child.wait_for_function('()=>SILVER_GAME.S.fired>2',timeout=30000)

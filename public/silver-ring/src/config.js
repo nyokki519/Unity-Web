@@ -116,8 +116,8 @@ export const CFG = {
 
   // 经济(赌博默示録・沼 规格)
   eco: {
-    start: 240000,       // 初始资金 ¥30,000,000
-    ballCost: 100,        // 一发 ¥4,000
+    start: 60000,        // 300 paid shots; seeded balance survey in docs/qa.
+    ballCost: 200,       // Virtual credits per accepted launch.
     jackpot: 1000000,    // 大当り ¥700,000,000
     borrow: 100000,      // 帝愛借款单位
     autoRate: 12,          // 连发 / 秒(AUTO 与随机力度按住连发共用;

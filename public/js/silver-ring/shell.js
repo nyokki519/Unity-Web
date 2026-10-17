@@ -14,7 +14,8 @@ export function mountSilver({onBack}){
  const strength=el('div','silver-strength');strength.append(button('−',()=>send('power',Math.max(2,Number(power.value)-2)),'button secondary'),field('発射威力',power),button('＋',()=>send('power',Math.min(100,Number(power.value)+2)),'button secondary'));
  const quality=labeledSelect('描画品質',[['auto','自動'],['high','精細'],['low','省電力']],'auto',value=>send('quality',value));
  const notes=el('input');notes.type='checkbox';notes.checked=true;const noteLabel=el('label');noteLabel.append(notes,document.createTextNode('紙幣の背景演出'));notes.addEventListener('change',()=>send('banknotes',notes.checked),{signal:abort.signal});
- options.append(camera,label,noteLabel,quality,strength,lab);
+ const backgroundCheck=button('背景の落下を確認',()=>{notes.checked=true;send('banknotes',true);send('camera','wide');options.hidden=true;settings.setAttribute('aria-expanded','false');},'button secondary');
+ options.append(camera,label,noteLabel,backgroundCheck,el('small','','更新版：200クレジット・初期6万'),quality,strength,lab);
  window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==frame.contentWindow||e.data?.source!=='silver-game')return;if(e.data.power!==undefined&&document.activeElement!==power)power.value=String(e.data.power);phase=e.data.phase;pause.textContent=e.data.phase==='paused'?'再開する':'一時停止';pause.disabled=!['play','paused'].includes(e.data.phase);},{signal:abort.signal});
  // Visibility is authoritative; iframe/browser-toolbar focus changes are not a background transition.
  document.addEventListener('visibilitychange',()=>{if(document.hidden)send('suspend');},{signal:abort.signal});

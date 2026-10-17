@@ -1,0 +1,9 @@
+[
+  {
+    "width": 390,
+    "initial": 60000,
+    "shotCost": 200,
+    "reducedMotionStillFalls": true,
+    "errors": []
+  }
+]

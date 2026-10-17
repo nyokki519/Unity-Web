@@ -22,6 +22,6 @@ export function createBanknoteRain(){
   layer.dataset.exclusion=JSON.stringify({left:l,right:r,top:t,bottom:b});
  }
 
- function update(_dt,{reduced=false,enabled=true}={}){layer.hidden=!enabled||reduced;}
+ function update(_dt,{reduced=false,enabled=true}={}){layer.hidden=!enabled;}
  update(0);return{layer,update,excludeRect};
 }

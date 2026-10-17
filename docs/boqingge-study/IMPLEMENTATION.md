@@ -64,3 +64,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 最新の録音音源・盤面更新は [RECORDED-AUDIO-AND-CABINET.md](RECORDED-AUDIO-AND-CABINET.md) を参照。
 
 筐体外の紙幣表示と添付ざわざわ音は [VISIBLE-RAIN-ZAWA.md](VISIBLE-RAIN-ZAWA.md) を参照。
+
+省モーション時の停止修正と200クレジット調整は [RAIN-AND-ECONOMY-FIX.md](RAIN-AND-ECONOMY-FIX.md) を参照。

@@ -10,9 +10,9 @@ with sync_playwright() as p:
  child.evaluate('SILVER_GAME.sim.balls.length=0')
  f.locator('#mMute').click();child.wait_for_function('()=>SILVER_GAME.audio.master.gain.value>.5',timeout=10000);f.locator('#mMute').click();child.wait_for_function('()=>SILVER_GAME.audio.master.gain.value<.001',timeout=10000)
  f.locator('#devPanel > summary').click();f.get_by_role('button',name='大当たり演出',exact=True).click();expect(f.locator('#jack')).to_have_class('show');page.screenshot(path=str(OUT/'jackpot.png'),timeout=45000)
- child.wait_for_function('()=>!SILVER_GAME.S.jackpotLock',timeout=20000);assert child.evaluate('SILVER_GAME.S.funds')==1240000
- f.get_by_role('button',name='玉切れ',exact=True).click();expect(f.get_by_role('button',name='もう一度遊ぶ（24万枚）',exact=True)).to_be_visible();page.screenshot(path=str(OUT/'gameover.png'),timeout=45000)
- f.get_by_role('button',name='もう一度遊ぶ（24万枚）',exact=True).click();assert child.evaluate('SILVER_GAME.S.funds')==240000;assert child.evaluate('SILVER_GAME.S.fired')==0;assert child.evaluate('SILVER_GAME.S.phase')=='play'
+ child.wait_for_function('()=>!SILVER_GAME.S.jackpotLock',timeout=20000);assert child.evaluate('SILVER_GAME.S.funds')==1060000
+ f.get_by_role('button',name='玉切れ',exact=True).click();expect(f.get_by_role('button',name='もう一度遊ぶ（6万枚）',exact=True)).to_be_visible();page.screenshot(path=str(OUT/'gameover.png'),timeout=45000)
+ f.get_by_role('button',name='もう一度遊ぶ（6万枚）',exact=True).click();assert child.evaluate('SILVER_GAME.S.funds')==60000;assert child.evaluate('SILVER_GAME.S.fired')==0;assert child.evaluate('SILVER_GAME.S.phase')=='play'
  page.get_by_role('button',name='設定',exact=True).click();page.get_by_label('動きを減らす',exact=True).check();child.wait_for_function("()=>document.body.classList.contains('reduced')");page.get_by_role('button',name='設定',exact=True).click()
  f.get_by_role('button',name='大当たり演出',exact=True).click();assert child.evaluate("getComputedStyle(document.querySelector('#flash')).display")=='none'
  assert not errors,errors

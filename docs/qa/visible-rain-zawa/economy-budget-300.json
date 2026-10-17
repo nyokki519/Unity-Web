@@ -1,0 +1,1000 @@
+{
+  "conditions": {
+    "budgetShots": 300,
+    "seeds": 48,
+    "power": 0.45,
+    "shotsPerSecond": 12,
+    "maxLive": 30,
+    "dt": 0.004166666666666667,
+    "cap": 5000,
+    "interference": false
+  },
+  "rows": [
+    {
+      "seed": "economy-200-0",
+      "hit": true,
+      "fired": 206,
+      "refunds": 0,
+      "net": 206,
+      "counts": {
+        "railout": 203,
+        "clack": 536,
+        "pin": 3176,
+        "shutter": 31,
+        "wood": 440,
+        "disc": 133,
+        "swamp": 176,
+        "gate": 32,
+        "bowlenter": 42,
+        "sink": 37,
+        "rattle": 7,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-1",
+      "hit": true,
+      "fired": 287,
+      "refunds": 0,
+      "net": 287,
+      "counts": {
+        "railout": 287,
+        "pin": 4616,
+        "clack": 693,
+        "wood": 620,
+        "shutter": 48,
+        "disc": 158,
+        "swamp": 258,
+        "gate": 61,
+        "bowlenter": 81,
+        "sink": 72,
+        "rattle": 15,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-2",
+      "hit": true,
+      "fired": 134,
+      "refunds": 0,
+      "net": 134,
+      "counts": {
+        "railout": 132,
+        "pin": 2038,
+        "shutter": 21,
+        "clack": 422,
+        "wood": 287,
+        "gate": 25,
+        "disc": 71,
+        "swamp": 105,
+        "bowlenter": 28,
+        "rattle": 3,
+        "sink": 20,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-3",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4855,
+        "clack": 685,
+        "shutter": 76,
+        "wood": 691,
+        "disc": 168,
+        "swamp": 300,
+        "gate": 77,
+        "bowlenter": 114,
+        "rattle": 25,
+        "sink": 114
+      }
+    },
+    {
+      "seed": "economy-200-4",
+      "hit": true,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "clack": 791,
+        "railout": 300,
+        "pin": 5053,
+        "shutter": 52,
+        "wood": 711,
+        "disc": 153,
+        "swamp": 298,
+        "gate": 57,
+        "bowlenter": 78,
+        "sink": 77,
+        "rattle": 14,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-5",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4809,
+        "clack": 731,
+        "shutter": 65,
+        "wood": 662,
+        "disc": 202,
+        "gate": 67,
+        "swamp": 300,
+        "bowlenter": 81,
+        "sink": 81,
+        "rattle": 14
+      }
+    },
+    {
+      "seed": "economy-200-6",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 790,
+        "pin": 4713,
+        "wood": 702,
+        "shutter": 61,
+        "disc": 191,
+        "swamp": 300,
+        "gate": 46,
+        "bowlenter": 70,
+        "sink": 70,
+        "rattle": 7
+      }
+    },
+    {
+      "seed": "economy-200-7",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4671,
+        "clack": 746,
+        "wood": 690,
+        "shutter": 68,
+        "disc": 191,
+        "swamp": 300,
+        "gate": 57,
+        "bowlenter": 76,
+        "sink": 76,
+        "rattle": 8
+      }
+    },
+    {
+      "seed": "economy-200-8",
+      "hit": true,
+      "fired": 152,
+      "refunds": 0,
+      "net": 152,
+      "counts": {
+        "railout": 149,
+        "clack": 442,
+        "pin": 2287,
+        "wood": 314,
+        "shutter": 21,
+        "disc": 94,
+        "swamp": 122,
+        "gate": 27,
+        "bowlenter": 36,
+        "rattle": 4,
+        "sink": 30,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-9",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 785,
+        "pin": 4745,
+        "wood": 731,
+        "shutter": 70,
+        "disc": 192,
+        "swamp": 300,
+        "gate": 54,
+        "bowlenter": 72,
+        "sink": 72,
+        "rattle": 9
+      }
+    },
+    {
+      "seed": "economy-200-10",
+      "hit": true,
+      "fired": 257,
+      "refunds": 0,
+      "net": 257,
+      "counts": {
+        "clack": 688,
+        "railout": 257,
+        "pin": 4040,
+        "shutter": 36,
+        "wood": 616,
+        "disc": 161,
+        "swamp": 227,
+        "gate": 34,
+        "bowlenter": 45,
+        "sink": 41,
+        "rattle": 5,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-11",
+      "hit": true,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4847,
+        "shutter": 69,
+        "clack": 717,
+        "wood": 709,
+        "disc": 170,
+        "gate": 56,
+        "swamp": 297,
+        "bowlenter": 86,
+        "sink": 85,
+        "rattle": 7,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-12",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 752,
+        "pin": 4943,
+        "wood": 700,
+        "shutter": 61,
+        "disc": 191,
+        "gate": 60,
+        "swamp": 300,
+        "bowlenter": 73,
+        "sink": 73,
+        "rattle": 12
+      }
+    },
+    {
+      "seed": "economy-200-13",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4934,
+        "clack": 716,
+        "shutter": 68,
+        "wood": 665,
+        "disc": 169,
+        "swamp": 300,
+        "gate": 72,
+        "bowlenter": 100,
+        "sink": 100,
+        "rattle": 14
+      }
+    },
+    {
+      "seed": "economy-200-14",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4746,
+        "clack": 721,
+        "shutter": 60,
+        "wood": 649,
+        "disc": 189,
+        "swamp": 300,
+        "gate": 70,
+        "bowlenter": 93,
+        "rattle": 13,
+        "sink": 93
+      }
+    },
+    {
+      "seed": "economy-200-15",
+      "hit": true,
+      "fired": 243,
+      "refunds": 0,
+      "net": 243,
+      "counts": {
+        "railout": 241,
+        "clack": 693,
+        "pin": 3853,
+        "shutter": 40,
+        "disc": 143,
+        "wood": 513,
+        "swamp": 213,
+        "gate": 38,
+        "bowlenter": 49,
+        "sink": 47,
+        "rattle": 9,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-16",
+      "hit": true,
+      "fired": 131,
+      "refunds": 0,
+      "net": 131,
+      "counts": {
+        "railout": 126,
+        "pin": 1979,
+        "clack": 354,
+        "wood": 260,
+        "shutter": 18,
+        "disc": 53,
+        "swamp": 102,
+        "gate": 23,
+        "bowlenter": 33,
+        "sink": 28,
+        "rattle": 2,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-17",
+      "hit": true,
+      "fired": 250,
+      "refunds": 0,
+      "net": 250,
+      "counts": {
+        "railout": 248,
+        "clack": 629,
+        "pin": 3876,
+        "shutter": 42,
+        "wood": 556,
+        "disc": 159,
+        "swamp": 220,
+        "gate": 44,
+        "bowlenter": 58,
+        "rattle": 13,
+        "sink": 51,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-18",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4982,
+        "clack": 811,
+        "shutter": 72,
+        "wood": 695,
+        "disc": 178,
+        "swamp": 300,
+        "gate": 63,
+        "bowlenter": 87,
+        "sink": 87,
+        "rattle": 6
+      }
+    },
+    {
+      "seed": "economy-200-19",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4666,
+        "clack": 774,
+        "shutter": 62,
+        "wood": 717,
+        "disc": 219,
+        "gate": 41,
+        "swamp": 300,
+        "bowlenter": 61,
+        "sink": 61,
+        "rattle": 3
+      }
+    },
+    {
+      "seed": "economy-200-20",
+      "hit": true,
+      "fired": 145,
+      "refunds": 0,
+      "net": 145,
+      "counts": {
+        "railout": 143,
+        "clack": 391,
+        "pin": 2075,
+        "shutter": 17,
+        "wood": 292,
+        "disc": 97,
+        "swamp": 115,
+        "gate": 22,
+        "bowlenter": 29,
+        "sink": 23,
+        "rattle": 7,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-21",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 798,
+        "pin": 4842,
+        "shutter": 59,
+        "wood": 687,
+        "disc": 196,
+        "swamp": 300,
+        "gate": 63,
+        "bowlenter": 84,
+        "rattle": 7,
+        "sink": 84
+      }
+    },
+    {
+      "seed": "economy-200-22",
+      "hit": true,
+      "fired": 156,
+      "refunds": 0,
+      "net": 156,
+      "counts": {
+        "railout": 153,
+        "pin": 2370,
+        "clack": 399,
+        "wood": 287,
+        "shutter": 26,
+        "disc": 85,
+        "swamp": 126,
+        "gate": 37,
+        "bowlenter": 42,
+        "sink": 34,
+        "rattle": 4,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-23",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 791,
+        "pin": 4836,
+        "wood": 682,
+        "shutter": 60,
+        "disc": 173,
+        "swamp": 300,
+        "gate": 59,
+        "bowlenter": 76,
+        "sink": 76,
+        "rattle": 8
+      }
+    },
+    {
+      "seed": "economy-200-24",
+      "hit": true,
+      "fired": 169,
+      "refunds": 0,
+      "net": 169,
+      "counts": {
+        "railout": 166,
+        "pin": 2630,
+        "clack": 445,
+        "shutter": 34,
+        "wood": 332,
+        "disc": 75,
+        "swamp": 139,
+        "gate": 41,
+        "bowlenter": 57,
+        "rattle": 11,
+        "sink": 50,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-25",
+      "hit": true,
+      "fired": 119,
+      "refunds": 0,
+      "net": 119,
+      "counts": {
+        "railout": 117,
+        "pin": 1775,
+        "clack": 319,
+        "wood": 214,
+        "shutter": 22,
+        "disc": 69,
+        "swamp": 89,
+        "gate": 24,
+        "bowlenter": 35,
+        "rattle": 6,
+        "sink": 27,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-26",
+      "hit": true,
+      "fired": 111,
+      "refunds": 0,
+      "net": 111,
+      "counts": {
+        "railout": 107,
+        "pin": 1678,
+        "clack": 302,
+        "shutter": 23,
+        "wood": 204,
+        "disc": 67,
+        "gate": 26,
+        "bowlenter": 33,
+        "swamp": 81,
+        "sink": 26,
+        "rattle": 3,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-27",
+      "hit": true,
+      "fired": 222,
+      "refunds": 0,
+      "net": 222,
+      "counts": {
+        "railout": 218,
+        "pin": 3411,
+        "clack": 601,
+        "shutter": 38,
+        "wood": 453,
+        "disc": 113,
+        "swamp": 192,
+        "gate": 45,
+        "bowlenter": 64,
+        "sink": 54,
+        "rattle": 4,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-28",
+      "hit": true,
+      "fired": 170,
+      "refunds": 0,
+      "net": 170,
+      "counts": {
+        "railout": 168,
+        "clack": 434,
+        "pin": 2670,
+        "shutter": 30,
+        "wood": 333,
+        "disc": 90,
+        "swamp": 141,
+        "gate": 45,
+        "bowlenter": 55,
+        "sink": 46,
+        "rattle": 14,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-29",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4823,
+        "clack": 799,
+        "wood": 681,
+        "shutter": 71,
+        "disc": 185,
+        "swamp": 300,
+        "gate": 62,
+        "bowlenter": 82,
+        "sink": 82,
+        "rattle": 13
+      }
+    },
+    {
+      "seed": "economy-200-30",
+      "hit": true,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4879,
+        "clack": 745,
+        "wood": 686,
+        "shutter": 59,
+        "disc": 183,
+        "gate": 60,
+        "swamp": 287,
+        "bowlenter": 81,
+        "sink": 71,
+        "rattle": 6,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-31",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "clack": 765,
+        "railout": 300,
+        "pin": 4727,
+        "wood": 675,
+        "shutter": 66,
+        "disc": 191,
+        "gate": 63,
+        "swamp": 300,
+        "bowlenter": 91,
+        "sink": 91,
+        "rattle": 9
+      }
+    },
+    {
+      "seed": "economy-200-32",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 815,
+        "pin": 4860,
+        "shutter": 70,
+        "wood": 711,
+        "disc": 206,
+        "swamp": 300,
+        "gate": 56,
+        "bowlenter": 84,
+        "rattle": 12,
+        "sink": 84
+      }
+    },
+    {
+      "seed": "economy-200-33",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 763,
+        "pin": 4876,
+        "wood": 641,
+        "shutter": 71,
+        "disc": 179,
+        "swamp": 300,
+        "gate": 74,
+        "bowlenter": 105,
+        "sink": 105,
+        "rattle": 15
+      }
+    },
+    {
+      "seed": "economy-200-34",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4809,
+        "clack": 736,
+        "shutter": 70,
+        "wood": 717,
+        "disc": 167,
+        "gate": 62,
+        "swamp": 300,
+        "bowlenter": 98,
+        "sink": 98,
+        "rattle": 11
+      }
+    },
+    {
+      "seed": "economy-200-35",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4831,
+        "clack": 682,
+        "shutter": 69,
+        "wood": 670,
+        "disc": 188,
+        "swamp": 300,
+        "gate": 61,
+        "bowlenter": 84,
+        "sink": 84,
+        "rattle": 10
+      }
+    },
+    {
+      "seed": "economy-200-36",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4910,
+        "clack": 792,
+        "shutter": 51,
+        "wood": 713,
+        "disc": 165,
+        "swamp": 300,
+        "gate": 55,
+        "bowlenter": 77,
+        "sink": 77,
+        "rattle": 2
+      }
+    },
+    {
+      "seed": "economy-200-37",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 801,
+        "pin": 4698,
+        "shutter": 53,
+        "wood": 673,
+        "disc": 200,
+        "swamp": 300,
+        "gate": 65,
+        "bowlenter": 86,
+        "rattle": 9,
+        "sink": 86
+      }
+    },
+    {
+      "seed": "economy-200-38",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4851,
+        "shutter": 68,
+        "clack": 655,
+        "wood": 626,
+        "swamp": 300,
+        "disc": 189,
+        "gate": 73,
+        "bowlenter": 96,
+        "sink": 96,
+        "rattle": 12
+      }
+    },
+    {
+      "seed": "economy-200-39",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 831,
+        "pin": 5049,
+        "shutter": 61,
+        "wood": 671,
+        "disc": 162,
+        "swamp": 300,
+        "gate": 65,
+        "bowlenter": 86,
+        "rattle": 10,
+        "sink": 86
+      }
+    },
+    {
+      "seed": "economy-200-40",
+      "hit": true,
+      "fired": 132,
+      "refunds": 0,
+      "net": 132,
+      "counts": {
+        "railout": 128,
+        "pin": 1899,
+        "clack": 368,
+        "wood": 270,
+        "shutter": 21,
+        "disc": 85,
+        "swamp": 102,
+        "gate": 23,
+        "bowlenter": 27,
+        "rattle": 2,
+        "sink": 19,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-41",
+      "hit": true,
+      "fired": 113,
+      "refunds": 0,
+      "net": 113,
+      "counts": {
+        "railout": 110,
+        "pin": 1837,
+        "clack": 287,
+        "shutter": 23,
+        "wood": 185,
+        "disc": 82,
+        "gate": 33,
+        "swamp": 83,
+        "bowlenter": 42,
+        "sink": 30,
+        "rattle": 10,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-42",
+      "hit": true,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4818,
+        "clack": 752,
+        "wood": 668,
+        "shutter": 54,
+        "disc": 172,
+        "swamp": 297,
+        "gate": 60,
+        "bowlenter": 80,
+        "rattle": 13,
+        "sink": 78,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-43",
+      "hit": true,
+      "fired": 222,
+      "refunds": 0,
+      "net": 222,
+      "counts": {
+        "railout": 219,
+        "pin": 3414,
+        "clack": 555,
+        "shutter": 36,
+        "wood": 468,
+        "disc": 131,
+        "gate": 42,
+        "swamp": 192,
+        "bowlenter": 54,
+        "sink": 47,
+        "rattle": 9,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-44",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 792,
+        "pin": 4907,
+        "shutter": 67,
+        "wood": 666,
+        "swamp": 300,
+        "disc": 197,
+        "gate": 73,
+        "bowlenter": 96,
+        "sink": 96,
+        "rattle": 11
+      }
+    },
+    {
+      "seed": "economy-200-45",
+      "hit": true,
+      "fired": 230,
+      "refunds": 0,
+      "net": 230,
+      "counts": {
+        "railout": 229,
+        "pin": 3598,
+        "clack": 540,
+        "shutter": 38,
+        "wood": 465,
+        "disc": 133,
+        "swamp": 200,
+        "gate": 59,
+        "bowlenter": 76,
+        "sink": 67,
+        "rattle": 10,
+        "jackpot": 1
+      }
+    },
+    {
+      "seed": "economy-200-46",
+      "hit": false,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "clack": 744,
+        "pin": 4874,
+        "shutter": 60,
+        "wood": 677,
+        "disc": 180,
+        "swamp": 300,
+        "gate": 66,
+        "bowlenter": 87,
+        "sink": 87,
+        "rattle": 10
+      }
+    },
+    {
+      "seed": "economy-200-47",
+      "hit": true,
+      "fired": 300,
+      "refunds": 0,
+      "net": 300,
+      "counts": {
+        "railout": 300,
+        "pin": 4901,
+        "clack": 774,
+        "wood": 669,
+        "shutter": 54,
+        "swamp": 287,
+        "disc": 178,
+        "gate": 61,
+        "bowlenter": 73,
+        "sink": 65,
+        "rattle": 11,
+        "jackpot": 1
+      }
+    }
+  ],
+  "hitCount": 24,
+  "medianNetShots": 222
+}

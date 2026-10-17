@@ -597,7 +597,7 @@ ui.showStart(() => {
   goImmersive();
   S.phase = 'play';
   fx.setCamMode('WIDE');
-  ui.toast('1球100枚。下のボタンから発射できます。', 'gold');
+  ui.toast('1球200クレジット。下のボタンから発射できます。', 'gold');
 
 });
 
