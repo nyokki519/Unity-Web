@@ -543,7 +543,7 @@ export class FX {
           tgt = [0, 1.4, 0];
           break;
         default: // WIDE:正对机台
-          dst = [0, 1.75 + this.viewOff, 3.88];
+          dst = [0, 1.75 + this.viewOff, 4.75]; // Leave visible background outside the cabinet.
           tgt = [0, 1.57 + this.viewOff, 0];
       }
       const k = 1 - Math.exp(-2.6 * dt);

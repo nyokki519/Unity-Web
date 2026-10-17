@@ -1,0 +1,56 @@
+[
+  {
+    "width": 375,
+    "duration": 47.713310657596374,
+    "loop": true,
+    "noteWidth": 153.64535522460938,
+    "backgroundMargins": {
+      "left": 43.85844320400286,
+      "right": 331.0896040578515,
+      "top": 54.8905124740119,
+      "bottom": 600.2209424683285
+    },
+    "visibleNotesOutsideCabinet": [
+      3,
+      3
+    ],
+    "captionAudioStartsStops": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "duration": 47.713310657596374,
+    "loop": true,
+    "noteWidth": 159.82333374023438,
+    "backgroundMargins": {
+      "left": 51.20132699676914,
+      "right": 338.7819072809769,
+      "top": 54.38241377081808,
+      "bottom": 600.238258747611
+    },
+    "visibleNotesOutsideCabinet": [
+      5,
+      4
+    ],
+    "captionAudioStartsStops": true,
+    "errors": []
+  },
+  {
+    "width": 414,
+    "duration": 47.713310657596374,
+    "loop": true,
+    "noteWidth": 165.44129943847656,
+    "backgroundMargins": {
+      "left": 63.23398530861908,
+      "right": 350.7439233503588,
+      "top": 54.4883144630318,
+      "bottom": 600.2388163850072
+    },
+    "visibleNotesOutsideCabinet": [
+      4,
+      4
+    ],
+    "captionAudioStartsStops": true,
+    "errors": []
+  }
+]

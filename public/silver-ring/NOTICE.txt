@@ -41,3 +41,7 @@ The current breakthrough and jackpot MP3 clips are extracted from recordings sup
 by the user, who reported permission for web embedding and redistribution. These are
 not original synthesized sounds. Source hashes and trims: docs/qa/recorded-sounds/trims.json.
 Earlier statements about no commercial audio describe the earlier release only.
+
+2026-10-17 whisper update: user supplied audio/zawa.mp3 for playback while the
+bowl caption is visible. Existing community cup mark (/assets/unity-mark.webp)
+is reproduced on the project's fictional decorative notes.

@@ -35,6 +35,7 @@ export class AudioEngine {
 
   setMute(m) {
     this.muted = m;
+    if(m)this.setWhisper(false);
     if (this.master) this.master.gain.setTargetAtTime(m ? 0 : 0.85, this.ctx.currentTime, 0.05);
   }
 
@@ -229,25 +230,9 @@ export class AudioEngine {
     this.osc('sine', 900, 1400, t, 0.12, 0.02);
   }
 
-  zawa() {
-    if (!this.ctx || !this.gate2('zawa', 900)) return;
-    const c = this.ctx, t = c.currentTime;
-    const s = c.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true;
-    const f = c.createBiquadFilter(); f.type = 'bandpass';
-    f.frequency.setValueAtTime(900 + Math.random() * 500, t);
-    f.frequency.linearRampToValueAtTime(600, t + 1.2);
-    f.Q.value = 4;
-    const g = c.createGain();
-    g.gain.setValueAtTime(0, t);
-    // 5Hz 颤动的耳语脉冲
-    for (let i = 0; i < 6; i++) {
-      g.gain.linearRampToValueAtTime(0.028, t + i * 0.2 + 0.08);
-      g.gain.linearRampToValueAtTime(0.006, t + i * 0.2 + 0.2);
-    }
-    g.gain.linearRampToValueAtTime(0, t + 1.4);
-    s.connect(f); f.connect(g); g.connect(this.master);
-    s.start(t); s.stop(t + 1.5);
-  }
+  setWhisper(visible) { this.samples.setWhisper(visible&&!this.muted,this.ctx,this.master); }
+
+
 
   creak() {
     if (!this.ctx || !this.gate2('creak', 700)) return;

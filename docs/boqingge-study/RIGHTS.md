@@ -23,3 +23,7 @@ User reported permission for embedding/redistribution; no independent written gr
 was reviewed. See `RECORDED-AUDIO-AND-CABINET.md` and QA trim hashes.
 The current cabinet backplate is newly AI-generated original ornamental artwork;
 it replaces the previous coffee-mask graphic. No supplied manga image is embedded.
+
+User supplied `ざわざわ.mp3` on 2026-10-17 and requested its integration; deployed as
+`public/silver-ring/audio/zawa.mp3`. Decorative notes use the existing community cup
+mark (`public/assets/unity-mark.webp`), not the Unity game-engine trademark.

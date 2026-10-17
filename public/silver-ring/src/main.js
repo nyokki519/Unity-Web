@@ -83,8 +83,8 @@ const sim = new Sim((ev, d) => {
       break;
     case 'bowlenter':
       fx.spawnZawa();
-      if (d.tier === 1) { ui.big('第二皿…!', 'amber'); audio.zawa(); }
-      if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); audio.zawa(); fx.shake(0.015); }
+      if (d.tier === 1) { ui.big('第二皿…!', 'amber'); }
+      if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); fx.shake(0.015); }
       break;
     case 'rattle': audio.rattle(); fx.shake(0.006); break;
     case 'sink':
@@ -94,7 +94,7 @@ const sim = new Sim((ev, d) => {
         if (d.tier >= 1) slowmo(0.35, 0.6);
       } else {
         audio.sinkLose();
-        if (d.tier === 2) { ui.big('あと一歩…', 'gray-big', 1600); audio.zawa(); }
+        if (d.tier === 2) { ui.big('あと一歩…', 'gray-big', 1600); }
       }
       break;
     case 'swamp':
@@ -557,13 +557,14 @@ function frame(now) {
     else fx.setCamMode('WIDE');
     fx.setNeonMode(!S.reduce&&tension >= 2 ? 'tension' : 'idle');
   }
-  if (tension >= 2 && Math.random() < dt * 0.5) audio.zawa();
+
 
   // 经济显示
   S.display += (S.funds - S.display) * Math.min(1, dt * 5);
   document.getElementById('remainingVal').textContent=Math.floor(S.funds/CFG.eco.ballCost).toLocaleString('ja-JP');
   ui.setFunds(S.display, S.funds < CFG.eco.ballCost * 40);
   presentation.update(S,sim);
+  audio.setWhisper(!document.getElementById('bowlWhisper').hidden);
   statT += dt;
   if (statT > 0.25) {
     statT = 0;
@@ -580,6 +581,7 @@ function frame(now) {
   if(S.reduce){fx.shakeAmp=0;fx.mouse.x=fx.mouse.y=0;}
   fx.banknotesEnabled=S.banknotes;
   fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
+  refs.maskBackground();
   refs.composer.render();
 }
 

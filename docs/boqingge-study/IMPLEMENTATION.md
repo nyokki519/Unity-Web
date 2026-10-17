@@ -62,3 +62,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 2026-10-17修正：[再開ボタン・左右の背景紙幣・指定音源の取得状況](RESUME-RAIN-FIX.md)。
 
 最新の録音音源・盤面更新は [RECORDED-AUDIO-AND-CABINET.md](RECORDED-AUDIO-AND-CABINET.md) を参照。
+
+筐体外の紙幣表示と添付ざわざわ音は [VISIBLE-RAIN-ZAWA.md](VISIBLE-RAIN-ZAWA.md) を参照。

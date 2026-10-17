@@ -1,5 +1,5 @@
 // User-provided recordings, trimmed at documented boundaries. No autoplay.
-const SOURCES={breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot.mp3',import.meta.url).href};
+const SOURCES={zawa:new URL('../audio/zawa.mp3',import.meta.url).href,breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot.mp3',import.meta.url).href};
 export class RecordedSounds{
  constructor({fetcher=globalThis.fetch?.bind(globalThis)}={}){this.fetcher=fetcher;this.status='idle';this.buffers={};this.active={breakthrough:new Set(),jackpot:new Set()};this.playCount={breakthrough:0,jackpot:0};}
  preload(){
@@ -10,6 +10,11 @@ export class RecordedSounds{
   if(this.status==='ready')return Promise.resolve(true);if(this.preparing)return this.preparing;
   this.status='loading';
   this.preparing=this.preload().then(async bytes=>{const decoded=await Promise.all(bytes.map(async([role,data])=>[role,await ctx.decodeAudioData(data.slice(0))]));this.buffers=Object.fromEntries(decoded);this.status='ready';return true;}).catch(()=>{this.status='error';this.bytesPromise=null;return false;}).finally(()=>{this.preparing=null;});return this.preparing;
+ }
+ setWhisper(visible,ctx,destination){
+  if(!visible){if(this.whisper){this.whisper.source.stop();this.whisper.source.disconnect();this.whisper.gain.disconnect();this.whisper=null;}return;}
+  if(this.whisper||!this.buffers.zawa||ctx?.state!=='running')return;
+  const source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=this.buffers.zawa;source.loop=true;gain.gain.value=.32;source.connect(gain);gain.connect(destination);source.start();this.whisper={source,gain};
  }
  play(role,ctx,destination){
   const buffer=this.buffers[role],active=this.active[role];if(!buffer||!active||!ctx||ctx.state==='closed'||ctx.state==='suspended')return false;
