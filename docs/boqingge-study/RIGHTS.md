@@ -27,3 +27,8 @@ it replaces the previous coffee-mask graphic. No supplied manga image is embedde
 User supplied `ざわざわ.mp3` on 2026-10-17 and requested its integration; deployed as
 `public/silver-ring/audio/zawa.mp3`. Decorative notes use the existing community cup
 mark (`public/assets/unity-mark.webp`), not the Unity game-engine trademark.
+
+2026-10-18: Two user-supplied screen recordings were provided with instructions to
+extract second/third-stage audio. Only trimmed audio is included; source videos,
+YouTube UI, characters and thumbnails are not embedded. Source/output hashes are
+recorded in docs/qa/stage-sounds/trims.json.

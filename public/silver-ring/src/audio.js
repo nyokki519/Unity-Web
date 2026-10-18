@@ -154,7 +154,7 @@ export class AudioEngine {
       this.osc('square', 1900 - i * 300, null, t + i * 0.045, 0.03, 0.045);
   }
 
-  sinkWin(tier) { if(this.muted||!this.ctx)return false;if(this.samples.play('breakthrough',this.ctx,this.master))return true;return playBreakthrough(this,tier); }
+  sinkWin(tier) { if(this.muted||!this.ctx)return false;if(this.samples.play(tier===2?'jackpot':tier===1?'breakthrough2':'breakthrough',this.ctx,this.master))return true;return playBreakthrough(this,tier); }
 
   sinkLose() {
     if (!this.ctx) return;
@@ -232,6 +232,7 @@ export class AudioEngine {
 
   fanfare() {
     if (!this.ctx||this.muted) return;
+    if(this.samples.active.jackpot.size)return;
     if(this.samples.play('jackpot',this.ctx,this.master))return;
     const c = this.ctx, t = c.currentTime;
     // 冲击

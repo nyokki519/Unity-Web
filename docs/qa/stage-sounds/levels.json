@@ -1,0 +1,17 @@
+[
+  {
+    "file": "breakthrough.mp3",
+    "peak": 0.8440865874290466,
+    "rms": 0.19046585261821747
+  },
+  {
+    "file": "breakthrough-second-stage.mp3",
+    "peak": 0.2961369752883911,
+    "rms": 0.08660731464624405
+  },
+  {
+    "file": "jackpot-third-stage.mp3",
+    "peak": 0.5147529244422913,
+    "rms": 0.1411513239145279
+  }
+]

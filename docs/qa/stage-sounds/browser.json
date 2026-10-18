@@ -1,0 +1,16 @@
+{
+  "played": {
+    "breakthrough2": 1,
+    "breakthrough": 1,
+    "jackpot": 1
+  },
+  "durations": {
+    "breakthrough2": 3.13,
+    "zawa": 47.713310657596374,
+    "breakthrough": 1.6,
+    "jackpot": 11.44
+  },
+  "thirdActive": 1,
+  "errors": [],
+  "method": "Controlled real sink callbacks followed by jackpot event; not natural breakthrough odds."
+}

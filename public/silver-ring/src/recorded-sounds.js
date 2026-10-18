@@ -1,7 +1,7 @@
 // User-provided recordings, trimmed at documented boundaries. No autoplay.
-const SOURCES={zawa:new URL('../audio/zawa.mp3',import.meta.url).href,breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot.mp3',import.meta.url).href};
+const SOURCES={breakthrough2:new URL('../audio/breakthrough-second-stage.mp3',import.meta.url).href,zawa:new URL('../audio/zawa.mp3',import.meta.url).href,breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot-third-stage.mp3',import.meta.url).href};
 export class RecordedSounds{
- constructor({fetcher=globalThis.fetch?.bind(globalThis)}={}){this.fetcher=fetcher;this.status='idle';this.buffers={};this.active={breakthrough:new Set(),jackpot:new Set()};this.playCount={breakthrough:0,jackpot:0};}
+ constructor({fetcher=globalThis.fetch?.bind(globalThis)}={}){this.fetcher=fetcher;this.status='idle';this.buffers={};this.active={breakthrough2:new Set(),breakthrough:new Set(),jackpot:new Set()};this.playCount={breakthrough2:0,breakthrough:0,jackpot:0};}
  preload(){
   if(!this.bytesPromise)this.bytesPromise=Promise.all(Object.entries(SOURCES).map(async([role,url])=>{const response=await this.fetcher(url);if(!response.ok)throw Error(`Audio asset ${role}: ${response.status}`);return[role,await response.arrayBuffer()];}));
   return this.bytesPromise;

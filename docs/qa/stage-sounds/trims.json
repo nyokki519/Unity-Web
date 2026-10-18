@@ -1,0 +1,24 @@
+[
+  {
+    "role": "second-stage",
+    "source": "ScreenRecording_10-18-2026 11-54-06_1.mp4",
+    "start": 2.62,
+    "end": 5.75,
+    "seconds": 3.13,
+    "linearGain": 1,
+    "sourceSHA256": "3145f7db99a0a537b37ca39c2f7d38c9e68f7db2bd17322d95203b5e1b450ea5",
+    "asset": "public/silver-ring/audio/breakthrough-second-stage.mp3",
+    "assetSHA256": "37ae4a9f69d52dfdc79dd35a2239922823b3721c78344701fbea450185b7f2f7"
+  },
+  {
+    "role": "third-stage",
+    "source": "ScreenRecording_10-18-2026 11-56-09_1.mp4",
+    "start": 1.56,
+    "end": 13.0,
+    "seconds": 11.44,
+    "linearGain": 0.5,
+    "sourceSHA256": "70e1bcb38e552d8916325c5b8dd6f4dd444b168366b4248d33efcdeb181967d5",
+    "asset": "public/silver-ring/audio/jackpot-third-stage.mp3",
+    "assetSHA256": "efbf9218e98fffe9d8cb105ef09cb216454f3eb159b89eeaabb0b881b25f73da"
+  }
+]

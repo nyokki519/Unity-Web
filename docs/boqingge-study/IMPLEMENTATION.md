@@ -72,3 +72,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 自由視点発射・250発・送風初期ONは [FREE-CAMERA-FIRE.md](FREE-CAMERA-FIRE.md) を参照。
 
 最高画質の初期設定と検証は [ULTRA-QUALITY.md](ULTRA-QUALITY.md) を参照。
+
+段別録音の差替えは [STAGE-SOUNDS.md](STAGE-SOUNDS.md) を参照。

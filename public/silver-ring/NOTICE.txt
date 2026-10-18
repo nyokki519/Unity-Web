@@ -48,3 +48,8 @@ is reproduced on the project's fictional decorative notes.
 
 Current background decoration: procedurally drawn gold coins carrying the existing
 community cup mark replace the earlier fictional notes. No external coin asset added.
+
+2026-10-18 stage audio update: two additional user-supplied recordings provide the
+second-stage breakthrough and third-stage winning-aperture sounds. First-stage
+breakthrough.mp3 is unchanged. Trim intervals, source/output hashes and amplitude
+adjustment are documented in docs/qa/stage-sounds/trims.json.
