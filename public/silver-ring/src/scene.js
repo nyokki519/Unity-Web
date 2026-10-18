@@ -1,3 +1,4 @@
+import{renderProfile}from'./render-profile.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」场景构建 —— 机体 / 盘面 / 三段皿 / 霓虹 / 材质
@@ -37,7 +38,7 @@ function goldMat(rough = 0.32) {
 export const TOUCH = /[?&]touch=1/.test(location.search) || (typeof matchMedia === 'function'
   && (matchMedia('(pointer: coarse)').matches
     || (navigator.maxTouchPoints > 0 && !matchMedia('(hover: hover)').matches)));
-const DPR_CAP = [1.0, 1.5, 4];
+
 
 // UnrealBloomPass 自带的高斯核取 sigma = kernelRadius,尾部权重还有中心的 80%,
 // 等于一个硬截断的方形盒滤波:碰上过曝像素(钉子闪光)糊出来的是一块硬边方块。
@@ -53,9 +54,10 @@ function roundBloomKernel(bloom) {
 // ============================================================
 export function buildScene(canvas,layout=buildLayout()) {
   let qual = 2;
+  const profile=()=>renderProfile({mobile:TOUCH,quality:qual,deviceRatio:devicePixelRatio,maxSamples:renderer.capabilities.maxSamples});
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP[qual]));
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias: !TOUCH, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(profile().pixelRatio);
   renderer.setSize(innerWidth, innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -101,7 +103,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   const key = new THREE.SpotLight(0xffdcb0, 48, 0, 0.52, 0.65, 1.8);
   key.position.set(2.4, 4.4, 3.0);
   key.castShadow = true;
-  key.shadow.mapSize.set(4096,4096);
+  key.shadow.mapSize.set(profile().shadowSize,profile().shadowSize);
   key.shadow.bias = -0.0004;
   const keyTgt = new THREE.Object3D(); keyTgt.position.set(0, 1.4, 0);
   scene.add(keyTgt); key.target = keyTgt;
@@ -857,7 +859,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   // ---------- 后期 ----------
   // 高 DPR 下缓冲本身就是超采样,再叠 4× MSAA 只是白烧一倍填充率
   const rt = new THREE.WebGLRenderTarget(innerWidth, innerHeight,
-    { samples: qual >= 2 ? Math.min(4,renderer.capabilities.maxSamples) : 0, type: THREE.HalfFloatType });
+    { samples: profile().samples, type: THREE.HalfFloatType });
   const composer = new EffectComposer(renderer, rt);
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.35, 1.2);
@@ -896,13 +898,13 @@ export function buildScene(canvas,layout=buildLayout()) {
   // 掉帧时逐级降档(手机上先砍分辨率,再砍阴影)
   function setQuality(l) {
     qual = Math.max(0, Math.min(2, l));
-    const ratio=Math.min(devicePixelRatio,DPR_CAP[qual]);
+    const ratio=profile().pixelRatio;
     if(renderer.getPixelRatio()!==ratio)renderer.setPixelRatio(ratio);
     key.castShadow = qual >= 1;
     renderer.shadowMap.type=qual>=2?THREE.PCFSoftShadowMap:THREE.PCFShadowMap;
-    const shadowSize=qual>=2?4096:1024;
+    const shadowSize=profile().shadowSize;
     if(key.shadow.mapSize.x!==shadowSize){key.shadow.mapSize.set(shadowSize,shadowSize);key.shadow.map?.dispose();key.shadow.map=null;}
-    const samples=qual>=2?Math.min(4,renderer.capabilities.maxSamples):0;
+    const samples=profile().samples;
     for(const target of [composer.renderTarget1,composer.renderTarget2])if(target.samples!==samples){target.dispose();target.samples=samples;}
     bloom.strength = qual >= 1 ? 0.22 : 0.15;
     requestResize();

@@ -1,0 +1,3 @@
+import test from'node:test';import assert from'node:assert/strict';import{renderProfile}from'../public/silver-ring/src/render-profile.js';
+test('mobile high retains 2x detail without multisampled HDR targets or oversized shadows',()=>{assert.deepEqual(renderProfile({mobile:true,quality:2,deviceRatio:3}),{pixelRatio:2,samples:0,shadowSize:1024})});
+test('desktop high and low options retain their distinct profiles',()=>{assert.deepEqual(renderProfile({deviceRatio:3}),{pixelRatio:3,samples:4,shadowSize:4096});assert.deepEqual(renderProfile({mobile:true,quality:0,deviceRatio:3}),{pixelRatio:1,samples:0,shadowSize:1024})});

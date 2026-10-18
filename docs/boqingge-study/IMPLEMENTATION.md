@@ -76,3 +76,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 段別録音の差替えは [STAGE-SOUNDS.md](STAGE-SOUNDS.md) を参照。
 
 看板・描画リセット対策は [SIGNS-AND-RESIZE.md](SIGNS-AND-RESIZE.md) を参照。
+
+スマホ向けの高精細安定プロファイルは [MOBILE-STABILITY.md](MOBILE-STABILITY.md) を参照。

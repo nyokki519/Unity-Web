@@ -12,7 +12,7 @@ export function createBanknoteRain(){
   note.style.setProperty('--lane',String(Math.floor(i/2)%3));
   for(const [key,value] of Object.entries({'--depth-from':`${-150+(i%5)*45}px`,'--depth-to':`${-90+(i%4)*70}px`,'--spin-time':`${3.8+(i%5)*.7}s`,'--axis-x':String(.3+(i%4)*.23),'--axis-y':String(.7+(i%3)*.17),'--axis-z':String(.15+(i%5)*.08),'--tilt':`${i*37%80-40}deg`,'--drift-from':`${i%3*8-12}px`,'--drift-to':`${i%2?12:-14}px`}))note.style.setProperty(key,value);note.style.setProperty('--duration',`${18+(i%4)*2}s`);note.style.setProperty('--delay',`${-i*1.9}s`);const coin=document.createElement('div');coin.className='unity-coin';
   for(const side of ['front','back']){const face=document.createElement('div');face.className=`coin-face coin-${side}`;face.style.backgroundImage=`url("${image}")`;coin.append(face);}
-  for(let j=0;j<24;j++){const rim=document.createElement('div');rim.className='coin-rim';rim.style.setProperty('--rim-angle',`${j*15}deg`);coin.append(rim);}
+  for(let j=0;j<16;j++){const rim=document.createElement('div');rim.className='coin-rim';rim.style.setProperty('--rim-angle',`${j*22.5}deg`);coin.append(rim);}
   const flight=document.createElement('div');flight.className='coin-flight';flight.append(coin);note.append(flight);layer.append(note);
  }
  document.body.prepend(layer);
@@ -23,10 +23,12 @@ export function createBanknoteRain(){
    image=cv.toDataURL();for(const face of layer.querySelectorAll('.coin-face'))face.style.backgroundImage=`url("${image}")`;layer.dataset.icon='ready';
   };mark.src=new URL('../../assets/unity-mark.webp',import.meta.url).href;
  }
+ let lastClip='';
  function excludeRect({left,right,top,bottom},width,height){
-  const l=Math.max(0,Math.min(width,left-8)),r=Math.max(0,Math.min(width,right+8)),t=Math.max(0,Math.min(height,top-8)),b=Math.max(0,Math.min(height,bottom+8));
+  const l=Math.round(Math.max(0,Math.min(width,left-8))),r=Math.round(Math.max(0,Math.min(width,right+8))),t=Math.round(Math.max(0,Math.min(height,top-8))),b=Math.round(Math.max(0,Math.min(height,bottom+8)));
   // Full background with a hole covering the projected cabinet. Never crosses it.
-  layer.style.clipPath=`polygon(evenodd,0px 0px,${width}px 0px,${width}px ${height}px,0px ${height}px,0px 0px,${l}px ${t}px,${l}px ${b}px,${r}px ${b}px,${r}px ${t}px,${l}px ${t}px)`;
+  const clip=`polygon(evenodd,0px 0px,${width}px 0px,${width}px ${height}px,0px ${height}px,0px 0px,${l}px ${t}px,${l}px ${b}px,${r}px ${b}px,${r}px ${t}px,${l}px ${t}px)`;
+  if(clip!==lastClip){layer.style.clipPath=clip;lastClip=clip;}
   layer.dataset.exclusion=JSON.stringify({left:l,right:r,top:t,bottom:b});
  }
 

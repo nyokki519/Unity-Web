@@ -62,7 +62,7 @@ body:has(#cameraControls:not([hidden])) #susWrap{bottom:288px}
 .coin-flight{width:100%;height:100%;transform-style:preserve-3d}
 .coin-face{position:absolute;inset:0;border-radius:50%;background-size:100% 100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:inset 0 0 0 2px #e1b44c}
 .coin-front{transform:translateZ(3px)}.coin-back{transform:rotateY(180deg) translateZ(3px)}
-.coin-rim{position:absolute;left:50%;top:50%;width:calc(var(--coin-size)*.132);height:6px;background:repeating-linear-gradient(90deg,#e2b850 0px,#8e6217 1px,#d5a83b 2px,#ffdf7e 3px);transform:translate(-50%,-50%) rotateZ(var(--rim-angle)) translateY(calc(var(--coin-size)*.485)) rotateX(90deg);backface-visibility:visible}
+.coin-rim{position:absolute;left:50%;top:50%;width:calc(var(--coin-size)*.196);height:6px;background:repeating-linear-gradient(90deg,#e2b850 0px,#8e6217 1px,#d5a83b 2px,#ffdf7e 3px);transform:translate(-50%,-50%) rotateZ(var(--rim-angle)) translateY(calc(var(--coin-size)*.485)) rotateX(90deg);backface-visibility:visible}
 body:not(.reduced) .unity-coin{animation:coin-tumble var(--spin-time) linear infinite!important;animation-delay:var(--delay)!important}
 .reduced .unity-coin{animation:coin-tumble 24s linear infinite!important;animation-delay:var(--delay)!important}
 body:not(.reduced) .coin-flight{animation:coin-drift var(--duration) linear infinite!important;animation-delay:var(--delay)!important}
