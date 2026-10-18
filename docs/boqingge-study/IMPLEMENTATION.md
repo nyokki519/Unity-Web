@@ -74,3 +74,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 最高画質の初期設定と検証は [ULTRA-QUALITY.md](ULTRA-QUALITY.md) を参照。
 
 段別録音の差替えは [STAGE-SOUNDS.md](STAGE-SOUNDS.md) を参照。
+
+看板・描画リセット対策は [SIGNS-AND-RESIZE.md](SIGNS-AND-RESIZE.md) を参照。

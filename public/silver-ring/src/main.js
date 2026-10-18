@@ -577,6 +577,7 @@ function frame(now) {
 
   if(S.reduce){fx.shakeAmp=0;fx.mouse.x=fx.mouse.y=0;}
   fx.banknotesEnabled=S.banknotes;
+  refs.applyPendingResize();
   fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
   refs.maskBackground();
   refs.composer.render();

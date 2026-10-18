@@ -460,7 +460,6 @@ export class FX {
     R.sheen.material.map.offset.x = (t * 0.018) % 1;
 
     // ---- 霓虹 ----
-    R.gateLabel.visible = !this.detailView; // Hide only the decorative sign in the manual bowl closeup.
     const mode = this.neonMode;
     R.neonMats.forEach((m, i) => {
       if (mode === 'jackpot') {

@@ -377,21 +377,6 @@ export function buildScene(canvas,layout=buildLayout()) {
     new THREE.MeshBasicMaterial({ color: new THREE.Color(4, 3, 1), toneMapped: false, transparent: true, opacity: 0 }));
   gateG.add(gateFlash);
   boardG.add(gateG);
-  const gateLabel = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.15, 0.035),
-    new THREE.MeshBasicMaterial({
-      map: canvasTex(512, 120, (g, w, h) => {
-        g.fillStyle = '#183a2c'; g.fillRect(0, 0, w, h);
-        g.strokeStyle = '#d9ae54'; g.lineWidth = 6; g.strokeRect(4, 4, w - 8, h - 8);
-        g.fillStyle = '#ffd970'; g.font = 'bold 62px "Hiragino Mincho ProN", serif';
-        g.textAlign = 'center'; g.textBaseline = 'middle';
-        g.fillText('ひ ら く 門', w / 2, h / 2 + 4);
-      }), toneMapped: false,
-    })
-  );
-  gateLabel.position.set(0, 0.952, 0.052);
-  boardG.add(gateLabel);
-
   // ---------- 三段皿 ----------
   const bowlRefs = [];
   CFG.bowls.list.forEach((bw, bi) => {
@@ -777,7 +762,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     m.position.set(x, 1.72, 0.205);
     machineG.add(m);
   };
-  placard('一玉百枚', -0.695);
+  placard('一玉二百枚', -0.695);
   placard('三段突破', 0.695);
 
   // ---------- 操作台细节:托盘 / 珠堆 / 手柄 ----------
@@ -887,8 +872,11 @@ export function buildScene(canvas,layout=buildLayout()) {
   // 右键留给发射(自由视角下左键要转镜头,发射只能挂右键 / 单击),平移改用中键
   controls.mouseButtons.RIGHT = null;
 
+  let resizeDirty=false,lastWidth=0,lastHeight=0,lastRatio=0;
   function resize() {
-    const w = innerWidth, h = innerHeight;
+    const w = innerWidth, h = innerHeight,ratio=renderer.getPixelRatio();
+    if(w===lastWidth&&h===lastHeight&&ratio===lastRatio)return;
+    lastWidth=w;lastHeight=h;lastRatio=ratio;
     camera.aspect = w / h;
     camera.fov = fitFov(camera.aspect);
     camera.updateProjectionMatrix();
@@ -899,14 +887,17 @@ export function buildScene(canvas,layout=buildLayout()) {
     composer.setSize(w, h);
   }
   resize();   // 初始化时也得走一遍:rt 是按 CSS px 建的,不同步 DPR 的话整个画面会按 1× 渲染再放大
-  addEventListener('resize', resize);
-  addEventListener('orientationchange', () => setTimeout(resize, 260));
-  if (window.visualViewport) visualViewport.addEventListener('resize', resize);
+  const requestResize=()=>{resizeDirty=true;};
+  function applyPendingResize(){if(resizeDirty){resizeDirty=false;resize();}}
+  addEventListener('resize', requestResize);
+  addEventListener('orientationchange', () => setTimeout(requestResize, 260));
+  if (window.visualViewport) visualViewport.addEventListener('resize', requestResize);
 
   // 掉帧时逐级降档(手机上先砍分辨率,再砍阴影)
   function setQuality(l) {
     qual = Math.max(0, Math.min(2, l));
-    renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP[qual]));
+    const ratio=Math.min(devicePixelRatio,DPR_CAP[qual]);
+    if(renderer.getPixelRatio()!==ratio)renderer.setPixelRatio(ratio);
     key.castShadow = qual >= 1;
     renderer.shadowMap.type=qual>=2?THREE.PCFSoftShadowMap:THREE.PCFShadowMap;
     const shadowSize=qual>=2?4096:1024;
@@ -914,7 +905,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     const samples=qual>=2?Math.min(4,renderer.capabilities.maxSamples):0;
     for(const target of [composer.renderTarget1,composer.renderTarget2])if(target.samples!==samples){target.dispose();target.samples=samples;}
     bloom.strength = qual >= 1 ? 0.22 : 0.15;
-    resize();
+    requestResize();
     return qual;
   }
 
@@ -922,12 +913,12 @@ export function buildScene(canvas,layout=buildLayout()) {
     THREE, renderer, scene, camera, composer, bloom, controls, banknoteRain, maskBackground,
     machineG, boardG, boardTex,
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
-    bowlRefs, pkRingMat, pocketG, gateLabel,
+    bowlRefs, pkRingMat, pocketG,
     swampUniforms, bubbleIM, sheen,
     neonMats, bulbIM, bulbN,
     handleG, hKnobG, ballsIM,
     dust, dustGeo, dustVel, dustN,
     alcoveLight, swampLight, key,
-    resize, setQuality, quality: () => qual, touch: TOUCH,
+    resize, applyPendingResize, setQuality, quality: () => qual, touch: TOUCH,
   };
 }
