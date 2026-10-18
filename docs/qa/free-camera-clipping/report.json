@@ -1,0 +1,8 @@
+{
+  "freeCameraInput": true,
+  "stressPoses": 50,
+  "cameraZ": 0.55,
+  "minDistance": 1.15,
+  "pan": false,
+  "twoFingerGestureStaysFree": true
+}

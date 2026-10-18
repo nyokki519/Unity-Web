@@ -1,0 +1,4 @@
+import test from'node:test';import assert from'node:assert/strict';import{Vector3,Matrix4,PerspectiveCamera}from'../public/vendor/three/three.module.js';import{projectCabinet}from'../public/silver-ring/src/project-cabinet.js';
+const corners=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-.3,.3])corners.push(new Vector3(x,y,z));
+test('projection crossing near plane conservatively masks the viewport',()=>{const camera=new PerspectiveCamera(50,1,.05,40);camera.position.z=.1;camera.updateMatrixWorld();assert.deepEqual(projectCabinet(corners,new Matrix4(),camera,390,844),{left:0,right:390,top:0,bottom:844})});
+test('outside view returns finite ordered projection',()=>{const c=new PerspectiveCamera(50,1,.05,40);c.position.z=3;c.updateMatrixWorld();const r=projectCabinet(corners,new Matrix4(),c,390,844);assert.ok(Object.values(r).every(Number.isFinite));assert.ok(r.left<r.right&&r.top<r.bottom)});

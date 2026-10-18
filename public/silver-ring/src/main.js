@@ -154,7 +154,7 @@ function fireOne() {
   return fire(S.randPow ? sim.randomPower() : S.memory + (launchRng() - 0.5) * 0.03);
 }
 
-const presentation=mountPresentation({previewSound:()=>{audio.sinkWin(0);ui.toast(S.muted?'音をONにすると突破音を試せます。':'突破音の試聴です。');},fire:fireOne,setPower:value=>{S.memory=value;ui.setPowerMark(value);},setCamera:value=>{S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);S.manualCamera=value;},setAngle:(axis,delta)=>{S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);S[axis]=Math.max(axis==='cameraPitch'?35:-70,Math.min(axis==='cameraPitch'?75:70,S[axis]+delta));}});
+const presentation=mountPresentation({previewSound:()=>{audio.sinkWin(0);ui.toast(S.muted?'音をONにすると突破音を試せます。':'突破音の試聴です。');},fire:fireOne,setPower:value=>{S.memory=value;ui.setPowerMark(value);},setCamera:value=>{leaveFreeCamera();S.manualCamera=value;},setAngle:(axis,delta)=>{leaveFreeCamera();S[axis]=Math.max(axis==='cameraPitch'?35:-70,Math.min(axis==='cameraPitch'?75:70,S[axis]+delta));}});
 
 // ---------- 输入 ----------
 function startCharge() {
@@ -171,14 +171,21 @@ function releaseCharge() {
   fire(S.chargeT);
 }
 function panView(d) {
+  if (S.freeCam) return;
   if(S.manualCamera.startsWith('cradle')){S.freeCam=false;refs.controls.enabled=false;S.cameraPitch=Math.max(35,Math.min(75,S.cameraPitch+d*80));return;}
   if (S.freeCam) return;
   fx.viewOffTarget = Math.max(-0.5, Math.min(0.95, fx.viewOffTarget + d));
 }
+function leaveFreeCamera(){
+  if(!S.freeCam)return;
+  fx.curPos.copy(refs.camera.position);fx.curTgt.copy(refs.controls.target);
+  S.freeCam = false;refs.controls.enabled = false;ui.setCamTag(false);
+}
 function toggleCam() {
   S.freeCam = !S.freeCam;
   refs.controls.enabled = S.freeCam;
-  if (S.freeCam) refs.controls.target.copy(fx.curTgt);
+  if (S.freeCam) {refs.controls.target.copy(fx.curTgt);refs.controls.update();}
+  else {fx.curPos.copy(refs.camera.position);fx.curTgt.copy(refs.controls.target);}
   S.charging = false; S.holdFire = false; tap = null;
   ui.setCamTag(S.freeCam);
   audio.uiBlip();
@@ -621,7 +628,7 @@ function publishState(){document.body.dataset.phase=S.phase;if(parent!==window)p
 function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';panHold=0;audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';last=performance.now();audio.resume();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.source!=='silver-shell')return;const {type,value}=e.data;if(type==='setPaused'&&typeof value==='boolean')pauseGame(value);if(type==='pause')pauseGame(S.phase!=='paused');if(type==='suspend')pauseGame(true);if(type==='power'&&Number.isFinite(value)){S.memory=Math.max(.02,Math.min(1,value/100));ui.setPowerMark(S.memory);}
  if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';S.degrade=0;refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
- if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value)){S.manualCamera=value;S.freeCam=false;refs.controls.enabled=false;ui.setCamTag(false);}if(type==='banknotes'){S.banknotes=!!value;refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}});
+ if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value)){S.manualCamera=value;leaveFreeCamera();}if(type==='banknotes'){S.banknotes=!!value;refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}});
 document.getElementById('resumeGame').addEventListener('click',()=>pauseGame(false));
 addEventListener('blur',()=>{if(parent===window)pauseGame(true);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame(true);});

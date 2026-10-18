@@ -1,3 +1,4 @@
+import{projectCabinet}from'./project-cabinet.js';
 import{renderProfile}from'./render-profile.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
@@ -848,12 +849,11 @@ export function buildScene(canvas,layout=buildLayout()) {
   machineG.updateWorldMatrix(true,true);
   const cabinetBounds=new THREE.Box3().setFromObject(machineG),cabinetCorners=[];
   for(const x of [cabinetBounds.min.x,cabinetBounds.max.x])for(const y of [cabinetBounds.min.y,cabinetBounds.max.y])for(const z of [cabinetBounds.min.z,cabinetBounds.max.z])cabinetCorners.push(new THREE.Vector3(x,y,z));
-  const projected=new THREE.Vector3();
   function maskBackground(){
-   camera.updateMatrixWorld();machineG.updateWorldMatrix(true,false);let left=Infinity,right=-Infinity,top=Infinity,bottom=-Infinity;
-   for(const corner of cabinetCorners){projected.copy(corner).applyMatrix4(machineG.matrixWorld).project(camera);const x=(projected.x+1)*innerWidth/2,y=(1-projected.y)*innerHeight/2;left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
-   banknoteRain.excludeRect({left,right,top,bottom},innerWidth,innerHeight);
+   camera.updateMatrixWorld();machineG.updateWorldMatrix(true,false);
+   banknoteRain.excludeRect(projectCabinet(cabinetCorners,machineG.matrixWorld,camera,innerWidth,innerHeight),innerWidth,innerHeight);
   }
+
 
 
   // ---------- 后期 ----------
@@ -870,6 +870,10 @@ export function buildScene(canvas,layout=buildLayout()) {
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 1.55, 0);
   controls.enableDamping = true;
+  controls.enablePan=false;
+  controls.minDistance=1.15;controls.maxDistance=7;
+  controls.minAzimuthAngle=-Math.PI/3;controls.maxAzimuthAngle=Math.PI/3;
+  controls.minPolarAngle=Math.PI/9;controls.maxPolarAngle=Math.PI*.47;
   controls.enabled = false;
   // 右键留给发射(自由视角下左键要转镜头,发射只能挂右键 / 单击),平移改用中键
   controls.mouseButtons.RIGHT = null;

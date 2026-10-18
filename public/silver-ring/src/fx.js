@@ -564,6 +564,8 @@ export class FX {
       R.camera.lookAt(this._v);
     } else {
       R.controls.update();
+      // Keep the lens in front of cabinet surfaces, including after damping.
+      if(R.camera.position.z<.55){R.camera.position.z=.55;R.camera.lookAt(R.controls.target);}
     }
   }
 }

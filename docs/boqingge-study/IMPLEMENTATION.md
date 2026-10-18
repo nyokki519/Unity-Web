@@ -78,3 +78,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 看板・描画リセット対策は [SIGNS-AND-RESIZE.md](SIGNS-AND-RESIZE.md) を参照。
 
 スマホ向けの高精細安定プロファイルは [MOBILE-STABILITY.md](MOBILE-STABILITY.md) を参照。
+
+自由視点の2本指操作・内部侵入・視点復帰は [FREE-CAMERA-STABILITY.md](FREE-CAMERA-STABILITY.md) を参照。
