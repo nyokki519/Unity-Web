@@ -80,3 +80,5 @@ Node.js24以上で `npm ci --ignore-scripts`、`npm start`。`http://localhost:3
 スマホ向けの高精細安定プロファイルは [MOBILE-STABILITY.md](MOBILE-STABILITY.md) を参照。
 
 自由視点の2本指操作・内部侵入・視点復帰は [FREE-CAMERA-STABILITY.md](FREE-CAMERA-STABILITY.md) を参照。
+
+筐体消失の再現・負のフレーム時刻・描画経路の修正は [OPAQUE-FRAMES-AND-CLOCK.md](OPAQUE-FRAMES-AND-CLOCK.md) を参照。

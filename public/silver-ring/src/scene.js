@@ -57,7 +57,9 @@ export function buildScene(canvas,layout=buildLayout()) {
   let qual = 2;
   const profile=()=>renderProfile({mobile:TOUCH,quality:qual,deviceRatio:devicePixelRatio,maxSamples:renderer.capabilities.maxSamples});
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias: !TOUCH, powerPreference: 'high-performance' });
+  const context=canvas.getContext('webgl2',{alpha:false,preserveDrawingBuffer:true,antialias:!TOUCH,premultipliedAlpha:false,powerPreference:'high-performance'});
+  if(!context)throw new Error('WebGL2を開始できませんでした');
+  const renderer = new THREE.WebGLRenderer({ canvas, context, alpha:false, preserveDrawingBuffer:true, antialias: !TOUCH, powerPreference: 'high-performance' });
   renderer.setPixelRatio(profile().pixelRatio);
   renderer.setSize(innerWidth, innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -66,7 +68,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   renderer.shadowMap.type = qual >= 2 ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
 
   const scene = new THREE.Scene();
-  scene.background = null;renderer.setClearColor(0x101b17,0);
+  scene.background = new THREE.Color(0x101b17);renderer.setClearColor(0x101b17,1);
   scene.fog = new THREE.FogExp2(0x101b17, 0.04);
 
   // 明亮摄影棚环境:暖白主光 + 绯红/金条灯点缀 + 沼绿背光

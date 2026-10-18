@@ -6,8 +6,8 @@ OUT=Path('docs/qa/resume-rain');OUT.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':390,'height':650});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.goto('http://127.0.0.1:3461/?bonus=jackpot&seed=rain');f=page.frame_locator('iframe');f.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=60000);child=page.frames[1]
- assert child.evaluate('SILVER_GAME.refs.renderer.getContext().getContextAttributes().alpha') is True
- assert child.evaluate('SILVER_GAME.refs.scene.background===null') is True
+ assert child.evaluate('SILVER_GAME.refs.renderer.getContext().getContextAttributes().alpha') is False
+ assert child.evaluate('SILVER_GAME.refs.scene.background.isColor') is True
  child.wait_for_function("()=>document.querySelectorAll('.unity-note').length===14")
  def positions():return child.evaluate("()=>['left','right'].map(side=>[...document.querySelectorAll('.unity-note[data-side='+side+']')].map(n=>{const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}}))")
  a=positions();child.wait_for_timeout(1200);c=positions();moves=[median(abs(x['y']-y['y']) for x,y in zip(a[i],c[i]) if abs(x['y']-y['y'])<325) for i in range(2)];assert all(m>20 for m in moves),moves

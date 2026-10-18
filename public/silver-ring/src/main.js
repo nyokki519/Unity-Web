@@ -1,3 +1,5 @@
+import{frameDelta}from'./frame-time.js';
+import{renderFrame}from'./render-frame.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」THE BOG —— 主控制器
@@ -443,12 +445,12 @@ function checkGameOver() {
 }
 
 // ---------- 主循环 ----------
-let last = performance.now();
+let last = null;
 let statT = 0, goT = 0, fpsT = 0, fpsN = 0;
 
 function frame(now) {
   requestAnimationFrame(frame);
-  let dt = Math.min(0.05, (now - last) / 1000);
+  let dt = frameDelta(now,last);
   last = now;
   if(S.phase==='paused'||document.hidden)return;
 
@@ -587,7 +589,7 @@ function frame(now) {
   refs.applyPendingResize();
   fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
   refs.maskBackground();
-  refs.composer.render();
+  refs.renderMode=renderFrame(refs,{mobile:TOUCH,freeCamera:S.freeCam});
 }
 
 // ---------- 启动 ----------
