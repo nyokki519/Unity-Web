@@ -48,7 +48,7 @@ export const CFG = {
   },
 
   // 中央「命の入口」(最终判定线,チューリップ正下方)
-  gate: { y: 1.0, halfW: 0.026 },
+  gate: { y: 1.0, halfW: 0.022 },
 
   // 大回転盤 ×2(原作的可動役物:盘面内旋转的大圆盘,带凸钉)
   discs: [
@@ -59,7 +59,7 @@ export const CFG = {
 
   // 電動チューリップ(随机开闭的双翼 + 店方遥控ブロック)
   shutter: {
-    y: 1.115, halfW: 0.055, wingLen: 0.052,
+    y: 1.115, halfW: 0.048, wingLen: 0.052,
     openA: 2.0, closedA: 0.17, speed: 10,     // 翼角(rad)与基准角速度
     openDur: [1.0, 2.4], closedDur: [1.2, 3.0],  // 长相(慢悠悠)
     shortDur: [0.22, 0.65], pShort: 0.38,        // 短促假动作的时长与混入概率

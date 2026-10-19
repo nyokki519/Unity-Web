@@ -375,10 +375,10 @@ export function buildScene(canvas,layout=buildLayout()) {
   // ---------- 入口(命の入口) ----------
   const gateG = new THREE.Group();
   gateG.position.set(0, CFG.gate.y, 0.03);
-  const gateRing = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.004, 8, 24),
+  const gateRing = new THREE.Mesh(new THREE.TorusGeometry(CFG.gate.halfW + 0.010, 0.004, 8, 24),
     new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 1.5, 0.4), toneMapped: false, transparent: true, opacity: 0.85 }));
   gateG.add(gateRing);
-  const gateFlash = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.006, 8, 24),
+  const gateFlash = new THREE.Mesh(new THREE.TorusGeometry(CFG.gate.halfW + 0.010, 0.006, 8, 24),
     new THREE.MeshBasicMaterial({ color: new THREE.Color(4, 3, 1), toneMapped: false, transparent: true, opacity: 0 }));
   gateG.add(gateFlash);
   boardG.add(gateG);
@@ -516,7 +516,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   const E = entryFlyPts();
   const entryCurve = new THREE.CubicBezierCurve3(...E.fly.map(p => new THREE.Vector3(p[0], p[1], p[2])));
   boardG.add(railGuide(entryCurve, { trimY: E.fly[3][1] + 0.020 }));
-  const inRing = new THREE.Mesh(new THREE.TorusGeometry(0.032, 0.004, 8, 20), goldMat(0.3));
+  const inRing = new THREE.Mesh(new THREE.TorusGeometry(CFG.gate.halfW + 0.008, 0.004, 8, 20), goldMat(0.3));
   inRing.position.set(0, CFG.gate.y, CFG.board.ballZ);
   boardG.add(inRing);
 
