@@ -1,0 +1,61 @@
+{
+  "conditions": {
+    "seeds": 1000,
+    "seedStart": 0,
+    "netShotBudget": 250,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0.32,
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240
+  },
+  "summary": [
+    {
+      "scale": 1,
+      "runs": 1000,
+      "winningRuns": 655,
+      "winningRunRate": 0.655,
+      "winningRun95CI": [
+        0.6249942093571865,
+        0.6838194955122914
+      ],
+      "shots": 250000,
+      "gates": 50954,
+      "gateRate": 0.203816,
+      "jackpots": 1083,
+      "remaining": 0
+    },
+    {
+      "scale": 0.5,
+      "runs": 1000,
+      "winningRuns": 537,
+      "winningRunRate": 0.537,
+      "winningRun95CI": [
+        0.5060124890263216,
+        0.5677043308457475
+      ],
+      "shots": 250000,
+      "gates": 34408,
+      "gateRate": 0.137632,
+      "jackpots": 757,
+      "remaining": 0
+    }
+  ],
+  "pairedDifference": {
+    "newMinusOld": -0.118,
+    "approximate95CI": [
+      -0.16123399981889616,
+      -0.07476600018110383
+    ],
+    "oldOnly": 309,
+    "newOnly": 191
+  },
+  "notes": [
+    "Fixed power 0.45, air ON 0.32, interference OFF; results do not cover all player strategies.",
+    "Confidence intervals describe Monte Carlo sampling uncertainty, not model realism.",
+    "Shared seed does not preserve ball-by-ball random draws after trajectories diverge.",
+    "250 net shots are completed even after jackpot."
+  ]
+}
