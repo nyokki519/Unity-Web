@@ -61,6 +61,7 @@ export const CFG = {
   shutter: {
     y: 1.115, halfW: 0.048, wingLen: 0.052,
     openA: 2.0, closedA: 0.17, speed: 10,     // 翼角(rad)与基准角速度
+    openTimeScale: 0.5, // 開放時間だけ半分。閉鎖時間・開閉速度は維持
     openDur: [1.0, 2.4], closedDur: [1.2, 3.0],  // 长相(慢悠悠)
     shortDur: [0.22, 0.65], pShort: 0.38,        // 短促假动作的时长与混入概率
     speedVar: [0.5, 1.7],                        // 每次开合角速度随机倍率

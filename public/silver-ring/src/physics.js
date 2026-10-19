@@ -226,9 +226,9 @@ export class Sim {
   // 开/闭时长:短促假动作与慢悠悠长相双峰混合,节奏不可预测
   _shutterDur(open) {
     const sh = CFG.shutter;
-    if (this.rand() < sh.pShort) return sh.shortDur[0] + this.rand() * (sh.shortDur[1] - sh.shortDur[0]);
-    const d = open ? sh.openDur : sh.closedDur;
-    return d[0] + this.rand() * (d[1] - d[0]);
+    const d = this.rand() < sh.pShort ? sh.shortDur : (open ? sh.openDur : sh.closedDur);
+    const duration = d[0] + this.rand() * (d[1] - d[0]);
+    return duration * (open ? sh.openTimeScale : 1);
   }
 
   stepShutter(dt) {
