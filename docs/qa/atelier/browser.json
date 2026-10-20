@@ -1,0 +1,35 @@
+[
+  {
+    "width": 375,
+    "errors": [],
+    "shot": true,
+    "pause": true,
+    "visibility": true,
+    "retry": true,
+    "opaque": true,
+    "results": 0,
+    "holdTimerRegression": true
+  },
+  {
+    "width": 390,
+    "errors": [],
+    "shot": true,
+    "pause": true,
+    "visibility": true,
+    "retry": true,
+    "opaque": true,
+    "results": 0,
+    "holdTimerRegression": false
+  },
+  {
+    "width": 414,
+    "errors": [],
+    "shot": true,
+    "pause": true,
+    "visibility": true,
+    "retry": true,
+    "opaque": true,
+    "results": 0,
+    "holdTimerRegression": false
+  }
+]

@@ -9,7 +9,7 @@ export function home({create,join,resume,session,bonus}){
  const options=el('div','sample-options');options.append(el('p','','A　いつもの一杯'),el('p','','B　初めてのメニュー'));card.append(options,el('p','small muted','答えは、みんなが選んでから。'));visual.append(card,el('p','home-caption','違いが見つかる。会話がはじまる。'),logo());
  const modes=el('section','home-modes');modes.append(eyebrow('SIX WAYS TO MEET EACH OTHER'),el('h2','','知り方も、いろいろ。'));
  const grid=el('div','mode-overview');Object.keys(modeNames).filter(k=>k!=='MIX').forEach((key,i)=>{const row=el('div');row.append(el('span','small muted',`0${i+1}`),el('h3','serif',key==='QUICK'?'Quick Mix':key[0]+key.slice(1).toLowerCase()),el('p','',modeDescription[key]));grid.append(row);});modes.append(grid);
- const extra=el('section','home-bonus');extra.append(eyebrow('おまけ / ひとりで遊ぶ'),el('h2','','喫茶Unity'),el('p','small muted','釘と回転盤を抜け、三段の皿へ。一球の行方を見届ける、ひとり用の遊技台。'),button('喫茶Unityで遊ぶ',bonus));screen.append(intro,visual,modes,extra);return screen;
+ const extra=el('section','home-bonus');extra.append(eyebrow('おまけ / ひとりで遊ぶ'),el('h2','','喫茶Unity / レトロパチンコ'),el('p','small muted','釘と回転盤を抜け、三段の皿へ。一球の行方を見届ける、ひとり用の遊技台。'),button('喫茶Unityで遊ぶ',bonus));const modern=el('a','button secondary','ATELIERを遊ぶ ↗');modern.href='/atelier/index.html';extra.append(el('h3','','喫茶Unity ATELIER'),el('p','small muted','現代の質感で、一球を見届ける。3D物理で転がる一段クルーンの試作版。'),modern);screen.append(intro,visual,modes,extra);return screen;
 }
 export function setup({catalog,submit,back,initial={}}){
  const screen=el('div','screen narrow');screen.append(button('← ホーム','function'===typeof back?back:()=>{},'quiet-button'),title('CREATE A ROOM','今日のMIXを、つくろう。','初めてなら、LIGHTとおまかせMIXがおすすめです。'));

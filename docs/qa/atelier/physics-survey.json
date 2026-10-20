@@ -1,0 +1,382 @@
+{
+  "conditions": {
+    "dt": 0.004166666666666667,
+    "ballDiameter": 0.011,
+    "dishDiameter": 0.36,
+    "holes": 3,
+    "maxLive": 4,
+    "standaloneRuns": 30,
+    "sessionRuns": 3
+  },
+  "summary": {
+    "wins": 11,
+    "holeOutcomes": 30,
+    "returns": 0,
+    "meanDwell": 11.539999999999667,
+    "unresolved": 0
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "power": 0.15,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 6.345833333333293,
+      "dwell": 6.345833333333293,
+      "remaining": 0
+    },
+    {
+      "seed": 1,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 9.024999999999809,
+      "dwell": 9.024999999999809,
+      "remaining": 0
+    },
+    {
+      "seed": 2,
+      "power": 0.51,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 13.408333333332893,
+      "dwell": 13.408333333332893,
+      "remaining": 0
+    },
+    {
+      "seed": 3,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 13.991666666666193,
+      "dwell": 13.991666666666193,
+      "remaining": 0
+    },
+    {
+      "seed": 4,
+      "power": 0.87,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 15.537499999999438,
+      "dwell": 15.537499999999438,
+      "remaining": 0
+    },
+    {
+      "seed": 5,
+      "power": 0.15,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 9.254166666666462,
+      "dwell": 9.254166666666462,
+      "remaining": 0
+    },
+    {
+      "seed": 6,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 9.074999999999806,
+      "dwell": 9.074999999999806,
+      "remaining": 0
+    },
+    {
+      "seed": 7,
+      "power": 0.51,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 12.345833333332953,
+      "dwell": 12.345833333332953,
+      "remaining": 0
+    },
+    {
+      "seed": 8,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 13.949999999999529,
+      "dwell": 13.949999999999529,
+      "remaining": 0
+    },
+    {
+      "seed": 9,
+      "power": 0.87,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 13.499999999999554,
+      "dwell": 13.499999999999554,
+      "remaining": 0
+    },
+    {
+      "seed": 10,
+      "power": 0.15,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 6.412499999999956,
+      "dwell": 6.412499999999956,
+      "remaining": 0
+    },
+    {
+      "seed": 11,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 9.066666666666473,
+      "dwell": 9.066666666666473,
+      "remaining": 0
+    },
+    {
+      "seed": 12,
+      "power": 0.51,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 10.299999999999736,
+      "dwell": 10.299999999999736,
+      "remaining": 0
+    },
+    {
+      "seed": 13,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 14.720833333332818,
+      "dwell": 14.720833333332818,
+      "remaining": 0
+    },
+    {
+      "seed": 14,
+      "power": 0.87,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 15.970833333332747,
+      "dwell": 15.970833333332747,
+      "remaining": 0
+    },
+    {
+      "seed": 15,
+      "power": 0.15,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 7.758333333333213,
+      "dwell": 7.758333333333213,
+      "remaining": 0
+    },
+    {
+      "seed": 16,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 8.549999999999836,
+      "dwell": 8.549999999999836,
+      "remaining": 0
+    },
+    {
+      "seed": 17,
+      "power": 0.51,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 10.837499999999705,
+      "dwell": 10.837499999999705,
+      "remaining": 0
+    },
+    {
+      "seed": 18,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 15.349999999999449,
+      "dwell": 15.349999999999449,
+      "remaining": 0
+    },
+    {
+      "seed": 19,
+      "power": 0.87,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 15.57083333333277,
+      "dwell": 15.57083333333277,
+      "remaining": 0
+    },
+    {
+      "seed": 20,
+      "power": 0.15,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 6.341666666666627,
+      "dwell": 6.341666666666627,
+      "remaining": 0
+    },
+    {
+      "seed": 21,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 8.983333333333144,
+      "dwell": 8.983333333333144,
+      "remaining": 0
+    },
+    {
+      "seed": 22,
+      "power": 0.51,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 11.012499999999696,
+      "dwell": 11.012499999999696,
+      "remaining": 0
+    },
+    {
+      "seed": 23,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 14.149999999999517,
+      "dwell": 14.149999999999517,
+      "remaining": 0
+    },
+    {
+      "seed": 24,
+      "power": 0.87,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 16.19166666666607,
+      "dwell": 16.19166666666607,
+      "remaining": 0
+    },
+    {
+      "seed": 25,
+      "power": 0.15,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 9.47916666666645,
+      "dwell": 9.47916666666645,
+      "remaining": 0
+    },
+    {
+      "seed": 26,
+      "power": 0.32999999999999996,
+      "id": 1,
+      "hole": 1,
+      "win": false,
+      "reason": "hole",
+      "time": 8.483333333333173,
+      "dwell": 8.483333333333173,
+      "remaining": 0
+    },
+    {
+      "seed": 27,
+      "power": 0.51,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 11.762499999999653,
+      "dwell": 11.762499999999653,
+      "remaining": 0
+    },
+    {
+      "seed": 28,
+      "power": 0.6900000000000001,
+      "id": 1,
+      "hole": 2,
+      "win": false,
+      "reason": "hole",
+      "time": 13.191666666666238,
+      "dwell": 13.191666666666238,
+      "remaining": 0
+    },
+    {
+      "seed": 29,
+      "power": 0.87,
+      "id": 1,
+      "hole": 0,
+      "win": true,
+      "reason": "hole",
+      "time": 15.633333333332766,
+      "dwell": 15.633333333332766,
+      "remaining": 0
+    }
+  ],
+  "sessions": [
+    {
+      "seed": 100,
+      "launched": 20,
+      "remaining": 0,
+      "active": 0,
+      "results": 20,
+      "wins": 4,
+      "returns": 0,
+      "maxLive": 4
+    },
+    {
+      "seed": 101,
+      "launched": 20,
+      "remaining": 0,
+      "active": 0,
+      "results": 20,
+      "wins": 5,
+      "returns": 0,
+      "maxLive": 4
+    },
+    {
+      "seed": 102,
+      "launched": 20,
+      "remaining": 0,
+      "active": 0,
+      "results": 20,
+      "wins": 5,
+      "returns": 0,
+      "maxLive": 4
+    }
+  ]
+}

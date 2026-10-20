@@ -1,0 +1,11 @@
+喫茶Unity ATELIER — one-bowl playable prototype
+
+Original application code, procedural geometry, materials, studio reflection environment and synthesized audio were created for this project. This mode does not copy the boqingge game code, models, imagery, characters or sound recordings.
+
+Runtime dependencies are self-hosted existing project dependencies:
+- Three.js (MIT): /vendor/three/LICENSE
+- Rapier / @dimforge/rapier3d-compat (Apache-2.0): /vendor/rapier/LICENSE
+- earcut (ISC): /vendor/earcut/LICENSE
+- Cormorant Garamond font (SIL Open Font License): /assets/fonts/OFL-CormorantGaramond.txt
+
+All units in the physics model are meters, seconds and kilograms. This is an interactive prototype, not a calibrated physical gambling machine or certified odds model. No real money, paid credits, cash-outs or prizes are involved.
