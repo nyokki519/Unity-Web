@@ -1,3 +1,4 @@
+import {moveFreeCameraHeight} from './camera-pose.js';
 import{frameDelta}from'./frame-time.js';
 import{renderFrame}from'./render-frame.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
@@ -173,9 +174,8 @@ function releaseCharge() {
   fire(S.chargeT);
 }
 function panView(d) {
-  if (S.freeCam) return;
+  if (S.freeCam) {moveFreeCameraHeight(refs,d);return;}
   if(S.manualCamera.startsWith('cradle')){S.freeCam=false;refs.controls.enabled=false;S.cameraPitch=Math.max(35,Math.min(75,S.cameraPitch+d*80));return;}
-  if (S.freeCam) return;
   fx.viewOffTarget = Math.max(-0.5, Math.min(0.95, fx.viewOffTarget + d));
 }
 function leaveFreeCamera(){
@@ -191,7 +191,7 @@ function toggleCam() {
   S.charging = false; S.holdFire = false; tap = null;
   ui.setCamTag(S.freeCam);
   audio.uiBlip();
-  if (S.freeCam) ui.toast('自由視点：ドラッグで回転。下の発射ボタンはそのまま使えます。', 'gold');
+  if (S.freeCam) ui.toast('自由視点：1本指で回転、2本指で上下移動・拡大縮小。上下ボタンも使えます。', 'gold');
 }
 function toggleMute() {
   S.muted = !S.muted;

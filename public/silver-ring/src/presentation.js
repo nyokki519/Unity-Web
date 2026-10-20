@@ -16,8 +16,11 @@ export function mountPresentation({fire,setPower,setCamera,setAngle,previewSound
   zoomed=state.manualCamera.startsWith('cradle');focus.textContent=zoomed?'自動視点へ':'皿を拡大';focus.setAttribute('aria-pressed',String(zoomed));
   $('mAuto').disabled=state.phase!=='play'||state.jackpotLock;
   for(const b of document.querySelectorAll('#extraControls button,#quickControls button,#cameraControls button'))b.disabled=state.phase!=='play'||state.jackpotLock;
-  $('cameraControls').hidden=!zoomed;
-  const angleText=`角度 ${Math.round(state.cameraPitch)}° / 左右 ${Math.round(state.cameraYaw)}°`;if($('cameraReadout').value!==angleText)$('cameraReadout').value=angleText;
+  $('cameraControls').hidden=!zoomed&&!state.freeCam;
+  $('cameraLeft').hidden=$('cameraRight').hidden=!!state.freeCam;
+  for(const [id,label] of [['mUp',state.freeCam?'視点を上へ':'見下ろす'],['mDown',state.freeCam?'視点を下へ':'低く見る']]){const button=$(id);if(button.textContent!==label){button.textContent=label;button.setAttribute('aria-label',label);}}
+  const cameraLabel=state.freeCam?'自由視点の上下移動':'クルーンの角度調整';if($('cameraControls').getAttribute('aria-label')!==cameraLabel)$('cameraControls').setAttribute('aria-label',cameraLabel);
+  const angleText=state.freeCam?'2本指でも上下移動できます':`角度 ${Math.round(state.cameraPitch)}° / 左右 ${Math.round(state.cameraYaw)}°`;if($('cameraReadout').value!==angleText)$('cameraReadout').value=angleText;
   if(document.activeElement!==power)power.value=String(Math.round(state.memory*100));
   const shownPower=Math.round(state.memory*100)+'%';
   if($('shotPowerValue').value!==shownPower)$('shotPowerValue').value=shownPower;

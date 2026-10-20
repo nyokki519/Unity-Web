@@ -2,7 +2,7 @@
 // ============================================================
 // 「沼」动态特效 —— 粒子 / 运镜 / 霓虹 / ざわざわ / 珠雨
 // ============================================================
-import {bowlCameraPose} from './camera-pose.js';
+import {bowlCameraPose,autoBowlCameraPose} from './camera-pose.js';
 import * as THREE from '../../vendor/three/three.module.js';
 import { CFG } from './config.js';
 import { bowlY, bowlSlope } from './physics.js';
@@ -532,9 +532,8 @@ export class FX {
         case 'CRUUNE': {
           const y = TIER_Y[this.camTier];
           // 竖屏时横向视野窄、纵向富余,特写机位整体往前收,皿才占得满
-          const ck = Math.max(0.68, Math.min(1, R.camera.aspect / 0.95));
           if(this.detailView){const pose=bowlCameraPose({height:y,aspect:R.camera.aspect,...this.detailPose});dst=pose.position;tgt=pose.target;}
-          else {tgt=[0,y-.02,-.11];dst=[.3*ck,tgt[1]+.26*ck,tgt[2]+1.19*ck];}
+          else {const pose=autoBowlCameraPose({height:y,aspect:R.camera.aspect});dst=pose.position;tgt=pose.target;}
           break;
         }
         case 'JACKPOT':
