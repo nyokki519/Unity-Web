@@ -83,6 +83,7 @@ export const CFG = {
     jitter: 0.09,          // 随机扰动加速度
     capture: 0.019,        // 洞捕获半径
     vpass: 0.26,           // 高于此速度会滚过洞口
+    contacts: { enabled:true, rimRadius:.023, rimBand:.012, rimRestitution:.35, rimFriction:.06, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
     sinkT: 0.32,           // 吞珠动画时长
     air: { tier: 2, chance: .32, kick: 0.60 },  // 最終皿空气喷出装置
     list: [

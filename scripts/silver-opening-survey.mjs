@@ -23,7 +23,7 @@ try {
   if((seed-seedStart+1)%25===0)console.log(JSON.stringify({scale,start:seedStart,completed:seed-seedStart+1,total:seedCount}));
  }
 }finally{CFG.shutter.openTimeScale=saved;}
-const report={conditions:{seeds:seedCount,seedStart,netShotBudget:shotBudget,power:.45,dt:1/240,air:CFG.bowls.air.chance,interference:CFG.shutter.blockRate,gateHalfWidth:CFG.gate.halfW,shutterHalfWidth:CFG.shutter.halfW,maxSeconds:240},rows,summary:scales.map(scale=>{
+const report={conditions:{bowlContacts:{...CFG.bowls.contacts},seeds:seedCount,seedStart,netShotBudget:shotBudget,power:.45,dt:1/240,air:CFG.bowls.air.chance,interference:CFG.shutter.blockRate,gateHalfWidth:CFG.gate.halfW,shutterHalfWidth:CFG.shutter.halfW,maxSeconds:240},rows,summary:scales.map(scale=>{
  const trials=rows.filter(r=>r.scale===scale);
  return {scale,runs:trials.length,winningRuns:trials.filter(r=>r.jackpots>0).length,winningRunRate:trials.filter(r=>r.jackpots>0).length/trials.length,shots:trials.reduce((s,r)=>s+r.shots,0),gates:trials.reduce((s,r)=>s+r.gates,0),jackpots:trials.reduce((s,r)=>s+r.jackpots,0),remaining:trials.reduce((s,r)=>s+r.remaining,0),incompleteRuns:trials.filter(r=>r.netShots!==shotBudget).length};
 })};

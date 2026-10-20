@@ -5,6 +5,7 @@
 //          → bowl(三段皿螺旋) → jackpot / swamp
 // 盘面机关:大回転盤×2(凸钉搅拌)/ 電動チューリップ(随机开闭+遥控ブロック)
 // ============================================================
+import {advanceHop,resolveLipContact,resolveBowlPair} from './bowl-contacts.js';
 import { CFG, buildLayout } from './config.js';
 
 const TAU = Math.PI * 2;
@@ -191,7 +192,7 @@ export class Sim {
   enterBowl(b, bi, fromPos) {
     const bw = CFG.bowls.list[bi];
     const e = bw.enter;
-    b.mode = 'bowl'; b.bi = bi; b.bowlT = 0; b.aired = false;
+    b.mode = 'bowl'; b.bi = bi; b.bowlT = 0; b.aired = false;b.hopY=0;b.hopV=0;b.lipTouches=new Set();b.pendingSink=null;b.contactStillT=0;
     // 个体差:速度与滚动阻尼 → 决定最终落洞的混沌相位
     b.dampMul = 0.86 + this.rand() * 0.28;
     const v = e.v * (0.82 + this.rand() * 0.38);
@@ -288,6 +289,11 @@ export class Sim {
       }
     }
     this.collideBalls();
+    if(CFG.bowls.contacts.enabled)for(const b of this.balls){
+      const entry=b.pendingSink;b.pendingSink=null;
+      if(!entry||b.dead||b.mode!=='bowl')continue;
+      if((b.hopY||0)<.0005&&(b.hopV||0)<=0&&Math.hypot(b.px-entry.hx,b.pz-entry.hz)<CFG.bowls.capture&&Math.hypot(b.pvx,b.pvz)<CFG.bowls.vpass)this.sink(b,CFG.bowls.list[b.bi],entry.hi,entry.hx,entry.hz);
+    }
     this.balls = this.balls.filter(b => !b.dead);
   }
 
@@ -494,6 +500,11 @@ export class Sim {
   stepBowl(b, dt) {
     const B = CFG.bowls, bw = B.list[b.bi];
     b.bowlT += dt;
+    if(B.contacts.enabled){
+      b.pendingSink=null;advanceHop(b,dt,CFG.g);
+      b.contactStillT=(Math.hypot(b.pvx,b.pvz)<.015&&(b.hopY||0)<.0005)?(b.contactStillT||0)+dt:0;
+      if(b.bowlT>B.contacts.stalledAfter&&b.contactStillT>B.contacts.stalledFor){b.dead=true;this.emit('foul',{reason:'bowl-stall',id:b.id,tier:b.bi});return;}
+    }
     const r = Math.hypot(b.px, b.pz);
     let ax = 0, az = 0;
     if (r > 1e-5) {
@@ -502,7 +513,7 @@ export class Sim {
       ax += f * b.px; az += f * b.pz;
     }
     // 阻尼(个体差 + 超时逐渐加强,保证收敛)
-    const extra = Math.max(0, b.bowlT - 16) / 5;
+    const extra = B.contacts.enabled?Math.min(B.contacts.maxDampingExtra,Math.max(0,b.bowlT-16)/5):Math.max(0,b.bowlT-16)/5;
     const c = B.damp * (b.dampMul || 1) * (1 + extra);
     ax -= c * b.pvx; az -= c * b.pvz;
     // 倾斜作弊 + 扰动
@@ -543,9 +554,14 @@ export class Sim {
           continue;
         }
       }
+      if(B.contacts.enabled){
+        const impact=resolveLipContact(b,{x:hx,z:hz,key:hi,radius:B.contacts.rimRadius,band:B.contacts.rimBand,restitution:B.contacts.rimRestitution,friction:B.contacts.rimFriction,maxHopSpeed:B.contacts.maxHopSpeed});
+        if(impact>.08&&(!b.rattled||this.time-b.rattled>.15)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
+        if((b.hopY||0)>.0005||(b.hopV||0)>0)continue;
+      }
       if (d < B.capture) {
         if (sp < B.vpass) {
-          this.sink(b, bw, hi, hx, hz);
+          if(B.contacts.enabled)b.pendingSink={hi,hx,hz};else this.sink(b, bw, hi, hx, hz);
           return;
         } else {
           // 高速滚过洞口:骤减速 + 轻微吸向洞心(哐啷感)
@@ -683,6 +699,11 @@ export class Sim {
             }
           }
         } else if (A.mode === 'bowl' && A.bi === B.bi) {
+          if(CFG.bowls.contacts.enabled){
+            const bw=CFG.bowls.list[A.bi],impact=resolveBowlPair(A,B,{radius:CFG.ball.r,restitution:CFG.phys.restBall,friction:CFG.bowls.contacts.pairFriction,maxHopSpeed:CFG.bowls.contacts.maxHopSpeed,heightA:bowlY(Math.hypot(A.px,A.pz),bw.R)+(A.hopY||0),heightB:bowlY(Math.hypot(B.px,B.pz),bw.R)+(B.hopY||0)});
+            if(impact>.12)this.emit('clack',{x:A.px,y:bw.cy,v:impact});
+            continue;
+          }
           const dx = B.px - A.px, dz = B.pz - A.pz;
           const d2 = dx * dx + dz * dz;
           if (d2 < r2 * r2 && d2 > 1e-12) {
@@ -720,7 +741,7 @@ export class Sim {
         const bw = CFG.bowls.list[b.bi];
         const r = Math.hypot(b.px, b.pz);
         out[0] = b.px;
-        out[1] = bw.cy + bowlY(r, bw.R) + CFG.ball.r;
+        out[1] = bw.cy + bowlY(r, bw.R) + CFG.ball.r + (CFG.bowls.contacts.enabled?(b.hopY||0):0);
         out[2] = bw.cz + b.pz;
         break;
       }

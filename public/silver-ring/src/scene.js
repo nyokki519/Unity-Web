@@ -440,7 +440,7 @@ export function buildScene(canvas,layout=buildLayout()) {
         new THREE.MeshBasicMaterial({ color: 0x000000 }));
       disc.rotation.x = -Math.PI / 2;
       hg.add(disc);
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.023, 0.0028, 8, 24),
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(CFG.bowls.contacts.rimRadius, 0.0028, 8, 24),
         new THREE.MeshBasicMaterial({
           color: h.win ? new THREE.Color(2.6, 1.8, 0.35) : new THREE.Color(0.5, 0.06, 0.06),
           toneMapped: false,

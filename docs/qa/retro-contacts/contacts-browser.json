@@ -1,0 +1,90 @@
+{
+  "controlledContacts": [
+    {
+      "tier": 0,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "shakeBefore": 0,
+      "contactShake": 0,
+      "after": {
+        "x": 0.09867854582030697,
+        "z": 0.20428018417783053
+      },
+      "hopY": 0.00526962180351312,
+      "mode": "bowl",
+      "visibleLift": 0.0052696218035130915,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.8745019435882568,
+        "worldY": 0.8745019690579648,
+        "cameraZ": 0.46719147259157107
+      }
+    },
+    {
+      "tier": 1,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "shakeBefore": 0,
+      "contactShake": 0,
+      "after": {
+        "x": 0.08681899124860191,
+        "z": 0.22229910855774884
+      },
+      "hopY": 0.005300292970421316,
+      "mode": "bowl",
+      "visibleLift": 0.005300292970421339,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.608267068862915,
+        "worldY": 0.6082670591222172,
+        "cameraZ": 0.4661147869079141
+      }
+    },
+    {
+      "tier": 2,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "shakeBefore": 0.015,
+      "contactShake": 0.015,
+      "after": {
+        "x": 0.08339123053485678,
+        "z": 0.22930468132165718
+      },
+      "hopY": 0.005313493631081704,
+      "mode": "bowl",
+      "visibleLift": 0.005313493631081689,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.3387337625026703,
+        "worldY": 0.338733775953274,
+        "cameraZ": 0.46611439953436556
+      }
+    }
+  ],
+  "obliquePair": {
+    "a": {
+      "x": -0.1362352429145519,
+      "z": -0.13415721726994217
+    },
+    "b": {
+      "x": 0.4362352429145519,
+      "z": 0.25415721726994217
+    }
+  },
+  "stalledBallReturn": {
+    "credit": 200,
+    "live": 0,
+    "notice": "皿で長く停止した玉を回収し、1球分を返却しました。"
+  },
+  "errors": [],
+  "note": "Controlled contact setups, separate from natural-play survey."
+}

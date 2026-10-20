@@ -78,6 +78,7 @@ const sim = new Sim((ev, d) => {
     case 'foul':
       S.funds += CFG.eco.ballCost;
       audio.foul();
+      if(d?.reason==='bowl-stall')ui.toast('皿で長く停止した玉を回収し、1球分を返却しました。','gold');
       break;
     case 'gate':
       S.gates++;
@@ -89,7 +90,7 @@ const sim = new Sim((ev, d) => {
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); }
       if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); fx.shake(0.015); }
       break;
-    case 'rattle': audio.rattle(); fx.shake(0.006); break;
+    case 'rattle': audio.rattle(); if(!d.contact)fx.shake(0.006); break;
     case 'sink':
       fx.sinkFX(d.tier, d.win, d.x, d.y, d.z);
       if (d.win) {
