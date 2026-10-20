@@ -1,24 +1,28 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 import json
-OUT=Path('docs/qa/retro-contacts');OUT.mkdir(parents=True,exist_ok=True)
+OUT=Path('docs/qa/retro-rim-direction');OUT.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True)
  errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto('http://127.0.0.1:3461/?bonus=jackpot&debug=1&seed=contacts-qa');f=page.frame_locator('iframe.silver-game');f.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=90000);c=page.frames[1];c.wait_for_function('()=>window.SILVER_GAME?.refs.boardTex.userData.artwork==="ready"',timeout=90000)
  rows=[]
  for tier in range(3):
   result=c.evaluate('''async(tier)=>{
-   const {CFG}=await import('/silver-ring/src/config.js'),{bowlY}=await import('/silver-ring/src/physics.js');const g=SILVER_GAME,s=g.sim;
+   const {CFG}=await import('/silver-ring/src/config.js'),{bowlY}=await import('/silver-ring/src/physics.js'),{resolveLipContact}=await import('/silver-ring/src/bowl-contacts.js');const g=SILVER_GAME,s=g.sim;
    g.S.phase='paused';g.S.auto=false;g.S.manualCamera='cradle'+(tier+1);g.S.freeCam=false;g.refs.controls.enabled=false;
    s.balls.length=0;s.spawnInBowl(tier);const ball=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],hx=Math.cos(h.a)*bw.ringR,hz=Math.sin(h.a)*bw.ringR;
    Object.assign(ball,{px:hx+.028,pz:hz+.003,pvx:-.45,pvz:.18,hopY:0,hopV:0});
-   const before={x:ball.pvx,z:ball.pvz},shakeBefore=g.fx.shakeAmp;for(let i=0;i<8;i++)s.step(1/240);const contactShake=g.fx.shakeAmp;
+   const before={x:ball.pvx,z:ball.pvz},shakeBefore=g.fx.shakeAmp;resolveLipContact(ball,{x:hx,z:hz,key:1,radius:CFG.bowls.contacts.rimRadius,band:CFG.bowls.contacts.rimBand,captureRadius:CFG.bowls.capture,deflection:CFG.bowls.contacts.rimDeflection});const contactAfter={x:ball.pvx,z:ball.pvz};for(let i=0;i<8;i++)s.step(1/240);const contactShake=g.fx.shakeAmp;
    g.fx.detailView=true;g.fx.detailPose={pitch:50,yaw:10,zoom:1};g.fx.setCamMode('CRUUNE',tier);for(let i=0;i<180;i++)g.fx.update(1/60,s,{tension:tier+1,freeCam:false});
-   const position=s.worldPos(ball,[0,0,0]);return{tier,before,shakeBefore,contactShake,after:{x:ball.pvx,z:ball.pvz},hopY:ball.hopY,mode:ball.mode,visibleLift:position[1]-(bw.cy+bowlY(Math.hypot(ball.px,ball.pz),bw.R)+CFG.ball.r),funds:g.S.funds};
+   const position=s.worldPos(ball,[0,0,0]);return{tier,before,contactAfter,shakeBefore,contactShake,after:{x:ball.pvx,z:ball.pvz},hopY:ball.hopY,mode:ball.mode,visibleLift:position[1]-(bw.cy+bowlY(Math.hypot(ball.px,ball.pz),bw.R)+CFG.ball.r),funds:g.S.funds};
   }''',tier)
-  assert result['after']['x']>0,result
+  assert result['contactAfter']['x']<0 and result['after']['x']<0,result
+  before_speed=(result['before']['x']**2+result['before']['z']**2)**.5
+  after_speed=(result['contactAfter']['x']**2+result['contactAfter']['z']**2)**.5
+  assert abs(before_speed-after_speed)<1e-12,result
+  assert abs(result['contactAfter']['z']-result['before']['z'])>.005,result
   assert result['contactShake']<=result['shakeBefore']+1e-9,'contact should move the ball, not shake the camera'
-  assert 0<result['hopY']<.01 and result['visibleLift']>0,result
+  assert result['hopY']==0 and abs(result['visibleLift'])<1e-12,result
   assert result['mode']=='bowl';assert result['funds']==40000
   # Render one real main-loop frame with the controlled physical pose frozen.
   # Paused gameplay deliberately retains its last canvas, so FX updates alone are insufficient.

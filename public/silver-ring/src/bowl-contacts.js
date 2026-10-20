@@ -5,22 +5,19 @@ export function advanceHop(ball,dt,gravity){
  ball.hopV=(ball.hopV||0)-gravity*dt;ball.hopY=Math.max(0,(ball.hopY||0)+ball.hopV*dt);
  if(ball.hopY===0)ball.hopV=ball.hopV<-.15?-ball.hopV*.14:0;
 }
-export function resolveLipContact(ball,{x,z,key,radius,band,restitution=.35,friction=.06,minSpeed=.08,maxHopSpeed=.28}){
+export function resolveLipContact(ball,{x,z,key,radius,band,captureRadius=0,deflection=.15,minSpeed=.08}){
  const dx=ball.px-x,dz=ball.pz-z,d=Math.hypot(dx,dz);
  ball.lipTouches??=new Set();
  if(d>radius+band+.003||d<radius-band-.003){ball.lipTouches.delete(key);return 0;}
- if(Math.abs(d-radius)>band||d<1e-8||ball.hopY>.0005||ball.hopV>.05||ball.lipTouches.has(key))return 0;
- const side=d>=radius?1:-1,nx=side*dx/d,nz=side*dz/d,vn=ball.pvx*nx+ball.pvz*nz;
+ if(d<=captureRadius||Math.abs(d-radius)>band||d<1e-8||ball.hopY>.0005||ball.hopV>.05||ball.lipTouches.has(key))return 0;
+ const nx=dx/d,nz=dz/d,vn=ball.pvx*nx+ball.pvz*nz;
  if(vn>=-minSpeed)return 0;
  ball.lipTouches.add(key);
- const before=ball.pvx**2+ball.pvz**2,impulse=-(1+restitution)*vn;
- ball.pvx+=impulse*nx;ball.pvz+=impulse*nz;
- const tangentX=-nz,tangentZ=nx,vt=ball.pvx*tangentX+ball.pvz*tangentZ;
- const drag=Math.sign(vt)*Math.min(Math.abs(vt),friction*impulse);
- ball.pvx-=drag*tangentX;ball.pvz-=drag*tangentZ;
- const lost=Math.max(0,before-ball.pvx**2-ball.pvz**2);
- // A fraction of impact energy becomes a visible hop; the remainder dissipates.
- ball.hopV=Math.max(ball.hopV||0,Math.min(maxHopSpeed,Math.sqrt(lost*.32)));
+ const speed=Math.hypot(ball.pvx,ball.pvz),tx=-nz,tz=nx,vt=ball.pvx*tx+ball.pvz*tz;
+ // A slight tangent deflection only: preserve speed and the inward direction.
+ // No normal reflection, rim friction, vertical impulse or capture-area steering.
+ const radial=vn*(1-Math.max(0,Math.min(.2,deflection))),vx=radial*nx+vt*tx,vz=radial*nz+vt*tz,scale=speed/Math.hypot(vx,vz);
+ ball.pvx=vx*scale;ball.pvz=vz*scale;
  return -vn;
 }
 export function resolveBowlPair(a,b,{radius,restitution=.8,friction=.08,heightA=0,heightB=0,maxHopSpeed=.28}){

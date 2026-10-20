@@ -9,12 +9,15 @@ test('balls separated vertically do not collide and coincident balls resolve fin
  const a=ball(0,0,.3,0),b=ball(0,0,-.2,0);assert.equal(resolveBowlPair(a,b,{radius:.026,heightA:0,heightB:.08}),0);
  assert.ok(resolveBowlPair(a,b,{radius:.026,heightA:0,heightB:0}));assert.ok([a.px,a.pz,b.px,b.pz,a.pvx,b.pvx].every(Number.isFinite));
 });
-test('a physical lip graze changes trajectory and uses lost energy for a small hop',()=>{
- const b=ball(.028,.003,-.45,.18),before=b.pvx**2+b.pvz**2;
- const contact={x:0,z:0,key:0,radius:.023,band:.008,restitution:.35,friction:.06,minSpeed:.08,maxHopSpeed:.28};
- assert.ok(resolveLipContact(b,contact));assert.ok(b.pvx>0);assert.ok(b.hopV>0);assert.ok(b.pvx**2+b.pvz**2+b.hopV**2<=before+1e-8);
- const v=b.pvx;assert.equal(resolveLipContact(b,contact),0);assert.equal(b.pvx,v,'no repeated kick inside one contact');
- for(let i=0;i<240;i++)advanceHop(b,1/240,9.81);assert.equal(b.hopY,0);assert.equal(b.hopV,0);
+test('a lip graze only changes direction: speed preserved, no outward bounce or hop',()=>{
+ const b=ball(.028,.003,-.45,.18),speed=Math.hypot(b.pvx,b.pvz),before={x:b.pvx,z:b.pvz};
+ const contact={x:0,z:0,key:0,radius:.023,band:.008,captureRadius:.019,deflection:.15,minSpeed:.08};
+ assert.ok(resolveLipContact(b,contact));assert.ok(b.pvx<0);assert.ok(Math.abs(b.pvz-before.z)>.005);assert.ok(Math.abs(Math.hypot(b.pvx,b.pvz)-speed)<1e-12);
+ assert.ok(b.pvx*b.px+b.pvz*b.pz<0,'must still travel inward');assert.equal(b.hopV,0);assert.equal(b.hopY,0);
+ const v=b.pvx;assert.equal(resolveLipContact(b,contact),0);assert.equal(b.pvx,v,'no repeated steering inside one contact');
+});
+test('a ball already within the capture area is not redirected by the rim',()=>{
+ const b=ball(.018,0,-.2,.1);assert.equal(resolveLipContact(b,{x:0,z:0,key:0,radius:.023,band:.012,captureRadius:.019}),0);assert.equal(b.pvx,-.2);assert.equal(b.pvz,.1);
 });
 test('a slow central entry or remote ball is not randomly kicked',()=>{
  const b=ball(0,0,.02,0);assert.equal(resolveLipContact(b,{x:0,z:0,key:0,radius:.023,band:.008}),0);assert.equal(b.pvx,.02);
@@ -42,4 +45,10 @@ test('a stalled bowl ball returns its credit exactly once instead of keeping the
  sim.spawnInBowl(0);const b=sim.balls[0];Object.assign(b,{bowlT:34.9,px:Math.cos(.5)*.0475,pz:Math.sin(.5)*.0475,pvx:0,pvz:0,dampMul:100});
  for(let i=0;i<240*5;i++)sim.step(1/240);assert.equal(sim.liveCount(),0);assert.equal(events.length,1);assert.equal(events[0].reason,'bowl-stall');
  for(let i=0;i<240;i++)sim.step(1/240);assert.equal(events.length,1);
+});
+test('fast passage over a hole has no extra braking or pull from the hole',()=>{
+ const a=new Sim(()=>{},createRng('rim-speed')),b=new Sim(()=>{},createRng('rim-speed'));a.spawnInBowl(0);b.spawnInBowl(0);
+ for(const sim of[a,b])Object.assign(sim.balls[0],{px:.008,pz:CFG.bowls.list[0].ringR,pvx:.4,pvz:.1});
+ const bw=CFG.bowls.list[0],holes=bw.holes;try{bw.holes=[];a.stepBowl(a.balls[0],1/240);}finally{bw.holes=holes;}
+ b.stepBowl(b.balls[0],1/240);assert.ok(Math.abs(a.balls[0].pvx-b.balls[0].pvx)<1e-12);assert.ok(Math.abs(a.balls[0].pvz-b.balls[0].pvz)<1e-12);assert.equal(b.balls[0].hopV,0);
 });

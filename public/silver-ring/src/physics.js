@@ -555,7 +555,7 @@ export class Sim {
         }
       }
       if(B.contacts.enabled){
-        const impact=resolveLipContact(b,{x:hx,z:hz,key:hi,radius:B.contacts.rimRadius,band:B.contacts.rimBand,restitution:B.contacts.rimRestitution,friction:B.contacts.rimFriction,maxHopSpeed:B.contacts.maxHopSpeed});
+        const impact=resolveLipContact(b,{x:hx,z:hz,key:hi,radius:B.contacts.rimRadius,band:B.contacts.rimBand,captureRadius:B.capture,deflection:B.contacts.rimDeflection});
         if(impact>.08&&(!b.rattled||this.time-b.rattled>.15)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
         if((b.hopY||0)>.0005||(b.hopV||0)>0)continue;
       }
@@ -563,7 +563,7 @@ export class Sim {
         if (sp < B.vpass) {
           if(B.contacts.enabled)b.pendingSink={hi,hx,hz};else this.sink(b, bw, hi, hx, hz);
           return;
-        } else {
+        } else if(!B.contacts.enabled) {
           // 高速滚过洞口:骤减速 + 轻微吸向洞心(哐啷感)
           b.pvx = b.pvx * 0.955 + (hx - b.px) * 2.2 * dt;
           b.pvz = b.pvz * 0.955 + (hz - b.pz) * 2.2 * dt;

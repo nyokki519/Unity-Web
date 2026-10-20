@@ -1,0 +1,102 @@
+{
+  "controlledContacts": [
+    {
+      "tier": 0,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "contactAfter": {
+        "x": -0.43627180267393306,
+        "z": 0.21110877336490977
+      },
+      "shakeBefore": 0,
+      "contactShake": 0,
+      "after": {
+        "x": -0.44741463978106716,
+        "z": 0.19496396639386943
+      },
+      "hopY": 0,
+      "mode": "bowl",
+      "visibleLift": 0,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.8662155866622925,
+        "worldY": 0.8662155901167201,
+        "cameraZ": 0.46719146232541614
+      }
+    },
+    {
+      "tier": 1,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "contactAfter": {
+        "x": -0.43627180267393306,
+        "z": 0.21110877336490977
+      },
+      "shakeBefore": 0,
+      "contactShake": 0,
+      "after": {
+        "x": -0.459987128822513,
+        "z": 0.20647851874223278
+      },
+      "hopY": 0,
+      "mode": "bowl",
+      "visibleLift": 0,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.5985743403434753,
+        "worldY": 0.5985743495494362,
+        "cameraZ": 0.4661147869042204
+      }
+    },
+    {
+      "tier": 2,
+      "before": {
+        "x": -0.45,
+        "z": 0.18
+      },
+      "contactAfter": {
+        "x": -0.43627180267393306,
+        "z": 0.21110877336490977
+      },
+      "shakeBefore": 0.015,
+      "contactShake": 0.015,
+      "after": {
+        "x": -0.46388943705845737,
+        "z": 0.2128757070179664
+      },
+      "hopY": 0,
+      "mode": "bowl",
+      "visibleLift": 0,
+      "funds": 40000,
+      "rendered": {
+        "count": 1,
+        "matrixY": 0.3287446200847626,
+        "worldY": 0.32874463322316355,
+        "cameraZ": 0.46611439953433376
+      }
+    }
+  ],
+  "obliquePair": {
+    "a": {
+      "x": -0.1362352429145519,
+      "z": -0.13415721726994217
+    },
+    "b": {
+      "x": 0.4362352429145519,
+      "z": 0.25415721726994217
+    }
+  },
+  "stalledBallReturn": {
+    "credit": 200,
+    "live": 0,
+    "notice": "皿で長く停止した玉を回収し、1球分を返却しました。"
+  },
+  "errors": [],
+  "note": "Controlled contact setups, separate from natural-play survey."
+}

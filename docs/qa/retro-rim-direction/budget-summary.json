@@ -1,0 +1,33 @@
+{
+  "conditions": {
+    "bowlContacts": {
+      "enabled": true,
+      "rimRadius": 0.023,
+      "rimBand": 0.012,
+      "rimDeflection": 0.15,
+      "pairFriction": 0.08,
+      "maxHopSpeed": 0.28,
+      "maxDampingExtra": 2,
+      "stalledAfter": 35,
+      "stalledFor": 3
+    },
+    "seeds": 100,
+    "seedStart": 0,
+    "netShotBudget": 200,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0.32,
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240
+  },
+  "runs": 100,
+  "winningRuns": 44,
+  "shots": 20000,
+  "returns": 0,
+  "gates": 2793,
+  "jackpots": 47,
+  "remaining": 0,
+  "note": "Small fixed-power check after rim correction, not calibrated odds."
+}
