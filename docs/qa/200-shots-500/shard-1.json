@@ -1,0 +1,1279 @@
+{
+  "conditions": {
+    "seeds": 125,
+    "seedStart": 125,
+    "netShotBudget": 200,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0.32,
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240
+  },
+  "rows": [
+    {
+      "scale": 0.5,
+      "seed": 125,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 126,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 19,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 127,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 128,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 129,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 130,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 131,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 132,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 133,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 134,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 135,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 136,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 137,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 138,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 139,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 140,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 141,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 21,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 142,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 143,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 3,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 144,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 145,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 146,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 147,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 148,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 149,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 150,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 151,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 21,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 152,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 153,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 154,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 155,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 156,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 157,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 158,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 159,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 160,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 161,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 162,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 163,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 15,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 164,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 165,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 166,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 167,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 168,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 169,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 170,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 171,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 172,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 173,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 174,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 175,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 18,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 176,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 177,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 178,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 179,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 180,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 181,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 182,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 183,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 184,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 185,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 186,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 187,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 188,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 189,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 38,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 190,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 191,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 3,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 192,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 193,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 194,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 195,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 196,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 15,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 197,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 198,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 199,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 200,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 201,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 17,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 202,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 203,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 204,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 205,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 206,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 43,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 207,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 208,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 21,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 209,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 210,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 211,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 22,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 212,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 213,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 214,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 215,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 21,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 216,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 217,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 218,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 219,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 220,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 20,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 221,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 222,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 41,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 223,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 224,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 225,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 226,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 227,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 228,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 229,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 230,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 23,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 231,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 232,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 233,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 234,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 235,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 236,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 237,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 238,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 239,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 240,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 241,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 242,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 243,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 244,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 245,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 24,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 246,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 247,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 248,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 200
+    },
+    {
+      "scale": 0.5,
+      "seed": 249,
+      "shots": 200,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 200
+    }
+  ],
+  "summary": [
+    {
+      "scale": 0.5,
+      "runs": 125,
+      "winningRuns": 51,
+      "winningRunRate": 0.408,
+      "shots": 25000,
+      "gates": 3452,
+      "jackpots": 65,
+      "remaining": 0,
+      "incompleteRuns": 0
+    }
+  ]
+}

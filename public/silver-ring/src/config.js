@@ -117,7 +117,7 @@ export const CFG = {
 
   // 经济(赌博默示録・沼 规格)
   eco: {
-    start: 50000,        // 250 paid shots; seeded balance survey in docs/qa.
+    start: 40000,        // 200 paid shots; seeded balance survey in docs/qa.
     ballCost: 200,       // Virtual credits per accepted launch.
     jackpot: 1000000,    // 大当り ¥700,000,000
     borrow: 100000,      // 帝愛借款单位
