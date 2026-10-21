@@ -1,0 +1,14 @@
+{
+  "restoredFrom": "22a3177",
+  "behaviorVersion": "r38",
+  "cacheAndLabelVersion": "r40",
+  "coreFilesIdentical": [
+    "public/silver-ring/src/config.js",
+    "public/silver-ring/src/physics.js",
+    "public/silver-ring/src/bowl-forces.js"
+  ],
+  "sameSeedTrialsCompared": 10,
+  "allTrialFieldsMatch": true,
+  "initialShots": 250,
+  "windTierOnly": 3
+}

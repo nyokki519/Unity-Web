@@ -61,37 +61,16 @@ test('the short puff integrates consistently across time steps and cannot act re
  assert.ok(Math.abs(run(1/240)-run(1/480))<1e-10);assert.ok(run(1/240)>.5);
  const b=ball(0,.1,0,0);assert.equal(forces.applyAirBurst(b,{x:0,z:0,elapsed:.02,dt:1/240,duration:.06,radius:.055,inner:.019,acceleration:40}),0);assert.equal(b.pvz,0);
 });
-test('all stages have sharp elastic lip deflections while wind stays off',()=>{
- const enabled=CFG.bowls.contacts.grazeEnabled,air=CFG.bowls.air.chance;
+test('all three stages show a clearly larger geometric graze without wind',()=>{
+ const depth=CFG.bowls.contacts.lipDepth,outer=CFG.bowls.contacts.lipOuter,air=CFG.bowls.air.chance;
  try{CFG.bowls.air.chance=0;
   for(let tier=0;tier<3;tier++){
-   const run=on=>{CFG.bowls.contacts.grazeEnabled=on;let hits=0;const s=new Sim((type,d)=>{if(type==='rattle'&&d.elastic)hits++;},createRng(`audit-${tier}`));s.spawnInBowl(tier);const b=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],nx=Math.cos(h.a),nz=Math.sin(h.a),tx=-nz,tz=nx;Object.assign(b,{px:nx*(bw.ringR+.032)-tx*.04,pz:nz*(bw.ringR+.032)-tz*.04,pvx:tx*.4,pvz:tz*.4});for(let i=0;i<36&&b.mode==='bowl';i++)s.step(1/240);return{heading:Math.atan2(b.pvz,b.pvx),x:b.px,z:b.pz,mode:b.mode,hits};};
-   const old=run(false),current=run(true),turn=Math.abs(Math.atan2(Math.sin(current.heading-old.heading),Math.cos(current.heading-old.heading)));
-   assert.equal(current.hits,1);assert.equal(old.hits,0);
-   assert.ok(turn>Math.PI/4,`stage ${tier+1}: clearly visible elastic turn`);
-   assert.ok(Math.hypot(current.x-old.x,current.z-old.z)>.02,`stage ${tier+1}: visible displacement`);
-   assert.equal(current.mode,'bowl');
+   const run=(d,o=outer)=>{CFG.bowls.contacts.lipDepth=d;CFG.bowls.contacts.lipOuter=o;const s=new Sim(()=>{},createRng(`audit-${tier}`));s.spawnInBowl(tier);const b=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],nx=Math.cos(h.a),nz=Math.sin(h.a),tx=-nz,tz=nx;Object.assign(b,{px:nx*(bw.ringR+.032)-tx*.04,pz:nz*(bw.ringR+.032)-tz*.04,pvx:tx*.4,pvz:tz*.4});for(let i=0;i<36&&b.mode==='bowl';i++)s.step(1/240);return{heading:Math.atan2(b.pvz,b.pvx),x:b.px,z:b.pz,mode:b.mode};};
+   const flat=run(0),old=run(.0035,.043),current=run(depth),angle=o=>Math.abs(Math.atan2(Math.sin(o.heading-flat.heading),Math.cos(o.heading-flat.heading)));
+   assert.ok(angle(current)>10*Math.PI/180,`stage ${tier+1}: visible turn`);
+   assert.ok(angle(current)>angle(old)*1.7,`stage ${tier+1}: materially stronger than r37`);
+   assert.ok(Math.hypot(current.x-flat.x,current.z-flat.z)>.007,`stage ${tier+1}: visible displacement`);
+   assert.equal(current.mode,'bowl','a graze may continue past the hole');
   }
- }finally{CFG.bowls.contacts.grazeEnabled=enabled;CFG.bowls.air.chance=air;}
-});
-test('an elastic lip graze redirects sharply without losing speed',()=>{
- const b=ball(-.04,.025,.4,0),speed=Math.hypot(b.pvx,b.pvz);let hits=0;
- for(let i=0;i<48;i++){if(forces.advanceLipGraze(b,{x:0,z:0,radius:.031,captureRadius:.019,dt:1/240}))hits++;else{b.px+=b.pvx/240;b.pz+=b.pvz/240;}}
- assert.equal(hits,1);assert.ok(b.pvz>.25);assert.ok(Math.abs(Math.hypot(b.pvx,b.pvz)-speed)<1e-12);
-});
-test('a central entry and an already falling ball are not rejected by the lip graze collider',()=>{
- for(const props of[{px:-.04,pz:0},{px:-.04,pz:.025,holeTime:.01}]){const b={...ball(0,0,.4,0),...props};for(let i=0;i<48;i++){assert.equal(forces.advanceLipGraze(b,{x:0,z:0,radius:.031,captureRadius:.019,dt:1/240}),0);b.px+=b.pvx/240;}}
-});
-test('swept lip contact gives the same trajectory at 120 and 480 Hz',()=>{
- const run=dt=>{const b=ball(-.04,.025,.4,0);for(let i=0;i<Math.round(.2/dt);i++){if(!forces.advanceLipGraze(b,{x:0,z:0,radius:.031,captureRadius:.019,dt})){b.px+=b.pvx*dt;b.pz+=b.pvz*dt;}}return b;};
- const a=run(1/120),b=run(1/480);assert.ok(Math.hypot(a.px-b.px,a.pz-b.pz)<1e-10);assert.ok(Math.hypot(a.pvx-b.pvx,a.pvz-b.pvz)<1e-10);
-});
-
-import {readFileSync} from 'node:fs';
-test('the final bowl keeps the recorded r36 sharp air response',()=>{
- const original=CFG.bowls.air.chance;
- try{CFG.bowls.air.chance=.32;const reference=JSON.parse(readFileSync(new URL('../docs/qa/retro-sharp-puff/contacts-browser.json',import.meta.url))).sharpPuff.on.path;
-  const s=new Sim(()=>{},createRng('sharp-puff'));s.spawnInBowl(2);s.time=1.1;const b=s.balls[0];Object.assign(b,{px:0,pz:-.012,pvx:0,pvz:-.22});
-  for(const expected of reference){s.step(1/240);assert.ok(Math.abs(b.pz-expected.z)<1e-12);assert.ok(Math.abs(b.pvz-expected.vz)<1e-12);assert.equal(b.mode,expected.mode);}
- }finally{CFG.bowls.air.chance=original;}
+ }finally{CFG.bowls.contacts.lipDepth=depth;CFG.bowls.contacts.lipOuter=outer;CFG.bowls.air.chance=air;}
 });

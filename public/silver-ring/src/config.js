@@ -83,7 +83,7 @@ export const CFG = {
     jitter: 0.09,          // 随机扰动加速度
     capture: 0.019,        // 洞捕获半径
     vpass: 0.26,           // 旧比較モードのみの入球速度制限
-    contacts: { enabled:true, rimRadius:.023, lipOuter:.043, lipDepth:.0035, grazeEnabled:true, grazeRadius:.031, fallDepth:.01, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
+    contacts: { enabled:true, rimRadius:.023, lipOuter:.037, lipDepth:.008, fallDepth:.01, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
     sinkT: 0.32,           // 吞珠动画时长
     // 現行: chance=運転時間比率、加速度を積分。旧比較モードのみchance/kickの抽選。
     air: { tier: 2, chance: .32, kick: 0.60, period:1.8, radius:.06, acceleration:5, triggerRadius:.04, burstRadius:.055, burstDuration:.06, burstAcceleration:40, burstCooldown:.7 },  // 最終皿空气喷出装置
