@@ -5,7 +5,8 @@
 //          → bowl(三段皿螺旋) → jackpot / swamp
 // 盘面机关:大回転盤×2(凸钉搅拌)/ 電動チューリップ(随机开闭+遥控ブロック)
 // ============================================================
-import {advanceHop,resolveLipContact,resolveBowlPair} from './bowl-contacts.js';
+import {advanceHop,resolveBowlPair} from './bowl-contacts.js';
+import {applyLipGravity,applyAirJet,lipHeight} from './bowl-forces.js';
 import { CFG, buildLayout } from './config.js';
 
 const TAU = Math.PI * 2;
@@ -25,6 +26,16 @@ export function bowlY(r, R) {
   const base = B.depth * Math.pow(r / R, B.expo);
   const bump = B.bump.h * Math.exp(-(r * r) / (B.bump.w * B.bump.w));
   return base + bump;
+}
+// Shared shallow-edge height field used for forces, visible ball height and dish mesh.
+export function bowlSurfaceY(x,z,bw,rot=0){
+ let y=bowlY(Math.hypot(x,z),bw.R);
+ let recess=0;
+ if(CFG.bowls.contacts.enabled)for(const h of bw.holes){
+  const a=h.a+rot;
+  recess=Math.min(recess,lipHeight(Math.hypot(x-Math.cos(a)*bw.ringR,z-Math.sin(a)*bw.ringR),{inner:CFG.bowls.capture,outer:CFG.bowls.contacts.lipOuter,depth:CFG.bowls.contacts.lipDepth}));
+ }
+ return y+recess;
 }
 export function bowlSlope(r, R) {
   const B = CFG.bowls;
@@ -192,7 +203,7 @@ export class Sim {
   enterBowl(b, bi, fromPos) {
     const bw = CFG.bowls.list[bi];
     const e = bw.enter;
-    b.mode = 'bowl'; b.bi = bi; b.bowlT = 0; b.aired = false;b.hopY=0;b.hopV=0;b.lipTouches=new Set();b.pendingSink=null;b.contactStillT=0;
+    b.mode = 'bowl'; b.bi = bi; b.bowlT = 0; b.aired = false;b.airPulse=-1;b.holeTime=0;b.holeIndex=-1;b.hopY=0;b.hopV=0;b.pendingSink=null;b.contactStillT=0;
     // 个体差:速度与滚动阻尼 → 决定最终落洞的混沌相位
     b.dampMul = 0.86 + this.rand() * 0.28;
     const v = e.v * (0.82 + this.rand() * 0.38);
@@ -292,7 +303,7 @@ export class Sim {
     if(CFG.bowls.contacts.enabled)for(const b of this.balls){
       const entry=b.pendingSink;b.pendingSink=null;
       if(!entry||b.dead||b.mode!=='bowl')continue;
-      if((b.hopY||0)<.0005&&(b.hopV||0)<=0&&Math.hypot(b.px-entry.hx,b.pz-entry.hz)<CFG.bowls.capture&&Math.hypot(b.pvx,b.pvz)<CFG.bowls.vpass)this.sink(b,CFG.bowls.list[b.bi],entry.hi,entry.hx,entry.hz);
+      if((b.hopY||0)<.0005&&(b.hopV||0)<=0&&Math.hypot(b.px-entry.hx,b.pz-entry.hz)<CFG.bowls.capture&&.5*CFG.g*(b.holeTime||0)**2>=CFG.bowls.contacts.fallDepth)this.sink(b,CFG.bowls.list[b.bi],entry.hi,entry.hx,entry.hz);
     }
     this.balls = this.balls.filter(b => !b.dead);
   }
@@ -518,9 +529,29 @@ export class Sim {
     ax -= c * b.pvx; az -= c * b.pvz;
     // 倾斜作弊 + 扰动
     ax += this.tilt * CFG.tilt.maxAccel;
-    ax += (this.rand() - 0.5) * B.jitter;
-    az += (this.rand() - 0.5) * B.jitter;
+    if(!B.contacts.enabled){
+      ax += (this.rand() - 0.5) * B.jitter;
+      az += (this.rand() - 0.5) * B.jitter;
+    }
     b.pvx += ax * dt; b.pvz += az * dt;
+    if(B.contacts.enabled){
+      const rot=this.bowlAngles[b.bi];
+      let nearest=-1,nearestD=Infinity;
+      for(let hi=0;hi<bw.holes.length;hi++){
+        const a=bw.holes[hi].a+rot,d=Math.hypot(b.px-Math.cos(a)*bw.ringR,b.pz-Math.sin(a)*bw.ringR);
+        if(d<nearestD){nearest=hi;nearestD=d;}
+      }
+      for(let hi=0;hi<bw.holes.length;hi++){
+        const h=bw.holes[hi],a=h.a+rot,hx=Math.cos(a)*bw.ringR,hz=Math.sin(a)*bw.ringR;
+        const force=hi===nearest?applyLipGravity(b,{x:hx,z:hz,inner:B.capture,outer:B.contacts.lipOuter,depth:B.contacts.lipDepth,gravity:CFG.g,dt}):0;
+        if(force>.2&&(!b.rattled||this.time-b.rattled>.25)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
+        if(h.win&&b.bi===B.air.tier){
+          const wind=applyAirJet(b,{x:hx,z:hz,time:this.time,dt,period:B.air.period,duty:B.air.chance,radius:B.air.radius,acceleration:B.air.acceleration});
+          const pulse=Math.floor(this.time/B.air.period);
+          if(wind>.1&&b.airPulse!==pulse){b.airPulse=pulse;this.emit('air',{tier:b.bi});}
+        }
+      }
+    }
     b.px += b.pvx * dt; b.pz += b.pvz * dt;
 
     // 碗缘
@@ -543,7 +574,7 @@ export class Sim {
       const d = Math.hypot(b.px - hx, b.pz - hz);
       // 最終皿的空气喷出装置(一条流アシスト):
       // 慢速接近当り穴的瞬间,可能被一股气流吹开
-      if (h.win && b.bi === B.air.tier && !b.aired && d < B.capture * 2.6 && sp < B.vpass * 1.6) {
+      if (!B.contacts.enabled && h.win && b.bi === B.air.tier && !b.aired && d < B.capture * 2.6 && sp < B.vpass * 1.6) {
         b.aired = true;
         if (this.rand() < B.air.chance) {
           const ddx = b.px - hx, ddz = b.pz - hz;
@@ -554,14 +585,15 @@ export class Sim {
           continue;
         }
       }
-      if(B.contacts.enabled){
-        const impact=resolveLipContact(b,{x:hx,z:hz,key:hi,radius:B.contacts.rimRadius,band:B.contacts.rimBand,captureRadius:B.capture,deflection:B.contacts.rimDeflection});
-        if(impact>.08&&(!b.rattled||this.time-b.rattled>.15)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
-        if((b.hopY||0)>.0005||(b.hopV||0)>0)continue;
-      }
+      if(B.contacts.enabled&&((b.hopY||0)>.0005||(b.hopV||0)>0))continue;
       if (d < B.capture) {
+        if(B.contacts.enabled){
+          b.holeTime=(b.holeIndex===hi?(b.holeTime||0):0)+dt;b.holeIndex=hi;
+          if(.5*CFG.g*b.holeTime*b.holeTime>=B.contacts.fallDepth)b.pendingSink={hi,hx,hz};
+          return;
+        }
         if (sp < B.vpass) {
-          if(B.contacts.enabled)b.pendingSink={hi,hx,hz};else this.sink(b, bw, hi, hx, hz);
+          this.sink(b, bw, hi, hx, hz);
           return;
         } else if(!B.contacts.enabled) {
           // 高速滚过洞口:骤减速 + 轻微吸向洞心(哐啷感)
@@ -574,17 +606,20 @@ export class Sim {
         }
       }
     }
+    if(B.contacts.enabled){b.holeTime=0;b.holeIndex=-1;}
   }
 
   sink(b, bw, hi, hx, hz) {
     const win = !!bw.holes[hi].win;
-    const wx = hx, wy = bw.cy + bowlY(Math.hypot(hx, hz), bw.R) + CFG.ball.r;
-    const wz = bw.cz + hz;
+    const current=this.worldPos(b,[0,0,0]);
+    const wx = CFG.bowls.contacts.enabled?current[0]:hx, wy = CFG.bowls.contacts.enabled?current[1]:bw.cy+bowlY(Math.hypot(hx,hz),bw.R)+CFG.ball.r;
+    const wz = CFG.bowls.contacts.enabled?current[2]:bw.cz+hz;
     this.emit('sink', { tier: b.bi, win, x: wx, y: wy, z: wz });
     const B = CFG.bowls;
     if (win) {
       // 与场景导管完全同轨的贯通路径
       const W = winFlyPts(b.bi);
+      if(B.contacts.enabled){W.drop[0]=current;W.drop[1]=[wx,wy-.03,wz];}
       if (W.jackpot) {
         this.setScript(b, [
           { pts: W.drop, dur: B.sinkT, ease: 2 },
@@ -700,7 +735,7 @@ export class Sim {
           }
         } else if (A.mode === 'bowl' && A.bi === B.bi) {
           if(CFG.bowls.contacts.enabled){
-            const bw=CFG.bowls.list[A.bi],impact=resolveBowlPair(A,B,{radius:CFG.ball.r,restitution:CFG.phys.restBall,friction:CFG.bowls.contacts.pairFriction,maxHopSpeed:CFG.bowls.contacts.maxHopSpeed,heightA:bowlY(Math.hypot(A.px,A.pz),bw.R)+(A.hopY||0),heightB:bowlY(Math.hypot(B.px,B.pz),bw.R)+(B.hopY||0)});
+            const bw=CFG.bowls.list[A.bi],impact=resolveBowlPair(A,B,{radius:CFG.ball.r,restitution:CFG.phys.restBall,friction:CFG.bowls.contacts.pairFriction,maxHopSpeed:CFG.bowls.contacts.maxHopSpeed,heightA:this.worldPos(A,[0,0,0])[1],heightB:this.worldPos(B,[0,0,0])[1]});
             if(impact>.12)this.emit('clack',{x:A.px,y:bw.cy,v:impact});
             continue;
           }
@@ -739,9 +774,8 @@ export class Sim {
         break;
       case 'bowl': {
         const bw = CFG.bowls.list[b.bi];
-        const r = Math.hypot(b.px, b.pz);
         out[0] = b.px;
-        out[1] = bw.cy + bowlY(r, bw.R) + CFG.ball.r + (CFG.bowls.contacts.enabled?(b.hopY||0):0);
+        out[1] = bw.cy + bowlSurfaceY(b.px,b.pz,bw,this.bowlAngles[b.bi]) + CFG.ball.r + (CFG.bowls.contacts.enabled?(b.hopY||0)-Math.min(CFG.bowls.contacts.fallDepth,.5*CFG.g*(b.holeTime||0)**2):0);
         out[2] = bw.cz + b.pz;
         break;
       }

@@ -1,0 +1,76 @@
+{
+  "conditions": {
+    "dt": 0.004166666666666667,
+    "contacts": {
+      "enabled": true,
+      "rimRadius": 0.023,
+      "lipOuter": 0.043,
+      "lipDepth": 0.0035,
+      "fallDepth": 0.01,
+      "pairFriction": 0.08,
+      "maxHopSpeed": 0.28,
+      "maxDampingExtra": 2,
+      "stalledAfter": 35,
+      "stalledFor": 3
+    },
+    "air": {
+      "tier": 2,
+      "chance": 0.32,
+      "kick": 0.6,
+      "period": 1.8,
+      "radius": 0.06,
+      "acceleration": 5
+    }
+  },
+  "rows": [
+    {
+      "tier": 1,
+      "duty": 0.32,
+      "trials": 200,
+      "wins": 72,
+      "losses": 128,
+      "unresolved": 0,
+      "windEvents": 0,
+      "windRuns": 0,
+      "meanSeconds": 6.18124999999997,
+      "maxSeconds": 7.641666666666553
+    },
+    {
+      "tier": 2,
+      "duty": 0.32,
+      "trials": 200,
+      "wins": 61,
+      "losses": 139,
+      "unresolved": 0,
+      "windEvents": 0,
+      "windRuns": 0,
+      "meanSeconds": 5.457604166666677,
+      "maxSeconds": 6.899999999999928
+    },
+    {
+      "tier": 3,
+      "duty": 0,
+      "trials": 200,
+      "wins": 42,
+      "losses": 158,
+      "unresolved": 0,
+      "windEvents": 0,
+      "windRuns": 0,
+      "meanSeconds": 5.1552500000000245,
+      "maxSeconds": 6.574999999999947
+    },
+    {
+      "tier": 3,
+      "duty": 0.32,
+      "trials": 200,
+      "wins": 48,
+      "losses": 152,
+      "unresolved": 0,
+      "windEvents": 37,
+      "windRuns": 33,
+      "meanSeconds": 5.147791666666692,
+      "maxSeconds": 6.608333333333278
+    }
+  ],
+  "note": "Natural seeded single-ball bowl entries. Not full-game odds or physical-device performance."
+}

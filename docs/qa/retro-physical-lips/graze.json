@@ -1,0 +1,11 @@
+{
+  "effectiveGravity": 3.2,
+  "startSpeed": 0.4,
+  "exitSpeed": 0.3999996804124948,
+  "maxTurnDegrees": 11.046238677623634,
+  "exitVelocity": {
+    "x": 0.3925888374032047,
+    "z": -0.07664038802418768
+  },
+  "note": "Isolated conservative rounded-edge pass; no dish damping, jet or ball collisions."
+}

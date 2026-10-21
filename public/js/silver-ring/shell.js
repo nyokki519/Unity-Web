@@ -15,7 +15,7 @@ export function mountSilver({onBack}){
  const quality=labeledSelect('描画品質',[['auto','自動'],['high','最高画質'],['low','省電力']],'high',value=>send('quality',value));
  const notes=el('input');notes.type='checkbox';notes.checked=true;const noteLabel=el('label');noteLabel.append(notes,document.createTextNode('金貨の背景演出'));notes.addEventListener('change',()=>send('banknotes',notes.checked),{signal:abort.signal});
  const backgroundCheck=button('背景の落下を確認',()=>{notes.checked=true;send('banknotes',true);send('camera','wide');options.hidden=true;settings.setAttribute('aria-expanded','false');},'button secondary');
- options.append(camera,label,noteLabel,backgroundCheck,el('small','','縁の軌道調整版 r34：1球200・初期4万'),quality,strength,lab);
+ options.append(camera,label,noteLabel,backgroundCheck,el('small','','縁の重力・周期送風版 r35：1球200・初期4万'),quality,strength,lab);
  window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==frame.contentWindow||e.data?.source!=='silver-game')return;if(e.data.power!==undefined&&document.activeElement!==power)power.value=String(e.data.power);phase=e.data.phase;pause.textContent=e.data.phase==='paused'?'再開する':'一時停止';pause.disabled=!['play','paused'].includes(e.data.phase);},{signal:abort.signal});
  // Visibility is authoritative; iframe/browser-toolbar focus changes are not a background transition.
  document.addEventListener('visibilitychange',()=>{if(document.hidden)send('suspend');},{signal:abort.signal});

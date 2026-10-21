@@ -15,7 +15,7 @@ import { OutputPass } from '../../vendor/three/addons/postprocessing/OutputPass.
 import { OrbitControls } from '../../vendor/three/addons/controls/OrbitControls.js';
 import * as BGU from '../../vendor/three/addons/utils/BufferGeometryUtils.js';
 import { CFG, buildLayout } from './config.js';
-import { bowlY, winFlyPts, entryFlyPts } from './physics.js';
+import { bowlSurfaceY, bowlY, winFlyPts, entryFlyPts } from './physics.js';
 
 // ---------- 画布纹理工具 ----------
 function canvasTex(w, h, draw) {
@@ -389,13 +389,20 @@ export function buildScene(canvas,layout=buildLayout()) {
     g.position.set(0, bw.cy, bw.cz);
     // 碗体
     const pts = [];
-    for (let i = 0; i <= 15; i++) {
-      const r = 0.004 + (bw.R - 0.004) * (i / 15);
+    for (let i = 0; i <= 40; i++) {
+      const r = 0.004 + (bw.R - 0.004) * (i / 40);
       pts.push(new THREE.Vector2(r, bowlY(r, bw.R)));
     }
     pts.push(new THREE.Vector2(bw.R + 0.005, bowlY(bw.R, bw.R) + 0.016));
     pts.push(new THREE.Vector2(bw.R + 0.008, bowlY(bw.R, bw.R) + 0.030));
-    const dish = new THREE.Mesh(new THREE.LatheGeometry(pts, 56),
+    const dishGeo=new THREE.LatheGeometry(pts,72);
+    const positions=dishGeo.attributes.position;
+    for(let i=0;i<positions.count;i++){
+      const x=positions.getX(i),z=positions.getZ(i);
+      positions.setY(i,positions.getY(i)+bowlSurfaceY(x,z,bw)-bowlY(Math.hypot(x,z),bw.R));
+    }
+    dishGeo.computeVertexNormals();
+    const dish = new THREE.Mesh(dishGeo,
       new THREE.MeshPhysicalMaterial({
         color: 0xe8f1f8, metalness: 0, roughness: 0.16,
         transparent: true, opacity: 0.17, clearcoat: 0.8, clearcoatRoughness: 0.22,
@@ -452,7 +459,22 @@ export function buildScene(canvas,layout=buildLayout()) {
       return { hg, win: !!h.win, ring };
     });
     boardG.add(g);
-    bowlRefs.push({ group: g, holes, ledMat, bw, bi });
+    let fan=null;
+    if(bi===CFG.bowls.air.tier){
+      const wh=bw.holes.find(h=>h.win),nx=Math.cos(wh.a),nz=Math.sin(wh.a);
+      const housing=new THREE.Group();
+      housing.position.set(nx*(bw.R-.012),bowlY(bw.R-.012,bw.R)+.034,nz*(bw.R-.012));
+      housing.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),new THREE.Vector3(-nx,0,-nz));
+      const light=new THREE.MeshBasicMaterial({color:0x357883,toneMapped:false});
+      housing.add(new THREE.Mesh(new THREE.TorusGeometry(.016,.0025,6,24),goldMat(.3)));
+      const rotor=new THREE.Group();
+      for(let k=0;k<3;k++){
+        const blade=new THREE.Mesh(new THREE.BoxGeometry(.018,.005,.002),light);
+        const a=k*Math.PI*2/3;blade.position.set(Math.cos(a)*.005,Math.sin(a)*.005,0);blade.rotation.z=a;rotor.add(blade);
+      }
+      housing.add(rotor);g.add(housing);fan={housing,rotor,light};
+    }
+    bowlRefs.push({ group: g, holes, ledMat, bw, bi, fan });
   });
 
   // ---------- 落球導軌(承托式金双轨) ----------

@@ -82,10 +82,11 @@ export const CFG = {
     damp: 0.34,            // 线性阻尼
     jitter: 0.09,          // 随机扰动加速度
     capture: 0.019,        // 洞捕获半径
-    vpass: 0.26,           // 高于此速度会滚过洞口
-    contacts: { enabled:true, rimRadius:.023, rimBand:.012, rimDeflection:.15, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
+    vpass: 0.26,           // 旧比較モードのみの入球速度制限
+    contacts: { enabled:true, rimRadius:.023, lipOuter:.043, lipDepth:.0035, fallDepth:.01, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
     sinkT: 0.32,           // 吞珠动画时长
-    air: { tier: 2, chance: .32, kick: 0.60 },  // 最終皿空气喷出装置
+    // 現行: chance=運転時間比率、加速度を積分。旧比較モードのみchance/kickの抽選。
+    air: { tier: 2, chance: .32, kick: 0.60, period:1.8, radius:.06, acceleration:5 },  // 最終皿空气喷出装置
     list: [
       { cy: 0.835, cz: -0.115, R: 0.165, ringR: 0.055, rot: 0,
         enter: { a: 150 * D2R, dir: +1, rr: 0.86, v: 0.95 },

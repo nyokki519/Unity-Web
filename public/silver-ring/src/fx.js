@@ -5,7 +5,7 @@
 import {bowlCameraPose,autoBowlCameraPose} from './camera-pose.js';
 import * as THREE from '../../vendor/three/three.module.js';
 import { CFG } from './config.js';
-import { bowlY, bowlSlope } from './physics.js';
+import { bowlSurfaceY, bowlSlope } from './physics.js';
 
 const TIER_Y = CFG.bowls.list.map(b => b.cy + CFG.machineY);
 const _UP = new THREE.Vector3(0, 1, 0), _HN = new THREE.Vector3();
@@ -407,12 +407,18 @@ export class FX {
     // ---- 皿:洞口位置(随转动)/ LED / 金环脉冲 ----
     R.bowlRefs.forEach((br, bi) => {
       const rot = sim.bowlAngles[bi];
-      const ySurf = bowlY(br.bw.ringR, br.bw.R) + 0.0025;
+      if(br.fan){
+        const duty=CFG.bowls.air.chance,phase=((sim.time%CFG.bowls.air.period)+CFG.bowls.air.period)%CFG.bowls.air.period/CFG.bowls.air.period;
+        const active=duty>0&&phase<duty;
+        br.fan.housing.visible=duty>0;
+        br.fan.rotor.rotation.z+=dt*(active?24:1.5);
+        br.fan.light.color.setRGB(active ? .3 : .08,active ? 1.4 : .3,active ? 1.7 : .35);
+      }
       const slope = bowlSlope(br.bw.ringR, br.bw.R);  // 洞口环贴碗面法线倾斜,防穿模
       br.holes.forEach((h, hi) => {
         const a = br.bw.holes[hi].a + rot;
         const ca = Math.cos(a), sa = Math.sin(a);
-        h.hg.position.set(ca * br.bw.ringR, ySurf, sa * br.bw.ringR);
+        h.hg.position.set(ca * br.bw.ringR, bowlSurfaceY(ca*br.bw.ringR,sa*br.bw.ringR,br.bw,rot)+0.0025, sa * br.bw.ringR);
         _HN.set(-slope * ca, 1, -slope * sa).normalize();
         h.hg.quaternion.setFromUnitVectors(_UP, _HN);
         if (h.win) {

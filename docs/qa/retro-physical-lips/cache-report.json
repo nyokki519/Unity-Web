@@ -1,0 +1,6 @@
+{
+  "old": "version-1",
+  "afterUpdate": "version-2",
+  "offline": "version-2",
+  "playPageNotReloaded": true
+}

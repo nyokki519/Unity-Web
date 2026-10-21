@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {resolveBowlPair,resolveLipContact,advanceHop} from '../public/silver-ring/src/bowl-contacts.js';
+import {resolveBowlPair,advanceHop} from '../public/silver-ring/src/bowl-contacts.js';
 const ball=(px,pz,pvx,pvz)=>({px,pz,pvx,pvz,hopY:0,hopV:0});
 test('oblique ball collision redirects both balls without adding kinetic energy',()=>{
  const a=ball(-.02,0,.5,.1),b=ball(.02,.014,-.2,0),energy=o=>o.pvx**2+o.pvz**2+(o.hopV||0)**2,before=energy(a)+energy(b);
@@ -9,26 +9,12 @@ test('balls separated vertically do not collide and coincident balls resolve fin
  const a=ball(0,0,.3,0),b=ball(0,0,-.2,0);assert.equal(resolveBowlPair(a,b,{radius:.026,heightA:0,heightB:.08}),0);
  assert.ok(resolveBowlPair(a,b,{radius:.026,heightA:0,heightB:0}));assert.ok([a.px,a.pz,b.px,b.pz,a.pvx,b.pvx].every(Number.isFinite));
 });
-test('a lip graze only changes direction: speed preserved, no outward bounce or hop',()=>{
- const b=ball(.028,.003,-.45,.18),speed=Math.hypot(b.pvx,b.pvz),before={x:b.pvx,z:b.pvz};
- const contact={x:0,z:0,key:0,radius:.023,band:.008,captureRadius:.019,deflection:.15,minSpeed:.08};
- assert.ok(resolveLipContact(b,contact));assert.ok(b.pvx<0);assert.ok(Math.abs(b.pvz-before.z)>.005);assert.ok(Math.abs(Math.hypot(b.pvx,b.pvz)-speed)<1e-12);
- assert.ok(b.pvx*b.px+b.pvz*b.pz<0,'must still travel inward');assert.equal(b.hopV,0);assert.equal(b.hopY,0);
- const v=b.pvx;assert.equal(resolveLipContact(b,contact),0);assert.equal(b.pvx,v,'no repeated steering inside one contact');
-});
-test('a ball already within the capture area is not redirected by the rim',()=>{
- const b=ball(.018,0,-.2,.1);assert.equal(resolveLipContact(b,{x:0,z:0,key:0,radius:.023,band:.012,captureRadius:.019}),0);assert.equal(b.pvx,-.2);assert.equal(b.pvz,.1);
-});
-test('a slow central entry or remote ball is not randomly kicked',()=>{
- const b=ball(0,0,.02,0);assert.equal(resolveLipContact(b,{x:0,z:0,key:0,radius:.023,band:.008}),0);assert.equal(b.pvx,.02);
- b.px=.09;assert.equal(resolveLipContact(b,{x:0,z:0,key:0,radius:.023,band:.008}),0);
-});
 import {Sim} from '../public/silver-ring/src/physics.js';
 import {CFG} from '../public/silver-ring/src/config.js';
 import {createRng} from '../public/silver-ring/src/seed.js';
 test('an incoming ball can knock a candidate out before hole entry is committed',()=>{
  const sim=new Sim(()=>{},createRng('pre-sink-contact'));sim.spawnInBowl(0);sim.spawnInBowl(0);const[a,b]=sim.balls;
- Object.assign(a,{px:0,pz:CFG.bowls.list[0].ringR,pvx:0,pvz:0});Object.assign(b,{px:-.048,pz:a.pz,pvx:.8,pvz:0});
+ Object.assign(a,{px:0,pz:CFG.bowls.list[0].ringR,pvx:0,pvz:0,holeTime:.044,holeIndex:0});Object.assign(b,{px:-.048,pz:a.pz,pvx:.8,pvz:0});
  sim.step(1/240);assert.equal(a.mode,'bowl');assert.ok(a.pvx>.3);assert.equal(a.pendingSink,null);
 });
 test('multiple bowl balls stay finite, never repeat a stage sink, and all resolve',()=>{

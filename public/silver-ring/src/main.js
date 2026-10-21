@@ -72,7 +72,7 @@ const sim = new Sim((ev, d) => {
     case 'air':
       audio.airPuff();
       fx.airPuff(d.tier);
-      ui.toast('送風ギミックが作動しました', 'red');
+      ui.toast('最終皿の送風が作動しています', 'red');
       break;
     case 'railout': audio.railout(); break;
     case 'foul':
