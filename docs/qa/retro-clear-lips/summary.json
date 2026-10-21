@@ -1,0 +1,80 @@
+{
+  "conditions": {
+    "bowlContacts": {
+      "enabled": true,
+      "rimRadius": 0.023,
+      "lipOuter": 0.037,
+      "lipDepth": 0.008,
+      "fallDepth": 0.01,
+      "pairFriction": 0.08,
+      "maxHopSpeed": 0.28,
+      "maxDampingExtra": 2,
+      "stalledAfter": 35,
+      "stalledFor": 3
+    },
+    "seeds": 500,
+    "seedStart": 0,
+    "netShotBudget": 250,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0.32,
+    "airSettings": {
+      "tier": 2,
+      "chance": 0.32,
+      "kick": 0.6,
+      "period": 1.8,
+      "radius": 0.06,
+      "acceleration": 5,
+      "triggerRadius": 0.04,
+      "burstRadius": 0.055,
+      "burstDuration": 0.06,
+      "burstAcceleration": 40,
+      "burstCooldown": 0.7
+    },
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240,
+    "initialCredit": 50000,
+    "shotCost": 200
+  },
+  "summary": {
+    "runs": 500,
+    "winningRuns": 222,
+    "winningRunRate": 0.444,
+    "winningRun95WilsonInterval": [
+      0.40104004351009104,
+      0.4878139137653702
+    ],
+    "shots": 125000,
+    "jackpots": 284,
+    "refunds": 0,
+    "remaining": 0,
+    "stages": [
+      {
+        "stage": 1,
+        "entered": 16835,
+        "won": 5691,
+        "winRate": 0.33804573804573806
+      },
+      {
+        "stage": 2,
+        "entered": 5691,
+        "won": 1473,
+        "winRate": 0.2588297311544544
+      },
+      {
+        "stage": 3,
+        "entered": 1473,
+        "won": 284,
+        "winRate": 0.19280380176510523
+      }
+    ]
+  },
+  "validation": {
+    "uniqueSeeds": 500,
+    "allRunsSpent250NetShots": true,
+    "allStageEntriesAccountedFor": true,
+    "allBallsResolved": true
+  }
+}

@@ -61,3 +61,16 @@ test('the short puff integrates consistently across time steps and cannot act re
  assert.ok(Math.abs(run(1/240)-run(1/480))<1e-10);assert.ok(run(1/240)>.5);
  const b=ball(0,.1,0,0);assert.equal(forces.applyAirBurst(b,{x:0,z:0,elapsed:.02,dt:1/240,duration:.06,radius:.055,inner:.019,acceleration:40}),0);assert.equal(b.pvz,0);
 });
+test('all three stages show a clearly larger geometric graze without wind',()=>{
+ const depth=CFG.bowls.contacts.lipDepth,outer=CFG.bowls.contacts.lipOuter,air=CFG.bowls.air.chance;
+ try{CFG.bowls.air.chance=0;
+  for(let tier=0;tier<3;tier++){
+   const run=(d,o=outer)=>{CFG.bowls.contacts.lipDepth=d;CFG.bowls.contacts.lipOuter=o;const s=new Sim(()=>{},createRng(`audit-${tier}`));s.spawnInBowl(tier);const b=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],nx=Math.cos(h.a),nz=Math.sin(h.a),tx=-nz,tz=nx;Object.assign(b,{px:nx*(bw.ringR+.032)-tx*.04,pz:nz*(bw.ringR+.032)-tz*.04,pvx:tx*.4,pvz:tz*.4});for(let i=0;i<36&&b.mode==='bowl';i++)s.step(1/240);return{heading:Math.atan2(b.pvz,b.pvx),x:b.px,z:b.pz,mode:b.mode};};
+   const flat=run(0),old=run(.0035,.043),current=run(depth),angle=o=>Math.abs(Math.atan2(Math.sin(o.heading-flat.heading),Math.cos(o.heading-flat.heading)));
+   assert.ok(angle(current)>10*Math.PI/180,`stage ${tier+1}: visible turn`);
+   assert.ok(angle(current)>angle(old)*1.7,`stage ${tier+1}: materially stronger than r37`);
+   assert.ok(Math.hypot(current.x-flat.x,current.z-flat.z)>.007,`stage ${tier+1}: visible displacement`);
+   assert.equal(current.mode,'bowl','a graze may continue past the hole');
+  }
+ }finally{CFG.bowls.contacts.lipDepth=depth;CFG.bowls.contacts.lipOuter=outer;CFG.bowls.air.chance=air;}
+});
