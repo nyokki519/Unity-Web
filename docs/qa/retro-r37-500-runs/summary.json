@@ -1,0 +1,85 @@
+{
+  "conditions": {
+    "bowlContacts": {
+      "enabled": true,
+      "rimRadius": 0.023,
+      "lipOuter": 0.043,
+      "lipDepth": 0.0035,
+      "fallDepth": 0.01,
+      "pairFriction": 0.08,
+      "maxHopSpeed": 0.28,
+      "maxDampingExtra": 2,
+      "stalledAfter": 35,
+      "stalledFor": 3
+    },
+    "seeds": 500,
+    "seedStart": 0,
+    "netShotBudget": 200,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0.32,
+    "airSettings": {
+      "tier": 2,
+      "chance": 0.32,
+      "kick": 0.6,
+      "period": 1.8,
+      "radius": 0.06,
+      "acceleration": 5,
+      "triggerRadius": 0.04,
+      "burstRadius": 0.055,
+      "burstDuration": 0.06,
+      "burstAcceleration": 40,
+      "burstCooldown": 0.7
+    },
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240,
+    "sourceCommit": "c993c69"
+  },
+  "summary": {
+    "runs": 500,
+    "winningRuns": 229,
+    "winningRunRate": 0.458,
+    "winningRun95WilsonInterval": [
+      0.41481382806562594,
+      0.50182663989097
+    ],
+    "jackpots": 285,
+    "shots": 100000,
+    "refunds": 0,
+    "gateEntries": 13454,
+    "remaining": 0,
+    "airBursts": 1011,
+    "stages": [
+      {
+        "stage": 1,
+        "entered": 13454,
+        "won": 4349,
+        "lost": 9105,
+        "winRate": 0.32324959119964325
+      },
+      {
+        "stage": 2,
+        "entered": 4349,
+        "won": 1010,
+        "lost": 3339,
+        "winRate": 0.23223729593009887
+      },
+      {
+        "stage": 3,
+        "entered": 1010,
+        "won": 285,
+        "lost": 725,
+        "winRate": 0.28217821782178215
+      }
+    ]
+  },
+  "validation": {
+    "allRunsSpent200NetShots": true,
+    "allBallsResolved": true,
+    "allStageEntriesAccountedFor": true,
+    "first100MatchPriorR36PhysicsResults": true
+  },
+  "note": "Current r37, wind ON; fixed power 45%, entry interference OFF. First 100 seeds repeat the prior sample; 400 seeds are additional. Conditional stage rates are from full routes, not direct bowl spawns."
+}
