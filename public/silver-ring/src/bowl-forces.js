@@ -30,3 +30,14 @@ export function applyAirJet(ball,{x,z,time,dt,period,duty,radius,acceleration}){
  ball.pvx-=x/n*a*dt;ball.pvz-=z/n*a*dt;
  return a;
 }
+// Short compressed-air discharge through the hole, spreading radially over the lip.
+// Exact temporal impulse integral avoids a frame-dependent single velocity kick.
+export function applyAirBurst(ball,{x,z,elapsed,dt,duration,radius,inner,acceleration}){
+ const dx=ball.px-x,dz=ball.pz-z,d=Math.hypot(dx,dz);
+ if(d<=inner||d>=radius||elapsed>=duration||elapsed+dt<=0||(ball.holeTime||0)>0)return 0;
+ const lo=Math.max(0,elapsed),hi=Math.min(duration,elapsed+dt);
+ const integral=t=>t/2-duration*Math.sin(2*Math.PI*t/duration)/(4*Math.PI);
+ const dv=acceleration*(integral(hi)-integral(lo))*(1-(d/radius)**2)**2;
+ ball.pvx+=dx/d*dv;ball.pvz+=dz/d*dv;
+ return dv;
+}

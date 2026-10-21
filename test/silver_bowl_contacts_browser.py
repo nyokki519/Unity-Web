@@ -1,8 +1,8 @@
 """Actual browser integration of geometric lip gravity, periodic wind and rendered positions."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import json
-OUT=Path('docs/qa/retro-physical-lips');OUT.mkdir(parents=True,exist_ok=True)
+import json,os
+OUT=Path(os.environ.get('SILVER_CONTACT_QA_DIR','docs/qa/retro-physical-lips'));OUT.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True)
  errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto('http://127.0.0.1:3461/?bonus=jackpot&debug=1&seed=physical-lips');f=page.frame_locator('iframe.silver-game');f.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=90000);c=page.frames[1];c.wait_for_function('()=>window.SILVER_GAME?.refs.boardTex.userData.artwork==="ready"',timeout=90000)
@@ -38,5 +38,9 @@ with sync_playwright() as p:
   page.screenshot(path=str(OUT/f'lip-stage-{tier+1}.png'),timeout=60000);rows.append(result)
  pair=c.evaluate('''()=>{const g=SILVER_GAME,s=g.sim;s.balls.length=0;s.spawnInBowl(0);s.spawnInBowl(0);const[a,b]=s.balls;Object.assign(a,{px:-.024,pz:-.10,pvx:.6,pvz:.12});Object.assign(b,{px:.018,pz:-.082,pvx:-.3,pvz:0});s.collideBalls();return{a:{x:a.pvx,z:a.pvz},b:{x:b.pvx,z:b.pvz}}}''')
  assert abs(pair['a']['z']-.12)>.03,pair
+ sharp=c.evaluate('''async()=>{const{Sim}=await import('/silver-ring/src/physics.js'),{CFG}=await import('/silver-ring/src/config.js'),{createRng}=await import('/silver-ring/src/seed.js');const saved=CFG.bowls.air.chance;const run=duty=>{CFG.bowls.air.chance=duty;let bursts=0;const s=new Sim((type,d)=>{if(type==='air'&&d.burst)bursts++},createRng('sharp-puff'));s.spawnInBowl(2);s.time=1.1;const b=s.balls[0];Object.assign(b,{px:0,pz:-.012,pvx:0,pvz:-.22});const path=[];for(let i=0;i<24;i++){s.step(1/240);path.push({t:(i+1)/240,z:b.pz,vz:b.pvz,mode:b.mode});}return{path,bursts,vz:b.pvz,mode:b.mode};};const on=run(.32),off=run(0);CFG.bowls.air.chance=saved;return{on,off};}''')
+ assert sharp['on']['vz']>.1 and sharp['on']['vz']-sharp['off']['vz']>.3,sharp
+ assert sharp['on']['bursts']==1 and sharp['off']['bursts']==0,sharp
+ assert sharp['on']['mode']=='bowl',sharp
  assert not errors,errors
- (OUT/'contacts-browser.json').write_text(json.dumps({'controlledContacts':rows,'obliquePair':pair,'errors':errors,'note':'Controlled real simulation/render checks, not natural outcome measurements.'},ensure_ascii=False,indent=2));print('physical lips and wind browser passed');b.close()
+ (OUT/'contacts-browser.json').write_text(json.dumps({'controlledContacts':rows,'obliquePair':pair,'sharpPuff':sharp,'errors':errors,'note':'Controlled real simulation/render checks, not natural outcome measurements.'},ensure_ascii=False,indent=2));print('physical lips and wind browser passed');b.close()

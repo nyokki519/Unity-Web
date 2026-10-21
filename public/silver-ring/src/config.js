@@ -86,7 +86,7 @@ export const CFG = {
     contacts: { enabled:true, rimRadius:.023, lipOuter:.043, lipDepth:.0035, fallDepth:.01, pairFriction:.08, maxHopSpeed:.28, maxDampingExtra:2, stalledAfter:35, stalledFor:3 },
     sinkT: 0.32,           // 吞珠动画时长
     // 現行: chance=運転時間比率、加速度を積分。旧比較モードのみchance/kickの抽選。
-    air: { tier: 2, chance: .32, kick: 0.60, period:1.8, radius:.06, acceleration:5 },  // 最終皿空气喷出装置
+    air: { tier: 2, chance: .32, kick: 0.60, period:1.8, radius:.06, acceleration:5, triggerRadius:.04, burstRadius:.055, burstDuration:.06, burstAcceleration:40, burstCooldown:.7 },  // 最終皿空气喷出装置
     list: [
       { cy: 0.835, cz: -0.115, R: 0.165, ringR: 0.055, rot: 0,
         enter: { a: 150 * D2R, dir: +1, rr: 0.86, v: 0.95 },

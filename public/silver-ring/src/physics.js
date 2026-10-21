@@ -6,7 +6,7 @@
 // 盘面机关:大回転盤×2(凸钉搅拌)/ 電動チューリップ(随机开闭+遥控ブロック)
 // ============================================================
 import {advanceHop,resolveBowlPair} from './bowl-contacts.js';
-import {applyLipGravity,applyAirJet,lipHeight} from './bowl-forces.js';
+import {applyLipGravity,applyAirJet,applyAirBurst,lipHeight} from './bowl-forces.js';
 import { CFG, buildLayout } from './config.js';
 
 const TAU = Math.PI * 2;
@@ -125,6 +125,7 @@ export class Sim {
     this.balls = [];
     this.railGapA = railGapA();
     this.time = 0;
+    this.airBurstStart=-Infinity;
     this.launchT = -9;        // 上一发的时刻(发射间隔下限用)
     this.tilt = 0;            // -1..1(玩家偷偷倾斜)
     this.bowlAngles = CFG.bowls.list.map(() => 0);
@@ -546,7 +547,13 @@ export class Sim {
         const force=hi===nearest?applyLipGravity(b,{x:hx,z:hz,inner:B.capture,outer:B.contacts.lipOuter,depth:B.contacts.lipDepth,gravity:CFG.g,dt}):0;
         if(force>.2&&(!b.rattled||this.time-b.rattled>.25)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
         if(h.win&&b.bi===B.air.tier){
-          const wind=applyAirJet(b,{x:hx,z:hz,time:this.time,dt,period:B.air.period,duty:B.air.chance,radius:B.air.radius,acceleration:B.air.acceleration});
+          const dx=b.px-hx,dz=b.pz-hz,d=Math.hypot(dx,dz);
+          const approaching=d>0&&(b.pvx*dx+b.pvz*dz)/d<-.02;
+          if(B.air.chance>0&&approaching&&d>B.capture&&d<B.air.triggerRadius&&!(b.holeTime>0)&&this.time-this.airBurstStart>B.air.burstCooldown){
+            this.airBurstStart=this.time;this.emit('air',{tier:b.bi,burst:true});
+          }
+          if(B.air.chance>0)applyAirBurst(b,{x:hx,z:hz,elapsed:this.time-this.airBurstStart,dt,duration:B.air.burstDuration,radius:B.air.burstRadius,inner:B.capture,acceleration:B.air.burstAcceleration});
+          const wind=b.holeTime>0?0:applyAirJet(b,{x:hx,z:hz,time:this.time,dt,period:B.air.period,duty:B.air.chance,radius:B.air.radius,acceleration:B.air.acceleration});
           const pulse=Math.floor(this.time/B.air.period);
           if(wind>.1&&b.airPulse!==pulse){b.airPulse=pulse;this.emit('air',{tier:b.bi});}
         }

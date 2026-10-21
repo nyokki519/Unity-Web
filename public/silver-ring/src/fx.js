@@ -409,7 +409,7 @@ export class FX {
       const rot = sim.bowlAngles[bi];
       if(br.fan){
         const duty=CFG.bowls.air.chance,phase=((sim.time%CFG.bowls.air.period)+CFG.bowls.air.period)%CFG.bowls.air.period/CFG.bowls.air.period;
-        const active=duty>0&&phase<duty;
+        const active=duty>0&&(phase<duty||sim.time-sim.airBurstStart<CFG.bowls.air.burstDuration);
         br.fan.housing.visible=duty>0;
         br.fan.rotor.rotation.z+=dt*(active?24:1.5);
         br.fan.light.color.setRGB(active ? .3 : .08,active ? 1.4 : .3,active ? 1.7 : .35);
