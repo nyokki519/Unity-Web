@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "event": "gate",
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "air",
+      "shake": 0
+    },
+    {
+      "event": "sink",
+      "tier": 0,
+      "win": true,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "sink",
+      "tier": 0,
+      "win": false,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "sink",
+      "tier": 1,
+      "win": true,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "sink",
+      "tier": 1,
+      "win": false,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "sink",
+      "tier": 2,
+      "win": true,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "sink",
+      "tier": 2,
+      "win": false,
+      "shake": 0,
+      "light": true
+    },
+    {
+      "event": "jackpot",
+      "shake": 0,
+      "raining": true
+    }
+  ],
+  "errors": []
+}

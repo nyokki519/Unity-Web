@@ -88,7 +88,7 @@ const sim = new Sim((ev, d) => {
     case 'bowlenter':
       fx.spawnZawa();
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); }
-      if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); fx.shake(0.015); }
+      if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); }
       break;
     case 'rattle': audio.rattle(); if(!d.contact)fx.shake(0.006); break;
     case 'sink':

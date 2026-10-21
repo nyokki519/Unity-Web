@@ -314,7 +314,6 @@ export class FX {
   gateBurst() {
     this.gatePulseT = 0;
     this.emitLocal(0, CFG.gate.y, 0.04, 30, { col: [2.6, 1.9, 0.5], speed: 0.4, up: 0.7, life: 0.7, size: 0.03 });
-    this.shake(0.012);
   }
 
   blockFlash() { this.blockT = 0; this.shake(0.012); }
@@ -325,27 +324,24 @@ export class FX {
     const hx = Math.cos(wh.a) * bw.ringR, hz = Math.sin(wh.a) * bw.ringR;
     this.emitLocal(hx, bw.cy + 0.03, bw.cz + hz, 26,
       { col: [0.8, 1.6, 1.8], speed: 0.28, up: 0.9, life: 0.5, size: 0.02, grav: 0.6 });
-    this.shake(0.010);
   }
 
   sinkFX(tier, win, x, y, z) {
+    this.shakeAmp=0; // Keep the hole and ball steady during entry.
     this.ledFlash[tier] = 1;
     this.ledFlashCol[tier] = win ? [3.2, 2.2, 0.5] : [2.4, 0.25, 0.2];
     if (win) {
       this.winPulse[tier] = 0;
       this.emitLocal(x, y + 0.02, z, 46, { col: [3, 2.1, 0.5], speed: 0.5, up: 0.8, life: 0.8, size: 0.032 });
-      this.shake(0.02 + tier * 0.012);
     } else {
       this.emitLocal(x, y + 0.02, z, 14, { col: [0.5, 1.2, 0.6], speed: 0.3, up: 0.35, life: 0.5, size: 0.022 });
-      this.shake(0.008);
     }
   }
 
-  jackpotBurst() { if(document.body.classList.contains('reduced'))return;
+  jackpotBurst() { this.shakeAmp=0; if(document.body.classList.contains('reduced'))return;
     const p = this._local(0, CFG.pocket.y + 0.05, CFG.pocket.z);
     this.emit(p.x, p.y, p.z, 140, { col: [3.2, 2.3, 0.6], speed: 1.2, up: 2.6, life: 1.6, size: 0.05, grav: 2.8 });
     this.startRain(3.4);
-    this.shake(0.09);
   }
 
   shake(a) { if(document.body.classList.contains('reduced'))return; this.shakeAmp = Math.min(0.12, this.shakeAmp + a); }
