@@ -41,3 +41,24 @@ export function applyAirBurst(ball,{x,z,elapsed,dt,duration,radius,inner,acceler
  ball.pvx+=dx/d*dv;ball.pvz+=dz/d*dv;
  return dv;
 }
+// Elastic oblique contact in the legacy surface plane, with a swept time of impact.
+// Only trajectories that miss the open aperture encounter this lip contact proxy.
+// Central entries and already unsupported/falling balls keep their existing route.
+export function advanceLipGraze(ball,{x,z,radius,captureRadius,dt}){
+ if(dt<=0||(ball.holeTime||0)>0||(ball.hopY||0)>.0005||(ball.hopV||0)>.05)return 0;
+ const dx=ball.px-x,dz=ball.pz-z,vx=ball.pvx,vz=ball.pvz,v2=vx*vx+vz*vz;
+ if(v2<.08**2)return 0;
+ const approach=dx*vx+dz*vz,r2=dx*dx+dz*dz;
+ if(approach>=0||r2<radius*radius-1e-12)return 0;
+ const cross=dx*vz-dz*vx;
+ if(cross*cross/v2<=(captureRadius+.001)**2)return 0;
+ const disc=approach*approach-v2*(r2-radius*radius);
+ if(disc<=0)return 0;
+ const t=Math.max(0,(-approach-Math.sqrt(disc))/v2);
+ if(t>dt)return 0;
+ const cx=dx+vx*t,cz=dz+vz*t,nx=cx/radius,nz=cz/radius,vn=vx*nx+vz*nz;
+ if(vn>=-1e-8)return 0;
+ ball.pvx=vx-2*vn*nx;ball.pvz=vz-2*vn*nz;
+ ball.px=x+cx+ball.pvx*(dt-t);ball.pz=z+cz+ball.pvz*(dt-t);
+ return -vn;
+}

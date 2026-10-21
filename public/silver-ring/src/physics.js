@@ -6,7 +6,7 @@
 // 盘面机关:大回転盤×2(凸钉搅拌)/ 電動チューリップ(随机开闭+遥控ブロック)
 // ============================================================
 import {advanceHop,resolveBowlPair} from './bowl-contacts.js';
-import {applyLipGravity,applyAirJet,applyAirBurst,lipHeight} from './bowl-forces.js';
+import {applyLipGravity,applyAirJet,applyAirBurst,advanceLipGraze,lipHeight} from './bowl-forces.js';
 import { CFG, buildLayout } from './config.js';
 
 const TAU = Math.PI * 2;
@@ -535,6 +535,7 @@ export class Sim {
       az += (this.rand() - 0.5) * B.jitter;
     }
     b.pvx += ax * dt; b.pvz += az * dt;
+    let grazeHandled=false;
     if(B.contacts.enabled){
       const rot=this.bowlAngles[b.bi];
       let nearest=-1,nearestD=Infinity;
@@ -558,8 +559,14 @@ export class Sim {
           if(wind>.1&&b.airPulse!==pulse){b.airPulse=pulse;this.emit('air',{tier:b.bi});}
         }
       }
+      if(B.contacts.grazeEnabled&&nearest>=0){
+        const a=bw.holes[nearest].a+rot;
+        const impact=advanceLipGraze(b,{x:Math.cos(a)*bw.ringR,z:Math.sin(a)*bw.ringR,radius:B.contacts.grazeRadius,captureRadius:B.capture,dt});
+        grazeHandled=impact>0;
+        if(grazeHandled)this.emit('rattle',{tier:b.bi,contact:true,elastic:true});
+      }
     }
-    b.px += b.pvx * dt; b.pz += b.pvz * dt;
+    if(!grazeHandled){b.px += b.pvx * dt; b.pz += b.pvz * dt;}
 
     // 碗缘
     const rmax = bw.R - CFG.ball.r * 0.7;

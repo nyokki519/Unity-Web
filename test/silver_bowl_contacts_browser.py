@@ -14,13 +14,13 @@ with sync_playwright() as p:
    s.balls.length=0;s.spawnInBowl(tier);const ball=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],hx=Math.cos(h.a)*bw.ringR,hz=Math.sin(h.a)*bw.ringR;
    const nx=Math.cos(h.a),nz=Math.sin(h.a),tx=-nz,tz=nx;
    Object.assign(ball,{px:hx+nx*.032-tx*.04,pz:hz+nz*.032-tz*.04,pvx:tx*.4,pvz:tz*.4,hopY:0,hopV:0});
-   const path=[];for(let i=0;i<24;i++){s.step(1/240);path.push({x:ball.px,z:ball.pz,mode:ball.mode});}
+   const path=[],events=[],emit=s.emit;s.emit=(type,d)=>{if(type==='rattle'&&d.elastic)events.push(d);emit(type,d);};try{for(let i=0;i<24;i++){s.step(1/240);path.push({x:ball.px,z:ball.pz,mode:ball.mode});}}finally{s.emit=emit;}
    const wind=duty=>{const events=[],sim=new Sim(type=>events.push(type),createRng('wind-browser'));sim.spawnInBowl(2);sim.time=.2;Object.assign(sim.balls[0],{px:0,pz:-.035,pvx:.3,pvz:0,aired:true});CFG.bowls.air.chance=duty;sim.stepBowl(sim.balls[0],1/240);return{v:sim.balls[0].pvz,events};};
    const saved=CFG.bowls.air.chance,on=wind(.32),off=wind(0);CFG.bowls.air.chance=saved;
-   return{tier,path,vx:ball.pvx,vz:ball.pvz,radialVelocity:ball.pvx*nx+ball.pvz*nz,mode:ball.mode,on,off,worldY:s.worldPos(ball,[0,0,0])[1],surfaceY:bw.cy+bowlSurfaceY(ball.px,ball.pz,bw,s.bowlAngles[tier])+CFG.ball.r,funds:g.S.funds};
+   return{tier,path,elasticContacts:events.length,vx:ball.pvx,vz:ball.pvz,radialVelocity:ball.pvx*nx+ball.pvz*nz,mode:ball.mode,on,off,worldY:s.worldPos(ball,[0,0,0])[1],surfaceY:bw.cy+bowlSurfaceY(ball.px,ball.pz,bw,s.bowlAngles[tier])+CFG.ball.r,funds:g.S.funds};
   }''',tier)
   assert result['mode']=='bowl',result
-  assert result['radialVelocity']<-.01,result
+  assert result['elasticContacts']==1 and result['radialVelocity']>.01,result
   assert result['on']['v']-result['off']['v']>.001,result
   assert 'air' in result['on']['events'] and 'air' not in result['off']['events'],result
   assert abs(result['worldY']-result['surfaceY'])<1e-8,result
@@ -42,5 +42,8 @@ with sync_playwright() as p:
  assert sharp['on']['vz']>.1 and sharp['on']['vz']-sharp['off']['vz']>.3,sharp
  assert sharp['on']['bursts']==1 and sharp['off']['bursts']==0,sharp
  assert sharp['on']['mode']=='bowl',sharp
+ windStages=c.evaluate('''async()=>{const{Sim}=await import('/silver-ring/src/physics.js'),{CFG}=await import('/silver-ring/src/config.js'),{createRng}=await import('/silver-ring/src/seed.js');const saved=CFG.bowls.air.chance;CFG.bowls.air.chance=.32;try{return[0,1,2].map(tier=>{let bursts=0;const s=new Sim((type,d)=>{if(type==='air'&&d.burst)bursts++;},createRng('wind-stage-check'));s.spawnInBowl(tier);s.time=1.1;const bw=CFG.bowls.list[tier],h=bw.holes.find(h=>h.win),nx=Math.cos(h.a),nz=Math.sin(h.a);Object.assign(s.balls[0],{px:nx*(bw.ringR-.034),pz:nz*(bw.ringR-.034),pvx:nx*.22,pvz:nz*.22});for(let i=0;i<24;i++)s.step(1/240);return{stage:tier+1,bursts,fan:!!SILVER_GAME.refs.bowlRefs[tier].fan};});}finally{CFG.bowls.air.chance=saved;}}''')
+ assert [r['bursts'] for r in windStages]==[0,0,1],windStages
+ assert [r['fan'] for r in windStages]==[False,False,True],windStages
  assert not errors,errors
- (OUT/'contacts-browser.json').write_text(json.dumps({'controlledContacts':rows,'obliquePair':pair,'sharpPuff':sharp,'errors':errors,'note':'Controlled real simulation/render checks, not natural outcome measurements.'},ensure_ascii=False,indent=2));print('physical lips and wind browser passed');b.close()
+ (OUT/'contacts-browser.json').write_text(json.dumps({'controlledContacts':rows,'obliquePair':pair,'sharpPuff':sharp,'windStages':windStages,'errors':errors,'note':'Controlled real simulation/render checks, not natural outcome measurements.'},ensure_ascii=False,indent=2));print('physical lips and wind browser passed');b.close()
