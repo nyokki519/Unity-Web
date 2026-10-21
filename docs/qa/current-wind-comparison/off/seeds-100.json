@@ -1,0 +1,2654 @@
+{
+  "conditions": {
+    "bowlContacts": {
+      "enabled": true,
+      "rimRadius": 0.023,
+      "lipOuter": 0.037,
+      "lipDepth": 0.008,
+      "fallDepth": 0.01,
+      "pairFriction": 0.08,
+      "maxHopSpeed": 0.28,
+      "maxDampingExtra": 2,
+      "stalledAfter": 35,
+      "stalledFor": 3
+    },
+    "seeds": 100,
+    "seedStart": 100,
+    "netShotBudget": 250,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "air": 0,
+    "airSettings": {
+      "tier": 2,
+      "chance": 0,
+      "kick": 0.6,
+      "period": 1.8,
+      "radius": 0.06,
+      "acceleration": 5,
+      "triggerRadius": 0.04,
+      "burstRadius": 0.055,
+      "burstDuration": 0.06,
+      "burstAcceleration": 40,
+      "burstCooldown": 0.7
+    },
+    "interference": 0,
+    "gateHalfWidth": 0.022,
+    "shutterHalfWidth": 0.048,
+    "maxSeconds": 240
+  },
+  "rows": [
+    {
+      "scale": 0.5,
+      "seed": 100,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 19,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        19,
+        8,
+        2
+      ],
+      "stageWins": [
+        8,
+        2,
+        0
+      ],
+      "stageLosses": [
+        11,
+        6,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 101,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        12,
+        2
+      ],
+      "stageWins": [
+        12,
+        2,
+        0
+      ],
+      "stageLosses": [
+        23,
+        10,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 102,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 3,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        9,
+        4
+      ],
+      "stageWins": [
+        9,
+        4,
+        3
+      ],
+      "stageLosses": [
+        25,
+        5,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 103,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        10,
+        2
+      ],
+      "stageWins": [
+        10,
+        2,
+        0
+      ],
+      "stageLosses": [
+        25,
+        8,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 104,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        10,
+        2
+      ],
+      "stageWins": [
+        10,
+        2,
+        1
+      ],
+      "stageLosses": [
+        22,
+        8,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 105,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        11,
+        4
+      ],
+      "stageWins": [
+        11,
+        4,
+        1
+      ],
+      "stageLosses": [
+        18,
+        7,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 106,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 38,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        38,
+        7,
+        1
+      ],
+      "stageWins": [
+        7,
+        1,
+        0
+      ],
+      "stageLosses": [
+        31,
+        6,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 107,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 47,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        47,
+        19,
+        3
+      ],
+      "stageWins": [
+        19,
+        3,
+        1
+      ],
+      "stageLosses": [
+        28,
+        16,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 108,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        10,
+        1
+      ],
+      "stageWins": [
+        10,
+        1,
+        0
+      ],
+      "stageLosses": [
+        19,
+        9,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 109,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        13,
+        2
+      ],
+      "stageWins": [
+        13,
+        2,
+        1
+      ],
+      "stageLosses": [
+        21,
+        11,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 110,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        10,
+        0
+      ],
+      "stageWins": [
+        10,
+        0,
+        0
+      ],
+      "stageLosses": [
+        22,
+        10,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 111,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        28,
+        12,
+        3
+      ],
+      "stageWins": [
+        12,
+        3,
+        1
+      ],
+      "stageLosses": [
+        16,
+        9,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 112,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        12,
+        3
+      ],
+      "stageWins": [
+        12,
+        3,
+        2
+      ],
+      "stageLosses": [
+        19,
+        9,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 113,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        16,
+        4
+      ],
+      "stageWins": [
+        16,
+        4,
+        0
+      ],
+      "stageLosses": [
+        19,
+        12,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 114,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        27,
+        10,
+        1
+      ],
+      "stageWins": [
+        10,
+        1,
+        0
+      ],
+      "stageLosses": [
+        17,
+        9,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 115,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        27,
+        11,
+        4
+      ],
+      "stageWins": [
+        11,
+        4,
+        1
+      ],
+      "stageLosses": [
+        16,
+        7,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 116,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        40,
+        13,
+        3
+      ],
+      "stageWins": [
+        13,
+        3,
+        1
+      ],
+      "stageLosses": [
+        27,
+        10,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 117,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        16,
+        4
+      ],
+      "stageWins": [
+        16,
+        4,
+        1
+      ],
+      "stageLosses": [
+        15,
+        12,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 118,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 42,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        42,
+        14,
+        2
+      ],
+      "stageWins": [
+        14,
+        2,
+        1
+      ],
+      "stageLosses": [
+        28,
+        12,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 119,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 41,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        41,
+        12,
+        3
+      ],
+      "stageWins": [
+        12,
+        3,
+        0
+      ],
+      "stageLosses": [
+        29,
+        9,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 120,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 43,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        43,
+        11,
+        6
+      ],
+      "stageWins": [
+        11,
+        6,
+        1
+      ],
+      "stageLosses": [
+        32,
+        5,
+        5
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 121,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        12,
+        4
+      ],
+      "stageWins": [
+        12,
+        4,
+        0
+      ],
+      "stageLosses": [
+        20,
+        8,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 122,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        14,
+        4
+      ],
+      "stageWins": [
+        14,
+        4,
+        0
+      ],
+      "stageLosses": [
+        17,
+        10,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 123,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 43,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        43,
+        11,
+        1
+      ],
+      "stageWins": [
+        11,
+        1,
+        0
+      ],
+      "stageLosses": [
+        32,
+        10,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 124,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 44,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        44,
+        12,
+        2
+      ],
+      "stageWins": [
+        12,
+        2,
+        0
+      ],
+      "stageLosses": [
+        32,
+        10,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 125,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 45,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        45,
+        22,
+        8
+      ],
+      "stageWins": [
+        22,
+        8,
+        1
+      ],
+      "stageLosses": [
+        23,
+        14,
+        7
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 126,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        8,
+        2
+      ],
+      "stageWins": [
+        8,
+        2,
+        0
+      ],
+      "stageLosses": [
+        26,
+        6,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 127,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        10,
+        2
+      ],
+      "stageWins": [
+        10,
+        2,
+        0
+      ],
+      "stageLosses": [
+        27,
+        8,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 128,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        8,
+        3
+      ],
+      "stageWins": [
+        8,
+        3,
+        1
+      ],
+      "stageLosses": [
+        26,
+        5,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 129,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        40,
+        9,
+        2
+      ],
+      "stageWins": [
+        9,
+        2,
+        1
+      ],
+      "stageLosses": [
+        31,
+        7,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 130,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        10,
+        3
+      ],
+      "stageWins": [
+        10,
+        3,
+        1
+      ],
+      "stageLosses": [
+        21,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 131,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        14,
+        3
+      ],
+      "stageWins": [
+        14,
+        3,
+        2
+      ],
+      "stageLosses": [
+        23,
+        11,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 132,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        9,
+        4
+      ],
+      "stageWins": [
+        9,
+        4,
+        1
+      ],
+      "stageLosses": [
+        23,
+        5,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 133,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        14,
+        4
+      ],
+      "stageWins": [
+        14,
+        4,
+        2
+      ],
+      "stageLosses": [
+        21,
+        10,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 134,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        26,
+        7,
+        0
+      ],
+      "stageWins": [
+        7,
+        0,
+        0
+      ],
+      "stageLosses": [
+        19,
+        7,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 135,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        28,
+        9,
+        1
+      ],
+      "stageWins": [
+        9,
+        1,
+        0
+      ],
+      "stageLosses": [
+        19,
+        8,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 136,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 46,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        46,
+        21,
+        6
+      ],
+      "stageWins": [
+        21,
+        6,
+        0
+      ],
+      "stageLosses": [
+        25,
+        15,
+        6
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 137,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        30,
+        13,
+        4
+      ],
+      "stageWins": [
+        13,
+        4,
+        2
+      ],
+      "stageLosses": [
+        17,
+        9,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 138,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        10,
+        2
+      ],
+      "stageWins": [
+        10,
+        2,
+        0
+      ],
+      "stageLosses": [
+        23,
+        8,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 139,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        10,
+        2
+      ],
+      "stageWins": [
+        10,
+        2,
+        1
+      ],
+      "stageLosses": [
+        21,
+        8,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 140,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        11,
+        2
+      ],
+      "stageWins": [
+        11,
+        2,
+        0
+      ],
+      "stageLosses": [
+        23,
+        9,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 141,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        30,
+        10,
+        4
+      ],
+      "stageWins": [
+        10,
+        4,
+        2
+      ],
+      "stageLosses": [
+        20,
+        6,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 142,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        28,
+        11,
+        1
+      ],
+      "stageWins": [
+        11,
+        1,
+        0
+      ],
+      "stageLosses": [
+        17,
+        10,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 143,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 39,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        39,
+        15,
+        2
+      ],
+      "stageWins": [
+        15,
+        2,
+        0
+      ],
+      "stageLosses": [
+        24,
+        13,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 144,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 38,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        38,
+        11,
+        1
+      ],
+      "stageWins": [
+        11,
+        1,
+        0
+      ],
+      "stageLosses": [
+        27,
+        10,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 145,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 39,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        39,
+        14,
+        1
+      ],
+      "stageWins": [
+        14,
+        1,
+        0
+      ],
+      "stageLosses": [
+        25,
+        13,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 146,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        10,
+        1
+      ],
+      "stageWins": [
+        10,
+        1,
+        0
+      ],
+      "stageLosses": [
+        24,
+        9,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 147,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        30,
+        6,
+        2
+      ],
+      "stageWins": [
+        6,
+        2,
+        0
+      ],
+      "stageLosses": [
+        24,
+        4,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 148,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        10,
+        3
+      ],
+      "stageWins": [
+        10,
+        3,
+        1
+      ],
+      "stageLosses": [
+        27,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 149,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        40,
+        13,
+        2
+      ],
+      "stageWins": [
+        13,
+        2,
+        1
+      ],
+      "stageLosses": [
+        27,
+        11,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 150,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 38,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        38,
+        14,
+        4
+      ],
+      "stageWins": [
+        14,
+        4,
+        2
+      ],
+      "stageLosses": [
+        24,
+        10,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 151,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 30,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        30,
+        7,
+        0
+      ],
+      "stageWins": [
+        7,
+        0,
+        0
+      ],
+      "stageLosses": [
+        23,
+        7,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 152,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 43,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        43,
+        21,
+        6
+      ],
+      "stageWins": [
+        21,
+        6,
+        0
+      ],
+      "stageLosses": [
+        22,
+        15,
+        6
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 153,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        12,
+        3
+      ],
+      "stageWins": [
+        12,
+        3,
+        1
+      ],
+      "stageLosses": [
+        25,
+        9,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 154,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        15,
+        5
+      ],
+      "stageWins": [
+        15,
+        5,
+        0
+      ],
+      "stageLosses": [
+        21,
+        10,
+        5
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 155,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        27,
+        8,
+        1
+      ],
+      "stageWins": [
+        8,
+        1,
+        0
+      ],
+      "stageLosses": [
+        19,
+        7,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 156,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        8,
+        1
+      ],
+      "stageWins": [
+        8,
+        1,
+        0
+      ],
+      "stageLosses": [
+        21,
+        7,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 157,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        11,
+        3
+      ],
+      "stageWins": [
+        11,
+        3,
+        0
+      ],
+      "stageLosses": [
+        24,
+        8,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 158,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 31,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        31,
+        11,
+        3
+      ],
+      "stageWins": [
+        11,
+        3,
+        0
+      ],
+      "stageLosses": [
+        20,
+        8,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 159,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 40,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        40,
+        15,
+        7
+      ],
+      "stageWins": [
+        15,
+        7,
+        1
+      ],
+      "stageLosses": [
+        25,
+        8,
+        6
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 160,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        7,
+        3
+      ],
+      "stageWins": [
+        7,
+        3,
+        0
+      ],
+      "stageLosses": [
+        22,
+        4,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 161,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        10,
+        3
+      ],
+      "stageWins": [
+        10,
+        3,
+        0
+      ],
+      "stageLosses": [
+        22,
+        7,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 162,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        9,
+        0
+      ],
+      "stageWins": [
+        9,
+        0,
+        0
+      ],
+      "stageLosses": [
+        27,
+        9,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 163,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        16,
+        7
+      ],
+      "stageWins": [
+        16,
+        7,
+        2
+      ],
+      "stageLosses": [
+        13,
+        9,
+        5
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 164,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 44,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        44,
+        15,
+        3
+      ],
+      "stageWins": [
+        15,
+        3,
+        2
+      ],
+      "stageLosses": [
+        29,
+        12,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 165,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        18,
+        4
+      ],
+      "stageWins": [
+        18,
+        4,
+        2
+      ],
+      "stageLosses": [
+        18,
+        14,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 166,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 47,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        47,
+        22,
+        5
+      ],
+      "stageWins": [
+        22,
+        5,
+        1
+      ],
+      "stageLosses": [
+        25,
+        17,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 167,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        10,
+        3
+      ],
+      "stageWins": [
+        10,
+        3,
+        1
+      ],
+      "stageLosses": [
+        26,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 168,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        28,
+        6,
+        3
+      ],
+      "stageWins": [
+        6,
+        3,
+        0
+      ],
+      "stageLosses": [
+        22,
+        3,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 169,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 26,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        26,
+        10,
+        3
+      ],
+      "stageWins": [
+        10,
+        3,
+        1
+      ],
+      "stageLosses": [
+        16,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 170,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 43,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        43,
+        10,
+        5
+      ],
+      "stageWins": [
+        10,
+        5,
+        0
+      ],
+      "stageLosses": [
+        33,
+        5,
+        5
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 171,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 28,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        28,
+        7,
+        2
+      ],
+      "stageWins": [
+        7,
+        2,
+        1
+      ],
+      "stageLosses": [
+        21,
+        5,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 172,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 45,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        45,
+        18,
+        3
+      ],
+      "stageWins": [
+        18,
+        3,
+        0
+      ],
+      "stageLosses": [
+        27,
+        15,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 173,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        7,
+        3
+      ],
+      "stageWins": [
+        7,
+        3,
+        2
+      ],
+      "stageLosses": [
+        29,
+        4,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 174,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        17,
+        4
+      ],
+      "stageWins": [
+        17,
+        4,
+        2
+      ],
+      "stageLosses": [
+        17,
+        13,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 175,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        6,
+        1
+      ],
+      "stageWins": [
+        6,
+        1,
+        0
+      ],
+      "stageLosses": [
+        23,
+        5,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 176,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        11,
+        1
+      ],
+      "stageWins": [
+        11,
+        1,
+        0
+      ],
+      "stageLosses": [
+        22,
+        10,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 177,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        12,
+        6
+      ],
+      "stageWins": [
+        12,
+        6,
+        2
+      ],
+      "stageLosses": [
+        21,
+        6,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 178,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        11,
+        2
+      ],
+      "stageWins": [
+        11,
+        2,
+        0
+      ],
+      "stageLosses": [
+        23,
+        9,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 179,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        5,
+        1
+      ],
+      "stageWins": [
+        5,
+        1,
+        1
+      ],
+      "stageLosses": [
+        24,
+        4,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 180,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        16,
+        2
+      ],
+      "stageWins": [
+        16,
+        2,
+        0
+      ],
+      "stageLosses": [
+        17,
+        14,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 181,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        12,
+        4
+      ],
+      "stageWins": [
+        12,
+        4,
+        0
+      ],
+      "stageLosses": [
+        21,
+        8,
+        4
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 182,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 25,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        25,
+        8,
+        3
+      ],
+      "stageWins": [
+        8,
+        3,
+        0
+      ],
+      "stageLosses": [
+        17,
+        5,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 183,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 27,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        27,
+        5,
+        2
+      ],
+      "stageWins": [
+        5,
+        2,
+        1
+      ],
+      "stageLosses": [
+        22,
+        3,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 184,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        7,
+        1
+      ],
+      "stageWins": [
+        7,
+        1,
+        0
+      ],
+      "stageLosses": [
+        27,
+        6,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 185,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        7,
+        4
+      ],
+      "stageWins": [
+        7,
+        4,
+        1
+      ],
+      "stageLosses": [
+        30,
+        3,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 186,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 47,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        47,
+        17,
+        7
+      ],
+      "stageWins": [
+        17,
+        7,
+        0
+      ],
+      "stageLosses": [
+        30,
+        10,
+        7
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 187,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 47,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        47,
+        21,
+        6
+      ],
+      "stageWins": [
+        21,
+        6,
+        0
+      ],
+      "stageLosses": [
+        26,
+        15,
+        6
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 188,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        11,
+        5
+      ],
+      "stageWins": [
+        11,
+        5,
+        2
+      ],
+      "stageLosses": [
+        21,
+        6,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 189,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 33,
+      "jackpots": 3,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        33,
+        12,
+        5
+      ],
+      "stageWins": [
+        12,
+        5,
+        3
+      ],
+      "stageLosses": [
+        21,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 190,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 36,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        36,
+        8,
+        1
+      ],
+      "stageWins": [
+        8,
+        1,
+        0
+      ],
+      "stageLosses": [
+        28,
+        7,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 191,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 54,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        54,
+        24,
+        9
+      ],
+      "stageWins": [
+        24,
+        9,
+        2
+      ],
+      "stageLosses": [
+        30,
+        15,
+        7
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 192,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 34,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        34,
+        15,
+        1
+      ],
+      "stageWins": [
+        15,
+        1,
+        0
+      ],
+      "stageLosses": [
+        19,
+        14,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 193,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 29,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        29,
+        11,
+        3
+      ],
+      "stageWins": [
+        11,
+        3,
+        0
+      ],
+      "stageLosses": [
+        18,
+        8,
+        3
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 194,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 35,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        35,
+        17,
+        5
+      ],
+      "stageWins": [
+        17,
+        5,
+        0
+      ],
+      "stageLosses": [
+        18,
+        12,
+        5
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 195,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 37,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        37,
+        14,
+        6
+      ],
+      "stageWins": [
+        14,
+        6,
+        0
+      ],
+      "stageLosses": [
+        23,
+        8,
+        6
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 196,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        13,
+        2
+      ],
+      "stageWins": [
+        13,
+        2,
+        1
+      ],
+      "stageLosses": [
+        19,
+        11,
+        1
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 197,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 2,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        11,
+        4
+      ],
+      "stageWins": [
+        11,
+        4,
+        2
+      ],
+      "stageLosses": [
+        21,
+        7,
+        2
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 198,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 32,
+      "jackpots": 0,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        32,
+        9,
+        0
+      ],
+      "stageWins": [
+        9,
+        0,
+        0
+      ],
+      "stageLosses": [
+        23,
+        9,
+        0
+      ],
+      "airBursts": 0
+    },
+    {
+      "scale": 0.5,
+      "seed": 199,
+      "shots": 250,
+      "refunds": 0,
+      "gates": 46,
+      "jackpots": 1,
+      "remaining": 0,
+      "netShots": 250,
+      "stageEntries": [
+        46,
+        14,
+        4
+      ],
+      "stageWins": [
+        14,
+        4,
+        1
+      ],
+      "stageLosses": [
+        32,
+        10,
+        3
+      ],
+      "airBursts": 0
+    }
+  ],
+  "summary": [
+    {
+      "scale": 0.5,
+      "runs": 100,
+      "winningRuns": 46,
+      "winningRunRate": 0.46,
+      "shots": 25000,
+      "gates": 3475,
+      "jackpots": 65,
+      "remaining": 0,
+      "incompleteRuns": 0
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "conditions": {
+    "sourceCommit": "2846e0f",
+    "behavior": "r38, displayed r40",
+    "runsPerMode": 500,
+    "netShotsPerRun": 250,
+    "shotCost": 200,
+    "initialCredits": 50000,
+    "power": 0.45,
+    "dt": 0.004166666666666667,
+    "entryInterference": 0,
+    "openingScale": 0.5,
+    "seeds": "opening-0 through opening-499",
+    "windOnDuty": 0.32,
+    "windOnlyTier": 3,
+    "offDisablesBothPeriodicAndBurst": true
+  },
+  "results": {
+    "on": {
+      "runs": 500,
+      "winningRuns": 222,
+      "winningRunRate": 0.444,
+      "winningRun95WilsonInterval": [
+        0.40104004351009104,
+        0.4878139137653702
+      ],
+      "shots": 125000,
+      "jackpots": 284,
+      "refunds": 0,
+      "remaining": 0,
+      "airBursts": 1310,
+      "stages": [
+        {
+          "stage": 1,
+          "entered": 16835,
+          "won": 5691,
+          "winRate": 0.33804573804573806
+        },
+        {
+          "stage": 2,
+          "entered": 5691,
+          "won": 1473,
+          "winRate": 0.2588297311544544
+        },
+        {
+          "stage": 3,
+          "entered": 1473,
+          "won": 284,
+          "winRate": 0.19280380176510523
+        }
+      ]
+    },
+    "off": {
+      "runs": 500,
+      "winningRuns": 201,
+      "winningRunRate": 0.402,
+      "winningRun95WilsonInterval": [
+        0.35992798652483676,
+        0.4455664387072203
+      ],
+      "shots": 125000,
+      "jackpots": 262,
+      "refunds": 0,
+      "remaining": 0,
+      "airBursts": 0,
+      "stages": [
+        {
+          "stage": 1,
+          "entered": 16876,
+          "won": 5640,
+          "winRate": 0.33420241763451053
+        },
+        {
+          "stage": 2,
+          "entered": 5640,
+          "won": 1443,
+          "winRate": 0.25585106382978723
+        },
+        {
+          "stage": 3,
+          "entered": 1443,
+          "won": 262,
+          "winRate": 0.18156618156618157
+        }
+      ]
+    }
+  },
+  "paired": {
+    "onMinusOffRate": 0.042,
+    "onMinusOff95NormalInterval": [
+      -0.01406107851485286,
+      0.09806107851485286
+    ],
+    "onOnlyWinningRuns": 113,
+    "offOnlyWinningRuns": 92,
+    "sameBinaryOutcomeRuns": 295
+  },
+  "validation": {
+    "allRunsCompleted": true,
+    "allStageEntriesAccountedFor": true,
+    "windOffBurstsZero": true,
+    "freshWindOnResultsExactlyMatchPriorR38": true,
+    "matchingSeeds": true
+  }
+}
