@@ -1,0 +1,32 @@
+{
+  "oldCacheContainedRetiredGame": true,
+  "retiredGameRemovedAfterUpdate": true,
+  "onlineRetiredRouteStatus": 404,
+  "offlineRetiredRouteRejected": true,
+  "playPageNotReloaded": true,
+  "remainingCaches": [
+    "unity-mix-shell-v41"
+  ],
+  "sharedAssetsOffline": [
+    {
+      "path": "/vendor/three/three.module.js",
+      "status": 200
+    },
+    {
+      "path": "/vendor/rapier/rapier.mjs",
+      "status": 200
+    },
+    {
+      "path": "/vendor/earcut/earcut.js",
+      "status": 200
+    },
+    {
+      "path": "/silver-ring/src/physics.js",
+      "status": 200
+    },
+    {
+      "path": "/js/cpu.js",
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "path": "/atelier/index.html",
+    "status": 404
+  },
+  {
+    "path": "/atelier/src/main.js",
+    "status": 404
+  },
+  {
+    "path": "/atelier/style.css",
+    "status": 404
+  },
+  {
+    "path": "/vendor/three/three.module.js",
+    "status": 200
+  },
+  {
+    "path": "/vendor/rapier/rapier.mjs",
+    "status": 200
+  },
+  {
+    "path": "/vendor/earcut/earcut.js",
+    "status": 200
+  },
+  {
+    "path": "/assets/fonts/cormorant-garamond-latin.woff",
+    "status": 200
+  },
+  {
+    "path": "/silver-ring/index.html",
+    "status": 200
+  },
+  {
+    "path": "/api/health",
+    "status": 200
+  }
+]

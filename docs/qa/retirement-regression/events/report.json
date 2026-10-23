@@ -1,0 +1,20 @@
+{
+  "runs": [
+    {
+      "people": 6,
+      "games": [
+        "VALUES",
+        "WHO",
+        "BOUNDARY",
+        "QUEST",
+        "CAFE",
+        "STORY"
+      ],
+      "roundsPerGame": 2,
+      "width": 390,
+      "hostTakeover": true,
+      "errors": []
+    }
+  ],
+  "errors": []
+}
