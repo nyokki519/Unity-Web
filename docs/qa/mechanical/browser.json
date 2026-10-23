@@ -1,0 +1,122 @@
+[
+  {
+    "viewport": [
+      375,
+      812
+    ],
+    "layout": {
+      "overflow": false,
+      "fireHeight": 58,
+      "canvasWidth": 341,
+      "scrollable": true
+    },
+    "pageErrors": [],
+    "checks": [
+      "initial-dialog",
+      "manual-fire",
+      "auto-fire",
+      "pause/resume",
+      "free-camera-pan",
+      "role-camera",
+      "physical-V/start/payout-fixtures",
+      "ledger",
+      "result/retry",
+      "finished-auto-replay",
+      "result-Escape-guard",
+      "quality-toggle-with-same-engine",
+      "sound-toggle",
+      "synthetic-hidden-handler"
+    ],
+    "limitations": "Chromium software GPU; not physical iPhone Safari. Fixtures do not establish normal-shot success rate."
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "layout": {
+      "overflow": false,
+      "fireHeight": 58,
+      "canvasWidth": 356,
+      "scrollable": true
+    },
+    "pageErrors": [],
+    "checks": [
+      "initial-dialog",
+      "manual-fire",
+      "auto-fire",
+      "pause/resume",
+      "free-camera-pan",
+      "role-camera",
+      "physical-V/start/payout-fixtures",
+      "ledger",
+      "result/retry",
+      "finished-auto-replay",
+      "result-Escape-guard",
+      "quality-toggle-with-same-engine",
+      "sound-toggle",
+      "synthetic-hidden-handler"
+    ],
+    "limitations": "Chromium software GPU; not physical iPhone Safari. Fixtures do not establish normal-shot success rate."
+  },
+  {
+    "viewport": [
+      414,
+      896
+    ],
+    "layout": {
+      "overflow": false,
+      "fireHeight": 58,
+      "canvasWidth": 380,
+      "scrollable": true
+    },
+    "pageErrors": [],
+    "checks": [
+      "initial-dialog",
+      "manual-fire",
+      "auto-fire",
+      "pause/resume",
+      "free-camera-pan",
+      "role-camera",
+      "physical-V/start/payout-fixtures",
+      "ledger",
+      "result/retry",
+      "finished-auto-replay",
+      "result-Escape-guard",
+      "quality-toggle-with-same-engine",
+      "sound-toggle",
+      "synthetic-hidden-handler"
+    ],
+    "limitations": "Chromium software GPU; not physical iPhone Safari. Fixtures do not establish normal-shot success rate."
+  },
+  {
+    "viewport": [
+      1280,
+      1000
+    ],
+    "layout": {
+      "overflow": false,
+      "fireHeight": 56,
+      "canvasWidth": 868,
+      "scrollable": true
+    },
+    "pageErrors": [],
+    "checks": [
+      "initial-dialog",
+      "manual-fire",
+      "auto-fire",
+      "pause/resume",
+      "free-camera-pan",
+      "role-camera",
+      "physical-V/start/payout-fixtures",
+      "ledger",
+      "result/retry",
+      "finished-auto-replay",
+      "result-Escape-guard",
+      "quality-toggle-with-same-engine",
+      "sound-toggle",
+      "synthetic-hidden-handler"
+    ],
+    "limitations": "Chromium software GPU; not physical iPhone Safari. Fixtures do not establish normal-shot success rate."
+  }
+]

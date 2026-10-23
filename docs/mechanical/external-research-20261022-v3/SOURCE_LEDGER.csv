@@ -1,0 +1,11 @@
+﻿source_id,url,publisher,target_model,access_status,observed_or_reported,source_class,checked_date
+V3-S01,https://www.daiichi.net/pdf/maruhon/w85.pdf,大一電機産業,Pはねものファインプレー H3,原典PDF本文確認,配線資料でH3表記、始動口1/2・V大入賞口などの信号,一次（接続資料）,2026-10-22
+V3-S02,https://www.redesign777.tokyo/Topics/Details?category=-1&id=20250828112050001&index=1,Re.design,Pはねものファインプレー,記事本文確認,二経路、ストッパー、バット、マグネット回転体、SP直行の記述,二次,2026-10-22
+V3-S03,https://yugi-nippon.com/pachinko-new-machine/post-72918/,遊技日本,PファインプレーH3,検索インデックスのみ／本文403,羽根開放、賞球、振分の記述,二次,2026-10-22
+V3-S04,https://nana-press.com/kaiseki/machine/1047/,なな徹,Pはねものファインプレー,検索インデックスのみ,スペック・振分・役物経路の記述,二次,2026-10-22
+V3-S05,https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php,パチマガスロマガ,Pはねものファインプレー,本文現在取得不可／障害告知へ,過去の検索インデックスはあるが現在の本文は未確認,二次,2026-10-22
+V3-S06,https://yutura.net/channel/114026/video/NklA8kHl71k/,yutura / 珍古台,PファインプレーH3,動画メタデータ本文確認／動画未再生,2026-10-14公開の短編、H3型式表記,第三者メタデータ,2026-10-22
+V3-S07,https://yutura.net/channel/114026/video/HzwShL74U88/,yutura / 珍古台,PファインプレーH3,動画メタデータ本文確認／動画未再生,2026-10-21公開の短編、H3型式表記,第三者メタデータ,2026-10-22
+V3-S08,https://yutura.net/channel/13973/video/KeNqFuPTLs4/,yutura / メガカス,Pはねものファインプレー,動画メタデータ本文確認／動画未再生,2025-10-23公開、36:48と掲載,第三者メタデータ,2026-10-22
+V3-S09,https://www.nakaiti.com/html/Amutex007.html,中一商事,CRAトキオ・デラックスB,検索インデックスのみ,型式、羽根開放0.438秒×1/2の記述,二次,2026-10-22
+V3-S10,https://www.slopachi-quest.com/article/tenryu/,スロパチクエスト,CR天龍∞,検索インデックスのみ,実践映像・機種解説への入口,二次,2026-10-22

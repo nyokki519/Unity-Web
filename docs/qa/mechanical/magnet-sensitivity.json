@@ -1,0 +1,152 @@
+{
+  "method": "120 prescribed rotor-contact initial conditions per force; nine x positions, 0.6s intervals; not normal-launch odds, no artificial success decision",
+  "reports": [
+    {
+      "forceN": 0.16,
+      "introduced": 120,
+      "carriedPastCrown": 2,
+      "peakHeight": 0.43833115696907043,
+      "snapshot": {
+        "version": "fielder-1",
+        "seed": "rotor-contact-grid",
+        "tick": 21600,
+        "phase": "START",
+        "power": 0.3,
+        "auto": false,
+        "hold": false,
+        "sweep": false,
+        "paused": false,
+        "wing": 0,
+        "round": 0,
+        "roundHits": 0,
+        "roundTarget": 2,
+        "ledger": {
+          "initial": 1000,
+          "stock": 895,
+          "fired": 120,
+          "active": 0,
+          "recovered": 120,
+          "payout": 15,
+          "valid": true
+        },
+        "stats": {
+          "pickups": 0,
+          "left": 0,
+          "right": 0,
+          "v": 1,
+          "out": 116,
+          "starters": 3,
+          "attacker": 0,
+          "contacts": 990,
+          "rounds": {
+            "3": 1,
+            "5": 0,
+            "10": 0
+          },
+          "jackpots": 1,
+          "escapes": 0
+        },
+        "stalled": [],
+        "balls": []
+      }
+    },
+    {
+      "forceN": 0.2,
+      "introduced": 120,
+      "carriedPastCrown": 7,
+      "peakHeight": 0.43855783343315125,
+      "snapshot": {
+        "version": "fielder-1",
+        "seed": "rotor-contact-grid",
+        "tick": 21600,
+        "phase": "PLAY",
+        "power": 0.3,
+        "auto": false,
+        "hold": false,
+        "sweep": false,
+        "paused": false,
+        "wing": 0,
+        "round": 0,
+        "roundHits": 0,
+        "roundTarget": 0,
+        "ledger": {
+          "initial": 1000,
+          "stock": 905,
+          "fired": 120,
+          "active": 0,
+          "recovered": 120,
+          "payout": 25,
+          "valid": true
+        },
+        "stats": {
+          "pickups": 0,
+          "left": 0,
+          "right": 0,
+          "v": 0,
+          "out": 115,
+          "starters": 5,
+          "attacker": 0,
+          "contacts": 1024,
+          "rounds": {
+            "3": 0,
+            "5": 0,
+            "10": 0
+          },
+          "jackpots": 0,
+          "escapes": 0
+        },
+        "stalled": [],
+        "balls": []
+      }
+    },
+    {
+      "forceN": 0.28,
+      "introduced": 120,
+      "carriedPastCrown": 9,
+      "peakHeight": 0.4385417401790619,
+      "snapshot": {
+        "version": "fielder-1",
+        "seed": "rotor-contact-grid",
+        "tick": 21600,
+        "phase": "START",
+        "power": 0.3,
+        "auto": false,
+        "hold": false,
+        "sweep": false,
+        "paused": false,
+        "wing": 0,
+        "round": 0,
+        "roundHits": 0,
+        "roundTarget": 2,
+        "ledger": {
+          "initial": 1000,
+          "stock": 900,
+          "fired": 120,
+          "active": 0,
+          "recovered": 120,
+          "payout": 20,
+          "valid": true
+        },
+        "stats": {
+          "pickups": 0,
+          "left": 0,
+          "right": 0,
+          "v": 1,
+          "out": 115,
+          "starters": 4,
+          "attacker": 0,
+          "contacts": 1075,
+          "rounds": {
+            "3": 1,
+            "5": 0,
+            "10": 0
+          },
+          "jackpots": 1,
+          "escapes": 0
+        },
+        "stalled": [],
+        "balls": []
+      }
+    }
+  ]
+}

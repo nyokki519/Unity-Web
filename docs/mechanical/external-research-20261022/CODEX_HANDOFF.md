@@ -1,0 +1,2 @@
+# Codex 引継ぎ指示
+このZIPの `RESEARCH_REPORT.md` と3つのCSVを `docs/mechanical/external-research-20261022/` に配置して確認してください。既存の `docs/mechanical/` 文書を削除・上書きせず、根拠台帳へ追記してください。一次／二次／検索結果のみ／未再生の区分を保持。H3は研究第一候補で正式決定ではありません。追加資料の不足項目を更新し、ユーザー承認待ちで停止。ゲーム実装・mainへのマージ・公開は禁止。レトロ版とUnity MIXを変更しない。

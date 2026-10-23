@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-10-22T12:29:54.572Z",
+  "observationsCurrent": true,
+  "specRevision": "1",
+  "observedSpecRevision": "1",
+  "mode": "restricted",
+  "state": "enforced",
+  "customAllowedHosts": [],
+  "presets": [
+    "package_managers"
+  ],
+  "configurationChangedThisTurn": false
+}

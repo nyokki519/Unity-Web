@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 1998,
+    "local_video_seconds": 66.6,
+    "x_pixels": 213,
+    "y_pixels": 207,
+    "estimated_position_error_pixels": 5,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "visible"
+  },
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2004,
+    "local_video_seconds": 66.8,
+    "x_pixels": 229,
+    "y_pixels": 219,
+    "estimated_position_error_pixels": 5,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "visible"
+  },
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2010,
+    "local_video_seconds": 67.0,
+    "x_pixels": 280,
+    "y_pixels": 234,
+    "estimated_position_error_pixels": 5,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "visible"
+  },
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2016,
+    "local_video_seconds": 67.2,
+    "x_pixels": 338,
+    "y_pixels": 244,
+    "estimated_position_error_pixels": 8,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "partly obscured by bat"
+  },
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2022,
+    "local_video_seconds": 67.4,
+    "x_pixels": 366,
+    "y_pixels": 230,
+    "estimated_position_error_pixels": 5,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "visible"
+  },
+  {
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2025,
+    "local_video_seconds": 67.5,
+    "x_pixels": 377,
+    "y_pixels": 205,
+    "estimated_position_error_pixels": 5,
+    "method": "manual visual estimate; no lens or camera correction",
+    "visibility": "visible"
+  }
+]

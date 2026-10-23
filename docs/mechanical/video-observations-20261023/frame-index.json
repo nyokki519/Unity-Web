@@ -1,0 +1,410 @@
+[
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2790,
+    "local_video_seconds": 93.0
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2799,
+    "local_video_seconds": 93.3
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2808,
+    "local_video_seconds": 93.6
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2817,
+    "local_video_seconds": 93.9
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2826,
+    "local_video_seconds": 94.2
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2835,
+    "local_video_seconds": 94.5
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2844,
+    "local_video_seconds": 94.8
+  },
+  {
+    "sheet": "roller-right.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2853,
+    "local_video_seconds": 95.1
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2724,
+    "local_video_seconds": 90.8
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2733,
+    "local_video_seconds": 91.1
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2742,
+    "local_video_seconds": 91.4
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2751,
+    "local_video_seconds": 91.7
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2760,
+    "local_video_seconds": 92.0
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2769,
+    "local_video_seconds": 92.3
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2778,
+    "local_video_seconds": 92.6
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2787,
+    "local_video_seconds": 92.9
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2796,
+    "local_video_seconds": 93.2
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2805,
+    "local_video_seconds": 93.5
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2814,
+    "local_video_seconds": 93.8
+  },
+  {
+    "sheet": "roller-left.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2823,
+    "local_video_seconds": 94.1
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1002,
+    "local_video_seconds": 33.4
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1011,
+    "local_video_seconds": 33.7
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1020,
+    "local_video_seconds": 34.0
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1029,
+    "local_video_seconds": 34.3
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1038,
+    "local_video_seconds": 34.6
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1047,
+    "local_video_seconds": 34.9
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1056,
+    "local_video_seconds": 35.2
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1065,
+    "local_video_seconds": 35.5
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1074,
+    "local_video_seconds": 35.8
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1083,
+    "local_video_seconds": 36.1
+  },
+  {
+    "sheet": "roller-lift.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1092,
+    "local_video_seconds": 36.4
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1065,
+    "local_video_seconds": 35.5
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1068,
+    "local_video_seconds": 35.6
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1071,
+    "local_video_seconds": 35.7
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1074,
+    "local_video_seconds": 35.8
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1077,
+    "local_video_seconds": 35.9
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1080,
+    "local_video_seconds": 36.0
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1083,
+    "local_video_seconds": 36.1
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1086,
+    "local_video_seconds": 36.2
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1089,
+    "local_video_seconds": 36.3
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1092,
+    "local_video_seconds": 36.4
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1095,
+    "local_video_seconds": 36.5
+  },
+  {
+    "sheet": "roller-end.jpg",
+    "source_id": "UP-H3-04",
+    "frame_index_zero_based": 1098,
+    "local_video_seconds": 36.6
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2910,
+    "local_video_seconds": 97.0
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2913,
+    "local_video_seconds": 97.1
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2916,
+    "local_video_seconds": 97.2
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2919,
+    "local_video_seconds": 97.3
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2922,
+    "local_video_seconds": 97.4
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2925,
+    "local_video_seconds": 97.5
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2928,
+    "local_video_seconds": 97.6
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2931,
+    "local_video_seconds": 97.7
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2934,
+    "local_video_seconds": 97.8
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2937,
+    "local_video_seconds": 97.9
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2940,
+    "local_video_seconds": 98.0
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2943,
+    "local_video_seconds": 98.1
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2946,
+    "local_video_seconds": 98.2
+  },
+  {
+    "sheet": "wings.jpg",
+    "source_id": "UP-H3-02",
+    "frame_index_zero_based": 2949,
+    "local_video_seconds": 98.3
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 1998,
+    "local_video_seconds": 66.6
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2001,
+    "local_video_seconds": 66.7
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2004,
+    "local_video_seconds": 66.8
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2007,
+    "local_video_seconds": 66.9
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2010,
+    "local_video_seconds": 67.0
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2013,
+    "local_video_seconds": 67.1
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2016,
+    "local_video_seconds": 67.2
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2019,
+    "local_video_seconds": 67.3
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2022,
+    "local_video_seconds": 67.4
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2025,
+    "local_video_seconds": 67.5
+  },
+  {
+    "sheet": "bat.jpg",
+    "source_id": "UP-H3-03",
+    "frame_index_zero_based": 2028,
+    "local_video_seconds": 67.6
+  }
+]

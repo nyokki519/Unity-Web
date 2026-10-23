@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-10-22",
+  "observationsCurrent": true,
+  "specRevision": "1",
+  "observedSpecRevision": "1",
+  "policy": "restricted",
+  "policyState": "enforced",
+  "currentCustomHosts": [],
+  "draftSaved": true,
+  "draftId": "d6d880db-4dea-45ad-8a52-e6049d8c2672~cecfgdraft_6ad9fda69b148197ab18516feece7c12",
+  "requiresPublish": true,
+  "runtimePolicyUpdated": false
+}

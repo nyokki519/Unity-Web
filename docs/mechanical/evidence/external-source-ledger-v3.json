@@ -1,0 +1,125 @@
+{
+  "archiveSha256": "ac42773472bb977aa94d8c0df502755f7f5ed43fc1c671a8d6adce4d980e234f",
+  "sources": [
+    {
+      "﻿source_id": "V3-S01",
+      "url": "https://www.daiichi.net/pdf/maruhon/w85.pdf",
+      "publisher": "大一電機産業",
+      "target_model": "Pはねものファインプレー H3",
+      "access_status": "原典PDF本文確認",
+      "observed_or_reported": "配線資料でH3表記、始動口1/2・V大入賞口などの信号",
+      "source_class": "一次（接続資料）",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S02",
+      "url": "https://www.redesign777.tokyo/Topics/Details?category=-1&id=20250828112050001&index=1",
+      "publisher": "Re.design",
+      "target_model": "Pはねものファインプレー",
+      "access_status": "記事本文確認",
+      "observed_or_reported": "二経路、ストッパー、バット、マグネット回転体、SP直行の記述",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S03",
+      "url": "https://yugi-nippon.com/pachinko-new-machine/post-72918/",
+      "publisher": "遊技日本",
+      "target_model": "PファインプレーH3",
+      "access_status": "検索インデックスのみ／本文403",
+      "observed_or_reported": "羽根開放、賞球、振分の記述",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S04",
+      "url": "https://nana-press.com/kaiseki/machine/1047/",
+      "publisher": "なな徹",
+      "target_model": "Pはねものファインプレー",
+      "access_status": "検索インデックスのみ",
+      "observed_or_reported": "スペック・振分・役物経路の記述",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S05",
+      "url": "https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php",
+      "publisher": "パチマガスロマガ",
+      "target_model": "Pはねものファインプレー",
+      "access_status": "本文現在取得不可／障害告知へ",
+      "observed_or_reported": "過去の検索インデックスはあるが現在の本文は未確認",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S06",
+      "url": "https://yutura.net/channel/114026/video/NklA8kHl71k/",
+      "publisher": "yutura / 珍古台",
+      "target_model": "PファインプレーH3",
+      "access_status": "動画メタデータ本文確認／動画未再生",
+      "observed_or_reported": "2026-10-14公開の短編、H3型式表記",
+      "source_class": "第三者メタデータ",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S07",
+      "url": "https://yutura.net/channel/114026/video/HzwShL74U88/",
+      "publisher": "yutura / 珍古台",
+      "target_model": "PファインプレーH3",
+      "access_status": "動画メタデータ本文確認／動画未再生",
+      "observed_or_reported": "2026-10-21公開の短編、H3型式表記",
+      "source_class": "第三者メタデータ",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S08",
+      "url": "https://yutura.net/channel/13973/video/KeNqFuPTLs4/",
+      "publisher": "yutura / メガカス",
+      "target_model": "Pはねものファインプレー",
+      "access_status": "動画メタデータ本文確認／動画未再生",
+      "observed_or_reported": "2025-10-23公開、36:48と掲載",
+      "source_class": "第三者メタデータ",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S09",
+      "url": "https://www.nakaiti.com/html/Amutex007.html",
+      "publisher": "中一商事",
+      "target_model": "CRAトキオ・デラックスB",
+      "access_status": "検索インデックスのみ",
+      "observed_or_reported": "型式、羽根開放0.438秒×1/2の記述",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "﻿source_id": "V3-S10",
+      "url": "https://www.slopachi-quest.com/article/tenryu/",
+      "publisher": "スロパチクエスト",
+      "target_model": "CR天龍∞",
+      "access_status": "検索インデックスのみ",
+      "observed_or_reported": "実践映像・機種解説への入口",
+      "source_class": "二次",
+      "checked_date": "2026-10-22",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    }
+  ]
+}

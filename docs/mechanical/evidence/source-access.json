@@ -1,0 +1,74 @@
+[
+  {
+    "id": "HEIWA",
+    "url": "https://www.heiwanet.co.jp/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "heiwa-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  },
+  {
+    "id": "AMTEX",
+    "url": "https://www.amtex.jp/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "amtex-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  },
+  {
+    "id": "MARUHON",
+    "url": "https://maruhon-kogyo.co.jp/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "maruhon-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  },
+  {
+    "id": "PWORLD",
+    "url": "https://www.p-world.co.jp/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "pworld-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  },
+  {
+    "id": "YOUTUBE",
+    "url": "https://www.youtube.com/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "youtube-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  },
+  {
+    "id": "SEARCH",
+    "url": "https://www.google.com/",
+    "attemptedAt": "2026-10-22",
+    "result": "blocked_by_environment_policy",
+    "proxyStatus": 403,
+    "curlExit": 56,
+    "originContentRead": false,
+    "videoFramesViewed": false,
+    "evidenceHeader": "search-headers.txt",
+    "error": "curl: (56) CONNECT tunnel failed, response 403"
+  }
+]

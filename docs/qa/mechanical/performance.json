@@ -1,0 +1,50 @@
+[
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "quality": "high",
+    "medianFrameMs": 16.700000000000728,
+    "p95FrameMs": 583.3000000000011,
+    "approxFramesPerSecond": 5.7787323387492915,
+    "balls": 3,
+    "renderer": "Chromium SwiftShader software GPU, DPR1; not device Safari/GPU performance"
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "quality": "light",
+    "medianFrameMs": 16.700000000000728,
+    "p95FrameMs": 183.39999999999782,
+    "approxFramesPerSecond": 14.938379185858334,
+    "balls": 4,
+    "renderer": "Chromium SwiftShader software GPU, DPR1; not device Safari/GPU performance"
+  },
+  {
+    "viewport": [
+      1280,
+      1000
+    ],
+    "quality": "high",
+    "medianFrameMs": 316.7000000000007,
+    "p95FrameMs": 449.89999999999964,
+    "approxFramesPerSecond": 3.027871557688523,
+    "balls": 4,
+    "renderer": "Chromium SwiftShader software GPU, DPR1; not device Safari/GPU performance"
+  },
+  {
+    "viewport": [
+      1280,
+      1000
+    ],
+    "quality": "light",
+    "medianFrameMs": 100,
+    "p95FrameMs": 199.89999999999782,
+    "approxFramesPerSecond": 9.137426900584794,
+    "balls": 2,
+    "renderer": "Chromium SwiftShader software GPU, DPR1; not device Safari/GPU performance"
+  }
+]

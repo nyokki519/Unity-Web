@@ -1,0 +1,4 @@
+id,source_id,quantity,start_frame,end_frame,value,unit,uncertainty_or_scope,usable_as_machine_calibration
+VT-01,UP-H3-04,下部から上端への可視搬送の観察窓,1002,1089,2.9,encoded_video_seconds,選択したフレーム間の差。搬送開始・終了を完全に捉えた滞留時間ではない,False
+VT-02,UP-H3-04,球の可視→不可視の遷移区間,1089,1092,0.1,encoded_video_seconds,出来事はこの区間内。実穴の通過確認ではない,False
+VT-03,UP-H3-03,手動投影追跡の観察窓,1998,2025,0.9,encoded_video_seconds,実時間への倍率未確認。座標は画像ピクセル,False

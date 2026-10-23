@@ -1,0 +1,22 @@
+﻿id,url,発行元,対象機種・型式,資料区分,実確認状態,確認日,確認できた内容・制限
+S01,https://maruhon-kogyo.co.jp/product/p-2025,マルホン工業,Pはねものファインプレー（型式未表示）,一次,本文確認,2026-10-22,2025年製品一覧に掲載。二刀流の説明。
+S02,https://maruhon-kogyo.co.jp/news/phf.html,マルホン工業,Pはねものファインプレー（型式未表示）,一次,本文確認,2026-10-22,2025-08-20特設サイト公開を告知。
+S03,https://maruhon-kogyo.co.jp/special/phf/,マルホン工業,Pはねものファインプレー,一次,ページ取得・画像内容未精査,2026-10-22,画像主体の特設ページ。図面寸法の有無未確認。
+S04,https://g-net-ps.com/info/p0484/,G-net 娯楽総合研究社,PファインプレーH3,二次（業界向け）,本文確認,2026-10-22,型式H3、賞球5&4&14、導入日、ラウンド振分、払出を掲載。
+S05,https://www.pachibee.jp/machines/about/125090010,パチビー,Pはねものファインプレー（H3照合は他資料）,二次,本文確認,2026-10-22,羽根0.4秒×1、0.6秒×2、2ルート、バット・ローラー・V。独自調査と明記。
+S06,https://www.redesign777.tokyo/Topics/Details?category=1&id=20250828112050001&index=164,Re.design,Pはねものファインプレー,二次,本文確認,2026-10-22,ノーマル/SP、マグネット回転体の記述。振分数値は他資料と差異あり。
+S07,https://www.redesign777.tokyo/Spec/PachinkoView?flag=True&id=P2025082407542701,Re.design,Pファインプレー H3,二次,検索結果本文のみ,2026-10-22,役物約1/12.5との記載。実機実測値として採用しない。
+S08,https://www.daiichi.net/pdf/maruhon/w85.pdf,デー太郎／大一電機関連配線資料,Pはねものファインプレー H3,一次（配線用途のみ）,PDF本文確認,2026-10-22,H3表記、始動口・V・役物回数の外部端子信号。形状・寸法根拠にしない。
+S09,https://1geki.jp/pachinko/p_hane_fineplay/1/,一撃,Pはねものファインプレー,二次,本文確認,2026-10-22,クラシック・実況・先バレの演出モード。
+S10,https://www.pachinkovista.com/pfactory/model.php?nid=19310,パチンコビスタ,CRAトキオ・デラックスB（型式照合はS11）,二次,検索結果本文のみ,2026-10-22,左右・中央チャッカー0.438秒、賞球など。
+S11,https://blog-pachislot.com/machines/34726.html,実機相場ナビ,CRAトキオ・デラックスB,二次,検索結果本文のみ,2026-10-22,型式と2012年6月導入の記載。
+S12,https://www.p-world.co.jp/machine/database/6739,P-WORLD,CRAトキオデラックス,二次,検索結果本文のみ,2026-10-22,V入賞、3/7/16Rの記載。
+S13,https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/259/p_dai.php,パチマガスロマガ,CR天龍∞7000VS,二次,検索結果本文のみ,2026-10-22,2018年1月、3段クルーンとスペシャルルート。
+S14,https://www.p-world.co.jp/machine/database/8550,P-WORLD,CR天龍∞VS／7000VS,二次,検索結果本文のみ,2026-10-22,型式名CR天龍∞VS、検定番号7P1340。
+S15,https://news.p-world.co.jp/articles/23461/nippon,遊技日本／P-WORLD,P天龍∞SEVEN R1,二次,検索結果本文のみ,2026-10-22,2023年P TENRYU 7は3段クルーンを排除。旧天龍と区別。
+S16,https://yugi-nippon.com/pachinko-new-machine/post-72918/,遊技日本,未照合,二次,403取得不可,2026-10-22,未閲覧。
+S17,https://data.hazuse.com/index.php?genre=104&machine_code=5P1020,HAZUSE,未照合,二次,未取得,2026-10-22,URLパラメータの取得不可。
+S18,https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php,パチマガスロマガ,未照合,二次,文字コードエラー,2026-10-22,本文未確認。
+S19,https://pachinko-curation.com/?p=57191,ぱちんこキュレーション,P羽根物ファインプレー,二次,ページ本文取得・個別仕様未精査,2026-10-22,追加照合対象。
+S20,https://www.youtube.com/watch?v=1NdwD8Bz0Jw,珍古台（YouTube）,PファインプレーH3（動画説明）,投稿者による実機映像候補,メタデータ確認・動画再生不可,2026-10-22,2025-10-19公開、2度打ちホームラン。球筋未観察。
+S21,https://www.redesign777.tokyo/Topics/Details?category=-1&id=20250808124623001&index=-9,Re.design,Pファインプレー（型式未照合）,二次・動画埋込入口,検索結果本文のみ,2026-10-22,PV公開情報。映像未再生。

@@ -1,0 +1,235 @@
+{
+  "createdAt": "2026-10-23T12:21:43.611Z",
+  "software": {
+    "node": "v24.19.0",
+    "sourceSha256": {
+      "config.js": "ea8006b87ae3ffc1877280777879e69e8295491dfb4216f2615e93d287b1213b",
+      "geometry.js": "99b082851868f628d2203cdb441146394fb487a9a0db1d6f1516b8dd3a9b9190",
+      "mechanisms.js": "548c444e6e04fee282d06c958a1650ff716d03e12209f2539fd6e65f83e37c8f",
+      "physics.js": "bebf955a516f4573dcd035af9b45ac5cd3d05989c9925e7d97dc49f426d1906f",
+      "game.js": "991d974ef2d3c0827765be50578cc06a65151768c9e5d4010be1ea8b8cd086c4",
+      "economy.js": "58d2300cb8757c87e31a3abb30551e0658a0c84df05b10539cc53e0b9ca8acde",
+      "random.js": "7e172a700847f22ef68bc01ab9058bfa39290b0c7fb7f569175a96ee56d91a2a",
+      "math.js": "526ab2c8b4fdc7da12aac8ffda5d8d56dd83f3859483de2e0c075ae069132a72"
+    }
+  },
+  "method": "normal launcher, seeded uniformly varying power 0..100%, 100/min, all phases; no fixture injection, no forced outcomes",
+  "requested": 10000,
+  "secondsWall": 241.087113115,
+  "config": {
+    "version": "fielder-1",
+    "physics": {
+      "dt": 0.004166666666666667,
+      "gravity": 9.80665,
+      "backTilt": 0.07,
+      "ccd": true,
+      "maxBalls": 64,
+      "captureTolerance": 0.0003
+    },
+    "ball": {
+      "radius": 0.0055,
+      "density": 7800,
+      "restitution": 0.42,
+      "friction": 0.24,
+      "rollingDamping": 0.08
+    },
+    "play": {
+      "initialBalls": 11000,
+      "shotInterval": 0.6,
+      "roundCount": 9,
+      "roundSeconds": 12,
+      "betweenRounds": 0.8
+    },
+    "board": {
+      "width": 0.5,
+      "height": 0.86,
+      "back": 0,
+      "front": 0.21
+    },
+    "launcher": {
+      "x": 0.236,
+      "y": 0.035,
+      "z": 0.008,
+      "minSpeed": 4.05,
+      "maxSpeed": 5.05
+    },
+    "wing": {
+      "pivotX": 0.104,
+      "y": 0.555,
+      "length": 0.06,
+      "width": 0.035,
+      "closed": 0.62,
+      "open": -0.38,
+      "travel": 0.07
+    },
+    "stopper": {
+      "period": 3.6,
+      "closedSeconds": 1.8
+    },
+    "sway": {
+      "period": 2.1,
+      "angle": 0.14
+    },
+    "bat": {
+      "period": 1.08,
+      "stroke": 0.58,
+      "attackSeconds": 0.055,
+      "returnSeconds": 0.18
+    },
+    "rotor": {
+      "x": 0,
+      "y": 0.39,
+      "z": 0.095,
+      "radius": 0.043,
+      "width": 0.1,
+      "omega": -1.65,
+      "friction": 0.95
+    },
+    "magnet": {
+      "enabled": true,
+      "force": 0.2,
+      "range": 0.018,
+      "releaseY": 0.03,
+      "poleWidth": 0.016
+    },
+    "materials": {
+      "pin": {
+        "friction": 0.12,
+        "restitution": 0.45
+      },
+      "resin": {
+        "friction": 0.22,
+        "restitution": 0.25
+      }
+    },
+    "assumptions": [
+      {
+        "parameter": "ball",
+        "basis": "11mm steel sphere, density7800kg/m³; machine-specific value unverified",
+        "range": [
+          7700,
+          8050
+        ]
+      },
+      {
+        "parameter": "board.backTilt",
+        "basis": "reconstruction of near-vertical field; unmeasured",
+        "range": [
+          0.04,
+          0.12
+        ]
+      },
+      {
+        "parameter": "magnet.force",
+        "basis": "hypothesized holding force; ball weight≈0.0533N; observation shows upward transport, not magnet layout",
+        "range": [
+          0.16,
+          0.28
+        ]
+      },
+      {
+        "parameter": "rotor.omega",
+        "basis": "estimated -1.65rad/s, not calibrated against edited source time",
+        "range": [
+          -1.2,
+          -2.2
+        ]
+      },
+      {
+        "parameter": "ball.friction",
+        "basis": "effective steel/resin contact, not material coefficient measurement",
+        "range": [
+          0.16,
+          0.32
+        ]
+      },
+      {
+        "parameter": "bat.attackSeconds",
+        "basis": "unmeasured motor stroke; verified contact with lower front of rotor, not a guaranteed catch",
+        "range": [
+          0.04,
+          0.065
+        ]
+      },
+      {
+        "parameter": "bat",
+        "basis": "estimated motor timing, moving-contact transfer; not observed cycle calibration",
+        "range": [
+          0.85,
+          1.3
+        ]
+      }
+    ]
+  },
+  "phases": {
+    "PLAY": 9862,
+    "START": 13,
+    "ROUND": 120,
+    "INTERVAL": 5
+  },
+  "events": {
+    "shot": 10000,
+    "contact": 49135,
+    "out": 8959,
+    "starter": 1024,
+    "pickup": 87,
+    "v": 2,
+    "jackpot": 2,
+    "start": 2,
+    "round": 6,
+    "attacker": 13,
+    "round-end": 2
+  },
+  "maxActive": 6,
+  "peakStalled": 1,
+  "snapshot": {
+    "version": "fielder-1",
+    "seed": "h3-normal-survey-20261023",
+    "tick": 1440284,
+    "phase": "PLAY",
+    "power": 0.3,
+    "auto": false,
+    "hold": false,
+    "sweep": true,
+    "paused": false,
+    "wing": 0,
+    "round": 0,
+    "roundHits": 2,
+    "roundTarget": 4,
+    "ledger": {
+      "initial": 11000,
+      "stock": 6302,
+      "fired": 10000,
+      "active": 0,
+      "recovered": 10000,
+      "payout": 5302,
+      "valid": true
+    },
+    "stats": {
+      "pickups": 87,
+      "left": 69,
+      "right": 18,
+      "v": 2,
+      "out": 8959,
+      "starters": 1024,
+      "attacker": 13,
+      "contacts": 315699,
+      "rounds": {
+        "3": 1,
+        "5": 1,
+        "10": 0
+      },
+      "jackpots": 2,
+      "escapes": 0
+    },
+    "stalled": [],
+    "balls": []
+  },
+  "rates": {
+    "pickupPerShot": 0.0087,
+    "vPerShot": 0.0002,
+    "vPerPickup": 0.022988505747126436,
+    "outPerShot": 0.8959
+  },
+  "limits": "Geometry and magnet are uncalibrated reconstruction. This measures this model, not real H3 probability. Active balls remain accounted for, never timed-out/teleported."
+}

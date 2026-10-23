@@ -1,0 +1,21 @@
+{
+  "/api/health": 200,
+  "/mechanical/index.html": 200,
+  "/mechanical/style.css": 200,
+  "/mechanical/NOTICE.txt": 200,
+  "/vendor/three/three.module.js": 200,
+  "/vendor/rapier/rapier.mjs": 200,
+  "/vendor/earcut/earcut.js": 200,
+  "/mechanical/src/random.js": 200,
+  "/mechanical/src/scene.js": 200,
+  "/mechanical/src/main.js": 200,
+  "/mechanical/src/geometry.js": 200,
+  "/mechanical/src/audio.js": 200,
+  "/mechanical/src/config.js": 200,
+  "/mechanical/src/camera.js": 200,
+  "/mechanical/src/math.js": 200,
+  "/mechanical/src/economy.js": 200,
+  "/mechanical/src/mechanisms.js": 200,
+  "/mechanical/src/game.js": 200,
+  "/mechanical/src/physics.js": 200
+}

@@ -1,0 +1,34 @@
+{
+  "tests": {
+    "total": 236,
+    "passed": 236,
+    "failed": 0
+  },
+  "normalSimulationSourceHashesMatch": {
+    "config.js": true,
+    "geometry.js": true,
+    "mechanisms.js": true,
+    "physics.js": true,
+    "game.js": true,
+    "economy.js": true,
+    "random.js": true,
+    "math.js": true
+  },
+  "protectedPathsUnchangedFrom": "2352c876511170796230dda28e5583e1a0e8b4f4",
+  "protectedPaths": [
+    "public/silver-ring",
+    "public/js/abyss",
+    "src",
+    "public/vendor",
+    "package.json",
+    "package-lock.json",
+    "public/js/cpu.js"
+  ],
+  "productionHttp": "blocked by managed proxy CONNECT403; not verified",
+  "githubReadAndPushDryRun": "passed",
+  "physicalIphoneSafari": "not tested",
+  "notes": [
+    "28 mechanical tests plus208 existing tests",
+    "Browser regression initially used local default .data: DB_PATH was not a recognized variable; correct DATA_PATH isolated server now at3462. No preexisting local database rows intentionally removed; ordinary expiry applies. Production database never accessed."
+  ]
+}

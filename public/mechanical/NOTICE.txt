@@ -1,0 +1,12 @@
+喫茶Unity フィールダー
+
+H3の機構研究を参考にした独立した機能モデルです。メーカーの公式ゲームではありません。
+盤面の図案、UI、生成テクスチャ、合成効果音は本プロジェクトで制作。
+メーカーの写真、実機映像、キャラクター、ロゴ、実機音源を本ゲームに収録していません。
+
+既存のローカルライブラリを利用:
+Three.js 0.180.0 — MIT, ../vendor/three/
+Rapier 0.21.0 — Apache-2.0, ../vendor/rapier/
+earcut 3.2.4 — ISC, ../vendor/earcut/
+Cormorant Garamond — SIL Open Font License, ../assets/fonts/
+それぞれの同梱ライセンスを参照してください。

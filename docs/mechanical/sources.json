@@ -1,0 +1,66 @@
+[
+  {
+    "id": "S01",
+    "url": "https://maruhon-kogyo.co.jp/",
+    "kind": "メーカー公式トップ",
+    "purpose": "2025-08-20の機種特設サイト告知、公式情報への入口",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S02",
+    "url": "https://yugi-nippon.com/pachinko-new-machine/post-72918/",
+    "kind": "業界メディア記事（2025-08-22）",
+    "purpose": "開放秒数、ルート、V入賞、賞球・ラウンド",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S03",
+    "url": "https://www.pachibee.jp/machines/about/125090010",
+    "kind": "専門機種解説",
+    "purpose": "メインルート、バット、ローラー、左右HIT、HRゾーン",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S04",
+    "url": "https://data.hazuse.com/index.php?genre=104&machine_code=5P1020",
+    "kind": "専門機種データ",
+    "purpose": "3R/5R/10R振分・設計払出",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S05",
+    "url": "https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php",
+    "kind": "専門機種データ",
+    "purpose": "役物の二ルート、演出モード",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S06",
+    "url": "https://pachinko-curation.com/?p=57191",
+    "kind": "専門機種解説",
+    "purpose": "型式H1/H3の区別、映像への導線",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S07",
+    "url": "https://www.daiichi.net/pdf/maruhon/w85.pdf",
+    "kind": "データ表示機接続資料（PDF）",
+    "purpose": "型式H3、外部信号。物理寸法の根拠には使用不可",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  },
+  {
+    "id": "S08",
+    "url": "https://1geki.jp/pachinko/p_hane_fineplay/1/",
+    "kind": "演出専門解説",
+    "purpose": "演出3モードの参考",
+    "provenance": "user_supplied_research_pack",
+    "originReviewed": false
+  }
+]

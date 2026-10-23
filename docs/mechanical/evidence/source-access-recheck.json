@@ -1,0 +1,98 @@
+[
+  {
+    "url": "https://maruhon-kogyo.co.jp/",
+    "checkedAt": "2026-10-22T12:28:21.265495+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://yugi-nippon.com/pachinko-new-machine/post-72918/",
+    "checkedAt": "2026-10-22T12:28:21.272424+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.pachibee.jp/machines/about/125090010",
+    "checkedAt": "2026-10-22T12:28:21.276781+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://data.hazuse.com/index.php?genre=104&machine_code=5P1020",
+    "checkedAt": "2026-10-22T12:28:21.270432+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php",
+    "checkedAt": "2026-10-22T12:28:21.278009+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://pachinko-curation.com/?p=57191",
+    "checkedAt": "2026-10-22T12:28:21.268508+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.daiichi.net/pdf/maruhon/w85.pdf",
+    "checkedAt": "2026-10-22T12:28:21.280484+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://1geki.jp/pachinko/p_hane_fineplay/1/",
+    "checkedAt": "2026-10-22T12:28:21.285168+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.heiwanet.co.jp/",
+    "checkedAt": "2026-10-22T12:28:21.287443+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.amtex.jp/",
+    "checkedAt": "2026-10-22T12:28:21.286863+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.p-world.co.jp/",
+    "checkedAt": "2026-10-22T12:28:21.289559+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  },
+  {
+    "url": "https://www.youtube.com/",
+    "checkedAt": "2026-10-22T12:28:21.290672+00:00",
+    "exitCode": 56,
+    "headers": "HTTP/1.1 403 Forbidden\ncontent-length: 16\ncontent-type: text/plain\ndate: Thu, 22 Oct 2026 12:28:21 GMT\nserver: envoy\nconnection: close\n\n",
+    "error": "curl: (56) CONNECT tunnel failed, response 403\n",
+    "originReviewed": false
+  }
+]

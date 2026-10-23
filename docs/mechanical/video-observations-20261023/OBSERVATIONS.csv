@@ -1,0 +1,12 @@
+observation_id,source_id,first_frame_zero_based,last_frame_zero_based,local_seconds,method,direct_observation,interpretation,status,evidence,limitations
+OBS-01,UP-H3-02,2910,2949,97.000–98.300,0.1s frame samples,上部表示の左右の赤い羽根が閉→開→閉へ変わる,開閉機構の存在を直接観察。拾った球の同一個体追跡は未完了,observed,wings.jpg,原撮影速度・開放角不明。公称0.6秒等の検証には使わない
+OBS-02,UP-H3-03,1998,2028,66.600–67.600,0.1s frame samples + manual points,左下の赤い台付近の球が下部の黒いバット付近へ進み、その後画面上方向へ移動する,投影軌跡とバットの姿勢変化を観察。正確な接触点・衝突法線は未確定,observed_partial,bat.jpg;manual-track.jpg,一部はバットで隠れる。摩擦・反発・速度を校正できない
+OBS-03,UP-H3-04,1002,1089,33.400–36.300,0.3s samples; endpoint at0.1s,球が中央緑色の回転面右側に沿って下部から上部へ移動する,回転面による保持・搬送を観察。磁力の位置・強さ・保持方式は未確認,observed,roller-lift.jpg;roller-end.jpg,360p・ほぼ正面の投影。内部保持構造は見えない
+OBS-04,UP-H3-03,2724,2823,90.800–94.100,0.3s samples,中央回転面の左側の球が下から上へ移動し、上端付近で見えなくなる,左側の搬送例。上端以降のV／OUTは未確定,observed_partial,roller-left.jpg,失敗例・成功例と確定せず、経路終端不明として保持
+OBS-05,UP-H3-02,2790,2853,93.000–95.100,0.3s samples; endpoint at0.1s,右寄りの球が上端付近へ運ばれ、その後見えなくなる,右上部の別例。OUTラベルは見えるが、その球のOUT通過は未確定,observed_partial,roller-right.jpg,V／OUT断定不可。外れ統計の分子に使わない
+OBS-06,UP-H3-04,1089,1092,36.300–36.400,0.1s samples,36.300秒の球は見え、36.400秒の同じ領域では見えない,上端付近の不可視化の時間区間。入賞判定面の通過時刻ではない,observed,roller-end.jpg,覆いの奥が見えず、消えたことと入賞を同一視しない
+OBS-07,UP-H3-04,1095,1155,36.500–38.500,selected frames at0.1/0.25s,全体画角へ切替後、発光・大きなV表示の演出が見える,大当たり告知と整合する場面。V穴通過そのものの観察とは分離,observed_display,original video; temporary detail sheets,編集切替があるため入賞から演出までの実機遅延は測定不可
+OBS-08,UP-H3-01,840,1110,28.000–37.000,0.5s samples,左右ルートとVに関する説明字幕が表示される,投稿者の説明であり、字幕だけで球の経路を確認済みとはしない,observed_caption,original video; temporary overview,字幕の説明と物理観察を別の根拠として扱う
+OBS-09,UP-H3-03,1800,2670,60.000–89.000,1s samples,中央の図柄位相が変化し、途中で画角・ズームも変わる,回転面の動作は観察できるが、連続回転周期の校正には未使用,observed_partial,original video; temporary cycle sheets,編集・速度変更の有無と撮影時間基準が未確定
+OBS-10,UP-H3-04,1755,1770,58.500–59.000,0.5s samples,実機画面から屋外映像へ切り替わる,内容切替はこの区間内。以降の非実機場面を機構研究から除外,observed,original video; temporary exact sheets,切替フレームの厳密確定はしていない
+OBS-11,UP-H3-05,0,3750,0.000–125.000,10s overview samples,抽出した全ての概観フレームは遊園地の映像,実機観察の対象外。全フレームを人が精査したという意味ではない,sampled_excluded,original video; temporary overview,未観察の短い挿入を不存在と断定しない

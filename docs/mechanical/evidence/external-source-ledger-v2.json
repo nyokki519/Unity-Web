@@ -1,0 +1,362 @@
+{
+  "archiveSha256": "98b96d47889ec9017638210d254150e6a907dbe24232f4a25794b4cceaf0ae3c",
+  "sources": [
+    {
+      "id": "EXT2-S01",
+      "packSourceId": "S01",
+      "source": {
+        "id": "S01",
+        "url": "https://maruhon-kogyo.co.jp/product/p-2025",
+        "発行元": "マルホン工業",
+        "対象機種・型式": "Pはねものファインプレー（型式未表示）",
+        "資料区分": "一次",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "2025年製品一覧に掲載。二刀流の説明。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S02",
+      "packSourceId": "S02",
+      "source": {
+        "id": "S02",
+        "url": "https://maruhon-kogyo.co.jp/news/phf.html",
+        "発行元": "マルホン工業",
+        "対象機種・型式": "Pはねものファインプレー（型式未表示）",
+        "資料区分": "一次",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "2025-08-20特設サイト公開を告知。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S03",
+      "packSourceId": "S03",
+      "source": {
+        "id": "S03",
+        "url": "https://maruhon-kogyo.co.jp/special/phf/",
+        "発行元": "マルホン工業",
+        "対象機種・型式": "Pはねものファインプレー",
+        "資料区分": "一次",
+        "実確認状態": "ページ取得・画像内容未精査",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "画像主体の特設ページ。図面寸法の有無未確認。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S04",
+      "packSourceId": "S04",
+      "source": {
+        "id": "S04",
+        "url": "https://g-net-ps.com/info/p0484/",
+        "発行元": "G-net 娯楽総合研究社",
+        "対象機種・型式": "PファインプレーH3",
+        "資料区分": "二次（業界向け）",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "型式H3、賞球5&4&14、導入日、ラウンド振分、払出を掲載。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S05",
+      "packSourceId": "S05",
+      "source": {
+        "id": "S05",
+        "url": "https://www.pachibee.jp/machines/about/125090010",
+        "発行元": "パチビー",
+        "対象機種・型式": "Pはねものファインプレー（H3照合は他資料）",
+        "資料区分": "二次",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "羽根0.4秒×1、0.6秒×2、2ルート、バット・ローラー・V。独自調査と明記。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S06",
+      "packSourceId": "S06",
+      "source": {
+        "id": "S06",
+        "url": "https://www.redesign777.tokyo/Topics/Details?category=1&id=20250828112050001&index=164",
+        "発行元": "Re.design",
+        "対象機種・型式": "Pはねものファインプレー",
+        "資料区分": "二次",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "ノーマル/SP、マグネット回転体の記述。振分数値は他資料と差異あり。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S07",
+      "packSourceId": "S07",
+      "source": {
+        "id": "S07",
+        "url": "https://www.redesign777.tokyo/Spec/PachinkoView?flag=True&id=P2025082407542701",
+        "発行元": "Re.design",
+        "対象機種・型式": "Pファインプレー H3",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "役物約1/12.5との記載。実機実測値として採用しない。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S08",
+      "packSourceId": "S08",
+      "source": {
+        "id": "S08",
+        "url": "https://www.daiichi.net/pdf/maruhon/w85.pdf",
+        "発行元": "デー太郎／大一電機関連配線資料",
+        "対象機種・型式": "Pはねものファインプレー H3",
+        "資料区分": "一次（配線用途のみ）",
+        "実確認状態": "PDF本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "H3表記、始動口・V・役物回数の外部端子信号。形状・寸法根拠にしない。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S09",
+      "packSourceId": "S09",
+      "source": {
+        "id": "S09",
+        "url": "https://1geki.jp/pachinko/p_hane_fineplay/1/",
+        "発行元": "一撃",
+        "対象機種・型式": "Pはねものファインプレー",
+        "資料区分": "二次",
+        "実確認状態": "本文確認",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "クラシック・実況・先バレの演出モード。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S10",
+      "packSourceId": "S10",
+      "source": {
+        "id": "S10",
+        "url": "https://www.pachinkovista.com/pfactory/model.php?nid=19310",
+        "発行元": "パチンコビスタ",
+        "対象機種・型式": "CRAトキオ・デラックスB（型式照合はS11）",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "左右・中央チャッカー0.438秒、賞球など。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S11",
+      "packSourceId": "S11",
+      "source": {
+        "id": "S11",
+        "url": "https://blog-pachislot.com/machines/34726.html",
+        "発行元": "実機相場ナビ",
+        "対象機種・型式": "CRAトキオ・デラックスB",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "型式と2012年6月導入の記載。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S12",
+      "packSourceId": "S12",
+      "source": {
+        "id": "S12",
+        "url": "https://www.p-world.co.jp/machine/database/6739",
+        "発行元": "P-WORLD",
+        "対象機種・型式": "CRAトキオデラックス",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "V入賞、3/7/16Rの記載。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S13",
+      "packSourceId": "S13",
+      "source": {
+        "id": "S13",
+        "url": "https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/259/p_dai.php",
+        "発行元": "パチマガスロマガ",
+        "対象機種・型式": "CR天龍∞7000VS",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "2018年1月、3段クルーンとスペシャルルート。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S14",
+      "packSourceId": "S14",
+      "source": {
+        "id": "S14",
+        "url": "https://www.p-world.co.jp/machine/database/8550",
+        "発行元": "P-WORLD",
+        "対象機種・型式": "CR天龍∞VS／7000VS",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "型式名CR天龍∞VS、検定番号7P1340。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S15",
+      "packSourceId": "S15",
+      "source": {
+        "id": "S15",
+        "url": "https://news.p-world.co.jp/articles/23461/nippon",
+        "発行元": "遊技日本／P-WORLD",
+        "対象機種・型式": "P天龍∞SEVEN R1",
+        "資料区分": "二次",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "2023年P TENRYU 7は3段クルーンを排除。旧天龍と区別。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S16",
+      "packSourceId": "S16",
+      "source": {
+        "id": "S16",
+        "url": "https://yugi-nippon.com/pachinko-new-machine/post-72918/",
+        "発行元": "遊技日本",
+        "対象機種・型式": "未照合",
+        "資料区分": "二次",
+        "実確認状態": "403取得不可",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "未閲覧。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S17",
+      "packSourceId": "S17",
+      "source": {
+        "id": "S17",
+        "url": "https://data.hazuse.com/index.php?genre=104&machine_code=5P1020",
+        "発行元": "HAZUSE",
+        "対象機種・型式": "未照合",
+        "資料区分": "二次",
+        "実確認状態": "未取得",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "URLパラメータの取得不可。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S18",
+      "packSourceId": "S18",
+      "source": {
+        "id": "S18",
+        "url": "https://cs62.cs-plaza.com/g/pachi/pla/p_conq/pachi_db/maruhon_pachi/287/kh01.php",
+        "発行元": "パチマガスロマガ",
+        "対象機種・型式": "未照合",
+        "資料区分": "二次",
+        "実確認状態": "文字コードエラー",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "本文未確認。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S19",
+      "packSourceId": "S19",
+      "source": {
+        "id": "S19",
+        "url": "https://pachinko-curation.com/?p=57191",
+        "発行元": "ぱちんこキュレーション",
+        "対象機種・型式": "P羽根物ファインプレー",
+        "資料区分": "二次",
+        "実確認状態": "ページ本文取得・個別仕様未精査",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "追加照合対象。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S20",
+      "packSourceId": "S20",
+      "source": {
+        "id": "S20",
+        "url": "https://www.youtube.com/watch?v=1NdwD8Bz0Jw",
+        "発行元": "珍古台（YouTube）",
+        "対象機種・型式": "PファインプレーH3（動画説明）",
+        "資料区分": "投稿者による実機映像候補",
+        "実確認状態": "メタデータ確認・動画再生不可",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "2025-10-19公開、2度打ちホームラン。球筋未観察。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    },
+    {
+      "id": "EXT2-S21",
+      "packSourceId": "S21",
+      "source": {
+        "id": "S21",
+        "url": "https://www.redesign777.tokyo/Topics/Details?category=-1&id=20250808124623001&index=-9",
+        "発行元": "Re.design",
+        "対象機種・型式": "Pファインプレー（型式未照合）",
+        "資料区分": "二次・動画埋込入口",
+        "実確認状態": "検索結果本文のみ",
+        "確認日": "2026-10-22",
+        "確認できた内容・制限": "PV公開情報。映像未再生。"
+      },
+      "provenance": "user_uploaded_external_research_report",
+      "verifiedByThisEnvironment": false,
+      "originalFileIncluded": false
+    }
+  ]
+}
