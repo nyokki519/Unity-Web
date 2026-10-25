@@ -1,0 +1,62 @@
+[
+  {
+    "width": 375,
+    "errors": [],
+    "checks": [
+      "CPU match to final",
+      "ledger",
+      "retry",
+      "hidden-page resume before bet",
+      "rules Escape",
+      "restart cancel",
+      "no overflow",
+      "home link",
+      "retired URL 410"
+    ]
+  },
+  {
+    "width": 390,
+    "errors": [],
+    "checks": [
+      "CPU match to final",
+      "ledger",
+      "retry",
+      "hidden-page resume before bet",
+      "rules Escape",
+      "restart cancel",
+      "no overflow",
+      "home link",
+      "retired URL 410"
+    ]
+  },
+  {
+    "width": 414,
+    "errors": [],
+    "checks": [
+      "CPU match to final",
+      "ledger",
+      "retry",
+      "hidden-page resume before bet",
+      "rules Escape",
+      "restart cancel",
+      "no overflow",
+      "home link",
+      "retired URL 410"
+    ]
+  },
+  {
+    "width": 1280,
+    "errors": [],
+    "checks": [
+      "CPU match to final",
+      "ledger",
+      "retry",
+      "hidden-page resume before bet",
+      "rules Escape",
+      "restart cancel",
+      "no overflow",
+      "home link",
+      "retired URL 410"
+    ]
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/mechanical/index.html",
+    "status": 410,
+    "retiredNotice": true,
+    "mechanicalLink": null
+  },
+  {
+    "path": "/mechanical/src/main.js",
+    "status": 410,
+    "retiredNotice": true,
+    "mechanicalLink": null
+  },
+  {
+    "path": "/silver-ring/index.html",
+    "status": 200,
+    "retiredNotice": false,
+    "mechanicalLink": null
+  },
+  {
+    "path": "/api/health",
+    "status": 200,
+    "retiredNotice": false,
+    "mechanicalLink": null
+  },
+  {
+    "path": "/js/home.js",
+    "status": 200,
+    "retiredNotice": false,
+    "mechanicalLink": false
+  }
+]
