@@ -1,10 +1,12 @@
 import {Match} from './game.js';
+import {DiceTray} from './dice-tray.js';
 const $=id=>document.getElementById(id);
-let match=new Match(),paused=false,busy=false,cpuTimer=null,rollTimer=null,generation=0;
+let match=new Match(),paused=false,busy=false,cpuTimer=null,rollTimer=null,generation=0,notice='',voids=0,tray=null;
+try{tray=new DiceTray($('dice-board'));}catch(e){$('error').textContent='3D表示を開始できませんでした。WebGLが利用できるブラウザで再読み込みしてください。';}
 let reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const motion=()=>{document.body.classList.toggle('reduced',reduced);$('motion').setAttribute('aria-pressed',String(reduced));};motion();
+const motion=()=>{document.body.classList.toggle('reduced',reduced);$('motion').setAttribute('aria-pressed',String(reduced));tray?.setReduced(reduced);};motion();
 function clearTimers(){clearTimeout(cpuTimer);clearTimeout(rollTimer);cpuTimer=rollTimer=null;busy=false;$('dice').classList.remove('rolling');}
-function setPause(value){paused=value;clearTimers();render();}
+function setPause(value){paused=value;clearTimeout(cpuTimer);cpuTimer=null;tray?.setPaused(value);render();}
 function face(n){
  const e=document.createElement('div');e.className='die';e.setAttribute('role','img');e.setAttribute('aria-label',`${n}の目`);
  if(n===1){const img=document.createElement('img');img.src='/assets/unity-mark.webp';img.alt='';e.append(img);}
@@ -26,7 +28,7 @@ function render(){
  if(isBet){$('bet').max=match.maxBet;$('bet').value=Math.min(Number($('bet').value)||25,match.maxBet);}
  const bet=Number($('bet').value);$('bet-value').value=`${bet}枚`;$('risk').textContent=`最大の増減は ${bet*5} 枚。残高に応じて上限を調整します。`;
  document.querySelectorAll('[data-bet]').forEach(b=>{b.disabled=Number(b.dataset.bet)>match.maxBet;b.setAttribute('aria-pressed',String(Number(b.dataset.bet)===bet));});
- $('action').disabled=paused||busy||phase==='TURN'&&match.current===1;
+ $('action').disabled=!tray||paused||busy||phase==='TURN'&&match.current===1;
  $('settlement').hidden=phase!=='ROUND_END'&&!final;
  if(!busy)showDice(phase==='TURN'?match.dice:phase==='ROUND_END'?match.results[0].dice:[]);
  if(isBet){$('turn').textContent=`今回の親：${match.players[match.dealer].name}`;$('role').textContent='一杯ぶん、勝負しよう。';$('message').textContent='コインを決めたら、親から順に振ります。';$('action').textContent='この枚数で勝負';}
@@ -40,6 +42,7 @@ function render(){
   const d=match.last.delta;$('turn').textContent=`第${match.hand+1}局の結果`;$('role').textContent=d>0?'あなたの勝ち':d<0?'モカの勝ち':'引き分け';$('message').textContent=d?`${Math.abs(d)}枚のコインが移動しました。`:'この局のコイン移動はありません。';$('settlement').textContent=`あなた ${d>=0?'+':''}${d}枚 / モカ ${d<=0?'+':''}${-d}枚`;$('action').textContent=match.hand===3||match.maxBet<1?'最終結果を見る':'親を交代して次の局へ';
  }
  if(final){const d=match.players[0].coins-1000;$('turn').textContent='対戦終了';$('role').textContent=d>0?'今日は、あなたの一杯。':d<0?'今日は、モカに一杯。':'いい勝負でした。';$('message').textContent=`あなたの最終残高 ${match.players[0].coins.toLocaleString()}枚`;$('settlement').textContent=`最初の1,000枚から ${d>=0?'+':''}${d}枚`;$('action').textContent='もう一度対戦する';}
+ if(notice&&phase==='TURN')$('message').textContent=notice;
  if(paused&&!$('rules').open&&!$('confirm').open){$('message').textContent='一時停止中です。「再開」で続けられます。';}
  $('history').replaceChildren(...(match.history.length?match.history.map(h=>{const li=document.createElement('li');li.textContent=`第${h.hand}局・親 ${match.players[h.dealer].name} / あなた ${h.results[0].label} 対 モカ ${h.results[1].label} / ${h.delta>=0?'+':''}${h.delta}枚`;return li;}):[Object.assign(document.createElement('li'),{textContent:'最初の一局を、ここから。'})]));
  scheduleCpu();
@@ -49,13 +52,20 @@ function scheduleCpu(){
  if(paused||busy||document.hidden||$('rules').open||$('confirm').open||match.phase!=='TURN'||match.current!==1)return;
  const token=generation;cpuTimer=setTimeout(()=>{if(token!==generation||paused)return;try{if(match.locked){match.advance();render();}else roll();}catch(e){$('error').textContent=e.message;}},reduced?350:1000);
 }
-function roll(){
- if(paused||busy||match.phase!=='TURN'||match.locked)return;
- match.roll();busy=true;$('action').disabled=true;$('role').textContent='ころん、と。';showDice([2,4,6]);$('dice').classList.add('rolling');
- const token=generation;rollTimer=setTimeout(()=>{if(token!==generation)return;busy=false;$('dice').classList.remove('rolling');render();},reduced?80:650);
+async function roll(){
+ if(paused||busy||!tray||match.phase!=='TURN'||match.locked)return;
+ const token=generation;notice='';busy=true;showDice([]);render();
+ try{
+  const seed=crypto.getRandomValues(new Uint32Array(1))[0];const result=await tray.roll(seed);
+  if(token!==generation)return;
+  busy=false;
+  if(result.values){match.roll(result.values);voids=0;}
+  else{notice=result.reason+'。この投擲は回数に含めません。';voids++;if(voids>=3){paused=true;tray.setPaused(true);notice+=' 再開するともう一度振れます。';}}
+  render();
+ }catch(e){if(token!==generation||e.name==='AbortError')return;busy=false;paused=true;tray.setPaused(true);$('error').textContent='投擲を続けられませんでした。最初からやり直してください。';render();}
 }
-function reset(){generation++;clearTimers();match=new Match();paused=false;$('error').textContent='';render();}
-$('action').addEventListener('click',()=>{if(paused||busy)return;try{
+function reset(){generation++;clearTimers();tray?.cancel();tray?.setPaused(false);notice='';voids=0;match=new Match();paused=false;$('error').textContent='';render();}
+$('action').addEventListener('click',()=>{if(paused||busy||!tray)return;notice='';try{
  if(match.phase==='BET'){match.placeBet(Number($('bet').value));render();}
  else if(match.phase==='TURN'&&match.current===0){if(match.locked){match.advance();render();}else roll();}
  else if(match.phase==='ROUND_END'){match.next();render();}else if(match.phase==='FINAL')reset();
@@ -69,4 +79,7 @@ $('rules-open').addEventListener('click',()=>openDialog($('rules')));$('rules-cl
 $('restart').addEventListener('click',()=>openDialog($('confirm')));$('cancel').addEventListener('click',()=>closeDialog($('confirm')));$('confirm-restart').addEventListener('click',()=>{$('confirm').close();reset();});
 for(const d of [$('rules'),$('confirm')])d.addEventListener('cancel',e=>{e.preventDefault();closeDialog(d);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)setPause(true);});
+$('dice-zoom').addEventListener('click',()=>{if(!tray)return;tray.setZoom(!tray.zoomed);$('dice-zoom').setAttribute('aria-pressed',String(tray.zoomed));$('dice-zoom').textContent=tray.zoomed?'皿全体を見る':'近くで見る';});
 render();
+
+if(new URLSearchParams(location.search).get('inspect')==='1')window.chinchiro={get match(){return match;},tray,get busy(){return busy;}};

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "rapier-colliders",
+    "url": "https://rapier.rs/docs/user_guides/javascript/colliders/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "rapier-rigid-bodies",
+    "url": "https://rapier.rs/docs/user_guides/javascript/rigid_bodies/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "gaffer-timestep",
+    "url": "https://gafferongames.com/post/fix_your_timestep/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "dice-geometry",
+    "url": "https://en.wikipedia.org/wiki/Dice",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "pmma-material",
+    "url": "https://www.perspex.co.uk/technical-library/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  }
+]

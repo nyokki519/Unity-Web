@@ -1,0 +1,37 @@
+{
+  "scope": "local-only; no production deployment",
+  "physics": "Rapier 0.21.0, SI, 240Hz, CCD",
+  "nodeTests": 248,
+  "browserWidths": [
+    375,
+    390,
+    414
+  ],
+  "fullMatchWidth": 390,
+  "recording": {
+    "seeds": [
+      312734594,
+      2711968421,
+      4001865070,
+      524669459,
+      950203069,
+      438719647
+    ],
+    "fps": 31.107640244696082,
+    "medianFrameMs": 33.29999999999973,
+    "p95FrameMs": 66.69999999999982,
+    "frameCount": 239,
+    "limitations": "Chromium software GPU DPR1 with recording; not physical iPhone. Real UI throws, no face forcing, normal playback speed."
+  },
+  "simulation": {
+    "throws": 500,
+    "valid": 457,
+    "ambiguousOrStack": 39,
+    "outside": 4
+  },
+  "limitations": [
+    "Material coefficients not measured",
+    "Physical iPhone Safari not tested",
+    "Software GPU performance is not device performance"
+  ]
+}

@@ -25,9 +25,9 @@ export class Match{
   this.bet=bet;this.order=[this.dealer,1-this.dealer];this.turnIndex=0;this.results=[null,null];this.phase='TURN';this.resetTurn();
  }
  resetTurn(){this.attempt=0;this.dice=[];this.locked=false;}
- roll(){
+ roll(physicalDice=null){
   if(this.phase!=='TURN'||this.locked)throw new Error('今は振れません');
-  const dice=[this.die(),this.die(),this.die()],role=evaluate(dice);
+  const dice=physicalDice===null?[this.die(),this.die(),this.die()]:[...physicalDice],role=evaluate(dice);
   this.dice=dice;this.attempt++;this.locked=role.kind!=='none'||this.attempt===3;
   this.results[this.current]={...role,dice:[...dice],attempt:this.attempt,final:this.locked};return this.results[this.current];
  }
