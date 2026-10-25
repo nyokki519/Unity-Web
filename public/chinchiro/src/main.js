@@ -34,7 +34,7 @@ function render(){
  if(isBet){$('turn').textContent=`今回の親：${match.players[match.dealer].name}`;$('role').textContent='一杯ぶん、勝負しよう。';$('message').textContent='コインを決めたら、親から順に振ります。';$('action').textContent='この枚数で勝負';}
  if(phase==='TURN'){
   const p=match.players[match.current],r=match.results[match.current];$('turn').textContent=`${p.name}の番 / ${match.current===match.dealer?'親':'子'} / ${Math.min(match.attempt+(!match.locked?1:0),3)}投目`;
-  $('role').textContent=busy?'皿を振って、出目を待とう。':r?r.label:'サイコロを振ろう';
+  $('role').textContent=busy?'出目を待とう。':r?r.label:'サイコロを振ろう';
   $('message').textContent=match.locked?'この出目で勝負。':match.attempt?'役なし。あと'+(3-match.attempt)+'回振れます。':'役が出るまで、最大3回。';
   $('action').textContent=match.current===1?(busy?'CPUが振っています…':'CPUの番です…'):match.locked?(match.turnIndex===1?'結果を精算する':'CPUの番へ'):'サイコロを振る';
  }
