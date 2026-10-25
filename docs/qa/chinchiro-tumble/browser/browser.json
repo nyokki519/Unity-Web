@@ -1,0 +1,89 @@
+[
+  {
+    "width": 390,
+    "pausedTick": 527,
+    "result": {
+      "values": [
+        2,
+        4,
+        6
+      ],
+      "reason": null,
+      "seed": 3063558240,
+      "ticks": 1119,
+      "seconds": 4.6625,
+      "contacts": {
+        "floor": 11,
+        "wall": 0,
+        "dice": 5
+      }
+    },
+    "errors": [],
+    "checks": [
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dish movement",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 375,
+    "pausedTick": 547,
+    "result": {
+      "values": [
+        3,
+        3,
+        1
+      ],
+      "reason": null,
+      "seed": 2413936518,
+      "ticks": 1126,
+      "seconds": 4.691666666666666,
+      "contacts": {
+        "floor": 27,
+        "wall": 0,
+        "dice": 0
+      }
+    },
+    "errors": [],
+    "checks": [
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dish movement",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 414,
+    "pausedTick": 535,
+    "result": {
+      "values": [
+        3,
+        1,
+        6
+      ],
+      "reason": null,
+      "seed": 3912745057,
+      "ticks": 1139,
+      "seconds": 4.745833333333334,
+      "contacts": {
+        "floor": 15,
+        "wall": 0,
+        "dice": 5
+      }
+    },
+    "errors": [],
+    "checks": [
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dish movement",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  }
+]

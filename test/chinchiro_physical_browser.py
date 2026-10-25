@@ -17,7 +17,7 @@ with sync_playwright() as p:
   page.click('#dice-zoom');assert page.evaluate('chinchiro.tray.zoomed');page.click('#dice-zoom')
   page.screenshot(path=str(out/f'dish-{width}.png'),full_page=True)
   if width==390:
-   deadline=time.monotonic()+150
+   deadline=time.monotonic()+300
    while time.monotonic()<deadline:
     phase=page.evaluate('chinchiro.match.phase')
     if phase=='FINAL':break

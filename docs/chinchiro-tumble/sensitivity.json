@@ -1,0 +1,54 @@
+[
+  {
+    "configuration": "baseline passive drop",
+    "throws": 24,
+    "meanSeconds": 0.9369791667,
+    "invalid": 4,
+    "movingAt3Seconds": 0
+  },
+  {
+    "configuration": "passive restitution .6/.6",
+    "throws": 24,
+    "meanSeconds": 1.0772569444,
+    "invalid": 4,
+    "movingAt3Seconds": 0
+  },
+  {
+    "configuration": "passive initial spin x3",
+    "throws": 24,
+    "meanSeconds": 0.9222222222,
+    "invalid": 4,
+    "movingAt3Seconds": 0
+  },
+  {
+    "configuration": "passive friction .14/.18, restitution .6, spin x2, speed x1.5",
+    "throws": 24,
+    "meanSeconds": 1.3385416667,
+    "invalid": 15,
+    "movingAt3Seconds": 0
+  },
+  {
+    "configuration": "moving dish, flat radius115mm, heave30mm",
+    "throws": 500,
+    "valid": 388,
+    "invalid": 112,
+    "lateChangingTopFace": 416,
+    "evidence": "../qa/chinchiro-tumble/survey-initial-500.json"
+  },
+  {
+    "configuration": "flat radius125mm, heave27mm",
+    "throws": 40,
+    "valid": 39,
+    "ambiguous": 1,
+    "outside": 0,
+    "note": "Rejected despite high validity: separate 12-seed regression found only3 with late rotation>1rad."
+  },
+  {
+    "configuration": "flat radius125mm, heave30mm",
+    "throws": 40,
+    "valid": 36,
+    "ambiguous": 2,
+    "outside": 2,
+    "note": "Selected for full500-run verification; repeated independent validation required, not material calibration."
+  }
+]

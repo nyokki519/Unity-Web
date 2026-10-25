@@ -1,5 +1,5 @@
 export const DICE_SIZE=.016,BEVEL=.0008;
-export const BOWL={flatRadius:.100,curveRadius:.035,height:.050,thickness:.004};
+export const BOWL={flatRadius:.125,curveRadius:.010,height:.050,thickness:.004};
 export const FACES=[{value:1,n:[0,1,0],u:[1,0,0],v:[0,0,-1]},{value:6,n:[0,-1,0],u:[1,0,0],v:[0,0,1]},{value:3,n:[1,0,0],u:[0,0,-1],v:[0,1,0]},{value:4,n:[-1,0,0],u:[0,0,1],v:[0,1,0]},{value:2,n:[0,0,1],u:[1,0,0],v:[0,1,0]},{value:5,n:[0,0,-1],u:[-1,0,0],v:[0,1,0]}];
 export function rotate(q,p){const [x,y,z]=p,tx=2*(q.y*z-q.z*y),ty=2*(q.z*x-q.x*z),tz=2*(q.x*y-q.y*x);return [x+q.w*tx+q.y*tz-q.z*ty,y+q.w*ty+q.z*tx-q.x*tz,z+q.w*tz+q.x*ty-q.y*tx];}
 export function topFace(q){const faces=FACES.map(f=>({value:f.value,alignment:rotate(q,f.n)[1]})).sort((a,b)=>b.alignment-a.alignment);return faces[0].alignment>=Math.cos(Math.PI/6)&&faces[0].alignment-faces[1].alignment>=.2?faces[0]:null;}
@@ -23,4 +23,17 @@ export function bowlMesh(){
  profile.push([0,-t]);const m=meshBuilder(),rings=profile.map(([r,y])=>Array.from({length:segments},(_,i)=>m.point([r*Math.cos(i/segments*Math.PI*2),y,r*Math.sin(i/segments*Math.PI*2)]))),groups=[];
  for(let j=0;j<rings.length-1;j++){const start=m.indices.length;for(let i=0;i<segments;i++){const k=(i+1)%segments,a=rings[j][i],b=rings[j][k],c=rings[j+1][k],d=rings[j+1][i];m.tri(a,b,c);m.tri(a,c,d);}const materialIndex=j>=rimStart&&j<rimEnd?1:j>=rimEnd?2:0,count=m.indices.length-start,last=groups.at(-1);if(last?.materialIndex===materialIndex)last.count+=count;else groups.push({start,count,materialIndex});}
  return {vertices:m.vertices,indices:m.indices,groups};
+}
+
+// The flat brass base uses a solid analytic cylinder to avoid losing support at
+// moving triangle seams. Remove its two planar caps from the curved-wall mesh:
+// no duplicate floor impulses, no added wall above the visible surface.
+export function bowlWallIndices({vertices,indices}){
+ const wall=[];
+ for(let i=0;i<indices.length;i+=3){
+  const ids=indices.slice(i,i+3),points=ids.map(n=>vertices.slice(n*3,n*3+3));
+  const cap=y=>points.every(p=>Math.abs(p[1]-y)<1e-8&&Math.hypot(p[0],p[2])<=BOWL.flatRadius+1e-8);
+  if(!cap(0)&&!cap(-BOWL.thickness))wall.push(...ids);
+ }
+ return wall;
 }

@@ -1,0 +1,53 @@
+{
+  "tests": {
+    "passed": 257,
+    "failed": 0
+  },
+  "throws": 500,
+  "valid": 449,
+  "invalid": {
+    "斜め停止・重なりのため振り直し": 46,
+    "場外に出ました": 5
+  },
+  "validMeanSeconds": 4.904844097995541,
+  "validP95Seconds": 5.166666666666667,
+  "lateMotion": {
+    "moving": 500,
+    "contacting": 500,
+    "turningOverOneRadian": 387,
+    "changingTopFace": 374
+  },
+  "belowFlatBase": [],
+  "monitorRadiusMetres": 0.109,
+  "browserWidths": [
+    375,
+    390,
+    414
+  ],
+  "cpuFullMatch": true,
+  "audioOffDuringActiveThrow": true,
+  "recordingFps": 11.155930921467288,
+  "recordedThrowTimings": [
+    {
+      "seed": 1501480660,
+      "physicsSeconds": 4.679166666666666,
+      "wallSeconds": 5.261099999994039
+    },
+    {
+      "seed": 1502827640,
+      "physicsSeconds": 5.183333333333334,
+      "wallSeconds": 5.34690000000596
+    },
+    {
+      "seed": 277388449,
+      "physicsSeconds": 4.829166666666667,
+      "wallSeconds": 4.92209999999404
+    }
+  ],
+  "limitations": [
+    "iPhone hardware not tested",
+    "Material coefficients not measured",
+    "Software GPU recording about11fps; real-device smoothness not established",
+    "About5seconds includes prescribed physical dish gesture, not passive metal restitution"
+  ]
+}

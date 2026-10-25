@@ -1,0 +1,79 @@
+[
+  {
+    "url": "https://rapier.rs/docs/user_guides/javascript/colliders/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Coefficient_of_restitution",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Rolling_resistance",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://openstax.org/books/university-physics-volume-1/pages/11-1-rolling-motion",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://rinblog.org/apps/chinchiro/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/dimforge/rapier/master/src/dynamics/integration_parameters.rs",
+    "status": 200,
+    "bytes": 20948,
+    "file": "/tmp/dice-source-5.txt"
+  },
+  {
+    "name": "rapier-colliders",
+    "url": "https://raw.githubusercontent.com/dimforge/rapier.rs/master/docs/user_guides/javascript/colliders.mdx",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "rapier-contact",
+    "url": "https://raw.githubusercontent.com/dimforge/rapier/master/src/dynamics/solver/contact_constraint/one_body_constraint.rs",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "rapier-material",
+    "url": "https://raw.githubusercontent.com/dimforge/rapier/master/src/geometry/collider_components.rs",
+    "status": 200,
+    "bytes": 17069
+  },
+  {
+    "name": "openstax-rolling",
+    "url": "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/main/modules/m58302/index.cnxml",
+    "status": 200,
+    "bytes": 1358
+  },
+  {
+    "url": "https://github.com/dimforge/rapier.rs",
+    "method": "shallow sparse git clone and git show",
+    "commit": "83c07a5d8a436efb9b74c49890a5b4a48160da12",
+    "paths": [
+      "docs/user_guides/templates/collider_friction.mdx",
+      "docs/user_guides/templates/collider_restitution.mdx",
+      "docs/user_guides/templates/rigid_body_damping.mdx"
+    ],
+    "status": "read"
+  },
+  {
+    "url": "https://github.com/openstax/osbooks-university-physics-bundle",
+    "method": "shallow sparse git clone and git show",
+    "commit": "2300d5b8ca2571dacc6ec25ebef56ba8d49000a2",
+    "paths": [
+      "modules/m58335/index.cnxml",
+      "modules/m58329/index.cnxml"
+    ],
+    "status": "read"
+  },
+  {
+    "source": "installed @dimforge/rapier3d-compat 0.21.0",
+    "paths": [
+      "dist/geometry/shape.d.ts",
+      "dist/geometry/collider.d.ts"
+    ],
+    "status": "read"
+  }
+]

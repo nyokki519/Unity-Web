@@ -1,0 +1,65 @@
+{
+  "audio": {
+    "impacts": 228,
+    "scrapes": 173,
+    "dropped": 9
+  },
+  "voices": 3,
+  "lastResult": {
+    "values": [
+      1,
+      2,
+      3
+    ],
+    "reason": null,
+    "seed": 277388449,
+    "ticks": 1159,
+    "seconds": 4.829166666666667,
+    "contacts": {
+      "floor": 14,
+      "wall": 0,
+      "dice": 4
+    }
+  },
+  "currentSeed": 343332554,
+  "currentGesture": {
+    "seconds": 4.7066808837465945,
+    "delay": 0.3,
+    "ramp": 0.6,
+    "brake": 0.9,
+    "radius": 0.012,
+    "frequency": 2.6,
+    "tilt": 0.06,
+    "direction": -1,
+    "heave": 0.03,
+    "heaveFrequency": 4.5
+  },
+  "throwTimings": [
+    {
+      "seed": 1501480660,
+      "physicsSeconds": 4.679166666666666,
+      "wallSeconds": 5.261099999994039
+    },
+    {
+      "seed": 1502827640,
+      "physicsSeconds": 5.183333333333334,
+      "wallSeconds": 5.34690000000596
+    },
+    {
+      "seed": 277388449,
+      "physicsSeconds": 4.829166666666667,
+      "wallSeconds": 4.92209999999404
+    }
+  ],
+  "seeds": [
+    1501480660,
+    1502827640,
+    277388449,
+    343332554
+  ],
+  "pageErrors": [],
+  "fps": 11.155930921467288,
+  "medianFrameMs": 83.40000000000146,
+  "p95FrameMs": 116.70000000000073,
+  "method": "Real UI throws, canvas.captureStream plus actual Web Audio output on the same MediaRecorder clock; no microphone, no replaced audio, no speed changes. Active-throw RAF timings, Chromium software GPU DPR1."
+}
