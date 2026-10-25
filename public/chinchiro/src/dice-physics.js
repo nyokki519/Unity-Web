@@ -1,7 +1,7 @@
 import RAPIER from '../../vendor/rapier/rapier.mjs';
-import {dieMesh,bowlMesh,meshVolume,topFace,BOWL} from './dice-geometry.js';
+import {dieMesh,bowlMesh,meshVolume,topFace,BOWL,rotate} from './dice-geometry.js';
 let ready;
-export const PHYSICS={dt:1/240,gravity:9.80665,density:1180,friction:.28,bowlFriction:.32,restitution:.38,bowlRestitution:.35,linearDamping:.02,angularDamping:.06,maxSeconds:8,stableSeconds:.45,linearThreshold:.012,angularThreshold:.6,launchHeight:.04,launchSpeed:.35};
+export const PHYSICS={dt:1/240,gravity:9.80665,density:8000,friction:.28,bowlFriction:.32,restitution:.38,bowlRestitution:.35,linearDamping:.02,angularDamping:.06,maxSeconds:8,stableSeconds:.45,linearThreshold:.012,angularThreshold:.6,launchHeight:.04,launchSpeed:.35};
 export function seeded(seed){let x=seed>>>0;x=Math.imul(x^(x>>>16),0x85ebca6b);x=Math.imul(x^(x>>>13),0xc2b2ae35);x=(x^(x>>>16))>>>0||1;return ()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296;};}
 function orientation(rng){const a=rng(),b=2*Math.PI*rng(),c=2*Math.PI*rng();return {x:Math.sqrt(1-a)*Math.sin(b),y:Math.sqrt(1-a)*Math.cos(b),z:Math.sqrt(a)*Math.sin(c),w:Math.sqrt(a)*Math.cos(c)};}
 export class DiceWorld{
@@ -9,17 +9,34 @@ export class DiceWorld{
  constructor(seed,{config={}}={}){
   this.config={...PHYSICS,...config};const c=this.config,rng=seeded(seed);this.seed=seed;this.tick=0;this.stable=0;this.done=false;this.result=null;this.contacts={floor:0,wall:0,dice:0};this.dieGeometry=dieMesh();this.bowlGeometry=bowlMesh();
   this.world=new RAPIER.World({x:0,y:-c.gravity,z:0});this.world.timestep=c.dt;this.world.integrationParameters.lengthUnit=1;this.world.integrationParameters.normalizedAllowedLinearError=.00001;this.world.integrationParameters.normalizedPredictionDistance=.0001;this.world.numSolverIterations=12;this.world.maxCcdSubsteps=4;
-  this.events=new RAPIER.EventQueue(true);
+  this.events=new RAPIER.EventQueue(true);this.soundEvents=[];
   this.bowl=this.world.createCollider(RAPIER.ColliderDesc.trimesh(new Float32Array(this.bowlGeometry.vertices),new Uint32Array(this.bowlGeometry.indices)).setFriction(c.bowlFriction).setRestitution(c.bowlRestitution));
   this.mass=meshVolume(this.dieGeometry)*c.density;
   this.dice=Array.from({length:3},(_,i)=>{
    const q=orientation(rng),p={x:-.033+i*.03,y:c.launchHeight+rng()*.015,z:-.045+(rng()-.5)*.012};
    const body=this.world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(p.x,p.y,p.z).setRotation(q).setLinvel((rng()-.5)*.6,.08+rng()*.12,c.launchSpeed+rng()*.25).setAngvel({x:(rng()-.5)*80,y:(rng()-.5)*80,z:(rng()-.5)*80}).setCcdEnabled(true).setCanSleep(false).setLinearDamping(c.linearDamping).setAngularDamping(c.angularDamping));
    const cd=RAPIER.ColliderDesc.convexMesh(new Float32Array(this.dieGeometry.vertices),new Uint32Array(this.dieGeometry.indices));if(!cd)throw new Error('サイコロの凸形状を作成できません');
-   const collider=this.world.createCollider(cd.setMass(this.mass).setFriction(c.friction).setRestitution(c.restitution).setActiveEvents(RAPIER.ActiveEvents.COLLISION_EVENTS),body);return {body,collider,previous:{p:{...p},q:{...q}}};
+   const collider=this.world.createCollider(cd.setMass(this.mass).setFriction(c.friction).setRestitution(c.restitution).setActiveEvents(RAPIER.ActiveEvents.COLLISION_EVENTS|RAPIER.ActiveEvents.CONTACT_FORCE_EVENTS).setContactForceEventThreshold(.005),body);return {body,collider,previous:{p:{...p},q:{...q}}};
   });
  }
  poses(){return this.dice.map(d=>({p:{...d.body.translation()},q:{...d.body.rotation()}}));}
+ drainSounds(){const events=this.soundEvents;this.soundEvents=[];return events;}
+ collectSounds(){
+  const velocity=(d,p)=>{if(!d)return {x:0,y:0,z:0};const b=d.before,r={x:p.x-b.p.x,y:p.y-b.p.y,z:p.z-b.p.z};return {x:b.v.x+b.w.y*r.z-b.w.z*r.y,y:b.v.y+b.w.z*r.x-b.w.x*r.z,z:b.v.z+b.w.x*r.y-b.w.y*r.x};};
+  this.events.drainContactForceEvents(event=>{
+   const a=this.dice.find(d=>d.collider.handle===event.collider1()),other=this.dice.find(d=>d.collider.handle===event.collider2()),first=a||other;if(!first)return;const second=a?other:null;
+   let point=null,closest=Infinity,points=0;
+   this.world.contactPair(first.collider,second?second.collider:this.bowl,(m,flipped)=>{
+    points+=m.numContacts();for(let k=0;k<m.numContacts();k++){const dist=m.contactDist(k);if(dist>=closest)continue;const local=m.localContactPoint1(k);if(!local)continue;const owner=flipped?second:first;
+     if(owner){const q=owner.body.rotation(),v=rotate(q,[local.x,local.y,local.z]),p=owner.body.translation();point={x:p.x+v[0],y:p.y+v[1],z:p.z+v[2]};}else point={x:local.x,y:local.y,z:local.z};closest=dist;
+    }
+   });
+   if(!point){const p=first.body.translation();point={x:p.x,y:p.y-.008,z:p.z};}
+   const n=event.maxForceDirection(),length=Math.hypot(n.x,n.y,n.z);if(length<1e-8)return;const normal={x:n.x/length,y:n.y/length,z:n.z/length},av=velocity(first,point),bv=velocity(second,point),v={x:av.x-bv.x,y:av.y-bv.y,z:av.z-bv.z},dot=v.x*normal.x+v.y*normal.y+v.z*normal.z,radial=Math.hypot(point.x,point.z)/.135,id=this.dice.indexOf(first),otherId=second?this.dice.indexOf(second):-1,pair=second?'d'+[id,otherId].sort().join(''):'b'+id;
+   this.soundEvents.push({touching:true,pair,id,type:second?'dice':radial>BOWL.flatRadius/.135?'rim':'bowl',normalSpeed:Math.abs(dot),tangentSpeed:Math.sqrt(Math.max(0,v.x*v.x+v.y*v.y+v.z*v.z-dot*dot)),angularSpeed:Math.max(Math.hypot(...Object.values(first.before.w)),second?Math.hypot(...Object.values(second.before.w)):0),impulse:event.totalForceMagnitude()*this.config.dt,mass:second?this.mass/2:this.mass,radial,points,time:this.tick*this.config.dt});
+  });
+  if(this.soundEvents.length>512)this.soundEvents.splice(0,this.soundEvents.length-512);
+ }
  hasStack(){
   for(let i=0;i<this.dice.length;i++)for(let j=i+1;j<this.dice.length;j++){
    const a=this.dice[i],b=this.dice[j];if(Math.abs(a.body.translation().y-b.body.translation().y)<.008)continue;
@@ -28,9 +45,10 @@ export class DiceWorld{
  }
  step(){
   if(this.done)return;const c=this.config;
-  for(const d of this.dice)d.previous={p:{...d.body.translation()},q:{...d.body.rotation()}};
+  for(const d of this.dice){d.previous={p:{...d.body.translation()},q:{...d.body.rotation()}};d.before={p:{...d.body.translation()},v:{...d.body.linvel()},w:{...d.body.angvel()}};}
   this.world.step(this.events);this.tick++;
   this.events.drainCollisionEvents((a,b,start)=>{if(!start)return;if(a===this.bowl.handle||b===this.bowl.handle){const d=this.dice.find(d=>d.collider.handle===(a===this.bowl.handle?b:a)),p=d.body.translation();this.contacts[Math.hypot(p.x,p.z)>BOWL.flatRadius?'wall':'floor']++;}else this.contacts.dice++;});
+  this.collectSounds();
   let quiet=true;
   for(const d of this.dice){const p=d.body.translation(),v=d.body.linvel(),w=d.body.angvel();if(!Object.values(p).every(Number.isFinite))throw new Error('物理状態が不正です');if(p.y<-.015||Math.hypot(p.x,p.z)>.17){this.finish(null,'場外に出ました');return;}if(Math.hypot(v.x,v.y,v.z)>c.linearThreshold||Math.hypot(w.x,w.y,w.z)>c.angularThreshold)quiet=false;}
   this.stable=quiet?this.stable+c.dt:0;

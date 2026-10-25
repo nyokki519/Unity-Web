@@ -1,0 +1,89 @@
+{
+  "scope": "local only; not published",
+  "tests": {
+    "passed": 252,
+    "failed": 0
+  },
+  "model": {
+    "diceMaterial": "solid stainless design assumption",
+    "diceMassKg": 0.03255211371851441,
+    "bowlMaterial": "brass design assumption",
+    "bowlMassKg": 3.0011719903401186,
+    "gravity": 9.80665
+  },
+  "audio": {
+    "surface": {
+      "metal": 1,
+      "roughness": [
+        0.56,
+        0.19,
+        0.58
+      ],
+      "groups": 3,
+      "cornerAlpha": 0
+    },
+    "stats": {
+      "impacts": 11,
+      "scrapes": 0,
+      "dropped": 1
+    },
+    "peak": 0.11923424154520035,
+    "voices": 0,
+    "context": "running",
+    "quietPeak": 0,
+    "errors": [],
+    "checks": [
+      "sound defaults off",
+      "gesture unlock",
+      "volume",
+      "physics pause mutes",
+      "actual contact PCM",
+      "no clipping",
+      "silent settled",
+      "transparent ink",
+      "material groups",
+      "no settled redraw"
+    ]
+  },
+  "recording": {
+    "audio": {
+      "impacts": 47,
+      "scrapes": 6,
+      "dropped": 3
+    },
+    "voices": 0,
+    "seeds": [
+      83269142,
+      1540536131,
+      3683387102,
+      3068163364,
+      3452379958
+    ],
+    "pageErrors": [],
+    "fps": 10.730553608969867,
+    "medianFrameMs": 100,
+    "p95FrameMs": 166.80000000000018,
+    "method": "Real UI throws, canvas.captureStream plus actual Web Audio output on the same MediaRecorder clock; no microphone, no replaced audio, no speed changes. Active-throw RAF timings, Chromium software GPU DPR1."
+  },
+  "recordedLevels": {
+    "sampleRate": 48000,
+    "seconds": 9.36,
+    "peak": 0.17462158203125,
+    "rms": 0.007561817624656823,
+    "peakDbFS": -15.158041629809482,
+    "clippedSamples": 0
+  },
+  "performance": {
+    "method": "No recording, active throws only; Chromium SwiftShader DPR1 390x844, audio ON, close view",
+    "fps": 10.871610461834374,
+    "medianMs": 99.89999999999964,
+    "p95Ms": 200,
+    "frames": 52
+  },
+  "limitations": [
+    "No physical iPhone test",
+    "Material and acoustic coefficients uncalibrated",
+    "Reference/manufacturer sites blocked; not directly viewed",
+    "Software GPU active rendering about 11fps, not verified smooth device performance"
+  ]
+}

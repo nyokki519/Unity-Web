@@ -1,0 +1,17 @@
+[
+  {
+    "id": "reference",
+    "url": "https://rinblog.org/apps/chinchiro/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "brass",
+    "url": "https://alloys.copper.org/alloy/C26000",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "id": "steel",
+    "url": "https://www.outokumpu.com/en/products/product-ranges/core/304-4301",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  }
+]

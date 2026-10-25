@@ -5,19 +5,22 @@ export function rotate(q,p){const [x,y,z]=p,tx=2*(q.y*z-q.z*y),ty=2*(q.z*x-q.x*z
 export function topFace(q){const faces=FACES.map(f=>({value:f.value,alignment:rotate(q,f.n)[1]})).sort((a,b)=>b.alignment-a.alignment);return faces[0].alignment>=Math.cos(Math.PI/6)&&faces[0].alignment-faces[1].alignment>=.2?faces[0]:null;}
 function meshBuilder(){const vertices=[],indices=[],keys=new Map();return {vertices,indices,point(p){const key=p.map(x=>x.toFixed(10)).join(',');if(!keys.has(key)){keys.set(key,vertices.length/3);vertices.push(...p);}return keys.get(key);},tri(a,b,c){if(a!==b&&b!==c&&a!==c)indices.push(a,b,c);}};}
 export function dieMesh(){
- const m=meshBuilder(),h=DICE_SIZE/2,k=h-BEVEL,coords=[-h,-k,k,h];
+ const m=meshBuilder(),h=DICE_SIZE/2,k=h-BEVEL,edge=[0,1,2,3,4].map(i=>k+BEVEL*Math.sin(i/4*Math.PI/2)),coords=[...edge.slice().reverse().map(v=>-v),...edge],N=coords.length;
  for(const f of FACES){const ids=[];for(const t of coords)for(const s of coords){const p=f.n.map((n,j)=>n*h+f.u[j]*s+f.v[j]*t),core=p.map(x=>Math.max(-k,Math.min(k,x))),d=p.map((x,j)=>x-core[j]),len=Math.hypot(...d);ids.push(m.point(core.map((x,j)=>x+d[j]/len*BEVEL)));}
-  for(let j=0;j<3;j++)for(let i=0;i<3;i++){const a=ids[j*4+i],b=ids[j*4+i+1],c=ids[(j+1)*4+i+1],d=ids[(j+1)*4+i];m.tri(a,b,c);m.tri(a,c,d);}
+  for(let j=0;j<N-1;j++)for(let i=0;i<N-1;i++){const a=ids[j*N+i],b=ids[j*N+i+1],c=ids[(j+1)*N+i+1],d=ids[(j+1)*N+i];m.tri(a,b,c);m.tri(a,c,d);}
  }
  return {vertices:m.vertices,indices:m.indices};
 }
 export function meshVolume({vertices:v,indices}){let volume=0;for(let i=0;i<indices.length;i+=3){const [a,b,c]=indices.slice(i,i+3).map(n=>v.slice(n*3,n*3+3));volume+=(a[0]*(b[1]*c[2]-b[2]*c[1])+a[1]*(b[2]*c[0]-b[0]*c[2])+a[2]*(b[0]*c[1]-b[1]*c[0]))/6;}return Math.abs(volume);}
 export function bowlMesh(){
- const {flatRadius:r,curveRadius:s,height:h,thickness:t}=BOWL,profile=[[0,0],[r,0]];
- for(let i=1;i<=20;i++){const a=i/20*Math.PI/2;profile.push([r+s*Math.sin(a),h*(1-Math.cos(a))]);}
- profile.push([.137,.052],[.139,.050]);
- for(let i=20;i>=0;i--){const a=i/20*Math.PI/2;profile.push([r+t+s*Math.sin(a),h*(1-Math.cos(a))-t]);}
- profile.push([0,-t]);const m=meshBuilder(),rings=profile.map(([r,y])=>Array.from({length:96},(_,i)=>m.point([r*Math.cos(i/96*Math.PI*2),y,r*Math.sin(i/96*Math.PI*2)])));
- for(let j=0;j<rings.length-1;j++)for(let i=0;i<96;i++){const k=(i+1)%96,a=rings[j][i],b=rings[j][k],c=rings[j+1][k],d=rings[j+1][i];m.tri(a,b,c);m.tri(a,c,d);}
- return {vertices:m.vertices,indices:m.indices};
+ const {flatRadius:r,curveRadius:s,height:h,thickness:t}=BOWL,profile=[[0,0],[r,0]],curves=28,segments=128;
+ for(let i=1;i<=curves;i++){const a=i/curves*Math.PI/2;profile.push([r+s*Math.sin(a),h*(1-Math.cos(a))]);}
+ const rimStart=profile.length-1;
+ for(let i=1;i<=16;i++){const a=Math.PI-i/16*Math.PI;profile.push([r+s+t/2+Math.cos(a)*t/2,h+Math.sin(a)*t/2]);}
+ const rimEnd=profile.length-1;
+ // Normal offset maintains wall thickness and joins the rolled lip tangentially.
+ for(let i=curves-1;i>=0;i--){const a=i/curves*Math.PI/2,dx=s*Math.cos(a),dy=h*Math.sin(a),l=Math.hypot(dx,dy);profile.push([r+s*Math.sin(a)+t*dy/l,h*(1-Math.cos(a))-t*dx/l]);}
+ profile.push([0,-t]);const m=meshBuilder(),rings=profile.map(([r,y])=>Array.from({length:segments},(_,i)=>m.point([r*Math.cos(i/segments*Math.PI*2),y,r*Math.sin(i/segments*Math.PI*2)]))),groups=[];
+ for(let j=0;j<rings.length-1;j++){const start=m.indices.length;for(let i=0;i<segments;i++){const k=(i+1)%segments,a=rings[j][i],b=rings[j][k],c=rings[j+1][k],d=rings[j+1][i];m.tri(a,b,c);m.tri(a,c,d);}const materialIndex=j>=rimStart&&j<rimEnd?1:j>=rimEnd?2:0,count=m.indices.length-start,last=groups.at(-1);if(last?.materialIndex===materialIndex)last.count+=count;else groups.push({start,count,materialIndex});}
+ return {vertices:m.vertices,indices:m.indices,groups};
 }

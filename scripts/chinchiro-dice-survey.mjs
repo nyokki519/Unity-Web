@@ -10,5 +10,5 @@ for(let seed=1;seed<=count;seed++){
  if(w.result.values){report.valid++;for(const n of w.result.values)report.faceCounts[n-1]++;}else report.invalid[w.result.reason]=(report.invalid[w.result.reason]||0)+1;
  for(const k of Object.keys(report.contacts))report.contacts[k]+=w.contacts[k];report.times.push(w.result.seconds);if(seed<=8)report.examples.push(w.result);w.dispose();
 }
-report.meanSeconds=report.times.reduce((a,b)=>a+b,0)/count;report.times.sort((a,b)=>a-b);report.p95Seconds=report.times[Math.floor(count*.95)];report.notes='Uncalibrated homogeneous resin/wood model. Face counts exclude invalid throws; not proof of fair or real-world-calibrated dice. Collision counts are contact starts, wall classification approximated by centre radius.';
+report.meanSeconds=report.times.reduce((a,b)=>a+b,0)/count;report.times.sort((a,b)=>a-b);report.p95Seconds=report.times[Math.floor(count*.95)];report.notes='Uncalibrated homogeneous solid-steel/brass design model. Face counts exclude invalid throws; not proof of fair or real-world-calibrated dice. Collision counts are contact starts, wall classification approximated by centre radius.';
 writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({...report,times:undefined,examples:undefined}));

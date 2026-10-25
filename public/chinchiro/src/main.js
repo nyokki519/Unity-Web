@@ -83,3 +83,6 @@ $('dice-zoom').addEventListener('click',()=>{if(!tray)return;tray.setZoom(!tray.
 render();
 
 if(new URLSearchParams(location.search).get('inspect')==='1')window.chinchiro={get match(){return match;},tray,get busy(){return busy;}};
+
+$('sound').addEventListener('click',async()=>{if(!tray)return;$('sound').disabled=true;try{await tray.sound.setEnabled(!tray.sound.enabled);$('sound').textContent=tray.sound.enabled?'音 ON':'音 OFF';$('sound').setAttribute('aria-pressed',String(tray.sound.enabled));$('sound-status').textContent='';}catch{$('sound-status').textContent='音を開始できませんでした。もう一度押してください。';}finally{$('sound').disabled=false;}});
+$('volume').addEventListener('input',()=>{const value=Number($('volume').value);tray?.sound.setVolume(value*.008);$('volume-value').value=value+'%';});

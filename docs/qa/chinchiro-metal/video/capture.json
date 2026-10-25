@@ -1,0 +1,20 @@
+{
+  "audio": {
+    "impacts": 47,
+    "scrapes": 6,
+    "dropped": 3
+  },
+  "voices": 0,
+  "seeds": [
+    83269142,
+    1540536131,
+    3683387102,
+    3068163364,
+    3452379958
+  ],
+  "pageErrors": [],
+  "fps": 10.730553608969867,
+  "medianFrameMs": 100,
+  "p95FrameMs": 166.80000000000018,
+  "method": "Real UI throws, canvas.captureStream plus actual Web Audio output on the same MediaRecorder clock; no microphone, no replaced audio, no speed changes. Active-throw RAF timings, Chromium software GPU DPR1."
+}

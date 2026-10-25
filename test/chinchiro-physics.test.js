@@ -27,7 +27,7 @@ test('game accepts physical faces atomically and preserves its existing reroll r
 test('shared die and bowl surfaces are watertight and die mass follows SI volume',async()=>{
  const {dieMesh,bowlMesh,meshVolume}=await import('../public/chinchiro/src/dice-geometry.js');
  for(const g of [dieMesh(),bowlMesh()]){const edges=new Map();for(let i=0;i<g.indices.length;i+=3)for(let j=0;j<3;j++){const edge=[g.indices[i+j],g.indices[i+(j+1)%3]].sort((a,b)=>a-b).join(':');edges.set(edge,(edges.get(edge)||0)+1);}assert.ok([...edges.values()].every(n=>n===2));}
- const mass=meshVolume(dieMesh())*1180;assert.ok(mass>.004&&mass<.005);
+ const mass=meshVolume(dieMesh())*8000;assert.ok(mass>.030&&mass<.034);
 });
 
 test('floor collision produces a bounce and die-to-die contact changes horizontal velocity',async()=>{
