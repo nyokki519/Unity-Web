@@ -23,10 +23,15 @@ with sync_playwright() as p:
   assert info['sleeves']==[{'color':0x050b09,'metalness':0}];assert info['thickness']==.0045
   page.wait_for_timeout(350)
   def sample():return c.evaluate('''()=>{const r=SILVER_GAME.refs.bowlRefs[2].holes.find(x=>x.win).ring;return{phase:r.userData.rainbowPhase,colors:Array.from(r.geometry.attributes.color.array),position:r.position.toArray(),rotation:r.rotation.toArray()};}''')
-  first=sample();bounds=c.evaluate('''()=>{const g=SILVER_GAME,r=g.refs.bowlRefs[2].holes.find(x=>x.win).ring,v=new g.refs.THREE.Vector3(),box=g.refs.renderer.domElement.getBoundingClientRect(),xs=[],ys=[];r.updateWorldMatrix(true,false);const p=r.geometry.attributes.position;for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i).applyMatrix4(r.matrixWorld).project(g.refs.camera);xs.push(box.left+(v.x+1)*box.width/2);ys.push(box.top+(1-v.y)*box.height/2);}return{left:Math.min(...xs),right:Math.max(...xs),top:Math.min(...ys),bottom:Math.max(...ys)};}''');frameBox=page.locator('iframe.silver-game').bounding_box();page.screenshot(path=str(out/f'flow-a-{width}.png'));page.wait_for_timeout(850);second=sample();page.screenshot(path=str(out/f'flow-b-{width}.png'))
-  crop=(int(bounds['left']+frameBox['x']),int(bounds['top']+frameBox['y']),int(bounds['right']+frameBox['x'])+1,int(bounds['bottom']+frameBox['y'])+1)
-  imageA=Image.open(out/f'flow-a-{width}.png').convert('RGB').crop(crop);imageB=Image.open(out/f'flow-b-{width}.png').convert('RGB').crop(crop)
-  changes=sum(1 for pixel in ImageChops.difference(imageA,imageB).getdata() if max(pixel)>8)
+  first=sample();frameBox=page.locator('iframe.silver-game').bounding_box();page.screenshot(path=str(out/f'flow-a-{width}.png'));page.wait_for_timeout(850);second=sample();page.screenshot(path=str(out/f'flow-b-{width}.png'))
+  shotA=Image.open(out/f'flow-a-{width}.png').convert('RGB');shotB=Image.open(out/f'flow-b-{width}.png').convert('RGB')
+  # Find the distinctive magenta portion in the actual rendered image, rather
+  # than projecting through the camera's separately transformed cabinet matrix.
+  pixels=[(x,y) for y in range(max(0,int(frameBox['y'])),min(844,int(frameBox['y']+frameBox['height']*.75))) for x in range(int(width*.3),int(width*.7)) if (lambda c:c[2]>160 and c[0]>c[1]*1.1 and c[2]>c[1]*1.2)(shotA.getpixel((x,y)))]
+  assert len(pixels)>10,'rainbow must be visible in the screenshot'
+  crop=(max(0,min(x for x,y in pixels)-12),max(0,min(y for x,y in pixels)-12),min(width,max(x for x,y in pixels)+13),min(844,max(y for x,y in pixels)+13))
+  imageA=shotA.crop(crop);imageB=shotB.crop(crop);raw=ImageChops.difference(imageA,imageB).tobytes()
+  changes=sum(1 for i in range(0,len(raw),3) if max(raw[i:i+3])>8)
   assert changes>10,changes
   imageA.resize((imageA.width*6,imageA.height*6)).save(out/f'rim-a-{width}.png');imageB.resize((imageB.width*6,imageB.height*6)).save(out/f'rim-b-{width}.png')
   assert first['colors']!=second['colors'];assert first['position']==second['position'];assert first['rotation']==second['rotation']
