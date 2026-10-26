@@ -27,7 +27,7 @@ export class DiceTray{
  resize(){this.dirty=true;const {width,height}=this.canvas.getBoundingClientRect();this.renderer.setSize(Math.max(1,width),Math.max(1,height),false);this.camera.aspect=width/height;this.camera.position.set(-.015,.325,.25);if(this.camera.aspect<1.05)this.camera.position.multiplyScalar(1.05/this.camera.aspect);if(this.zoomed)this.camera.position.multiplyScalar(.8);this.camera.lookAt(0,.012,0);this.camera.updateProjectionMatrix();}
  setZoom(value){this.zoomed=value;this.resize();}
  setReduced(value){this.reduced=value;this.dirty=true;}
- setPaused(value){this.dirty=true;this.paused=value;this.sound.setPaused(value);this.last=0;this.accumulator=0;if(this.world){for(const d of this.world.dice)d.previous={p:{...d.body.translation()},q:{...d.body.rotation()}};this.world.previousBowl={p:{...this.world.bowlBody.translation()},q:{...this.world.bowlBody.rotation()}};}}
+ setPaused(value){this.dirty=true;this.paused=value;this.sound.setPaused(value);this.last=0;this.accumulator=0;if(this.world){for(const d of this.world.dice)d.previous={p:{...d.body.translation()},q:{...d.body.rotation()}};}}
  clear(){this.dirty=true;this.sound.stop();for(const g of this.groups)this.scene.remove(g);this.groups=[];this.world?.dispose();this.world=null;this.bowlGroup.position.set(0,0,0);this.bowlGroup.quaternion.identity();}
  cancel(){this.token++;if(this.reject){this.reject(new DOMException('投擲を中止しました','AbortError'));this.resolve=this.reject=null;}this.clear();}
  async roll(seed){
@@ -43,7 +43,6 @@ export class DiceTray{
   if(this.stopped)return;this.raf=requestAnimationFrame(this.frame);const elapsed=this.last?Math.min((now-this.last)/1000,.1):0;this.last=now;const w=this.world,active=w&&!this.paused&&!w.done;
   if(active){this.accumulator+=elapsed;let steps=0;while(this.accumulator>=w.config.dt&&steps<24&&!w.done){w.step();this.accumulator-=w.config.dt;steps++;}}
   if(w){const alpha=this.paused||w.done?1:Math.min(1,this.accumulator/w.config.dt);w.dice.forEach((d,i)=>{const g=this.groups[i];g.visible=!this.reduced||w.done;g.position.copy(d.previous.p).lerp(d.body.translation(),alpha);g.quaternion.copy(d.previous.q).slerp(this.targetQuaternion.copy(d.body.rotation()),alpha);});
-   if(!this.reduced||w.done){this.bowlGroup.position.copy(w.previousBowl.p).lerp(w.bowlBody.translation(),alpha);this.bowlGroup.quaternion.copy(w.previousBowl.q).slerp(this.targetQuaternion.copy(w.bowlBody.rotation()),alpha);}else{this.bowlGroup.position.set(0,0,0);this.bowlGroup.quaternion.identity();}
   }
   if(w)this.sound.consume(w.drainSounds());
   if(this.dirty||(active&&!this.reduced)||(w?.done&&this.resolve)){this.renderer.render(this.scene,this.camera);this.dirty=false;}

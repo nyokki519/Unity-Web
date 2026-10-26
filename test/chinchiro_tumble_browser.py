@@ -1,4 +1,4 @@
-"""Real UI gesture checks; does not replace the physics or roll outcomes."""
+"""Real UI fixed-dish checks; does not replace the physics or roll outcomes."""
 import argparse,json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -9,9 +9,11 @@ with sync_playwright() as p:
   page=b.new_page(viewport={'width':width,'height':844},reduced_motion='no-preference');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(args.url+'/chinchiro/index.html?inspect=1');page.wait_for_function('()=>window.chinchiro?.tray')
   camera=page.evaluate('chinchiro.tray.camera.position.toArray()');page.click('#action');page.click('#action')
-  page.wait_for_function('()=>chinchiro.tray.world?.tick>480&&!chinchiro.tray.world.done',timeout=30000)
+  page.wait_for_function('()=>chinchiro.tray.world?.tick>48&&!chinchiro.tray.world.done',timeout=30000)
   page.click('#pause');page.wait_for_timeout(300)
+  assert page.evaluate('chinchiro.tray.world.bowlBody.isFixed()')
   state=page.evaluate('''()=>{const t=chinchiro.tray,w=t.world;return {tick:w.tick,bowl:w.bowlBody.translation(),draw:t.bowlGroup.position.toArray(),rotation:w.bowlBody.rotation(),drawRotation:t.bowlGroup.quaternion.toArray(),dice:w.poses()};}''')
+  assert state['bowl']=={'x':0,'y':0,'z':0}
   assert max(abs(state['draw'][i]-state['bowl'][k]) for i,k in enumerate(['x','y','z']))<1e-7
   assert max(abs(state['drawRotation'][i]-state['rotation'][k]) for i,k in enumerate(['x','y','z','w']))<1e-7
   page.screenshot(path=str(out/f'rolling-{width}.png'),full_page=True);page.wait_for_timeout(300)
@@ -24,6 +26,6 @@ with sync_playwright() as p:
   if result['values']:assert page.evaluate('chinchiro.match.dice')==result['values']
   else:assert page.evaluate('chinchiro.match.attempt')==0
   assert not page.evaluate('document.documentElement.scrollWidth>innerWidth');assert errors==[],errors
-  rows.append({'width':width,'pausedTick':state['tick'],'result':result,'errors':errors,'checks':['visible and collision bowl poses agree','dice and bowl pause together','camera does not shake','reduced motion hides dish movement','resume and actual physical results','no horizontal overflow']});page.close()
+  rows.append({'width':width,'pausedTick':state['tick'],'result':result,'errors':errors,'checks':['fixed dish remains at origin','visible and collision bowl poses agree','dice and bowl pause together','camera does not shake','reduced motion hides dice and keeps the dish fixed','resume and actual physical results','no horizontal overflow']});page.close()
  b.close()
 (out/'browser.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n');print(json.dumps(rows,ensure_ascii=False))

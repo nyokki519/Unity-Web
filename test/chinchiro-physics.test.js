@@ -44,9 +44,9 @@ test('floor collision produces a bounce and die-to-die contact changes horizonta
 });
 
 test('a stack on the outer flat floor cannot be accepted as three top faces',async()=>{
- const {DiceWorld}=await import('../public/chinchiro/src/dice-physics.js');const w=await DiceWorld.create(23,{config:{bowlMotionSeconds:0}});
+ const {DiceWorld}=await import('../public/chinchiro/src/dice-physics.js');const w=await DiceWorld.create(23);
  try{
-  w.dice.forEach((d,i)=>{d.body.setTranslation({x:i<2?.085:-.05,y:i===1?.024:.008,z:0},true);d.body.setRotation({x:0,y:0,z:0,w:1},true);d.body.setLinvel({x:0,y:0,z:0},true);d.body.setAngvel({x:0,y:0,z:0},true);});
+  w.dice.forEach((d,i)=>{d.body.setTranslation({x:i<2?.03:-.03,y:i===1?.024:.008,z:0},true);d.body.setRotation({x:0,y:0,z:0,w:1},true);d.body.setLinvel({x:0,y:0,z:0},true);d.body.setAngvel({x:0,y:0,z:0},true);});
   while(!w.done)w.step();assert.equal(w.result.values,null);assert.match(w.result.reason,/重なり/);
  }finally{w.dispose();}
 });
@@ -59,7 +59,7 @@ test('CCD blocks a fast floor crossing and the curved rim redirects an outward d
  }finally{w.dispose();}
  const r=await DiceWorld.create(28);
  try{
-  r.dice.forEach((d,i)=>{d.body.setTranslation({x:i===0?.12:0,y:i===0?.025:.008,z:(i-1)*.035},true);d.body.setRotation({x:0,y:0,z:0,w:1},true);d.body.setLinvel({x:i===0?.5:0,y:0,z:0},true);d.body.setAngvel({x:0,y:0,z:0},true);});
+  r.dice.forEach((d,i)=>{d.body.setTranslation({x:i===0?.115:0,y:i===0?.055:.008,z:i===0?0:(i-1)*.035},true);d.body.setRotation({x:0,y:0,z:0,w:1},true);d.body.setLinvel({x:i===0?.5:0,y:0,z:0},true);d.body.setAngvel({x:0,y:0,z:0},true);});
   for(let i=0;i<80&&!r.done;i++)r.step();assert.ok(r.contacts.wall>0);assert.ok(r.dice[0].body.linvel().x<.4);
  }finally{r.dispose();}
 });

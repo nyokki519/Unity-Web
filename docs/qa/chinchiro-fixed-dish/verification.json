@@ -1,0 +1,39 @@
+{
+  "testsPassed": 266,
+  "testsFailed": 0,
+  "throws": 500,
+  "valid": 492,
+  "invalid": {
+    "場外に出ました": 8
+  },
+  "meanValidSeconds": 1.556648035230351,
+  "p95ValidSeconds": 1.7583333333333333,
+  "stableConfirmationSeconds": 0.45,
+  "target3to5SecondsAchieved": false,
+  "afterLandingFaceChange": 499,
+  "dishDisplacement": 0,
+  "maxEnergyRatio": 0.9999562198549999,
+  "supportAudit": {
+    "count": 500,
+    "insideMaterial": 0,
+    "belowInterior": 0,
+    "positiveControl": true
+  },
+  "actualMassKg": 0.03255212679505348,
+  "rawGravityCmPerSecondSquared": -980.665,
+  "physicalGravityMetresPerSecondSquared": 9.80665,
+  "browserWidths": [
+    375,
+    390,
+    414
+  ],
+  "cpuFullMatch": true,
+  "audioOffDuringActiveThrow": true,
+  "recordingFps": 16.2291278558122,
+  "limitations": [
+    "Typical physical throws still shorter than3–5seconds",
+    "No physical iPhone Safari test",
+    "No calibration against a recorded real steel/brass pair",
+    "Software GPU remains below60fps"
+  ]
+}

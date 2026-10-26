@@ -1,0 +1,35 @@
+{
+  "count": 500,
+  "config": {
+    "dt": 0.004166666666666667,
+    "gravity": 9.80665,
+    "density": 8000,
+    "friction": 0.18,
+    "bowlFriction": 0.18,
+    "restitution": 0.8,
+    "bowlRestitution": 0.8,
+    "linearDamping": 0,
+    "angularDamping": 0,
+    "maxSeconds": 12,
+    "stableSeconds": 0.45,
+    "linearThreshold": 0.012,
+    "angularThreshold": 0.6,
+    "launchHeight": 0.075,
+    "launchSpeed": 0.65,
+    "predictionDistance": 0.002,
+    "solverUnitsPerMetre": 100
+  },
+  "solidQueryPositiveControl": true,
+  "observerEquivalenceSeeds": [
+    1,
+    73,
+    296
+  ],
+  "insideMaterial": [],
+  "belowInterior": [],
+  "valid": 492,
+  "invalid": {
+    "場外に出ました": 8
+  },
+  "note": "Same solver and release conditions; only sound observation work omitted. Every physics tick checks die centres against actual solid dish colliders and below the bowl interior, not only the flat base."
+}

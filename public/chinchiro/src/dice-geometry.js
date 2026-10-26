@@ -1,5 +1,5 @@
 export const DICE_SIZE=.016,BEVEL=.0008;
-export const BOWL={flatRadius:.125,curveRadius:.010,height:.050,thickness:.004};
+export const BOWL={flatRadius:.050,curveRadius:.085,height:.065,thickness:.004,segments:48,profileSegments:12,rimSegments:16};
 export const FACES=[{value:1,n:[0,1,0],u:[1,0,0],v:[0,0,-1]},{value:6,n:[0,-1,0],u:[1,0,0],v:[0,0,1]},{value:3,n:[1,0,0],u:[0,0,-1],v:[0,1,0]},{value:4,n:[-1,0,0],u:[0,0,1],v:[0,1,0]},{value:2,n:[0,0,1],u:[1,0,0],v:[0,1,0]},{value:5,n:[0,0,-1],u:[-1,0,0],v:[0,1,0]}];
 export function rotate(q,p){const [x,y,z]=p,tx=2*(q.y*z-q.z*y),ty=2*(q.z*x-q.x*z),tz=2*(q.x*y-q.y*x);return [x+q.w*tx+q.y*tz-q.z*ty,y+q.w*ty+q.z*tx-q.x*tz,z+q.w*tz+q.x*ty-q.y*tx];}
 export function topFace(q){const faces=FACES.map(f=>({value:f.value,alignment:rotate(q,f.n)[1]})).sort((a,b)=>b.alignment-a.alignment);return faces[0].alignment>=Math.cos(Math.PI/6)&&faces[0].alignment-faces[1].alignment>=.2?faces[0]:null;}
@@ -12,28 +12,27 @@ export function dieMesh(){
  return {vertices:m.vertices,indices:m.indices};
 }
 export function meshVolume({vertices:v,indices}){let volume=0;for(let i=0;i<indices.length;i+=3){const [a,b,c]=indices.slice(i,i+3).map(n=>v.slice(n*3,n*3+3));volume+=(a[0]*(b[1]*c[2]-b[2]*c[1])+a[1]*(b[2]*c[0]-b[0]*c[2])+a[2]*(b[0]*c[1]-b[1]*c[0]))/6;}return Math.abs(volume);}
+// One cross-section drives both the visible lathe and its solid collision cells.
+function bowlProfile(){
+ const {flatRadius:r,curveRadius:s,height:h,thickness:t,profileSegments:n,rimSegments:k}=BOWL;
+ const inner=[],outer=[];
+ for(let i=0;i<=n;i++){const a=i/n*Math.PI/2,dx=s*Math.cos(a),dy=h*Math.sin(a),l=Math.hypot(dx,dy);inner.push([r+s*Math.sin(a),h*(1-Math.cos(a))]);outer.push([r+s*Math.sin(a)+t*dy/l,h*(1-Math.cos(a))-t*dx/l]);}
+ const lip=[inner.at(-1)];for(let i=1;i<=k;i++){const a=Math.PI-i/k*Math.PI;lip.push([r+s+t/2+Math.cos(a)*t/2,h+Math.sin(a)*t/2]);}outer[n]=lip.at(-1);
+ return {inner,outer,lip,profile:[[0,0],...inner,...lip.slice(1),...outer.slice(0,-1).reverse(),[0,-t]],rimStart:inner.length,rimEnd:inner.length+k};
+}
 export function bowlMesh(){
- const {flatRadius:r,curveRadius:s,height:h,thickness:t}=BOWL,profile=[[0,0],[r,0]],curves=28,segments=128;
- for(let i=1;i<=curves;i++){const a=i/curves*Math.PI/2;profile.push([r+s*Math.sin(a),h*(1-Math.cos(a))]);}
- const rimStart=profile.length-1;
- for(let i=1;i<=16;i++){const a=Math.PI-i/16*Math.PI;profile.push([r+s+t/2+Math.cos(a)*t/2,h+Math.sin(a)*t/2]);}
- const rimEnd=profile.length-1;
- // Normal offset maintains wall thickness and joins the rolled lip tangentially.
- for(let i=curves-1;i>=0;i--){const a=i/curves*Math.PI/2,dx=s*Math.cos(a),dy=h*Math.sin(a),l=Math.hypot(dx,dy);profile.push([r+s*Math.sin(a)+t*dy/l,h*(1-Math.cos(a))-t*dx/l]);}
- profile.push([0,-t]);const m=meshBuilder(),rings=profile.map(([r,y])=>Array.from({length:segments},(_,i)=>m.point([r*Math.cos(i/segments*Math.PI*2),y,r*Math.sin(i/segments*Math.PI*2)]))),groups=[];
+ const {profile,rimStart,rimEnd}=bowlProfile(),segments=BOWL.segments,m=meshBuilder(),rings=profile.map(([r,y])=>Array.from({length:segments},(_,i)=>m.point([r*Math.cos(i/segments*Math.PI*2),y,r*Math.sin(i/segments*Math.PI*2)]))),groups=[];
  for(let j=0;j<rings.length-1;j++){const start=m.indices.length;for(let i=0;i<segments;i++){const k=(i+1)%segments,a=rings[j][i],b=rings[j][k],c=rings[j+1][k],d=rings[j+1][i];m.tri(a,b,c);m.tri(a,c,d);}const materialIndex=j>=rimStart&&j<rimEnd?1:j>=rimEnd?2:0,count=m.indices.length-start,last=groups.at(-1);if(last?.materialIndex===materialIndex)last.count+=count;else groups.push({start,count,materialIndex});}
  return {vertices:m.vertices,indices:m.indices,groups};
 }
 
-// The flat brass base uses a solid analytic cylinder to avoid losing support at
-// moving triangle seams. Remove its two planar caps from the curved-wall mesh:
-// no duplicate floor impulses, no added wall above the visible surface.
-export function bowlWallIndices({vertices,indices}){
- const wall=[];
- for(let i=0;i<indices.length;i+=3){
-  const ids=indices.slice(i,i+3),points=ids.map(n=>vertices.slice(n*3,n*3+3));
-  const cap=y=>points.every(p=>Math.abs(p[1]-y)<1e-8&&Math.hypot(p[0],p[2])<=BOWL.flatRadius+1e-8);
-  if(!cap(0)&&!cap(-BOWL.thickness))wall.push(...ids);
- }
- return wall;
+export function bowlSolids(){
+ const {inner,outer,lip}=bowlProfile(),parts=[],n=BOWL.segments;
+ const part=(section,i)=>{
+  const points=[];for(const k of [i,(i+1)%n]){const angle=k/n*Math.PI*2;for(const [r,y]of section)points.push([r*Math.cos(angle),y,r*Math.sin(angle)]);}
+  const centre=[0,1,2].map(j=>points.reduce((s,p)=>s+p[j],0)/points.length);
+  parts.push({centre,vertices:new Float32Array(points.flatMap(p=>p.map((x,j)=>x-centre[j])))});
+ };
+ for(let i=0;i<n;i++){for(let j=0;j<inner.length-1;j++)part([inner[j],inner[j+1],outer[j+1],outer[j]],i);part(lip,i);}
+ return parts;
 }

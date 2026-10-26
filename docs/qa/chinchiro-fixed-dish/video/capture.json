@@ -1,0 +1,71 @@
+{
+  "audio": {
+    "impacts": 204,
+    "scrapes": 15,
+    "dropped": 26
+  },
+  "voices": 0,
+  "lastResult": {
+    "values": [
+      2,
+      3,
+      3
+    ],
+    "reason": null,
+    "seed": 1386884472,
+    "ticks": 379,
+    "seconds": 1.5791666666666666,
+    "contacts": {
+      "floor": 11,
+      "wall": 136,
+      "dice": 4
+    }
+  },
+  "currentSeed": 1284328346,
+  "bowlFixed": true,
+  "bowlPosition": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "throwTimings": [
+    {
+      "seed": 3610760610,
+      "physicsSeconds": 1.5208333333333333,
+      "wallSeconds": 1.7592000000178813
+    },
+    {
+      "seed": 2396323278,
+      "physicsSeconds": 1.5208333333333333,
+      "wallSeconds": 1.5845
+    },
+    {
+      "seed": 2010831850,
+      "physicsSeconds": 1.4916666666666667,
+      "wallSeconds": 1.5438999999761582
+    },
+    {
+      "seed": 2990349690,
+      "physicsSeconds": 1.5708333333333333,
+      "wallSeconds": 1.6075999999940396
+    },
+    {
+      "seed": 1386884472,
+      "physicsSeconds": 1.5791666666666666,
+      "wallSeconds": 1.639
+    }
+  ],
+  "seeds": [
+    3610760610,
+    2396323278,
+    2010831850,
+    2990349690,
+    1386884472,
+    1284328346
+  ],
+  "pageErrors": [],
+  "fps": 16.2291278558122,
+  "medianFrameMs": 66.60000000000036,
+  "p95FrameMs": 100,
+  "method": "Real UI throws, canvas.captureStream plus actual Web Audio output on the same MediaRecorder clock; no microphone, no replaced audio, no speed changes. Active-throw RAF timings, Chromium software GPU DPR1."
+}

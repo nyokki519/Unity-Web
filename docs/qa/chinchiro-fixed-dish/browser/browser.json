@@ -1,0 +1,92 @@
+[
+  {
+    "width": 390,
+    "pausedTick": 127,
+    "result": {
+      "values": [
+        1,
+        3,
+        3
+      ],
+      "reason": null,
+      "seed": 1991189441,
+      "ticks": 364,
+      "seconds": 1.5166666666666666,
+      "contacts": {
+        "floor": 25,
+        "wall": 139,
+        "dice": 3
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 375,
+    "pausedTick": 155,
+    "result": {
+      "values": [
+        1,
+        2,
+        6
+      ],
+      "reason": null,
+      "seed": 2542275657,
+      "ticks": 352,
+      "seconds": 1.4666666666666666,
+      "contacts": {
+        "floor": 16,
+        "wall": 125,
+        "dice": 5
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 414,
+    "pausedTick": 144,
+    "result": {
+      "values": [
+        6,
+        2,
+        2
+      ],
+      "reason": null,
+      "seed": 3064769446,
+      "ticks": 325,
+      "seconds": 1.3541666666666667,
+      "contacts": {
+        "floor": 4,
+        "wall": 174,
+        "dice": 10
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  }
+]
