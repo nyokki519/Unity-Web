@@ -46,7 +46,7 @@ export function bowlSlope(r, R) {
 }
 
 // 皿贯通路径(物理脚本与场景导管几何共用同一组贝塞尔控制点)
-export function winFlyPts(bi) {
+export function winFlyPts(bi, entry = null) {
   const B = CFG.bowls, bw = B.list[bi];
   const wh = bw.holes.find(h => h.win);
   const hx = Math.cos(wh.a) * bw.ringR, hz = Math.sin(wh.a) * bw.ringR;
@@ -70,12 +70,21 @@ export function winFlyPts(bi) {
     };
   }
   const pk = CFG.pocket;
-  const y0 = wy - 0.09, y1 = pk.y + 0.02, dy = y0 - y1;
+  const y0 = wy - 0.12, y1 = pk.y + 0.02, dy = y0 - y1;
+  const start = entry ? [...entry] : [wx, wy, wz];
   return {
-    drop: [[wx, wy, wz], [wx, wy - 0.045, wz], [wx, y0, wz], [wx, y0, wz]],
+    drop: [start, [start[0], start[1] - 0.035, start[2]], [wx, y0, wz], [wx, y0, wz]],
     fly: [[wx, y0, wz], [wx, y0 - dy * 0.35, wz], [pk.x, y1 + dy * 0.35, pk.z], [pk.x, y1, pk.z]],
     jackpot: true,
   };
+}
+
+// The final sleeve admits the entire sphere at every accepted capture offset.
+// Its exit and the scripted centreline share this specification; no odds change.
+export function winFunnelSpec(bi){
+ const W=winFlyPts(bi),p=W.drop[0],surface=p[1]-CFG.ball.r;
+ return {x:p[0],z:p[2],top:surface+.002,bottom:surface-.044,
+  radius:bi===CFG.bowls.list.length-1?CFG.ball.r+CFG.bowls.capture+.002:.034};
 }
 
 // 闸门→第一皿的固定導軌(同 winFlyPts:物理脚本与场景几何共用一条曲线)。
@@ -625,8 +634,8 @@ export class Sim {
     const B = CFG.bowls;
     if (win) {
       // 与场景导管完全同轨的贯通路径
-      const W = winFlyPts(b.bi);
-      if(B.contacts.enabled){W.drop[0]=current;W.drop[1]=[wx,wy-.03,wz];}
+      const W = winFlyPts(b.bi, B.contacts.enabled?current:null);
+      if(B.contacts.enabled&&!W.jackpot){W.drop[0]=current;W.drop[1]=[wx,wy-.03,wz];}
       if (W.jackpot) {
         this.setScript(b, [
           { pts: W.drop, dur: B.sinkT, ease: 2 },

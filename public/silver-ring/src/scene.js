@@ -15,7 +15,7 @@ import { OutputPass } from '../../vendor/three/addons/postprocessing/OutputPass.
 import { OrbitControls } from '../../vendor/three/addons/controls/OrbitControls.js';
 import * as BGU from '../../vendor/three/addons/utils/BufferGeometryUtils.js';
 import { CFG, buildLayout } from './config.js';
-import { bowlSurfaceY, bowlY, winFlyPts, entryFlyPts } from './physics.js';
+import { bowlSurfaceY, bowlY, winFlyPts, winFunnelSpec, entryFlyPts } from './physics.js';
 
 // ---------- 画布纹理工具 ----------
 function canvasTex(w, h, draw) {
@@ -452,6 +452,17 @@ export function buildScene(canvas,layout=buildLayout()) {
           color: h.win ? new THREE.Color(2.6, 1.8, 0.35) : new THREE.Color(0.5, 0.06, 0.06),
           toneMapped: false,
         }));
+      if(bi===2&&h.win){
+        const pos=ring.geometry.attributes.position,colors=[];
+        for(let i=0;i<pos.count;i++){
+          const hue=(Math.atan2(pos.getY(i),pos.getX(i))/(Math.PI*2)+1)%1;
+          const color=new THREE.Color().setHSL(hue,.9,.58);
+          colors.push(color.r,color.g,color.b);
+        }
+        ring.geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
+        ring.material.color.set(0xffffff);ring.material.vertexColors=true;
+        ring.userData.rainbow=true;
+      }
       ring.rotation.x = Math.PI / 2;
       ring.position.y = 0.0018;
       hg.add(ring);
@@ -581,13 +592,15 @@ export function buildScene(canvas,layout=buildLayout()) {
     const dp = W.drop[0];        // dp[1] = 碗面 + 珠半径
     const surfY = dp[1] - CFG.ball.r;
     // 当り穴下的金落口:内径必须大于珠径(52mm),否则珠子会从锥壁里穿出来
-    const funnel = new THREE.Mesh(new THREE.CylinderGeometry(0.034, 0.029, 0.046, 16, 1, true),
+    const spec=winFunnelSpec(bi);
+    const funnel = new THREE.Mesh(new THREE.CylinderGeometry(spec.radius, bi===2?spec.radius:.029, spec.top-spec.bottom, 48, 1, true),
       new THREE.MeshStandardMaterial({
         color: GOLD, metalness: 0.95, roughness: 0.3, envMapIntensity: 1.1, side: THREE.DoubleSide,
       }));
-    funnel.position.set(dp[0], surfY - 0.021, dp[2]);
+    funnel.position.set(spec.x,(spec.top+spec.bottom)/2,spec.z);
+    funnel.userData.finalWinSleeve=bi===2;
     boardG.add(funnel);
-    const lip = new THREE.Mesh(new THREE.TorusGeometry(0.0335, 0.0026, 6, 24), goldMat(0.3));
+    const lip = new THREE.Mesh(new THREE.TorusGeometry(bi===2?spec.radius+.0026:.0335, 0.0026, 6, 48), goldMat(0.3));
     lip.rotation.x = Math.PI / 2;
     lip.position.set(dp[0], surfY - 0.043, dp[2]);
     boardG.add(lip);

@@ -418,7 +418,7 @@ export class FX {
         _HN.set(-slope * ca, 1, -slope * sa).normalize();
         h.hg.quaternion.setFromUnitVectors(_UP, _HN);
         if (h.win) {
-          const pulse = 1 + 0.18 * Math.sin(t * 5 + bi);
+          const pulse = h.ring.userData.rainbow?1:1 + 0.18 * Math.sin(t * 5 + bi);
           h.ring.scale.setScalar(pulse);
         }
       });
