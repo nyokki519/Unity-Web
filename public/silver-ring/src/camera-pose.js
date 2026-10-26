@@ -8,9 +8,9 @@ export function bowlCameraPose({height,aspect=1,pitch=50,yaw=10,zoom=1}){
 }
 
 // Automatic close-up: show hole depth while retaining a view of the ball's side.
-export function autoBowlCameraPose({height,aspect=1}){
+export function autoBowlCameraPose({height,aspect=1,tier=0}){
  const distance=1.25*Math.max(.68,Math.min(1,finite(aspect,1)/.95));
- const pitch=Math.PI/6,yaw=14*Math.PI/180,target=[0,finite(height,1.4)+.01,-.115];
+ const pitch=(tier===2?48:30)*Math.PI/180,yaw=(tier===2?-38:14)*Math.PI/180,target=[0,finite(height,1.4)+.01,tier===2?-.138:-.115];
  return {target,position:[Math.sin(yaw)*Math.cos(pitch)*distance,target[1]+Math.sin(pitch)*distance,target[2]+Math.cos(yaw)*Math.cos(pitch)*distance]};
 }
 

@@ -1,3 +1,4 @@
+import {stageMaterials,createStageStructure} from './stage-structure.js?v=stage1';
 import {createRainbowRim} from './rainbow-rim.js?v=rainbow3';
 import{projectCabinet}from'./project-cabinet.js';
 import{renderProfile}from'./render-profile.js';
@@ -385,6 +386,7 @@ export function buildScene(canvas,layout=buildLayout()) {
   boardG.add(gateG);
   // ---------- 三段皿 ----------
   const bowlRefs = [];
+  const stageMats=stageMaterials();
   CFG.bowls.list.forEach((bw, bi) => {
     const g = new THREE.Group();
     g.position.set(0, bw.cy, bw.cz);
@@ -412,7 +414,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     dish.renderOrder = 10;
     g.add(dish);
     // 金缘
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(bw.R + 0.006, 0.0042, 8, 48), goldMat(0.28));
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(bw.R + 0.006, 0.0035, 8, 64), stageMats.entry);
     rim.rotation.x = Math.PI / 2;
     rim.position.y = bowlY(bw.R, bw.R) + 0.030;
     g.add(rim);
@@ -422,14 +424,15 @@ export function buildScene(canvas,layout=buildLayout()) {
     led.rotation.x = Math.PI / 2;
     led.position.y = -0.008;
     g.add(led);
+    g.add(createStageStructure({R:bw.R,edgeY:bowlY(bw.R,bw.R),surfaceY:(x,z)=>bowlSurfaceY(x,z,bw)},stageMats));
     // 中央支撑柱脚 + 后方支撑臂
-    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.028, 0.075, 12), goldMat(0.32));
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.028, 0.075, 24), stageMats.support);
     stem.position.y = -0.042;
     g.add(stem);
     // 支撑臂只从皿心伸到凹龛后壁(旧算式多出 215mm,会从皿前面捅出来挡住落口)
     const armLen = Math.abs(CFG.column.backZ - bw.cz);
     const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, armLen, 8),
-      new THREE.MeshStandardMaterial({ color: 0x8d8d92, metalness: 1, roughness: 0.28 }));
+      stageMats.support);
     arm.rotation.x = Math.PI / 2;
     arm.position.set(0, -0.055, (CFG.column.backZ - bw.cz) / 2);
     g.add(arm);
@@ -483,14 +486,14 @@ export function buildScene(canvas,layout=buildLayout()) {
   // 横档改成从珠底兜过去的 U 型托架(圆心在珠心轨迹上、半径=珠半径+轨半径,
   // 与珠同心所以永不相擦),珠子是骑在轨上滚下去的。
   // 出落口的竖直下坠段不铺轨(自由落体),轨道从曲线开始倾斜处接起。
-  const railMat = goldMat(0.48);
+  const railMat = stageMats.rail;
   const RAIL_R = 0.0032;                                  // 轨管半径
   const CONT = CFG.ball.r + RAIL_R;                       // 珠心→轨心的相切距离
   const RAIL_W = 0.017;                                   // 轨距半宽
   const RAIL_D = Math.sqrt(CONT * CONT - RAIL_W * RAIL_W);// 轨心在珠心下方的深度
   const CANG = Math.atan2(RAIL_W, RAIL_D);                // 接触角
   function railGuide(curve, { trimY = -9, seg = 64 } = {}) {
-    const g = new THREE.Group();
+    const g = new THREE.Group();g.userData.transferRail=true;
     const P = [], T = [], N = [], S = [];
     for (let i = 0; i <= seg; i++) {
       const p = curve.getPoint(i / seg), tn = curve.getTangent(i / seg).normalize();
@@ -583,7 +586,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     const spec=winFunnelSpec(bi);
     const funnel = new THREE.Mesh(new THREE.CylinderGeometry(spec.radius, bi===2?spec.radius:.029, spec.top-spec.bottom, 48, 1, true),
       new THREE.MeshStandardMaterial({
-        color:bi===2?0x050b09:GOLD, metalness:bi===2?0:0.95, roughness:bi===2?1:0.3, envMapIntensity:bi===2?0:1.1, side: THREE.DoubleSide,
+        color:bi===2?0x050b09:0xb89a60, metalness:bi===2?0:0.95, roughness:bi===2?1:0.3, envMapIntensity:bi===2?0:1.1, side: THREE.DoubleSide,
       }));
     funnel.position.set(spec.x,(spec.top+spec.bottom)/2,spec.z);
     funnel.userData.finalWinSleeve=bi===2;

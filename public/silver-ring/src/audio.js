@@ -1,3 +1,4 @@
+import {stageSoundMix,contactVoice} from './stage-sound.js?v=stage1';
 import{RecordedSounds}from'./recorded-sounds.js';
 import{playBreakthrough}from'./breakthrough-sound.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
@@ -76,6 +77,7 @@ export class AudioEngine {
   // ---------- 持续声 ----------
   startAmbient() {
     const c = this.ctx, t = c.currentTime;
+    this.ambientBus=c.createGain();this.ambientBus.gain.value=stageSoundMix(this.stageFocus).ambient;this.ambientBus.connect(this.master);
     const g = c.createGain(); g.gain.value = 0.0;
     g.gain.setTargetAtTime(0.05, t, 3);
     const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 160; f.Q.value = 2;
@@ -87,29 +89,36 @@ export class AudioEngine {
     const lfo = c.createOscillator(); lfo.frequency.value = 0.07;
     const lg = c.createGain(); lg.gain.value = 60;
     lfo.connect(lg); lg.connect(f.frequency); lfo.start(t);
-    f.connect(g); g.connect(this.master);
+    f.connect(g); g.connect(this.ambientBus);
     // 空调气流感
     const s = c.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true;
     const nf = c.createBiquadFilter(); nf.type = 'lowpass'; nf.frequency.value = 240;
     const ng = c.createGain(); ng.gain.value = 0.012;
-    s.connect(nf); nf.connect(ng); ng.connect(this.master); s.start(t);
+    s.connect(nf); nf.connect(ng); ng.connect(this.ambientBus); s.start(t);
   }
 
   // ---------- 事件音 ----------
   tick(v) {
     if (!this.ctx || !this.gate2('tick', 38)) return;
     const t = this.ctx.currentTime;
-    const vol = Math.min(0.09, 0.02 + v * 0.03);
+    const vol = Math.min(0.09, 0.02 + v * 0.03)*stageSoundMix(this.stageFocus).pins;
     this.osc('square', 1500 + Math.random() * 1300, null, t, 0.035, vol);
     this.noise(t, 0.02, vol * 0.6, 'highpass', 5000, 0.7);
   }
 
-  clack(v) {
-    if (!this.ctx || !this.gate2('clack', 70)) return;
-    const t = this.ctx.currentTime;
-    this.osc('square', 2300 + Math.random() * 500, null, t, 0.03, 0.05);
-    this.noise(t, 0.03, 0.05, 'bandpass', 3400, 2);
+  setStageFocus(active){
+    if(this.stageFocus===!!active)return;this.stageFocus=!!active;
+    if(this.ambientBus)this.ambientBus.gain.setTargetAtTime(stageSoundMix(this.stageFocus).ambient,this.ctx.currentTime,.12);
   }
+  contact(type,strength){
+    const voice=contactVoice(type,strength);
+    if(!voice||this.muted||!this.ctx||!this.gate2('contact-'+type,type==='air'?90:65))return false;
+    const t=this.ctx.currentTime;
+    this.osc('sine',voice.frequency,voice.frequency*.96,t,voice.duration,voice.gain);
+    this.osc('sine',voice.frequency*2.63,null,t,voice.duration*.55,voice.gain*.28);
+    return true;
+  }
+  clack(v) { return this.contact('pair',v); }
 
   wood(v) {
     if (!this.ctx || !this.gate2('wood', 90)) return;
@@ -147,12 +156,7 @@ export class AudioEngine {
     this.noise(t + 0.05, 0.3, 0.03, 'highpass', 6000, 0.7);
   }
 
-  rattle() {
-    if (!this.ctx || !this.gate2('rattle', 200)) return;
-    const t = this.ctx.currentTime;
-    for (let i = 0; i < 3; i++)
-      this.osc('square', 1900 - i * 300, null, t + i * 0.045, 0.03, 0.045);
-  }
+  rattle() { return this.contact('rim',.45); }
 
   sinkWin(tier) { if(this.muted||!this.ctx)return false;if(this.samples.play(tier===2?'jackpot':tier===1?'breakthrough2':'breakthrough',this.ctx,this.master))return true;return playBreakthrough(this,tier); }
 
@@ -204,12 +208,7 @@ export class AudioEngine {
   }
 
   // 最終皿空气喷出:嘶——的一股气
-  airPuff() {
-    if (!this.ctx) return;
-    const t = this.ctx.currentTime;
-    this.noise(t, 0.30, 0.11, 'highpass', 3600, 0.8, 7000);
-    this.osc('sine', 900, 1400, t, 0.12, 0.02);
-  }
+  airPuff() { return this.contact('air',.65); }
 
   setWhisper(visible) { this.samples.setWhisper(visible&&!this.muted,this.ctx,this.master); }
 

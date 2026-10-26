@@ -8,9 +8,9 @@ import{renderFrame}from'./render-frame.js';
 import { CFG,buildLayout } from './config.js';
 import {createRng} from './seed.js';
 import { Sim, clearPower, randPowerRange } from './physics.js';
-import { buildScene, TOUCH } from './scene.js?v=rainbow3';
-import { FX } from './fx.js?v=rainbow3';
-import { AudioEngine } from './audio.js';
+import { buildScene, TOUCH } from './scene.js?v=stage1';
+import { FX } from './fx.js?v=stage1';
+import { AudioEngine } from './audio.js?v=stage1';
 import { UI } from './ui.js';
 import {mountPresentation} from './presentation.js';
 
@@ -32,7 +32,7 @@ const S = {
   randPow: false, holdFire: false, lastPower: 0.40,
   auto: false, autoAcc: 0,
   tiltIn: 0, tiltKey: 0, tiltBtn: 0, sus: 0, tiltLock: 0,
-  freeCam: false, muted: true, reduce:matchMedia("(prefers-reduced-motion:reduce)").matches, manualCamera:"auto", cameraPitch:50,cameraYaw:10,cameraZoom:1,banknotes:true,testUsed:false,
+  freeCam: false, muted: true, reduce:matchMedia("(prefers-reduced-motion:reduce)").matches, manualCamera:"auto", cameraPitch:48,cameraYaw:-38,cameraZoom:1,banknotes:true,testUsed:false,
   jackpotLock: false, pendingJack: 0,
   timeScale: 1, slowT: 0, slowV: 1,
   acc: 0, degrade: 0, qualityLocked:true,
@@ -571,6 +571,7 @@ function frame(now) {
   document.getElementById('remainingVal').textContent=Math.floor(S.funds/CFG.eco.ballCost).toLocaleString('ja-JP');
   ui.setFunds(S.display, S.funds < CFG.eco.ballCost * 40);
   presentation.update(S,sim);
+  audio.setStageFocus(sim.balls.some(b=>!b.dead&&b.mode==='bowl'&&b.bi===2));
   audio.setWhisper(!document.getElementById('bowlWhisper').hidden);
   statT += dt;
   if (statT > 0.25) {

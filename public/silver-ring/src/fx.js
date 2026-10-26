@@ -537,7 +537,7 @@ export class FX {
           const y = TIER_Y[this.camTier];
           // 竖屏时横向视野窄、纵向富余,特写机位整体往前收,皿才占得满
           if(this.detailView){const pose=bowlCameraPose({height:y,aspect:R.camera.aspect,...this.detailPose});dst=pose.position;tgt=pose.target;}
-          else {const pose=autoBowlCameraPose({height:y,aspect:R.camera.aspect});dst=pose.position;tgt=pose.target;}
+          else {const pose=autoBowlCameraPose({height:y,aspect:R.camera.aspect,tier:this.camTier});dst=pose.position;tgt=pose.target;}
           break;
         }
         case 'JACKPOT':
