@@ -10,7 +10,7 @@ with sync_playwright() as p:
   if version=='before':
    for name in ['scene.js','physics.js','fx.js']:
     content=subprocess.check_output(['git','show','cc367a1:public/silver-ring/src/'+name])
-    page.route('**/silver-ring/src/'+name,lambda route,request,body=content:route.fulfill(body=body,content_type='text/javascript'))
+    page.route('**/silver-ring/src/'+name+'*',lambda route,request,body=content:route.fulfill(body=body,content_type='text/javascript'))
   page.goto(os.environ.get('SILVER_URL','http://127.0.0.1:3482')+'/silver-ring/index.html?debug=1&seed=final-hole-qa')
   page.get_by_role('button',name='チャレンジ開始',exact=True).click(timeout=90000)
   page.wait_for_function('()=>window.SILVER_GAME?.refs.bowlRefs.length===3',timeout=90000)
@@ -27,9 +27,9 @@ with sync_playwright() as p:
     g.refs.ballsIM.count=1;g.refs.ballsIM.setMatrixAt(0,matrix);g.refs.ballsIM.instanceMatrix.needsUpdate=true;
     g.refs.renderer.setRenderTarget(null);g.refs.renderer.render(g.refs.scene,g.refs.camera);
     const ring=g.refs.bowlRefs[2].holes.find(x=>x.win).ring;
-    const initial=ring.rotation.z;
-    g.fx.update(.1,g.sim,{tension:0,freeCam:false});const flowing=ring.rotation.z;
-    document.body.classList.add('reduced');g.fx.update(.1,g.sim,{tension:0,freeCam:false});const reduced=ring.rotation.z;document.body.classList.remove('reduced');
+    const initial=ring.userData.rainbowPhase||0;
+    g.fx.update(.1,g.sim,{tension:0,freeCam:false});const flowing=ring.userData.rainbowPhase||0;
+    document.body.classList.add('reduced');g.fx.update(.1,g.sim,{tension:0,freeCam:false});const reduced=ring.userData.rainbowPhase||0;document.body.classList.remove('reduced');
     const flow={initial,flowing,reduced};
     const {winFunnelSpec}=await import('/silver-ring/src/physics.js');
     let extraGoldRims=0;
@@ -42,7 +42,7 @@ with sync_playwright() as p:
   }''')
   if version=='after':
    assert data['rainbow'] and data['colors']>100 and data['scale']==[1,1,1]
-   assert abs(data['flow']['flowing']-data['flow']['initial']-.08)<1e-8
+   assert abs(data['flow']['flowing']-data['flow']['initial']-.03)<1e-8
    assert data['flow']['flowing']==data['flow']['reduced']
    assert data['extraGoldRims']==0
   page.screenshot(path=str(out/f'{version}-{width}.png'));assert not errors,errors

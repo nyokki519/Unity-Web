@@ -1,3 +1,4 @@
+import {createRainbowRim} from './rainbow-rim.js?v=rainbow3';
 import{projectCabinet}from'./project-cabinet.js';
 import{renderProfile}from'./render-profile.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
@@ -447,22 +448,9 @@ export function buildScene(canvas,layout=buildLayout()) {
         new THREE.MeshBasicMaterial({ color: 0x000000 }));
       disc.rotation.x = -Math.PI / 2;
       hg.add(disc);
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(CFG.bowls.contacts.rimRadius, 0.0028, 8, 24),
-        new THREE.MeshBasicMaterial({
-          color: h.win ? new THREE.Color(2.6, 1.8, 0.35) : new THREE.Color(0.5, 0.06, 0.06),
-          toneMapped: false,
-        }));
-      if(bi===2&&h.win){
-        const pos=ring.geometry.attributes.position,colors=[];
-        for(let i=0;i<pos.count;i++){
-          const hue=(Math.atan2(pos.getY(i),pos.getX(i))/(Math.PI*2)+1)%1;
-          const color=new THREE.Color().setHSL(hue,.9,.58);
-          colors.push(color.r,color.g,color.b);
-        }
-        ring.geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
-        ring.material.color.set(0xffffff);ring.material.vertexColors=true;
-        ring.userData.rainbow=true;
-      }
+      const ring = bi===2&&h.win ? createRainbowRim(CFG.bowls.contacts.rimRadius) :
+        new THREE.Mesh(new THREE.TorusGeometry(CFG.bowls.contacts.rimRadius, 0.0028, 8, 24),
+          new THREE.MeshBasicMaterial({color:h.win?new THREE.Color(2.6,1.8,.35):new THREE.Color(.5,.06,.06),toneMapped:false}));
       ring.rotation.x = Math.PI / 2;
       ring.position.y = 0.0018;
       hg.add(ring);
@@ -595,7 +583,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     const spec=winFunnelSpec(bi);
     const funnel = new THREE.Mesh(new THREE.CylinderGeometry(spec.radius, bi===2?spec.radius:.029, spec.top-spec.bottom, 48, 1, true),
       new THREE.MeshStandardMaterial({
-        color: GOLD, metalness: 0.95, roughness: 0.3, envMapIntensity: 1.1, side: THREE.DoubleSide,
+        color:bi===2?0x050b09:GOLD, metalness:bi===2?0:0.95, roughness:bi===2?1:0.3, envMapIntensity:bi===2?0:1.1, side: THREE.DoubleSide,
       }));
     funnel.position.set(spec.x,(spec.top+spec.bottom)/2,spec.z);
     funnel.userData.finalWinSleeve=bi===2;

@@ -1,3 +1,4 @@
+import {updateRainbowRim} from './rainbow-rim.js?v=rainbow3';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」动态特效 —— 粒子 / 运镜 / 霓虹 / ざわざわ / 珠雨
@@ -420,7 +421,7 @@ export class FX {
         if (h.win) {
           const pulse = h.ring.userData.rainbow?1:1 + 0.18 * Math.sin(t * 5 + bi);
           h.ring.scale.setScalar(pulse);
-          if(h.ring.userData.rainbow&&!document.body.classList.contains('reduced'))h.ring.rotation.z=(h.ring.rotation.z+dt*.8)%(Math.PI*2);
+          if(h.ring.userData.rainbow)updateRainbowRim(h.ring,dt,document.body.classList.contains('reduced'));
         }
       });
       // LED
