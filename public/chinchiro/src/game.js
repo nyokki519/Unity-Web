@@ -11,6 +11,7 @@ export function evaluate(dice){
 // Signed profit for A. Both sides lose/win exactly the same number of coins.
 export function settlement(a,b,bet){
  if(!Number.isSafeInteger(bet)||bet<1)throw new Error('賭け枚数を確認してください');
+ if(a.kind==='shonben'||b.kind==='shonben')return a.kind===b.kind?0:(a.kind==='shonben'?-bet:bet);
  if(a.rank===b.rank)return 0;
  const win=a.rank>b.rank?a:b,lose=a.rank>b.rank?b:a;
  return (a.rank>b.rank?1:-1)*bet*Math.max(win.multiplier,lose.kind==='hifumi'?2:1);
@@ -31,9 +32,20 @@ export class Match{
   this.dice=dice;this.attempt++;this.locked=role.kind!=='none'||this.attempt===3;
   this.results[this.current]={...role,dice:[...dice],attempt:this.attempt,final:this.locked};return this.results[this.current];
  }
+ forfeitOutside(){
+  if(this.phase!=='TURN'||this.locked)throw new Error('今は振れません');
+  const loser=this.current;this.attempt++;this.dice=[];this.locked=true;
+  this.results[loser]={kind:'shonben',label:'ションベン',rank:-200,multiplier:1,dice:[],attempt:this.attempt,final:true};
+  if(!this.results[1-loser])this.results[1-loser]={kind:'unthrown',label:'未投擲',rank:0,multiplier:1,dice:[],attempt:0,final:true};
+  this.finishHand();
+ }
  advance(){
   if(this.phase!=='TURN'||!this.locked)throw new Error('まだ出目が決まっていません');
   if(this.turnIndex===0){this.turnIndex=1;this.resetTurn();return;}
+  this.finishHand();
+ }
+ finishHand(){
+  if(this.phase!=='TURN'||!this.results.every(r=>r?.final))throw new Error('まだ出目が決まっていません');
   const delta=settlement(this.results[0],this.results[1],this.bet);
   this.players[0].coins+=delta;this.players[1].coins-=delta;
   this.last={hand:this.hand+1,dealer:this.dealer,bet:this.bet,delta,results:structuredClone(this.results)};this.history.push(this.last);this.phase='ROUND_END';

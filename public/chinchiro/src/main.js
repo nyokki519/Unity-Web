@@ -39,7 +39,7 @@ function render(){
   $('action').textContent=match.current===1?(busy?'CPUが振っています…':'CPUの番です…'):match.locked?(match.turnIndex===1?'結果を精算する':'CPUの番へ'):'サイコロを振る';
  }
  if(phase==='ROUND_END'){
-  const d=match.last.delta;$('turn').textContent=`第${match.hand+1}局の結果`;$('role').textContent=d>0?'あなたの勝ち':d<0?'モカの勝ち':'引き分け';$('message').textContent=d?`${Math.abs(d)}枚のコインが移動しました。`:'この局のコイン移動はありません。';$('settlement').textContent=`あなた ${d>=0?'+':''}${d}枚 / モカ ${d<=0?'+':''}${-d}枚`;$('action').textContent=match.hand===3||match.maxBet<1?'最終結果を見る':'親を交代して次の局へ';
+  const d=match.last.delta;$('turn').textContent=`第${match.hand+1}局の結果`;$('role').textContent=d>0?'あなたの勝ち':d<0?'モカの勝ち':'引き分け';$('message').textContent=match.last.results.some(r=>r.kind==='shonben')?`ションベン！ 場外に出した${match.last.results[0].kind==='shonben'?'あなた':'モカ'}の負け。${Math.abs(d)}枚を支払います。`:d?`${Math.abs(d)}枚のコインが移動しました。`:'この局のコイン移動はありません。';$('settlement').textContent=`あなた ${d>=0?'+':''}${d}枚 / モカ ${d<=0?'+':''}${-d}枚`;$('action').textContent=match.hand===3||match.maxBet<1?'最終結果を見る':'親を交代して次の局へ';
  }
  if(final){const d=match.players[0].coins-1000;$('turn').textContent='対戦終了';$('role').textContent=d>0?'今日は、あなたの一杯。':d<0?'今日は、モカに一杯。':'いい勝負でした。';$('message').textContent=`あなたの最終残高 ${match.players[0].coins.toLocaleString()}枚`;$('settlement').textContent=`最初の1,000枚から ${d>=0?'+':''}${d}枚`;$('action').textContent='もう一度対戦する';}
  if(notice&&phase==='TURN')$('message').textContent=notice;
@@ -60,6 +60,7 @@ async function roll(){
   if(token!==generation)return;
   busy=false;
   if(result.values){match.roll(result.values);voids=0;}
+  else if(result.reason==='場外に出ました'){match.forfeitOutside();voids=0;}
   else{notice=result.reason+'。この投擲は回数に含めません。';voids++;if(voids>=3){paused=true;tray.setPaused(true);notice+=' 再開するともう一度振れます。';}}
   render();
  }catch(e){if(token!==generation||e.name==='AbortError')return;busy=false;paused=true;tray.setPaused(true);$('error').textContent='投擲を続けられませんでした。最初からやり直してください。';render();}

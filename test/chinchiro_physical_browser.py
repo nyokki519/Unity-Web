@@ -13,6 +13,7 @@ with sync_playwright() as p:
   assert page.evaluate('chinchiro.tray.groups.every(g=>g.quaternion.toArray().every(Number.isFinite))')
   result=page.evaluate('chinchiro.tray.lastResult')
   if result['values']:assert page.evaluate('chinchiro.match.dice')==result['values']
+  elif result['reason']=='場外に出ました':assert page.evaluate("chinchiro.match.phase==='ROUND_END'&&chinchiro.match.results[0].kind==='shonben'")
   else:assert page.evaluate('chinchiro.match.attempt')==0
   page.click('#dice-zoom');assert page.evaluate('chinchiro.tray.zoomed');page.click('#dice-zoom')
   page.screenshot(path=str(out/f'dish-{width}.png'),full_page=True)

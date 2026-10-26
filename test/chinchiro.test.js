@@ -33,3 +33,22 @@ test('no-role can roll only three times and maximum loss never exceeds either ba
  assert.equal(m.maxBet,100);assert.throws(()=>m.placeBet(101));m.placeBet(100);
  for(let i=0;i<3;i++)m.roll();assert.equal(m.locked,true);assert.equal(m.attempt,3);assert.throws(()=>m.roll());m.advance();for(let i=0;i<3;i++)m.roll();m.advance();assert.equal(m.last.delta,0);
 });
+test('shonben ends the hand immediately for human and CPU, before or after opponent rolls',async()=>{
+ const {Match}=await import(moduleUrl);
+ for(const hand of [0,1])for(const turn of [0,1]){
+  const m=new Match();m.hand=hand;m.placeBet(25);
+  if(turn){m.roll([1,1,1]);m.advance();}
+  const loser=m.current;m.forfeitOutside();
+  assert.equal(m.phase,'ROUND_END');assert.equal(m.results[loser].kind,'shonben');
+  assert.equal(m.results[loser].label,'ションベン');assert.equal(m.results[loser].attempt,1);
+  assert.equal(m.last.delta,loser===0?-25:25);
+  assert.equal(m.players.reduce((s,p)=>s+p.coins,0),2000);
+  assert.equal(m.history.length,1);assert.throws(()=>m.finishHand());assert.throws(()=>m.forfeitOutside());assert.throws(()=>m.roll());
+  m.next();assert.equal(m.phase,'BET');assert.deepEqual(m.results,[null,null]);
+ }
+});
+test('outside after a no-role retry counts the throw and cannot replace a locked role',async()=>{
+ const {Match}=await import(moduleUrl);const m=new Match();m.placeBet(10);m.roll([1,2,4]);m.forfeitOutside();
+ assert.equal(m.results[0].attempt,2);assert.equal(m.last.delta,-10);
+ const locked=new Match();locked.placeBet(10);locked.roll([1,1,1]);assert.throws(()=>locked.forfeitOutside());
+});
