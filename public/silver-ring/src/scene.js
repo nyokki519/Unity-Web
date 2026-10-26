@@ -600,10 +600,12 @@ export function buildScene(canvas,layout=buildLayout()) {
     funnel.position.set(spec.x,(spec.top+spec.bottom)/2,spec.z);
     funnel.userData.finalWinSleeve=bi===2;
     boardG.add(funnel);
-    const lip = new THREE.Mesh(new THREE.TorusGeometry(bi===2?spec.radius+.0026:.0335, 0.0026, 6, 48), goldMat(0.3));
-    lip.rotation.x = Math.PI / 2;
-    lip.position.set(dp[0], surfY - 0.043, dp[2]);
-    boardG.add(lip);
+    if(bi!==2){
+      const lip = new THREE.Mesh(new THREE.TorusGeometry(.0335, 0.0026, 6, 48), goldMat(0.3));
+      lip.rotation.x = Math.PI / 2;
+      lip.position.set(dp[0], surfY - 0.043, dp[2]);
+      boardG.add(lip);
+    }
     // 漏斗口 → 下一段的導軌(最終皿→ポケット只有 9cm,留空让珠子自由落体更带劲)
     const nb = CFG.bowls.list[bi + 1];
     if (!nb) continue;

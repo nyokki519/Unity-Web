@@ -420,6 +420,7 @@ export class FX {
         if (h.win) {
           const pulse = h.ring.userData.rainbow?1:1 + 0.18 * Math.sin(t * 5 + bi);
           h.ring.scale.setScalar(pulse);
+          if(h.ring.userData.rainbow&&!document.body.classList.contains('reduced'))h.ring.rotation.z=(h.ring.rotation.z+dt*.8)%(Math.PI*2);
         }
       });
       // LED

@@ -27,9 +27,24 @@ with sync_playwright() as p:
     g.refs.ballsIM.count=1;g.refs.ballsIM.setMatrixAt(0,matrix);g.refs.ballsIM.instanceMatrix.needsUpdate=true;
     g.refs.renderer.setRenderTarget(null);g.refs.renderer.render(g.refs.scene,g.refs.camera);
     const ring=g.refs.bowlRefs[2].holes.find(x=>x.win).ring;
-    return {start,path,rainbow:!!ring.userData.rainbow,colors:ring.geometry.attributes.color?.count||0,scale:ring.scale.toArray(),script:ball.mode};
+    const initial=ring.rotation.z;
+    g.fx.update(.1,g.sim,{tension:0,freeCam:false});const flowing=ring.rotation.z;
+    document.body.classList.add('reduced');g.fx.update(.1,g.sim,{tension:0,freeCam:false});const reduced=ring.rotation.z;document.body.classList.remove('reduced');
+    const flow={initial,flowing,reduced};
+    const {winFunnelSpec}=await import('/silver-ring/src/physics.js');
+    let extraGoldRims=0;
+    if(typeof winFunnelSpec==='function'){
+      const spec=winFunnelSpec(2);
+      g.refs.boardG.traverse(o=>{if(o.geometry?.type==='TorusGeometry'&&Math.hypot(o.position.x-spec.x,o.position.z-spec.z)<1e-6&&Math.abs(o.position.y-(spec.top-.045))<1e-6)extraGoldRims++;});
+    }
+
+    return {extraGoldRims,flow,start,path,rainbow:!!ring.userData.rainbow,colors:ring.geometry.attributes.color?.count||0,scale:ring.scale.toArray(),script:ball.mode};
   }''')
-  if version=='after':assert data['rainbow'] and data['colors']>100 and data['scale']==[1,1,1]
+  if version=='after':
+   assert data['rainbow'] and data['colors']>100 and data['scale']==[1,1,1]
+   assert abs(data['flow']['flowing']-data['flow']['initial']-.08)<1e-8
+   assert data['flow']['flowing']==data['flow']['reduced']
+   assert data['extraGoldRims']==0
   page.screenshot(path=str(out/f'{version}-{width}.png'));assert not errors,errors
   rows.append({'version':version,'width':width,'errors':errors,**data});page.close()
  (out/'browser.json').write_text(json.dumps(rows,indent=2));print('before/after capture and 3 widths passed');b.close()
