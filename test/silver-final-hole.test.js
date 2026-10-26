@@ -1,3 +1,4 @@
+import {holeGeometry} from '../public/silver-ring/src/hole-geometry.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CFG} from '../public/silver-ring/src/config.js';
@@ -8,7 +9,7 @@ test('final winning transfer begins continuously and clears the full funnel befo
  const f=winFunnelSpec(tier);
  for(let k=0;k<24;k++){
   const sim=new Sim(()=>{});sim.spawnInBowl(tier);const b=sim.balls[0],a=k*Math.PI/12;
-  Object.assign(b,{px:hx+Math.cos(a)*CFG.bowls.capture*.99,pz:hz+Math.sin(a)*CFG.bowls.capture*.99,holeTime:.046});
+  Object.assign(b,{px:hx+Math.cos(a)*holeGeometry(bw,wh).capture*.99,pz:hz+Math.sin(a)*holeGeometry(bw,wh).capture*.99,holeTime:.046});
   const before=sim.worldPos(b,[0,0,0]);sim.sink(b,bw,bw.holes.indexOf(wh),hx,hz);
   assert.deepEqual(sim.worldPos(b,[0,0,0]),before);
   const pts=b.chain[0].pts;

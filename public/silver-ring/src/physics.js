@@ -1,3 +1,4 @@
+import {holeGeometry,canEnterHole} from './hole-geometry.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」物理核心 —— 纯 JS,无 three 依赖(可被 node 离线模拟调用)
@@ -32,8 +33,8 @@ export function bowlSurfaceY(x,z,bw,rot=0){
  let y=bowlY(Math.hypot(x,z),bw.R);
  let recess=0;
  if(CFG.bowls.contacts.enabled)for(const h of bw.holes){
-  const a=h.a+rot;
-  recess=Math.min(recess,lipHeight(Math.hypot(x-Math.cos(a)*bw.ringR,z-Math.sin(a)*bw.ringR),{inner:CFG.bowls.capture,outer:CFG.bowls.contacts.lipOuter,depth:CFG.bowls.contacts.lipDepth}));
+  const hole=holeGeometry(bw,h,rot);
+  recess=Math.min(recess,lipHeight(Math.hypot(x-hole.x,z-hole.z),{inner:hole.capture,outer:CFG.bowls.contacts.lipOuter,depth:CFG.bowls.contacts.lipDepth}));
  }
  return y+recess;
 }
@@ -49,8 +50,8 @@ export function bowlSlope(r, R) {
 export function winFlyPts(bi, entry = null) {
   const B = CFG.bowls, bw = B.list[bi];
   const wh = bw.holes.find(h => h.win);
-  const hx = Math.cos(wh.a) * bw.ringR, hz = Math.sin(wh.a) * bw.ringR;
-  const wy = bw.cy + bowlY(bw.ringR, bw.R) + CFG.ball.r;
+  const hole=holeGeometry(bw,wh),hx=hole.x,hz=hole.z;
+  const wy = bw.cy + bowlY(hole.radial, bw.R) + CFG.ball.r;
   const wx = hx, wz = bw.cz + hz;
   if (bi < B.list.length - 1) {
     const nb = B.list[bi + 1], e = nb.enter, r0 = nb.R * e.rr;
@@ -80,11 +81,11 @@ export function winFlyPts(bi, entry = null) {
 }
 
 // The final sleeve admits the entire sphere at every accepted capture offset.
-// Its exit and the scripted centreline share this specification; no odds change.
+// Its exit and the scripted centreline share this specification.
 export function winFunnelSpec(bi){
- const W=winFlyPts(bi),p=W.drop[0],surface=p[1]-CFG.ball.r;
- return {x:p[0],z:p[2],top:surface+.002,bottom:surface-.044,
-  radius:bi===CFG.bowls.list.length-1?CFG.ball.r+CFG.bowls.capture+.002:.034};
+ const W=winFlyPts(bi),p=W.drop[0],bw=CFG.bowls.list[bi],hole=holeGeometry(bw,bw.holes.find(h=>h.win));
+ const top=hole.vertical?bw.cy+bowlSurfaceY(hole.x,hole.z,bw)+.0043:p[1]-CFG.ball.r+.002;
+ return {x:p[0],z:p[2],top,bottom:top-.046,radius:hole.vertical?hole.aperture:bi===CFG.bowls.list.length-1?CFG.ball.r+CFG.bowls.capture+.002:.034};
 }
 
 // 闸门→第一皿的固定導軌(同 winFlyPts:物理脚本与场景几何共用一条曲线)。
@@ -313,7 +314,8 @@ export class Sim {
     if(CFG.bowls.contacts.enabled)for(const b of this.balls){
       const entry=b.pendingSink;b.pendingSink=null;
       if(!entry||b.dead||b.mode!=='bowl')continue;
-      if((b.hopY||0)<.0005&&(b.hopV||0)<=0&&Math.hypot(b.px-entry.hx,b.pz-entry.hz)<CFG.bowls.capture&&.5*CFG.g*(b.holeTime||0)**2>=CFG.bowls.contacts.fallDepth)this.sink(b,CFG.bowls.list[b.bi],entry.hi,entry.hx,entry.hz);
+      const hole=holeGeometry(CFG.bowls.list[b.bi],CFG.bowls.list[b.bi].holes[entry.hi],this.bowlAngles[b.bi]);
+      if((b.hopY||0)<.0005&&(b.hopV||0)<=0&&canEnterHole(b.px,b.pz,hole)&&.5*CFG.g*(b.holeTime||0)**2>=hole.fallDepth)this.sink(b,CFG.bowls.list[b.bi],entry.hi,entry.hx,entry.hz);
     }
     this.balls = this.balls.filter(b => !b.dead);
   }
@@ -548,12 +550,12 @@ export class Sim {
       const rot=this.bowlAngles[b.bi];
       let nearest=-1,nearestD=Infinity;
       for(let hi=0;hi<bw.holes.length;hi++){
-        const a=bw.holes[hi].a+rot,d=Math.hypot(b.px-Math.cos(a)*bw.ringR,b.pz-Math.sin(a)*bw.ringR);
+        const hole=holeGeometry(bw,bw.holes[hi],rot),d=Math.hypot(b.px-hole.x,b.pz-hole.z);
         if(d<nearestD){nearest=hi;nearestD=d;}
       }
       for(let hi=0;hi<bw.holes.length;hi++){
-        const h=bw.holes[hi],a=h.a+rot,hx=Math.cos(a)*bw.ringR,hz=Math.sin(a)*bw.ringR;
-        const force=hi===nearest?applyLipGravity(b,{x:hx,z:hz,inner:B.capture,outer:B.contacts.lipOuter,depth:B.contacts.lipDepth,gravity:CFG.g,dt}):0;
+        const h=bw.holes[hi],hole=holeGeometry(bw,h,rot),hx=hole.x,hz=hole.z;
+        const force=hi===nearest?applyLipGravity(b,{x:hx,z:hz,inner:hole.capture,outer:B.contacts.lipOuter,depth:B.contacts.lipDepth,gravity:CFG.g,dt}):0;
         if(force>.2&&(!b.rattled||this.time-b.rattled>.25)){b.rattled=this.time;this.emit('rattle',{tier:b.bi,contact:true});}
         if(h.win&&b.bi===B.air.tier){
           const dx=b.px-hx,dz=b.pz-hz,d=Math.hypot(dx,dz);
@@ -586,7 +588,7 @@ export class Sim {
     for (let hi = 0; hi < bw.holes.length; hi++) {
       const h = bw.holes[hi];
       const a = h.a + rot;
-      const hx = Math.cos(a) * bw.ringR, hz = Math.sin(a) * bw.ringR;
+      const hole=holeGeometry(bw,h,rot),hx=hole.x,hz=hole.z;
       const d = Math.hypot(b.px - hx, b.pz - hz);
       // 最終皿的空气喷出装置(一条流アシスト):
       // 慢速接近当り穴的瞬间,可能被一股气流吹开
@@ -602,10 +604,10 @@ export class Sim {
         }
       }
       if(B.contacts.enabled&&((b.hopY||0)>.0005||(b.hopV||0)>0))continue;
-      if (d < B.capture) {
+      if (canEnterHole(b.px,b.pz,hole)) {
         if(B.contacts.enabled){
           b.holeTime=(b.holeIndex===hi?(b.holeTime||0):0)+dt;b.holeIndex=hi;
-          if(.5*CFG.g*b.holeTime*b.holeTime>=B.contacts.fallDepth)b.pendingSink={hi,hx,hz};
+          if(.5*CFG.g*b.holeTime*b.holeTime>=hole.fallDepth)b.pendingSink={hi,hx,hz};
           return;
         }
         if (sp < B.vpass) {
@@ -630,7 +632,9 @@ export class Sim {
     const current=this.worldPos(b,[0,0,0]);
     const wx = CFG.bowls.contacts.enabled?current[0]:hx, wy = CFG.bowls.contacts.enabled?current[1]:bw.cy+bowlY(Math.hypot(hx,hz),bw.R)+CFG.ball.r;
     const wz = CFG.bowls.contacts.enabled?current[2]:bw.cz+hz;
-    this.emit('sink', { tier: b.bi, win, x: wx, y: wy, z: wz });
+    const sinkData={tier:b.bi,win,x:wx,y:wy,z:wz};
+    if(win&&holeGeometry(bw,bw.holes[hi]).vertical)b.pendingWinSink={data:sinkData,top:winFunnelSpec(b.bi).top};
+    else this.emit('sink',sinkData);
     const B = CFG.bowls;
     if (win) {
       // 与场景导管完全同轨的贯通路径
@@ -683,6 +687,9 @@ export class Sim {
     const out = [0, 0, 0];
     bez(sc.pts[0], sc.pts[1], sc.pts[2], sc.pts[3], te, out);
     b.wx = out[0]; b.wy = out[1]; b.wz = out[2];
+    if(b.pendingWinSink&&b.wy+CFG.ball.r<=b.pendingWinSink.top){
+      const data={...b.pendingWinSink.data,x:b.wx,y:b.wy,z:b.wz};b.pendingWinSink=null;this.emit('sink',data);
+    }
     if (t >= 1) {
       if (sc.end === 'jackpot') {
         this.emit('jackpot', { ball: b });
@@ -791,7 +798,7 @@ export class Sim {
       case 'bowl': {
         const bw = CFG.bowls.list[b.bi];
         out[0] = b.px;
-        out[1] = bw.cy + bowlSurfaceY(b.px,b.pz,bw,this.bowlAngles[b.bi]) + CFG.ball.r + (CFG.bowls.contacts.enabled?(b.hopY||0)-Math.min(CFG.bowls.contacts.fallDepth,.5*CFG.g*(b.holeTime||0)**2):0);
+        out[1] = bw.cy + bowlSurfaceY(b.px,b.pz,bw,this.bowlAngles[b.bi]) + CFG.ball.r + (CFG.bowls.contacts.enabled?(b.hopY||0)-Math.min(b.holeIndex>=0?holeGeometry(bw,bw.holes[b.holeIndex],this.bowlAngles[b.bi]).fallDepth:CFG.bowls.contacts.fallDepth,.5*CFG.g*(b.holeTime||0)**2):0);
         out[2] = bw.cz + b.pz;
         break;
       }

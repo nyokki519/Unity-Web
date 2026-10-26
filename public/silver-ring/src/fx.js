@@ -1,3 +1,4 @@
+import {holeGeometry} from './hole-geometry.js';
 import {updateRainbowRim} from './rainbow-rim.js?v=rainbow3';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
@@ -322,7 +323,7 @@ export class FX {
   airPuff(tier) {
     const bw = CFG.bowls.list[tier];
     const wh = bw.holes.find(h => h.win);
-    const hx = Math.cos(wh.a) * bw.ringR, hz = Math.sin(wh.a) * bw.ringR;
+    const hole=holeGeometry(bw,wh),hx=hole.x,hz=hole.z;
     this.emitLocal(hx, bw.cy + 0.03, bw.cz + hz, 26,
       { col: [0.8, 1.6, 1.8], speed: 0.28, up: 0.9, life: 0.5, size: 0.02, grav: 0.6 });
   }
@@ -414,9 +415,10 @@ export class FX {
       const slope = bowlSlope(br.bw.ringR, br.bw.R);  // 洞口环贴碗面法线倾斜,防穿模
       br.holes.forEach((h, hi) => {
         const a = br.bw.holes[hi].a + rot;
-        const ca = Math.cos(a), sa = Math.sin(a);
-        h.hg.position.set(ca * br.bw.ringR, bowlSurfaceY(ca*br.bw.ringR,sa*br.bw.ringR,br.bw,rot)+0.0025, sa * br.bw.ringR);
-        _HN.set(-slope * ca, 1, -slope * sa).normalize();
+        const hole=holeGeometry(br.bw,br.bw.holes[hi],rot),ca=Math.cos(hole.a),sa=Math.sin(hole.a);
+        h.hg.position.set(hole.x,bowlSurfaceY(hole.x,hole.z,br.bw,rot)+.0025,hole.z);
+        const localSlope=bowlSlope(hole.radial,br.bw.R);
+        _HN.set(hole.vertical?0:-localSlope*ca,1,hole.vertical?0:-localSlope*sa).normalize();
         h.hg.quaternion.setFromUnitVectors(_UP, _HN);
         if (h.win) {
           const pulse = h.ring.userData.rainbow?1:1 + 0.18 * Math.sin(t * 5 + bi);

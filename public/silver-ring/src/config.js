@@ -96,7 +96,7 @@ export const CFG = {
         holes: [ { a: 90 * D2R, win: true }, { a: 0 }, { a: 180 * D2R }, { a: 270 * D2R } ] },
       { cy: 0.295, cz: -0.115, R: 0.135, ringR: 0.046, rot: 0,
         enter: { a: 80 * D2R, dir: +1, rr: 0.86, v: 0.85 },
-        holes: [ { a: 270 * D2R, win: true }, { a: 342 * D2R }, { a: 54 * D2R }, { a: 126 * D2R }, { a: 198 * D2R } ] },
+        holes: [ { a: 270 * D2R, win: true, aperture: .032, entryDepth: .0005 }, { a: 342 * D2R, ringR: .065 }, { a: 54 * D2R, ringR: .065 }, { a: 126 * D2R, ringR: .065 }, { a: 198 * D2R, ringR: .065 } ] },
     ],
   },
 

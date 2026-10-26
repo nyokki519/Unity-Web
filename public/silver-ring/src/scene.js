@@ -1,3 +1,4 @@
+import {holeGeometry} from './hole-geometry.js';
 import {stageMaterials,createStageStructure} from './stage-structure.js?v=stage1';
 import {createRainbowRim} from './rainbow-rim.js?v=rainbow3';
 import{projectCabinet}from'./project-cabinet.js';
@@ -441,17 +442,18 @@ export function buildScene(canvas,layout=buildLayout()) {
       if (h.win) continue;
       const stub = new THREE.Mesh(new THREE.CylinderGeometry(0.021, 0.013, 0.034, 10, 1, true),
         new THREE.MeshStandardMaterial({ color: 0x5e594e, metalness: 0.6, roughness: 0.5, side: THREE.DoubleSide }));
-      stub.position.set(Math.cos(h.a) * bw.ringR, -0.015, Math.sin(h.a) * bw.ringR);
+      const hole=holeGeometry(bw,h);stub.position.set(hole.x,-.015,hole.z);
       g.add(stub);
     }
     // 洞口
     const holes = bw.holes.map((h) => {
       const hg = new THREE.Group();
-      const disc = new THREE.Mesh(new THREE.CircleGeometry(0.0215, 20),
+      const hole=holeGeometry(bw,h);
+      const disc = new THREE.Mesh(new THREE.CircleGeometry(hole.aperture, 48),
         new THREE.MeshBasicMaterial({ color: 0x000000 }));
       disc.rotation.x = -Math.PI / 2;
       hg.add(disc);
-      const ring = bi===2&&h.win ? createRainbowRim(CFG.bowls.contacts.rimRadius) :
+      const ring = bi===2&&h.win ? createRainbowRim(hole.ringRadius) :
         new THREE.Mesh(new THREE.TorusGeometry(CFG.bowls.contacts.rimRadius, 0.0028, 8, 24),
           new THREE.MeshBasicMaterial({color:h.win?new THREE.Color(2.6,1.8,.35):new THREE.Color(.5,.06,.06),toneMapped:false}));
       ring.rotation.x = Math.PI / 2;
