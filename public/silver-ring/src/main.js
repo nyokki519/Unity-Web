@@ -1,3 +1,4 @@
+import {createFinalEntryFX} from './final-entry-fx.js';
 import {ReplayHistory} from './replay-history.js';
 import {createReplayView} from './replay-view.js';
 import {moveFreeCameraHeight} from './camera-pose.js';
@@ -11,8 +12,8 @@ import { CFG,buildLayout } from './config.js';
 import {createRng} from './seed.js';
 import { Sim, clearPower, randPowerRange } from './physics.js';
 import { buildScene, TOUCH } from './scene.js?v=center1';
-import { FX } from './fx.js?v=center1';
-import { AudioEngine } from './audio.js?v=center1';
+import { FX } from './fx.js?v=replay2';
+import { AudioEngine } from './audio.js?v=replay2';
 import { UI } from './ui.js';
 import {mountPresentation} from './presentation.js';
 
@@ -24,7 +25,9 @@ const fx = new FX(refs);
 const audio = new AudioEngine();
 const ui = new UI();
 const replayHistory=new ReplayHistory();
-const replay=createReplayView(refs);
+const entryFX=createFinalEntryFX(refs);
+let liveEntryTime=-Infinity;
+const replay=createReplayView(refs,{entryFX,onEntry:()=>audio.replayEntry()});
 
 // ---------- 状态 ----------
 const S = {
@@ -96,7 +99,7 @@ const sim = new Sim((ev, d) => {
       break;
     case 'rattle': audio.rattle(); if(!d.contact)fx.shake(0.006); break;
     case 'sink':
-      if(d.tier===2&&d.win)replayHistory.mark(d.ballId,sim.time);
+      if(d.tier===2&&d.win){replayHistory.mark(d.ballId,sim.time);liveEntryTime=sim.time;}
       fx.sinkFX(d.tier, d.win, d.x, d.y, d.z);
       if (d.win) {
         audio.sinkWin(d.tier);
@@ -122,11 +125,13 @@ async function onJackpot(ball) {
   fx.jackpotOn = true;
   fx.setNeonMode('jackpot');
   fx.setCamMode('JACKPOT');
-  audio.fanfare();
   const clip=ball?replayHistory.winningClip(ball.id):[];
+  // The actual final sink already started the recorded jackpot sound.
+  if(clip.length<2)audio.fanfare();
   if(clip.length>1){
     S.holdFire=false;S.charging=false;audio.setWhisper(false);
-    await replay.play(clip);
+    liveEntryTime=-Infinity; // Replay now owns the celebration; never resurrect the live burst.
+    await replay.play(clip,{entryTime:replayHistory.entries.get(ball.id),reduced:S.reduce});
   }
   ui.flash('#ffffff', 600);
   fx.jackpotBurst();
@@ -609,6 +614,7 @@ function frame(now) {
   fx.banknotesEnabled=S.banknotes;
   refs.applyPendingResize();
   fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
+  entryFX.draw(sim.time-liveEntryTime,S.reduce);
   refs.maskBackground();
   refs.renderMode=renderFrame(refs,{mobile:TOUCH,freeCamera:S.freeCam});
 }
@@ -638,7 +644,7 @@ window.SILVER_GAME = {
   power: { clear: P_CLEAR, rand: [RAND_LO, RAND_HI] },
   random: (on = true) => { if (S.randPow !== on) toggleRandom(); },
   fire: (p) => (p === undefined ? fireOne() : fire(p)),
-  replay, replayHistory,
+  replay, replayHistory, entryFX,
   jackpot: () => onJackpot(),
   money: (n = 10000000) => { S.funds += n; },
   shutter: (open = true) => {

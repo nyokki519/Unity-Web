@@ -334,7 +334,7 @@ export class FX {
     this.ledFlashCol[tier] = win ? [3.2, 2.2, 0.5] : [2.4, 0.25, 0.2];
     if (win) {
       this.winPulse[tier] = 0;
-      this.emitLocal(x, y + 0.02, z, 46, { col: [3, 2.1, 0.5], speed: 0.5, up: 0.8, life: 0.8, size: 0.032 });
+      if(tier!==2)this.emitLocal(x, y + 0.02, z, 46, { col: [3, 2.1, 0.5], speed: 0.5, up: 0.8, life: 0.8, size: 0.032 });
     } else {
       this.emitLocal(x, y + 0.02, z, 14, { col: [0.5, 1.2, 0.6], speed: 0.3, up: 0.35, life: 0.5, size: 0.022 });
     }
