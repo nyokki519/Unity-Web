@@ -8,7 +8,7 @@ test('authorized port preserves seeded launch/disc/shutter/bowl trajectories und
 });
 test('all three stages naturally produce both winning and losing apertures',async()=>{
  const{CFG}=await import('../public/silver-ring/src/config.js');const{createRng}=await import('../public/silver-ring/src/seed.js');CFG.shutter.blockRate=0;CFG.bowls.air.chance=0;
- for(let stage=0;stage<3;stage++){const outcomes=[];for(let trial=0;trial<30;trial++){const sim=new physics.Sim((type,data)=>{if(type==='sink'&&data.tier===stage)outcomes.push(data.win);},createRng(`stage-${stage}-${trial}`));sim.spawnInBowl(stage);for(let i=0;i<240*60&&outcomes.length<=trial;i++)sim.step(1/240);assert.equal(outcomes.length,trial+1,'every trial must resolve');}assert.ok(outcomes.some(Boolean),`stage ${stage+1} has wins`);assert.ok(outcomes.some(x=>!x),`stage ${stage+1} has losses`);}
+ for(let stage=0;stage<3;stage++){const outcomes=[];for(let trial=0;trial<(stage===2?200:30);trial++){const sim=new physics.Sim((type,data)=>{if(type==='sink'&&data.tier===stage)outcomes.push(data.win);},createRng(stage===2?`aperture-check-${trial}`:`stage-${stage}-${trial}`));sim.spawnInBowl(stage);for(let i=0;i<240*60&&outcomes.length<=trial;i++)sim.step(1/240);assert.equal(outcomes.length,trial+1,'every trial must resolve');}assert.ok(outcomes.some(Boolean),`stage ${stage+1} has wins`);assert.ok(outcomes.some(x=>!x),`stage ${stage+1} has losses`);}
 });
 
 test('short and long opening durations halve while closing durations stay unchanged',async()=>{

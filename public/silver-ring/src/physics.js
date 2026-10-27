@@ -85,7 +85,7 @@ export function winFlyPts(bi, entry = null) {
 export function winFunnelSpec(bi){
  const W=winFlyPts(bi),p=W.drop[0],bw=CFG.bowls.list[bi],hole=holeGeometry(bw,bw.holes.find(h=>h.win));
  const top=hole.vertical?bw.cy+bowlSurfaceY(hole.x,hole.z,bw)+.0043:p[1]-CFG.ball.r+.002;
- return {x:p[0],z:p[2],top,bottom:top-.046,radius:hole.vertical?hole.aperture:bi===CFG.bowls.list.length-1?CFG.ball.r+CFG.bowls.capture+.002:.034};
+ return {x:p[0],z:p[2],top,bottom:top-.046,radius:hole.vertical?Math.max(.032,CFG.ball.r+hole.capture+.001):bi===CFG.bowls.list.length-1?CFG.ball.r+CFG.bowls.capture+.002:.034};
 }
 
 // 闸门→第一皿的固定導軌(同 winFlyPts:物理脚本与场景几何共用一条曲线)。

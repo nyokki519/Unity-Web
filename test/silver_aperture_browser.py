@@ -7,7 +7,7 @@ with sync_playwright() as p:
  rows=[]
  for width in [375,390,414]:
   page=b.new_page(viewport={'width':width,'height':844},has_touch=True,reduced_motion='no-preference');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.goto(os.environ.get('SILVER_URL','http://127.0.0.1:3482')+'/silver-ring/index.html?debug=1&rev=aperture1');page.locator('#btnStart').click(timeout=90000)
+  page.goto(os.environ.get('SILVER_URL','http://127.0.0.1:3482')+'/silver-ring/index.html?debug=1&rev=center1');page.locator('#btnStart').click(timeout=90000)
   c=page
   initial=c.evaluate('''async()=>{
    const g=SILVER_GAME,{CFG}=await import('/silver-ring/src/config.js'),{holeGeometry}=await import('/silver-ring/src/hole-geometry.js'),{winFunnelSpec}=await import('/silver-ring/src/physics.js');
@@ -22,8 +22,10 @@ with sync_playwright() as p:
    window.renderAperturePose=()=>{const p=g.sim.worldPos(ball,[0,0,0]),m=new g.refs.THREE.Matrix4().makeTranslation(...p);g.refs.ballsIM.count=1;g.refs.ballsIM.setMatrixAt(0,m);g.refs.ballsIM.instanceMatrix.needsUpdate=true;g.refs.renderer.setRenderTarget(null);g.refs.renderer.render(g.refs.scene,g.refs.camera);return{position:p,mode:ball.mode,events:apertureEvents.length};};
    return{...renderAperturePose(),hole:h,discRadius:disc.geometry.parameters.radius,ringInner:hole.ring.geometry.parameters.radius-hole.ring.geometry.parameters.tube,displayCentre:hole.hg.position.toArray(),quaternion:hole.hg.quaternion.toArray(),sleeveRadius:sleeve.geometry.parameters.radiusTop};
   }''')
-  assert abs(initial['discRadius']-initial['ringInner'])<1e-10
-  assert initial['sleeveRadius']==initial['discRadius']==initial['hole']['aperture']
+  assert initial['discRadius']==.0215
+  assert abs(initial['ringInner']-(.023-.0045))<1e-10
+  assert initial['hole']['capture']==.005
+  assert initial['sleeveRadius']>=.026+initial['hole']['capture']
   assert initial['quaternion']==[0,0,0,1]
   assert abs(initial['displayCentre'][0]-initial['hole']['x'])<1e-12 and abs(initial['displayCentre'][2]-initial['hole']['z'])<1e-12
   page.screenshot(path=str(out/f'before-{width}.png'))

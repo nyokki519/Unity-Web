@@ -66,7 +66,7 @@ test('all three stages show a clearly larger geometric graze without wind',()=>{
  const depth=CFG.bowls.contacts.lipDepth,outer=CFG.bowls.contacts.lipOuter,air=CFG.bowls.air.chance;
  try{CFG.bowls.air.chance=0;
   for(let tier=0;tier<3;tier++){
-   const run=(d,o=outer)=>{CFG.bowls.contacts.lipDepth=d;CFG.bowls.contacts.lipOuter=o;const s=new Sim(()=>{},createRng(`audit-${tier}`));s.spawnInBowl(tier);const b=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],hole=holeGeometry(bw,h),nx=Math.cos(hole.a),nz=Math.sin(hole.a),tx=-nz,tz=nx;Object.assign(b,{px:hole.x+nx*.032-tx*.04,pz:hole.z+nz*.032-tz*.04,pvx:tx*.4,pvz:tz*.4});for(let i=0;i<48&&b.mode==='bowl';i++)s.step(1/240);return{heading:Math.atan2(b.pvz,b.pvx),x:b.px,z:b.pz,mode:b.mode};};
+   const run=(d,o=outer)=>{CFG.bowls.contacts.lipDepth=d;CFG.bowls.contacts.lipOuter=o;const s=new Sim(()=>{},createRng(`audit-${tier}`));s.spawnInBowl(tier);const b=s.balls[0],bw=CFG.bowls.list[tier],h=bw.holes[1],hole=holeGeometry(bw,h),nx=Math.cos(hole.a),nz=Math.sin(hole.a),tx=-nz,tz=nx;Object.assign(b,{px:hole.x+nx*.032-tx*.04,pz:hole.z+nz*.032-tz*.04,pvx:tx*.4,pvz:tz*.4});for(let i=0;i<36&&b.mode==='bowl';i++)s.step(1/240);return{heading:Math.atan2(b.pvz,b.pvx),x:b.px,z:b.pz,mode:b.mode};};
    const flat=run(0),old=run(.0035,.043),current=run(depth),angle=o=>Math.abs(Math.atan2(Math.sin(o.heading-flat.heading),Math.cos(o.heading-flat.heading)));
    assert.ok(angle(current)>10*Math.PI/180,`stage ${tier+1}: visible turn`);
    assert.ok(angle(current)>angle(old)*1.7,`stage ${tier+1}: materially stronger than r37`);

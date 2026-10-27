@@ -1,0 +1,25 @@
+{
+  "note": "Controlled third-stage entries, not full250-ball session jackpot rates.",
+  "rows": [
+    {
+      "wind": 0,
+      "count": 200,
+      "wins": 17,
+      "losses": 183,
+      "unresolved": 0,
+      "maxAdmissionOffset": 0.004739292875403971,
+      "maxEventOffset": 0.0033470648633938892,
+      "capture": 0.005
+    },
+    {
+      "wind": 0.32,
+      "count": 200,
+      "wins": 7,
+      "losses": 193,
+      "unresolved": 0,
+      "maxAdmissionOffset": 0.0041973122210137125,
+      "maxEventOffset": 0.0029642979712350232,
+      "capture": 0.005
+    }
+  ]
+}

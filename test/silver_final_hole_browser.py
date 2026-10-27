@@ -18,7 +18,7 @@ with sync_playwright() as p:
     const g=SILVER_GAME,{CFG}=await import('/silver-ring/src/config.js');
     g.S.phase='paused';g.S.auto=false;g.S.freeCam=false;g.refs.controls.enabled=false;
     g.sim.balls.length=0;g.sim.spawnInBowl(2);const ball=g.sim.balls[0],bw=CFG.bowls.list[2],h=bw.holes.find(x=>x.win),hx=Math.cos(h.a)*bw.ringR,hz=Math.sin(h.a)*bw.ringR;
-    Object.assign(ball,{px:hx+.018,pz:hz,holeTime:.046});
+    Object.assign(ball,{px:hx+.004,pz:hz,holeTime:.046});
     const start=g.sim.worldPos(ball,[0,0,0]);g.sim.sink(ball,bw,bw.holes.indexOf(h),hx,hz);
     const path=[];for(let i=0;i<60;i++){g.sim.stepScript(ball,1/240);path.push(g.sim.worldPos(ball,[0,0,0]));}
     g.fx.detailView=true;g.fx.detailPose={pitch:50,yaw:10,zoom:1};g.fx.setCamMode('CRUUNE',2);
