@@ -1,5 +1,5 @@
 // User-provided recordings, trimmed at documented boundaries. No autoplay.
-const SOURCES={replayEntry:new URL('../audio/replay-entry.mp3',import.meta.url).href,breakthrough2:new URL('../audio/breakthrough-second-stage.mp3',import.meta.url).href,zawa:new URL('../audio/zawa.mp3',import.meta.url).href,breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot-third-stage.mp3',import.meta.url).href};
+const SOURCES={replayEntry:new URL('../audio/replay-entry.wav',import.meta.url).href,breakthrough2:new URL('../audio/breakthrough-second-stage.mp3',import.meta.url).href,zawa:new URL('../audio/zawa.mp3',import.meta.url).href,breakthrough:new URL('../audio/breakthrough.mp3',import.meta.url).href,jackpot:new URL('../audio/jackpot-third-stage.mp3',import.meta.url).href};
 export class RecordedSounds{
  constructor({fetcher=globalThis.fetch?.bind(globalThis)}={}){this.fetcher=fetcher;this.status='idle';this.buffers={};this.active={replayEntry:new Set(),breakthrough2:new Set(),breakthrough:new Set(),jackpot:new Set()};this.playCount={replayEntry:0,breakthrough2:0,breakthrough:0,jackpot:0};}
  preload(){

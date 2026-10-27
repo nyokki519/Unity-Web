@@ -42,9 +42,8 @@ export class UI {
   }
 
   setFunds(v, danger) {
-    if (this._lastFunds !== null && Math.abs(v - this._lastFunds) < 1) return;
-    this._lastFunds = v;
-    this.el.funds.textContent = fmt(v);
+    const value=Math.round(v);
+    if(this._lastFunds!==value){this._lastFunds=value;this.el.funds.textContent=fmt(value);}
     this.el.funds.classList.toggle('danger', !!danger);
   }
 

@@ -15,3 +15,10 @@ test('whisper follows visibility without stacking and stops when hidden',async()
  const bank=new mod.RecordedSounds({fetcher:async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(2)})});const ctx=context();await bank.prepare(ctx);
  assert.equal(typeof bank.setWhisper,'function');bank.setWhisper(true,ctx,{});const first=ctx.nodes.at(-1);assert.equal(first.loop,true);bank.setWhisper(true,ctx,{});assert.equal(ctx.nodes.at(-1),first);bank.setWhisper(false,ctx,{});assert.ok(first.stopped);bank.setWhisper(true,ctx,{});assert.notEqual(ctx.nodes.at(-1),first);
 });
+test('replay kyuiin and fanfare have independent complete voices in both start orders',async()=>{
+ const bank=new mod.RecordedSounds({fetcher:async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(2)})});const ctx=context();await bank.prepare(ctx);
+ bank.play('replayEntry',ctx,{});const first=ctx.nodes.at(-1);bank.play('jackpot',ctx,{});const fanfare=ctx.nodes.at(-1);
+ assert.ok(!first.stopped&&!fanfare.stopped);assert.equal(bank.active.replayEntry.size,1);assert.equal(bank.active.jackpot.size,1);
+ fanfare.onended();assert.ok(!first.stopped);bank.play('jackpot',ctx,{});assert.ok(!first.stopped);
+ first.onended();bank.play('replayEntry',ctx,{});assert.ok(!ctx.nodes.at(-2).stopped);
+});

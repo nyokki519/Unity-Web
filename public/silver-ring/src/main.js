@@ -1,3 +1,4 @@
+import {CoinWallet} from './coin-wallet.js';
 import {createFinalEntryFX} from './final-entry-fx.js';
 import {ReplayHistory} from './replay-history.js';
 import {createReplayView} from './replay-view.js';
@@ -12,8 +13,8 @@ import { CFG,buildLayout } from './config.js';
 import {createRng} from './seed.js';
 import { Sim, clearPower, randPowerRange } from './physics.js';
 import { buildScene, TOUCH } from './scene.js?v=center1';
-import { FX } from './fx.js?v=replay3';
-import { AudioEngine } from './audio.js?v=replay3';
+import { FX } from './fx.js?v=credits1';
+import { AudioEngine } from './audio.js?v=credits1';
 import { UI } from './ui.js';
 import {mountPresentation} from './presentation.js';
 
@@ -29,10 +30,15 @@ const entryFX=createFinalEntryFX(refs);
 let liveEntryTime=-Infinity;
 const replay=createReplayView(refs,{entryFX,onEntry:()=>audio.replayEntry()});
 
+const wallet=new CoinWallet({start:CFG.eco.start,onChange:balance=>{
+  ui.setFunds(balance,balance<CFG.eco.ballCost*40);
+  document.getElementById('remainingVal').textContent=Math.floor(balance/CFG.eco.ballCost).toLocaleString('ja-JP');
+}});
+
 // ---------- 状态 ----------
 const S = {
   phase: 'title',
-  funds: CFG.eco.start, display: CFG.eco.start,
+  get funds(){return wallet.balance;}, set funds(value){wallet.setBalance(value);},
   debt: 0, borrowed: 0,
   fired: 0, gates: 0, jacks: 0,
   charging: false, chargeT: 0, memory: 0.40,
@@ -88,11 +94,13 @@ const sim = new Sim((ev, d) => {
       if(d?.reason==='bowl-stall')ui.toast('皿で長く停止した玉を回収し、1球分を返却しました。','gold');
       break;
     case 'gate':
+      wallet.gate(d.ball);
       S.gates++;
       audio.gateIn();
       fx.gateBurst();
       break;
     case 'bowlenter':
+      if(wallet.starter(d.ball,d.tier))ui.toast('始動入賞 ＋100枚', 'gold');
       fx.spawnZawa();
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); }
       if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); }
@@ -126,8 +134,8 @@ async function onJackpot(ball) {
   fx.setNeonMode('jackpot');
   fx.setCamMode('JACKPOT');
   const clip=ball?replayHistory.winningClip(ball.id):[];
-  // The actual final sink already started the recorded jackpot sound.
-  if(clip.length<2)audio.fanfare();
+  // Fanfare and replay kyuiin are independent; neither cancels the other.
+  audio.fanfare(); // Independent of the replayEntry voice; overlap is intentional.
   if(clip.length>1){
     S.holdFire=false;S.charging=false;audio.setWhisper(false);
     liveEntryTime=-Infinity; // Replay now owns the celebration; never resurrect the live burst.
@@ -158,10 +166,10 @@ function playable() {
 // 返回 false = 这一发没出去(送珠口没让开 / 珠满 / 没钱),不扣钱不计数
 function fire(power) {
   if (!playable()) return false;
-  if (S.funds < CFG.eco.ballCost) return false;
+  if (!wallet.canAfford(CFG.eco.ballCost)) return false;
   const p = Math.max(0.02, Math.min(1, power));
   if (!sim.launch(p)) return false;
-  S.funds -= CFG.eco.ballCost;
+  wallet.spend(CFG.eco.ballCost);
   S.fired++;
   S.lastPower = p;
   audio.launch();
@@ -446,7 +454,7 @@ function checkGameOver() {
   const q = QUOTES[(Math.random() * QUOTES.length) | 0];
   ui.showOver(q[0], q[1], S.debt,
     () => { // 重开
-      S.funds = CFG.eco.start; S.debt = 0; S.borrowed = 0;
+      wallet.reset(); S.debt = 0; S.borrowed = 0;
       S.fired = 0; S.gates = 0; S.jacks = 0;
       sim.balls.length = 0;
       S.phase = 'play';
@@ -591,9 +599,9 @@ function frame(now) {
 
 
   // 经济显示
-  S.display += (S.funds - S.display) * Math.min(1, dt * 5);
+  // Render the exact integer balance; do not interpolate accounting values.
   document.getElementById('remainingVal').textContent=Math.floor(S.funds/CFG.eco.ballCost).toLocaleString('ja-JP');
-  ui.setFunds(S.display, S.funds < CFG.eco.ballCost * 40);
+  ui.setFunds(S.funds, S.funds < CFG.eco.ballCost * 40);
   presentation.update(S,sim);
   audio.setStageFocus(sim.balls.some(b=>!b.dead&&b.mode==='bowl'&&b.bi===2));
   audio.setWhisper(!document.getElementById('bowlWhisper').hidden);
@@ -644,9 +652,9 @@ window.SILVER_GAME = {
   power: { clear: P_CLEAR, rand: [RAND_LO, RAND_HI] },
   random: (on = true) => { if (S.randPow !== on) toggleRandom(); },
   fire: (p) => (p === undefined ? fireOne() : fire(p)),
-  replay, replayHistory, entryFX,
+  replay, replayHistory, entryFX, wallet,
   jackpot: () => onJackpot(),
-  money: (n = 10000000) => { S.funds += n; },
+  money: (n = 10000000) => { if(Number.isSafeInteger(n)&&n>=0)wallet.credit(n); },
   shutter: (open = true) => {
     sim.shutterOpen = open;
     sim.shutterT = 9;

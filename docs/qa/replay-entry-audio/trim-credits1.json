@@ -1,0 +1,17 @@
+{
+  "sourceName": "ScreenRecording_10-17-2026 19-39-56_1.MP4",
+  "start": 2.0352494331065762,
+  "end": 3.73,
+  "duration": 1.6947619047619047,
+  "boundarySampleOffset": 11,
+  "encoding": "PCM signed 16-bit stereo, 44100Hz",
+  "pitchChanged": false,
+  "playbackRate": 1,
+  "fade": false,
+  "firstSample": [
+    21,
+    29
+  ],
+  "sha256": "1e5b000b19d09a7e8a73887e975e917a69a6e5a8b4a69d178bbb9daa53c86724",
+  "note": "Earlier 2.105 cut shortened the final onset; extended start and natural tail. Boundary aligned to the smallest near-zero stereo sample within 2ms; no fade, noise removal or time stretch."
+}
