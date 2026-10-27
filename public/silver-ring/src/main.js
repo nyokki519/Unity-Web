@@ -12,8 +12,8 @@ import { CFG,buildLayout } from './config.js';
 import {createRng} from './seed.js';
 import { Sim, clearPower, randPowerRange } from './physics.js';
 import { buildScene, TOUCH } from './scene.js?v=center1';
-import { FX } from './fx.js?v=replay2';
-import { AudioEngine } from './audio.js?v=replay2';
+import { FX } from './fx.js?v=replay3';
+import { AudioEngine } from './audio.js?v=replay3';
 import { UI } from './ui.js';
 import {mountPresentation} from './presentation.js';
 

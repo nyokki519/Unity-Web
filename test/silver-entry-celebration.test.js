@@ -13,10 +13,10 @@ test('replay cues a short entry sound once per angle, never before entry',()=>{
  assert.equal(shouldCueEntry(played,1,1,1),true);assert.equal(shouldCueEntry(played,2,1,1),true);
  assert.equal(shouldCueEntry(new Set(),0,1,undefined),false);
 });
-test('replay voice is short, has no noise and respects mute',async()=>{
+test('all replay cuts use the supplied single kyuiin recording and respect mute',async()=>{
  const {AudioEngine}=await import('../public/silver-ring/src/audio.js');
- const notes=[],voice={muted:false,ctx:{currentTime:10},osc:(...args)=>notes.push(args)};
- assert.equal(AudioEngine.prototype.replayEntry.call(voice),true);assert.equal(notes.length,3);
- assert.ok(notes.every(n=>n[0]==='sine'&&n[4]<=.16&&n[5]<=.075));
- voice.muted=true;assert.equal(AudioEngine.prototype.replayEntry.call(voice),false);assert.equal(notes.length,3);
+ const roles=[],voice={muted:false,ctx:{currentTime:10},master:{},samples:{play(role){roles.push(role);return true;}}};
+ for(let i=0;i<3;i++)assert.equal(AudioEngine.prototype.replayEntry.call(voice),true);
+ assert.deepEqual(roles,['replayEntry','replayEntry','replayEntry']);
+ voice.muted=true;assert.equal(AudioEngine.prototype.replayEntry.call(voice),false);assert.equal(roles.length,3);
 });

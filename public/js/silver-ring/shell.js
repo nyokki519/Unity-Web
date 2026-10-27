@@ -2,7 +2,7 @@ import{el,button,labeledSelect,field}from'../dom.js';
 export function mountSilver({onBack}){
  const abort=new AbortController(),node=el('section','silver-shell'),head=el('header','silver-head'),title=el('strong','','喫茶Unity'),frame=el('iframe','silver-game');
  frame.title='喫茶Unityのゲーム画面';frame.allow='accelerometer; gyroscope';
- const url=new URL('/silver-ring/index.html',location.origin),query=new URLSearchParams(location.search);for(const key of ['seed','debug'])if(query.has(key))url.searchParams.set(key,query.get(key));if(matchMedia('(max-width:850px)').matches)url.searchParams.set('touch','1');url.searchParams.set('rev','replay2');frame.src=url.href;
+ const url=new URL('/silver-ring/index.html',location.origin),query=new URLSearchParams(location.search);for(const key of ['seed','debug'])if(query.has(key))url.searchParams.set(key,query.get(key));if(matchMedia('(max-width:850px)').matches)url.searchParams.set('touch','1');url.searchParams.set('rev','replay3');frame.src=url.href;
  const send=(type,value)=>frame.contentWindow?.postMessage({source:'silver-shell',type,value},location.origin);
  let phase='title';
  const pause=button('一時停止',()=>{frame.contentWindow?.focus();send('setPaused',phase!=='paused');},'button secondary'),options=el('section','silver-options');options.hidden=true;

@@ -1,0 +1,14 @@
+{
+  "sourceName": "ScreenRecording_10-17-2026 19-39-56_1.MP4",
+  "sourceSHA256": "8da63d5526b3d015efe24e51f4d3dfe02245faced2d490ba35524dca5d57ee39",
+  "start": 2.105,
+  "end": 3.35,
+  "contentSeconds": 1.245,
+  "fadeIn": 0.004,
+  "fadeOut": 0.05,
+  "pitchChanged": false,
+  "playbackRate": 1,
+  "asset": "public/silver-ring/audio/replay-entry.mp3",
+  "sha256": "4e415a0d4786a082c450da0cf2b1e4789a5c470e4eb2fb7334651990dfda0e98",
+  "permission": "User supplied recording; prior incorporation permission persists."
+}

@@ -158,14 +158,10 @@ export class AudioEngine {
 
   rattle() { return this.contact('rim',.45); }
 
-  // A short original crystalline confirmation; no long sample/noise layering.
+  // The same user-supplied final kyuiin is used in each replay cut.
   replayEntry() {
     if(this.muted||!this.ctx)return false;
-    const t=this.ctx.currentTime;
-    this.osc('sine',1175,1047,t,.13,.075);
-    this.osc('sine',1568,1760,t+.025,.16,.045);
-    this.osc('sine',2349,null,t+.04,.10,.018);
-    return true;
+    return this.samples.play('replayEntry',this.ctx,this.master);
   }
   sinkWin(tier) { if(this.muted||!this.ctx)return false;if(this.samples.play(tier===2?'jackpot':tier===1?'breakthrough2':'breakthrough',this.ctx,this.master))return true;return playBreakthrough(this,tier); }
 
