@@ -632,7 +632,7 @@ export class Sim {
     const current=this.worldPos(b,[0,0,0]);
     const wx = CFG.bowls.contacts.enabled?current[0]:hx, wy = CFG.bowls.contacts.enabled?current[1]:bw.cy+bowlY(Math.hypot(hx,hz),bw.R)+CFG.ball.r;
     const wz = CFG.bowls.contacts.enabled?current[2]:bw.cz+hz;
-    const sinkData={tier:b.bi,win,x:wx,y:wy,z:wz};
+    const sinkData={ballId:b.id,tier:b.bi,win,x:wx,y:wy,z:wz};
     if(win&&holeGeometry(bw,bw.holes[hi]).vertical)b.pendingWinSink={data:sinkData,top:winFunnelSpec(b.bi).top};
     else this.emit('sink',sinkData);
     const B = CFG.bowls;

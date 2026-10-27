@@ -1,3 +1,5 @@
+import {ReplayHistory} from './replay-history.js';
+import {createReplayView} from './replay-view.js';
 import {moveFreeCameraHeight} from './camera-pose.js';
 import{frameDelta}from'./frame-time.js';
 import{renderFrame}from'./render-frame.js';
@@ -21,6 +23,8 @@ const refs = buildScene(canvas,buildLayout(createRng(runSeed)));
 const fx = new FX(refs);
 const audio = new AudioEngine();
 const ui = new UI();
+const replayHistory=new ReplayHistory();
+const replay=createReplayView(refs);
 
 // ---------- 状态 ----------
 const S = {
@@ -92,6 +96,7 @@ const sim = new Sim((ev, d) => {
       break;
     case 'rattle': audio.rattle(); if(!d.contact)fx.shake(0.006); break;
     case 'sink':
+      if(d.tier===2&&d.win)replayHistory.mark(d.ballId,sim.time);
       fx.sinkFX(d.tier, d.win, d.x, d.y, d.z);
       if (d.win) {
         audio.sinkWin(d.tier);
@@ -105,20 +110,25 @@ const sim = new Sim((ev, d) => {
       audio.splash();
       fx.splash(d.x, d.z);
       break;
-    case 'jackpot': onJackpot(); break;
+    case 'jackpot': onJackpot(d.ball); break;
   }
 },createRng(runSeed));
 
 // ---------- 大当り ----------
-async function onJackpot() {
+async function onJackpot(ball) {
   if (S.jackpotLock) { S.pendingJack++; return; }
   S.jackpotLock = true;
   S.jacks++;
   fx.jackpotOn = true;
   fx.setNeonMode('jackpot');
   fx.setCamMode('JACKPOT');
-  ui.flash('#ffffff', 600);
   audio.fanfare();
+  const clip=ball?replayHistory.winningClip(ball.id):[];
+  if(clip.length>1){
+    S.holdFire=false;S.charging=false;audio.setWhisper(false);
+    await replay.play(clip);
+  }
+  ui.flash('#ffffff', 600);
   fx.jackpotBurst();
   slowmo(0.30, 0.8);
   ui.big('喫茶Unity、三段突破！', 'jackpot-big', 2400);
@@ -281,6 +291,7 @@ addEventListener('pointermove', (e) => {
 addEventListener('contextmenu', (e) => { if (e.target === canvas) e.preventDefault(); });
 
 addEventListener('keydown', (e) => {
+  if(replay.active)return;
   if (e.repeat||e.target.closest?.('input,select,textarea,button,a,summary')) return;
   switch (e.code) {
     case 'Space': e.preventDefault(); startCharge(); break;
@@ -295,6 +306,7 @@ addEventListener('keydown', (e) => {
 });
 // ↑↓ 视角上下平移(长按连续,锁定视角时生效)
 addEventListener('keydown', (e) => {
+  if(replay.active)return;
   if(e.target.closest?.('input,select,textarea,button,a,summary'))return;
   if (e.code !== 'ArrowUp' && e.code !== 'ArrowDown') return;
   e.preventDefault();
@@ -454,6 +466,7 @@ function frame(now) {
   let dt = frameDelta(now,last);
   last = now;
   if(S.phase==='paused'||document.hidden)return;
+  if(replay.active){replay.update(dt);return;}
 
   // 掉帧自动降档(弱机 / 手机)
   fpsT += dt; fpsN++;
@@ -531,7 +544,13 @@ function frame(now) {
   S.acc += sdt;
   const PDT = CFG.phys.dt;
   let steps = 0;
-  while (S.acc >= PDT && steps < 40) { sim.step(PDT); S.acc -= PDT; steps++; }
+  while (S.acc >= PDT && steps < 40 && !replay.active) {
+    sim.step(PDT); S.acc -= PDT; steps++;
+    for(const b of sim.balls)if(b.bi===2)replayHistory.add(b.id,sim.time,sim.worldPos(b,[0,0,0]));
+  }
+  // Clips are detached at jackpot before dead balls are pruned.
+  replayHistory.prune(new Set(sim.balls.map(b=>b.id)));
+  if(replay.active)return;
 
   // 珠子 → 实例
   const im = refs.ballsIM;
@@ -619,6 +638,7 @@ window.SILVER_GAME = {
   power: { clear: P_CLEAR, rand: [RAND_LO, RAND_HI] },
   random: (on = true) => { if (S.randPow !== on) toggleRandom(); },
   fire: (p) => (p === undefined ? fireOne() : fire(p)),
+  replay, replayHistory,
   jackpot: () => onJackpot(),
   money: (n = 10000000) => { S.funds += n; },
   shutter: (open = true) => {

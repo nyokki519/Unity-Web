@@ -381,3 +381,15 @@
 #rotHint{display:none!important}.overlay{background:radial-gradient(ellipse,#123d2fef,#071c16fa);overflow:auto;padding:24px 18px;touch-action:pan-y}.ov-title{font-size:clamp(42px,10vw,100px)!important;letter-spacing:.16em}.ov-rules,.ov-keys{max-width:600px;margin:12px auto;font-size:clamp(12px,2.8vw,16px);line-height:1.8}.ov-rules label{display:block}#btnStart{min-height:48px}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff4a7;outline-offset:3px}#seedInput{font:16px sans-serif;width:160px;max-width:55vw}#seedApply{font-size:12px;min-height:40px;padding:5px 10px}.ov-note{font-size:11px;line-height:1.6}#paused{position:fixed;top:45%;left:10%;right:10%;z-index:80;text-align:center;padding:16px;background:#123d2fe8;border:1px solid #d9bf79;color:#f7f1de;pointer-events:none}#paused[hidden]{display:none}#devPanel{position:fixed;left:6px;top:125px;z-index:25;background:#f4efdcf2;color:#183b2c;font-size:11px;max-width:180px;border-radius:6px;padding:7px}#devPanel[hidden]{display:none}#devPanel button{min-height:36px;margin:3px;padding:5px}#devPanel summary{min-height:30px;cursor:pointer}.reduced *{animation:none!important;transition:none!important}.reduced #flash{display:none!important}.reduced #vignette{opacity:.5}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 #start.overlay,#over.overlay{justify-content:flex-start}#mbar .mbtn{font-size:16px;line-height:1.15;padding:5px 2px;min-width:0}#mbar .mbtn i{font-size:10px;line-height:1.2}#mbar #mRand{font-size:13px}#mbar .mbtn{min-height:48px}
+
+/* Full input shield, with the actual 3D canvas visible behind it. */
+#entryReplay{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:max(18px,env(safe-area-inset-top)) 16px max(30px,env(safe-area-inset-bottom));box-sizing:border-box;background:linear-gradient(#061d16d9,transparent 28%,transparent 70%,#061d16da);touch-action:pan-y}
+#entryReplay[hidden]{display:none}
+.replay-heading{display:grid;gap:7px;text-align:center;color:#fff5d5;text-shadow:0 2px 4px #000}
+.replay-heading strong{font-size:20px;letter-spacing:.06em}.replay-heading span{font-size:15px}.replay-heading small{font-size:12px}
+#skipReplay{min-height:48px;font-size:15px;margin-bottom:20px}
+body[data-replay] .play-dock,body[data-replay] #bowlWhisper,body[data-replay] #bigText,body[data-replay] #hud-tl,body[data-replay] #roundDetails,body[data-replay] #hintBar,body[data-replay] #mtop,body[data-replay] #susWrap,body[data-replay] #powerWrap,body[data-replay] #lamps{visibility:hidden}
+
+#paused{z-index:100}
+
+body[data-replay] #devPanel,body[data-replay] #extraControls,body[data-replay] #cameraControls,body[data-replay] #cameraPanel{visibility:hidden}
