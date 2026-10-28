@@ -1,0 +1,29 @@
+{
+  "method": "WCAG relative luminance, specified opaque palette endpoints; not a full-site pixel audit",
+  "samples": [
+    {
+      "sample": "通常カード説明",
+      "text": "#bed0c6",
+      "background": "#1b3129",
+      "ratio": 8.58
+    },
+    {
+      "sample": "選択カード説明",
+      "text": "#bed0c6",
+      "background": "#234d3a",
+      "ratio": 5.94
+    },
+    {
+      "sample": "設定・任務の補足",
+      "text": "#bed0c6",
+      "background": "#12231d",
+      "ratio": 10.15
+    },
+    {
+      "sample": "選択カード番号",
+      "text": "#e6c98c",
+      "background": "#234d3a",
+      "ratio": 5.97
+    }
+  ]
+}

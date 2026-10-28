@@ -1,0 +1,27 @@
+{
+  "webglFailureDisablesLaunch": true,
+  "retryFailureNoDuplicate": true,
+  "retryRecovery": true,
+  "contextLossRecovery": true,
+  "resultRecoveryWithoutDuplicateRewards": true,
+  "quickstartAutoWithoutPreferenceMutation": true,
+  "uniqueShipPreviews": 8,
+  "performanceMeters": 24,
+  "modeDescriptions": true,
+  "difficultyNaming": true,
+  "settingsUnits": true,
+  "touchOffsetPreviewPixels": 90,
+  "settingsPersisted": true,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "screens": [
+    "title",
+    "hangar",
+    "help",
+    "settings"
+  ],
+  "errors": []
+}
