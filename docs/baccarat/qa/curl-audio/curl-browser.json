@@ -1,0 +1,24 @@
+{
+  "music": {
+    "time": 3.999637,
+    "duration": 49.230771,
+    "paused": false,
+    "loop": true,
+    "error": null
+  },
+  "mutePauseResume": true,
+  "oneMusicElement": true,
+  "realCurveSurface": true,
+  "blankPaperPixels": {
+    "variation": 0,
+    "min": 243
+  },
+  "noEarlyPoints": true,
+  "holdProgress": 95,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "errors": []
+}

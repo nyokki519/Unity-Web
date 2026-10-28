@@ -57,7 +57,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       }
       try{const info=await stat(file);if(!info.isFile())throw new Error('not file');}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
       const data=await readFile(file);
-      const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.svg':'image/svg+xml'};
+      const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.mp3':'audio/mpeg','.svg':'image/svg+xml'};
       res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':['.html','.js','.mjs','.css'].includes(extname(file))?'no-cache':'public, max-age=3600'});
       res.end(req.method==='HEAD'?undefined:data);
     }catch(error){failResponse(res,error instanceof GameError?error.code:'SERVER_ERROR',error.code==='ROOM_NOT_FOUND'?404:400);}

@@ -1,4 +1,6 @@
-# 絞りと希少予告 / VESPER presentation v1
+# 絞りと希少予告 / VESPER
+
+最新の絞り・音響v2は [CURL-AUDIO-PLAN.md](CURL-AUDIO-PLAN.md) と `qa/curl-audio/` を参照。以下は希少予告・初期演出v1の仕様と履歴。
 
 ## 体験と操作
 

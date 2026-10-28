@@ -1,0 +1,43 @@
+{
+  "composition": "Original 16-bar late-night cafe lounge",
+  "bpm": 78,
+  "bars": 16,
+  "sources": "All oscillators / filtered procedural noise, no external samples",
+  "files": {
+    "lounge-jazz": {
+      "durationSeconds": 49.23077097505669,
+      "peakBeforeMp3": 0.72,
+      "bytes": 788795
+    },
+    "preview-blue": {
+      "durationSeconds": 1.35,
+      "peakBeforeMp3": 0.58,
+      "bytes": 22676
+    },
+    "preview-green": {
+      "durationSeconds": 1.35,
+      "peakBeforeMp3": 0.58,
+      "bytes": 22677
+    },
+    "preview-red": {
+      "durationSeconds": 1.35,
+      "peakBeforeMp3": 0.58,
+      "bytes": 22675
+    },
+    "preview-rainbow": {
+      "durationSeconds": 1.35,
+      "peakBeforeMp3": 0.58,
+      "bytes": 22679
+    },
+    "win": {
+      "durationSeconds": 1.3,
+      "peakBeforeMp3": 0.65,
+      "bytes": 21831
+    },
+    "reveal": {
+      "durationSeconds": 0.38,
+      "peakBeforeMp3": 0.4,
+      "bytes": 7206
+    }
+  }
+}

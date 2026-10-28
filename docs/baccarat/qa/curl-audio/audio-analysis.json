@@ -1,0 +1,46 @@
+[
+  {
+    "file": "win.mp3",
+    "duration": 1.3,
+    "peak": 0.6184967756271362,
+    "rms": 0.11292418092489243
+  },
+  {
+    "file": "preview-green.mp3",
+    "duration": 1.35,
+    "peak": 0.5506604909896851,
+    "rms": 0.08880786597728729
+  },
+  {
+    "file": "preview-red.mp3",
+    "duration": 1.35,
+    "peak": 0.5505087971687317,
+    "rms": 0.10159461200237274
+  },
+  {
+    "file": "reveal.mp3",
+    "duration": 0.38,
+    "peak": 0.379774808883667,
+    "rms": 0.1318129152059555
+  },
+  {
+    "file": "lounge-jazz.mp3",
+    "duration": 49.23077097505669,
+    "peak": 0.6842914819717407,
+    "rms": 0.12725256383419037,
+    "halfSecondRmsMin": 0.07468944787979126,
+    "seamSampleStep": 0.0034697428345680237
+  },
+  {
+    "file": "preview-blue.mp3",
+    "duration": 1.35,
+    "peak": 0.5505907535552979,
+    "rms": 0.07668723911046982
+  },
+  {
+    "file": "preview-rainbow.mp3",
+    "duration": 1.35,
+    "peak": 0.5492865443229675,
+    "rms": 0.1095283180475235
+  }
+]
