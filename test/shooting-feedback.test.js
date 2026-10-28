@@ -21,7 +21,7 @@ test('batched pickups retain independent snapshots rather than the final state',
  assert.equal(events[1].before.level,2);assert.equal(events[1].after.level,3);
 });
 
-test('firepower growth returns to the original eleven percent per level',async()=>{
+test('first firepower pickup retains its eleven percentage point gain',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');
  const damage=boost=>{const g=new Game({weapon:0});if(boost)g.collect('P');shootPlayer(g,1/120);return g.bullets.damage.find((_,i)=>g.bullets.active[i]&&g.bullets.kind[i]===0);};
  assert.ok(Math.abs(damage(true)/damage(false)-1.11)<1e-6);
@@ -79,3 +79,4 @@ test('new visual upgrades cap at three while barrier pickup reports existing pro
  const events=g.drainEvents();for(const id of ['A','Q','T'])assert.match(pickupFeedback(events.filter(e=>e.type==='item'&&e.value===id).at(-1)||{}).detail,/最大強化/);
  g.collect('D');g.collect('D');assert.match(pickupFeedback(g.drainEvents().filter(e=>e.type==='item').at(-1)).detail,/展開済み/);
 });
+test('late power and rapid feedback uses the actual diminishing gains',()=>{const g=new Game();g.player.level=7;g.collect('P');let e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).detail,/141 → 143%/);g.player.rapid=4;g.collect('S');e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).detail,/132 → 136%/);});

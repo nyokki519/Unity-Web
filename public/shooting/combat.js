@@ -1,10 +1,10 @@
-import {UPGRADE_BALANCE as U,orbitPositions,wideningScale} from './balance.js';
+import {UPGRADE_BALANCE as U,orbitPositions,wideningScale,powerScale,rapidScale} from './balance.js';
 import {WEAPONS,SUPPORTS} from './data.js';
 const TAU=Math.PI*2;
 export function shootPlayer(g,dt){
  const p=g.player;p.cooldown-=dt;p.supportCD-=dt;p.auxCD-=dt;p.ricochetCD-=dt;p.orbitCD-=dt;
  if(p.cooldown<=0&&g.input.fire!==false){
-  const id=p.weapon,w=WEAPONS[id]||WEAPONS[0],level=p.level,od=p.driveTime>0?1.5:1,damage=(w.damage||7)*(1+(level-1)*U.powerPerLevel)*g.damage*od*wideningScale(w.kind,level,p.width);
+  const id=p.weapon,w=WEAPONS[id]||WEAPONS[0],level=p.level,od=p.driveTime>0?1.5:1,damage=(w.damage||7)*powerScale(level)*g.damage*od*wideningScale(w.kind,level,p.width);
   const n=(level>=6?3:level>=3?2:1)+p.width,speed=w.speed||600;
   const add=(x,y,angle=-Math.PI/2,opt={})=>g.bullets.add(x,y,opt.vx??Math.cos(angle)*speed,opt.vy??Math.sin(angle)*speed,{owner:1,kind:id,r:4,damage,pierce:w.pierce||0,life:(w.range||900)/speed,...opt,r:(opt.r??4)*(1+p.caliber*.22)});
   const enough=p.energy>=(w.energy||0);if(enough){p.energy=Math.max(0,p.energy-(w.energy||0));
@@ -32,7 +32,7 @@ export function shootPlayer(g,dt){
    }
    if(p.width>0&&!['shot','spread'].includes(w.kind))for(let k=0;k<p.width;k++)for(const side of [-1,1])add(p.x+side*(18+k*12),p.y-15,-Math.PI/2+side*(.12+k*.1),{damage:damage*U.sideDamage,r:3.5});
   }else add(p.x,p.y-18,-Math.PI/2,{damage:damage*.45,r:3});
-  p.cooldown=(w.interval||.16)/(1+p.rapid*U.rapidPerLevel)/(p.focus?1.12:1)/od;g.stats.shots++;g.stats.weaponUse[id]=(g.stats.weaponUse[id]||0)+1;g.emit('shot',p.x,p.y,{weapon:id});
+  p.cooldown=(w.interval||.16)/rapidScale(p.rapid)/(p.focus?1.12:1)/od;g.stats.shots++;g.stats.weaponUse[id]=(g.stats.weaponUse[id]||0)+1;g.emit('shot',p.x,p.y,{weapon:id});
  }
  if(p.ricochet>0&&p.ricochetCD<=0){p.ricochetCD=U.ricochetInterval;for(let n=0;n<p.ricochet;n++)for(const side of [-1,1])g.bullets.add(p.x+side*18,p.y-10,side*(330+n*35),-230,{owner:1,kind:21,r:6,damage:(8+p.ricochet*4)*U.ricochetInterval/(p.ricochet*2),bounces:2,life:3,pierce:1});}
  if(p.orbitLevel>0&&p.orbitCD<=0){p.orbitCD=U.orbitInterval;for(const pos of orbitPositions(p,g.time))g.bullets.add(pos.x,pos.y,Math.cos(pos.angle)*60,-460,{owner:1,kind:22,r:5,damage:(12+p.orbitLevel*4)*U.orbitInterval/(p.orbitLevel+1),life:2});}

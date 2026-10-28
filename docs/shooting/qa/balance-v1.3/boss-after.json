@@ -1,0 +1,802 @@
+[
+  {
+    "weapon": 0,
+    "build": "base",
+    "seconds": 30.15,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "mid",
+    "seconds": 7.025,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "all",
+    "seconds": 3.983,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "permanent",
+    "seconds": 3.1,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "fusion",
+    "seconds": 2.917,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "base",
+    "seconds": 25.067,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "mid",
+    "seconds": 15.808,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "all",
+    "seconds": 12.325,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "permanent",
+    "seconds": 8.808,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "fusion",
+    "seconds": 7.117,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 2,
+    "build": "base",
+    "seconds": 46.683,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "mid",
+    "seconds": 23.375,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "all",
+    "seconds": 15.9,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "permanent",
+    "seconds": 10.875,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "fusion",
+    "seconds": 8.333,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 3,
+    "build": "base",
+    "seconds": 15.167,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 3,
+    "build": "mid",
+    "seconds": 9.292,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 3,
+    "build": "all",
+    "seconds": 7.508,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 3,
+    "build": "permanent",
+    "seconds": 5.475,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 3,
+    "build": "fusion",
+    "seconds": 4.925,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 4,
+    "build": "base",
+    "seconds": 24.925,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 4,
+    "build": "mid",
+    "seconds": 14.725,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 4,
+    "build": "all",
+    "seconds": 11.808,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 4,
+    "build": "permanent",
+    "seconds": 8.433,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 4,
+    "build": "fusion",
+    "seconds": 6.792,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 5,
+    "build": "base",
+    "seconds": 17.983,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 5,
+    "build": "mid",
+    "seconds": 10.058,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 5,
+    "build": "all",
+    "seconds": 7.592,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 5,
+    "build": "permanent",
+    "seconds": 5.625,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 5,
+    "build": "fusion",
+    "seconds": 5.142,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 6,
+    "build": "base",
+    "seconds": 29.708,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 6,
+    "build": "mid",
+    "seconds": 16.75,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 6,
+    "build": "all",
+    "seconds": 12.683,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 6,
+    "build": "permanent",
+    "seconds": 9.075,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 6,
+    "build": "fusion",
+    "seconds": 7.367,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 7,
+    "build": "base",
+    "seconds": 37.342,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 4
+  },
+  {
+    "weapon": 7,
+    "build": "mid",
+    "seconds": 20.65,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 4
+  },
+  {
+    "weapon": 7,
+    "build": "all",
+    "seconds": 16.192,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 4
+  },
+  {
+    "weapon": 7,
+    "build": "permanent",
+    "seconds": 10.875,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 7,
+    "build": "fusion",
+    "seconds": 8.433,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 8,
+    "build": "base",
+    "seconds": 32.167,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 8,
+    "build": "mid",
+    "seconds": 17.933,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 8,
+    "build": "all",
+    "seconds": 13.95,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 8,
+    "build": "permanent",
+    "seconds": 9.733,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 8,
+    "build": "fusion",
+    "seconds": 7.867,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 9,
+    "build": "base",
+    "seconds": 53.633,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 9,
+    "build": "mid",
+    "seconds": 26.875,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 9,
+    "build": "all",
+    "seconds": 19.1,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 1
+  },
+  {
+    "weapon": 9,
+    "build": "permanent",
+    "seconds": 12.933,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 9,
+    "build": "fusion",
+    "seconds": 9.4,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 10,
+    "build": "base",
+    "seconds": 38.575,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 10,
+    "build": "mid",
+    "seconds": 20.542,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 10,
+    "build": "all",
+    "seconds": 15.333,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 1
+  },
+  {
+    "weapon": 10,
+    "build": "permanent",
+    "seconds": 10.617,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 10,
+    "build": "fusion",
+    "seconds": 8.333,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 11,
+    "build": "base",
+    "seconds": 90,
+    "clear": false,
+    "remainingHp": 547.2999968528748,
+    "parts": 0
+  },
+  {
+    "weapon": 11,
+    "build": "mid",
+    "seconds": 42.233,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 11,
+    "build": "all",
+    "seconds": 24.025,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 11,
+    "build": "permanent",
+    "seconds": 17.358,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 11,
+    "build": "fusion",
+    "seconds": 11.133,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 12,
+    "build": "base",
+    "seconds": 28.925,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 12,
+    "build": "mid",
+    "seconds": 16.55,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 12,
+    "build": "all",
+    "seconds": 12.958,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 12,
+    "build": "permanent",
+    "seconds": 9.125,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 12,
+    "build": "fusion",
+    "seconds": 7.308,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 13,
+    "build": "base",
+    "seconds": 26.15,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 13,
+    "build": "mid",
+    "seconds": 14.75,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 13,
+    "build": "all",
+    "seconds": 10.967,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 13,
+    "build": "permanent",
+    "seconds": 8.033,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 13,
+    "build": "fusion",
+    "seconds": 6.525,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 14,
+    "build": "base",
+    "seconds": 90,
+    "clear": false,
+    "remainingHp": 651.25,
+    "parts": 0
+  },
+  {
+    "weapon": 14,
+    "build": "mid",
+    "seconds": 50.025,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 14,
+    "build": "all",
+    "seconds": 26.158,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 1
+  },
+  {
+    "weapon": 14,
+    "build": "permanent",
+    "seconds": 18.1,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 1
+  },
+  {
+    "weapon": 14,
+    "build": "fusion",
+    "seconds": 11.4,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 15,
+    "build": "base",
+    "seconds": 43.358,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 15,
+    "build": "mid",
+    "seconds": 23.442,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 15,
+    "build": "all",
+    "seconds": 17.3,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 1
+  },
+  {
+    "weapon": 15,
+    "build": "permanent",
+    "seconds": 11.675,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 15,
+    "build": "fusion",
+    "seconds": 8.892,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 16,
+    "build": "base",
+    "seconds": 48.058,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 16,
+    "build": "mid",
+    "seconds": 28.292,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 16,
+    "build": "all",
+    "seconds": 19.5,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 16,
+    "build": "permanent",
+    "seconds": 12.825,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 3
+  },
+  {
+    "weapon": 16,
+    "build": "fusion",
+    "seconds": 8.808,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 17,
+    "build": "base",
+    "seconds": 14.4,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 17,
+    "build": "mid",
+    "seconds": 8.592,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 17,
+    "build": "all",
+    "seconds": 7.142,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 17,
+    "build": "permanent",
+    "seconds": 5.233,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 17,
+    "build": "fusion",
+    "seconds": 4.683,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 18,
+    "build": "base",
+    "seconds": 40.183,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 18,
+    "build": "mid",
+    "seconds": 19.842,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 18,
+    "build": "all",
+    "seconds": 13.6,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 18,
+    "build": "permanent",
+    "seconds": 9.008,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 18,
+    "build": "fusion",
+    "seconds": 7.25,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 19,
+    "build": "base",
+    "seconds": 17.3,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 19,
+    "build": "mid",
+    "seconds": 10.083,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 19,
+    "build": "all",
+    "seconds": 8.442,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 19,
+    "build": "permanent",
+    "seconds": 6.05,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 19,
+    "build": "fusion",
+    "seconds": 5.442,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  }
+]

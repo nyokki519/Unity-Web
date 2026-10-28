@@ -1,9 +1,9 @@
 // Inextensible sheet bent around a cylindrical moving fold. World units are
 // card-widths, not a claim about paper stiffness. Both sides use the actual card.
-export function cardMesh(value,columns=4,rows=40){
+export function cardMesh(value,columns=8,rows=80,{gripX=0}={}){
  const p=Math.max(0,Math.min(1,Number.isFinite(value)?value:0)),vertices=[],triangles=[],radius=.12,start=.7-p*(1.4+Math.PI*radius);
  for(let j=0;j<=rows;j++)for(let i=0;i<=columns;i++){
-  const u=i/columns,v=j/rows,x=u-.5,y=v*1.4-.7,fold=start+(u-.5)*.12*Math.sin(p*Math.PI),delta=Math.max(0,y-fold),angle=Math.min(Math.PI,delta/radius);
+  const u=i/columns,v=j/rows,x=u-.5,y=v*1.4-.7,fold=start-(u-.5)*(.08+.34*Math.max(-1,Math.min(1,gripX)))*Math.sin(p*Math.PI),delta=Math.max(0,y-fold),angle=Math.min(Math.PI,delta/radius);
   const yy=delta===0?y:delta<Math.PI*radius?fold+radius*Math.sin(angle):fold-(delta-Math.PI*radius),z=radius*(1-Math.cos(angle));vertices.push({x,y:yy,z,u,v,angle});
  }
  const centre=(Math.min(...vertices.map(v=>v.y))+Math.max(...vertices.map(v=>v.y)))/2;for(const v of vertices)v.y-=centre;

@@ -1,0 +1,20 @@
+{
+  "actualCardWidthAt390": 338.29204827293097,
+  "rangeHidden": true,
+  "directTouch": true,
+  "peekBack": true,
+  "twoFingerDoesNotSteal": true,
+  "leftRightCorners": true,
+  "partialHold": true,
+  "keyboardOnCard": true,
+  "tapDoesNotReveal": true,
+  "fastFlickCompletes": true,
+  "touchTakesOverAuto": true,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "noEarlyScore": true,
+  "errors": []
+}

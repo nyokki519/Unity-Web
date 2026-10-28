@@ -1,6 +1,9 @@
 // Gameplay revision; old replays are not interpreted using changed combat rules.
-export const GAME_VERSION='1.2.0';
-export const UPGRADE_BALANCE=Object.freeze({powerPerLevel:.11,rapidPerLevel:.12,auxInterval:.65,auxReferenceInterval:1.2,laserBase:3,laserPerLevel:2,missileBase:5,missilePerLevel:3,sideDamage:.08,ricochetInterval:.65,orbitInterval:.42});
+export const GAME_VERSION='1.3.0';
+export const UPGRADE_BALANCE=Object.freeze({powerPerLevel:.11,powerLatePerLevel:.025,rapidPerLevel:.12,rapidLatePerLevel:.04,auxInterval:.65,auxReferenceInterval:1.2,laserBase:3,laserPerLevel:2,missileBase:5,missilePerLevel:3,sideDamage:.08,ricochetInterval:.65,orbitInterval:.42});
+// Early pickups retain their strength; later pickups add smaller, positive gains.
+export function powerScale(level){const n=Math.max(0,level-1);return 1+Math.min(3,n)*UPGRADE_BALANCE.powerPerLevel+Math.max(0,n-3)*UPGRADE_BALANCE.powerLatePerLevel;}
+export function rapidScale(level){return 1+Math.min(2,level)*UPGRADE_BALANCE.rapidPerLevel+Math.max(0,level-2)*UPGRADE_BALANCE.rapidLatePerLevel;}
 export function orbitPositions(player,time){
  const level=player.orbitLevel||0;if(!level)return [];
  return Array.from({length:level+1},(_,i)=>{const angle=time*2+i*Math.PI*2/(level+1);return{x:player.x+Math.cos(angle)*48,y:player.y+Math.sin(angle)*48,angle};});

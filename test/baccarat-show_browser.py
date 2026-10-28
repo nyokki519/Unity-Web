@@ -20,14 +20,16 @@ with sync_playwright() as p:
  def ready():page.wait_for_function('()=>!!window.BACCARAT')
  def load(tier='none',mode='squeeze',squeezeMode='important'):
   page.goto(base+'/baccarat/index.html');ready();r=page.evaluate(fixture,{'tier':tier,'mode':mode,'squeezeMode':squeezeMode});page.reload();ready();page.locator('[data-action=continue]').click();page.locator('[data-action=resume-deal]').click();return r
- def sq():page.locator('#squeeze-dialog[open]').wait_for(timeout=15000)
+ def sq():
+  page.locator('#squeeze-dialog[open]').wait_for(timeout=15000)
+  if not page.locator('.squeeze-assist').evaluate('(d)=>d.open'):page.locator('.squeeze-assist summary').click()
  r=load();sq();before=page.evaluate('BACCARAT.session.state.round.revealed');assert before==len(r['plan']['cards'])-1
  # Partial card is not added to public scores and does not have an accessible rank.
  side=r['plan']['cards'][-1]['side'];point=page.locator('#points-'+side).inner_text();page.locator('#squeeze-range').fill('45');assert page.locator('#points-'+side).inner_text()==point;assert page.evaluate('BACCARAT.session.state.round.revealed')==before
  page.screenshot(path=str(out/'squeeze-45-390.png'));debit=page.evaluate('BACCARAT.session.state.balance');page.reload();ready();page.locator('[data-action=continue]').click();assert page.evaluate('BACCARAT.session.state.round.revealed')==before;assert page.evaluate('BACCARAT.session.state.balance')==debit;assert page.evaluate('BACCARAT.session.state.round.plan')==r['plan'];page.locator('[data-action=resume-deal]').click();sq();assert page.locator('#squeeze-range').input_value()=='45'
  # Hold and keyboard alternatives retain progress; no forced opening.
  page.locator('[data-show=hold]').click();page.wait_for_timeout(900);assert page.evaluate('BACCARAT.session.state.round.revealed')==before;page.locator('[data-action=resume-deal]').click();sq();page.locator('#squeeze-range').focus();page.keyboard.press('ArrowRight');assert page.locator('#squeeze-range').input_value()=='46';page.keyboard.press('Escape');assert page.locator('[data-action=resume-deal]').is_visible()
- page.locator('[data-action=resume-deal]').click();sq();card=page.locator('.squeeze-card');box=card.bounding_box();page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.8);page.mouse.down();page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.6,steps=10);page.mouse.up();assert int(page.locator('#squeeze-range').input_value())>=60
+ page.locator('[data-action=resume-deal]').click();sq();card=page.locator('.squeeze-card');box=card.bounding_box();page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.8);page.mouse.down();page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.8-45,steps=10);page.mouse.up();assert int(page.locator('#squeeze-range').input_value())>=60
  # Touch drag uses browser input events, not synthetic progress assignments.
  box=card.bounding_box();cdp=context.new_cdp_session(page);x=box['x']+box['width']/2;y=box['y']+box['height']*.7;cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':x,'y':y}]});cdp.send('Input.dispatchTouchEvent',{'type':'touchMove','touchPoints':[{'x':x,'y':y-20}]});cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});assert int(page.locator('#squeeze-range').input_value())>66
  # Resizing while held does not reveal the card or overlap controls. Japanese and English at 130%.

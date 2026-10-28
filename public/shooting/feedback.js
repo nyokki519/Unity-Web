@@ -1,12 +1,12 @@
-import {UPGRADE_BALANCE as U} from './balance.js';
+import {powerScale,rapidScale} from './balance.js';
 // Presentation-only vocabulary. This module never changes game state or RNG.
 export const ITEM_UI={
  A:{label:'大口径',symbol:'●',color:'#ffb897',category:'強化',hint:'主弾の直径 +22ポイント（最大3段階）。威力は据え置き、命中範囲を拡大'},
  Q:{label:'反射',symbol:'↶',color:'#ffda87',category:'強化',hint:'壁で2回跳ね返る金色の側射。段階に応じた総火力を各弾に分配'},
  T:{label:'旋回砲',symbol:'◎',color:'#c6adff',category:'強化',hint:'自機の周囲を回る砲台（2〜4基）。総火力を各砲に分配'},
  D:{label:'防壁',symbol:'⬡',color:'#94d6ff',category:'防御',hint:'被弾を1回防ぐ青い防壁。重複しません'},
- P:{label:'火力',symbol:'↑',color:'#81f3c4',category:'強化',hint:'主砲の基礎威力 +11ポイント・レベル +1（最大8）'},
- S:{label:'連射',symbol:'»',color:'#81f3c4',category:'強化',hint:'連射速度 +12ポイント（最大5段階）'},
+ P:{label:'火力',symbol:'↑',color:'#81f3c4',category:'強化',hint:'主砲レベル +1（最大8）。基礎威力はLv.4まで +11、以降 +2.5ポイント'},
+ S:{label:'連射',symbol:'»',color:'#81f3c4',category:'強化',hint:'連射速度は2段階まで +12、以降 +4ポイント（最大5段階）'},
  W:{label:'拡幅',symbol:'↔',color:'#81f3c4',category:'強化',hint:'射線や側射を追加（最大3段階）。追加弾の威力は武器ごとに分配・調整'},
  L:{label:'光線',symbol:'╱',color:'#81f3c4',category:'強化',hint:'0.65秒ごとに補助光線（最大3段階）'},
  M:{label:'誘導',symbol:'↗',color:'#81f3c4',category:'強化',hint:'0.65秒ごとに誘導弾（最大3段階）'},
@@ -26,8 +26,8 @@ export function pickupFeedback(e){
  const fields={A:['caliber','大口径段階 '],Q:['ricochet','反射段階 '],T:['orbitLevel','旋回砲段階 '],P:['level','主砲 Lv.'],S:['rapid','連射段階 '],W:['width','拡幅段階 '],L:['laserBoost','光線段階 '],M:['missileBoost','誘導段階 '],O:['options','随伴数 '],B:['bombs','ボム '],H:['hp','耐久 '],E:['energy','エネルギー '],G:['drive','解放ゲージ ']};
  let detail=ui.hint;
  if(fields[id]){const [key,label]=fields[id],before=Math.floor(a[key]||0),after=Math.floor(b[key]||0);detail=after>before?`${label}${before} → ${after}${id==='G'?'%':''}`:`${label}${after}${id==='G'?'%':''} · ${id==='H'?'全回復済み':id==='E'||id==='G'?'満タン':'最大強化'}`;}
- if(id==='P'&&b.level>a.level)detail+=` · 基礎威力 ${Math.round((1+(a.level-1)*U.powerPerLevel)*100)} → ${Math.round((1+(b.level-1)*U.powerPerLevel)*100)}%`;
- if(id==='S'&&b.rapid>a.rapid)detail+=` · 速度 ${Math.round((1+a.rapid*U.rapidPerLevel)*100)} → ${Math.round((1+b.rapid*U.rapidPerLevel)*100)}%`;
+ if(id==='P'&&b.level>a.level)detail+=` · 基礎威力 ${Math.round(powerScale(a.level)*100)} → ${Math.round(powerScale(b.level)*100)}%`;
+ if(id==='S'&&b.rapid>a.rapid)detail+=` · 速度 ${Math.round(rapidScale(a.rapid)*100)} → ${Math.round(rapidScale(b.rapid)*100)}%`;
  if(id==='W'&&b.width>a.width)detail+=' · 射線追加';
  if(id==='L'&&b.laserBoost>a.laserBoost)detail+=' · 補助光線を追加';
  if(id==='M'&&b.missileBoost>a.missileBoost)detail+=' · 誘導弾を追加';

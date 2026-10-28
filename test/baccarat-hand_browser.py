@@ -1,0 +1,36 @@
+"""Direct touch and mouse on a large card. Assistance stays closed throughout."""
+import os,json,shutil,tempfile
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+base=os.environ.get('UNITY_URL','http://127.0.0.1:3483');out=Path(os.environ.get('BACCARAT_HAND_QA','/tmp/baccarat-hand-qa'));out.mkdir(parents=True,exist_ok=True)
+if not os.environ.get('PLAYWRIGHT_BROWSERS_PATH') and shutil.which('ffmpeg'):
+ cache=Path(tempfile.gettempdir())/'unity-baccarat-playwright';binary=cache/'ffmpeg-1011'/'ffmpeg-linux';binary.parent.mkdir(parents=True,exist_ok=True)
+ if not binary.exists():binary.symlink_to(shutil.which('ffmpeg'))
+ os.environ['PLAYWRIGHT_BROWSERS_PATH']=str(cache)
+with sync_playwright() as p:
+ args=['--no-sandbox'];
+ if os.environ.get('PROXY_SPKI'):args+=['--ignore-certificate-errors-spki-list='+os.environ['PROXY_SPKI']]
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=args);context=b.new_context(viewport={'width':390,'height':844},has_touch=True,record_video_dir=str(out/'video'),record_video_size={'width':390,'height':844});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto(base+'/baccarat/index.html');page.locator('[data-action=tables]').click();page.locator('[data-action="start:lounge"]').click();page.locator('[data-action="bet:player"]').click();page.locator('[data-action=confirm]').click();page.locator('#squeeze-dialog[open]').wait_for(timeout=15000);page.locator('.has-curl').wait_for();card=page.locator('.squeeze-card');assert not page.locator('#squeeze-range').is_visible();actual_width=float(page.locator('.curl-canvas').get_attribute('data-card-width'));assert actual_width>=390*.78;page.screenshot(path=str(out/'large-card-start-390.png'))
+ before=page.evaluate('BACCARAT.session.state.round.revealed');points=page.locator('.points').all_text_contents();cdp=context.new_cdp_session(page)
+ def touch(kind,pts):cdp.send('Input.dispatchTouchEvent',{'type':kind,'touchPoints':pts})
+ box=card.bounding_box();x=box['x']+box['width']*.82;y=box['y']+box['height']*.75;touch('touchStart',[{'x':x,'y':y,'id':0}])
+ for dy in [20,40,60,80]:touch('touchMove',[{'x':x,'y':y-dy,'id':0}]);page.wait_for_timeout(40)
+ touch('touchEnd',[]);value=int(card.get_attribute('aria-valuenow'));assert 25<=value<=40;assert page.locator('.points').all_text_contents()==points;assert page.evaluate('BACCARAT.session.state.round.revealed')==before;assert not page.locator('#squeeze-range').is_visible();page.screenshot(path=str(out/'direct-right-peek-390.png'))
+ saved=page.evaluate("JSON.parse(localStorage.getItem('unity-baccarat-show-v1'))");assert saved['squeeze']['gripX']>.4
+ # Another touch can peek back without a full-card reveal.
+ touch('touchStart',[{'x':x,'y':y-80,'id':0}]);touch('touchMove',[{'x':x,'y':y-45,'id':0}]);page.wait_for_timeout(120);touch('touchEnd',[]);assert int(card.get_attribute('aria-valuenow'))<value
+ # A second finger moving cannot take over the primary pinch.
+ value=int(card.get_attribute('aria-valuenow'));a={'x':x,'y':y-60,'id':0};z={'x':box['x']+30,'y':box['y']+70,'id':1};touch('touchStart',[a]);touch('touchStart',[a,z]);touch('touchMove',[a,{**z,'y':z['y']+50}]);touch('touchEnd',[]);assert int(card.get_attribute('aria-valuenow'))==value
+ # Hold and resume keeps the selected corner and exact position; range stays closed.
+ page.locator('[data-show=hold]').click();page.locator('[data-action=resume-deal]').click();page.locator('#squeeze-dialog[open]').wait_for();page.locator('.has-curl').wait_for();assert int(card.get_attribute('aria-valuenow'))==value;assert not page.locator('#squeeze-range').is_visible()
+ # Left-hand mouse pinch uses the other corner, held at a moderate displacement.
+ box=card.bounding_box();x=box['x']+box['width']*.12;y=box['y']+box['height']*.7;page.mouse.move(x,y);page.mouse.down();page.mouse.move(x,y-50,steps=10);page.mouse.up();page.wait_for_timeout(150);assert page.evaluate("JSON.parse(localStorage.getItem('unity-baccarat-show-v1')).squeeze.gripX")<-.5
+ for width in [375,390,414]:
+  page.set_viewport_size({'width':width,'height':844});page.wait_for_timeout(100);assert not page.evaluate('()=>document.documentElement.scrollWidth>innerWidth');assert page.locator('[data-show=full]').bounding_box()['height']>=44;assert page.locator('.squeeze-actions').bounding_box()['y']>=page.locator('.squeeze-stage').bounding_box()['y']+page.locator('.squeeze-stage').bounding_box()['height']-1;page.screenshot(path=str(out/f'direct-table-{width}.png'))
+ # Keyboard alternative operates the card itself without opening a bar.
+ card.focus();page.keyboard.press('Home');assert card.get_attribute('aria-valuenow')=='0';page.keyboard.press('ArrowUp');assert int(card.get_attribute('aria-valuenow'))>0;page.keyboard.press('End');page.wait_for_function("()=>BACCARAT.session.state.phase==='result'");assert page.evaluate('BACCARAT.session.state.stats.rounds')==1;assert not errors,errors
+ # Fast intentional upward flick finishes naturally; a stationary tap does not.
+ page.locator('[data-action=next]').click();page.locator('[data-action="bet:player"]').click();page.locator('[data-action=confirm]').click();page.locator('#squeeze-dialog[open]').wait_for(timeout=15000);page.locator('.has-curl').wait_for();box=card.bounding_box();x=box['x']+box['width']*.6;y=box['y']+box['height']*.85;touch('touchStart',[{'x':x,'y':y,'id':0}]);touch('touchEnd',[]);assert card.get_attribute('aria-valuenow')=='0';touch('touchStart',[{'x':x,'y':y,'id':0}]);page.wait_for_timeout(30);touch('touchMove',[{'x':x,'y':y-230,'id':0}]);touch('touchEnd',[]);page.wait_for_function("()=>BACCARAT.session.state.phase==='result'",timeout=8000);assert page.evaluate('BACCARAT.session.state.stats.rounds')==2
+ # Touch takes control even from auto-open; a held card stays manual on return.
+ page.locator('#settings-link').click();page.locator('[data-setting=squeezeMode]').select_option('auto');page.locator('[data-action=back]').click();page.locator('[data-action=next]').click();page.locator('[data-action="bet:player"]').click();page.locator('[data-action=confirm]').click();page.locator('#squeeze-dialog[open]').wait_for(timeout=15000);page.locator('.has-curl').wait_for();box=card.bounding_box();x=box['x']+box['width']*.65;y=box['y']+box['height']*.7;touch('touchStart',[{'x':x,'y':y,'id':0}]);touch('touchEnd',[]);held=card.get_attribute('aria-valuenow');page.wait_for_timeout(300);assert card.get_attribute('aria-valuenow')==held;page.locator('[data-show=hold]').click();page.locator('[data-action=resume-deal]').click();page.locator('#squeeze-dialog[open]').wait_for();page.wait_for_timeout(300);assert card.get_attribute('aria-valuenow')==held;assert not page.locator('#squeeze-range').is_visible();page.locator('[data-show=skip]').click();assert page.evaluate('BACCARAT.session.state.stats.rounds')==3
+ (out/'report.json').write_text(json.dumps({'actualCardWidthAt390':actual_width,'rangeHidden':True,'directTouch':True,'peekBack':True,'twoFingerDoesNotSteal':True,'leftRightCorners':True,'partialHold':True,'keyboardOnCard':True,'tapDoesNotReveal':True,'fastFlickCompletes':True,'touchTakesOverAuto':True,'widths':[375,390,414],'noEarlyScore':True,'errors':errors},indent=2));context.close();b.close();print('direct hand table browser passed')
