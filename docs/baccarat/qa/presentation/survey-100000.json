@@ -1,0 +1,77 @@
+{
+  "rounds": 100000,
+  "wager": "Player 10 chips, fixed",
+  "positive": 44554,
+  "nonpositive": 55446,
+  "seed": 28102026,
+  "note": "Full-round denominators are rounds; configured rarity probabilities are conditional on positive personal net. Observed counts, not promised future odds.",
+  "counts": {
+    "standard": {
+      "none": 89367,
+      "blue": 7081,
+      "green": 2670,
+      "red": 804,
+      "rainbow": 78
+    },
+    "squeeze": {
+      "none": 89367,
+      "blue": 7081,
+      "green": 2670,
+      "red": 804,
+      "rainbow": 78
+    },
+    "rich": {
+      "none": 80005,
+      "blue": 12048,
+      "green": 5757,
+      "red": 1983,
+      "rainbow": 207
+    },
+    "quick": {
+      "none": 94666,
+      "blue": 3569,
+      "green": 1331,
+      "red": 397,
+      "rainbow": 37
+    },
+    "off": {
+      "none": 100000,
+      "blue": 0,
+      "green": 0,
+      "red": 0,
+      "rainbow": 0
+    }
+  },
+  "conditionalRates": {
+    "standard": {
+      "rainbow": 0.002,
+      "red": 0.018,
+      "green": 0.06,
+      "blue": 0.16
+    },
+    "squeeze": {
+      "rainbow": 0.002,
+      "red": 0.018,
+      "green": 0.06,
+      "blue": 0.16
+    },
+    "rich": {
+      "rainbow": 0.005,
+      "red": 0.045,
+      "green": 0.13,
+      "blue": 0.27
+    },
+    "quick": {
+      "rainbow": 0.001,
+      "red": 0.009,
+      "green": 0.03,
+      "blue": 0.08
+    },
+    "off": {
+      "rainbow": 0,
+      "red": 0,
+      "green": 0,
+      "blue": 0
+    }
+  }
+}

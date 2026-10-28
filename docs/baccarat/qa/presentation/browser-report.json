@@ -1,0 +1,134 @@
+{
+  "fixtureNote": "Controlled seeded QA deals, not production win statistics",
+  "tiers": {
+    "blue": {
+      "version": 1,
+      "id": "show-v1:qa-show-1:1",
+      "mode": "squeeze",
+      "tier": "blue",
+      "primary": "quiet",
+      "aux": [
+        "line",
+        "bell"
+      ],
+      "cues": [
+        {
+          "at": 3,
+          "tier": "blue",
+          "kind": "quiet",
+          "ms": 850
+        }
+      ],
+      "extraMs": 850
+    },
+    "green": {
+      "version": 1,
+      "id": "show-v1:qa-show-3:1",
+      "mode": "squeeze",
+      "tier": "green",
+      "primary": "doors",
+      "aux": [
+        "line",
+        "bell"
+      ],
+      "cues": [
+        {
+          "at": 0,
+          "tier": "blue",
+          "kind": "trace",
+          "ms": 400
+        },
+        {
+          "at": 2,
+          "tier": "blue",
+          "kind": "upgrade",
+          "ms": 500
+        },
+        {
+          "at": 3,
+          "tier": "green",
+          "kind": "doors",
+          "ms": 850
+        }
+      ],
+      "extraMs": 1750
+    },
+    "red": {
+      "version": 1,
+      "id": "show-v1:qa-show-7:1",
+      "mode": "squeeze",
+      "tier": "red",
+      "primary": "starlight",
+      "aux": [
+        "line",
+        "bell"
+      ],
+      "cues": [
+        {
+          "at": 0,
+          "tier": "blue",
+          "kind": "trace",
+          "ms": 400
+        },
+        {
+          "at": 2,
+          "tier": "green",
+          "kind": "upgrade",
+          "ms": 500
+        },
+        {
+          "at": 3,
+          "tier": "red",
+          "kind": "starlight",
+          "ms": 850
+        }
+      ],
+      "extraMs": 1750
+    },
+    "rainbow": {
+      "version": 1,
+      "id": "show-v1:qa-show-130:1",
+      "mode": "squeeze",
+      "tier": "rainbow",
+      "primary": "seal",
+      "aux": [
+        "line",
+        "bell"
+      ],
+      "cues": [
+        {
+          "at": 0,
+          "tier": "green",
+          "kind": "trace",
+          "ms": 400
+        },
+        {
+          "at": 2,
+          "tier": "red",
+          "kind": "upgrade",
+          "ms": 500
+        },
+        {
+          "at": 3,
+          "tier": "rainbow",
+          "kind": "seal",
+          "ms": 850
+        }
+      ],
+      "extraMs": 1750
+    }
+  },
+  "partialReload": true,
+  "noEarlyScore": true,
+  "keyboardAndMouse": true,
+  "holdAndAutoStop": true,
+  "mobileWidths": [
+    375,
+    390,
+    414
+  ],
+  "skipOnce": true,
+  "reducedMotion": true,
+  "effectsOff": true,
+  "errors": []
+}

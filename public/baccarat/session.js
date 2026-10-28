@@ -32,8 +32,8 @@ function settleState(s){
  s.history.push({id:r.id,number:s.sequence,shoeSerial:r.shoeSerial,start:r.plan.start,end:r.plan.end,cards:r.plan.cards,player:r.plan.player,banker:r.plan.banker,winner:r.plan.winner,bets:r.bets,before:r.balanceBefore,after:s.balance,returned:receipt.returned,net:receipt.net});s.history=s.history.slice(-500);return true;
 }
 export class Session{
- constructor({table='lounge',state=null,random=cryptoRandom,commit=()=>true}={}){
-  this.random=random;this.commit=commit;
+ constructor({table='lounge',state=null,random=cryptoRandom,commit=()=>true,decorateRound=null}={}){
+  this.random=random;this.commit=commit;this.decorateRound=decorateRound;
   if(state){validateSession(state);this.state=structuredClone(state);}else{require(Object.hasOwn(TABLES,table),'TABLE');this.state={version:1,id:globalThis.crypto.randomUUID(),table,initial:TABLES[table].start,balance:TABLES[table].start,phase:'betting',sequence:0,shoe:newShoe(random),bets:{},lastBet:{},undo:[],round:null,history:[],stats:{rounds:0,player:0,banker:0,tie:0,positive:0,negative:0,push:0,net:0,wagered:0,peak:TABLES[table].start,maxDrawdown:0}};}
  }
  transaction(change){const next=structuredClone(this.state);const result=change(next);validateSession(next);if(this.commit(next)!==true)throw Error('SAVE');this.state=next;return result;}
@@ -45,7 +45,7 @@ export class Session{
  repeat(){require(totalBet(this.state.lastBet)>0,'PREVIOUS');return this.edit({...this.state.lastBet});}
  double(){require(totalBet(this.state.bets)>0,'EMPTY');return this.edit(Object.fromEntries(Object.entries(this.state.bets).map(([k,v])=>[k,v*2])));}
  confirm(){this.editable();const table=TABLES[this.state.table];require(totalBet(this.state.bets)>0,'EMPTY');for(const amount of Object.values(this.state.bets))require(amount>=table.min,'MIN');
-  return this.transaction(s=>{if(s.shoe.cursor>=s.shoe.cut||416-s.shoe.cursor<6)s.shoe=newShoe(this.random,s.shoe.serial+1);const plan=deal(s.shoe.order,s.shoe.cursor);s.sequence++;s.round={id:s.id+':'+s.sequence,bets:{...s.bets},balanceBefore:s.balance,plan,shoeSerial:s.shoe.serial,revealed:0,paid:false};s.shoe.cursor=plan.end;s.balance-=totalBet(s.bets);s.bets={};s.undo=[];s.phase='dealing';});
+  return this.transaction(s=>{if(s.shoe.cursor>=s.shoe.cut||416-s.shoe.cursor<6)s.shoe=newShoe(this.random,s.shoe.serial+1);const plan=deal(s.shoe.order,s.shoe.cursor);s.sequence++;s.round={id:s.id+':'+s.sequence,bets:{...s.bets},balanceBefore:s.balance,plan,shoeSerial:s.shoe.serial,revealed:0,paid:false};if(this.decorateRound)s.round.presentation=this.decorateRound(structuredClone(s.round));s.shoe.cursor=plan.end;s.balance-=totalBet(s.bets);s.bets={};s.undo=[];s.phase='dealing';});
  }
  reveal(){if(this.state.phase!=='dealing')return false;this.state.round.revealed++;if(this.state.round.revealed===this.state.round.plan.cards.length)this.state.phase='judging';return true;}
  revealAll(){while(this.reveal());}
