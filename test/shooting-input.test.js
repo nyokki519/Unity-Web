@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {touchAnchor} from '../public/shooting/input.js';
+test('touch starts above a nearby finger without accumulating offset on repeated taps',()=>{const r={top:0,height:720},p={x:240,y:610},a=touchAnchor(p,610,r,60);assert.equal(a.y,550);assert.deepEqual(touchAnchor({...p,y:a.y},610,r,60),a);assert.deepEqual(touchAnchor(p,100,r,60),p);assert.equal(touchAnchor(p,610,r,0).y,610);});

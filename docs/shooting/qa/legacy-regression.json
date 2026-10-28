@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Unity MIX create form/event modes loaded",
+    "Chinchiro two players, dice action, coin conservation",
+    "Retro launch and exact 200 debit",
+    "Retired mechanical stays410"
+  ],
+  "errors": []
+}

@@ -1,0 +1,330 @@
+{
+  "rows": [
+    {
+      "difficulty": "easy",
+      "seed": 0,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 185.40833333332904,
+      "kills": 119,
+      "misses": 0,
+      "graze": 3,
+      "score": 88858,
+      "items": 10,
+      "level": 4,
+      "bossSeconds": [
+        17.583333333332977,
+        10.416666666666716
+      ],
+      "weaponUse": {
+        "0": 1140
+      }
+    },
+    {
+      "difficulty": "easy",
+      "seed": 1,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 179.1500000000014,
+      "kills": 121,
+      "misses": 0,
+      "graze": 1,
+      "score": 99108,
+      "items": 18,
+      "level": 6,
+      "bossSeconds": [
+        24.924999999999226,
+        4.15833333333333
+      ],
+      "weaponUse": {
+        "0": 792,
+        "19": 123
+      }
+    },
+    {
+      "difficulty": "easy",
+      "seed": 2,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 178.64166666666853,
+      "kills": 121,
+      "misses": 0,
+      "graze": 2,
+      "score": 98102,
+      "items": 16,
+      "level": 7,
+      "bossSeconds": [
+        10.741666666666697,
+        3.6499999999999897
+      ],
+      "weaponUse": {
+        "0": 369,
+        "1": 499,
+        "19": 259
+      }
+    },
+    {
+      "difficulty": "easy",
+      "seed": 3,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 179.13333333333475,
+      "kills": 122,
+      "misses": 1,
+      "graze": 1,
+      "score": 105068,
+      "items": 16,
+      "level": 7,
+      "bossSeconds": [
+        11.724999999999975,
+        4.141666666666662
+      ],
+      "weaponUse": {
+        "0": 1089
+      }
+    },
+    {
+      "difficulty": "normal",
+      "seed": 0,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 182.63333333333156,
+      "kills": 133,
+      "misses": 0,
+      "graze": 19,
+      "score": 112887,
+      "items": 19,
+      "level": 8,
+      "bossSeconds": [
+        41.991666666664926,
+        7.641666666666836
+      ],
+      "weaponUse": {
+        "0": 1134
+      }
+    },
+    {
+      "difficulty": "normal",
+      "seed": 1,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 183.40833333333086,
+      "kills": 127,
+      "misses": 0,
+      "graze": 16,
+      "score": 102695,
+      "items": 18,
+      "level": 6,
+      "bossSeconds": [
+        16.649999999999697,
+        8.41666666666683
+      ],
+      "weaponUse": {
+        "0": 1166
+      }
+    },
+    {
+      "difficulty": "normal",
+      "seed": 2,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 179.22500000000133,
+      "kills": 145,
+      "misses": 1,
+      "graze": 14,
+      "score": 104288,
+      "items": 17,
+      "level": 8,
+      "bossSeconds": [
+        12.29166666666661,
+        4.233333333333333
+      ],
+      "weaponUse": {
+        "0": 227,
+        "1": 918,
+        "19": 254
+      }
+    },
+    {
+      "difficulty": "normal",
+      "seed": 3,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 180.42500000000024,
+      "kills": 144,
+      "misses": 3,
+      "graze": 13,
+      "score": 120042,
+      "items": 20,
+      "level": 7,
+      "bossSeconds": [
+        29.299999999998978,
+        5.433333333333393
+      ],
+      "weaponUse": {
+        "0": 1104
+      }
+    },
+    {
+      "difficulty": "hard",
+      "seed": 0,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 206.89999999997616,
+      "kills": 171,
+      "misses": 2,
+      "graze": 67,
+      "score": 108393,
+      "items": 17,
+      "level": 4,
+      "bossSeconds": [
+        24.449999999999253,
+        31.908333333332163
+      ],
+      "weaponUse": {
+        "0": 1324
+      }
+    },
+    {
+      "difficulty": "hard",
+      "seed": 1,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 182.98333333333125,
+      "kills": 175,
+      "misses": 1,
+      "graze": 28,
+      "score": 133796,
+      "items": 23,
+      "level": 8,
+      "bossSeconds": [
+        17.44999999999965,
+        7.991666666666854
+      ],
+      "weaponUse": {
+        "0": 1165
+      }
+    },
+    {
+      "difficulty": "hard",
+      "seed": 2,
+      "phase": "stageclear",
+      "clear": true,
+      "seconds": 181.0916666666663,
+      "kills": 178,
+      "misses": 2,
+      "graze": 31,
+      "score": 150781,
+      "items": 23,
+      "level": 8,
+      "bossSeconds": [
+        15.749999999999746,
+        6.100000000000093
+      ],
+      "weaponUse": {
+        "0": 673,
+        "19": 196
+      }
+    },
+    {
+      "difficulty": "hard",
+      "seed": 3,
+      "phase": "result",
+      "clear": false,
+      "seconds": 94.49166666668793,
+      "kills": 78,
+      "misses": 4,
+      "graze": 41,
+      "score": 22669,
+      "items": 8,
+      "level": 1,
+      "bossSeconds": [],
+      "weaponUse": {
+        "0": 615
+      }
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 0,
+      "phase": "result",
+      "clear": false,
+      "seconds": 95.99166666668913,
+      "kills": 116,
+      "misses": 4,
+      "graze": 103,
+      "score": 51788,
+      "items": 14,
+      "level": 3,
+      "bossSeconds": [],
+      "weaponUse": {
+        "0": 246,
+        "1": 1054
+      }
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 1,
+      "phase": "result",
+      "clear": false,
+      "seconds": 125.87500000004624,
+      "kills": 164,
+      "misses": 4,
+      "graze": 96,
+      "score": 96940,
+      "items": 17,
+      "level": 5,
+      "bossSeconds": [
+        34.758333333332004
+      ],
+      "weaponUse": {
+        "0": 807
+      }
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 2,
+      "phase": "result",
+      "clear": false,
+      "seconds": 96.3833333333561,
+      "kills": 129,
+      "misses": 4,
+      "graze": 51,
+      "score": 43645,
+      "items": 17,
+      "level": 3,
+      "bossSeconds": [],
+      "weaponUse": {
+        "0": 517,
+        "1": 392
+      }
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 3,
+      "phase": "result",
+      "clear": false,
+      "seconds": 85.04166666668041,
+      "kills": 103,
+      "misses": 5,
+      "graze": 92,
+      "score": 33556,
+      "items": 10,
+      "level": 2,
+      "bossSeconds": [],
+      "weaponUse": {
+        "0": 559
+      }
+    }
+  ],
+  "benchmark": {
+    "controlledInvulnerable": true,
+    "bullets": 2200,
+    "ticks": 2400,
+    "simulationSeconds": 20,
+    "medianUpdateMs": 0.18758300000263262,
+    "p95UpdateMs": 0.2615850000001956,
+    "maxUpdateMs": 0.7482189999973343,
+    "heapDeltaBytes": 650600
+  },
+  "note": "Scripted pilot is not a human gameplay evaluation; renderer/device performance measured separately."
+}

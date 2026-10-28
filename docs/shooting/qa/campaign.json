@@ -1,0 +1,98 @@
+[
+  {
+    "difficulty": "easy",
+    "seed": 0,
+    "clear": true,
+    "phase": "result",
+    "stage": 5,
+    "seconds": 903.9583333326756,
+    "score": 514575,
+    "kills": 651,
+    "graze": 2,
+    "misses": 1,
+    "recordedInputs": 13560,
+    "replayExact": true,
+    "profileRuns": 1,
+    "profileStages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ending": "clear"
+  },
+  {
+    "difficulty": "easy",
+    "seed": 1,
+    "clear": true,
+    "phase": "result",
+    "stage": 5,
+    "seconds": 904.2166666660087,
+    "score": 505059,
+    "kills": 652,
+    "graze": 0,
+    "misses": 1,
+    "recordedInputs": 13564,
+    "replayExact": true,
+    "profileRuns": 1,
+    "profileStages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ending": "clear"
+  },
+  {
+    "difficulty": "normal",
+    "seed": 0,
+    "clear": true,
+    "phase": "result",
+    "stage": 5,
+    "seconds": 930.5833333326514,
+    "score": 646971,
+    "kills": 817,
+    "graze": 19,
+    "misses": 1,
+    "recordedInputs": 13959,
+    "replayExact": true,
+    "profileRuns": 1,
+    "profileStages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ending": "true"
+  },
+  {
+    "difficulty": "normal",
+    "seed": 1,
+    "clear": true,
+    "phase": "result",
+    "stage": 5,
+    "seconds": 905.1083333326745,
+    "score": 622334,
+    "kills": 810,
+    "graze": 3,
+    "misses": 1,
+    "recordedInputs": 13577,
+    "replayExact": true,
+    "profileRuns": 1,
+    "profileStages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ending": "clear"
+  }
+]
