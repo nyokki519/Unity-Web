@@ -39,3 +39,7 @@
 ![取得効果](qa/ui-refresh/pickup-firepower-390.webp)
 ![追加強化](qa/ui-refresh/visual-upgrades-390.webp)
 
+
+## 本番確認
+
+mainへ9435423を反映し、Render公開後の全15ファイルのSHA-256一致を確認。同じ公開URL上で取得効果・新強化・耐久HUD・3幅・小画面・キーボード・防壁・スキルをブラウザ再検証し成功。新しい環境変数・外部サービス設定は不要。

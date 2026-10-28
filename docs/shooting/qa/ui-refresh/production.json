@@ -1,0 +1,37 @@
+{
+  "actualPickupDelta": true,
+  "cappedRecovery": true,
+  "hpMeter": true,
+  "criticalState": true,
+  "abilityReadiness": true,
+  "overdriveActivated": true,
+  "guideCount": 19,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "smallHeight667": true,
+  "allItemTextures": 19,
+  "reducedMotion": true,
+  "errors": [],
+  "url": "https://unity-mix.onrender.com/shooting/index.html",
+  "codeCommit": "9435423",
+  "assetsMatched": [
+    "shooting/flight-ui.js",
+    "shooting/core.js",
+    "shooting/pool.js",
+    "shooting/save.js",
+    "shooting/combat.js",
+    "shooting/audio.js",
+    "shooting/main.js",
+    "shooting/data.js",
+    "shooting/index.html",
+    "shooting/input.js",
+    "shooting/patterns.js",
+    "shooting/feedback.js",
+    "shooting/style.css",
+    "shooting/balance.js",
+    "shooting/renderer.js"
+  ]
+}
