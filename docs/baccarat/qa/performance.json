@@ -1,0 +1,14 @@
+{
+  "longTasks": [],
+  "dom": 134,
+  "heap": 3720535,
+  "viewport": [
+    1920,
+    1080
+  ],
+  "frames": 734,
+  "medianRAFms": 16.699999999999818,
+  "p95RAFms": 16.700000000000728,
+  "maxRAFms": 50.100000000000364,
+  "note": "Chromium requestAnimationFrame callback cadence during three normal-speed rounds; NOT measured physical display FPS or iPhone performance."
+}

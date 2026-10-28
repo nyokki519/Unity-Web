@@ -1,0 +1,9 @@
+import {FACES,BACK} from '../public/baccarat/card-data.js';
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,readdirSync} from 'node:fs';import {TEXT,formatMoney} from '../public/baccarat/i18n.js';
+const root=new URL('../public/baccarat/cards/',import.meta.url);
+test('52 original SVG faces have exact ranks, suits and numeric pip counts',()=>{const files=readdirSync(root);assert.equal(files.filter(x=>/^\d+\.svg$/.test(x)).length,52);for(let id=0;id<52;id++){const svg=readFileSync(new URL(id+'.svg',root),'utf8'),rank=id%13+1,suit=Math.floor(id/13);assert.ok(svg.includes(`data-rank="${rank}"`));assert.ok(svg.includes(`data-suit="${suit}"`));if(rank<=10)assert.equal((svg.match(/class="main-pip"/g)||[]).length,rank);assert.ok(svg.includes('rotate(180 250 350)'));assert.ok(!svg.includes('<script'));}});
+test('single symmetric back and artwork manifest exclude marked card variants',()=>{const back=readFileSync(new URL('back.svg',root),'utf8'),manifest=JSON.parse(readFileSync(new URL('manifest.json',root)));assert.equal(manifest.count,52);assert.equal(manifest.backs,1);assert.ok(back.includes('rotate(180 250 350)'));assert.ok(!back.includes('data-rank'));});
+test('Japanese and English have matching translation keys including errors',()=>{assert.deepEqual(Object.keys(TEXT.ja).sort(),Object.keys(TEXT.en).sort());assert.deepEqual(Object.keys(TEXT.ja.err).sort(),Object.keys(TEXT.en.err).sort());});
+test('integer money formatter preserves hundredths and negative net results',()=>{assert.equal(formatMoney(100095),'1,000.95');assert.equal(formatMoney(-50),'−0.50');assert.equal(formatMoney(0),'0');});
+
+test('packed in-memory artwork matches the editable SVG masters',()=>{assert.equal(FACES.length,52);for(let i=0;i<52;i++)assert.equal(FACES[i],readFileSync(new URL(i+'.svg',root),'utf8'));assert.equal(BACK,readFileSync(new URL('back.svg',root),'utf8'));});

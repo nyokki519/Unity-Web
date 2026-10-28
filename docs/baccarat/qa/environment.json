@@ -1,0 +1,5 @@
+{
+  "node": "v24.19.0",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "browserTest": "Linux Chromium desktop and mobile viewport emulation; no physical iPhone/Safari certification"
+}

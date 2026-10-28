@@ -1,0 +1,13 @@
+{
+  "count": 52,
+  "jokers": 0,
+  "size": [
+    500,
+    700
+  ],
+  "backs": 1,
+  "design": "Original hotel-window geometry; no Unity Technologies logo",
+  "generator": "tools/generate-baccarat-cards.py",
+  "license": "Original project artwork; no third-party art or font files bundled",
+  "symmetry": "back upper half repeated with 180-degree transform; identical back for all ranks and decks"
+}

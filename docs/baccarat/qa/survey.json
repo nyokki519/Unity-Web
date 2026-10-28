@@ -1,0 +1,82 @@
+{
+  "seed": 20261028,
+  "rounds": 100000,
+  "shoes": 1247,
+  "counts": {
+    "player": 44762,
+    "banker": 45857,
+    "tie": 9381
+  },
+  "cardCounts": {
+    "4": 37754,
+    "5": 30168,
+    "6": 32078
+  },
+  "netAtFlatOneChip": {
+    "player": -109500,
+    "banker": -119785,
+    "tie": -1557100
+  },
+  "logicMs": 496.971292,
+  "sessionRounds": 5000,
+  "historyCap": 500,
+  "memory": [
+    {
+      "round": 500,
+      "heap": 5730192,
+      "history": 500
+    },
+    {
+      "round": 1000,
+      "heap": 5752992,
+      "history": 500
+    },
+    {
+      "round": 1500,
+      "heap": 5756000,
+      "history": 500
+    },
+    {
+      "round": 2000,
+      "heap": 5759176,
+      "history": 500
+    },
+    {
+      "round": 2500,
+      "heap": 5757008,
+      "history": 500
+    },
+    {
+      "round": 3000,
+      "heap": 5759864,
+      "history": 500
+    },
+    {
+      "round": 3500,
+      "heap": 5770696,
+      "history": 500
+    },
+    {
+      "round": 4000,
+      "heap": 5761096,
+      "history": 500
+    },
+    {
+      "round": 4500,
+      "heap": 5782712,
+      "history": 500
+    },
+    {
+      "round": 5000,
+      "heap": 5795288,
+      "history": 500
+    }
+  ],
+  "explicitGC": true,
+  "sessionTransactionMs": {
+    "median": 13.273252999999386,
+    "p95": 16.22549599999911,
+    "max": 74.07798400000001
+  },
+  "note": "Logic benchmark on execution-host Node.js; not mobile frame-rate or human win-rate validation."
+}
