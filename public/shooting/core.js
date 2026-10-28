@@ -3,7 +3,7 @@ import {BulletPool,random,segmentDistance2} from './pool.js';
 import {pattern} from './patterns.js';
 import {shootPlayer} from './combat.js';
 const STEP=1/120,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),TAU=Math.PI*2;
-export const GAME_VERSION='1.0.0';
+export {GAME_VERSION} from './balance.js';
 export class Game {
  constructor(options={}){
   this.options={seed:'unity-shooting',ship:0,weapon:0,support:0,difficulty:'normal',mode:'campaign',stage:0,upgrades:{},...options};
@@ -15,7 +15,7 @@ export class Game {
   this.stage=clamp(Math.floor(this.options.stage)||0,0,STAGES.length-1);this.difficulty=DIFFICULTIES[this.options.difficulty];this.rng=random(this.options.seed);this.acc=0;this.tick=0;this.time=0;this.stageTime=0;this.phase='play';this.nextId=1;this.events=[];
   this.enemies=[];this.items=[];this.hazards=[];this.turrets=[];this.bullets=new BulletPool();this.boss=null;this.result=null;this.wave=0;this.waveCD=1.5;this.midSpawned=false;this.bossSpawned=false;this.secretSpawned=false;this.lastActions={};this.input={};
   const ship=SHIPS[this.options.ship],u=this.options.upgrades||{},upgrade=k=>clamp(Number(u[k])||0,0,5);this.ship=ship;this.damage=(ship.damage||1)*(1+upgrade('power')*.05)*(1+clamp(Number(this.options.weaponLevels?.[this.options.weapon])||0,0,5)*.02);
-  this.player={x:240,y:610,hp:(ship.hp||3)+Math.floor(upgrade('armor')/2),maxHp:(ship.hp||3)+Math.floor(upgrade('armor')/2),bombs:3,energy:100+upgrade('energy')*12,maxEnergy:100+upgrade('energy')*12,drive:0,driveTime:0,level:1+Math.floor(clamp(Number(this.options.weaponLevels?.[this.options.weapon])||0,0,5)/2),supportLevel:clamp(Number(this.options.supportLevels?.[this.options.support])||0,0,5),options:1,invincible:2,focus:false,weapon:this.options.weapon,cooldown:0,supportCD:0,auxCD:0,rapid:0,width:0,laserBoost:0,missileBoost:0,shield:0,specialCD:0,dash:0,magnet:upgrade('magnet'),fused:false};
+  this.player={x:240,y:610,hp:(ship.hp||3)+Math.floor(upgrade('armor')/2),maxHp:(ship.hp||3)+Math.floor(upgrade('armor')/2),bombs:3,energy:100+upgrade('energy')*12,maxEnergy:100+upgrade('energy')*12,drive:0,driveTime:0,level:1+Math.floor(clamp(Number(this.options.weaponLevels?.[this.options.weapon])||0,0,5)/2),supportLevel:clamp(Number(this.options.supportLevels?.[this.options.support])||0,0,5),options:1,invincible:2,focus:false,weapon:this.options.weapon,cooldown:0,supportCD:0,auxCD:0,ricochetCD:0,orbitCD:0,caliber:0,ricochet:0,orbitLevel:0,rapid:0,width:0,laserBoost:0,missileBoost:0,shield:0,specialCD:0,dash:0,magnet:upgrade('magnet'),fused:false};
   this.stats={score:0,kills:0,graze:0,combo:0,peakCombo:0,misses:0,shots:0,hits:0,items:0,parts:0,duration:0,stages:0,weaponUse:{},bossTimes:[]};this.materials={common:0,uncommon:0,rare:0,epic:0,legendary:0};this.stageBaseline={...this.stats};this.comboTime=0;this.supportTime=0;this.stageScore=0;this.stageCredits=0;this.encounters=new Set();this.bossesSeen=new Set();this.itemsSeen=new Set();this.branch=false;
   this.emit('warning',240,180,{text:STAGES[this.stage].name});
  }
@@ -130,9 +130,9 @@ export class Game {
    if(d<22){this.collect(item.type);item.age=99;}}
   this.items=this.items.filter(i=>i.age<14&&i.y<760);
  }
- collect(type){this.itemsSeen.add(type);const p=this.player;this.stats.items++;let applied=type;if(type==='?')applied=['P','S','W','H','E','G','B'][Math.floor(this.rng()*7)];
-  switch(applied){case'P':p.level=Math.min(8,p.level+1);break;case'S':p.rapid=Math.min(5,p.rapid+1);break;case'W':p.width=Math.min(3,p.width+1);break;case'L':p.laserBoost=Math.min(3,p.laserBoost+1);break;case'M':p.missileBoost=Math.min(3,p.missileBoost+1);break;case'O':p.options=Math.min(3,p.options+1);break;case'B':p.bombs=Math.min(5,p.bombs+1);break;case'H':p.hp=Math.min(p.maxHp,p.hp+1);break;case'E':p.energy=Math.min(p.maxEnergy,p.energy+40);break;case'G':p.drive=Math.min(100,p.drive+28);break;case'R':this.materials.rare++;break;case'X':this.materials.epic++;p.core=true;break;case'C':this.materials.common+=5;this.stageCredits+=25;break;default:this.stats.score+=1000;}
-  this.emit('item',p.x,p.y,{text:applied==='C'?'C +25CR':`${type} 回収`,value:type});this.evolve();
+ collect(type){this.itemsSeen.add(type);const p=this.player;const state=()=>({...p,credits:this.stageCredits,score:this.stats.score,rare:this.materials.rare,epic:this.materials.epic,common:this.materials.common});const before=state();this.stats.items++;let applied=type;if(type==='?')applied=['P','S','W','H','E','G','B'][Math.floor(this.rng()*7)];
+  switch(applied){case'A':p.caliber=Math.min(3,p.caliber+1);break;case'Q':p.ricochet=Math.min(3,p.ricochet+1);break;case'T':p.orbitLevel=Math.min(3,p.orbitLevel+1);break;case'D':p.shield=Math.max(1,p.shield);break;case'P':p.level=Math.min(8,p.level+1);break;case'S':p.rapid=Math.min(5,p.rapid+1);break;case'W':p.width=Math.min(3,p.width+1);break;case'L':p.laserBoost=Math.min(3,p.laserBoost+1);break;case'M':p.missileBoost=Math.min(3,p.missileBoost+1);break;case'O':p.options=Math.min(3,p.options+1);break;case'B':p.bombs=Math.min(5,p.bombs+1);break;case'H':p.hp=Math.min(p.maxHp,p.hp+1);break;case'E':p.energy=Math.min(p.maxEnergy,p.energy+40);break;case'G':p.drive=Math.min(100,p.drive+28);break;case'R':this.materials.rare++;break;case'X':this.materials.epic++;p.core=true;break;case'C':this.materials.common+=5;this.stageCredits+=25;break;default:this.stats.score+=1000;}
+  this.emit('item',p.x,p.y,{text:applied==='C'?'C +25CR':`${type} 回収`,value:type,applied,before,after:state()});this.evolve();
  }
  evolve(){const p=this.player;let next=p.weapon;for(const rule of EVOLUTIONS){if(rule.from!==null&&rule.from!==p.weapon)continue;if(Object.entries(rule.requires).every(([key,value])=>typeof value==='boolean'?p[key]===value:p[key]>=value))next=rule.to;}
   if(p.core&&p.options===3)p.fused=true;

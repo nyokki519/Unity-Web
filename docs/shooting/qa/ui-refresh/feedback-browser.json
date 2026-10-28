@@ -1,0 +1,18 @@
+{
+  "actualPickupDelta": true,
+  "cappedRecovery": true,
+  "hpMeter": true,
+  "criticalState": true,
+  "abilityReadiness": true,
+  "overdriveActivated": true,
+  "guideCount": 19,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "smallHeight667": true,
+  "allItemTextures": 19,
+  "reducedMotion": true,
+  "errors": []
+}
