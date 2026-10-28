@@ -1,0 +1,23 @@
+{
+  "workshop": true,
+  "developmentPersisted": true,
+  "keyboard": true,
+  "touchDrag": true,
+  "manualFire": true,
+  "focusToggle": true,
+  "pause": true,
+  "replayExact": true,
+  "replayRewards": false,
+  "controlledBossResult": true,
+  "nextStage": true,
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "achievements": 100,
+  "codex": true,
+  "homeLink": true,
+  "deniedStoragePlayable": true,
+  "errors": []
+}

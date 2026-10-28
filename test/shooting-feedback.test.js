@@ -21,15 +21,15 @@ test('batched pickups retain independent snapshots rather than the final state',
  assert.equal(events[1].before.level,2);assert.equal(events[1].after.level,3);
 });
 
-test('one firepower pickup raises actual shot damage by at least 25 percent',async()=>{
+test('firepower growth returns to the original eleven percent per level',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');
  const damage=boost=>{const g=new Game({weapon:0});if(boost)g.collect('P');shootPlayer(g,1/120);return g.bullets.damage.find((_,i)=>g.bullets.active[i]&&g.bullets.kind[i]===0);};
- assert.ok(damage(true)>=damage(false)*1.249);
+ assert.ok(Math.abs(damage(true)/damage(false)-1.11)<1e-6);
 });
-test('one rapid pickup raises practical sustained firing rate by at least 18 percent',async()=>{
+test('rapid pickup gives a modest eight to thirteen percent sustained rate gain',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');
  const count=boost=>{const g=new Game();if(boost)g.collect('S');for(let i=0;i<1200;i++)shootPlayer(g,1/120);return g.stats.shots;};
- assert.ok(count(true)>=count(false)*1.18);
+ assert.ok(count(true)>=count(false)*1.08);assert.ok(count(true)<=count(false)*1.13);
 });
 test('width supplies visibly add firepower for all twenty weapon types',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');
@@ -40,11 +40,11 @@ test('width supplies visibly add firepower for all twenty weapon types',async()=
 });
 test('first laser and missile supplements are meaningful attacks',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');
- for(const [id,kind] of [['L',4],['M',6]]){const g=new Game();g.collect(id);shootPlayer(g,1/120);let damage=0;for(let i=0;i<g.bullets.capacity;i++)if(g.bullets.active[i]&&g.bullets.kind[i]===kind)damage+=g.bullets.damage[i];assert.ok(damage>=12,id+' damage');assert.ok(g.player.auxCD<=.7);}
+ for(const [id,kind] of [['L',4],['M',6]]){const g=new Game();g.collect(id);shootPlayer(g,1/120);let damage=0;for(let i=0;i<g.bullets.capacity;i++)if(g.bullets.active[i]&&g.bullets.kind[i]===kind)damage+=g.bullets.damage[i];assert.ok(damage>0);assert.ok(damage/g.player.auxCD<=(id==='L'?5:8)/1.2+.001,id+' respects original sustained damage');assert.ok(g.player.auxCD<=.7);}
 });
 
 test('feedback uses actual improvements and never claims healing at full health',()=>{
- const g=new Game();g.collect('P');let e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).detail,/100 → 125%/);
+ const g=new Game();g.collect('P');let e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).detail,/100 → 111%/);
  g.collect('H');e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).detail,/全回復済み/);assert.doesNotMatch(pickupFeedback(e).detail,/→/);
  g.collect('?');e=g.drainEvents().find(e=>e.type==='item');assert.match(pickupFeedback(e).title,/未知核 →/);assert.ok(ITEM_UI[e.applied]);
 });
@@ -55,10 +55,10 @@ test('ability readiness uses actual cost, cooldown and ongoing drive',()=>{
  p.driveTime=5;assert.equal(abilityStatus(g).overdrive.ready,false);
 });
 
-test('large-caliber supply changes both real projectile radius and damage',async()=>{
+test('large-caliber supply increases real projectile radius without a multiplicative damage bonus',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');const a=new Game(),b=new Game();b.collect('A');shootPlayer(a,1/120);shootPlayer(b,1/120);
  const first=g=>[...g.bullets.active].findIndex((v,i)=>v&&g.bullets.kind[i]===0),i=first(a),j=first(b);
- assert.ok(b.bullets.r[j]>a.bullets.r[i]);assert.ok(b.bullets.damage[j]>=a.bullets.damage[i]*1.19);
+ assert.ok(b.bullets.r[j]>a.bullets.r[i]);assert.equal(b.bullets.damage[j],a.bullets.damage[i]);
 });
 test('ricochet supply emits real wall-reflecting supplemental projectiles',async()=>{
  const {shootPlayer}=await import('../public/shooting/combat.js');const g=new Game();g.collect('Q');shootPlayer(g,1/120);

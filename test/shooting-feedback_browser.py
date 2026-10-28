@@ -12,7 +12,7 @@ with sync_playwright() as p:
  page.evaluate('''()=>{const g=SHOOTING.game;g.enemies=[];g.bullets.clear();g.waveCD=999;g.midSpawned=g.bossSpawned=true;g.player.invincible=999;g.player.hp=2;g.collect('H');}''')
  page.wait_for_function("()=>document.querySelector('#pickup-feed').textContent.includes('耐久 2 → 3')")
  assert page.locator('[role=meter]').get_attribute('aria-valuenow')=='3'
- page.evaluate("SHOOTING.game.collect('P')");page.wait_for_function("()=>document.querySelector('#pickup-feed').textContent.includes('威力 100 → 125%')")
+ page.evaluate("SHOOTING.game.collect('P')");page.wait_for_function("()=>document.querySelector('#pickup-feed').textContent.includes('威力 100 → 111%')")
  page.screenshot(path=str(out/'pickup-firepower-390.png'))
  page.evaluate("SHOOTING.game.player.hp=SHOOTING.game.player.maxHp;SHOOTING.game.collect('H')");page.wait_for_function("()=>document.querySelector('#pickup-feed').textContent.includes('全回復済み')")
  page.evaluate("SHOOTING.game.player.energy=0;SHOOTING.game.player.drive=100;SHOOTING.game.player.bombs=0;SHOOTING.game.player.specialCD=0")

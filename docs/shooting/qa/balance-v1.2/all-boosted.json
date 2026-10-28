@@ -1,0 +1,482 @@
+[
+  {
+    "weapon": 0,
+    "build": "base",
+    "dps": 60.05,
+    "peakBullets": 6
+  },
+  {
+    "weapon": 0,
+    "build": "mid",
+    "dps": 422.85,
+    "peakBullets": 22
+  },
+  {
+    "weapon": 0,
+    "build": "full",
+    "dps": 1657.2,
+    "peakBullets": 51
+  },
+  {
+    "weapon": 0,
+    "build": "all",
+    "dps": 2649.29,
+    "peakBullets": 95
+  },
+  {
+    "weapon": 1,
+    "build": "base",
+    "dps": 72.05,
+    "peakBullets": 9
+  },
+  {
+    "weapon": 1,
+    "build": "mid",
+    "dps": 209.35,
+    "peakBullets": 52
+  },
+  {
+    "weapon": 1,
+    "build": "full",
+    "dps": 436.2,
+    "peakBullets": 184
+  },
+  {
+    "weapon": 1,
+    "build": "all",
+    "dps": 695.69,
+    "peakBullets": 227
+  },
+  {
+    "weapon": 2,
+    "build": "base",
+    "dps": 49.4,
+    "peakBullets": 23
+  },
+  {
+    "weapon": 2,
+    "build": "mid",
+    "dps": 159.56,
+    "peakBullets": 57
+  },
+  {
+    "weapon": 2,
+    "build": "full",
+    "dps": 318.23,
+    "peakBullets": 117
+  },
+  {
+    "weapon": 2,
+    "build": "all",
+    "dps": 506.93,
+    "peakBullets": 159
+  },
+  {
+    "weapon": 3,
+    "build": "base",
+    "dps": 120.35,
+    "peakBullets": 8
+  },
+  {
+    "weapon": 3,
+    "build": "mid",
+    "dps": 337.22,
+    "peakBullets": 23
+  },
+  {
+    "weapon": 3,
+    "build": "full",
+    "dps": 697.64,
+    "peakBullets": 54
+  },
+  {
+    "weapon": 3,
+    "build": "all",
+    "dps": 1114,
+    "peakBullets": 98
+  },
+  {
+    "weapon": 4,
+    "build": "base",
+    "dps": 72.75,
+    "peakBullets": 8
+  },
+  {
+    "weapon": 4,
+    "build": "mid",
+    "dps": 210.36,
+    "peakBullets": 38
+  },
+  {
+    "weapon": 4,
+    "build": "full",
+    "dps": 371.75,
+    "peakBullets": 115
+  },
+  {
+    "weapon": 4,
+    "build": "all",
+    "dps": 592.56,
+    "peakBullets": 159
+  },
+  {
+    "weapon": 5,
+    "build": "base",
+    "dps": 101.45,
+    "peakBullets": 3
+  },
+  {
+    "weapon": 5,
+    "build": "mid",
+    "dps": 295.1,
+    "peakBullets": 14
+  },
+  {
+    "weapon": 5,
+    "build": "full",
+    "dps": 624.85,
+    "peakBullets": 34
+  },
+  {
+    "weapon": 5,
+    "build": "all",
+    "dps": 997.53,
+    "peakBullets": 78
+  },
+  {
+    "weapon": 6,
+    "build": "base",
+    "dps": 61.25,
+    "peakBullets": 10
+  },
+  {
+    "weapon": 6,
+    "build": "mid",
+    "dps": 187.65,
+    "peakBullets": 39
+  },
+  {
+    "weapon": 6,
+    "build": "full",
+    "dps": 359.48,
+    "peakBullets": 121
+  },
+  {
+    "weapon": 6,
+    "build": "all",
+    "dps": 572.93,
+    "peakBullets": 165
+  },
+  {
+    "weapon": 7,
+    "build": "base",
+    "dps": 54.41,
+    "peakBullets": 16
+  },
+  {
+    "weapon": 7,
+    "build": "mid",
+    "dps": 172.11,
+    "peakBullets": 36
+  },
+  {
+    "weapon": 7,
+    "build": "full",
+    "dps": 346.11,
+    "peakBullets": 89
+  },
+  {
+    "weapon": 7,
+    "build": "all",
+    "dps": 551.55,
+    "peakBullets": 133
+  },
+  {
+    "weapon": 8,
+    "build": "base",
+    "dps": 55.55,
+    "peakBullets": 9
+  },
+  {
+    "weapon": 8,
+    "build": "mid",
+    "dps": 177.68,
+    "peakBullets": 37
+  },
+  {
+    "weapon": 8,
+    "build": "full",
+    "dps": 357.82,
+    "peakBullets": 111
+  },
+  {
+    "weapon": 8,
+    "build": "all",
+    "dps": 570.29,
+    "peakBullets": 155
+  },
+  {
+    "weapon": 9,
+    "build": "base",
+    "dps": 34.33,
+    "peakBullets": 2
+  },
+  {
+    "weapon": 9,
+    "build": "mid",
+    "dps": 125.11,
+    "peakBullets": 17
+  },
+  {
+    "weapon": 9,
+    "build": "full",
+    "dps": 231.55,
+    "peakBullets": 51
+  },
+  {
+    "weapon": 9,
+    "build": "all",
+    "dps": 368.24,
+    "peakBullets": 95
+  },
+  {
+    "weapon": 10,
+    "build": "base",
+    "dps": 46.85,
+    "peakBullets": 4
+  },
+  {
+    "weapon": 10,
+    "build": "mid",
+    "dps": 157.41,
+    "peakBullets": 22
+  },
+  {
+    "weapon": 10,
+    "build": "full",
+    "dps": 304.53,
+    "peakBullets": 63
+  },
+  {
+    "weapon": 10,
+    "build": "all",
+    "dps": 485.02,
+    "peakBullets": 107
+  },
+  {
+    "weapon": 11,
+    "build": "base",
+    "dps": 13.25,
+    "peakBullets": 16
+  },
+  {
+    "weapon": 11,
+    "build": "mid",
+    "dps": 77.94,
+    "peakBullets": 45
+  },
+  {
+    "weapon": 11,
+    "build": "full",
+    "dps": 146.58,
+    "peakBullets": 111
+  },
+  {
+    "weapon": 11,
+    "build": "all",
+    "dps": 232.3,
+    "peakBullets": 155
+  },
+  {
+    "weapon": 12,
+    "build": "base",
+    "dps": 62.65,
+    "peakBullets": 6
+  },
+  {
+    "weapon": 12,
+    "build": "mid",
+    "dps": 199.55,
+    "peakBullets": 25
+  },
+  {
+    "weapon": 12,
+    "build": "full",
+    "dps": 393.44,
+    "peakBullets": 65
+  },
+  {
+    "weapon": 12,
+    "build": "all",
+    "dps": 627.27,
+    "peakBullets": 109
+  },
+  {
+    "weapon": 13,
+    "build": "base",
+    "dps": 85.25,
+    "peakBullets": 17
+  },
+  {
+    "weapon": 13,
+    "build": "mid",
+    "dps": 252.75,
+    "peakBullets": 42
+  },
+  {
+    "weapon": 13,
+    "build": "full",
+    "dps": 515.4,
+    "peakBullets": 103
+  },
+  {
+    "weapon": 13,
+    "build": "all",
+    "dps": 824.17,
+    "peakBullets": 147
+  },
+  {
+    "weapon": 14,
+    "build": "base",
+    "dps": 67.83,
+    "peakBullets": 1
+  },
+  {
+    "weapon": 14,
+    "build": "mid",
+    "dps": 274.9,
+    "peakBullets": 8
+  },
+  {
+    "weapon": 14,
+    "build": "full",
+    "dps": 719.72,
+    "peakBullets": 23
+  },
+  {
+    "weapon": 14,
+    "build": "all",
+    "dps": 1214.75,
+    "peakBullets": 60
+  },
+  {
+    "weapon": 15,
+    "build": "base",
+    "dps": 39.5,
+    "peakBullets": 5
+  },
+  {
+    "weapon": 15,
+    "build": "mid",
+    "dps": 140.14,
+    "peakBullets": 27
+  },
+  {
+    "weapon": 15,
+    "build": "full",
+    "dps": 241.34,
+    "peakBullets": 87
+  },
+  {
+    "weapon": 15,
+    "build": "all",
+    "dps": 383.92,
+    "peakBullets": 130
+  },
+  {
+    "weapon": 16,
+    "build": "base",
+    "dps": 60.29,
+    "peakBullets": 14
+  },
+  {
+    "weapon": 16,
+    "build": "mid",
+    "dps": 155.21,
+    "peakBullets": 36
+  },
+  {
+    "weapon": 16,
+    "build": "full",
+    "dps": 242.93,
+    "peakBullets": 98
+  },
+  {
+    "weapon": 16,
+    "build": "all",
+    "dps": 386.46,
+    "peakBullets": 141
+  },
+  {
+    "weapon": 17,
+    "build": "base",
+    "dps": 130.25,
+    "peakBullets": 17
+  },
+  {
+    "weapon": 17,
+    "build": "mid",
+    "dps": 332.31,
+    "peakBullets": 54
+  },
+  {
+    "weapon": 17,
+    "build": "full",
+    "dps": 559.06,
+    "peakBullets": 163
+  },
+  {
+    "weapon": 17,
+    "build": "all",
+    "dps": 892.26,
+    "peakBullets": 205
+  },
+  {
+    "weapon": 18,
+    "build": "base",
+    "dps": 46.51,
+    "peakBullets": 80
+  },
+  {
+    "weapon": 18,
+    "build": "mid",
+    "dps": 149.25,
+    "peakBullets": 142
+  },
+  {
+    "weapon": 18,
+    "build": "full",
+    "dps": 282.21,
+    "peakBullets": 289
+  },
+  {
+    "weapon": 18,
+    "build": "all",
+    "dps": 449.91,
+    "peakBullets": 331
+  },
+  {
+    "weapon": 19,
+    "build": "base",
+    "dps": 105.86,
+    "peakBullets": 14
+  },
+  {
+    "weapon": 19,
+    "build": "mid",
+    "dps": 300.37,
+    "peakBullets": 34
+  },
+  {
+    "weapon": 19,
+    "build": "full",
+    "dps": 642.95,
+    "peakBullets": 75
+  },
+  {
+    "weapon": 19,
+    "build": "all",
+    "dps": 1026.48,
+    "peakBullets": 119
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "weapon": 0,
+    "build": "base",
+    "seconds": 30.15,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "mid",
+    "seconds": 7.025,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 0,
+    "build": "all",
+    "seconds": 3.092,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "base",
+    "seconds": 25.067,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "mid",
+    "seconds": 15.808,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 1,
+    "build": "all",
+    "seconds": 9.892,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 0
+  },
+  {
+    "weapon": 2,
+    "build": "base",
+    "seconds": 46.683,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "mid",
+    "seconds": 23.375,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  },
+  {
+    "weapon": 2,
+    "build": "all",
+    "seconds": 13.4,
+    "clear": true,
+    "remainingHp": 0,
+    "parts": 2
+  }
+]
