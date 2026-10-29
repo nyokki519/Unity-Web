@@ -1,0 +1,15 @@
+✔ independent detailed denomination assets and injection-safe custom chips (24.584701ms)
+✔ audio unlock, channels, contact cap, pause/resume and disposal (2.313089ms)
+✔ salon chip-first placement is editable and undo does not spend wallet (17.269581ms)
+✔ salon limits and whole chip amount cannot overdraw or exceed tie cap (2.586612ms)
+✔ save failure at start or confirm retains last committed wallet (4.865561ms)
+✔ repeat after paid round and interrupted rebet keeps accounting idempotent (4.004963ms)
+✔ existing paid session restores exact wallet and table (3.381413ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.130337

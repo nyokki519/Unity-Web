@@ -1,0 +1,3180 @@
+[
+  {
+    "step": "01-title",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          86,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "help",
+        "name": "バカラについて",
+        "disabled": false,
+        "rect": [
+          6,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "start",
+        "name": "スタート",
+        "disabled": false,
+        "rect": [
+          220,
+          380,
+          200,
+          79.984375
+        ],
+        "physical": [
+          121.875,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "record",
+        "name": "成績",
+        "disabled": false,
+        "rect": [
+          215,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "local",
+        "name": "ローカル保存",
+        "disabled": false,
+        "rect": [
+          90,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "menu",
+        "name": "メニュー",
+        "disabled": false,
+        "rect": [
+          475,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          345,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      }
+    ],
+    "phase": null,
+    "balance": null,
+    "bets": null
+  },
+  {
+    "step": "02-betting",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          36.438720703125,
+          36.438720703125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          90.1875,
+          41.4375
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5000000,
+    "bets": {}
+  },
+  {
+    "step": "03-selected",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          36.438720703125,
+          36.438720703125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          90.1875,
+          41.4375
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5000000,
+    "bets": {}
+  },
+  {
+    "step": "04-wager",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": false,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          36.438720703125,
+          36.438720703125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": false,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          90.1875,
+          41.4375
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5000000,
+    "bets": {
+      "player": 100000
+    }
+  },
+  {
+    "step": "05-min-clears",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          36.438720703125,
+          36.438720703125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          90.1875,
+          41.4375
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5000000,
+    "bets": {}
+  },
+  {
+    "step": "06-deal",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": true,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": true,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": true,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": true,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": true,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": true,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": true,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": true,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": true,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": true,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": true,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": true,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": true,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      }
+    ],
+    "phase": "dealing",
+    "balance": 4990000,
+    "bets": {}
+  },
+  {
+    "step": "07-result",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": true,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": true,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": true,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": true,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": true,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": true,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": true,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": true,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": true,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": true,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": true,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": true,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": true,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": null,
+        "name": "はい",
+        "disabled": false,
+        "rect": [
+          73.515625,
+          741,
+          242,
+          68
+        ],
+        "physical": [
+          147.46875,
+          41.4375
+        ]
+      },
+      {
+        "key": null,
+        "name": "いいえ",
+        "disabled": false,
+        "rect": [
+          323.515625,
+          741,
+          242,
+          68
+        ],
+        "physical": [
+          147.46875,
+          41.4375
+        ]
+      }
+    ],
+    "phase": "result",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "08-home-dialog",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          121.875,
+          121.875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          27.421875,
+          28.640625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          35.34375,
+          21.9375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          36.438720703125,
+          36.438720703125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          90.1875,
+          41.4375
+        ]
+      },
+      {
+        "key": null,
+        "name": "Yes",
+        "disabled": false,
+        "rect": [
+          290.53125,
+          726.5,
+          73.96875,
+          47
+        ],
+        "physical": [
+          45.07470703125,
+          28.640625
+        ]
+      },
+      {
+        "key": null,
+        "name": "No",
+        "disabled": false,
+        "rect": [
+          372.5,
+          726.5,
+          69.5,
+          47
+        ],
+        "physical": [
+          42.3515625,
+          28.640625
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "09-menu",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          86,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "help",
+        "name": "バカラについて",
+        "disabled": false,
+        "rect": [
+          6,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "start",
+        "name": "スタート",
+        "disabled": false,
+        "rect": [
+          220,
+          380,
+          200,
+          79.984375
+        ],
+        "physical": [
+          121.875,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "record",
+        "name": "成績",
+        "disabled": false,
+        "rect": [
+          215,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "local",
+        "name": "ローカル保存",
+        "disabled": false,
+        "rect": [
+          90,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "menu",
+        "name": "メニュー",
+        "disabled": false,
+        "rect": [
+          475,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          345,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "home",
+        "name": "トップページ",
+        "disabled": false,
+        "rect": [
+          115,
+          511.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": "record",
+        "name": "成績",
+        "disabled": false,
+        "rect": [
+          115,
+          578.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": "roads",
+        "name": "罫線",
+        "disabled": false,
+        "rect": [
+          115,
+          645.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": "help",
+        "name": "遊び方",
+        "disabled": false,
+        "rect": [
+          115,
+          712.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          115,
+          779.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": "local",
+        "name": "ローカル保存",
+        "disabled": false,
+        "rect": [
+          115,
+          846.5,
+          452,
+          47
+        ],
+        "physical": [
+          275.4375,
+          28.640625
+        ]
+      },
+      {
+        "key": null,
+        "name": "OK",
+        "disabled": false,
+        "rect": [
+          445.875,
+          940.5,
+          71.125,
+          47
+        ],
+        "physical": [
+          43.341796875,
+          28.640625
+        ]
+      }
+    ],
+    "phase": "ended",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "10-roads",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          86,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "help",
+        "name": "バカラについて",
+        "disabled": false,
+        "rect": [
+          6,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "start",
+        "name": "スタート",
+        "disabled": false,
+        "rect": [
+          220,
+          380,
+          200,
+          79.984375
+        ],
+        "physical": [
+          121.875,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "record",
+        "name": "成績",
+        "disabled": false,
+        "rect": [
+          215,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "local",
+        "name": "ローカル保存",
+        "disabled": false,
+        "rect": [
+          90,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "menu",
+        "name": "メニュー",
+        "disabled": false,
+        "rect": [
+          475,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          345,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": null,
+        "name": "OK",
+        "disabled": false,
+        "rect": [
+          505.875,
+          939.28125,
+          71.125,
+          47
+        ],
+        "physical": [
+          43.341796875,
+          28.640625
+        ]
+      }
+    ],
+    "phase": "ended",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "11-settings",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.609375
+    },
+    "buttons": [
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          86,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "help",
+        "name": "バカラについて",
+        "disabled": false,
+        "rect": [
+          6,
+          6,
+          60,
+          60
+        ],
+        "physical": [
+          36.5625,
+          36.5625
+        ]
+      },
+      {
+        "key": "start",
+        "name": "スタート",
+        "disabled": false,
+        "rect": [
+          220,
+          380,
+          200,
+          79.984375
+        ],
+        "physical": [
+          121.875,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "record",
+        "name": "成績",
+        "disabled": false,
+        "rect": [
+          215,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "local",
+        "name": "ローカル保存",
+        "disabled": false,
+        "rect": [
+          90,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "menu",
+        "name": "メニュー",
+        "disabled": false,
+        "rect": [
+          475,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          345,
+          560,
+          80,
+          79.984375
+        ],
+        "physical": [
+          48.75,
+          48.740478515625
+        ]
+      },
+      {
+        "key": null,
+        "name": "OK",
+        "disabled": false,
+        "rect": [
+          370.875,
+          855.5,
+          71.125,
+          47
+        ],
+        "physical": [
+          43.341796875,
+          28.640625
+        ]
+      }
+    ],
+    "phase": "ended",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "12-betting-375",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.5859375
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          117.1875,
+          117.1875
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          117.1875,
+          117.1875
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          117.1875,
+          117.1875
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          35.15625,
+          35.15625
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          35.15625,
+          35.15625
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          35.15625,
+          35.15625
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          26.3671875,
+          27.5390625
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          33.984375,
+          21.09375
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          33.984375,
+          21.09375
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          35.0372314453125,
+          35.0372314453125
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          86.71875,
+          39.84375
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "12-betting-414",
+    "url": "https://unity-mix.onrender.com/baccarat/index.html",
+    "viewport": {
+      "width": 640,
+      "height": 1386,
+      "scale": 0.6468750238418579
+    },
+    "buttons": [
+      {
+        "key": "bet:banker",
+        "name": "BANKER",
+        "disabled": false,
+        "rect": [
+          425,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          129.37500476837158,
+          129.37500476837158
+        ]
+      },
+      {
+        "key": "bet:tie",
+        "name": "TIE",
+        "disabled": false,
+        "rect": [
+          220,
+          351,
+          200,
+          200
+        ],
+        "physical": [
+          129.37500476837158,
+          129.37500476837158
+        ]
+      },
+      {
+        "key": "bet:player",
+        "name": "PLAYER",
+        "disabled": false,
+        "rect": [
+          15,
+          268,
+          200,
+          200
+        ],
+        "physical": [
+          129.37500476837158,
+          129.37500476837158
+        ]
+      },
+      {
+        "key": "home",
+        "name": "タイトルへ",
+        "disabled": false,
+        "rect": [
+          5,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          38.812501430511475,
+          38.812501430511475
+        ]
+      },
+      {
+        "key": "sound",
+        "name": "サウンド設定",
+        "disabled": false,
+        "rect": [
+          73,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          38.812501430511475,
+          38.812501430511475
+        ]
+      },
+      {
+        "key": "exchange",
+        "name": "カジノコイン",
+        "disabled": false,
+        "rect": [
+          141,
+          12,
+          60,
+          60
+        ],
+        "physical": [
+          38.812501430511475,
+          38.812501430511475
+        ]
+      },
+      {
+        "key": "chip:1",
+        "name": "1チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:10",
+        "name": "10チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:50",
+        "name": "50チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:100",
+        "name": "100チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          568,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:500",
+        "name": "500チップ",
+        "disabled": false,
+        "rect": [
+          300,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:1000",
+        "name": "1000チップ",
+        "disabled": false,
+        "rect": [
+          365,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:5000",
+        "name": "5000チップ",
+        "disabled": false,
+        "rect": [
+          430,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "chip:10000",
+        "name": "10000チップ",
+        "disabled": false,
+        "rect": [
+          495,
+          630.984375,
+          45,
+          47
+        ],
+        "physical": [
+          29.109376072883606,
+          30.403126120567322
+        ]
+      },
+      {
+        "key": "min",
+        "name": "Min. 選択中の賭け先を解除",
+        "disabled": false,
+        "rect": [
+          208,
+          632,
+          58,
+          36
+        ],
+        "physical": [
+          37.51875138282776,
+          23.287500858306885
+        ]
+      },
+      {
+        "key": "max",
+        "name": "Max. 選択中の賭け先へ最大ベット",
+        "disabled": false,
+        "rect": [
+          208,
+          577,
+          58,
+          36
+        ],
+        "physical": [
+          37.51875138282776,
+          23.287500858306885
+        ]
+      },
+      {
+        "key": "clear",
+        "name": "全解除",
+        "disabled": true,
+        "rect": [
+          564.09375,
+          591.09375,
+          59.796875,
+          59.796875
+        ],
+        "physical": [
+          38.6811049412936,
+          38.6811049412936
+        ]
+      },
+      {
+        "key": "deal",
+        "name": "DEAL",
+        "disabled": true,
+        "rect": [
+          477,
+          479,
+          148,
+          68
+        ],
+        "physical": [
+          95.73750352859497,
+          43.98750162124634
+        ]
+      }
+    ],
+    "phase": "betting",
+    "balance": 5010000,
+    "bets": {}
+  },
+  {
+    "step": "13-desktop",
+    "canvas": {
+      "x": 640,
+      "y": 0,
+      "width": 640,
+      "height": 960
+    }
+  }
+]

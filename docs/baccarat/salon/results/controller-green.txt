@@ -1,0 +1,13 @@
+✔ salon chip-first placement is editable and undo does not spend wallet (11.455738ms)
+✔ salon limits and whole chip amount cannot overdraw or exceed tie cap (1.731063ms)
+✔ save failure at start or confirm retains last committed wallet (7.391488ms)
+✔ repeat after paid round and interrupted rebet keeps accounting idempotent (3.693905ms)
+✔ existing paid session restores exact wallet and table (2.986472ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.670121

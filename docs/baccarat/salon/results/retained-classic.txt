@@ -1,0 +1,2 @@
+Retained classic test/baccarat-classic_browser.py
+source-style betting, third, repeat, reload and viewports passed

@@ -1,0 +1,48 @@
+[
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "mobileEmulation": true,
+    "idleRafIntervals": {
+      "count": 91,
+      "medianMs": 16.7,
+      "p95Ms": 16.7,
+      "maxMs": 16.8
+    },
+    "curlCpuSubmit": {
+      "count": 44,
+      "medianMs": 1.0,
+      "p95Ms": 1.6,
+      "maxMs": 2.7
+    },
+    "textureWidth": 720,
+    "textureHeight": 1000,
+    "heap": 13997239,
+    "limit": "Headless Chromium/software GPU, no recording/concurrent benchmarks. rAF interval is not measured compositor FPS. Curl timing includes CPU/WebGL submission, not GPU completion. Physical iPhone/Safari unverified."
+  },
+  {
+    "viewport": [
+      1920,
+      1080
+    ],
+    "mobileEmulation": false,
+    "idleRafIntervals": {
+      "count": 90,
+      "medianMs": 16.7,
+      "p95Ms": 16.7,
+      "maxMs": 16.8
+    },
+    "curlCpuSubmit": {
+      "count": 44,
+      "medianMs": 1.0,
+      "p95Ms": 1.8,
+      "maxMs": 2.6
+    },
+    "textureWidth": 720,
+    "textureHeight": 1000,
+    "heap": 14475481,
+    "limit": "Headless Chromium/software GPU, no recording/concurrent benchmarks. rAF interval is not measured compositor FPS. Curl timing includes CPU/WebGL submission, not GPU completion. Physical iPhone/Safari unverified."
+  }
+]

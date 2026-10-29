@@ -1,0 +1,100 @@
+✖ salon chip-first placement is editable and undo does not spend wallet (2.08327ms)
+✖ salon limits and whole chip amount cannot overdraw or exceed tie cap (0.540196ms)
+✖ save failure at start or confirm retains last committed wallet (0.593575ms)
+✖ repeat after paid round and interrupted rebet keeps accounting idempotent (2.046545ms)
+✖ existing paid session restores exact wallet and table (0.489882ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.714961
+
+✖ failing tests:
+
+test at test/baccarat-salon-controller.test.js:5:1
+✖ salon chip-first placement is editable and undo does not spend wallet (2.08327ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-controller.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js'
+  }
+
+test at test/baccarat-salon-controller.test.js:6:1
+✖ salon limits and whole chip amount cannot overdraw or exceed tie cap (0.540196ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-controller.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js'
+  }
+
+test at test/baccarat-salon-controller.test.js:7:1
+✖ save failure at start or confirm retains last committed wallet (0.593575ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-controller.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js'
+  }
+
+test at test/baccarat-salon-controller.test.js:8:1
+✖ repeat after paid round and interrupted rebet keeps accounting idempotent (2.046545ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-controller.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js'
+  }
+
+test at test/baccarat-salon-controller.test.js:9:1
+✖ existing paid session restores exact wallet and table (0.489882ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-controller.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-controller.js'
+  }

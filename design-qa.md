@@ -1,28 +1,22 @@
-# Baccarat faithful reproduction — design QA
+# Unity Baccarat original salon — design QA
 
-Scope: the playable 640×960 game canvas and observed dialogs at playingcards.jp/m/gamble/baccarat/. User-authorized source materials. Unity community card faces/back intentionally replaced; remote portal/account/purchase excluded. This is not a claim that the whole site is identical.
+Current target is the user-approved audit at docs/baccarat/audits/2026-10-29-original-redesign/README.md, not source pixel matching. Scope is the actual playable title, table, direct squeeze, betting, inline receipt, history and settings. Old faithful reproduction evidence remains under docs/baccarat/faithful/; its fidelity metrics no longer describe the default page.
 
-Evidence: docs/baccarat/faithful/comparison/pair-{betting,selected,wager,deal,reveal,result,settlement,record,max,min,clear}.png; aligned-comparison.mp4 and separate real-audio clips. Desktop capture800×1300/DPR1; game origin80,206. Local host-only outside-game margin206 aligns portal placement. Canonical comparison excludes portal chrome. Physical viewport captures375/390/414px are supplied separately; mobile layout viewport640 is deliberate reference behavior.
+Actual new UI screenshots and sound-on round recording: docs/baccarat/salon/. Inspected title-390, squeeze-390, result-390 plus independent mobile/desktop captures. The recording uses an explicit legal known-shoe QA fixture; no mocked images/sounds/trajectories. Source-style title, yellow circles, PNG controls and OS-themed dialogs have been replaced with original navy/emerald/ivory/brass, detailed community cards and chips, woven felt, consistent buttons and native themed panels.
 
-## Findings and resolutions
+## Findings resolved
 
-|Severity|Observed issue|Resolution / evidence|
-|---|---|---|
-|P1|Previous VESPER layout and cinematic squeeze diverged from source|Default replaced with actual source layout, imagery, coordinates and face-up sliding deal. Old version separately retained|
-|P1|Canvas fallback produced lighter betting fields|Retained source WebGL SCREEN blend; fields match source RGB75,131,38|
-|P2|Instruction copy duplicated text already baked into background|Removed overlay except actual error messages|
-|P2|Dialog dimensions, title close control and copy differed|Source jQueryUI theme, body text, auto width538×262 and explicit actions; title X hidden; keyboard action focus maintained|
-|P2|Unity card substrate/outline and raster scale differed|White stock, black border, rounded corners, source144×200 atlas and86.4×120 displayed size; original community artwork retained|
-|P2|Flying cards could cover fixed HUD|Separate card layer below fixed HUD matches source ordering|
-|P2|Oversized52SVG textures|One local52-face atlas, theoretical RGBA reduction72.8→7.5MB|
-|P2|Failed rebet saves or missing dialog library could strand round|Fresh independent review, failing tests then transactional recovery and preflight validation. Browser regressions green|
+- Tiny fixed640px UI → responsive native layout, main44px+ targets, mobile scroll/safe-area, desktop record sidebar.
+- Min meaning wrong → explicit one-step undo / clear / previous / maximum.
+- Card tiny at53px → actual86px overlapping mobile cards, preserving index visibility and each hand's area; root fixed initial inherited1/3 maxwidth constraint.
+- No direct reveal → pointer-controlled segmented3D sheet, face/back and curl shading,720×1000 active texture, fallback, keyboard, skip.
+- Title ghost artwork/blank gap → visible original card/chip vignette, clean transparent community logo, consistent game/title palette.
+- Every-round forced dialog → inline actual winner, principal/profit/returned/net and next/rebet controls.
+- Record unavailable while playing → header and squeeze actions open history/settings, full focus handling.
+- SAVE recovery edge cases → same explicit transactional commit/retry path; independent QA catches real failure states.
 
-Inspected result/settlement pairs and390px viewport directly. Fonts, chip buttons, table texture, colors and static geometry agree in no-card states. Three no-card states have0 mean absolute channel error outside the sole variable name mask; do not extrapolate to dynamic frames. Unity faces are visibly different by design. Dialog hover/focus styling depends on current pointer/keyboard state. No new decorative effects or invented BGM added.
+Independent review found modal Escape/Tab captured by squeeze and nested retry success hiding a repeated failure; both fixed with dedicated regression. Async retry also clears warning only after successful settlement. No material open findings from the review.
 
-## Validation / limits
+## Evidence limits
 
-413 Node tests passed; browser touch/keyboard, third card, accounting, storage failure recovery, repeated inputs, interrupted/reloaded rounds, source controls, other games and retained VESPER passed. Actual evidence/logs: docs/baccarat/faithful/results/.
-
-Recorded initial-four-card timing differs by40.2ms and result timing by176.3ms under recording; no exact dynamic identity claim. Actual render21.42fps at390px and21.33fps at1920px in software-GPU Chromium. Source cap30 preserved, performance remains a limitation. Not tested on physical iPhone/Safari. Same semantics, legal hand and nominal tween timings are used; source network callbacks are not reproduced.
-
-Expected retained differences: local profile/menu instead of remote account/purchase/portal;8deck and cent-exact95% payout instead of source per-hand52deck/whole-chip floor. These financial safeguards remain documented. Scope result: compared canvas/static source reproduction verified, remaining differences explicitly disclosed; no assertion of commercial readiness or perfect site-wide fidelity.
+Node420 green,14 independent browser groups green, existing protected-game regressions green. Exact commands and logs in docs/baccarat/salon/results. Browser375/390/414/1440 touch geometry plus1920 performance; all Chromium, not physical iPhone. Idle rAF16.7ms and curlCPU submit1.0ms median are measured, not a promise of60fps on devices. Colors/typography/reading order and actual pointer/reveal sequence were visually checked; screen-reader compliance and speaker listening remain unverified. No claim of commercial/perfect quality solely from tests.

@@ -1,3 +1,7 @@
+# オリジナルテーブル追加素材
+
+現在の既定UIは salon-assets/ の独自SVG、既存Unity専用カード、Three.js(MIT)、Cormorant Garamond(OFL)とオリジナルWebAudioを使用します。参考サイトの画像/音/フォントは旧画面のみで利用。[詳細](salon/README.md)。
+
 # 最新版の素材
 
 参考準拠版の元画像・音・フォント・描画ライブラリと許諾記録は [reference/NOTICE.md](../../public/baccarat/reference/NOTICE.md) と同ディレクトリのmanifestを参照。以下は保持したVESPER用オリジナル素材の記録です。

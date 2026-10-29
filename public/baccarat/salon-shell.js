@@ -1,0 +1,36 @@
+import { chipArt } from './salon-art.js';
+
+const button = (action, text, cls = '') => `<button type="button" data-action="${action}" class="${cls}">${text}</button>`;
+const chips = [1,10,100,500,1000,5000];
+
+/** Pure presentation. All game state and event handling belong to the controller. */
+export function createSalonShell(root) {
+  root.innerHTML = `
+    <div class="salon-app">
+      <section class="salon-title" aria-labelledby="salon-title-heading">
+        <header class="salon-brand"><img src="/baccarat/salon-assets/community-mark.svg" alt="Unity community" width="48" height="48"><span>UNITY<span class="salon-brand-sub">THE COMMUNITY TABLE</span></span></header>
+        <div class="salon-title-layout">
+          <div class="salon-title-copy"><p class="salon-eyebrow">A SEAT AT YOUR OWN TABLE</p><h1 id="salon-title-heading">Baccarat<span>ひと息、ひと勝負。</span></h1><p class="salon-intro">いつもの仲間と、少し特別な時間を。<br>カードをめくる、その瞬間まで楽しもう。</p><div class="salon-title-actions">${button('start','テーブルにつく <span aria-hidden="true">↗</span>','salon-primary')}${button('resume','前のゲームを続ける','salon-secondary')}${button('new-session','新しいセッション','salon-text-button')}</div><p class="salon-play-note">FOR THE COMMUNITY · 仮想チップで楽しむゲーム</p></div>
+          <div class="salon-title-art" aria-hidden="true"><div class="salon-art-ring"></div><span class="salon-art-caption">UNITY PRIVATE TABLE<br><b>BACCARAT</b></span><img class="salon-preview-card salon-preview-card-back" src="/baccarat/salon-assets/title-back.svg" alt=""><img class="salon-preview-card salon-preview-card-face" src="/baccarat/salon-assets/title-ace.svg" alt=""><img class="salon-preview-chip chip-one" src="${chipArt(1000)}" alt=""><img class="salon-preview-chip chip-two" src="${chipArt(100)}" alt=""><span class="salon-art-edition">EST. FOR GOOD COMPANY</span></div>
+        </div><footer class="salon-title-footer"><span>8 DECKS <i>·</i> CLASSIC BACCARAT</span><nav aria-label="ゲーム案内">${button('help','遊び方')}${button('settings','設定')}</nav></footer>
+      </section>
+      <section class="salon-game" hidden aria-label="バカラテーブル">
+        <header class="salon-topbar"><button type="button" class="salon-game-brand" data-action="home" aria-label="タイトルへ"><img src="/baccarat/salon-assets/community-mark.svg" alt="" width="32" height="32"><span>UNITY <small>BACCARAT</small></span></button><nav aria-label="テーブルメニュー">${button('history','履歴')}${button('help','遊び方')}${button('settings','設定')}</nav></header>
+        <div class="salon-game-layout"><main class="salon-main-table"><section class="salon-wallet" aria-label="チップ残高"><div><span>残高</span><strong data-money="balance">—</strong></div><div><span>ベット</span><strong data-money="stake">—</strong></div><div><span>利用可能</span><strong data-money="available">—</strong></div></section>
+        <div class="salon-felt"><div class="salon-table-meta"><span id="salon-status">ベットを選んでください</span><span id="salon-shoe">8 DECK SHOE</span></div><div class="salon-table-heading" aria-hidden="true">UNITY <span>PRIVATE TABLE</span></div>
+          <section class="salon-hands" aria-label="配られたカード">${['player','banker'].map(side=>`<div class="salon-hand" data-side="${side}"><div class="salon-hand-label"><h2>${side.toUpperCase()}</h2><output data-score="${side}" aria-label="${side} 合計">—</output></div><div class="salon-cards"></div></div>`).join('')}</section>
+          <div class="salon-round-line"><p id="salon-round-status">YOUR TABLE. YOUR MOMENT.</p>${button('skip','すべてめくる','salon-skip')}</div>
+          <section id="salon-squeeze" hidden aria-label="カードをめくる"></section>
+          <div class="salon-betting" aria-label="ベット先">${[['player','PLAYER','1 : 1'],['tie','TIE','8 : 1'],['banker','BANKER','0.95 : 1']].map(([side,label,pay])=>`<button type="button" data-action="bet:${side}" class="salon-bet salon-bet-${side}"><span>${label}</span><small>${pay}</small><strong data-bet="${side}">0</strong><span class="salon-bet-hint">タップして置く</span></button>`).join('')}</div>
+          <p class="salon-table-rule">BANKER PAYS 95% <span>·</span> TIE PAYS 8 TO 1</p>
+        </div>
+        <section class="salon-controls" aria-label="ベット操作"><div class="salon-chip-heading"><span>チップを選ぶ</span><span>CHOOSE YOUR STAKE</span></div><div class="salon-chip-tray">${chips.map(value=>`<button type="button" data-action="chip:${value}" class="salon-chip" aria-label="${value.toLocaleString()} チップ" aria-pressed="${value===100?'true':'false'}"><img src="${chipArt(value)}" alt=""><span>${value.toLocaleString()}</span></button>`).join('')}</div><div class="salon-bet-tools">${button('undo','1つ取り消す')}${button('clear','全解除')}${button('repeat','前回のベット')}${button('maximum','最大ベット')}</div><div class="salon-confirm-row"><p id="salon-message" role="status" aria-live="polite">チップを選んで、ベット先に置いてください。</p>${button('confirm','ベットを確定 <span aria-hidden="true">→</span>','salon-primary')}</div></section>
+        <section id="salon-receipt" hidden aria-label="ラウンド結果"><div id="salon-receipt-content"></div><div class="salon-receipt-actions">${button('rebet','同じベットで配札','salon-secondary')}${button('next','ベットを変更 →','salon-primary')}</div></section>
+        </main><aside class="salon-history-aside" aria-label="テーブルの記録"><div class="salon-aside-heading"><span class="salon-eyebrow">THE SESSION</span><h2>テーブルの記録</h2></div><div id="salon-history-preview"><div class="salon-history-empty"><span aria-hidden="true">○ ○ ○</span><p>ここから、物語が始まる。</p><small>ラウンドの結果がここに並びます。</small></div></div>${button('history','すべての履歴を見る ↗','salon-history-link')}<div class="salon-table-note"><span>THE ART OF THE REVEAL</span><p>角に触れて、ゆっくりめくる。<br>急がず、この一枚を楽しもう。</p></div></aside></div>
+        <footer class="salon-game-footer"><span>UNITY COMMUNITY TABLE</span><span>仮想チップ専用</span></footer>
+      </section>
+      <dialog id="salon-panel" aria-labelledby="salon-panel-title"><header><h2 id="salon-panel-title"></h2>${button('close-panel','✕','salon-panel-close')}</header><div id="salon-panel-content"></div></dialog>
+    </div>`;
+  const query = selector => root.querySelector(selector);
+  return { root, title: query('.salon-title'), game: query('.salon-game'), panel: query('#salon-panel'), panelTitle: query('#salon-panel-title'), panelContent: query('#salon-panel-content'), message: query('#salon-message'), receipt: query('#salon-receipt'), receiptContent: query('#salon-receipt-content'), squeeze: query('#salon-squeeze'), status: query('#salon-status'), roundStatus: query('#salon-round-status'), shoe: query('#salon-shoe'), query, queryAll: selector => root.querySelectorAll(selector) };
+}

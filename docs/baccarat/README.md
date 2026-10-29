@@ -1,3 +1,7 @@
+# 現在のバカラ：Unityオリジナルテーブル
+
+既定入口 `/baccarat/index.html` は独自デザイン・直接絞り・チップ先行操作へ更新しました。[実装・画面・動画・検証](salon/README.md)。前の再現版は `/baccarat/classic.html`、VESPERは `/baccarat/vesper.html` に保管しています。以下は過去の段階の記録です。
+
 # Unity バカラ：参考準拠版
 
 最新の既定入口は `/baccarat/index.html`。参考サイトの許諾済み素材と配置を使う版です。[比較・検証記録](faithful/README.md)を参照してください。
