@@ -1,0 +1,12 @@
+RUN test/baccarat-classic_browser.py
+source-style betting, third, repeat, reload and viewports passed
+RUN test/baccarat-classic-review_browser.py
+all four rebet SAVE boundaries recover, no double settlement, missing dialog library blocks entry
+RUN test/baccarat-classic-storage_browser.py
+startup quota reports visible failure without phantom session; denied storage clearly uses memory only
+RUN test/baccarat-classic-lifecycle_browser.py
+save retry, cent commission, interrupted reload, no double pay and failed asset recovery passed
+RUN test/baccarat-classic-modal_browser.py
+mid-deal sound close returns to repeat, home settles once and cancels old callbacks
+RUN test/baccarat-legacy_browser.py
+["Unity MIX create form and event modes", "Chinchiro roll and coin conservation", "Retro shot and 200-credit debit", "Shooting quickstart and actual firing", "Retired mechanical remains410"]
