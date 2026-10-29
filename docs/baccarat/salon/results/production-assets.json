@@ -1,0 +1,1087 @@
+{
+  "base": "https://unity-mix.onrender.com",
+  "checked": 216,
+  "matches": 216,
+  "files": [
+    {
+      "path": "baccarat/art-pass.css",
+      "sha256": "412aca68dd518cfa3b233287ce4069c320b8a6d691087ec8756f120998a44473",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio.js",
+      "sha256": "03e9f834c2b1db332e5718b2b5ea55558cad3d8ff6617d941c239c90a39529f9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/card-curl.js",
+      "sha256": "c94f344d7ad7c95c2ea39f78bbe509a330e8a74d85e693fbe17a301b903cd9e7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/card-data.js",
+      "sha256": "543d3dec791454c92a86035e4fdf23bafc0128843d34cf86d0354b6175599b76",
+      "matches": true
+    },
+    {
+      "path": "baccarat/curl-renderer.js",
+      "sha256": "2a2c66ace9d079103e6fabe0d872a0828b82e8cce24993c82e90f0984ff553d7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/hand-squeeze.js",
+      "sha256": "c722f28f97fc9ec14ce78ab10b1e4da452aaea75a71f84f0e3b678c8e73468e8",
+      "matches": true
+    },
+    {
+      "path": "baccarat/hand-table.css",
+      "sha256": "9da7e2b9e80e103c7b445967b61dc0e1471ea7ef1aebf2f41eb703ce814e79f9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/i18n.js",
+      "sha256": "b69dede3995261efec1d2514aa87e483b9f284af6d4494b102a8c61e9fa4b5db",
+      "matches": true
+    },
+    {
+      "path": "baccarat/index.html",
+      "sha256": "6fe02fb2ace6c7271fed2127332cc83fa5955337c0060e88af8937ddd27b37bf",
+      "matches": true
+    },
+    {
+      "path": "baccarat/main.js",
+      "sha256": "11686d99d76ff6cc637883ef8892a588720083534798ead411d7f9850389b79c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/motion.js",
+      "sha256": "da5b13ed42e0c3a3aa0fbe25b49ffb5263047c82a3530e0751a3e60d598f053d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/roads.js",
+      "sha256": "f2d9e85b0881217e5f180c98655ab24d8e2554f619616fe608915cbd041190b7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/rules.js",
+      "sha256": "54f6a0e55487b3eff447349f5ccad574c5d88cdac88211b59b12a9281798e7ce",
+      "matches": true
+    },
+    {
+      "path": "baccarat/session.js",
+      "sha256": "a5f4e346044a6f27eb11a7749c2e3deb0cde1062e79d835740ef566fb803ccb7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/shoe.js",
+      "sha256": "6c70a6ebef755a2cedb7151985c3eb0fa0daadd4cfb65514cbb31fe075be04c9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/show-i18n.js",
+      "sha256": "8494d2299256fafc687ea5f61f8a0f4744b3fd9ed301c7e1ff5e248caaa96e6f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/show-plan.js",
+      "sha256": "620adba9ae3ff1dae831f656ea49cde18e3081986f3fcd0850a9773f79079cdf",
+      "matches": true
+    },
+    {
+      "path": "baccarat/show-state.js",
+      "sha256": "52e9f9eeace550da750a421cea45e4816ce9d7c4ba0858f6953dd53256b78585",
+      "matches": true
+    },
+    {
+      "path": "baccarat/show-view.js",
+      "sha256": "f5f75306a82394494d087553d92d274c7ee19190b87274673a4f6b8729a272a0",
+      "matches": true
+    },
+    {
+      "path": "baccarat/show.css",
+      "sha256": "6ff0154cd495adb5e97ef15762b13b39dd9a448706b479c7bbac3190616cf528",
+      "matches": true
+    },
+    {
+      "path": "baccarat/storage.js",
+      "sha256": "dba00d4172a79ac61eb9b6d4fa22026d448060794c476e1dd8ce504db869e757",
+      "matches": true
+    },
+    {
+      "path": "baccarat/style.css",
+      "sha256": "df648a2c2d49b0647ab8da934713f4e1e99d229fd84c89bf81f20f0e82833cf7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-cards.json",
+      "sha256": "9bc90e3706e0662ecf89cc0b1ddc0e7a66789605936297e761b710697377bc98",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon.css",
+      "sha256": "2e276714d116e9ab4ac01e893616a672783a2cde03d37ff78bf80cbfd1b9b749",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-squeeze.js",
+      "sha256": "4d917aee0114e3afdd6cb3dd5a317794b9812a3bd3de9ca90a887866f17da5d5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-boot.js",
+      "sha256": "be091cbabb2895dd9b7205d74c6ab55edc53af49db83f67f6ae85e48e294188e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/ceremony.css",
+      "sha256": "7a3ac36814f2e943f18f8bf13dd7e157bdabc45b599a074bc7962533d4988c5b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-records.js",
+      "sha256": "c8fed02f99c69e1215fb5384564e87b90d5fd737eecf60942433e3446445f22a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/card-images.js",
+      "sha256": "566e7bb197af177cf64d45baa65e3ec9877a3d04be510de884bb12e95a32b83e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic.css",
+      "sha256": "fb2c6919bc6a98fcff6c7cfac9f891d95f0692fbffba286c6a151df93b17bd62",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-view.js",
+      "sha256": "910c64fd8d7805cf2c8a36be37f44a7a961d5876fffc97e147f36a17ca0abf7d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-card.js",
+      "sha256": "50b1f7ea5fc0ef7eb46bcfc0f3e1e6a9ec5ae95fe3be900fabd6c0f626cfc114",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-config.js",
+      "sha256": "c3615f8509480d162723764e252b1d50b54eb5b817e3a8cd900e5e64f8b18401",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-controller.js",
+      "sha256": "393abff7cca5a47dce446c8928a61c4c9dbd824795ac3969573664858c8ccc3b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-card.js",
+      "sha256": "c7fb1ddfe128d64796c5e49734a35bd47b6831043b988cf979efbfb5e7e9db9b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-main.js",
+      "sha256": "2320e334d7c40220ac21a3f59567591a003176c51fdb0a9376f37de1cb6e385b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-format.js",
+      "sha256": "025ea3aba3ff12b62c4d02e93497491724a14a95cd8a1c95214ecafb9230e28c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips.js",
+      "sha256": "62f53985aba6749fd33b7e01edf65346d0c1217b50a5e1b6552ec421e20bdedc",
+      "matches": true
+    },
+    {
+      "path": "baccarat/table.css",
+      "sha256": "7bb9935985395ba12d7309d1138b8ad9a4f5069b6f1d46ed451b435e3e6f30b2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-shell.js",
+      "sha256": "d2c029416a0e462576562ea8f1138ed24f5e42a244cbcd018cf2f4bb929a90df",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-round.js",
+      "sha256": "3524e354ce92622a1b1b1a641dfd8fbfffb9dff3a3f9d2c4b8d95db342a3600c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-panels.js",
+      "sha256": "bcf73df52a0b36c777b14be5caef9358b6d26cd4ec1ebdb57a605d9306071bf0",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-cards.png",
+      "sha256": "75c8f3656ff4e29cd5fc713854402c7dfa9d4ce650514b66025cd5fea3df38ac",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-art.js",
+      "sha256": "8767f5e5947c5076281cc593f0b7b78ae4d88cd2d38eb893001be882b8010098",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-round.js",
+      "sha256": "34a02d3bb91804fd3626b27327a3a17b143c8d6212ad3e15ae906d9300699f72",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-panels.css",
+      "sha256": "5a0089d0597d80795836cfe4d59950c64d23670f60e6502c4390cdaead989ba2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic-dialogs.js",
+      "sha256": "891d649fc3b33b4dea4966f25f80e22f7d972ed12071251f4bab1bd0ac154f3c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-main.js",
+      "sha256": "5707ede5df3d4cf54cf7efc60ba9b48367c2a81ebf4bf5820ac623d20560b80f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/table-ui.js",
+      "sha256": "ef3aabeb49ddc19aa244c83df82ccec19314a335147b4127391f7bdfae2e73fb",
+      "matches": true
+    },
+    {
+      "path": "baccarat/classic.html",
+      "sha256": "0ce85c6661e57fa9864129ce135aa860e47351c9d54ce49dc22ec9b41135106f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/vesper.html",
+      "sha256": "850689bf6668516eb3176f046def394cce302f61dfb8536871a7e3bfb6681074",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-squeeze.css",
+      "sha256": "1db34a5d376d3991448cacc412e1f459d297de301aaa0a942b35cae4b9371457",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-controller.js",
+      "sha256": "0f4ec23f50277be2492eab6be846809fc01cb1ad2a6724a3df1fc0a71ff956ea",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-audio.js",
+      "sha256": "b8bcdd3348237daa23c5a7e7edac598ab4f466a5ad3a20aff3f1240772bb99e3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/PROVENANCE.md",
+      "sha256": "14e6cd98034168b5e5520b238340b0b1034e20992a3f2434bb5aece2d5915c32",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/felt.webp",
+      "sha256": "b716a0f1cce9d57ca82a578875718a7566307260414ac2d522232d01f4bee6bc",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/jack.webp",
+      "sha256": "9f6ac370dfd99a3419e1693212a7b2ece3254ec2e04ede6a5a88fb3911e43675",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/king.webp",
+      "sha256": "4ac60f6cb1666ffb8942bd68fbaa8f9850e77e2ff3ce46d1aece9c2776a92811",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/leather.webp",
+      "sha256": "177214e4c47de88bcb4010a4837eda366cea629b87c93f902f21035be6d90d04",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/materials.json",
+      "sha256": "8e2baafb71e427cf9592060f0520be714dac84a209f1439c5bfc6e5d35497dc8",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/paper.webp",
+      "sha256": "076ddd78011f11cdd4757125abbb58386e59b6bad4077e1b2332d4168a0b8f4a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/queen.webp",
+      "sha256": "43cc79e25e91202ada1ccbce3c029abea7af6d75cc598caf3f524963462a4a53",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/salon.webp",
+      "sha256": "39a0d49ec5d070dff1adfae9146d85e75f588b01f3a242f071272bb8e5cd665a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/art/unity-engraving.png",
+      "sha256": "a537b1c6d8e218c8d115ecaeee68114e626ba28ed926cb4d45ccf61da9cf0af5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/lounge-jazz.mp3",
+      "sha256": "a71bfbd416f48cc6af67414d8247a8bf341c7f6a33b5e9d299982291f53c60d8",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/manifest.json",
+      "sha256": "852b9cb23b7babf21f97ca5f6b4ad8674627c86a31e15650a70b93c6b39432d6",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/preview-blue.mp3",
+      "sha256": "c4e9329e7fcb1879a6e7b8449adbde49afb2ec089ec7c442adead70d737df7c5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/preview-green.mp3",
+      "sha256": "e687bc31e42725855a9b925d99dde4561c5de511880088c4b4f58d4e1e88d098",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/preview-rainbow.mp3",
+      "sha256": "ad076f6610c1bb1442fca9942c96029aa94938080f2973451dea4502d02ff9c3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/preview-red.mp3",
+      "sha256": "2f7db3b326e86f20daf148ec4d6b99927dd4b76be9e3744b729164cab142cda7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/reveal.mp3",
+      "sha256": "e41b0eb507f6b6d824702ee0c678b8b16f9cc47a62c60dcd77e8f3f02e97eeb0",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/win.mp3",
+      "sha256": "da0d5b717dcbeaa875e8f35259ec080c99101ec874d17d8cfa19122dac1a1eb5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/land.mp3",
+      "sha256": "85048bea7748dbf76f8ed93e6340a67aab31f9858582b02f9f4784eeb5fd62b6",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/card.mp3",
+      "sha256": "faab4df328d0d73d580dff827f2e594cff57177e00ba79468c052f953366868f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/third.mp3",
+      "sha256": "04f4b5d01025b2a1441d064899663f1e2f3756bbd676a0d867ca891101c425ed",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/result-2.mp3",
+      "sha256": "becfc2352d17a946c54bfab28f83208d3488635257f172e665f6e9cdea46b84e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/lock.mp3",
+      "sha256": "95db143e26ee9c24067120d00f4a9c3dfe2b09c54811bcbc325e28262b536a3e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/chip.mp3",
+      "sha256": "8c258a762cc4ad48e1d7f25a5142b1a082dacf3da9ef99d7159641fa9107b93e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/audio/result-3.mp3",
+      "sha256": "eca69bc2a45f18b8b3907a349b49e3410bd455e0f3aa88d6868d4045c2663789",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/0.svg",
+      "sha256": "5618673fd07f98b560c90f7d6ee54f9f21e7c733a1ca660d16f4a28d8a75f482",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/1.svg",
+      "sha256": "a77c59952157a93dd6b4a989faf720cca710adc08ddf23b1115ffa960aef2bea",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/10.svg",
+      "sha256": "d25e57a49914b2d11b8c41c0f914717624ff1037363225bd6e0d1270bbd129dd",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/11.svg",
+      "sha256": "39298794d98acb40e6eb8a6810dd86bb5400e01246e83aee7bda44c2f932d22a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/12.svg",
+      "sha256": "d9a95e1a11d7360442f3a6aca394c7af4d16fe39bca6264618c2e505d7b3a49e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/13.svg",
+      "sha256": "4565c6e38e5c13029534b7c27fdc42bb6a7a285a8f49ce1f48458aec0f4f86c2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/14.svg",
+      "sha256": "fd3eebf0e960c78365447eadc88fe8841ddb272a8a39dc98d6754048a48fe989",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/15.svg",
+      "sha256": "63cd96374aafa62d3aeabdf4f95b725af418b3be1e4df8cc9eb50b833166b791",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/16.svg",
+      "sha256": "7e4201be33251bb616e48ec3527db3d799481e4cb8ceaf700bb4c544d66db354",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/17.svg",
+      "sha256": "57ffdbdbb58bf29a1b47bbd915be05df8e1970323f1e6866a712cd89e8a7af72",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/18.svg",
+      "sha256": "06f4e522e364ad6042e33dcd27e616c382bf1625cf2203e9797fa7285e588454",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/19.svg",
+      "sha256": "f9a69552634462bce3ee02044f395ca3c514c5813225fae32855eca270aecebf",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/2.svg",
+      "sha256": "e7ec9f0f8b3c32643f3bb4712cb96919c6344e61dca25848127ee08f07eec806",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/20.svg",
+      "sha256": "b1e661dc90c644f6aa38f1f29fc25d44aed77bb1db5a5dfb5c6d7adb7cd51f73",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/21.svg",
+      "sha256": "55b785861fa15ca041899c49b8844acab1549b844a34f41f595820acb7613754",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/22.svg",
+      "sha256": "b802d26a78028ec441cef8fd1766bf17679c17fc72b1b39985a6f99a150f55d0",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/23.svg",
+      "sha256": "7cd0e56eeed54931a741a2b9f6d03e343484e9d3112a486ba4bd347355cc1a18",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/24.svg",
+      "sha256": "9a57d3efbdaeffc90e427835a9e5c502e489c153af7e174ff562edb5e7f57871",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/25.svg",
+      "sha256": "a4d7876be2fb1f41ffdc14673bcfc8a1f0468e87eed87a318988937c513d03d9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/26.svg",
+      "sha256": "f1ad52218291ebabc3c3d1c7d30e3640e51d0fc5425ff9b30a9421245537c767",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/27.svg",
+      "sha256": "d85a936306c2c30e84fd8ca8986d5286c04dfa0d8e5c0424b84c1d4886eff269",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/28.svg",
+      "sha256": "6c93331cd9e34006dd1ae2c8c063ff2c671b369e92cd8e821dd35b16c27b46ca",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/29.svg",
+      "sha256": "a5a9ddc0e88af30033b69d39e8cf4d53316c1669009d1f34c1cfd1d4f5c01478",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/3.svg",
+      "sha256": "0a0cec6391728abb321840a58c87ff878e888da707fc102b002c4ebfe412c566",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/30.svg",
+      "sha256": "2e02da469613552d52e437142464ffa59d5b6df2a142f76eaee5605d5ab71fa5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/31.svg",
+      "sha256": "85657f8604b37ee12f87d6f292bfa5a1489b22cbe50c96c492cee2a92e5bef74",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/32.svg",
+      "sha256": "1abee2fa2d60ae704a0bef5694e314c79c779ddf8297c53035d6629f99439b46",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/33.svg",
+      "sha256": "55c8434c131da0a10f5b0d166da9170e9b3bfc5c7078c7fba36c00bf1d99dbbc",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/34.svg",
+      "sha256": "ca2a75252ac5a6602bb7102c85cfe16631acf9d07b11f40566fbc25187a21a8d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/35.svg",
+      "sha256": "cf3473a4c25ee7596c5ff135790c4cefaf826c3d5360d75694b6e72e533fd48e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/36.svg",
+      "sha256": "0a51637038c4297577dacd701ba6f4c5f03261f13f65201ec358e7bf4243929c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/37.svg",
+      "sha256": "25c99111ac0b1997205aab0865eb0aef44f1771043ca5000da40b209e43b57e3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/38.svg",
+      "sha256": "2346f905ec18cf94ac447374dd8333a90bf4580d6284a6e567fcb91b26a3e367",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/39.svg",
+      "sha256": "ae984adb82553cdb7d9e6dda538215b2a542869ab6a09539d28f2e6312dca1c3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/4.svg",
+      "sha256": "509f6de29fce18c3071ba1cb110e1aea33f24c7ffb6e8044f925628e42321ced",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/40.svg",
+      "sha256": "a31c6085ccc52ed3d64dc134ed79dea6a98e322442215352c0039218a965be1a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/41.svg",
+      "sha256": "60ae6bbc1482285158aa51ea9e1dbd9bf23e6bbe0264953c897c774f27190913",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/42.svg",
+      "sha256": "92a14c7c5775e1698d2161add08fad02558dca8542fda69baed7c9dd07737490",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/43.svg",
+      "sha256": "e987d7f80c852ca8c8047c0687945d80db041ae3c2a947157f7dcb8489b0c233",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/44.svg",
+      "sha256": "cccb7909d880a0417ddc9b3b11610a32f25b0b0c13a1186ca0c63d9e28625288",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/45.svg",
+      "sha256": "737ddf2b0465fd2f929adf144342e6442119421e6f5f3dd85fbcfd1930268c51",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/46.svg",
+      "sha256": "e57a900ffa428b1522dd33d19d0fa426f7728ea94439e74ab3d0c102de9bebd2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/47.svg",
+      "sha256": "787f51d6884df76c8c7a9b71e590888c0e9abb5d0ff110a3ba4b2247c51ef8c6",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/48.svg",
+      "sha256": "a2a7304804f5bf831c70bea7fcff96559f80c394d68aa5143470149a0a8aa4d9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/49.svg",
+      "sha256": "92ad0061f0d3bb34ca2e2c56329a0483d4ed27b45d90e214dd469837bd5b9741",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/5.svg",
+      "sha256": "1aa1faef78ae7c0f137625441fc6b6467435e954b88e2cbb617985e99bdbbfab",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/50.svg",
+      "sha256": "22ebaf368052951be427ade505c1ef2617d6638ce41f9955daead8a66e04cc63",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/51.svg",
+      "sha256": "8ff29c810920b0794fb567f71c575b6c1073e22f1201bc9d44a6ed8cb5d50463",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/6.svg",
+      "sha256": "5dfec9aa8003bfbeb36fd54fb0e9340639f77746e5f844930d1e3d7f6ca7a4f6",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/7.svg",
+      "sha256": "b11a7bbe3454f95da538565fa8127603d730dd253e00afaab65de458cc7ce2a3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/8.svg",
+      "sha256": "b379108e176914d581e663f302e667f67990ee9850a05122b6b94ff21713c7da",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/9.svg",
+      "sha256": "264476a33d62e690ab0df8f3b7f3d854dfbf4c86f789bb9ba7f3dddcb6ab5d53",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/back.svg",
+      "sha256": "c6d2c5d5494f8f56985222f56704762dd40febff76e7beab394432478391bd45",
+      "matches": true
+    },
+    {
+      "path": "baccarat/cards/manifest.json",
+      "sha256": "d58f5e8c4fee4d0dc679d61d7c3572e1e17cba413106f9fd659deb26bd9c97a3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/font-OFL.txt",
+      "sha256": "e315abc82a78710c7242e2f2e6529651fd631d4d50e6ad98ea194f9b54c3d701",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/manifest.json",
+      "sha256": "44ef467ff0e186511050d07da8dc90a6727c762fb2d221d37589b73201fa4c62",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/NOTICE.md",
+      "sha256": "875fe9ba586b013d5d448a9460e28b6f352a3fa06964925c6999bcac910fa55e",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/alfa-slab-one.woff2",
+      "sha256": "48a110c7fda81f9921a6437e1a813dcea56df5a9f52f778c7b2f2151e36e4f2c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/community-mark.svg",
+      "sha256": "6cc3da0da782f32ef40d81073e0e645d31e17b94bd4664163a3b76f416876155",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/felt-weave.svg",
+      "sha256": "12674f65c6deddee7edb3db08056ca3e4cfbef254157bf499da860e745a96221",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-1.svg",
+      "sha256": "937510e722cbb289a912964e2b26f0db2e74be27483304d5acb018fb5a834ae1",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-5000.svg",
+      "sha256": "46a0677aca53a74af4fafc668ed9e6b4468fc2b21f73151bb64d0d3654458082",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/title-back.svg",
+      "sha256": "054c41506c60fdfef23c879f7c79ab4bd9f0e8045c9aebcad0a608ec5ac7b479",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-100.svg",
+      "sha256": "6b107582ba153527438bec9c3fdddcd266cb81687cc20ebef595d2ec490f22e3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-1000.svg",
+      "sha256": "2e531b9828ae66fe11aecc580d2e046d525559ee5324c6bf2a9fa93c8fac7b62",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/title-ace.svg",
+      "sha256": "22ee2072ac3f00b6445be4b156c4defddb76f10c5081aa2a6258eb1a073268c7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/salon-medallion.svg",
+      "sha256": "2f9bb62bb9f352c4f13700c594c515a2e8553f180f931a8cdf87bcb2ff3515c5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-500.svg",
+      "sha256": "2c74846740e6661d11a0225c5f8479b4e12c2f3cf6df9a54bdcfe91c8f051cf1",
+      "matches": true
+    },
+    {
+      "path": "baccarat/salon-assets/chip-10.svg",
+      "sha256": "3cd8316a727ee1d542d28ec6c5c385b4e1ac73c3f3d32d668a9e140c33cce6e3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/100.svg",
+      "sha256": "84ee89c18d81aa71efd7a372f2a7c40bf0fbb89b5c140d0d2a71bb94d429824c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/10000.svg",
+      "sha256": "6beb87b1b67856ebe6e75828c522b16abfbecd5ab9b8c125e66ab9b7c498cc98",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/1000.svg",
+      "sha256": "2f35c3dccd1e89292f446d0b834c674243abc70291a2b177169e20727d7fd829",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/500.svg",
+      "sha256": "bb14e4d6390525cafb4aabcf40f0acaf4debe6b8f55b6f7ce5ce0df9a968890d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/5000.svg",
+      "sha256": "bee5d3781d53f0c538c334d20cfa74f6e6c353ddea4984e324ac7b6b07493150",
+      "matches": true
+    },
+    {
+      "path": "baccarat/chips/50000.svg",
+      "sha256": "caa523b5bbc6dee25c95f45c026330de2058db9cd07af7aac33eb65c34df09f4",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/jquery.js",
+      "sha256": "87083882cc6015984eb0411a99d3981817f5dc5c90ba24f0940420c5548d82de",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/jquery-ui-LICENSE.txt",
+      "sha256": "de33fb695880d0b07615d4b86f78cd43796906959ade5fdfef70968827a0db78",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/phaser-LICENSE.txt",
+      "sha256": "6c7bb5d2dd14480ab1fb3d8e46f790d394151a14702e44da12b2333ef99b7bc8",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/jquery-LICENSE.txt",
+      "sha256": "2b3ed8ba424423a50b023e728530d94bc385cfc7c328ad65a3dfee9c7c0531c5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/jquery-ui.js",
+      "sha256": "78613a6e5bab939b078feae691fb0661e2b2671dcce1b1be66517203b2a7b3b1",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/phaser-2.8.0.min.js",
+      "sha256": "1ca29642a859097deb7b27ee321b1bd338a27875a2bd6824e522553797204a39",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/SaveCPU.js",
+      "sha256": "dcc2926765e8277a6e9bb2bf48532b70d5af1389ebfc6f7870ca9295bd7c1391",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/jquery-ui.css",
+      "sha256": "caad4fac7e623dc5fd1abec3ab6b4a70ba92e30d14dc199de81884509dbf173a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/card_kubaru.mp3",
+      "sha256": "703fa6889f8c43408e810af1464c087ee04e0d01e528aec941db788010a496a1",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/button3.mp3",
+      "sha256": "dccd9337d7f4e8d7602e198fc6dbdba93e6d389ea0759bb1c5d310e8dcc8c35a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/card_move.mp3",
+      "sha256": "f14b0c67f753ebeb8b3ce9d7f92427b76ac0238154faab804f4944fad22833a5",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/button_cancel.mp3",
+      "sha256": "ddb69c2a9bbfda63e6a2805edb911e966033721ed741249096c0daf48f5a1e4b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/button.mp3",
+      "sha256": "d9c01fb2ddacefe1e35b85425e7f982d178da718d9871880ddbf611f37e15886",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/card_drag.mp3",
+      "sha256": "3168c16a8556ebd6343838ca9379d2c5e4d65c5f0bbbd0cd7147c3bd6389271f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/success.mp3",
+      "sha256": "ad9b2abc095366c923cae31166c80d658e41079edc5accafc8bce41e63d64128",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/button2.mp3",
+      "sha256": "64ccc3549b7e0b68bfa7e7b8546bd5f337242bb36d14a4c79f49ae19cfc80811",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/spades_bid.mp3",
+      "sha256": "39342ab24801d00ae933e0a253f28f55db0d63394327d0622c441dbd6a647bf7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/card_send.mp3",
+      "sha256": "c77da3fbe9c8d53166db161a94c0960893dd5e845126d20e39e72d8f2e7f36c4",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/audio/fail.mp3",
+      "sha256": "9c842a6b9118fa31455ced2487c9764a2d8a5e60574d409255f13f5c8e6fa2d1",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/clear.png",
+      "sha256": "da00bdf25b8c86908ca24e3db43cbd3696a60c50780be0767b9a9cd114e0df1d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/soundbutton.png",
+      "sha256": "e70e99f1b2e19d2d1ef888a85617c784dcd90525f307e84bfbdb4a25bb6eeab3",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tiefield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/rebet.png",
+      "sha256": "b3ef9f2739097913d8785a1049c0031e643b9b03fb0ed3502d9c0f7761ff8c4c",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_1000.png",
+      "sha256": "b1aa391e6dcfba8bee07ed102ed6e26dbf0ceb45a28c7cab7a4070c93d766af2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/recordbutton.png",
+      "sha256": "83a1bed810d37390965a36c4c652b5f4767272e5a38d79fd4c172509444ca6b2",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/max.png",
+      "sha256": "52cafce6d1e88871745973fc8808ea0e7b010b39f908d16a277ddf251a25f475",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_50.png",
+      "sha256": "8cdfb877aa1bd1bdc153e2e80be91208ee8995a4b870bbd8f1f9d7d1a6d96075",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/exchange.png",
+      "sha256": "2269a94abe975b41bcd827d3bff9ddfdfdf536a443753a308c8c2353cec5e692",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/accountbutton.png",
+      "sha256": "91bac79adb7df03207844a2e1fe739192979dd0a6c2150e34a9f5ac1c7181eae",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/coin.png",
+      "sha256": "b51ab351136c1ea1e375d811fd0147ff68fcf3964df2e7790ac27add4cc6680d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/aboutbutton.png",
+      "sha256": "d731a80de5c49d75e8e5d0556a6e29715123e85367884ebca0d6e1c13e1d989a",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_10.png",
+      "sha256": "5d4b6eb316b3461e0d23d8049a9d95b1a153e31ce73210963d7421866f3177fd",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/startbutton.png",
+      "sha256": "baa723ffc389bb8a72832a3e3cad14e86c895baf5c39f587cd01f045112c6e69",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/exchange_m.png",
+      "sha256": "e3e5d425f7303628b6c38ffd92be86e0add30b01d36b4e10d49eb084144f88fe",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/playerfield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_500.png",
+      "sha256": "636efc77218817beb40d7ac6bddb8c6d9ac8271c5bd8c4cfa610a5ab6586c73b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_100.png",
+      "sha256": "a4994e019cae37cb1eb5881ade08c06f2ef6b0bebc78b0c3bcb23b8627c2d47d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_5000.png",
+      "sha256": "e435c85d38f9f34aeb1d3f874f2c9314f507d6a32cd92ab963eacab89e182141",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/deal.png",
+      "sha256": "4d026316b03b7011d1d8218599db52a8ec2e9b9cb3e9476a26ba9a19597fadbc",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/menubutton.png",
+      "sha256": "0107ff1f9e3181757bf2cdcc1a4158585f8c4903ec6a279ccd353536e94d9f31",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/logo.png",
+      "sha256": "253fff943d8049f8675d9a8dd4e7c3c61c78088bd3352d9f0737482a96e92f57",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/casinocoin.png",
+      "sha256": "c85dee5df48581e831c9c74d03793374ab6fc04ff46932c8100dbe38a3c1932f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/bankerfield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/homebutton.png",
+      "sha256": "7a3d1785557498aad09506920b3c4dfee5e2795877f928bc44db63d6fa579273",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/title.png",
+      "sha256": "0fbe5b2676ff6a7a1a2426521bdcdad50006c1bc19b3cb9d21036bf13797d61f",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/background.png",
+      "sha256": "8215d382bea351c53f843a7a4014b4b35861254034e6764c52733e311cb2c934",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_1.png",
+      "sha256": "d61b651cc4d0a1126a25f2b18b1028398eaf32980583f89447fbef655b789602",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/tip_10000.png",
+      "sha256": "6cad88bfde7f87bed5fdb14cf4649196af913e9bbaa7a3a412c71d15c8759aa9",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/min.png",
+      "sha256": "2aaa83bdf8d5a00f09652bea22f75b8d7be1945b5d441e640b456e5ea1b0ffe0",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/images/cutin.png",
+      "sha256": "2d8b4e09613eb0b5dbbe9fd96fab0ff405c8e438beefe4a7d7f2d64277562c6d",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_highlight-soft_100_deedf7_1x100.png",
+      "sha256": "d989a34da863e83edc6b42c8e462f334250bf756a209b3928651b79eed17ad07",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_glass_100_e4f1fb_1x400.png",
+      "sha256": "e7bca93140dd47454e42d85e64f8cae3f72c4633fb52a40fe97b9975ae0b8c08",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-icons_2694e8_256x240.png",
+      "sha256": "2f002cd0dd92a97a8244ce23515813e2610f2531cb9002581ccccd37156fa4b4",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-icons_ffffff_256x240.png",
+      "sha256": "0aa3d480038363030e55a88c7e2f4f89b35e1af06a11be38a271442b48a9de32",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-icons_2e83ff_256x240.png",
+      "sha256": "1d7a4a2897c1519d384d260a0063d3101fcb0ce7e715779da0632053f018a046",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-icons_3d80b3_256x240.png",
+      "sha256": "2b9ae4f5b7b651295efde50d032855a2bcb534176a242d68e57d92c0fe430051",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png",
+      "sha256": "fedb6a56a9419bc7e3a749d35179d825d0ff96a664576a022f09eef7b01f3a78",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png",
+      "sha256": "85ebaa162a65b5c3ea8469698a0e18cdb369873739f6929391deb4ca845786a7",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_glass_80_d7ebf9_1x400.png",
+      "sha256": "a4c930cd149abf31974f788c8ccc3a50929071fa9651924a81088ef298abbb1b",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-icons_72a7cf_256x240.png",
+      "sha256": "3c200dbc5db730ad2fe09c390c640e670c94d78ff5945874c1e945c227a2d993",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_glass_50_3baae3_1x400.png",
+      "sha256": "08fcc8d93ec14a1c18a0db58b2872659918954a2fb28b3788be1a08a61f6f841",
+      "matches": true
+    },
+    {
+      "path": "baccarat/reference/vendor/images/ui-bg_highlight-soft_25_ffef8f_1x100.png",
+      "sha256": "4f757d4b7397a1a971fc6cd97269fed9a203bfbb57fd47d136e0f986b09fd3e3",
+      "matches": true
+    }
+  ]
+}

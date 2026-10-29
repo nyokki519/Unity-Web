@@ -46,4 +46,4 @@ createSalonShell(root) injects title and game (one hidden). title data-action=st
 - [x] New browser end-to-end and existing protected regression
 - [x] Independent whole-change review and fixes
 - [x] Visual and motion capture, measured performance
-- [ ] Main/Render deploy and production hashes + play
+- [x] Main/Render deploy and production hashes + play

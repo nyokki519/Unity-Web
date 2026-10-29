@@ -51,3 +51,5 @@ Unityはコミュニティ名でありゲームエンジンのロゴではない
 起動: `npm install`（Node24以上）、`npm start`、`http://localhost:3000/baccarat/index.html`（PORT設定に従う）。テストは`npm test`、`UNITY_URL=http://localhost:3000 python test/baccarat-salon_browser.py`。通常の公開は既存Render設定を利用。リリース確認記録は公開後に追記する。
 
 改善前後: [タイトル](before-after-title.png)、[盤面](before-after-table.png)。いずれも390px幅の実画面。共有コードの変更はUnity MIXホームのバカラ紹介文1か所のみ（ベット操作順の説明を更新）。旧画面テストは`BACCARAT_VARIANT=classic|vesper python tools/baccarat-retained-qa.py 対象test.py`で実行できる。
+
+[本番公開・216ファイル照合・操作検証](PRODUCTION.md)まで完了。
