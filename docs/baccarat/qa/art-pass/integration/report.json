@@ -1,0 +1,23 @@
+{
+  "midDealReload": true,
+  "exactWallet": true,
+  "normalRounds": true,
+  "tutorialLessons": 3,
+  "tutorialDoesNotOverwriteNormal": true,
+  "englishJapanese": true,
+  "text130Percent": true,
+  "widths": [
+    375,
+    390,
+    414,
+    1280,
+    1920
+  ],
+  "modalInspectAndRoads": true,
+  "pauseInSettings": true,
+  "storageFailureNoDebit": true,
+  "explicitUnsavedPlay": true,
+  "deniedStoragePlayable": true,
+  "homeLink": true,
+  "errors": []
+}

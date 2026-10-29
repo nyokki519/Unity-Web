@@ -1,0 +1,17 @@
+{
+  "fallbackRenders": true,
+  "immediateNext": {
+    "nextVisible": "visible",
+    "focused": true,
+    "hit": true
+  },
+  "presentationCleared": {
+    "sequences": 0,
+    "particles": 0,
+    "rings": 0,
+    "smoke": 0,
+    "debris": 0,
+    "shake": 0,
+    "flash": 0
+  }
+}

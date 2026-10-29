@@ -11,3 +11,10 @@
 #menu .card.locked{opacity:1}.control-diagram{display:block;width:72px;height:46px;max-width:100%;color:var(--mint)}
 @media(max-width:600px){.quick-controls small{font-size:12px}}
 .recommended-caption{display:grid;gap:3px}
+
+/* Keep result actions available while the completed boss detonation resolves. */
+#overlay.victory-reveal{background:transparent;backdrop-filter:none;align-items:flex-end}
+#overlay.victory-reveal .report-body{animation:victory-report 1.35s both;background:#06150ff2;border:1px solid var(--line);border-radius:16px;padding:12px}
+#overlay.victory-reveal .report-actions{position:relative;bottom:0}
+@keyframes victory-report{0%,78%{opacity:0}100%{opacity:1}}
+@media(prefers-reduced-motion:reduce){#overlay.victory-reveal .report-body{animation:none}}

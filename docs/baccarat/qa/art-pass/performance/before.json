@@ -1,0 +1,36 @@
+[
+  {
+    "longTasks": [],
+    "dom": 113,
+    "heap": 7387553,
+    "viewport": [
+      390,
+      844
+    ],
+    "rounds": 3,
+    "style": "rich / auto squeeze",
+    "frames": 1163,
+    "medianRAFms": 16.699999999999818,
+    "p95RAFms": 16.799999999999272,
+    "maxRAFms": 50.09999999999991,
+    "note": "Headless Chromium rAF cadence. Not physical FPS or iPhone/Safari certification."
+  },
+  {
+    "longTasks": [
+      50
+    ],
+    "dom": 139,
+    "heap": 6870606,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "rounds": 3,
+    "style": "rich / auto squeeze",
+    "frames": 1133,
+    "medianRAFms": 16.699999999999818,
+    "p95RAFms": 16.799999999999727,
+    "maxRAFms": 66.59999999999991,
+    "note": "Headless Chromium rAF cadence. Not physical FPS or iPhone/Safari certification."
+  }
+]

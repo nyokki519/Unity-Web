@@ -1,0 +1,19 @@
+{
+  "generator": "tools/generate-baccarat-materials.py",
+  "license": "Original project procedural material maps; icon derived from existing Unity community mark, user authorized",
+  "tileSize": [
+    512,
+    512
+  ],
+  "paperSize": [
+    256,
+    256
+  ],
+  "seed": 291029,
+  "maps": [
+    "felt.webp",
+    "leather.webp",
+    "paper.webp"
+  ],
+  "note": "Stylized image-based surface detail, not measured BRDF scans."
+}

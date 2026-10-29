@@ -6,8 +6,10 @@
     700
   ],
   "backs": 1,
-  "design": "Original hotel-window geometry; no Unity Technologies logo",
+  "design": "Original VESPER engraved botanical court deck; existing Unity community heart-cup mark",
   "generator": "tools/generate-baccarat-cards.py",
-  "license": "Original project artwork; no third-party art or font files bundled",
-  "symmetry": "back upper half repeated with 180-degree transform; identical back for all ranks and decks"
+  "license": "Original project artwork; community mark user authorized; no third-party art or font files bundled",
+  "symmetry": "Entire back upper half repeated at180degrees; identical backs across all ranks/decks",
+  "materials": "Embedded deterministic paper grain and restrained foil gradients",
+  "court": "Three original generated engraved court portraits, composed into twelve precise suit variants with vector indices/cartouches. Generated art contains no numbers or suits."
 }

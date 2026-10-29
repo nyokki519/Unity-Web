@@ -1,0 +1,430 @@
+{
+  "results": [
+    {
+      "result": "win",
+      "net": 1000,
+      "peakChips": 5,
+      "positiveLighting": true,
+      "audioEvents": [
+        {
+          "kind": "chip",
+          "at": 231.89999999850988,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 463.3999999985099,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1120.7000000029802,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1772.3999999985099,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 2423.8000000044703,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 3075.3000000044703,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "win",
+          "at": 3727.60000000149,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 4752,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 4834.89999999851,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 4918.30000000447,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 5001.60000000149,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 5084.89999999851,
+          "state": "running",
+          "voices": 0
+        }
+      ]
+    },
+    {
+      "result": "tie",
+      "net": 0,
+      "peakChips": 1,
+      "positiveLighting": false,
+      "audioEvents": [
+        {
+          "kind": "chip",
+          "at": 232.20000000298023,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 447.20000000298023,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1103.4000000059605,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1755.1000000014901,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 2406.60000000149,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 3058.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 4010,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 4962.20000000298,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "tie",
+          "at": 5615.10000000149,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 6287.4000000059605,
+          "state": "running",
+          "voices": 0
+        }
+      ]
+    },
+    {
+      "result": "tie-hit",
+      "net": 8000,
+      "peakChips": 5,
+      "positiveLighting": true,
+      "audioEvents": [
+        {
+          "kind": "chip",
+          "at": 226.60000000149012,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 461.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1118.3999999985099,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1770.3000000044703,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 2421.8000000044703,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 3073.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 4025.60000000149,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 4977.89999999851,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "win",
+          "at": 5630.80000000447,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 6653.80000000447,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 6736.30000000447,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 6819.60000000149,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 6919.60000000149,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 6986.20000000298,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 7102.89999999851,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 7186.20000000298,
+          "state": "running",
+          "voices": 0
+        }
+      ]
+    },
+    {
+      "result": "loss",
+      "net": -1000,
+      "peakChips": 1,
+      "positiveLighting": false,
+      "audioEvents": [
+        {
+          "kind": "chip",
+          "at": 220.10000000149012,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 443.1000000014901,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1099.2000000029802,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1750.8000000044703,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 2402,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 3053.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "loss",
+          "at": 3705.3000000044703,
+          "state": "running",
+          "voices": 0
+        }
+      ]
+    },
+    {
+      "result": "large-win",
+      "net": 100000,
+      "peakChips": 5,
+      "positiveLighting": true,
+      "audioEvents": [
+        {
+          "kind": "ui",
+          "at": 248.69999999552965,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 300.19999999552965,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 345.69999999552965,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "card",
+          "at": 563.1999999955297,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1219.1999999955297,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 1871,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 2522.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "card",
+          "at": 3173.89999999851,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "win",
+          "at": 3825.6999999955297,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 4855.60000000149,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 4938.29999999702,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 5021.69999999553,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 5105,
+          "state": "running",
+          "voices": 1
+        },
+        {
+          "kind": "chip",
+          "at": 5188.39999999851,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 5288.5,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 5371.69999999553,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 5471.69999999553,
+          "state": "running",
+          "voices": 0
+        },
+        {
+          "kind": "chip",
+          "at": 5521.60000000149,
+          "state": "running",
+          "voices": 1
+        }
+      ]
+    }
+  ],
+  "cancelOnNext": true,
+  "mobileWidths": [
+    375,
+    390,
+    414
+  ],
+  "desktop": 1920,
+  "errors": []
+}

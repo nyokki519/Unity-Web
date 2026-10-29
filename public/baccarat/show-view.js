@@ -1,3 +1,4 @@
+import {payoutTier} from './motion.js';
 import {HandSqueeze} from './hand-squeeze.js';
 import {points} from './rules.js';
 import {CurlRenderer} from './curl-renderer.js';
@@ -29,7 +30,7 @@ export class ShowDirector{
   const layer=document.createElement('div');layer.className='show-cutin '+cue.kind;layer.dataset.tier=cue.tier;layer.setAttribute('role','status');
   // Original doorway / seal geometry, created with CSS; no borrowed logos or characters.
   const mark=document.createElement('span');mark.className='cutin-mark';mark.setAttribute('aria-hidden','true');mark.textContent=cue.kind==='seal'?'◇':cue.kind==='starlight'?'✧':'Ⅱ';
-  const label=document.createElement('b');label.textContent=this.text(cue.tier);layer.append(mark,label);
+  const label=document.createElement('b');label.textContent=this.text(cue.tier);layer.append(mark,label);const shear=document.createElement('span');shear.className='cue-shear';shear.setAttribute('aria-hidden','true');layer.append(shear);
   if(this.settings.dialogue&&this.plan.aux.includes('line')){const line=document.createElement('span');line.className='cutin-line';line.textContent=this.text('line'+(['trace','upgrade','doors','seal','starlight'].indexOf(cue.kind)+5)%5);layer.append(line);}
   felt.append(layer);if(this.plan.aux.includes('bell'))this.audio.hint(cue.tier,cue.kind);
  }
@@ -57,6 +58,6 @@ export class ShowDirector{
  }
  stopAuto(){if(!this.squeeze)return;this.squeeze.auto=false;this.squeeze.autoEpoch=(this.squeeze.autoEpoch||0)+1;const b=this.dialog.querySelector('[data-show=auto]');if(b)b.textContent=this.text('autoOpen');}
  startAuto(duration=1500){const s=this.squeeze;if(!s||s.finished)return;s.auto=true;const autoEpoch=s.autoEpoch=(s.autoEpoch||0)+1;this.dialog.querySelector('[data-show=auto]').textContent=this.text('stop');const begin=performance.now(),initial=s.progress;const tick=()=>{if(this.squeeze!==s||!s.auto||s.finished||s.autoEpoch!==autoEpoch)return;this.progress(initial+(performance.now()-begin)/duration);if(!s.finished)this.later(tick,16);};tick();}
- result(receipt){const felt=document.querySelector('.felt');if(!felt||this.plan?.mode==='off')return;felt.classList.add(receipt.net>0?'show-profit':receipt.net<0?'show-loss':'show-push');if(receipt.net>0&&!this.reducedNow()&&this.state.emit('result')){const layer=document.createElement('div');layer.className='show-sparks';layer.setAttribute('aria-hidden','true');for(let i=0;i<10;i++){const dot=document.createElement('i');dot.style.setProperty('--i',i);layer.append(dot);}felt.append(layer);this.later(()=>layer.remove(),1100);}}
+ result(receipt){const felt=document.querySelector('.felt');if(!felt||this.plan?.mode==='off')return;felt.classList.add(receipt.net>0?'show-profit':receipt.net<0?'show-loss':'show-push');if(receipt.net>0&&this.settings.particles!==false&&!this.reducedNow()&&this.state.emit('result')){const layer=document.createElement('div');layer.className='show-sparks';layer.setAttribute('aria-hidden','true');for(let i=0;i<Math.min(12,4+payoutTier(receipt)*2);i++){const dot=document.createElement('i');dot.style.setProperty('--i',i);layer.append(dot);}felt.append(layer);this.later(()=>layer.remove(),1100);}}
  restoreFrame(round=this.round){const frame=document.querySelector('.felt');if(!round||round.id!==this.round?.id){if(frame){frame.dataset.forecast='none';frame.classList.remove('show-profit','show-loss','show-push');}return;}this.round=round;const last=this.plan?.cues.filter(c=>this.state.data.played.includes('cue:'+c.at)).at(-1);const felt=document.querySelector('.felt');if(felt){felt.dataset.forecast=last?.tier||'none';if(!this.round?.paid)felt.classList.remove('show-profit','show-loss','show-push');}}
 }

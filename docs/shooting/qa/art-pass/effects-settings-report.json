@@ -1,0 +1,35 @@
+{
+  "persisted": {
+    "shake": false,
+    "flash": false,
+    "particleAmount": 0
+  },
+  "zeroCosmeticParticles": {
+    "particles": 0,
+    "particleInstances": 0,
+    "smoke": 0,
+    "debris": 0,
+    "muzzles": 0,
+    "shake": 0,
+    "flash": false,
+    "enemyBullets": 1
+  },
+  "independent": {
+    "flashOnly": {
+      "shake": 0,
+      "flash": true,
+      "particles": 95
+    },
+    "shakeOnly": {
+      "shake": 7.997600000143051,
+      "flash": false,
+      "particles": 48
+    },
+    "reduced": {
+      "shake": 0,
+      "flash": false,
+      "particles": 28
+    }
+  },
+  "errors": []
+}

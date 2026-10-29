@@ -1,0 +1,30 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "runtime": "Linux Chromium / SwiftShader",
+  "physicalIPhoneTest": false,
+  "paintedStagesLoaded": 6,
+  "raf": {
+    "samples": 120,
+    "medianMs": 83.29999999999927,
+    "p95Ms": 200,
+    "drawCalls": 66,
+    "triangles": 462,
+    "particles": 34,
+    "smoke": 0,
+    "debris": 0,
+    "enemyBullets": 28,
+    "enemyBulletOrder": 54,
+    "particleOrder": 42
+  },
+  "renderLeavesCombatUnchanged": true,
+  "reduced": {
+    "shake": 0,
+    "flashVisible": false,
+    "particles": 137,
+    "smoke": 0
+  },
+  "errors": []
+}

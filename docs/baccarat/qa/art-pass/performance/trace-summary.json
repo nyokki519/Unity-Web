@@ -1,0 +1,372 @@
+[
+  {
+    "label": "before",
+    "events": [
+      {
+        "name": "RunTask",
+        "totalMs": 3438.41,
+        "maxMs": 47.08,
+        "count": 9383
+      },
+      {
+        "name": "Commit",
+        "totalMs": 764.88,
+        "maxMs": 28.39,
+        "count": 338
+      },
+      {
+        "name": "GPUTask",
+        "totalMs": 683.88,
+        "maxMs": 26.92,
+        "count": 201
+      },
+      {
+        "name": "RasterTask",
+        "totalMs": 349.86,
+        "maxMs": 3.67,
+        "count": 586
+      },
+      {
+        "name": "FunctionCall",
+        "totalMs": 161.61,
+        "maxMs": 30.43,
+        "count": 453
+      },
+      {
+        "name": "TimerFire",
+        "totalMs": 121.1,
+        "maxMs": 32.06,
+        "count": 72
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "totalMs": 76.93,
+        "maxMs": 2.11,
+        "count": 279
+      },
+      {
+        "name": "Layout",
+        "totalMs": 48.0,
+        "maxMs": 16.11,
+        "count": 107
+      },
+      {
+        "name": "Paint",
+        "totalMs": 46.53,
+        "maxMs": 4.09,
+        "count": 219
+      },
+      {
+        "name": "FireAnimationFrame",
+        "totalMs": 28.98,
+        "maxMs": 1.66,
+        "count": 334
+      },
+      {
+        "name": "PrePaint",
+        "totalMs": 22.05,
+        "maxMs": 0.44,
+        "count": 486
+      },
+      {
+        "name": "EventDispatch",
+        "totalMs": 19.84,
+        "maxMs": 7.11,
+        "count": 149
+      },
+      {
+        "name": "MinorGC",
+        "totalMs": 18.47,
+        "maxMs": 3.56,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_SCAVENGER",
+        "totalMs": 16.82,
+        "maxMs": 3.51,
+        "count": 33
+      },
+      {
+        "name": "Layerize",
+        "totalMs": 16.74,
+        "maxMs": 0.75,
+        "count": 331
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE",
+        "totalMs": 16.47,
+        "maxMs": 3.5,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+        "totalMs": 10.95,
+        "maxMs": 3.34,
+        "count": 33
+      },
+      {
+        "name": "PaintImage",
+        "totalMs": 8.26,
+        "maxMs": 1.25,
+        "count": 45
+      },
+      {
+        "name": "EvaluateScript",
+        "totalMs": 6.01,
+        "maxMs": 5.89,
+        "count": 2
+      },
+      {
+        "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+        "totalMs": 4.2,
+        "maxMs": 0.32,
+        "count": 74
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+        "totalMs": 4.2,
+        "maxMs": 3.27,
+        "count": 26
+      },
+      {
+        "name": "HitTest",
+        "totalMs": 2.7,
+        "maxMs": 0.3,
+        "count": 110
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+        "totalMs": 2.21,
+        "maxMs": 0.71,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_BACKGROUND_SAFEPOINT",
+        "totalMs": 1.69,
+        "maxMs": 0.57,
+        "count": 4
+      },
+      {
+        "name": "UpdateLayer",
+        "totalMs": 1.54,
+        "maxMs": 0.28,
+        "count": 592
+      },
+      {
+        "name": "ParseHTML",
+        "totalMs": 1.45,
+        "maxMs": 0.48,
+        "count": 84
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+        "totalMs": 1.17,
+        "maxMs": 0.1,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+        "totalMs": 0.85,
+        "maxMs": 0.06,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+        "totalMs": 0.68,
+        "maxMs": 0.12,
+        "count": 33
+      },
+      {
+        "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+        "totalMs": 0.36,
+        "maxMs": 0.12,
+        "count": 31
+      }
+    ]
+  },
+  {
+    "label": "after",
+    "events": [
+      {
+        "name": "RunTask",
+        "totalMs": 4914.48,
+        "maxMs": 70.77,
+        "count": 10965
+      },
+      {
+        "name": "RasterTask",
+        "totalMs": 2513.73,
+        "maxMs": 31.98,
+        "count": 2602
+      },
+      {
+        "name": "Commit",
+        "totalMs": 865.71,
+        "maxMs": 23.94,
+        "count": 364
+      },
+      {
+        "name": "GPUTask",
+        "totalMs": 787.35,
+        "maxMs": 21.76,
+        "count": 170
+      },
+      {
+        "name": "FunctionCall",
+        "totalMs": 171.15,
+        "maxMs": 29.75,
+        "count": 468
+      },
+      {
+        "name": "TimerFire",
+        "totalMs": 122.37,
+        "maxMs": 33.8,
+        "count": 61
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "totalMs": 98.17,
+        "maxMs": 3.31,
+        "count": 395
+      },
+      {
+        "name": "Paint",
+        "totalMs": 70.83,
+        "maxMs": 4.83,
+        "count": 214
+      },
+      {
+        "name": "EventDispatch",
+        "totalMs": 58.22,
+        "maxMs": 43.43,
+        "count": 176
+      },
+      {
+        "name": "Layout",
+        "totalMs": 48.67,
+        "maxMs": 14.53,
+        "count": 91
+      },
+      {
+        "name": "FireAnimationFrame",
+        "totalMs": 35.28,
+        "maxMs": 2.11,
+        "count": 358
+      },
+      {
+        "name": "PrePaint",
+        "totalMs": 30.61,
+        "maxMs": 0.43,
+        "count": 507
+      },
+      {
+        "name": "Decode LazyPixelRef",
+        "totalMs": 23.24,
+        "maxMs": 11.6,
+        "count": 7
+      },
+      {
+        "name": "Decode Image",
+        "totalMs": 22.99,
+        "maxMs": 11.57,
+        "count": 7
+      },
+      {
+        "name": "PaintImage",
+        "totalMs": 16.02,
+        "maxMs": 3.46,
+        "count": 244
+      },
+      {
+        "name": "Layerize",
+        "totalMs": 15.14,
+        "maxMs": 0.36,
+        "count": 347
+      },
+      {
+        "name": "ImageDecodeTask",
+        "totalMs": 14.58,
+        "maxMs": 9.32,
+        "count": 190
+      },
+      {
+        "name": "EvaluateScript",
+        "totalMs": 9.57,
+        "maxMs": 9.4,
+        "count": 2
+      },
+      {
+        "name": "MinorGC",
+        "totalMs": 8.96,
+        "maxMs": 1.71,
+        "count": 14
+      },
+      {
+        "name": "V8.GC_SCAVENGER",
+        "totalMs": 6.69,
+        "maxMs": 1.51,
+        "count": 14
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE",
+        "totalMs": 6.54,
+        "maxMs": 1.5,
+        "count": 14
+      },
+      {
+        "name": "ParseHTML",
+        "totalMs": 4.41,
+        "maxMs": 0.8,
+        "count": 94
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+        "totalMs": 4.32,
+        "maxMs": 1.37,
+        "count": 14
+      },
+      {
+        "name": "V8.GC_BACKGROUND_SAFEPOINT",
+        "totalMs": 3.33,
+        "maxMs": 2.11,
+        "count": 3
+      },
+      {
+        "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+        "totalMs": 3.02,
+        "maxMs": 0.44,
+        "count": 41
+      },
+      {
+        "name": "HitTest",
+        "totalMs": 2.54,
+        "maxMs": 0.13,
+        "count": 97
+      },
+      {
+        "name": "UpdateLayer",
+        "totalMs": 2.42,
+        "maxMs": 0.27,
+        "count": 791
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+        "totalMs": 1.98,
+        "maxMs": 1.11,
+        "count": 10
+      },
+      {
+        "name": "V8.GC_TIME_TO_SAFEPOINT",
+        "totalMs": 1.61,
+        "maxMs": 1.39,
+        "count": 13
+      },
+      {
+        "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+        "totalMs": 0.72,
+        "maxMs": 0.21,
+        "count": 14
+      }
+    ]
+  }
+]

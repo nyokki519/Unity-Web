@@ -1,0 +1,22 @@
+{
+  "before": {
+    "samples": 120,
+    "medianMs": 49.899999999999636,
+    "p95Ms": 66.69999999999982,
+    "drawCalls": 40,
+    "triangles": 312,
+    "enemyBullets": 10,
+    "allyBullets": 6,
+    "particles": 9
+  },
+  "after": {
+    "samples": 120,
+    "medianMs": 49.900000000000546,
+    "p95Ms": 66.80000000000018,
+    "drawCalls": 78,
+    "triangles": 412,
+    "enemyBullets": 8,
+    "allyBullets": 8,
+    "particles": 21
+  }
+}
