@@ -56,4 +56,37 @@ for i,note in enumerate([60,67,72,76,79,83]):put(fx,bell(note,1.05),i*.065/BEAT,
 meta['files']['win']=export('win',fx,.65)
 fx=np.zeros((int(.38*SR),2));put(fx,bell(88,.3),0,.06);put(fx,piano(76,.35,.3),.03/BEAT,.1)
 meta['files']['reveal']=export('reveal',fx,.4)
+# Original tactile table foley: filtered impulses and inharmonic damped bodies.
+# Seeded procedural synthesis only; no recordings or licensed reference material.
+def tactile(duration,frequencies,noise_band,noise_decay,body_decay):
+ t=np.arange(round(duration*SR))/SR
+ noise=sosfilt(butter(2,noise_band,btype='bandpass',fs=SR,output='sos'),rng.normal(0,1,len(t)))
+ body=sum(np.sin(2*np.pi*f*t+0.12*i)*np.exp(-t/body_decay)/(i+1) for i,f in enumerate(frequencies))
+ attack=np.minimum(1,t/.0015);release=np.minimum(1,(duration-t)/.012)
+ return (noise*np.exp(-t/noise_decay)*.65+body*.26)*attack*release
+for name,duration,frequencies,band,nd,bd,peak in [
+ ('chip',.105,[780,1237,2111],[1100,6200],.008,.017,.43),
+ ('card',.16,[185,390],[700,4200],.045,.014,.28),
+ ('land',.12,[155,307,557],[350,2400],.009,.019,.30),
+ ('lock',.34,[96,193,487],[550,3100],.017,.066,.48)]:
+ a=tactile(duration,frequencies,band,nd,bd)
+ if name=='lock':
+  offset=round(.055*SR);second=tactile(duration-.055,[680,1103],[1200,4500],.008,.019);a[offset:]+=second[:len(a)-offset]*.36
+ meta['files'][name]=export(name,np.column_stack([a,a]),peak)
+# A breath of rising filtered air; deliberately no resolved or celebratory notes.
+t=np.arange(round(.65*SR))/SR
+hush=sosfilt(butter(2,[450,2400],btype='bandpass',fs=SR,output='sos'),rng.normal(0,1,len(t)))
+hush*=np.sin(np.pi*t/.65)**2*(.4+.6*t/.65)
+hush+=.12*np.sin(2*np.pi*(105*t+32*t*t))*np.sin(np.pi*t/.65)**2
+meta['files']['third']=export('third',np.column_stack([hush,hush]),.24)
+for tier,notes,duration in [(2,[64,71,74,79],1.55),(3,[60,67,71,76,79,86],2.25)]:
+ fx=np.zeros((round(duration*SR),2))
+ for i,note in enumerate(notes):
+  # Offset the extension so the existing win bed keeps its initial articulation.
+  onset=.32+i*(.13 if tier==2 else .18)
+  signal=bell(note,min(.95,duration-onset))
+  start=round(onset*SR);length=min(len(signal),len(fx)-start)
+  fx[start:start+length,0]+=signal[:length]*.18*np.sqrt((1-(i%2*.3-.15))/2)
+  fx[start:start+length,1]+=signal[:length]*.18*np.sqrt((1+(i%2*.3-.15))/2)
+ meta['files']['result-'+str(tier)]=export('result-'+str(tier),fx,.43 if tier==2 else .48)
 (out/'manifest.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2));print(json.dumps(meta,ensure_ascii=False,indent=2))

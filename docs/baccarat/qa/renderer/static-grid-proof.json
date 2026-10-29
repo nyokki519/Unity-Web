@@ -1,0 +1,176 @@
+{
+  "states": [
+    {
+      "progress": 0,
+      "gripX": -0.7,
+      "meanAbsoluteChannelError": 0.00020720108695652175,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 295.7744684353495
+    },
+    {
+      "progress": 0,
+      "gripX": 0,
+      "meanAbsoluteChannelError": 0.00020720108695652175,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 295.7744684353495
+    },
+    {
+      "progress": 0,
+      "gripX": 0.7,
+      "meanAbsoluteChannelError": 0.00020720108695652175,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 295.7744684353495
+    },
+    {
+      "progress": 0.25,
+      "gripX": -0.7,
+      "meanAbsoluteChannelError": 0.005548573369565217,
+      "channelsOver4": 0.00011209239130434782,
+      "maxError": 64,
+      "width": 310.46801879716884
+    },
+    {
+      "progress": 0.25,
+      "gripX": 0,
+      "meanAbsoluteChannelError": 0.0029789402173913044,
+      "channelsOver4": 6.114130434782609e-05,
+      "maxError": 64,
+      "width": 310.6350492839645
+    },
+    {
+      "progress": 0.25,
+      "gripX": 0.7,
+      "meanAbsoluteChannelError": 0.00487601902173913,
+      "channelsOver4": 0.00010190217391304347,
+      "maxError": 64,
+      "width": 310.0529866651058
+    },
+    {
+      "progress": 0.5,
+      "gripX": -0.7,
+      "meanAbsoluteChannelError": 0.0067561141304347825,
+      "channelsOver4": 0.00022248641304347826,
+      "maxError": 64,
+      "width": 308.4816139855993
+    },
+    {
+      "progress": 0.5,
+      "gripX": 0,
+      "meanAbsoluteChannelError": 0.0078108016304347825,
+      "channelsOver4": 0.0001783288043478261,
+      "maxError": 64,
+      "width": 308.2074896042494
+    },
+    {
+      "progress": 0.5,
+      "gripX": 0.7,
+      "meanAbsoluteChannelError": 0.003485054347826087,
+      "channelsOver4": 0.00014775815217391304,
+      "maxError": 64,
+      "width": 308.9608953290576
+    },
+    {
+      "progress": 0.75,
+      "gripX": -0.7,
+      "meanAbsoluteChannelError": 0.003568274456521739,
+      "channelsOver4": 8.491847826086956e-05,
+      "maxError": 89,
+      "width": 312.23616200428785
+    },
+    {
+      "progress": 0.75,
+      "gripX": 0,
+      "meanAbsoluteChannelError": 0.004964334239130435,
+      "channelsOver4": 8.322010869565218e-05,
+      "maxError": 64,
+      "width": 312.0415011394924
+    },
+    {
+      "progress": 0.75,
+      "gripX": 0.7,
+      "meanAbsoluteChannelError": 0.003702445652173913,
+      "channelsOver4": 0.00010699728260869565,
+      "maxError": 64,
+      "width": 312.5771612298481
+    },
+    {
+      "progress": 1,
+      "gripX": -0.7,
+      "meanAbsoluteChannelError": 0.001037703804347826,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 320.6823190209042
+    },
+    {
+      "progress": 1,
+      "gripX": 0,
+      "meanAbsoluteChannelError": 0.001037703804347826,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 320.6823190209042
+    },
+    {
+      "progress": 1,
+      "gripX": 0.7,
+      "meanAbsoluteChannelError": 0.001037703804347826,
+      "channelsOver4": 0,
+      "maxError": 1,
+      "width": 320.6823190209042
+    }
+  ],
+  "timings": [
+    {
+      "trial": 0,
+      "renderer": "reference",
+      "ms": 140.39999999990687
+    },
+    {
+      "trial": 0,
+      "renderer": "static",
+      "ms": 10.5
+    },
+    {
+      "trial": 1,
+      "renderer": "reference",
+      "ms": 98.79999999981374
+    },
+    {
+      "trial": 1,
+      "renderer": "static",
+      "ms": 5
+    },
+    {
+      "trial": 2,
+      "renderer": "reference",
+      "ms": 108.60000000009313
+    },
+    {
+      "trial": 2,
+      "renderer": "static",
+      "ms": 5.800000000279397
+    },
+    {
+      "trial": 3,
+      "renderer": "reference",
+      "ms": 117
+    },
+    {
+      "trial": 3,
+      "renderer": "static",
+      "ms": 4.7999999998137355
+    },
+    {
+      "trial": 4,
+      "renderer": "reference",
+      "ms": 127
+    },
+    {
+      "trial": 4,
+      "renderer": "static",
+      "ms": 2.5
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "fixture": "Known isolated shoe [11,13,1,26,2,9], no production odds claim",
+  "cards": 6,
+  "receipt": {
+    "stake": 1000,
+    "returned": 2000,
+    "net": 1000,
+    "lines": [
+      {
+        "side": "player",
+        "stake": 1000,
+        "principal": 1000,
+        "profit": 1000,
+        "returned": 2000,
+        "net": 1000
+      }
+    ]
+  },
+  "capturedFrames": 358,
+  "audioStartRelativeToFirstFrameSeconds": -0.010259866714477539,
+  "errors": [],
+  "note": "Full DOM screencast and actual WebAudio mix, browser epoch timestamps align tracks. Recording is not performance measurement."
+}

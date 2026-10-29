@@ -1,0 +1,10 @@
+/* Bounded local accents. The director removes every transient class and node. */
+.ceremony-lock .phase-label{color:#eddbb5;letter-spacing:.2em}.ceremony-third .phase-label{color:#f1d596}.ceremony-third .shoe-stack{filter:brightness(1.16)}
+.ceremony-anticipation .phase-label{color:#f2db9f}.felt.settlement-light{outline:1px solid #dbc38d;outline-offset:-14px}
+.hand.ceremony-winner{position:relative}.hand.ceremony-winner:before{content:'';position:absolute;inset:-5px 0;border:1px solid #dbc38d55;border-radius:50% 50% 12px 12px;pointer-events:none;background:linear-gradient(180deg,#dfc27d13,transparent 72%)}
+.ceremony-winner .points{color:#f6deb0;text-shadow:0 2px 4px #0008}.ceremony-winner h2{color:#ead4a6}.ceremony-result{border-bottom-color:#dbc38d;color:#f4dfb6}
+.ceremony-reflection{position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,#fff7dc88 49%,transparent 63%);border-radius:inherit;z-index:2}
+.ceremony-spark{position:absolute;pointer-events:none;left:50%;top:48%;width:3px;height:8px;border-radius:2px;background:#ddc491;z-index:5}.flying-chip{background-size:cover;background-position:center;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.ceremony-spark,.ceremony-reflection{display:none}.ceremony-winner:before{background:none}}
+
+.ceremony-winning-zone{box-shadow:inset 0 0 0 1px #efda9c,0 0 18px #ceb97526!important}.ceremony-winning-zone strong{color:#f6e3b8}

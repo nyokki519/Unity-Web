@@ -1,0 +1,22 @@
+{
+  "loaded": [
+    "reveal",
+    "win",
+    "preview-green",
+    "preview-red",
+    "chip",
+    "card",
+    "land",
+    "lock",
+    "preview-rainbow",
+    "result-2",
+    "third",
+    "preview-blue",
+    "result-3"
+  ],
+  "peak": 0.39054015278816223,
+  "rms": 0.06394647951463198,
+  "maxVoices": 3,
+  "remainingVoices": 0,
+  "musicError": false
+}

@@ -38,6 +38,41 @@
       "durationSeconds": 0.38,
       "peakBeforeMp3": 0.4,
       "bytes": 7206
+    },
+    "chip": {
+      "durationSeconds": 0.10498866213151928,
+      "peakBeforeMp3": 0.43,
+      "bytes": 3024
+    },
+    "card": {
+      "durationSeconds": 0.16,
+      "peakBeforeMp3": 0.28,
+      "bytes": 3860
+    },
+    "land": {
+      "durationSeconds": 0.12,
+      "peakBeforeMp3": 0.3,
+      "bytes": 3024
+    },
+    "lock": {
+      "durationSeconds": 0.34,
+      "peakBeforeMp3": 0.48,
+      "bytes": 6786
+    },
+    "third": {
+      "durationSeconds": 0.65,
+      "peakBeforeMp3": 0.24,
+      "bytes": 11384
+    },
+    "result-2": {
+      "durationSeconds": 1.55,
+      "peakBeforeMp3": 0.43,
+      "bytes": 26016
+    },
+    "result-3": {
+      "durationSeconds": 2.25,
+      "peakBeforeMp3": 0.48,
+      "bytes": 37301
     }
   }
 }

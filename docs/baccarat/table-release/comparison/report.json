@@ -1,0 +1,36 @@
+[
+  {
+    "tag": "before",
+    "shoe": [
+      11,
+      6,
+      8,
+      13
+    ],
+    "bet": 1000,
+    "viewport": [
+      390,
+      844
+    ],
+    "speed": "normal",
+    "net": 1000,
+    "errors": []
+  },
+  {
+    "tag": "after",
+    "shoe": [
+      11,
+      6,
+      8,
+      13
+    ],
+    "bet": 1000,
+    "viewport": [
+      390,
+      844
+    ],
+    "speed": "normal",
+    "net": 1000,
+    "errors": []
+  }
+]

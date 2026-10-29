@@ -13,7 +13,7 @@ with sync_playwright() as p:
  page.locator('[data-action=resume-deal]').click();page.locator('[data-action=skip]').click();page.wait_for_function("()=>BACCARAT.session.state.phase==='result'")
  assert page.evaluate('BACCARAT.session.state.stats.rounds')==1
  assert page.evaluate('BACCARAT.session.state.balance===BACCARAT.session.state.round.balanceBefore+BACCARAT.session.state.round.receipt.net')
- page.screenshot(path=str(out/'result-390.png'));page.locator('.playing-card.revealed').first.click();page.locator('.card-zoom').wait_for();page.keyboard.press('Escape')
+ page.screenshot(path=str(out/'result-390.png'));page.locator('.playing-card.revealed').first.focus();page.keyboard.press('Enter');page.locator('.card-zoom').wait_for();page.keyboard.press('Escape')
  page.locator('[data-action=roads]').click();assert page.locator('#modal').evaluate('(x)=>x.open');page.locator('[data-action=modal-close]').click()
  saved=page.evaluate("localStorage.getItem('unity-baccarat-session-v1')")
  page.locator('[data-action=next]').click();page.locator('[data-action="bet:banker"]').click();page.locator('[data-action=confirm]').click();page.locator('[data-action=end]').click();assert page.evaluate('BACCARAT.session.state.stats.rounds')==2;amount=page.evaluate('BACCARAT.session.state.balance')

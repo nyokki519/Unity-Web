@@ -1,3 +1,5 @@
+> Historical first art pass. The later table release supersedes layout, motion counts, reference access and performance statements below; see [current verification](table-release/README.md).
+
 # Vesper presentation pass
 
 The private table uses a midnight navy salon, emerald felt with an original fiber tile, leather rail and brass inlays, ivory card stock and champagne controls. The table selections, title screen, ordinary table and full-screen squeeze share these materials. The header uses the community cup/heart engraving. Original card generation and material provenance are recorded with their assets.

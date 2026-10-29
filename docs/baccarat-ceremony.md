@@ -1,0 +1,11 @@
+# Cosmetic motion director
+
+`motion.js` never calls Session, RNG, settlement or money APIs. Import `ceremony.css` after the table styles.
+
+- `dealMotion(node, settings, onFace?)`: preserves the computed outer-card transform, including crosswise third cards. Normal travel/landing lasts 500 ms; the inner flip lasts 420 ms. Quick travel lasts 180 ms and flip 160 ms. The optional cosmetic callback waits until the actual WAAPI timeline passes the front-facing midpoint, with an 8 ms margin. Instant, OS reduced-motion, explicit reduced motion and hidden-document calls invoke it synchronously. The caller must guard round identity and update displayed points only here. Every delayed callback is generation guarded; `clearMotion()` discards it. Timeline polling has a finite 40-attempt limit.
+- `lockMotion(settings)` and `thirdMotion(settings)`: bounded local phase/shoe accents, at most 420/600 ms normal and 180 ms quick. No outcome changes.
+- `chipFlight(from, to, settings, {index, denomination, onLand})`: 560 ms normal, 180 ms quick, uses generated denomination SVGs when known. Cancellation never invokes `onLand`.
+- `settleMotion(receipt, settings, audio)`: reads the committed `.felt.dataset.winner`. Personal `net > 0` enables celebration. Normal anticipation occupies 0–120 ms, impact begins at 120 ms and lasts 250 ms, and all afterglow ends by 1300 ms. Principal follows each real returned/lost line; a distinct later house-to-wallet movement exists only for positive profit. Reflections are restricted to the winning hand. Tie wins elevate the existing bounded payout tier.
+- `clearMotion()`: cancels all timers and animations, removes generated nodes and transient classes. Hiding the page invokes it automatically. Decorative nodes share a hard cap of 24. Flash, particles and shake remain independently controlled; no animation loop, fullscreen shader or background reraster loop is used.
+
+Verification: `node --test test/baccarat-ceremony.test.js test/baccarat-motion.test.js`; `UNITY_URL=http://127.0.0.1:3487 python test/baccarat-ceremony_browser.py` against a server with `public` as its document root. The browser fixture checks the computed front-facing matrix at the callback, cancellation, winning-hand accent, decorative cap and cleanup.
