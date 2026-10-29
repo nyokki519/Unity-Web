@@ -1,0 +1,14 @@
+RUN test/baccarat-table_browser.py
+compact table viewports and real round integrity passed
+RUN test/baccarat-bet-order_browser.py
+area-first target selection, chip deposit, undo and restore passed
+RUN test/baccarat-table-scenarios_browser.py
+reference operation, commission, tie, loss and peak real UI scenarios passed
+RUN test/baccarat-reveal-lifecycle_browser.py
+queued flip skip and active flip pause lifecycle passed
+RUN test/baccarat-hand_browser.py
+direct hand table browser passed
+RUN test/baccarat-curl-fallback_browser.py
+GPU loss during texture loading keeps playable fallback
+RUN test/baccarat-legacy_browser.py
+["Unity MIX create form and event modes", "Chinchiro roll and coin conservation", "Retro shot and 200-credit debit", "Shooting quickstart and actual firing", "Retired mechanical remains410"]

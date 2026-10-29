@@ -1,0 +1,47 @@
+{
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812,
+      "confirm": {
+        "x": 20,
+        "y": 717.328125,
+        "width": 335,
+        "height": 45
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "confirm": {
+        "x": 20,
+        "y": 718.09375,
+        "width": 350,
+        "height": 45
+      }
+    },
+    {
+      "width": 414,
+      "height": 896,
+      "confirm": {
+        "x": 20,
+        "y": 721.59375,
+        "width": 374,
+        "height": 45
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "confirm": {
+        "x": 790,
+        "y": 815.46875,
+        "width": 403,
+        "height": 48.046875
+      }
+    }
+  ],
+  "singleSettlement": true,
+  "reloadBalance": 1000000,
+  "errors": []
+}

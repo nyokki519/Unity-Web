@@ -15,8 +15,8 @@ No rules/shoe/session changes, othergames untouched, no referenceassets, preserv
 - [x] Task3: audio originalsamples + roundResult(receipt), independentchannels/caps, no abruptBGMstop. Tests and recordedactualmix.
 - [x] Task4: parent main/layout integration, new table.css/table-ui.js asneeded, compactmetadata/handpoints/wagerstacks/receipt. Write viewport+face/roundflow failingtest thenimplement; verify actual375/390/414/PC and large text.
 - [x] Task5: first-player pass, title/tutorial/history/settings consistency; normal/max/mute/skip/hold/reload flow; test all financial branches, full npm test and othergame regressions; freshreview and fix importantfindings.
-- [ ] Task6: screenshots, shortactualaudio/video, timing/performance/provenance/limitations; approved release throughGit/Render + publishedasset/realUI check.
+- [x] Task6: screenshots, shortactualaudio/video, timing/performance/provenance/limitations; approved release throughGit/Render + publishedasset/realUI check.
 
 Ledger: baseline8db26c3; currentonlyuntrackednode_modules. Reference truly played one round: PLAYER9/BANKER6,bet100,returned200,net100; rebetdialog displayed, completedreset notverified. Main390confirm y1005.125 vsviewport844. No full visual/interaction superiority claim from single reference round.
 
-Implementation, original asset work, financial regression, broad browser flows and reviewer fixes are verified; evidence in docs/baccarat/table-release/. Task6 release confirmation remains in progress. Full Node suite407/407; physical iPhone and stable end-to-end60fps not certified.
+Implementation, original asset work, financial regression, broad browser flows and reviewer fixes are verified; evidence in docs/baccarat/table-release/. Task6 completed: main pushed, Render111/111 asset hashes match, seven production browser suites passed; docs/baccarat/table-release/PRODUCTION.md. Full Node suite407/407; physical iPhone and stable end-to-end60fps not certified.

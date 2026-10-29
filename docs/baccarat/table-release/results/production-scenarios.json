@@ -1,0 +1,146 @@
+[
+  {
+    "scenario": "reference-round",
+    "receipt": {
+      "stake": 10000,
+      "returned": 20000,
+      "net": 10000,
+      "lines": [
+        {
+          "side": "player",
+          "stake": 10000,
+          "principal": 10000,
+          "profit": 10000,
+          "returned": 20000,
+          "net": 10000
+        }
+      ]
+    },
+    "points": [
+      "9",
+      "6"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  },
+  {
+    "scenario": "banker-commission",
+    "receipt": {
+      "stake": 1000,
+      "returned": 1950,
+      "net": 950,
+      "lines": [
+        {
+          "side": "banker",
+          "stake": 1000,
+          "principal": 1000,
+          "profit": 950,
+          "returned": 1950,
+          "net": 950
+        }
+      ]
+    },
+    "points": [
+      "4",
+      "7"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  },
+  {
+    "scenario": "tie-push",
+    "receipt": {
+      "stake": 1000,
+      "returned": 1000,
+      "net": 0,
+      "lines": [
+        {
+          "side": "player",
+          "stake": 1000,
+          "principal": 1000,
+          "profit": 0,
+          "returned": 1000,
+          "net": 0
+        }
+      ]
+    },
+    "points": [
+      "9",
+      "9"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  },
+  {
+    "scenario": "tie-hit",
+    "receipt": {
+      "stake": 1000,
+      "returned": 9000,
+      "net": 8000,
+      "lines": [
+        {
+          "side": "tie",
+          "stake": 1000,
+          "principal": 1000,
+          "profit": 8000,
+          "returned": 9000,
+          "net": 8000
+        }
+      ]
+    },
+    "points": [
+      "9",
+      "9"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  },
+  {
+    "scenario": "loss",
+    "receipt": {
+      "stake": 1000,
+      "returned": 0,
+      "net": -1000,
+      "lines": [
+        {
+          "side": "player",
+          "stake": 1000,
+          "principal": 0,
+          "profit": 0,
+          "returned": 0,
+          "net": -1000
+        }
+      ]
+    },
+    "points": [
+      "3",
+      "9"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  },
+  {
+    "scenario": "large-win",
+    "receipt": {
+      "stake": 100000,
+      "returned": 200000,
+      "net": 100000,
+      "lines": [
+        {
+          "side": "player",
+          "stake": 100000,
+          "principal": 100000,
+          "profit": 100000,
+          "returned": 200000,
+          "net": 100000
+        }
+      ]
+    },
+    "points": [
+      "8",
+      "7"
+    ],
+    "allFacesStable": true,
+    "errors": []
+  }
+]
