@@ -1,3 +1,13 @@
+# Unity バカラ：参考準拠版
+
+最新の既定入口は `/baccarat/index.html`。参考サイトの許諾済み素材と配置を使う版です。[比較・検証記録](faithful/README.md)を参照してください。
+
+以前のVESPERは `/baccarat/vesper.html` に保存されています。進行・残高は同じSession保存を使用し、既存のレトロ、交流ゲーム、チンチロ、シューティングは維持しています。
+
+---
+
+以下は保存したVESPER版の記録です。
+
 # Unity BACCARAT / VESPER
 
 Unity MIXのホームから入る、登録・ルーム作成不要の1人用ブラウザゲーム。ユーザーの追加指示により、Windows向けUnityネイティブ案から**スマホ中心のWeb版**へ変更した。Unity Editor/C#のプロジェクトやWindows実行ファイルではない。

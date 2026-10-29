@@ -1,0 +1,50 @@
+{
+  "reference": "Actual guest hand [15,46,19,8,47], PLAYER9/BANKER7; bet100; before50100; after50200",
+  "local": "Same legal hand via isolated Session fixture after one real100 profit warm round; no source state/outcome edited",
+  "normalization": "Both800x1300,DPR1,game640x960 origin80,206. Local host-only206px top margin aligns source portal placement; no internal game styles/positions adjusted for capture. Names-only mask x280:445/y18:52 in three no-card metrics. Portal chrome excluded.",
+  "metrics": [
+    {
+      "phase": "betting",
+      "meanAbsoluteChannelError0to255": 0.0,
+      "channelsOver4Percent": 0.0,
+      "pixels": 608790
+    },
+    {
+      "phase": "selected",
+      "meanAbsoluteChannelError0to255": 0.0,
+      "channelsOver4Percent": 0.0,
+      "pixels": 608790
+    },
+    {
+      "phase": "wager",
+      "meanAbsoluteChannelError0to255": 0.0,
+      "channelsOver4Percent": 0.0,
+      "pixels": 608790
+    }
+  ],
+  "semanticFrameTargetsMs": {
+    "reference": {
+      "deal": 780.3999999985099,
+      "reveal": 2089.599999997765,
+      "result": 4078,
+      "settlement": 12646.300000000745
+    },
+    "unity": {
+      "deal": 700.5999999977648,
+      "reveal": 1935.0999999977648,
+      "result": 3581.89999999851,
+      "settlement": 8437.5
+    }
+  },
+  "videoTrimStartsSeconds": [
+    0.3801908493041992,
+    0.27425575256347656
+  ],
+  "timing": {
+    "referenceDealToPoints4Ms": 1668.5,
+    "unityDealToPoints4Ms": 1628.300000000745,
+    "referenceDealToResultMs": 3091.400000002235,
+    "unityDealToResultMs": 2915.10000000149
+  },
+  "recordingLimit": "Screencast overhead and source remote-account callbacks affect wall time. Not FPS measurement; no exact timing identity claim."
+}

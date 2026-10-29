@@ -1,0 +1,7132 @@
+{
+  "frames": [
+    {
+      "t": 65.39999999850988,
+      "state": "Select",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 150.69999999925494,
+      "state": "Select",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 161.19999999925494,
+      "state": "Select",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 213.89999999850988,
+      "state": "Select",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 224.19999999925494,
+      "state": "Select",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 381.0999999977648,
+      "state": "Deal",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 493.8999999985099,
+      "state": "Deal",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 579.5999999977648,
+      "state": "Deal",
+      "cards": [],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50100"
+    },
+    {
+      "t": 642.5,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 151.45800000000003,
+          "y": 114.05135999999993,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 750.3999999985099,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 752.5,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 818.6999999992549,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 833.0999999977648,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 904.1999999992549,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 977.5999999977648,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1077,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 416.468650125,
+          "y": 88.11900750000007,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1162.199999999255,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1200.800000000745,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1314.199999999255,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1447.5,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 195.17525,
+          "y": 76.26750000000004,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1506.199999999255,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186.00002675000002,
+          "y": 119.99987250000004,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1642.800000000745,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1776.3999999985099,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 1903.5999999977648,
+      "state": "Deal",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "0",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2049.599999997765,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2186.300000000745,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2261.89999999851,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2305.300000000745,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2369.89999999851,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2474.699999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2575.89999999851,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2592.300000000745,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 252.265600592,
+          "y": -53.432093280000004,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2688.599999997765,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 229.896411792,
+          "y": 74.75089872000001,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2704.199999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 229.896411792,
+          "y": 74.75089872000001,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2778.699999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222.937708272,
+          "y": 114.62661551999997,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2784.199999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222.937708272,
+          "y": 114.62661551999997,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2849.5,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222.53150515200002,
+          "y": 116.95429631999991,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2905.199999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2912.199999999255,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2933.099999997765,
+      "state": "Deal2",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "0",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 2976.5,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3043.800000000745,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3056.099999997765,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3099.800000000745,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3104.199999999255,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3162.199999999255,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3168.199999999255,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3237.5,
+      "state": "GeneralWait",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3385.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3392.199999999255,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "0",
+      "credit": "50000"
+    },
+    {
+      "t": 3472.5,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50000"
+    },
+    {
+      "t": 3488.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50000"
+    },
+    {
+      "t": 3565.5,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50000"
+    },
+    {
+      "t": 3569.800000000745,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50000"
+    },
+    {
+      "t": 3678,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3680.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3778,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3853.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3856.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3936.39999999851,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3952.199999999255,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 3995.599999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4000.5,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4079.89999999851,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4145.39999999851,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4160.300000000745,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4223.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4224.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4279.5,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4288.5,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4353.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4400.099999997765,
+      "state": "CashOut",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4482.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4643.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4847.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 4964.89999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5088.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5187.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5274.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5280.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5348.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5360.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5438.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5440.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5539.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5650.89999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5734.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5745.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5808.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5882.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5889,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5974.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 5984.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6082.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6096.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6199,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6208.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6224.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6307.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6333.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6336.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6485.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6748.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6911.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 6973.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7133.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7201.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7278.89999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7483.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7578.89999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7719.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7861.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 7943,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8093.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8258.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8339.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8453.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8535.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8659.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8794.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 8952.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9069.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9116.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9303.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9391.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9513.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9666.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9788.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9916.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 9986.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10072.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10144.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10245.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10366.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10484.800000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10581.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10671.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10764.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10768.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10848.099999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10939.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 10944.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11015.89999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11090.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11246.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11302.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11449.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11561.39999999851,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11634.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11775.199999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 11934.599999997765,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12074.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12183.5,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12355.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12503.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12672.699999999255,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    },
+    {
+      "t": 12746.300000000745,
+      "state": "AskRebet",
+      "cards": [
+        {
+          "card": 8,
+          "x": 453,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 15,
+          "x": 150,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 19,
+          "x": 186,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 46,
+          "x": 417,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        },
+        {
+          "card": 47,
+          "x": 222,
+          "y": 120,
+          "heads": true,
+          "width": 86.39999999999999,
+          "height": 120
+        }
+      ],
+      "player": "9",
+      "banker": "7",
+      "win": "200",
+      "credit": "50200"
+    }
+  ],
+  "sounds": [
+    {
+      "key": "card_send",
+      "t": 17413.199999999255,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 17413.29999999702,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 17413.39999999851,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 17413.5,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 17736.29999999702,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 17736.39999999851,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 18166.29999999702,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 18538.29999999702,
+      "volume": 1
+    },
+    {
+      "key": "card_send",
+      "t": 19211.199999999255,
+      "volume": 1
+    },
+    {
+      "key": "success",
+      "t": 20235.699999999255,
+      "volume": 1
+    }
+  ],
+  "epoch": 1793293536.172,
+  "start": 16831.699999999255
+}

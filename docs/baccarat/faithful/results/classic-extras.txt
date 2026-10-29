@@ -1,0 +1,1 @@
+source stats, exact Max stacks, Min/Clear, keyboard and sound setting verified

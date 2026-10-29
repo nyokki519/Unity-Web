@@ -1,0 +1,54 @@
+[
+  {
+    "tasks": [
+      53,
+      51,
+      155
+    ],
+    "elapsed": 8075.10000000149,
+    "renderType": 2,
+    "pluginLimit": 30,
+    "heap": 15002873,
+    "viewport": [
+      390,
+      844
+    ],
+    "mobile": true,
+    "warmRounds": 1,
+    "actualRenders": 173,
+    "renderFps": 21.42,
+    "drawMedianMs": 49.9,
+    "drawP95Ms": 50.9,
+    "drawMaxMs": 166.4,
+    "rafMedianMs": 16.7,
+    "rafP95Ms": 16.8,
+    "rafMaxMs": 149.9,
+    "note": "Headless Chromium/software GPU; source SaveCPU rendering cap30, rAF is not actual render FPS; not physical iPhone."
+  },
+  {
+    "tasks": [
+      50,
+      53,
+      56
+    ],
+    "elapsed": 8111.60000000149,
+    "renderType": 2,
+    "pluginLimit": 30,
+    "heap": 12296585,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "mobile": false,
+    "warmRounds": 1,
+    "actualRenders": 173,
+    "renderFps": 21.33,
+    "drawMedianMs": 49.9,
+    "drawP95Ms": 51.0,
+    "drawMaxMs": 69.1,
+    "rafMedianMs": 16.7,
+    "rafP95Ms": 33.3,
+    "rafMaxMs": 50.0,
+    "note": "Headless Chromium/software GPU; source SaveCPU rendering cap30, rAF is not actual render FPS; not physical iPhone."
+  }
+]

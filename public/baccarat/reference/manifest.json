@@ -1,0 +1,412 @@
+{
+  "source": "https://playingcards.jp/m/gamble/baccarat/",
+  "captured": "2026-10-29",
+  "authorization": "User states permission for all source design/assets/audio/code needed for this reproduction; no independent contract verification.",
+  "images": {
+    "background": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/mobile_baccarat_BG.png",
+      "width": 640,
+      "height": 960,
+      "fw": 640,
+      "fh": 960,
+      "count": 1,
+      "file": "images/background.png",
+      "sha256": "8215d382bea351c53f843a7a4014b4b35861254034e6764c52733e311cb2c934"
+    },
+    "title": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/mobile_title_BG.png",
+      "width": 640,
+      "height": 960,
+      "fw": 640,
+      "fh": 960,
+      "count": 1,
+      "file": "images/title.png",
+      "sha256": "0fbe5b2676ff6a7a1a2426521bdcdad50006c1bc19b3cb9d21036bf13797d61f"
+    },
+    "logo": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/baccarat_title_logo_m.png",
+      "width": 620,
+      "height": 214,
+      "fw": 620,
+      "fh": 214,
+      "count": 1,
+      "file": "images/logo.png",
+      "sha256": "253fff943d8049f8675d9a8dd4e7c3c61c78088bd3352d9f0737482a96e92f57"
+    },
+    "homebutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/m_button_home.png",
+      "width": 180,
+      "height": 60,
+      "fw": 60,
+      "fh": 60,
+      "count": 3,
+      "file": "images/homebutton.png",
+      "sha256": "7a3d1785557498aad09506920b3c4dfee5e2795877f928bc44db63d6fa579273"
+    },
+    "soundbutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/m_button_sound.png",
+      "width": 180,
+      "height": 60,
+      "fw": 60,
+      "fh": 60,
+      "count": 3,
+      "file": "images/soundbutton.png",
+      "sha256": "e70e99f1b2e19d2d1ef888a85617c784dcd90525f307e84bfbdb4a25bb6eeab3"
+    },
+    "aboutbutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/m_button_info.png",
+      "width": 180,
+      "height": 60,
+      "fw": 60,
+      "fh": 60,
+      "count": 3,
+      "file": "images/aboutbutton.png",
+      "sha256": "d731a80de5c49d75e8e5d0556a6e29715123e85367884ebca0d6e1c13e1d989a"
+    },
+    "startbutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/button_start.png",
+      "width": 600,
+      "height": 80,
+      "fw": 200,
+      "fh": 80,
+      "count": 3,
+      "file": "images/startbutton.png",
+      "sha256": "baa723ffc389bb8a72832a3e3cad14e86c895baf5c39f587cd01f045112c6e69"
+    },
+    "recordbutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/button_record.png",
+      "width": 240,
+      "height": 80,
+      "fw": 80,
+      "fh": 80,
+      "count": 3,
+      "file": "images/recordbutton.png",
+      "sha256": "83a1bed810d37390965a36c4c652b5f4767272e5a38d79fd4c172509444ca6b2"
+    },
+    "menubutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/button_menu.png",
+      "width": 240,
+      "height": 80,
+      "fw": 80,
+      "fh": 80,
+      "count": 3,
+      "file": "images/menubutton.png",
+      "sha256": "0107ff1f9e3181757bf2cdcc1a4158585f8c4903ec6a279ccd353536e94d9f31"
+    },
+    "accountbutton": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/button/button_account.png",
+      "width": 240,
+      "height": 80,
+      "fw": 80,
+      "fh": 80,
+      "count": 3,
+      "file": "images/accountbutton.png",
+      "sha256": "91bac79adb7df03207844a2e1fe739192979dd0a6c2150e34a9f5ac1c7181eae"
+    },
+    "exchange_m": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/m/tiptrade_m_A.png",
+      "width": 180,
+      "height": 60,
+      "fw": 60,
+      "fh": 60,
+      "count": 3,
+      "file": "images/exchange_m.png",
+      "sha256": "e3e5d425f7303628b6c38ffd92be86e0add30b01d36b4e10d49eb084144f88fe"
+    },
+    "exchange": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/buy.png",
+      "width": 240,
+      "height": 80,
+      "fw": 80,
+      "fh": 80,
+      "count": 3,
+      "file": "images/exchange.png",
+      "sha256": "2269a94abe975b41bcd827d3bff9ddfdfdf536a443753a308c8c2353cec5e692"
+    },
+    "coin": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/coin.png",
+      "width": 32,
+      "height": 32,
+      "fw": 32,
+      "fh": 32,
+      "count": 1,
+      "file": "images/coin.png",
+      "sha256": "b51ab351136c1ea1e375d811fd0147ff68fcf3964df2e7790ac27add4cc6680d"
+    },
+    "casinocoin": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/coin_icon.png?big",
+      "width": 13,
+      "height": 14,
+      "fw": 13,
+      "fh": 14,
+      "count": 1,
+      "file": "images/casinocoin.png",
+      "sha256": "c85dee5df48581e831c9c74d03793374ab6fc04ff46932c8100dbe38a3c1932f"
+    },
+    "deal": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/m/DEAL.png?big",
+      "width": 444,
+      "height": 68,
+      "fw": 148,
+      "fh": 68,
+      "count": 3,
+      "file": "images/deal.png",
+      "sha256": "4d026316b03b7011d1d8218599db52a8ec2e9b9cb3e9476a26ba9a19597fadbc"
+    },
+    "clear": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/CLEAR.png",
+      "width": 138,
+      "height": 46,
+      "fw": 46,
+      "fh": 46,
+      "count": 3,
+      "file": "images/clear.png",
+      "sha256": "da00bdf25b8c86908ca24e3db43cbd3696a60c50780be0767b9a9cd114e0df1d"
+    },
+    "rebet": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/REBET.png",
+      "width": 138,
+      "height": 46,
+      "fw": 46,
+      "fh": 46,
+      "count": 3,
+      "file": "images/rebet.png",
+      "sha256": "b3ef9f2739097913d8785a1049c0031e643b9b03fb0ed3502d9c0f7761ff8c4c"
+    },
+    "min": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/m/min_m.png",
+      "width": 174,
+      "height": 36,
+      "fw": 58,
+      "fh": 36,
+      "count": 3,
+      "file": "images/min.png",
+      "sha256": "2aaa83bdf8d5a00f09652bea22f75b8d7be1945b5d441e640b456e5ea1b0ffe0"
+    },
+    "max": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/m/max_m.png",
+      "width": 174,
+      "height": 36,
+      "fw": 58,
+      "fh": 36,
+      "count": 3,
+      "file": "images/max.png",
+      "sha256": "52cafce6d1e88871745973fc8808ea0e7b010b39f908d16a277ddf251a25f475"
+    },
+    "playerfield": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/circlec_olor.png?big",
+      "width": 200,
+      "height": 200,
+      "fw": 200,
+      "fh": 200,
+      "count": 1,
+      "file": "images/playerfield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be"
+    },
+    "bankerfield": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/circlec_olor.png?big",
+      "width": 200,
+      "height": 200,
+      "fw": 200,
+      "fh": 200,
+      "count": 1,
+      "file": "images/bankerfield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be"
+    },
+    "tiefield": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/m/circlec_olor.png?big",
+      "width": 200,
+      "height": 200,
+      "fw": 200,
+      "fh": 200,
+      "count": 1,
+      "file": "images/tiefield.png",
+      "sha256": "a5ec9d2b63d0403c315933591ba0c6efa6b11b19418aa024b96a722df918d0be"
+    },
+    "cutin": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/game/baccarat/assets/image/BK_cutin.png?big",
+      "width": 300,
+      "height": 129,
+      "fw": 300,
+      "fh": 43,
+      "count": 3,
+      "file": "images/cutin.png",
+      "sha256": "2d8b4e09613eb0b5dbbe9fd96fab0ff405c8e438beefe4a7d7f2d64277562c6d"
+    },
+    "tip_1": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_1.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_1.png",
+      "sha256": "d61b651cc4d0a1126a25f2b18b1028398eaf32980583f89447fbef655b789602"
+    },
+    "tip_10": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_10.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_10.png",
+      "sha256": "5d4b6eb316b3461e0d23d8049a9d95b1a153e31ce73210963d7421866f3177fd"
+    },
+    "tip_50": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_50.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_50.png",
+      "sha256": "8cdfb877aa1bd1bdc153e2e80be91208ee8995a4b870bbd8f1f9d7d1a6d96075"
+    },
+    "tip_100": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_100.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_100.png",
+      "sha256": "a4994e019cae37cb1eb5881ade08c06f2ef6b0bebc78b0c3bcb23b8627c2d47d"
+    },
+    "tip_500": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_500.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_500.png",
+      "sha256": "636efc77218817beb40d7ac6bddb8c6d9ac8271c5bd8c4cfa610a5ab6586c73b"
+    },
+    "tip_1000": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_1k.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_1000.png",
+      "sha256": "b1aa391e6dcfba8bee07ed102ed6e26dbf0ceb45a28c7cab7a4070c93d766af2"
+    },
+    "tip_5000": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_5k.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_5000.png",
+      "sha256": "e435c85d38f9f34aeb1d3f874f2c9314f507d6a32cd92ab963eacab89e182141"
+    },
+    "tip_10000": {
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/image/casino/tip/tip_10k.png?bigger",
+      "width": 135,
+      "height": 47,
+      "fw": 45,
+      "fh": 47,
+      "count": 3,
+      "file": "images/tip_10000.png",
+      "sha256": "6cad88bfde7f87bed5fdb14cf4649196af913e9bbaa7a3a412c71d15c8759aa9"
+    }
+  },
+  "audio": {
+    "card_move": {
+      "file": "audio/card_move.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/card_move.mp3",
+      "sha256": "f14b0c67f753ebeb8b3ce9d7f92427b76ac0238154faab804f4944fad22833a5"
+    },
+    "card_drag": {
+      "file": "audio/card_drag.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/card_drag.mp3",
+      "sha256": "3168c16a8556ebd6343838ca9379d2c5e4d65c5f0bbbd0cd7147c3bd6389271f"
+    },
+    "card_kubaru": {
+      "file": "audio/card_kubaru.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/card_kubaru.mp3",
+      "sha256": "703fa6889f8c43408e810af1464c087ee04e0d01e528aec941db788010a496a1"
+    },
+    "card_send": {
+      "file": "audio/card_send.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/card_send.mp3",
+      "sha256": "c77da3fbe9c8d53166db161a94c0960893dd5e845126d20e39e72d8f2e7f36c4"
+    },
+    "button": {
+      "file": "audio/button.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/button.mp3",
+      "sha256": "d9c01fb2ddacefe1e35b85425e7f982d178da718d9871880ddbf611f37e15886"
+    },
+    "button2": {
+      "file": "audio/button2.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/button2.mp3",
+      "sha256": "64ccc3549b7e0b68bfa7e7b8546bd5f337242bb36d14a4c79f49ae19cfc80811"
+    },
+    "button3": {
+      "file": "audio/button3.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/button3.mp3",
+      "sha256": "dccd9337d7f4e8d7602e198fc6dbdba93e6d389ea0759bb1c5d310e8dcc8c35a"
+    },
+    "button_cancel": {
+      "file": "audio/button_cancel.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/button_cancel.mp3",
+      "sha256": "ddb69c2a9bbfda63e6a2805edb911e966033721ed741249096c0daf48f5a1e4b"
+    },
+    "success": {
+      "file": "audio/success.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/success.mp3",
+      "sha256": "ad9b2abc095366c923cae31166c80d658e41079edc5accafc8bce41e63d64128"
+    },
+    "fail": {
+      "file": "audio/fail.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/fail.mp3",
+      "sha256": "9c842a6b9118fa31455ced2487c9764a2d8a5e60574d409255f13f5c8e6fa2d1"
+    },
+    "spades_bid": {
+      "file": "audio/spades_bid.mp3",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/assets/audio/se/spades_bid.mp3",
+      "sha256": "39342ab24801d00ae933e0a253f28f55db0d63394327d0622c441dbd6a647bf7"
+    }
+  },
+  "font": {
+    "file": "alfa-slab-one.woff2",
+    "url": "https://fonts.gstatic.com/s/alfaslabone/v21/6NUQ8FmMKwSEKjnm5-4v-4Jh2dJhew.woff2",
+    "license": "OFL-1.1",
+    "sha256": "48a110c7fda81f9921a6437e1a813dcea56df5a9f52f778c7b2f2151e36e4f2c"
+  },
+  "vendor": {
+    "phaser-2.8.0.min.js": {
+      "file": "vendor/phaser-2.8.0.min.js",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.8.0/phaser.min.js",
+      "license": "MIT",
+      "sha256": "1ca29642a859097deb7b27ee321b1bd338a27875a2bd6824e522553797204a39"
+    },
+    "SaveCPU.js": {
+      "file": "vendor/SaveCPU.js",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/playingcards-jp/js/SaveCPU.js",
+      "license": "MIT",
+      "sha256": "dcc2926765e8277a6e9bb2bf48532b70d5af1389ebfc6f7870ca9295bd7c1391"
+    },
+    "jquery.js": {
+      "file": "vendor/jquery.js",
+      "url": "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+      "license": "MIT",
+      "sha256": "87083882cc6015984eb0411a99d3981817f5dc5c90ba24f0940420c5548d82de"
+    },
+    "jquery-ui.js": {
+      "file": "vendor/jquery-ui.js",
+      "url": "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js",
+      "license": "MIT",
+      "sha256": "78613a6e5bab939b078feae691fb0661e2b2671dcce1b1be66517203b2a7b3b1"
+    },
+    "jquery-ui.css": {
+      "file": "vendor/jquery-ui.css",
+      "url": "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/cupertino/jquery-ui.css",
+      "license": "MIT",
+      "sha256": "caad4fac7e623dc5fd1abec3ab6b4a70ba92e30d14dc199de81884509dbf173a"
+    }
+  }
+}

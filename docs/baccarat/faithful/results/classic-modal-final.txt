@@ -1,0 +1,1 @@
+mid-deal sound close returns to repeat, home settles once and cancels old callbacks

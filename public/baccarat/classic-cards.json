@@ -1,0 +1,12 @@
+{
+  "faces": 52,
+  "backFrame": 53,
+  "frameWidth": 144,
+  "frameHeight": 200,
+  "columns": 13,
+  "width": 1872,
+  "height": 1000,
+  "sha256": "75c8f3656ff4e29cd5fc713854402c7dfa9d4ce650514b66025cd5fea3df38ac",
+  "art": "Existing Unity community deck, source-matched white stock/black edge; no reference face art",
+  "generator": "tools/generate-baccarat-classic-atlas.py"
+}

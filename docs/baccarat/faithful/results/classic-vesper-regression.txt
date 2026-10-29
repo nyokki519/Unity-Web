@@ -1,0 +1,4 @@
+RUN retained VESPER: test/baccarat_browser.py
+baccarat browser integration passed
+RUN retained VESPER: test/baccarat-hand_browser.py
+direct hand table browser passed

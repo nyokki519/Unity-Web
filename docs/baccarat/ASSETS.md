@@ -1,3 +1,7 @@
+# 最新版の素材
+
+参考準拠版の元画像・音・フォント・描画ライブラリと許諾記録は [reference/NOTICE.md](../../public/baccarat/reference/NOTICE.md) と同ディレクトリのmanifestを参照。以下は保持したVESPER用オリジナル素材の記録です。
+
 # 素材・利用条件
 
 | 対象 | 出所 | 配布・取り扱い |

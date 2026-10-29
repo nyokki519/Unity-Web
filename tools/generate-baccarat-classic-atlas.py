@@ -1,0 +1,8 @@
+"""Rasterize the community deck into the source144×200/13-column format."""
+import os,base64,json,hashlib
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+root=Path(__file__).resolve().parents[1];base=os.environ.get('UNITY_URL','http://127.0.0.1:3483')
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page();page.goto(base+'/baccarat/reference/manifest.json');encoded=page.evaluate('''async()=>{const {FACES,BACK}=await import('/baccarat/card-data.js'),{classicCardFace,classicCardBack}=await import('/baccarat/classic-card.js');const canvas=document.createElement('canvas');canvas.width=1872;canvas.height=1000;const ctx=canvas.getContext('2d');for(const [index,svg]of [...FACES.map((s,i)=>[i,classicCardFace(s)]),[53,classicCardBack(BACK)]]){const image=new Image();image.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await image.decode();ctx.drawImage(image,index%13*144,Math.floor(index/13)*200,144,200);}return canvas.toDataURL('image/png').split(',')[1]}''');b.close()
+path=root/'public/baccarat/classic-cards.png';data=base64.b64decode(encoded);path.write_bytes(data);(root/'public/baccarat/classic-cards.json').write_text(json.dumps({'faces':52,'backFrame':53,'frameWidth':144,'frameHeight':200,'columns':13,'width':1872,'height':1000,'sha256':hashlib.sha256(data).hexdigest(),'art':'Existing Unity community deck, source-matched white stock/black edge; no reference face art','generator':'tools/generate-baccarat-classic-atlas.py'},indent=2));print('Unity atlas saved:',len(data),'bytes')

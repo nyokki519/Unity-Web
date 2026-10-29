@@ -1,6 +1,6 @@
 import {deal,payout,totalBet,SIDES} from './rules.js';
 import {newShoe,cryptoRandom} from './shoe.js';
-export const TABLES={lounge:{min:1000,max:100000,start:1000000},salon:{min:10000,max:500000,start:5000000},suite:{min:50000,max:2000000,start:20000000}};
+export const TABLES={lounge:{min:1000,max:100000,start:1000000},salon:{min:10000,max:500000,start:5000000},suite:{min:50000,max:2000000,start:20000000},classic:{min:100,max:10500000,start:5000000}};
 const MAX=9e12,integer=(x,max=MAX)=>Number.isSafeInteger(x)&&x>=0&&x<=max;
 const require=(ok,code='CORRUPT')=>{if(!ok)throw Error(code);};
 function validBets(bets){require(bets&&typeof bets==='object'&&!Array.isArray(bets));for(const[side,x]of Object.entries(bets))require(SIDES.includes(side)&&integer(x)&&x>0&&x%100===0);}
