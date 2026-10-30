@@ -1,0 +1,41 @@
+/* Earlier casino art with the current responsive, accessible game controls. */
+@font-face{font-family:ClassicCasino;src:url('./reference/alfa-slab-one.woff2') format('woff2');font-display:swap}
+:root{--salon-navy:#132606;--salon-emerald:#385f0c;--salon-ivory:#eee6ad;--salon-brass:#e4c758;--salon-line:#e6d68a55;background:#142805}
+.salon-app{background:radial-gradient(ellipse at 50% 25%,#304c0c,transparent 85%),#122504}
+.salon-title{background:linear-gradient(180deg,#09010a9c,#65002880),url('./reference/images/title.png') center/cover;max-width:none}
+.salon-title-layout,.salon-title-footer,.salon-brand{width:100%;max-width:1250px;margin-inline:auto}
+.salon-title-copy h1{margin:14px 0 22px;text-shadow:none;letter-spacing:0}
+.salon-title-logo{display:block;width:min(100%,520px);height:auto;filter:drop-shadow(0 3px 5px #0008)}
+.salon-title-copy h1 span{color:#fff2ce;margin-top:20px}
+.salon-title-art{background:radial-gradient(ellipse,#7b9c2660,transparent),#244806;border-radius:48%;box-shadow:inset 0 0 0 5px #071c00,inset 0 0 0 7px #d9c25c,inset 0 0 38px #0008,0 14px 28px #0006}
+.salon-art-ring{border-style:dashed;border-color:#e9db91aa}.salon-art-caption,.salon-art-edition{color:#f9e3a0}
+.salon-brand-sub,.salon-intro,.salon-play-note,.salon-title-footer,.salon-title-footer button{color:#f1d9cb}
+.salon-primary{background:linear-gradient(#d6d896,#a5a951 48%,#929736 51%,#b7b857);border:2px solid #f0d969;border-radius:3px;color:#233506;box-shadow:inset 0 0 0 1px #5d6716,0 3px 5px #0004}
+.salon-primary:hover:not(:disabled){background:linear-gradient(#eff3bb,#b5c85e)}
+.salon-secondary{background:linear-gradient(#3a5314,#193006);border-color:#d6c666;border-radius:3px;color:#f1e4aa}
+.salon-topbar{border-bottom-color:#d4c47755}.salon-topbar nav button,.salon-game-brand{color:#f0df95}
+.salon-wallet span{color:#e9d66a;font-weight:700;font-family:Georgia,serif}
+.salon-wallet strong{display:block;background:linear-gradient(#070609,#271e29);border:1px solid #ddce89;border-radius:3px;color:#fff6d3!important;padding:7px 6px;font-size:clamp(17px,1.8vw,25px);line-height:1.2;box-shadow:inset 0 0 0 1px #0008}
+.salon-felt{padding-top:17px;border:1px solid #d9cc79;border-radius:8px;background:radial-gradient(ellipse at 50% 42%,#84aa3266,transparent 78%),url('./reference/images/background.png') center bottom/100% 550%;box-shadow:inset 0 0 0 3px #223a06,0 4px 14px #0005}
+.salon-felt::before{inset:6px;border:1px solid #dace7a55;border-radius:2px}
+.salon-table-meta{color:#ebe2b1}.salon-table-heading{height:102px;margin:0 auto 6px;max-width:400px;display:grid;place-items:center}
+.salon-table-logo{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.85);opacity:.95}
+.salon-hand-label{border:0;padding-bottom:8px}.salon-hand h2{font:bold 20px Georgia,serif;color:#efdf8d;text-shadow:1px 1px #000,-1px -1px #142000;letter-spacing:0}
+.salon-hand output{border:1px solid #f1cf4e;border-radius:3px;width:42px;height:27px;background:#070707;box-shadow:inset 0 0 4px #fff3;font:18px ClassicCasino,Georgia,serif;color:#fff}
+.salon-round-line p{color:#eee9bf}.salon-skip{border:1px solid #d6c26d;background:#254809;color:#f7e398;border-radius:3px}
+.salon-betting{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:680px;gap:12px;align-items:start;margin:13px auto 0}
+.salon-bet{width:100%;max-width:200px;aspect-ratio:1;height:auto;min-height:44px;justify-self:center;border:3px dashed #e9dfa2;border-radius:50%;padding:14px 5px;gap:5px;background:#142b0733;box-shadow:none;justify-content:center}
+.salon-bet-tie{margin-top:65px;border-radius:50%;background:#142b0733;min-height:44px}
+.salon-bet:hover:not(:disabled),.salon-bet.is-selected{background:#b2c96642;border-color:#fff0b5;box-shadow:inset 0 0 22px #e6ef5b24}
+.salon-bet>span:first-child{font:bold clamp(20px,2.6vw,32px) Georgia,serif;color:#e5e0ac;letter-spacing:0}
+.salon-bet-banker>span:first-child{color:#ffcf29}.salon-bet small{font-size:13px;color:#ece4af}
+.salon-bet strong{order:-1;align-self:center;width:70%;min-height:20px;padding:2px 4px;border:1px solid #e6c447;border-radius:3px;background:linear-gradient(#080707,#1b151f);font:14px ClassicCasino,Georgia,serif;color:#fff;overflow-wrap:anywhere}
+.salon-bet-hint{display:none}.salon-table-rule{height:42px;margin:5px auto 0}.salon-table-rule text{font:bold 22px Georgia,serif;fill:#d8d891;letter-spacing:1.5px}
+.salon-controls{border:1px solid #ae9b3a77;border-radius:5px;margin-top:10px;padding-inline:12px;background:#29450b99}
+.salon-chip-heading{color:#ede7c8}.salon-chip-heading span:last-child{color:#d4d291}.salon-chip-tray{background:none;border-radius:0;gap:8px}
+.salon-classic-chip-art{display:block;width:56px;height:58.49px;background-size:300% 100%;background-repeat:no-repeat;background-position:50% 50%;filter:drop-shadow(0 3px 2px #0006)}
+.salon-chip{border-radius:4px}.salon-chip span{color:#f0eccb}.salon-chip[aria-pressed=true]{background:#e3de6855;border-color:#f1d76b}
+.salon-bet-tools button{border:1px solid #aebd69;background:linear-gradient(#3c5a1d,#1c3608);border-radius:3px;color:#f1e7b9}
+.salon-confirm-row p{color:#f1edcb}.salon-history-aside{border-left-color:#c7b65a55}.salon-game-footer{color:#d5cc9b}
+@media(max-width:600px){.salon-title-logo{width:100%;max-width:360px}.salon-title-copy h1 span{font-size:17px;margin-top:16px}.salon-table-heading{height:81px;max-width:300px}.salon-felt{border-radius:5px;padding:13px 10px 15px}.salon-felt::before{inset:5px}.salon-hand h2{font-size:18px}.salon-hand output{width:35px;font-size:16px}.salon-betting{gap:6px}.salon-bet{padding:10px 3px;gap:4px;border-width:2px}.salon-bet-tie{margin-top:47px}.salon-bet>span:first-child{font-size:18px}.salon-bet small{font-size:11px}.salon-bet strong{font-size:12px;min-height:18px;width:72%;padding:1px 3px}.salon-wallet strong{font-size:17px;padding:6px 4px}.salon-wallet{gap:8px}.salon-classic-chip-art{width:43px;height:44.91px}.salon-controls{padding:13px 7px}.salon-chip-tray{gap:3px}.salon-table-rule{height:31px}.salon-table-rule text{font-size:23px}.salon-title-art{height:248px}.salon-title-footer{flex-wrap:wrap;justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){.salon-classic-chip-art{filter:none}}

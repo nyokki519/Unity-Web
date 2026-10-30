@@ -1,3 +1,5 @@
+2026-10-30追補: さらに以前のカジノ風へ戻す指示を反映。docs/baccarat/classic-return/README.md と実画面を参照。明るい緑の卓・筆記体ロゴ・点線円形ベット枠・旧チップを復帰、全方向絞りと操作UIは維持。
+
 最新の追補: docs/baccarat/omni-casino/README.md。全8方向の折り目・戻し・つかみ直しと、緑のフェルト/金のレール/曲線文字を確認。422 Nodeと独立22方向QA、既存14通し検証成功。実機Safari未確認。以下は前段のUI刷新記録。
 
 # Unity Baccarat original salon — design QA

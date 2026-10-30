@@ -1,3 +1,5 @@
+現在の既定テーマは、以前のカジノ風に戻す指示により、許諾済みreference/images/のロゴ・チップ・卓背景とAlfa Slab Oneを再び使用しています。設定の素材表記も更新。[詳細](classic-return/README.md)。以下は過去の制作段階の記録です。
+
 # オリジナルテーブル追加素材
 
 現在の既定UIは salon-assets/ の独自SVG、既存Unity専用カード、Three.js(MIT)、Cormorant Garamond(OFL)とオリジナルWebAudioを使用します。参考サイトの画像/音/フォントは旧画面のみで利用。[詳細](salon/README.md)。
