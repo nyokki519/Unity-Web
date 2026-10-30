@@ -1,0 +1,154 @@
+[
+  {
+    "width": 375,
+    "checks": [
+      "idle physical meshes",
+      "coin amounts10/25/50/100/77",
+      "no action overlap",
+      "44px coin controls",
+      "live throw",
+      "pause",
+      "dialog cancel preserves pause",
+      "two-sided roles",
+      "exact125 settlement",
+      "round markers",
+      "reset clears effects",
+      "loss and tie classification390",
+      "role guide",
+      "sound gesture",
+      "reduced motion",
+      "no overflow"
+    ],
+    "errors": [],
+    "realThrow": {
+      "values": [
+        6,
+        4,
+        5
+      ],
+      "reason": null,
+      "seed": 1818519916,
+      "ticks": 372,
+      "seconds": 1.55,
+      "contacts": {
+        "floor": 5,
+        "wall": 193,
+        "dice": 5
+      }
+    }
+  },
+  {
+    "width": 390,
+    "checks": [
+      "idle physical meshes",
+      "coin amounts10/25/50/100/77",
+      "no action overlap",
+      "44px coin controls",
+      "live throw",
+      "pause",
+      "dialog cancel preserves pause",
+      "two-sided roles",
+      "exact125 settlement",
+      "round markers",
+      "reset clears effects",
+      "loss and tie classification390",
+      "role guide",
+      "sound gesture",
+      "reduced motion",
+      "no overflow"
+    ],
+    "errors": [],
+    "realThrow": {
+      "values": [
+        2,
+        2,
+        3
+      ],
+      "reason": null,
+      "seed": 3091676771,
+      "ticks": 383,
+      "seconds": 1.5958333333333332,
+      "contacts": {
+        "floor": 10,
+        "wall": 155,
+        "dice": 7
+      }
+    }
+  },
+  {
+    "width": 414,
+    "checks": [
+      "idle physical meshes",
+      "coin amounts10/25/50/100/77",
+      "no action overlap",
+      "44px coin controls",
+      "live throw",
+      "pause",
+      "dialog cancel preserves pause",
+      "two-sided roles",
+      "exact125 settlement",
+      "round markers",
+      "reset clears effects",
+      "loss and tie classification390",
+      "role guide",
+      "sound gesture",
+      "reduced motion",
+      "no overflow"
+    ],
+    "errors": [],
+    "realThrow": {
+      "values": [
+        2,
+        4,
+        4
+      ],
+      "reason": null,
+      "seed": 836208460,
+      "ticks": 377,
+      "seconds": 1.5708333333333333,
+      "contacts": {
+        "floor": 14,
+        "wall": 157,
+        "dice": 11
+      }
+    }
+  },
+  {
+    "width": 1440,
+    "checks": [
+      "idle physical meshes",
+      "coin amounts10/25/50/100/77",
+      "no action overlap",
+      "44px coin controls",
+      "live throw",
+      "pause",
+      "dialog cancel preserves pause",
+      "two-sided roles",
+      "exact125 settlement",
+      "round markers",
+      "reset clears effects",
+      "loss and tie classification390",
+      "role guide",
+      "sound gesture",
+      "reduced motion",
+      "no overflow"
+    ],
+    "errors": [],
+    "realThrow": {
+      "values": [
+        1,
+        6,
+        1
+      ],
+      "reason": null,
+      "seed": 2809781058,
+      "ticks": 332,
+      "seconds": 1.3833333333333333,
+      "contacts": {
+        "floor": 21,
+        "wall": 139,
+        "dice": 4
+      }
+    }
+  }
+]

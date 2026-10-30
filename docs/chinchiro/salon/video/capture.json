@@ -1,0 +1,91 @@
+{
+  "audio": {
+    "impacts": 179,
+    "scrapes": 18,
+    "dropped": 14
+  },
+  "voices": 0,
+  "lastResult": {
+    "values": [
+      4,
+      3,
+      2
+    ],
+    "reason": null,
+    "seed": 962244390,
+    "ticks": 353,
+    "seconds": 1.4708333333333332,
+    "contacts": {
+      "floor": 16,
+      "wall": 131,
+      "dice": 4
+    }
+  },
+  "currentSeed": 831063877,
+  "physicsConfig": {
+    "dt": 0.004166666666666667,
+    "gravity": 9.80665,
+    "density": 8000,
+    "friction": 0.18,
+    "bowlFriction": 0.18,
+    "restitution": 0.8,
+    "bowlRestitution": 0.8,
+    "linearDamping": 0,
+    "angularDamping": 0,
+    "maxSeconds": 12,
+    "stableSeconds": 0.45,
+    "linearThreshold": 0.012,
+    "angularThreshold": 0.6,
+    "launchHeight": 0.075,
+    "launchSpeed": 0.65,
+    "predictionDistance": 0.002,
+    "solverUnitsPerMetre": 100
+  },
+  "actualMassKg": 0.03255212679505348,
+  "bowlFixed": true,
+  "bowlPosition": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "throwTimings": [
+    {
+      "seed": 4080906379,
+      "physicsSeconds": 1.4125,
+      "wallSeconds": 2.14620000000298
+    },
+    {
+      "seed": 3738807815,
+      "physicsSeconds": 1.6875,
+      "wallSeconds": 1.9055
+    },
+    {
+      "seed": 3604745712,
+      "physicsSeconds": 1.7125,
+      "wallSeconds": 1.8352999999970199
+    },
+    {
+      "seed": 267115398,
+      "physicsSeconds": 1.6416666666666666,
+      "wallSeconds": 1.7992000000029802
+    },
+    {
+      "seed": 962244390,
+      "physicsSeconds": 1.4708333333333332,
+      "wallSeconds": 1.8173999999910593
+    }
+  ],
+  "seeds": [
+    4080906379,
+    3738807815,
+    3604745712,
+    267115398,
+    962244390,
+    831063877
+  ],
+  "pageErrors": [],
+  "fps": 11.527922139279978,
+  "medianFrameMs": 83.29999999999927,
+  "p95FrameMs": 166.6999999999989,
+  "method": "Real UI throws, canvas.captureStream plus actual Web Audio output on the same MediaRecorder clock; no microphone, no replaced audio, no speed changes. Active-throw RAF timings, Chromium software GPU DPR1."
+}

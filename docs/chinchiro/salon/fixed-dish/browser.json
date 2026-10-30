@@ -1,0 +1,92 @@
+[
+  {
+    "width": 390,
+    "pausedTick": 99,
+    "result": {
+      "values": [
+        5,
+        6,
+        5
+      ],
+      "reason": null,
+      "seed": 1023436249,
+      "ticks": 422,
+      "seconds": 1.7583333333333333,
+      "contacts": {
+        "floor": 9,
+        "wall": 114,
+        "dice": 9
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 375,
+    "pausedTick": 144,
+    "result": {
+      "values": [
+        6,
+        4,
+        3
+      ],
+      "reason": null,
+      "seed": 1320106238,
+      "ticks": 380,
+      "seconds": 1.5833333333333333,
+      "contacts": {
+        "floor": 9,
+        "wall": 137,
+        "dice": 7
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 414,
+    "pausedTick": 99,
+    "result": {
+      "values": [
+        6,
+        3,
+        5
+      ],
+      "reason": null,
+      "seed": 974643382,
+      "ticks": 345,
+      "seconds": 1.4375,
+      "contacts": {
+        "floor": 27,
+        "wall": 105,
+        "dice": 3
+      }
+    },
+    "errors": [],
+    "checks": [
+      "fixed dish remains at origin",
+      "visible and collision bowl poses agree",
+      "dice and bowl pause together",
+      "camera does not shake",
+      "reduced motion hides dice and keeps the dish fixed",
+      "resume and actual physical results",
+      "no horizontal overflow"
+    ]
+  }
+]

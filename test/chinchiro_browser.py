@@ -1,4 +1,4 @@
-import json,argparse
+import json,argparse,time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ap=argparse.ArgumentParser();ap.add_argument('--url',default='http://127.0.0.1:3465');ap.add_argument('--output',default='docs/qa/chinchiro');args=ap.parse_args();base=args.url.rstrip('/');
@@ -14,7 +14,8 @@ with sync_playwright() as p:
   page.evaluate("Object.defineProperty(document,'hidden',{get:()=>true,configurable:true});document.dispatchEvent(new Event('visibilitychange'));delete document.hidden")
   assert page.locator('#action').is_disabled();page.click('#pause');assert page.locator('#action').is_enabled()
   page.click('#rules-open');assert page.get_by_role('dialog',name='この卓のルール').count()==1;page.keyboard.press('Escape');assert not page.locator('#rules').evaluate('(e)=>e.open')
-  for _ in range(90):
+  deadline=time.monotonic()+300
+  while time.monotonic()<deadline:
    label=page.locator('#action').inner_text()
    if label=='もう一度対戦する':break
    if page.locator('#action').is_enabled():page.click('#action')
@@ -25,7 +26,7 @@ with sync_playwright() as p:
   assert not page.evaluate('document.documentElement.scrollWidth>innerWidth')
   page.screenshot(path=str(out/f'final-{width}.png'),full_page=True)
   page.click('#action');assert page.locator('.bank').all_inner_texts()==['1,000 枚','1,000 枚']
-  page.click('#restart');assert page.get_by_role('dialog',name='最初から遊びますか？').count()==1;page.click('#cancel');assert page.locator('#action').is_enabled()
+  page.locator('.sound-settings > summary').click();page.click('#restart');assert page.get_by_role('dialog',name='最初から遊びますか？').count()==1;page.click('#cancel');assert page.locator('#action').is_enabled()
   page.goto(base+'/');page.wait_for_selector('a[href="/chinchiro/index.html"]');assert page.locator('a[href*="mechanical"]').count()==0
   response=page.goto(base+'/mechanical/index.html');assert response.status==410
   assert errors==[],errors;rows.append({'width':width,'errors':errors,'checks':['CPU match to final','ledger','retry','hidden-page resume before bet','rules Escape','restart cancel','no overflow','home link','retired URL 410']});page.close()

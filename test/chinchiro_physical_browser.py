@@ -7,7 +7,7 @@ with sync_playwright() as p:
  for width in [390,375,414]:
   page=browser.new_page(viewport={'width':width,'height':844},device_scale_factor=1,reduced_motion='no-preference');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(args.url+'/chinchiro/index.html?inspect=1');page.wait_for_function('()=>window.chinchiro&&chinchiro.tray');page.click('#action');page.click('#action');page.wait_for_function('()=>chinchiro.tray.world!==null');page.click('#pause');assert page.evaluate('chinchiro.busy');tick=page.evaluate('chinchiro.tray.world.tick');page.wait_for_timeout(250);assert page.evaluate('chinchiro.tray.world.tick')==tick
-  page.click('#motion');page.wait_for_function('()=>chinchiro.tray.groups.every(g=>!g.visible)')
+  page.locator('.sound-settings > summary').click();page.click('#motion');page.wait_for_function('()=>chinchiro.tray.groups.every(g=>!g.visible)')
   assert page.evaluate('chinchiro.tray.groups.every(g=>!g.visible)'),'reduced motion must affect WebGL rendering'
   page.click('#motion');page.click('#pause');page.wait_for_function('()=>!chinchiro.busy',timeout=30000)
   assert page.evaluate('chinchiro.tray.groups.every(g=>g.quaternion.toArray().every(Number.isFinite))')

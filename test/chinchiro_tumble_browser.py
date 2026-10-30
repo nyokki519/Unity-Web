@@ -20,7 +20,7 @@ with sync_playwright() as p:
   assert page.evaluate('chinchiro.tray.world.tick')==state['tick']
   assert page.evaluate('chinchiro.tray.world.poses()')==state['dice']
   assert page.evaluate('chinchiro.tray.camera.position.toArray()')==camera
-  page.click('#motion');page.wait_for_function('()=>chinchiro.tray.groups.every(g=>!g.visible)&&chinchiro.tray.bowlGroup.position.length()===0')
+  page.locator('.sound-settings > summary').click();page.click('#motion');page.wait_for_function('()=>chinchiro.tray.groups.every(g=>!g.visible)&&chinchiro.tray.bowlGroup.position.length()===0')
   page.click('#motion');page.click('#pause');page.wait_for_function('()=>!chinchiro.busy',timeout=30000)
   result=page.evaluate('chinchiro.tray.lastResult');assert result['seconds']<=12
   if result['values']:assert page.evaluate('chinchiro.match.dice')==result['values']

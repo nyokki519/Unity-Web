@@ -1,0 +1,43 @@
+✔ bet preview conserves integer coins for every supported stake (3.17898ms)
+✖ four round markers distinguish complete current and future including final (1.330528ms)
+✔ decision effects distinguish losses and pushes from actual wins (0.132065ms)
+✔ role guidance explains multiplier and illegal throw without inventing odds (0.199885ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.173197
+
+✖ failing tests:
+
+test at test/chinchiro-presentation.test.js:8:1
+✖ four round markers distinguish complete current and future including final (1.330528ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'complete',
+      'complete',
+  +   'complete',
+  +   'complete'
+  -   'future',
+  -   'future'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/chinchiro-presentation.test.js:11:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'complete', 'complete', 'complete', 'complete' ],
+    expected: [ 'complete', 'complete', 'future', 'future' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

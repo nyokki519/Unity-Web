@@ -18,15 +18,26 @@ function brush(){
  const texture=new THREE.CanvasTexture(c);texture.anisotropy=4;return texture;
 }
 function studioEnvironment(renderer){
- const studio=new THREE.Scene();studio.background=new THREE.Color('#707b77');
- for(const [pos,size,color]of [[[-.8,.65,.3],[.3,1.5],'#fffaf0'],[[.9,.5,-.1],[.16,1.3],'#e2e9e8'],[[0,1.1,0],[2.6,2.4],'#ffffff'],[[0,.3,1],[.9,.6],'#c8cbc4']]){const m=new THREE.Mesh(new THREE.PlaneGeometry(...size),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));m.position.set(...pos);m.lookAt(0,0,0);studio.add(m);}
- const target=new THREE.WebGLCubeRenderTarget(64),camera=new THREE.CubeCamera(.01,5,target);camera.update(renderer,studio);const pmrem=new THREE.PMREMGenerator(renderer),env=pmrem.fromCubemap(target.texture);pmrem.dispose();target.dispose();studio.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});renderer.setRenderTarget(null);return env;
+ const studio=new THREE.Scene();studio.background=new THREE.Color('#283a35');
+ for(const [pos,size,color]of [[[-.8,.65,.3],[.38,1.5],'#fff4dc'],[[.9,.5,-.1],[.18,1.3],'#dce8ed'],[[0,1.1,-.1],[1.25,1.5],'#edf0e9'],[[0,.3,1],[.6,.6],'#a7b8ad'],[[.25,.9,.8],[.06,1.2],'#fffcf2']]){const m=new THREE.Mesh(new THREE.PlaneGeometry(...size),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));m.position.set(...pos);m.lookAt(0,0,0);studio.add(m);}
+ const target=new THREE.WebGLCubeRenderTarget(128),camera=new THREE.CubeCamera(.01,5,target);camera.update(renderer,studio);const pmrem=new THREE.PMREMGenerator(renderer),env=pmrem.fromCubemap(target.texture);pmrem.dispose();target.dispose();studio.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});renderer.setRenderTarget(null);return env;
+}
+
+// A shallow visual engraving only: no added contact surface, mass, or die bias.
+function engraving(icon){
+ const canvas=document.createElement('canvas');canvas.width=canvas.height=512;const c=canvas.getContext('2d');c.strokeStyle='#173d30';c.fillStyle='#173d30';c.lineWidth=1.8;
+ for(const radius of [220,228]){c.beginPath();c.arc(256,256,radius,0,Math.PI*2);c.stroke();}
+ for(let i=0;i<48;i++){const a=i/48*Math.PI*2;c.beginPath();c.moveTo(256+222*Math.cos(a),256+222*Math.sin(a));c.lineTo(256+226*Math.cos(a),256+226*Math.sin(a));c.stroke();}
+ c.font='22px Georgia,serif';c.textAlign='center';c.textBaseline='middle';const text='UNITY  ·  COFFEE & DICE  ·  ';
+ for(let i=0;i<text.length;i++){const angle=(i/text.length)*Math.PI*2-Math.PI/2;c.save();c.translate(256+195*Math.cos(angle),256+195*Math.sin(angle));c.rotate(angle+Math.PI/2);c.fillText(text[i],0,0);c.restore();}
+ if(icon)c.drawImage(icon,130,130,252,252);else{c.font='38px Georgia,serif';c.fillText('UNITY',256,256);}
+ const t=new THREE.CanvasTexture(canvas);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;return t;
 }
 export function metalSurfaces(renderer,onStamp){
- const roughness=brush(),env=studioEnvironment(renderer),bowlMaterials=[new THREE.MeshStandardMaterial({color:'#bda06a',metalness:1,roughness:.56,roughnessMap:roughness,envMapIntensity:.85}),new THREE.MeshStandardMaterial({color:'#cfb17b',metalness:1,roughness:.19,envMapIntensity:1}),new THREE.MeshStandardMaterial({color:'#ae915e',metalness:1,roughness:.58,roughnessMap:roughness,envMapIntensity:.75})];
- const dieMaterial=new THREE.MeshStandardMaterial({color:'#d5dedb',metalness:1,roughness:.28,envMapIntensity:1.3});
+ const roughness=brush(),env=studioEnvironment(renderer),bowlMaterials=[new THREE.MeshStandardMaterial({color:'#c6a677',metalness:1,roughness:.43,roughnessMap:roughness,envMapIntensity:1.05}),new THREE.MeshStandardMaterial({color:'#dbc095',metalness:1,roughness:.2,envMapIntensity:1.1}),new THREE.MeshStandardMaterial({color:'#ab8c5a',metalness:1,roughness:.5,roughnessMap:roughness,envMapIntensity:.8})];
+ const dieMaterial=new THREE.MeshStandardMaterial({color:'#e5e9e7',metalness:1,roughness:.24,envMapIntensity:1.25});
  const textures=[],materials=[];for(const n of [1,6,3,4,2,5]){const pair=markings(n);textures.push(pair);materials.push(new THREE.MeshStandardMaterial({map:pair.texture,bumpMap:pair.bump,bumpScale:.00004,roughness:.58,metalness:.04,transparent:true,alphaTest:.015,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}));}
- const stampMaterial=materials[0].clone();stampMaterial.opacity=.48;
- const image=new Image();let disposed=false;image.onload=()=>{if(disposed)return;const pair=markings(1,image),old=textures[0];textures[0]=pair;materials[0].map=pair.texture;materials[0].bumpMap=pair.bump;materials[0].needsUpdate=true;stampMaterial.map=pair.texture;stampMaterial.bumpMap=pair.bump;stampMaterial.needsUpdate=true;old.texture.dispose();old.bump.dispose();onStamp?.();};image.src='/assets/unity-mark.webp';
- return {env,bowlMaterials,dieMaterial,materials,stampMaterial,dispose(){disposed=true;for(const m of [...bowlMaterials,dieMaterial,...materials,stampMaterial])m.dispose();for(const p of textures){p.texture.dispose();p.bump.dispose();}roughness.dispose();env.dispose();}};
+ const stamp=engraving(),stampMaterial=new THREE.MeshStandardMaterial({map:stamp,transparent:true,opacity:.40,depthWrite:false,roughness:.65,metalness:.12,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+ const image=new Image();let disposed=false;image.onload=()=>{if(disposed)return;const pair=markings(1,image),old=textures[0];textures[0]=pair;materials[0].map=pair.texture;materials[0].bumpMap=pair.bump;materials[0].needsUpdate=true;const previousStamp=stampMaterial.map;stampMaterial.map=engraving(pair.texture.image);stampMaterial.needsUpdate=true;previousStamp.dispose();old.texture.dispose();old.bump.dispose();onStamp?.();};image.src='/assets/unity-mark.webp';
+ return {env,bowlMaterials,dieMaterial,materials,stampMaterial,dispose(){disposed=true;for(const m of [...bowlMaterials,dieMaterial,...materials,stampMaterial])m.dispose();for(const p of textures){p.texture.dispose();p.bump.dispose();}stampMaterial.map.dispose();roughness.dispose();env.dispose();}};
 }

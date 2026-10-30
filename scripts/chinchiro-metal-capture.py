@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 ap=argparse.ArgumentParser();ap.add_argument('--url',default='http://127.0.0.1:3482');ap.add_argument('--output',default='docs/qa/chinchiro-metal/video');ap.add_argument('--seconds',type=float,default=10);args=ap.parse_args();assert 2<=args.seconds<=120;out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
  browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=browser.new_page(viewport={'width':390,'height':844},device_scale_factor=1,reduced_motion='no-preference');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
- page.goto(args.url+'/chinchiro/index.html?inspect=1');page.wait_for_function('()=>window.chinchiro?.tray');page.click('#sound');page.wait_for_function('()=>chinchiro.tray.sound.enabled');page.click('#action');page.click('#dice-zoom');page.evaluate("document.querySelector('.physical-bowl').scrollIntoView({block:'start'})")
+ page.goto(args.url+'/chinchiro/index.html?inspect=1');page.wait_for_function('()=>window.chinchiro?.tray');page.locator('.sound-settings > summary').click();page.click('#sound');page.wait_for_function('()=>chinchiro.tray.sound.enabled');page.click('#action');page.click('#dice-zoom');page.evaluate("document.querySelector('.physical-bowl').scrollIntoView({block:'start'})")
  page.evaluate('''()=>{
   const tray=chinchiro.tray,sound=tray.sound,dest=sound.context.createMediaStreamDestination();sound.output.connect(dest);
   const video=tray.canvas.captureStream(30),stream=new MediaStream([...video.getVideoTracks(),...dest.stream.getAudioTracks()]);

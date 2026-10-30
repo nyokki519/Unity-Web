@@ -1,0 +1,38 @@
+{
+  "surface": {
+    "metal": 1,
+    "roughness": [
+      0.43,
+      0.2,
+      0.5
+    ],
+    "groups": 3,
+    "cornerAlpha": 0
+  },
+  "stats": {
+    "impacts": 27,
+    "scrapes": 4,
+    "dropped": 1
+  },
+  "peak": 0.18561331927776337,
+  "voices": 0,
+  "context": "running",
+  "quietPeak": 0,
+  "offDuringActiveThrow": true,
+  "offGain": 0,
+  "offPeak": 0,
+  "errors": [],
+  "checks": [
+    "sound defaults off",
+    "gesture unlock",
+    "volume",
+    "physics pause mutes",
+    "actual contact PCM",
+    "no clipping",
+    "silent settled",
+    "transparent ink",
+    "material groups",
+    "no settled redraw",
+    "OFF mutes ongoing contact audio while physics continues"
+  ]
+}

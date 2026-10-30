@@ -1,0 +1,87 @@
+[
+  {
+    "width": 390,
+    "errors": [],
+    "firstRoll": {
+      "values": [
+        4,
+        6,
+        1
+      ],
+      "reason": null,
+      "seed": 3229160738,
+      "ticks": 396,
+      "seconds": 1.65,
+      "contacts": {
+        "floor": 9,
+        "wall": 165,
+        "dice": 6
+      }
+    },
+    "checks": [
+      "physics pause",
+      "reduced WebGL motion",
+      "finite interpolation",
+      "physical-face transfer",
+      "zoom",
+      "no overflow",
+      "CPU full match and retry"
+    ]
+  },
+  {
+    "width": 375,
+    "errors": [],
+    "firstRoll": {
+      "values": [
+        5,
+        4,
+        5
+      ],
+      "reason": null,
+      "seed": 279277862,
+      "ticks": 348,
+      "seconds": 1.45,
+      "contacts": {
+        "floor": 18,
+        "wall": 127,
+        "dice": 7
+      }
+    },
+    "checks": [
+      "physics pause",
+      "reduced WebGL motion",
+      "finite interpolation",
+      "physical-face transfer",
+      "zoom",
+      "no overflow"
+    ]
+  },
+  {
+    "width": 414,
+    "errors": [],
+    "firstRoll": {
+      "values": [
+        4,
+        5,
+        2
+      ],
+      "reason": null,
+      "seed": 3988176876,
+      "ticks": 345,
+      "seconds": 1.4375,
+      "contacts": {
+        "floor": 10,
+        "wall": 179,
+        "dice": 3
+      }
+    },
+    "checks": [
+      "physics pause",
+      "reduced WebGL motion",
+      "finite interpolation",
+      "physical-face transfer",
+      "zoom",
+      "no overflow"
+    ]
+  }
+]

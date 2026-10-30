@@ -1,0 +1,6 @@
+{'x': 26, 'y': -271.3125, 'width': 338, 'height': 275}
+Traceback (most recent call last):
+  File "scratch/chinchiro-scroll-check.py", line 3, in <module>
+    b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(viewport={'width':390,'height':700});page.goto('http://127.0.0.1:3483/chinchiro/index.html?inspect=1');page.wait_for_function('()=>window.chinchiro?.tray');page.click('#action');page.click('#action');page.wait_for_function('()=>chinchiro.tray.world');r=page.locator('#dice-board').bounding_box();print(r);assert r['y']>=0 and r['y']+r['height']<=700,'throw must be visible after actual button clicks';b.close()
+                                                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: throw must be visible after actual button clicks
