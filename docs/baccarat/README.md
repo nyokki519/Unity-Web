@@ -1,3 +1,5 @@
+全方向の絞りと、緑・金のカジノ卓へ更新しました。[最新の画面・動画・検証](omni-casino/README.md)。
+
 # 現在のバカラ：Unityオリジナルテーブル
 
 既定入口 `/baccarat/index.html` は独自デザイン・直接絞り・チップ先行操作へ更新しました。[実装・画面・動画・検証](salon/README.md)。前の再現版は `/baccarat/classic.html`、VESPERは `/baccarat/vesper.html` に保管しています。以下は過去の段階の記録です。

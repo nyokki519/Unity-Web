@@ -14,8 +14,8 @@ with sync_playwright() as p:
  cdp.on('Page.screencastFrame',frame);cdp.send('Page.startScreencast',{'format':'jpeg','quality':87,'everyNthFrame':1})
  epoch=page.evaluate('''()=>{const ctx=SALON.audio.ctx;window.captureMix=ctx.createMediaStreamDestination();Object.values(SALON.audio.gains).forEach(g=>g.connect(captureMix));window.captureChunks=[];window.captureRecorder=new MediaRecorder(captureMix.stream);captureRecorder.ondataavailable=e=>captureChunks.push(e.data);captureRecorder.start();return Date.now()/1000}''')
  page.locator('[data-action=confirm]').click();expect(page.locator('[data-squeeze=finish]')).to_be_visible(timeout=10000);page.wait_for_selector('.salon-squeeze__canvas',timeout=10000);page.wait_for_timeout(180)
- stage=page.locator('.salon-squeeze__stage');box=stage.bounding_box();x=box['x']+box['width']*.72;y=box['y']+box['height']*.82;page.mouse.move(x,y);page.mouse.down()
- for i in range(1,15):page.mouse.move(x-25*i/14,y-box['height']*.38*i/14,steps=2);page.wait_for_timeout(35)
+ stage=page.locator('.salon-squeeze__stage');box=stage.bounding_box();right=os.environ.get('SALON_EDGE')=='right';card=page.evaluate('()=>SALON.squeeze.getCardRect().toJSON()') if right else None;x=card['right']-card['width']*.05 if right else box['x']+box['width']*.72;y=card['y']+card['height']*.5 if right else box['y']+box['height']*.82;page.mouse.move(x,y);page.mouse.down()
+ for i in range(1,15):page.mouse.move(x-(card['width']*.5 if right else 25)*i/14,y if right else y-box['height']*.38*i/14,steps=2);page.wait_for_timeout(35)
  page.mouse.up();page.wait_for_timeout(300);snap('squeeze-390',False);page.wait_for_timeout(500);page.locator('[data-squeeze=finish]').click()
  for i in range(3):
   expect(page.locator('[data-squeeze=finish]')).to_be_visible(timeout=10000);page.wait_for_timeout(330);page.locator('[data-squeeze=finish]').click()

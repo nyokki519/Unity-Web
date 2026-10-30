@@ -1,5 +1,6 @@
 import * as THREE from '../vendor/three/three.module.js';
 import {createCard, frameForCard} from './salon-card.js';
+import {gripNormal, projectedProgress, foldPoint, backPolygon} from './salon-curl.js';
 const clamp = n => Math.max(0, Math.min(1, n));
 let mastersPromise;
 function masters() {
@@ -28,22 +29,41 @@ export class SqueezeView {
   this.host = host; this.onProgress = onProgress; this.onReveal = onReveal; this.onSound = onSound; this.serial = 0;
  }
  open({card, label = 'Card', reduced = false}) {
-  this.cancel(); const serial = ++this.serial; this.progress = 0; this.reduced = reduced;
-  this.host.hidden = false; this.host.dataset.progress = '0'; this.host.classList.add('salon-squeeze');
-  this.host.innerHTML = `<div class="salon-squeeze__panel"><p class="salon-squeeze__label"></p><p class="salon-squeeze__hint">カードの下端を上へなぞると、少しずつめくれます。</p><div class="salon-squeeze__stage" role="button" tabindex="0" aria-label="カードをなぞるか、Enterキーでめくる"><div class="salon-squeeze__fallback"></div></div><button class="salon-squeeze__reveal" data-squeeze="finish" type="button">このカードをめくる</button></div>`;
+  this.cancel(); const serial = ++this.serial; this.progress = 0; this.normal = {x:0,y:-1}; this.reduced = reduced;
+  this.host.hidden = false; this.host.dataset.progress = '0'; this.host.dataset.direction = 'bottom'; this.host.classList.add('salon-squeeze');
+  this.host.innerHTML = `<div class="salon-squeeze__panel"><p class="salon-squeeze__label"></p><p class="salon-squeeze__hint">カードの辺や角から内側へなぞると、少しずつめくれます。</p><div class="salon-squeeze__stage" role="button" tabindex="0" aria-label="カードをなぞるか、Enterキーでめくる"><div class="salon-squeeze__fallback"></div><div class="salon-squeeze__hit" aria-hidden="true"></div></div><button class="salon-squeeze__reveal" data-squeeze="finish" type="button">このカードをめくる</button></div>`;
   this.host.querySelector('.salon-squeeze__label').textContent = label;
   this.stage = this.host.querySelector('.salon-squeeze__stage'); this.fallback = this.host.querySelector('.salon-squeeze__fallback');
-  this.face = createCard(card); this.back = createCard(card, {hidden:true}); this.fallback.append(this.face, this.back);
+  this.hit = this.host.querySelector('.salon-squeeze__hit'); this.face = createCard(card); this.back = createCard(card, {hidden:true}); this.fallback.append(this.face, this.back);
   this.promise = new Promise(resolve => { this.resolve = resolve; });
   this.button = this.host.querySelector('button'); this.button.onclick = () => this.finish(); this.stage.focus({preventScroll:true});
   this.stage.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.finish(); } };
-  this.stage.onpointerdown = e => { if (e.button !== 0 || this.pointer) return; const rect = this.stage.getBoundingClientRect(); this.pointer = {id:e.pointerId,x:e.clientX,y:e.clientY,start:this.progress,rect}; this.stage.setPointerCapture(e.pointerId); this.onSound('drag'); };
-  this.stage.onpointermove = e => { const p = this.pointer; if (!p || p.id !== e.pointerId) return; const distance = p.y - e.clientY; this.setProgress(p.start + distance / (p.rect.height * .65), (p.x - p.rect.left) / p.rect.width * 2 - 1); };
-  this.stage.onpointerup = e => { const p = this.pointer; if (!p || p.id !== e.pointerId) return; this.pointer = null; if (Math.hypot(e.clientX-p.x,e.clientY-p.y) < 10 || this.progress >= .9) this.finish(); };
-  this.stage.onpointercancel = () => { this.pointer = null; };
+  this.hit.onpointerdown = e => {
+   if (e.button !== 0 || this.pointer) return;
+   const rect=this.getCardRect(), x=(e.clientX-rect.left)/rect.width*2-1, y=1-(e.clientY-rect.top)/rect.height*2;
+   const nearCenter=Math.max(Math.abs(x),Math.abs(y)) < .35;
+   const normal=nearCenter ? null : gripNormal(x,y);
+   if (normal && (normal.x !== this.normal.x || normal.y !== this.normal.y)) { this.normal=normal; this.setProgress(0); }
+   this.pointer={id:e.pointerId,x:e.clientX,y:e.clientY,start:this.progress,normal,rect};
+   this.hit.setPointerCapture(e.pointerId); this.onSound('drag');
+  };
+  this.hit.onpointermove = e => {
+   const p=this.pointer; if (!p || p.id!==e.pointerId) return;
+   const delta={x:e.clientX-p.x,y:p.y-e.clientY}; if (Math.hypot(delta.x,delta.y)>=10) p.moved=true;
+   if (!p.normal && Math.hypot(delta.x,delta.y)>8) { p.normal=gripNormal(-delta.x,-delta.y); if (p.normal.x!==this.normal.x || p.normal.y!==this.normal.y) { this.normal=p.normal; this.setProgress(0); p.start=0; } }
+   if (!p.normal) return;
+   const scale=p.rect.width, qmax=Math.abs(p.normal.x)*.5+Math.abs(p.normal.y)*.6945;
+   this.setProgress(projectedProgress(p.start,delta,p.normal,scale*(2*qmax+Math.PI*.12)));
+  };
+  this.hit.onpointerup = e => { const p=this.pointer; if (!p || p.id!==e.pointerId) return; this.pointer=null; if (!p.moved || this.progress>=.9) this.finish(); };
+  this.hit.onpointercancel = e => { if (this.pointer?.id===e.pointerId) this.pointer=null; };
+  this.hit.onlostpointercapture = e => { if (this.pointer?.id===e.pointerId) this.pointer=null; };
+  this.layoutHit();
   if (!reduced) cardImages(card).then(images => { if (this.resolve && this.serial === serial) this.createRenderer(images); }).catch(() => {});
   return this.promise;
  }
+ getCardRect() { return this.hit.getBoundingClientRect(); }
+ layoutHit() { this.hit.style.width="72%"; this.hit.style.height="auto"; this.hit.style.aspectRatio="144 / 200"; }
  createRenderer(images) {
   try {
    const canvas = document.createElement('canvas'); canvas.className = 'salon-squeeze__canvas';
@@ -60,17 +80,17 @@ export class SqueezeView {
    this.observer = new ResizeObserver(() => this.draw()); this.observer.observe(this.stage); this.draw();
   } catch (_) { this.releaseGraphics(); }
  }
- setProgress(progress, grip = 0) {
-  if (!this.resolve) return; this.progress = clamp(progress); this.host.dataset.progress = String(this.progress); this.grip = grip; this.fallback.style.setProperty('--peek', `${this.progress * 100}%`); this.draw(); this.onProgress(this.progress);
+ setProgress(progress) {
+  if (!this.resolve) return; this.progress = clamp(progress); this.host.dataset.progress = String(this.progress); this.host.dataset.direction = [this.normal.y>0?'top':this.normal.y<0?'bottom':'',this.normal.x<0?'left':this.normal.x>0?'right':''].filter(Boolean).join('-'); this.back.style.clipPath = backPolygon(this.normal,this.progress); this.draw(); this.onProgress(this.progress);
  }
  draw() {
   const g = this.graphics; if (!g) return; const rect = this.stage.getBoundingClientRect(); if (!rect.width || !rect.height) return;
   g.renderer.setSize(rect.width, rect.height, false); const aspect = rect.width / rect.height;
-  const a = g.geometry.attributes.position, p = this.progress, radius = .12, bend = (this.grip || 0) * .22 * Math.sin(p * Math.PI);
-  let minY = Infinity, maxY = -Infinity;
-  for (let i = 0; i < a.count; i++) { const x = g.base[i*3], y = g.base[i*3+1], fold = -.6945 + p * (1.389 + Math.PI * radius) + x * bend, d = Math.max(0, fold - y), angle = Math.min(Math.PI, d/radius); const yy = d === 0 ? y : d < Math.PI * radius ? fold-radius*Math.sin(angle) : fold+(d-Math.PI*radius); a.setXYZ(i,x,yy,radius*(1-Math.cos(angle))); minY=Math.min(minY,yy); maxY=Math.max(maxY,yy); }
-  const center = (minY+maxY)/2; for (let i=0;i<a.count;i++) a.setY(i,a.getY(i)-center);
-  const extent = Math.max(.68, (maxY-minY)/2+.035, .52/aspect); g.camera.left = -extent*aspect; g.camera.right = extent*aspect; g.camera.top = extent; g.camera.bottom = -extent; g.camera.updateProjectionMatrix();
+  const a = g.geometry.attributes.position; let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  for (let i=0;i<a.count;i++) { const v=foldPoint({x:g.base[i*3],y:g.base[i*3+1]},this.normal,this.progress); a.setXYZ(i,v.x,v.y,v.z); minX=Math.min(minX,v.x); maxX=Math.max(maxX,v.x); minY=Math.min(minY,v.y); maxY=Math.max(maxY,v.y); }
+  const cx=(minX+maxX)/2, cy=(minY+maxY)/2; for(let i=0;i<a.count;i++) { a.setX(i,a.getX(i)-cx); a.setY(i,a.getY(i)-cy); }
+  const extent=Math.max(.68,(maxY-minY)/2+.035,(maxX-minX+.07)/(2*aspect)); g.camera.left=-extent*aspect; g.camera.right=extent*aspect; g.camera.top=extent; g.camera.bottom=-extent; g.camera.updateProjectionMatrix();
+  this.hit.style.width=`${(maxX-minX)/(2*extent*aspect)*100}%`; this.hit.style.height=`${(maxY-minY)/(2*extent)*100}%`;
   a.needsUpdate = true; g.geometry.computeVertexNormals(); g.renderer.render(g.scene,g.camera);
  }
  finish() { if (!this.resolve) return; this.setProgress(1); this.onSound('reveal'); const resolve = this.resolve; this.resolve = null; this.releaseGraphics(); this.host.hidden = true; this.host.replaceChildren(); this.onReveal(); resolve(true); }

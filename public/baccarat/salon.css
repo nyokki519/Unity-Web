@@ -30,3 +30,39 @@ img.salon-preview-card-face{transform:rotate(13deg) translateX(46px)}
  .salon-title-footer{margin-top:auto}
 }
 button{min-width:44px}
+
+/* Casino cloth and engraved rails: fluid table geometry, native playable controls. */
+.salon-app{background:radial-gradient(ellipse at 50% -10%,#38754545 0,transparent 55%),radial-gradient(ellipse at 100% 50%,#a17a2410,transparent 55%),#0c1b1e}
+.salon-felt{isolation:isolate;border:2px solid #d6bb6e;border-radius:120px 120px 29px 29px;padding:20px 26px 19px;background:radial-gradient(ellipse at 50% 20%,#34845580,transparent 80%),url('./salon-assets/felt-weave.svg'),#125232;box-shadow:0 0 0 3px #102a20,0 0 0 5px #ae8a43,inset 0 0 0 5px #0b3324,inset 0 0 0 6px #dbbd6c,inset 0 0 0 9px #255f37,inset 0 0 55px 15px #032916b3,0 16px 40px #0005}
+.salon-felt::before{content:'';position:absolute;z-index:-1;inset:14px;border:1px solid #d4b96155;border-radius:103px 103px 14px 14px;pointer-events:none}
+.salon-table-meta{color:#e6e4bf;padding-left:24px;padding-right:24px}
+.salon-table-heading{height:82px;margin:4px auto 7px;max-width:560px;width:100%;color:#eed58e}
+.salon-table-crest{display:block;width:100%;height:100%;overflow:visible;fill:#f0d58d}
+.salon-table-crest text{font:600 29px SalonDisplay,Georgia,serif;letter-spacing:5px;filter:drop-shadow(0 1px 1px #092c1b)}
+.salon-table-crest .salon-crest-sub{font:600 10px system-ui,sans-serif;letter-spacing:3px;fill:#e0ca8c}
+.salon-crest-rule{fill:none;stroke:#ddbf70;stroke-width:1;opacity:.7}
+.salon-crest-flourish{fill:none;stroke:#dfc981;stroke-width:1}
+.salon-hand-label{border-bottom:1px solid #d8c2774d;margin-bottom:8px;padding-bottom:8px}
+.salon-hand h2{color:#f4e7b8;letter-spacing:.15em}
+.salon-hand output{border-color:#d9be73;background:#082c1b;box-shadow:inset 0 0 0 2px #bda45a24;color:#ffedb5}
+.salon-cards:empty:before{border-color:#d6c17c66;color:#d8c78e55;background:#0b3c2533}
+.salon-round-line p{color:#f0e4bd}
+.salon-skip{color:#f3db9e;border-color:#d8bb69}
+.salon-betting{gap:12px;align-items:end;margin-top:7px}
+.salon-bet{border:1.5px solid #dfbf70;border-radius:54% 54% 12px 12px / 34px 34px 12px 12px;min-height:124px;padding:17px 5px 11px;background:radial-gradient(ellipse at 50% 0%,#7baa5630,transparent 80%),#0c4a2b55;box-shadow:inset 0 0 0 3px #164c2c,inset 0 0 0 4px #d7bb6b55,0 2px 4px #001d1122}
+.salon-bet:hover:not(:disabled){background:#bfac4830;border-color:#ffe3a1;box-shadow:inset 0 0 0 3px #164c2c,inset 0 0 0 4px #e6cb7d99,0 0 17px #cfb15d20}
+.salon-bet>span:first-child{font:600 22px SalonDisplay,Georgia,serif;color:#ffe5a5;letter-spacing:.07em}
+.salon-bet small{color:#efddb0}.salon-bet strong{color:#ffedb9}.salon-bet-hint{color:#e1e4c4}
+.salon-bet-tie{border-radius:50% 50% 13px 13px / 46px 46px 13px 13px;min-height:115px;background:#41653355}
+.salon-table-rule{color:#e1c884;letter-spacing:.15em;font-size:9px;margin-top:16px}
+.salon-chip-tray{border-radius:40px;background:radial-gradient(ellipse at center,#99753214,transparent 75%)}
+.salon-title{background:radial-gradient(ellipse at 85% 32%,#2c794c2e,transparent 58%),radial-gradient(ellipse at 25% 0%,#d3a84c0d,transparent 50%)}
+.salon-title-copy h1{color:#f6e8c8;text-shadow:0 0 35px #d1ad6425}.salon-title-copy h1:first-letter{font-style:italic}
+.salon-title-art{background:radial-gradient(ellipse at 45% 30%,#469b5490,transparent 75%),url('./salon-assets/felt-weave.svg'),#154f30;box-shadow:inset 0 0 0 10px #0a281d,inset 0 0 0 12px #d0ac5f,inset 0 0 0 15px #163d25,inset 0 0 0 16px #bda36199,inset 0 0 55px 20px #001b13b3,0 30px 65px #0005}
+.salon-art-ring{border-color:#e1c17780}.salon-art-caption{color:#eed695}.salon-art-caption b{font-family:SalonDisplay,Georgia,serif;font-size:32px;letter-spacing:.12em}.salon-art-edition{color:#e2cb91}
+@media(max-width:600px){.salon-felt{border-radius:62px 62px 21px 21px;padding:15px 13px 16px}.salon-felt::before{inset:12px;border-radius:49px 49px 9px 9px}.salon-table-meta{padding:4px 11px;font-size:10px}.salon-table-heading{height:64px;margin:4px auto 3px}.salon-table-crest text{font-size:32px;letter-spacing:4px}.salon-table-crest .salon-crest-sub{font-size:12px;letter-spacing:2px}.salon-hands{gap:13px}.salon-hand-label{padding-bottom:6px;margin-bottom:5px}.salon-betting{gap:7px;margin-top:4px}.salon-bet{min-height:110px;padding:17px 3px 10px;border-radius:52% 52% 10px 10px / 26px 26px 10px 10px}.salon-bet>span:first-child{font-size:19px}.salon-bet-tie{min-height:103px;border-radius:50% 50% 10px 10px / 35px 35px 10px 10px}.salon-bet-hint{font-size:10px}.salon-table-rule{font-size:7px;letter-spacing:.06em}.salon-table-rule span{padding:0 7px}.salon-title-art{height:248px;min-height:248px}.salon-art-caption b{font-size:21px}}
+.salon-felt{background:radial-gradient(ellipse at 50% 18%,#37894e55,transparent 80%),linear-gradient(#176331d9,#104623df),url('./salon-assets/felt-weave.svg'),#14522d}
+.salon-title-art{background:radial-gradient(ellipse at 45% 30%,#469b5455,transparent 75%),linear-gradient(#176331d9,#104623df),url('./salon-assets/felt-weave.svg'),#154f29}
+
+.salon-table-rule{margin:12px auto 0;max-width:640px;width:100%;height:35px}.salon-table-rule svg{width:100%;height:100%;display:block;overflow:visible}.salon-table-rule text{fill:#f5daa0;font:600 19px SalonDisplay,Georgia,serif;letter-spacing:2px}
+@media(max-width:600px){.salon-table-rule{height:27px;margin-top:9px}.salon-table-rule text{font-size:22px;letter-spacing:1px}}

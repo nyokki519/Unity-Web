@@ -1,0 +1,5 @@
+# Directional squeeze
+
+Added cylindrical folding in a normal/tangent basis for all four edges and four corners. The grip fixes the normal for the gesture, inward and outward movement opens and unwinds, and a new edge starts a new fold. Pointer cancellation and lost capture clear the gesture. Touch capture is restricted to the card hit area; keyboard and the reveal button remain available. A directional clip is used for WebGL/reduced-motion fallback. `getCardRect()` exposes the interactive sheet bounds and `data-direction` names the selected direction.
+
+Validation: `node --test test/baccarat-salon-curl.test.js` passed pure eight-direction and diagonal geometry/unwind checks. `python test/baccarat-salon-direction_browser.py` passed eight actual mouse gestures, reversal, cancellation and no reveal callback; inspected `/tmp/salon-omni-corner.png`. `python test/baccarat-salon-squeeze_browser.py` passed lifecycle, fallback, keyboard and ten WebGL reopenings. Browser proof uses an isolated host; integrated accounting remains the controller's responsibility.

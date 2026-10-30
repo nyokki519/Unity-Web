@@ -1,0 +1,9 @@
+# All-direction squeeze and casino atmosphere refinement
+
+User requests only two refinements: allow squeezing from every direction and retain the appealing casino character of the earlier/reference table. Keep the new readable responsive controls, large cards, local balances/rules and all recovery behavior. Prior design-question optout and publication permission remain. No full redesign, no other games changes.
+
+## Squeeze
+Pointer grip must choose top/bottom/left/right and all four corners, with crease oriented to the grip and inward drag (not fixed vertical delta). Curl geometry must transform both x and y in the projected bend direction; surface arc length is preserved around a cylindrical fold. Return movement closes the peek. Regrip another side works without finishing or hanging. Pointercancel/lostcapture clears active pointer; keyboard/tap/skip/reduced-motion remain. At most one pointer; capture only actual card interaction; gestures outside viewer do not hijack page scrolling. Expose direction metadata only as presentation diagnostics, never changing result. Fallback clip responds from corresponding edge/corner. Existing async promise/cleanup contracts retained; highres face/back and correct readable orientation.
+
+## Casino atmosphere
+Restore recognizable rich green felt, gold double rails, curved table lettering and gold betting outlines drawn from the source's strengths. Preserve readable native buttons, six chip choices, per-hand large cards, history/sidebar, mobile scroll and min44px controls. Main game should read as casino rather than flat dashboard. Add restrained casino title lighting/lettering compatible with Unity brand, avoid return to old fixed640px UI or purple/OS-style mixed buttons. No changes to financial files/controller flow. Actual sameviewport screenshots and directional pointer gestures required.

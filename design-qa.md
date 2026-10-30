@@ -1,3 +1,5 @@
+最新の追補: docs/baccarat/omni-casino/README.md。全8方向の折り目・戻し・つかみ直しと、緑のフェルト/金のレール/曲線文字を確認。422 Nodeと独立22方向QA、既存14通し検証成功。実機Safari未確認。以下は前段のUI刷新記録。
+
 # Unity Baccarat original salon — design QA
 
 Current target is the user-approved audit at docs/baccarat/audits/2026-10-29-original-redesign/README.md, not source pixel matching. Scope is the actual playable title, table, direct squeeze, betting, inline receipt, history and settings. Old faithful reproduction evidence remains under docs/baccarat/faithful/; its fidelity metrics no longer describe the default page.
