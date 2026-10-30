@@ -55,7 +55,7 @@ with sync_playwright() as pw:
  open_view(page);page.locator('.salon-squeeze__stage').focus();page.keyboard.press('Enter');page.wait_for_function('()=>window.omniResult===true');assert state(page)==original
  results.append('card tap and keyboard preserve viewer completion contract')
  # Actual application round: finances reserve once and remain frozen while peeking.
- page.locator('[data-action="chip:1"]:visible').click();page.locator('[data-action="bet:banker"]:visible').click()
+ page.locator('[data-action="bet:banker"]:visible').click();page.locator('[data-action="chip:1"]:visible').click()
  page.locator('[data-action=confirm]:visible').click();expect(page.locator('[data-squeeze=finish]')).to_be_visible(timeout=15000)
  reserved=state(page);mouse_case(page,'bottom-right');assert state(page)==reserved
  page.locator('#salon-squeeze [data-action=skip]').click();page.wait_for_function('()=>SALON.controller.session.state.phase==="result"')

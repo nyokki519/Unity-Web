@@ -1,0 +1,15 @@
+{
+  "presses": 5,
+  "playerPile": 3,
+  "bankerPile": 2,
+  "walletUnchangedBeforeConfirm": true,
+  "undoAndReloadPilesMatch": true,
+  "failedCoinRetryAddsOnce": true,
+  "originalWordmarkAndCoins": true,
+  "widths": [
+    375,
+    390,
+    414,
+    1440
+  ]
+}

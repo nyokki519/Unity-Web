@@ -1,0 +1,3 @@
+# Original logo/coins and visible coin placement
+
+User steering: keep the accepted casino table/design and omni squeeze; replace only source-identical logo/coins, and bet by selecting a field then pressing coins, visibly stacking at that field. Retain native accessible button semantics beneath round coin artwork,44px targets and keyboard. Target selection must not reserve/debit; every coin press adds its value transactionally. Existing Session remains finance owner. Undo/clear/repeat/reload reflect exact bets. Render bounded visible piles reconstructed from committed bet/undo snapshots; no visual change may alter outcomes or payouts. Original outline wordmark (no borrowed cursive), original community coin artwork. Preserve earlier table texture/layout/palette.

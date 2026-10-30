@@ -1,0 +1,15 @@
+PASS independent title and session startup
+PASS field selection and repeated coin presses stack without spending wallet; undo clear
+PASS natural banker exact commission and no duplicate settlement; repeat
+PASS legal natural tie pays 8:1 and pushes main bets
+PASS legal six-card third draw and real pointer gesture followed by skip
+PASS saved result reload does not repay
+PASS failed confirmation is atomic and retry charges once
+PASS failed settlement and next retry exactly once without hidden debit
+PASS interrupted committed round resumes once; rebet failure and retry
+PASS native panels focus Escape and keyboard wagering
+PASS 375 390 414 desktop fit and minimum 44px buttons
+PASS denied storage explicit temporary play; quota startup retry has no phantom session
+PASS failed reset preserves prior session and offers usable native-panel retry
+PASS async reveal save checkpoint retry clears stale error and settles once
+14 independent salon checks passed

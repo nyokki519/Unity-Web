@@ -39,3 +39,15 @@
 .salon-confirm-row p{color:#f1edcb}.salon-history-aside{border-left-color:#c7b65a55}.salon-game-footer{color:#d5cc9b}
 @media(max-width:600px){.salon-title-logo{width:100%;max-width:360px}.salon-title-copy h1 span{font-size:17px;margin-top:16px}.salon-table-heading{height:81px;max-width:300px}.salon-felt{border-radius:5px;padding:13px 10px 15px}.salon-felt::before{inset:5px}.salon-hand h2{font-size:18px}.salon-hand output{width:35px;font-size:16px}.salon-betting{gap:6px}.salon-bet{padding:10px 3px;gap:4px;border-width:2px}.salon-bet-tie{margin-top:47px}.salon-bet>span:first-child{font-size:18px}.salon-bet small{font-size:11px}.salon-bet strong{font-size:12px;min-height:18px;width:72%;padding:1px 3px}.salon-wallet strong{font-size:17px;padding:6px 4px}.salon-wallet{gap:8px}.salon-classic-chip-art{width:43px;height:44.91px}.salon-controls{padding:13px 7px}.salon-chip-tray{gap:3px}.salon-table-rule{height:31px}.salon-table-rule text{font-size:23px}.salon-title-art{height:248px}.salon-title-footer{flex-wrap:wrap;justify-content:space-between}}
 @media(prefers-reduced-motion:reduce){.salon-classic-chip-art{filter:none}}
+/* Original Unity coins; native buttons remain accessible but have no square button chrome. */
+.salon-chip,.salon-chip:hover:not(:disabled),.salon-chip[aria-pressed=true]{background:transparent;border:1px solid transparent;box-shadow:none;border-radius:50%;padding:5px 2px}
+.salon-chip .salon-original-coin{display:block;width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 2px #0007)}
+.salon-chip:active:not(:disabled) .salon-original-coin{transform:translateY(3px) scale(.94)}
+.salon-chip-tray{gap:8px}.salon-bet{position:relative}.salon-bet-coins{display:block;position:absolute;left:50%;bottom:14px;width:52px;height:52px;transform:translateX(-50%);pointer-events:none;isolation:isolate}
+.salon-bet-coins:empty{display:none}.salon-bet-coins img{position:absolute;inset:auto 0 calc(var(--coin-level)*3px);width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 2px #0008)}
+.salon-bet.has-coins{padding-bottom:66px;padding-top:14px}.salon-bet.has-coins small{visibility:hidden}.salon-coin-land{animation:salon-coin-land .24s cubic-bezier(.15,.7,.3,1) both}
+@keyframes salon-coin-land{0%{transform:translateY(-20px) rotate(-12deg) scale(1.18);opacity:.4}65%{transform:translateY(2px) rotate(2deg);opacity:1}100%{transform:none;opacity:1}}
+@media(max-width:600px){.salon-chip .salon-original-coin{width:44px;height:44px}.salon-chip-tray{gap:3px}.salon-bet-coins{bottom:6px;width:31px;height:31px}.salon-bet-coins img{bottom:calc(var(--coin-level)*2px)}.salon-bet.has-coins{padding-bottom:34px;padding-top:8px}.salon-bet strong{font-size:11px}.salon-chip-heading span:last-child{font-size:6px}}
+@media(prefers-reduced-motion:reduce){.salon-coin-land{animation:none}.salon-chip:active:not(:disabled) .salon-original-coin{transform:none}}
+.salon-original-coin{-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
+@media(max-width:600px){.salon-bet-coins img{bottom:calc(var(--coin-level)*3px)}}

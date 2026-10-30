@@ -1,0 +1,13 @@
+✔ selecting a target reserves nothing, each coin press adds once (19.037768ms)
+✔ coin requires a target and failed persistence never adds a visible bet (2.906714ms)
+✔ piles preserve successive denomination presses and undo snapshots (1.258215ms)
+✔ clear and saved/restored bet totals build exact independent piles (0.312701ms)
+✔ repeat does not merge old piles or invent extra financial amounts (0.268466ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.267216

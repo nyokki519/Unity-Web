@@ -1,4 +1,7 @@
 import {
+  coinPiles
+} from './salon-coins.js';
+import {
   createSalonShell
 } from './salon-shell.js';
 import {
@@ -270,7 +273,7 @@ export function bootSalon() {
         available: betting ? s.balance - stake : s.balance
       })) root.querySelector(`[data-money=${key}]`).textContent = money(value);
     for (const e of root.querySelectorAll('[data-action^="chip:"]')) {
-      e.setAttribute('aria-pressed', String(Number(e.dataset.action.split(':')[1]) === controller.chip));
+      e.removeAttribute('aria-pressed');
       e.disabled = !betting || Number(e.dataset.action.split(':')[1]) * 100 < TABLES[s.table].min;
     }
     for (const side of ['player', 'tie', 'banker']) {
@@ -278,12 +281,13 @@ export function bootSalon() {
       const e = root.querySelector(`[data-action="bet:${side}"]`);
       e.disabled = !betting;
       e.classList.toggle('is-selected', betting && controller.selected === side);
-      e.setAttribute('aria-label', `${names[side]}へ${controller.chip}チップを置く。現在${money(s.bets[side]||0)}チップ`);
+      e.setAttribute('aria-label', `${names[side]}を選択。現在${money((betting?s.bets:s.round?.bets||{})[side]||0)}チップ`);
+      e.setAttribute('aria-pressed', String(betting && controller.selected === side));
     }
     for (const action of ['undo', 'clear', 'repeat', 'maximum', 'confirm']) {
       const e = root.querySelector(`[data-action=${action}]`);
       e.disabled = !betting || action === 'undo' && !s.undo.length || action === 'clear' && !totalBet(s.bets) || action === 'repeat' && !totalBet(s.lastBet) || action === 'maximum' && !controller.selected || action === 'confirm' && !totalBet(s.bets);
-      if (e.disabled) e.title = !betting ? 'ラウンド終了後に操作できます' : action === 'repeat' ? '前回のベットがまだありません' : action === 'maximum' ? '先に賭け先へチップを置いてください' : 'チップを賭け先へ置いてください';
+      if (e.disabled) e.title = !betting ? 'ラウンド終了後に操作できます' : action === 'repeat' ? '前回のベットがまだありません' : action === 'maximum' ? '先に賭け先を選んでください' : 'チップを賭け先へ置いてください';
       else e.removeAttribute('title');
     }
     ui.query('[data-action=confirm]').hidden = !betting;
@@ -292,14 +296,48 @@ export function bootSalon() {
     root.querySelector('.salon-chip-heading').hidden = !betting;
     ui.query('[data-action=skip]').hidden = !['dealing', 'judging'].includes(s.phase);
     ui.receipt.hidden = s.phase !== 'result';
-    ui.status.textContent = betting ? 'ベット受付中' : s.phase === 'result' ? 'ラウンド終了' : 'カードを公開中';
+    ui.status.textContent = betting ? (controller.selected ? names[controller.selected] + 'を選択中' : '賭け先を選んでください') : s.phase === 'result' ? 'ラウンド終了' : 'カードを公開中';
     ui.shoe.textContent = `シュー ${s.shoe.serial} · 残り ${416-s.shoe.cursor}枚`;
-    if (message && betting) app.message(`${controller.chip.toLocaleString()}チップを選択中 · 賭け先をタップして配置${TABLES[s.table].min>100?' · 最低'+money(TABLES[s.table].min)+'チップ':''}`);
+    if (message && betting) app.message(`${controller.selected?names[controller.selected]+'を選択中 · コインを押すたびに積まれます':'先にPLAYER・TIE・BANKERから賭け先を選んでください'}${TABLES[s.table].min>100?' · 最低'+money(TABLES[s.table].min)+'チップ':''}`);
     if (betting) {
-      ui.roundStatus.textContent = 'チップを置いて、勝負を始めましょう。';
+      ui.roundStatus.textContent = '賭け先を選んで、コインを押してください。';
       root.querySelector('.salon-felt').removeAttribute('data-winner');
     }
+    app.drawCoins();
     app.preview();
+  };
+  app.drawCoins = () => {
+    const s = controller.session?.state;
+    if (!s) return;
+    const betting = s.phase === 'betting';
+    if (betting) app.coinPiles = coinPiles(s.bets, s.undo);
+    const piles = betting ? app.coinPiles : app.coinPiles && Object.values(app.coinPiles).some(p => p.length) ? app.coinPiles : coinPiles(s.round?.bets || {});
+    for (const side of ['player', 'banker', 'tie']) {
+      const button = root.querySelector(`[data-action="bet:${side}"]`);
+      let stack = button.querySelector('.salon-bet-coins');
+      if (!stack) {
+        stack = element('span', 'salon-bet-coins');
+        stack.setAttribute('aria-hidden', 'true');
+        button.append(stack);
+      }
+      const coins = piles[side] || [];
+      stack.replaceChildren();
+      stack.dataset.coinCount = coins.length;
+      button.classList.toggle('has-coins', coins.length > 0);
+      coins.slice(-5).forEach((value, i) => {
+        const image = document.createElement('img');
+        image.src = chipArt(value);
+        image.alt = '';
+        image.dataset.value = value;
+        image.style.setProperty('--coin-level', i);
+        stack.append(image);
+      });
+    }
+  };
+  app.coinMotion = side => {
+    if (settings.reduced) return;
+    const stack = root.querySelector(`[data-action="bet:${side}"] .salon-bet-coins`);
+    stack?.lastElementChild?.classList.add('salon-coin-land');
   };
   app.payout = (round) => {
     if (settings.reduced || round.receipt.net <= 0) return;
@@ -386,14 +424,15 @@ export function bootSalon() {
     }
     let fn;
     if (action.startsWith('chip:')) fn = () => {
-      controller.selectChip(Number(action.split(':')[1]));
+      controller.coin(Number(action.split(':')[1]));
       app.render();
-      app.audio.play('click');
+      app.coinMotion(controller.selected);
+      app.audio.play('chip');
     };
     else if (action.startsWith('bet:')) fn = () => {
-      controller.place(action.split(':')[1]);
+      controller.selectTarget(action.split(':')[1]);
       app.render();
-      app.audio.play('chip');
+      app.audio.play('click');
     };
     else fn = {
       start: () => {

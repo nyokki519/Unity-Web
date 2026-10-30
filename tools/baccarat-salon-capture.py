@@ -6,7 +6,7 @@ BASE=os.environ.get('UNITY_URL','http://127.0.0.1:3483');OUT=Path(os.environ.get
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True,device_scale_factor=1);errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto(BASE+'/baccarat/index.html');page.wait_for_function('()=>window.SALON?.ready');page.wait_for_timeout(300)
  def snap(name,full=True):page.screenshot(path=str(OUT/(name+'.png')),full_page=full)
- snap('title-390');page.locator('[data-action=start]').click();snap('table-390');page.locator('[data-action="chip:100"]').click();page.locator('[data-action="bet:banker"]').click();snap('bet-390')
+ snap('title-390');page.locator('[data-action=start]').click();snap('table-390');page.locator('[data-action="bet:banker"]').click();page.locator('[data-action="chip:100"]').click();snap('bet-390')
  page.evaluate('''()=>{SALON.settings.squeeze='all';SALON.settings.reduced=false;const s=SALON.controller.session.state,k=s.shoe.cursor,prefix=s.shoe.order.slice(0,k),used=new Set(prefix);const cards=[12,3,11,4].map(face=>{const id=s.shoe.order.slice(k).find(id=>id%52===face&&!used.has(id));used.add(id);return id});s.shoe.order=[...prefix,...cards,...s.shoe.order.slice(k).filter(id=>!cards.includes(id))];}''')
  cdp=page.context.new_cdp_session(page);frames=OUT/'frames';frames.mkdir(exist_ok=True);stamps=[]
  def frame(e):

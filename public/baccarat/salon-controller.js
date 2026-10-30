@@ -53,6 +53,16 @@ export class SalonController {
     this.selected = null;
     return s;
   }
+  selectTarget(side) {
+    this.session.editable();
+    if (!Object.hasOwn(AREA_LIMITS, side)) throw Error('TARGET');
+    this.selected = side;
+  }
+  coin(value) {
+    if (!this.selected) throw Error('TARGET');
+    this.selectChip(value);
+    return this.place(this.selected);
+  }
   selectChip(value) {
     if (!CHIP_VALUES.includes(value)) throw Error('AMOUNT');
     this.chip = value;

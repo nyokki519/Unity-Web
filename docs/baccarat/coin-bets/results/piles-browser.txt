@@ -1,0 +1,1 @@
+coin stacking, undo, reload and widths passed

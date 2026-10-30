@@ -21,7 +21,7 @@ def start(page):
 def fixture(page,cards):
     page.evaluate('''cards=>{const shoe=SALON.controller.session.state.shoe,prefix=shoe.order.slice(0,shoe.cursor),rest=shoe.order.slice(shoe.cursor),chosen=[];for(const card of cards){const i=rest.findIndex(x=>x%13===card%13);if(i<0)throw Error('fixture exhausted rank');chosen.push(rest.splice(i,1)[0]);}shoe.order=[...prefix,...chosen,...rest];}''',cards)
 def bet(page,side='banker',chip=1):
-    action(page,f'chip:{chip}').click(); action(page,f'bet:{side}').click()
+    action(page,f'bet:{side}').click(); action(page,f'chip:{chip}').click()
 def finish(page,skip=True):
     if skip:
         expect(page.locator('#salon-squeeze')).to_be_visible(timeout=15000)
@@ -37,13 +37,16 @@ with sync_playwright() as p:
     context=browser.new_context(viewport={'width':390,'height':844},reduced_motion='reduce')
     page=context.new_page(); errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     check('independent title and session startup',lambda:start(page))
-    def chip_first():
-        before=state(page)['balance'];action(page,'chip:10').click();assert state(page)['bets']=={}
-        action(page,'bet:player').click();action(page,'bet:banker').click();action(page,'bet:tie').click()
+    def target_and_coins():
+        before=state(page)['balance'];action(page,'bet:player').click();assert state(page)['bets']=={}
+        action(page,'chip:10').click();action(page,'chip:10').click();assert state(page)['bets']=={'player':2000}
+        assert page.locator('[data-action="bet:player"] .salon-bet-coins img').count()==2
+        action(page,'undo').click();assert state(page)['bets']=={'player':1000}
+        action(page,'bet:banker').click();action(page,'chip:10').click();action(page,'bet:tie').click();action(page,'chip:10').click()
         assert state(page)['bets']=={'player':1000,'banker':1000,'tie':1000};assert state(page)['balance']==before
         action(page,'undo').click();assert state(page)['bets']=={'player':1000,'banker':1000}
-        action(page,'clear').click();assert state(page)['bets']=={}
-    check('chip-first all sides undo clear preserve wallet',chip_first)
+        action(page,'clear').click();assert state(page)['bets']=={};assert page.locator('.salon-bet-coins img').count()==0
+    check('field selection and repeated coin presses stack without spending wallet; undo clear',target_and_coins)
     def banker():
         before=state(page)['balance'];place_fixture(page,[0,3,1,4]);finish(page)
         s=state(page);assert s['round']['plan']['winner']=='banker';assert s['round']['receipt']['returned']==195;assert s['balance']==before+95
@@ -133,7 +136,7 @@ with sync_playwright() as p:
             page.keyboard.press('Tab');assert page.evaluate('document.querySelector("#salon-panel").contains(document.activeElement)')
             assert state(page)['balance']==before['balance'] and state(page)['sequence']==before['sequence']
             page.keyboard.press('Escape');expect(page.locator('#salon-panel')).not_to_be_visible();page.wait_for_timeout(50)
-        action(page,'chip:1').focus();page.keyboard.press('Enter');action(page,'bet:player').focus();page.keyboard.press('Enter');assert state(page)['bets']=={'player':100},state(page)['bets']
+        action(page,'bet:player').focus();page.keyboard.press('Enter');action(page,'chip:1').focus();page.keyboard.press('Enter');assert state(page)['bets']=={'player':100},state(page)['bets']
         action(page,'clear').click()
     check('native panels focus Escape and keyboard wagering',panels)
     def responsive():

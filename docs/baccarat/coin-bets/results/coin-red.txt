@@ -1,0 +1,96 @@
+✖ selecting a target reserves nothing, each coin press adds once (10.839058ms)
+✖ coin requires a target and failed persistence never adds a visible bet (2.231998ms)
+✖ piles preserve successive denomination presses and undo snapshots (0.625852ms)
+✖ clear and saved/restored bet totals build exact independent piles (0.327733ms)
+✖ repeat does not merge old piles or invent extra financial amounts (0.284599ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78.85934
+
+✖ failing tests:
+
+test at test/baccarat-salon-coins.test.js:3:1
+✖ selecting a target reserves nothing, each coin press adds once (10.839058ms)
+  TypeError: c.selectTarget is not a function
+      at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js:3:201)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at test/baccarat-salon-coins.test.js:4:1
+✖ coin requires a target and failed persistence never adds a visible bet (2.231998ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TARGET/. Input:
+  
+  'TypeError: c.coin is not a function'
+  
+      at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js:4:214)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: c.coin is not a function
+        at file:///workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js:4:227
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js:4:214)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /TARGET/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test/baccarat-salon-coins.test.js:5:1
+✖ piles preserve successive denomination presses and undo snapshots (0.625852ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js'
+  }
+
+test at test/baccarat-salon-coins.test.js:6:1
+✖ clear and saved/restored bet totals build exact independent piles (0.327733ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js'
+  }
+
+test at test/baccarat-salon-coins.test.js:7:1
+✖ repeat does not merge old piles or invent extra financial amounts (0.284599ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js' imported from /workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at node:internal/modules/esm/loader:632:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///workspace/Unity-Chinchiro-Release/public/baccarat/salon-coins.js'
+  }
