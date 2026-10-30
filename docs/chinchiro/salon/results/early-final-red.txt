@@ -17,7 +17,7 @@ test at test/chinchiro-presentation.test.js:8:1
 ✖ four round markers distinguish complete current and future including final (1.330528ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
   + actual - expected
-  
+
     [
       'complete',
       'complete',
@@ -26,7 +26,7 @@ test at test/chinchiro-presentation.test.js:8:1
   -   'future',
   -   'future'
     ]
-  
+
       at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/chinchiro-presentation.test.js:11:9)
       at Test.runInAsyncScope (node:async_hooks:227:14)
       at Test.run (node:internal/test_runner/test:1382:25)

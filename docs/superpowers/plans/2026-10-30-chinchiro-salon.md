@@ -12,6 +12,6 @@
 - [x] Browser checks:375/390/414/1440; complete match; sound, reduce, pause, reset dialogs; coin preview, outcomes, limits, no overflow and usable fixed action.
 - [x] Run full Node suite, existing physical/audio/browser checks, record real play and frame timings.
 - [x] Review diff and isolate important fixes.
-- [ ] Deploy main after green, compare production assets and smoke actual public game.
+- [x] Deploy main after green, compare production assets and smoke actual public game.
 
 Review focus: narrow-height mobile action; native dialogs above sticky action; CPU scheduling while collapsed panels; stale outcome effects on reset; no fabricated result in idle preview.
