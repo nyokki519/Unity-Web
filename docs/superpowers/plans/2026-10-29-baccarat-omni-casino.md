@@ -10,4 +10,4 @@
 - [x] Squeeze worker: salon-squeeze.js/CSS + pure salon-curl.js + geometry tests + directional browser test. Preserve original contracts, focus management root stays unchanged.
 - [x] Table worker: salon-shell.js/salon.css only, casino green/gold/curved lettering/field styling, screenshots375/390/414/PC; retain all selectors and44px.
 - [x] Root: integrate, correct help/labels only if needed, run420+newtests,14groupbrowser, touch, eight-direction proof, independent review.
-- [ ] Record current screenshots/video and limitations; publish main/Render, verify hashes and real play.
+- [x] Record current screenshots/video and limitations; publish main/Render, verify hashes and real play.

@@ -22,3 +22,5 @@
 変更ファイルはsalon-squeeze.js/CSS、純粋計算のsalon-curl.js、salon-shell.js/salon.css、遊び方の文言。Session・シュー・保存・controller/main/round、他ゲームは変更していない。
 
 実機iPhone/Safariは未確認。ブラウザのタッチエミュレーションと実機は区別する。8方向の握り位置に合わせたモデルであり、柔らかい紙の全自由度や指の接触を物理シミュレーションしているわけではない。
+
+[本番公開確認](PRODUCTION.md)：217ファイル一致、公開URLで方向別22項目＋既存14グループ成功。
