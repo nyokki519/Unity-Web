@@ -17,3 +17,5 @@ Node427件、失敗0。新規5件は賭け先選択・コイン追加・保存�
 `npm test`、`python test/baccarat-salon_browser.py`、`python test/baccarat-salon-omni_browser.py`、`python test/baccarat-salon-coin-piles_browser.py`。ローカルサーバーはUNITY_URL指定、未指定は3483。実機iPhone/Safariは未確認。
 
 ロゴの再生成は `python tools/generate-baccarat-wordmark.py`（開発用fontTools）。通常プレイにfontToolsは不要。カード・コイン・ロゴ・音楽はUnity用、背景は既存許諾済みMasunakaSoft / トランプスタジアム素材。設定内クレジットも変更に合わせた。新サービス・課金・外部通信の追加なし。
+
+[本番公開確認](PRODUCTION.md)：220ファイル一致、公開URLで14＋22項目と積み上げ専用検証成功。

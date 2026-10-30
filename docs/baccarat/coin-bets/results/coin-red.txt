@@ -24,9 +24,9 @@ test at test/baccarat-salon-coins.test.js:3:1
 test at test/baccarat-salon-coins.test.js:4:1
 ✖ coin requires a target and failed persistence never adds a visible bet (2.231998ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TARGET/. Input:
-  
+
   'TypeError: c.coin is not a function'
-  
+
       at TestContext.<anonymous> (file:///workspace/Unity-Chinchiro-Release/test/baccarat-salon-coins.test.js:4:214)
       at async Test.run (node:internal/test_runner/test:1389:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
