@@ -27,7 +27,7 @@ export function validateSession(s){
 }
 function settleState(s){
  if(!s.round||s.round.paid||!['dealing','judging'].includes(s.phase))return false;
- const r=s.round,receipt=payout(r.bets,r.plan.winner);r.revealed=r.plan.cards.length;r.receipt=receipt;r.paid=true;s.balance+=receipt.returned;s.lastBet={...r.bets};s.phase='result';
+ const r=s.round,receipt=payout(r.bets,r.plan.winner);r.revealed=r.plan.cards.length;r.receipt=receipt;r.paid=true;s.balance+=receipt.returned;s.lastBet={...r.bets};s.phase=s.balance<TABLES[s.table].min?'ended':'result';
  const st=s.stats;st.rounds++;st[r.plan.winner]++;st[receipt.net>0?'positive':receipt.net<0?'negative':'push']++;st.net+=receipt.net;st.wagered+=receipt.stake;st.peak=Math.max(st.peak,s.balance);st.maxDrawdown=Math.max(st.maxDrawdown,st.peak-s.balance);
  s.history.push({id:r.id,number:s.sequence,shoeSerial:r.shoeSerial,start:r.plan.start,end:r.plan.end,cards:r.plan.cards,player:r.plan.player,banker:r.plan.banker,winner:r.plan.winner,bets:r.bets,before:r.balanceBefore,after:s.balance,returned:receipt.returned,net:receipt.net});s.history=s.history.slice(-500);return true;
 }
@@ -51,7 +51,7 @@ export class Session{
  revealAll(){while(this.reveal());}
  settle(){if(!this.state.round||this.state.round.paid||!['dealing','judging'].includes(this.state.phase))return false;require(this.state.round.revealed===this.state.round.plan.cards.length,'REVEAL');return this.transaction(settleState);}
  skip(){if(!['dealing','judging'].includes(this.state.phase))return false;return this.transaction(settleState);}
- next(){require(this.state.phase==='result','PHASE');this.transaction(s=>{s.phase='betting';s.round=null;s.bets={};s.undo=[];});}
+ next(){require(this.state.phase==='result','PHASE');this.transaction(s=>{if(s.balance<TABLES[s.table].min){s.phase='ended';return;}s.phase='betting';s.round=null;s.bets={};s.undo=[];});}
  end(){return this.transaction(s=>{settleState(s);s.phase='ended';});}
- resume(){require(this.state.phase==='ended','PHASE');this.transaction(s=>{s.phase=s.round?'result':'betting';});}
+ resume(){require(this.state.phase==='ended','PHASE');require(this.state.balance>=TABLES[this.state.table].min,'FUNDS');this.transaction(s=>{s.phase=s.round?'result':'betting';});}
 }

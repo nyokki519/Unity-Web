@@ -82,7 +82,7 @@ export class SalonRound {
         if (!await this.wait(a.settings.reduced ? 1 : 250, token)) return;
         c.settle();
       }
-      if (c.session.state.phase === 'result') {
+      if (c.session.state.phase === 'result' || c.session.state.phase === 'ended' && c.session.state.round?.paid) {
         a.result();
         a.success();
       }

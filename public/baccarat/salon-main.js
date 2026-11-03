@@ -262,7 +262,8 @@ export function bootSalon() {
       ui.query('[data-action=new-session]').hidden = true;
       return;
     }
-    ui.query('[data-action=resume]').hidden = false;
+    const cannotContinue = s.balance < TABLES[s.table].min;
+    ui.query('[data-action=resume]').hidden = cannotContinue;
     ui.query('[data-action=start]').hidden = true;
     ui.query('[data-action=new-session]').hidden = false;
     const betting = s.phase === 'betting',
@@ -295,8 +296,9 @@ export function bootSalon() {
     root.querySelector('.salon-bet-tools').hidden = !betting;
     root.querySelector('.salon-chip-heading').hidden = !betting;
     ui.query('[data-action=skip]').hidden = !['dealing', 'judging'].includes(s.phase);
-    ui.receipt.hidden = s.phase !== 'result';
-    ui.status.textContent = betting ? (controller.selected ? names[controller.selected] + 'を選択中' : '賭け先を選んでください') : s.phase === 'result' ? 'ラウンド終了' : 'カードを公開中';
+    const completedRound = s.phase === 'result' || s.phase === 'ended' && s.round?.paid;
+    ui.receipt.hidden = !completedRound;
+    ui.status.textContent = betting ? (controller.selected ? names[controller.selected] + 'を選択中' : '賭け先を選んでください') : s.phase === 'result' ? 'ラウンド終了' : s.phase === 'ended' ? 'セッション終了' : 'カードを公開中';
     ui.shoe.textContent = `シュー ${s.shoe.serial} · 残り ${416-s.shoe.cursor}枚`;
     if (message && betting) app.message(`${controller.selected?names[controller.selected]+'を選択中 · コインを押すたびに積まれます':'先にPLAYER・TIE・BANKERから賭け先を選んでください'}${TABLES[s.table].min>100?' · 最低'+money(TABLES[s.table].min)+'チップ':''}`);
     if (betting) {
@@ -359,19 +361,29 @@ export function bootSalon() {
   };
   app.result = (sound = true) => {
     const s = controller.session.state,
-      r = s.round;
+      r = s.round,
+      finalSession = s.phase === 'ended' || s.balance < TABLES[s.table].min;
     if (!r?.paid) return;
     app.restoreCards();
     const p = r.receipt,
       principal = p.lines.reduce((n, l) => n + l.principal, 0),
       profit = p.lines.reduce((n, l) => n + l.profit, 0);
-    ui.receiptContent.innerHTML = `<p class="salon-eyebrow">ROUND ${s.sequence} · ${names[r.plan.winner]} ${r.plan.winner==='tie'?'引き分け':'勝利'}</p><h2 class="salon-result-title">${p.net>0?'あなたの勝利':p.net===0?'ベットを返却しました':'このラウンドは終了です'}</h2><div class="salon-receipt-grid"><div><span>元本の返却</span><strong>${money(principal)}</strong></div><div><span>配当利益</span><strong>${money(profit)}</strong></div><div><span>受取合計</span><strong>${money(p.returned)}</strong></div><div><span>純収支</span><strong>${p.net>0?'+':''}${money(p.net)}</strong></div></div><p class="salon-panel-note">${r.plan.player} 対 ${r.plan.banker} · ベット ${money(p.stake)} · BANKER利益は5%控除済み</p>`;
-    ui.receipt.dataset.result = p.net > 0 ? 'win' : p.net < 0 ? 'loss' : 'push';
+    const roundTitle = p.net > 0 ? 'このベットは的中' : p.net < 0 ? 'このベットは不的中' : '引き分け・ベット返却';
+    const finalNet = s.balance - s.initial,
+      sessionTitle = finalNet > 0 ? 'セッション勝利' : finalNet < 0 ? 'セッション敗北' : 'セッション終了・収支±0';
+    ui.receiptContent.innerHTML = `<p class="salon-eyebrow">ROUND ${s.sequence} · ${names[r.plan.winner]} ${r.plan.winner==='tie'?'引き分け':'勝利'}</p><h2 class="salon-result-title">${finalSession ? sessionTitle : roundTitle}</h2><div class="salon-receipt-grid"><div><span>元本の返却</span><strong>${money(principal)}</strong></div><div><span>配当利益</span><strong>${money(profit)}</strong></div><div><span>受取合計</span><strong>${money(p.returned)}</strong></div><div><span>この局の純収支</span><strong>${p.net>0?'+':''}${money(p.net)}</strong></div></div><p class="salon-panel-note">${r.plan.player} 対 ${r.plan.banker} · ベット ${money(p.stake)} · BANKER利益は5%控除済み</p>${finalSession?`<section class="salon-session-ending" aria-label="セッション最終結果"><p class="salon-eyebrow">SESSION FINAL</p><p>最低ベット ${money(TABLES[s.table].min)} に届かないため、このセッションは終了です。</p><div class="salon-receipt-grid"><div><span>開始チップ</span><strong>${money(s.initial)}</strong></div><div><span>終了チップ</span><strong>${money(s.balance)}</strong></div><div><span>セッション純収支</span><strong>${finalNet>0?'+':''}${money(finalNet)}</strong></div><div><span>プレイした局数</span><strong>${s.stats.rounds}</strong></div></div></section>`:''}`;
+    ui.receipt.setAttribute('aria-label', finalSession ? 'セッション最終結果' : 'ラウンド結果');
+    ui.receipt.dataset.result = finalSession ? finalNet > 0 ? 'win' : finalNet < 0 ? 'loss' : 'push' : p.net > 0 ? 'win' : p.net < 0 ? 'loss' : 'push';
     root.querySelector('.salon-felt').dataset.winner = r.plan.winner;
     ui.roundStatus.textContent = `${names[r.plan.winner]} ${r.plan.winner==='tie'?'引き分け':'勝利'} · ${r.plan.player} 対 ${r.plan.banker}`;
     app.render(false);
-    app.message('結果を確認したら、同じベットで配札するか、ベットを変更できます。');
+    app.message(finalSession ? '残高が最低ベット未満のため、次のラウンドには進めません。' : '結果を確認したら、同じベットで配札するか、ベットを変更できます。');
     const rebet = ui.query('[data-action=rebet]');
+    const next = ui.query('[data-action=next]');
+    const leave = ui.query('#salon-receipt [data-action=leave-table]');
+    rebet.hidden = finalSession;
+    next.hidden = finalSession;
+    leave.hidden = !finalSession;
     rebet.disabled = totalBet(s.lastBet) > s.balance;
     rebet.title = rebet.disabled ? '残高が足りません。ベットを変更してください。' : `同じ賭け先へ合計${money(totalBet(s.lastBet))}チップで配札`;
     if (sound && app.shownRound !== r.id) {
@@ -388,7 +400,7 @@ export function bootSalon() {
     ui.game.hidden = false;
     app.restoreCards();
     app.render();
-    if (controller.session.state.phase === 'result') {
+    if (controller.session.state.phase === 'result' || controller.session.state.phase === 'ended' && controller.session.state.round?.paid) {
       app.shownRound = controller.session.state.round?.id;
       app.result(false);
     } else if (['dealing', 'judging'].includes(controller.session.state.phase)) app.round.run();

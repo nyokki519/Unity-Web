@@ -40,7 +40,11 @@ export class SalonController {
       if (!this.commit(s.state)) throw Error('SAVE');
       this.session = s;
     }
-    if (this.session.state.phase === 'ended') this.session.resume();
+    const s = this.session.state;
+    // Older saved sessions could return to betting with less than the table
+    // minimum. Close those sessions on restore instead of presenting a dead end.
+    if (s.balance < TABLES[s.table].min && s.phase !== 'ended') this.session.end();
+    else if (s.phase === 'ended' && s.balance >= TABLES[s.table].min) this.session.resume();
     return this.session;
   }
   fresh() {
