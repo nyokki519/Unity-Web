@@ -10,3 +10,9 @@ export function classicCardBack(svg){
  if(!svg.includes(original))throw Error('CARD_ART');
  return svg.replace(original,'<rect x="1.74" y="1.75" width="496.52" height="696.5" rx="14" fill="#13332f" stroke="#000" stroke-width="3.47"/>');
 }
+// Only the rank glyphs are suppressed during hand-squeeze. Pips, suits and
+// court portraits remain visible so the player can read the emerging pattern.
+// Normal/dealt cards continue to use classicCardFace without this conversion.
+export function squeezeCardFace(svg){
+ return classicCardFace(svg).replace(/<text\b[^>]*>[\s\S]*?<\/text>/g,'');
+}

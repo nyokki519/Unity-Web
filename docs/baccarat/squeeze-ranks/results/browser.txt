@@ -1,0 +1,1 @@
+{"cornerDiff": 10898, "centerDiff": 0, "normalRankStillPresent": true, "fallbackRankFree": true, "fallbackCornerMasks": 2, "webglTexture": {"same": true, "size": [720, 1000]}, "normalAfterReveal": {"label": "スペードの10", "masks": 0, "atlas": true}, "errors": []}

@@ -15,9 +15,9 @@ function imageFromSvg(svg) {
   image.src = url;
  });
 }
-async function cardImages(card) {
- const [{FACES, BACK}, {classicCardFace, classicCardBack}] = await masters();
- return Promise.all([imageFromSvg(classicCardFace(FACES[frameForCard(card)])), imageFromSvg(classicCardBack(BACK))]);
+async function cardArtwork(card) {
+ const [{FACES, BACK}, {squeezeCardFace, classicCardBack}] = await masters();
+ return [squeezeCardFace(FACES[frameForCard(card)]),classicCardBack(BACK)];
 }
 function texture(image) {
  const canvas = document.createElement('canvas'); canvas.width = 720; canvas.height = 1000;
@@ -34,7 +34,7 @@ export class SqueezeView {
   this.host.innerHTML = `<div class="salon-squeeze__panel"><p class="salon-squeeze__label"></p><p class="salon-squeeze__hint">カードの辺や角から内側へなぞると、少しずつめくれます。</p><div class="salon-squeeze__stage" role="button" tabindex="0" aria-label="カードをなぞるか、Enterキーでめくる"><div class="salon-squeeze__fallback"></div><div class="salon-squeeze__hit" aria-hidden="true"></div></div><button class="salon-squeeze__reveal" data-squeeze="finish" type="button">このカードをめくる</button></div>`;
   this.host.querySelector('.salon-squeeze__label').textContent = label;
   this.stage = this.host.querySelector('.salon-squeeze__stage'); this.fallback = this.host.querySelector('.salon-squeeze__fallback');
-  this.hit = this.host.querySelector('.salon-squeeze__hit'); this.face = createCard(card); this.back = createCard(card, {hidden:true}); this.fallback.append(this.face, this.back);
+  this.hit = this.host.querySelector('.salon-squeeze__hit'); this.face = createCard(card, {squeezing:true}); this.back = createCard(card, {hidden:true}); this.fallback.append(this.face, this.back);
   this.promise = new Promise(resolve => { this.resolve = resolve; });
   this.button = this.host.querySelector('button'); this.button.onclick = () => this.finish(); this.stage.focus({preventScroll:true});
   this.stage.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.finish(); } };
@@ -59,7 +59,17 @@ export class SqueezeView {
   this.hit.onpointercancel = e => { if (this.pointer?.id===e.pointerId) this.pointer=null; };
   this.hit.onlostpointercapture = e => { if (this.pointer?.id===e.pointerId) this.pointer=null; };
   this.layoutHit();
-  if (!reduced) cardImages(card).then(images => { if (this.resolve && this.serial === serial) this.createRenderer(images); }).catch(() => {});
+  cardArtwork(card).then(async artwork => {
+   if (!this.resolve || this.serial !== serial) return;
+   // The fallback and WebGL use the exact same rank-free SVG. Masks above are
+   // present synchronously, so even delayed/failed SVG loading cannot flash ranks.
+   this.face.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(artwork[0])}")`;
+   this.face.style.backgroundSize = '100% 100%'; this.face.style.backgroundPosition = 'center';
+   if (!reduced) {
+    const images = await Promise.all(artwork.map(imageFromSvg));
+    if (this.resolve && this.serial === serial) this.createRenderer(images);
+   }
+  }).catch(() => {});
   return this.promise;
  }
  getCardRect() { return this.hit.getBoundingClientRect(); }

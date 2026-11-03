@@ -37,7 +37,7 @@ function render(){
  $('action').disabled=!tray||paused||busy||phase==='TURN'&&match.current===1;
  $('settlement').hidden=phase!=='ROUND_END'&&!final;
  if(!busy)showDice(phase==='TURN'?match.dice:phase==='ROUND_END'?match.results[0].dice:[]);
- if(isBet){$('turn').textContent=`今回の親：${match.players[match.dealer].name}`;$('role').textContent='一杯ぶん、勝負しよう。';$('message').textContent='コインを決めたら、親から順に振ります。';$('action').textContent='この枚数で勝負';}
+ if(isBet){$('turn').textContent=`今回の親：${match.players[match.dealer].name}`;$('role').textContent='';$('message').textContent='';$('action').textContent='この枚数で勝負';}
  if(phase==='TURN'){
   const p=match.players[match.current],r=match.results[match.current];$('turn').textContent=`${p.name}の番 / ${match.current===match.dealer?'親':'子'} / ${Math.min(match.attempt+(!match.locked?1:0),3)}投目`;
   $('role').textContent=busy?'出目を待とう。':r?r.label:'サイコロを振ろう';
@@ -74,7 +74,7 @@ async function roll(){
 }
 function reset(){generation++;clearTimers();tray?.cancel();tray?.setPaused(false);notice='';voids=0;heardResult=0;match=new Match();paused=false;$('error').textContent='';render();}
 $('action').addEventListener('click',()=>{if(paused||busy||!tray)return;notice='';try{
- if(match.phase==='BET'){match.placeBet(Number($('bet').value));render();}
+ if(match.phase==='BET'){match.placeBet(Number($('bet').value));render();if(matchMedia('(max-width: 849px)').matches)$('dice-board').scrollIntoView({block:'center',behavior:'auto'});}
  else if(match.phase==='TURN'&&match.current===0){if(match.locked){match.advance();render();}else roll();}
  else if(match.phase==='ROUND_END'){match.next();render();}else if(match.phase==='FINAL')reset();
  }catch(e){$('error').textContent=e.message;}});

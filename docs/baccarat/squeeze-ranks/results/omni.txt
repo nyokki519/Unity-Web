@@ -1,0 +1,17 @@
+PASS mouse top opens and reverse drag closes without accounting change
+PASS mouse bottom opens and reverse drag closes without accounting change
+PASS mouse left opens and reverse drag closes without accounting change
+PASS mouse right opens and reverse drag closes without accounting change
+PASS mouse top-left opens and reverse drag closes without accounting change
+PASS mouse top-right opens and reverse drag closes without accounting change
+PASS mouse bottom-left opens and reverse drag closes without accounting change
+PASS mouse bottom-right opens and reverse drag closes without accounting change
+PASS touch top opens and unwinds
+PASS touch bottom opens and unwinds
+PASS touch left opens and unwinds
+PASS touch right opens and unwinds
+PASS touch top-left opens and unwinds
+PASS touch top-right opens and unwinds
+PASS touch bottom-left opens and unwinds
+PASS touch bottom-right opens and unwinds
+22 omni checks passed

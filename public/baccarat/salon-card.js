@@ -5,14 +5,18 @@ export function frameForCard(card, hidden = false) {
  if (!Number.isInteger(id) || id < 0) throw new TypeError('Invalid card');
  return id % 52;
 }
-export function createCard(card, {hidden = false} = {}) {
+export function createCard(card, {hidden = false, squeezing = false} = {}) {
  const frame = frameForCard(card, hidden), el = document.createElement('span');
  el.className = 'salon-card'; el.setAttribute('role', 'img');
  const ranks = ['エース','2','3','4','5','6','7','8','9','10','ジャック','クイーン','キング'];
  const suits = ['スペード','ハート','ダイヤ','クラブ'];
- el.setAttribute('aria-label', hidden ? '裏向きのカード' : `${suits[Math.floor(frame / 13)]}の${ranks[frame % 13]}`);
+ el.setAttribute('aria-label', hidden ? '裏向きのカード' : squeezing ? '絞り中のカード。公開確定後に数字を表示します' : `${suits[Math.floor(frame / 13)]}の${ranks[frame % 13]}`);
  el.style.backgroundImage = `url("${atlas}")`;
  el.style.backgroundSize = '1300% 500%';
  el.style.backgroundPosition = `${(frame % 13) / 12 * 100}% ${Math.floor(frame / 13) / 4 * 100}%`;
+ if(squeezing&&!hidden){
+  el.classList.add('salon-card--squeezing');
+  for(const corner of ['top','bottom']){const mask=document.createElement('span');mask.className=`salon-rank-mask salon-rank-mask--${corner}`;mask.setAttribute('aria-hidden','true');el.append(mask);}
+ }
  return el;
 }

@@ -21,7 +21,7 @@ with sync_playwright() as p:
  page.evaluate("""async () => { const {SqueezeView}=await import('/baccarat/salon-squeeze.js'); const host=document.createElement('section'); host.id='squeeze-test'; document.body.append(host); window.progress=[]; window.view=new SqueezeView(host,{onProgress:p=>progress.push(p)}); window.pending=view.open({card:26,label:'Player'}); }""")
  page.wait_for_selector('.salon-squeeze__canvas',timeout=10000)
  assert page.evaluate('view.graphics.frontTexture.image.width >= 512 && view.graphics.frontTexture.image.height >= 710')
- assert page.evaluate("document.querySelector('#squeeze-test .salon-card').getAttribute('aria-label').includes('ダイヤ')")
+ assert page.evaluate("document.querySelector('#squeeze-test .salon-card').getAttribute('aria-label').includes('絞り中')")
  stage=page.locator('#squeeze-test .salon-squeeze__stage'); box=stage.bounding_box()
  page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.8); page.mouse.down(); page.mouse.move(box['x']+box['width']/2,box['y']+box['height']*.4,steps=6); page.mouse.up()
  assert page.evaluate('progress.some(p=>p>0 && p<1)')

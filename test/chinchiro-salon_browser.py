@@ -17,7 +17,7 @@ with sync_playwright() as p:
   assert page.locator('#stake-total').inner_text()=='77 枚'
   vals=page.locator('#stake-coins img').evaluate_all("els=>els.map(e=>parseInt(e.alt))");assert sum(vals)==77
   # Action follows the stake in normal flow: it must not cover bet controls on mobile.
-  assert page.locator('#action').bounding_box()['y']>=page.locator('#risk').bounding_box()['y']
+  assert page.locator('#action').bounding_box()['y']>=page.locator('.chips').bounding_box()['y']+page.locator('.chips').bounding_box()['height']
   assert page.locator('[data-bet="25"]').bounding_box()['height']>=44
   page.screenshot(path=str(out/f'bet-{w}.png'),full_page=True)
   page.click('#action');assert page.locator('#showdown').is_visible();assert page.locator('.showdown-side').count()==2

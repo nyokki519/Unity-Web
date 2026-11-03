@@ -1,0 +1,38 @@
+[
+  {
+    "width": 375,
+    "height": 667,
+    "startButtonVisible": true,
+    "confirmedBowlVisibleWithoutManualScroll": true,
+    "rollBowlVisible": true,
+    "precisionKeyboard": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "startButtonVisible": true,
+    "confirmedBowlVisibleWithoutManualScroll": true,
+    "rollBowlVisible": true,
+    "precisionKeyboard": true,
+    "errors": []
+  },
+  {
+    "width": 414,
+    "height": 896,
+    "startButtonVisible": true,
+    "confirmedBowlVisibleWithoutManualScroll": true,
+    "rollBowlVisible": true,
+    "precisionKeyboard": true,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "height": 1000,
+    "startButtonVisible": false,
+    "confirmedBowlVisibleWithoutManualScroll": true,
+    "rollBowlVisible": true,
+    "precisionKeyboard": true,
+    "errors": []
+  }
+]
