@@ -1,6 +1,6 @@
 import {GAME_VERSION} from './balance.js';
 import {SHIPS,WEAPONS,SUPPORTS,ACHIEVEMENTS,ITEMS,DIFFICULTIES} from './data.js';
-const KEY='unity-shooting-profile-v1', REPLAY='unity-shooting-replay-v1', MAX=1e12;
+const KEY='unity-shooting-profile-v1', REPLAY='unity-shooting-replay-v1', CHECKPOINT='unity-shooting-checkpoint-v1', MAX=1e12, MAX_CHECKPOINT_CHARS=1800000;
 const real=(v,max=MAX)=>typeof v==='number'&&Number.isFinite(v)?Math.min(max,Math.max(0,v)):0;
 const num=(v,max=MAX)=>typeof v==='number'&&Number.isFinite(v)?Math.min(max,Math.max(0,Math.floor(v))):0;
 const list=(a,max,initial=[])=>[...new Set([...initial,...(Array.isArray(a)?a:[]).filter(x=>Number.isInteger(x)&&x>=0&&x<max)])];
@@ -46,3 +46,11 @@ p.seen.weapons=list([...p.seen.weapons,options.weapon,...Object.keys(st.weaponUs
 function replayValid(r){return r&&r.version===1&&r.gameVersion===GAME_VERSION&&r.options&&typeof r.options==='object'&&Number.isInteger(r.endTick)&&r.endTick>=0&&r.endTick<=2000000&&Array.isArray(r.inputs)&&r.inputs.length<=2000000&&r.inputs.every((v,i)=>Array.isArray(v)&&Number.isInteger(v[0])&&v[0]>=0&&v[0]<=r.endTick&&(i===0||v[0]>r.inputs[i-1][0])&&v[1]&&typeof v[1]==='object'&&Object.values(v[1]).every(x=>typeof x==='boolean'||(typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=10000)));}
 export function saveReplay(r,storage=defaultStorage()){try{if(!storage||!replayValid(r))return false;storage.setItem(REPLAY,JSON.stringify(r));return true;}catch{return false;}}
 export function loadReplay(storage=defaultStorage()){try{const r=JSON.parse(storage?.getItem(REPLAY)||'null');return replayValid(r)?r:null;}catch{return null;}}
+function checkpointValid(c){return c&&c.version===1&&c.gameVersion===GAME_VERSION&&Number.isSafeInteger(c.savedAt)&&c.savedAt>0&&Number.isInteger(c.stage)&&c.stage>=0&&c.stage<6&&typeof c.forceAutofire==='boolean'&&replayValid(c.replay)&&(!c.reward||(Number.isSafeInteger(c.reward.credits)&&c.reward.credits>=0&&c.reward.materials&&Object.values(c.reward.materials).every(x=>Number.isSafeInteger(x)&&x>=0)));}
+export function saveCheckpoint(c,storage=defaultStorage()){
+ try{if(!storage||!checkpointValid(c))return false;const raw=JSON.stringify(c);if(raw.length>MAX_CHECKPOINT_CHARS)return false;storage.setItem(CHECKPOINT,raw);return true;}catch{return false;}
+}
+export function loadCheckpoint(storage=defaultStorage()){
+ try{if(!storage)return null;const raw=storage.getItem(CHECKPOINT);if(!raw)return null;const value=JSON.parse(raw);if(checkpointValid(value))return value;storage.removeItem(CHECKPOINT);return null;}catch{return null;}
+}
+export function clearCheckpoint(storage=defaultStorage()){try{storage?.removeItem(CHECKPOINT);return true;}catch{return false;}}

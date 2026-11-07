@@ -11,6 +11,7 @@
 #menu .card.locked{opacity:1}.control-diagram{display:block;width:72px;height:46px;max-width:100%;color:var(--mint)}
 @media(max-width:600px){.quick-controls small{font-size:12px}}
 .recommended-caption{display:grid;gap:3px}
+.result-rewards{max-width:420px;margin:14px auto;padding:14px 16px;text-align:left;border:1px solid #e6c98c55;border-radius:14px;background:linear-gradient(135deg,#182c23,#0d1914)}.result-rewards h3{color:var(--gold);font-size:14px}.result-rewards p{margin:5px 0;color:#bed0c6}.result-rewards p b{color:var(--mint);font-variant-numeric:tabular-nums}.result-rewards .muted{padding-top:7px;border-top:1px solid var(--line)}
 
 /* Keep result actions available while the completed boss detonation resolves. */
 #overlay.victory-reveal{background:transparent;backdrop-filter:none;align-items:flex-end}
