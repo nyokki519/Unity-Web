@@ -19,3 +19,35 @@
 #overlay.victory-reveal .report-actions{position:relative;bottom:0}
 @keyframes victory-report{0%,78%{opacity:0}100%{opacity:1}}
 @media(prefers-reduced-motion:reduce){#overlay.victory-reveal .report-body{animation:none}}
+
+/* Keep the portrait playfield and every combat control inside short mobile viewports. */
+@media(max-width:600px){
+ body.playing #app{height:100svh;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+ body.playing header{flex:0 0 auto;padding-top:max(6px,env(safe-area-inset-top))}
+ body.playing #shell{flex:1 1 auto;min-height:0;width:100%;margin:0;padding:0 12px}
+ #flight{height:100%;min-height:0;display:flex;flex-direction:column;max-width:480px}
+ #hud{flex:0 0 auto;padding:2px 2px 1px}
+ .mission-line{font-size:9px;line-height:14px}
+ .score-label{font-size:8px}
+ .score-label strong{font-size:12px}
+ .vitals{grid-template-columns:1fr .82fr;gap:8px;margin:2px 0}
+ .meter-label{font-size:9px;line-height:12px}
+ .meter-label strong{font-size:13px;line-height:14px}
+ .meter-label small{font-size:8px}
+ .hp-segments{height:4px;gap:3px;margin-top:2px}
+ .energy-track{height:4px;margin-top:2px}
+ .loadout-line{font-size:8px;line-height:13px;gap:5px}
+ .loadout-line small{font-size:8px}
+ #viewport{flex:0 0 auto;width:min(100%,calc((100svh - 250px - env(safe-area-inset-top) - env(safe-area-inset-bottom))*0.666667));margin:auto;max-height:calc(100svh - 250px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+ #pickup-feed{flex:0 0 34px;height:34px;padding:2px}
+ .pickup-card{min-height:29px;gap:6px;padding:2px 6px}
+ .pickup-symbol{width:20px;font-size:20px}
+ .pickup-card strong{font-size:10px;line-height:12px}
+ .pickup-card div>span{font-size:9px;line-height:11px}
+ .pickup-idle{font-size:8px}
+ #actions{flex:0 0 auto;gap:4px;padding:3px 0 max(4px,env(safe-area-inset-bottom))}
+ #actions button{min-height:50px;padding:3px 0;font-size:9px;line-height:12px;border-radius:9px}
+ #actions button b{font-size:9px;line-height:12px}
+ #actions button .action-icon{font-size:17px;line-height:18px}
+ #actions button .action-detail{font-size:7px;line-height:9px}
+}
