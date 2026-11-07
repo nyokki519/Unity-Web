@@ -51,3 +51,12 @@
  #actions button .action-icon{font-size:17px;line-height:18px}
  #actions button .action-detail{font-size:7px;line-height:9px}
 }
+
+/* Expand the playfield into the space previously left as vertical gutters. */
+#flight{max-width:760px}
+#viewport{width:min(100%,calc((100dvh - 300px - env(safe-area-inset-top) - env(safe-area-inset-bottom))*.666667))}
+@media(max-width:600px){
+ body.playing #shell{padding-left:4px;padding-right:4px}
+ #flight{max-width:480px}
+ #viewport{width:min(100%,calc((100svh - 197px - env(safe-area-inset-top) - env(safe-area-inset-bottom))*.666667));max-height:calc(100svh - 197px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+}
