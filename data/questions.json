@@ -4058,9 +4058,9 @@
     "mode": "QUICK",
     "category": "LIGHT",
     "depth": "LIGHT",
-    "question": "最近の小さな楽しみは？",
+    "question": "最近いちばん楽しかったことは？",
     "choices": [],
-    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "talkPrompt": "どんな場面が楽しかった？小さな出来事でも歓迎。聞いている人は、その楽しさが伝わるところを見つけてみよう。パスも大丈夫。",
     "valueTags": {},
     "enabled": true
   },
@@ -4156,10 +4156,10 @@
     "id": "quick-170",
     "mode": "QUICK",
     "category": "LIFE",
-    "depth": "BALANCED",
-    "question": "最近、新しく始めたことは？",
+    "depth": "LIGHT",
+    "question": "最近始めた新しいことは？",
     "choices": [],
-    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "talkPrompt": "始めたきっかけや、思っていたのと違ったところを教えて。これから始めたいことでも大丈夫。パスもできます。",
     "valueTags": {},
     "enabled": true
   },
@@ -4353,11 +4353,11 @@
   {
     "id": "quick-188",
     "mode": "QUICK",
-    "category": "FUTURE",
-    "depth": "DEEP",
-    "question": "これから少し大切にしたいことは？",
+    "category": "MORAL",
+    "depth": "LIGHT",
+    "question": "今の自分が大切にしたいことは？",
     "choices": [],
-    "talkPrompt": "順番に話してみよう。気になった答えには、もうひとつ質問を。パスも大丈夫。",
+    "talkPrompt": "そう思うようになったきっかけや、最近それを感じた場面は？話せる範囲で大丈夫。パスもできます。",
     "valueTags": {},
     "enabled": true
   },
@@ -7913,6 +7913,83 @@
         "achievement"
       ]
     },
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-01",
+    "mode": "QUICK",
+    "category": "FRIENDS",
+    "depth": "LIGHT",
+    "question": "今好きなこと・ものは？",
+    "choices": [],
+    "talkPrompt": "好きになったきっかけや面白いところを聞いてみよう。同じ興味がある人は、あとでひとこと共有してみて。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-02",
+    "mode": "QUICK",
+    "category": "LIGHT",
+    "depth": "LIGHT",
+    "question": "最近ハマっていることは？",
+    "choices": [],
+    "talkPrompt": "ハマったきっかけや、続けたくなる理由を話してみよう。知らないことなら、気になった点を一つ聞いてみて。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-03",
+    "mode": "QUICK",
+    "category": "LIFE",
+    "depth": "LIGHT",
+    "question": "理想の休日はどんな過ごし方？",
+    "choices": [],
+    "talkPrompt": "一日全部でなく、一番楽しみにしたい時間を教えて。似た過ごし方が見つかったら共有しよう。パスも大丈夫。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-04",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "今年中に挑戦してみたいことは？",
+    "choices": [],
+    "talkPrompt": "やってみたい理由や、最初の小さな一歩を話そう。大きな目標でなくても大丈夫。パスもできます。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-05",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "人生で一度は経験してみたいことは？",
+    "choices": [],
+    "talkPrompt": "今それを経験してみたいと思う理由は？具体的に決まっていなくても、想像を話すだけで大丈夫。パスもできます。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-08",
+    "mode": "QUICK",
+    "category": "CHAOS",
+    "depth": "LIGHT",
+    "question": "時間もお金も自由だったら、まず何をしてみたい？",
+    "choices": [],
+    "talkPrompt": "最初の一週間を思い浮かべると、何から始める？現実的でなくても大丈夫。パスもできます。",
+    "valueTags": {},
+    "enabled": true
+  },
+  {
+    "id": "quick-starter-10",
+    "mode": "QUICK",
+    "category": "FUTURE",
+    "depth": "LIGHT",
+    "question": "来年はどんな一年にしたい？",
+    "choices": [],
+    "talkPrompt": "一年の終わりに、どんな時間や出来事があったらうれしい？一つだけ挙げてみよう。パスも大丈夫。",
+    "valueTags": {},
     "enabled": true
   }
 ]
