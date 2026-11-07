@@ -2,6 +2,7 @@ import {SHIPS,WEAPONS,SUPPORTS,STAGES,DIFFICULTIES,ITEMS,EVOLUTIONS} from './dat
 import {BulletPool,random,segmentDistance2} from './pool.js';
 import {pattern} from './patterns.js';
 import {shootPlayer} from './combat.js';
+import {stageScaling} from './balance.js';
 const STEP=1/120,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),TAU=Math.PI*2;
 export {GAME_VERSION} from './balance.js';
 export class Game {
@@ -41,7 +42,8 @@ export class Game {
  }
  nearest(x,y,exclude=new Set(),range=1000){let target=null;for(const e of this.enemies){if(e.hp<=0||exclude.has(e.id))continue;const d=Math.hypot(e.x-x,e.y-y);if(d<range){range=d;target=e;}}return target;}
  spawnEnemy(type=0,x=240,y=-40,boss=false,mid=false,secret=false){
-  const hp=(boss?(mid?520:1800)+this.stage*430:18+(type%5)*9+this.stage*4)*this.difficulty.hp;
+  const scaling=stageScaling(this.stage),baseHp=boss?(mid?520:1800)+this.stage*430:18+(type%5)*9+this.stage*4;
+  const hp=baseHp*(boss?scaling.bossHp:scaling.enemyHp)*this.difficulty.hp;
   const e={id:this.nextId++,x,y,baseX:x,baseY:y,r:boss?(mid?35:55):14+(type%3)*4,hp,maxHp:hp,type:type%12,age:0,shoot:boss?1.4:.8+this.rng()*1.6,boss,mid,secret,name:secret?'真核・アカツキ零式':mid?STAGES[this.stage].midName:STAGES[this.stage].bossName,phase:0,parts:[],color:STAGES[this.stage].color,entry:0};
   this.encounters.add(type%12);
   if(boss){if(!mid)this.bossesSeen.add(secret?6:this.stage);const count=mid?2:4;for(let i=0;i<count;i++)e.parts.push({x:x+(i%2?1:-1)*(i<2?48:78),y:y+(i<2?10:30),hp:hp*(mid?.12:.09),maxHp:hp*(mid?.12:.09),dead:false,dx:(i%2?1:-1)*(i<2?48:78),dy:i<2?10:30,r:14});this.boss=e;this.bullets.clear(0);this.hazards=[];this.emit('boss',x,130,{text:e.name});}
@@ -53,7 +55,7 @@ export class Game {
   if(!this.bossSpawned&&this.stageTime>=bossAt&&!this.boss){this.bossSpawned=true;this.spawnEnemy(11,240,-85,true,false);}
   if(rush||this.boss&&!this.boss.mid||this.stageTime>=bossAt)return;
   this.waveCD-=dt;if(this.waveCD>0||this.enemies.length>=32)return;
-  this.wave++;const count=2+this.wave%3+(this.options.difficulty==='extreme'?1:0),type=(this.wave+(s.enemyOffset||this.stage*2))%12;
+  this.wave++;const count=2+this.wave%3+stageScaling(this.stage).extraWaveEnemies+(this.options.difficulty==='extreme'?1:0),type=(this.wave+(s.enemyOffset||this.stage*2))%12;
   if(!this.branch&&this.stats.graze>=50){this.branch=true;this.emit('warning',240,180,{text:'分岐：外周航路を捕捉'});}
   const route=this.options.mode==='daily'?1:this.stats.graze>=50?2:0;
   for(let i=0;i<count;i++){const x=45+(i+.5)*(390/count);this.spawnEnemy((type+(i%2)+route)%12,x,-35-i*30);}

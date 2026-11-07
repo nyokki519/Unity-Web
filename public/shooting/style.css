@@ -52,6 +52,65 @@
  #actions button .action-detail{font-size:7px;line-height:9px}
 }
 
+/* Friendly Japanese arcade presentation for menus; the combat palette stays legible. */
+:root{--ink:#091524;--panel:#13253a;--mint:#79e3de;--cream:#f7f4eb;--gold:#ffbd72;--line:#c7e9f02b;--muted:#c3d0d9}
+body{background:radial-gradient(ellipse at 82% 3%,#294a68 0,transparent 48%),radial-gradient(ellipse at 6% 60%,#163c4a 0,transparent 45%),#091321;font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+header{letter-spacing:0;font-size:13px;color:#e7edf0}
+header>span{font-weight:700;color:#b8dae0}
+.eyebrow{letter-spacing:.06em;color:#ffd08a;font-size:12px}
+h1{letter-spacing:-.035em;text-shadow:0 5px 28px #54d5d866}
+.hero{min-height:0;padding:30px 24px 26px;border:1px solid #b9e9ed30;border-radius:26px;background:linear-gradient(145deg,#18334bcc,#102331e8 72%,#112c38);box-shadow:0 18px 48px #020a1280;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.42;background:radial-gradient(circle at 82% 25%,#8ce8e933 0 2px,transparent 3px),radial-gradient(circle at 92% 63%,#ffd08a44 0 2px,transparent 3px);background-size:38px 38px,56px 56px;mask-image:linear-gradient(90deg,transparent 30%,#000)}
+.hero:after{font-size:clamp(180px,38vw,320px);right:1%;top:8%;color:#79e3de14}
+.lead{color:#e0e8e9;font-size:17px;line-height:1.85}
+.quick-controls{gap:8px;margin:18px 0;position:relative}
+.quick-controls>div{background:#0a1b2bd9;border-color:#a5d7df36;border-radius:16px}
+.quick-controls b{font-size:14px;color:#fff8e9}
+.quick-controls small{color:#c7d7dc;font-size:12px}
+.control-diagram{color:#8be5de}
+.start-choices{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.start-choices button{min-height:54px;font-weight:700;border-radius:16px}
+.start-choices .primary{grid-column:1/-1;min-height:62px;background:linear-gradient(110deg,#ffbd72,#ff916d);border:0;color:#241725;box-shadow:0 8px 24px #ff9b5840;font-size:17px}
+.start-choices button:not(.primary){background:#f7f4eb;color:#162436;border:1px solid #fff8e9}
+.recommended-caption{position:relative;color:#d7e5e8;font-size:13px}
+.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:15px 0}
+.nav button{min-width:0;min-height:50px;border-radius:15px;background:#172b40;border-color:#b5dce433;font-weight:650}
+.nav button:hover{background:#22415a;border-color:#79e3de88}
+.panel,.card{background:linear-gradient(145deg,#172e43,#102235);border-color:#badde32e}
+.panel{border-radius:20px}
+.card{border-radius:20px;box-shadow:0 8px 22px #020b1460}
+.card.selected{border-color:#79e3de;background:linear-gradient(145deg,#20525b,#153044);box-shadow:0 0 0 2px #79e3de33,0 10px 28px #020b1480}
+.card.locked{filter:saturate(.72)}
+.tabs button{border-radius:15px;background:#12283a}
+.tabs .active{background:#f7f4eb;border-color:#f7f4eb}
+.mission-panel{background:linear-gradient(145deg,#19344a,#102438);border-color:#93cfdb42}
+.mission-selects label{font-size:14px;color:#e2e9e8;font-weight:650}
+.mission-selects select{background:#f7f4eb;color:#142334;border-color:#fff8e9;border-radius:14px;font-weight:650}
+.mode-description{color:#e0e8e9}
+.loadout-summary{background:#0a1b2bd9;border:1px solid #b5dce428}
+.loadout-summary span{color:#c9d9df}
+.mission-panel>.primary{min-height:58px;border-radius:16px;background:linear-gradient(110deg,#ffbd72,#ff916d);border:0;color:#241725;font-size:16px}
+.toolbar h2{color:#fff8e9}
+.toolbar .eyebrow{color:#9edee1}
+.balance{color:#ffd08a}
+.ship-tags>span{background:#79e3de1c;border-color:#79e3de44;color:#b9ffed}
+.ship-stats [role=meter]>i{background:#79e3de}
+@media(max-width:600px){
+ .hero{padding:24px 15px 20px;border-radius:20px}
+ .hero:after{right:-74px;top:34px}
+ .start-choices{grid-template-columns:1fr}
+ .start-choices .primary{grid-column:auto}
+ .nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .nav button{min-height:48px}
+ .quick-controls>div{padding:10px 7px}
+ .quick-controls small{font-size:11px}
+}
+
+/* Keep the campaign continuation action visible while allowing the result copy to scroll. */
+#overlay.stage-clear-actions .modal{display:flex;flex-direction:column;min-height:100%;max-height:100%;overflow:hidden;padding:10px 12px}
+#overlay.stage-clear-actions .report-body{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;padding:4px 0 12px}
+#overlay.stage-clear-actions .report-actions{flex:0 0 auto;position:relative;bottom:auto;margin-top:6px;padding:8px 0 max(8px,env(safe-area-inset-bottom));border-top:1px solid #ffffff24;background:#081b13;border-radius:12px}
+
 /* Expand the playfield into the space previously left as vertical gutters. */
 #flight{max-width:760px}
 #viewport{width:min(100%,calc((100dvh - 300px - env(safe-area-inset-top) - env(safe-area-inset-bottom))*.666667))}

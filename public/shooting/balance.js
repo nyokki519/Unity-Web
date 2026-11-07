@@ -1,6 +1,15 @@
 // Gameplay revision; old replays are not interpreted using changed combat rules.
 export const GAME_VERSION='1.3.0';
 export const UPGRADE_BALANCE=Object.freeze({powerPerLevel:.11,powerLatePerLevel:.025,rapidPerLevel:.12,rapidLatePerLevel:.04,auxInterval:.65,auxReferenceInterval:1.2,laserBase:3,laserPerLevel:2,missileBase:5,missilePerLevel:3,sideDamage:.08,ricochetInterval:.65,orbitInterval:.42});
+export const STAGE_SCALING=Object.freeze([
+ {enemyHp:1,bossHp:1,extraWaveEnemies:0},
+ {enemyHp:1.25,bossHp:1.4,extraWaveEnemies:0},
+ {enemyHp:1.55,bossHp:1.7,extraWaveEnemies:1},
+ {enemyHp:1.9,bossHp:2,extraWaveEnemies:1},
+ {enemyHp:2.3,bossHp:2.4,extraWaveEnemies:2},
+ {enemyHp:2.7,bossHp:2.8,extraWaveEnemies:2},
+].map(Object.freeze));
+export function stageScaling(stage){const i=Math.max(0,Math.min(STAGE_SCALING.length-1,Math.floor(Number(stage)||0)));return STAGE_SCALING[i];}
 // Early pickups retain their strength; later pickups add smaller, positive gains.
 export function powerScale(level){const n=Math.max(0,level-1);return 1+Math.min(3,n)*UPGRADE_BALANCE.powerPerLevel+Math.max(0,n-3)*UPGRADE_BALANCE.powerLatePerLevel;}
 export function rapidScale(level){return 1+Math.min(2,level)*UPGRADE_BALANCE.rapidPerLevel+Math.max(0,level-2)*UPGRADE_BALANCE.rapidLatePerLevel;}

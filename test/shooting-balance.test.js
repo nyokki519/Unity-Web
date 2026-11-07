@@ -8,4 +8,19 @@ test('six visible main lanes retain their five-lane budget with late power gains
 test('rapid weapon widening redistributes the salvo rather than multiplying damage',()=>{const a=salvo(1),b=salvo(1,3);assert.ok(b.bullets.count>a.bullets.count);assert.ok(Math.abs(sum(a,1)-sum(b,1))<.001);});
 test('supplemental guns have bounded total DPS even at max visual count',()=>{for(let level=1;level<=3;level++){const g=new Game();Object.assign(g.player,{ricochet:level,orbitLevel:level});shootPlayer(g,1/120);assert.ok(sum(g,21)/g.player.ricochetCD<=20.001);assert.ok(sum(g,22)/g.player.orbitCD<=24.001);}});
 test('late power and rapid pickups keep positive smaller gains without changing early builds',async()=>{const {powerScale,rapidScale}=await import('../public/shooting/balance.js');assert.equal(typeof powerScale,'function');assert.equal(typeof rapidScale,'function');assert.equal(powerScale(1),1);assert.equal(powerScale(4),1.33);assert.equal(rapidScale(0),1);assert.equal(rapidScale(2),1.24);assert.ok(powerScale(8)<1.46);assert.ok(rapidScale(5)<1.38);for(let l=2;l<=8;l++)assert.ok(powerScale(l)>powerScale(l-1));for(let l=1;l<=5;l++)assert.ok(rapidScale(l)>rapidScale(l-1));});
+test('successive campaign routes strengthen enemies and bosses while retaining earned weapon upgrades',async()=>{
+ const {stageScaling}=await import('../public/shooting/balance.js');
+ assert.deepEqual([0,1,2,3,4].map(i=>stageScaling(i).bossHp),[1,1.4,1.7,2,2.4]);
+ assert.deepEqual([0,1,2,3,4].map(i=>stageScaling(i).enemyHp),[1,1.25,1.55,1.9,2.3]);
+ assert.deepEqual([0,1,2,3,4].map(i=>stageScaling(i).extraWaveEnemies),[0,0,1,1,2]);
+ const hpAt=stage=>new Game({stage,difficulty:'easy'}).spawnEnemy(0).hp;
+ const bossAt=stage=>new Game({stage,difficulty:'easy'}).spawnEnemy(11,240,135,true,false).hp;
+ assert.ok([1,2,3,4].every(stage=>hpAt(stage)>hpAt(stage-1)));
+ assert.ok([1,2,3,4].every(stage=>bossAt(stage)>bossAt(stage-1)));
+ const waveSizeAt=stage=>{const g=new Game({stage});g.waveCD=0;g.spawnWaves(1/120);return g.enemies.length;};
+ assert.deepEqual([waveSizeAt(0),waveSizeAt(2),waveSizeAt(4)],[3,4,5]);
+ const g=new Game({stage:0});g.collect('P');g.collect('P');g.collect('S');const level=g.player.level,rapid=g.player.rapid;
+ g.completeStage();assert.equal(g.nextStage(),true);assert.equal(g.player.level,level);assert.equal(g.player.rapid,rapid);
+ assert.ok(g.spawnEnemy(11,240,135,true,false).hp>bossAt(0));
+});
 test('late pickups increase real main damage and cadence without changing visual lanes',()=>{const before=salvo(0,3,true);before.player.level=7;before.bullets.clear();before.player.cooldown=0;shootPlayer(before,1/120);const damage=sum(before,0),cooldown=before.player.cooldown;before.player.level=8;before.player.rapid=4;before.player.cooldown=0;before.bullets.clear();shootPlayer(before,1/120);assert.ok(sum(before,0)>damage);assert.ok(Math.abs(sum(before,0)/(5*8)-1.43)<1e-6);assert.ok(before.player.cooldown>cooldown);});

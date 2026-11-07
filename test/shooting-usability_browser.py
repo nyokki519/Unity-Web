@@ -34,12 +34,12 @@ with sync_playwright() as p:
  images=page.locator('.ship-preview');assert images.count()==8
  sources=images.evaluate_all('(imgs)=>imgs.map(i=>i.src)');assert len(set(sources))==8
  assert page.locator('.ship-stats [role=meter]').count()==24
- assert '初心者向け' in page.locator('.card').first.inner_text()
- for mode,expected in [('score','固定装備'),('daily','日替わり'),('bossrush','ボス'),('campaign','5')]:
+ assert 'はじめて向け' in page.locator('.card').first.inner_text()
+ for mode,expected in [('score','みんな同じ'),('daily','毎日変わる'),('bossrush','ボス'),('campaign','5')]:
   page.locator('#mode').select_option(mode);assert expected in page.locator('#mode-description').inner_text()
   assert page.locator('#difficulty').is_disabled()==(mode in ['score','daily'])
   if mode in ['score','daily']:assert '翠燕' in page.locator('.loadout-summary').inner_text()
- page.locator('#difficulty').select_option('hard');assert page.locator('#difficulty option:checked').inner_text()=='激戦（HARD）'
+ page.locator('#difficulty').select_option('hard');assert page.locator('#difficulty option:checked').inner_text()=='むずかしい'
  page.locator('[data-do="equip:ship:1"]').click();assert '白鷺' in page.locator('.loadout-summary').inner_text()
  for width in [375,390,414]:
   page.set_viewport_size({'width':width,'height':844});assert not page.evaluate('document.documentElement.scrollWidth>innerWidth');page.screenshot(path=str(out/f'hangar-{width}.png'),full_page=True)
