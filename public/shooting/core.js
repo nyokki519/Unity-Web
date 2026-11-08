@@ -44,7 +44,7 @@ export class Game {
  spawnEnemy(type=0,x=240,y=-40,boss=false,mid=false,secret=false){
   const scaling=stageScaling(this.stage),baseHp=boss?(mid?520:1800)+this.stage*430:18+(type%5)*9+this.stage*4;
   const hp=baseHp*(boss?scaling.bossHp:scaling.enemyHp)*this.difficulty.hp;
-  const e={id:this.nextId++,x,y,baseX:x,baseY:y,r:boss?(mid?35:55):14+(type%3)*4,hp,maxHp:hp,type:type%12,age:0,shoot:boss?1.4:.8+this.rng()*1.6,boss,mid,secret,name:secret?'真核・アカツキ零式':mid?STAGES[this.stage].midName:STAGES[this.stage].bossName,phase:0,parts:[],color:STAGES[this.stage].color,entry:0};
+  const e={id:this.nextId++,x,y,baseX:x,baseY:y,r:boss?(mid?35:55):14+(type%3)*4,hp,maxHp:hp,type:type%12,age:0,shoot:boss?1.4:.8+this.rng()*1.6,boss,mid,secret,name:secret?'真核・アカツキ零式':mid?STAGES[this.stage].midName:STAGES[this.stage].bossName,phase:0,parts:[],color:STAGES[this.stage].color,entry:0,reflectReady:!boss&&type%12===8,reflectSpent:false,aiming:false,windup:false,chargeDone:false};
   this.encounters.add(type%12);
   if(boss){if(!mid)this.bossesSeen.add(secret?6:this.stage);const count=mid?2:4;for(let i=0;i<count;i++)e.parts.push({x:x+(i%2?1:-1)*(i<2?48:78),y:y+(i<2?10:30),hp:hp*(mid?.12:.09),maxHp:hp*(mid?.12:.09),dead:false,dx:(i%2?1:-1)*(i<2?48:78),dy:i<2?10:30,r:14});this.boss=e;this.bullets.clear(0);this.hazards=[];this.emit('boss',x,130,{text:e.name});}
   this.enemies.push(e);return e;
@@ -71,18 +71,22 @@ export class Game {
      case 0:e.y+=v*dt;break;
      case 1:e.y+=v*dt;e.x=e.baseX+Math.sin(e.age*1.8)*50;break;
      case 2:e.y+=v*dt;e.x=e.baseX+Math.sin(e.age*3)*75;break;
-     case 3:e.y+=v*.85*dt;e.x=e.baseX+Math.sin(e.age*1.2)*22;break;
+     case 3:e.y+=v*.85*dt;e.x=e.baseX+Math.sin(e.age*1.2)*22;if(!e.aiming&&e.shoot<=.65&&e.y>15&&e.y<this.player.y-95){e.aiming=true;e.aimX=this.player.x;e.aimY=this.player.y;this.emit('warning',e.x,e.y,{text:'ねらい撃ち！横へ動こう'});}break;
      case 4:e.y+=v*dt;e.x+=clamp(this.player.x-e.x,-60,60)*dt*.7;break;
      case 5:e.y=Math.min(220,e.y+v*dt);e.x=e.baseX+Math.sin(e.age)*30;break;
      case 6:e.y+=(e.age<2?35:160)*dt;e.x+=Math.sin(e.age*2)*70*dt;break;
      case 7:e.y+=(e.age<4?v:-110)*dt;break;
      case 8:e.y+=v*.65*dt;e.x=e.baseX+Math.sin(e.age*2.1)*65;break;
-     case 9:e.y=Math.min(180,e.y+v*dt);if(e.age>8)e.y+=120*dt;break;
+     case 9:
+      if(!e.chargeDone){e.y=Math.min(180,e.y+v*dt);e.x=e.baseX+Math.sin(e.age)*30;e.ambushTime=(e.ambushTime||0)+dt;
+       if(e.y>=180&&e.ambushTime>=3.2&&!e.windup){e.windup=true;e.aimX=this.player.x;e.aimY=this.player.y;e.windupTime=0;this.emit('warning',e.x,e.y,{text:'急降下に注意！横へ逃げよう'});}
+       if(e.windup){e.windupTime+=dt;if(e.windupTime>=.8){const angle=Math.atan2(e.aimY-e.y,e.aimX-e.x);e.diveVx=Math.cos(angle)*285*this.difficulty.speed;e.diveVy=Math.sin(angle)*285*this.difficulty.speed;e.chargeLeft=1.05;e.chargeDone=true;e.windup=false;e.aiming=false;}}
+      }else if(e.chargeLeft>0){e.x+=e.diveVx*dt;e.y+=e.diveVy*dt;e.chargeLeft-=dt;}else{e.y+=115*dt;e.x=e.baseX+Math.sin(e.age*1.3)*35;}break;
      case 10:e.y+=v*.65*dt;if(Math.floor(e.age/5)>Math.floor((e.age-dt)/5)&&this.enemies.length<26)this.spawnEnemy(0,e.x+25,e.y);break;
      default:e.y+=v*dt;e.x=e.baseX+Math.sin(e.age*1.3)*95;
     }
     e.x=clamp(e.x,20,460);e.shoot-=dt;
-    if(e.shoot<=0&&e.y>15&&e.y<this.player.y-95){pattern(this,e,(e.type+(STAGES[this.stage].patternOffset||0))%20);e.shoot=(2.9+(e.type%3)*.4)/this.difficulty.rate;}
+    if(e.shoot<=0&&e.y>15&&e.y<this.player.y-95){if(e.type===3){const a=Math.atan2((e.aimY??this.player.y)-e.y,(e.aimX??this.player.x)-e.x),speed=335*this.difficulty.speed;this.bullets.add(e.x,e.y,Math.cos(a)*speed,Math.sin(a)*speed,{owner:0,r:5.5,kind:20,damage:1,life:7});e.aiming=false;}else pattern(this,e,(e.type+(STAGES[this.stage].patternOffset||0))%20);e.shoot=(2.9+(e.type%3)*.4)/this.difficulty.rate;}
     if(e.y>780||e.age>19||e.age>5&&e.y<-80)e.hp=0;
    }
    if(Math.hypot(e.x-this.player.x,e.y-this.player.y)<e.r+(this.ship.hitR||4))this.hurt();
@@ -104,7 +108,9 @@ export class Game {
    }else{
     const near=new Set();for(let x=Math.floor(Math.min(b.px[i],b.x[i])/80);x<=Math.floor(Math.max(b.px[i],b.x[i])/80);x++)for(let y=Math.floor(Math.min(b.py[i],b.y[i])/80);y<=Math.floor(Math.max(b.py[i],b.y[i])/80);y++)for(const e of grid.get(x+','+y)||[])near.add(e);
     for(const e of near){if(this.phase!=='play')break;if(e.hp<=0||b.hitTargets[i]?.has(e.id))continue;let part=e.parts.find(p=>!p.dead&&segmentDistance2(p.x,p.y,b.px[i],b.py[i],b.x[i],b.y[i])<(b.r[i]+(p.r||14))**2);
-     if(part||segmentDistance2(e.x,e.y,b.px[i],b.py[i],b.x[i],b.y[i])<(b.r[i]+e.r)**2){b.lastHit[i]=e.id;if(!b.hitTargets[i])b.hitTargets[i]=new Set();b.hitTargets[i].add(e.id);this.stats.hits++;if(part){part.hp-=b.damage[i];if(part.hp<=0&&!part.dead){part.dead=true;this.stats.parts++;this.stats.score+=1800;this.materials.rare++;this.drop(part.x,part.y,'R');this.emit('part',part.x,part.y);}this.damageEnemy(e,b.damage[i]*.25);}else this.damageEnemy(e,b.damage[i]);
+     if(part||segmentDistance2(e.x,e.y,b.px[i],b.py[i],b.x[i],b.y[i])<(b.r[i]+e.r)**2){
+      if(!part&&!e.boss&&e.reflectReady){const dx=this.player.x-e.x,dy=this.player.y-e.y,d=Math.max(1,Math.hypot(dx,dy)),speed=clamp(Math.hypot(b.vx[i],b.vy[i])*.62,190,330);b.px[i]=b.x[i];b.py[i]=b.y[i];b.vx[i]=dx/d*speed;b.vy[i]=dy/d*speed;b.owner[i]=0;b.kind[i]=20;b.r[i]=5;b.damage[i]=Math.min(12,b.damage[i]);b.age[i]=0;b.life[i]=2.8;b.turn[i]=0;b.acceleration[i]=0;b.homing[i]=0;b.split[i]=0;b.pierce[i]=0;b.bounces[i]=0;b.grazed[i]=0;b.lastHit[i]=0;b.hitTargets[i]=null;e.reflectReady=false;e.reflectSpent=true;this.emit('reflect',e.x,e.y,{text:'弾をはね返した！'});break;}
+      b.lastHit[i]=e.id;if(!b.hitTargets[i])b.hitTargets[i]=new Set();b.hitTargets[i].add(e.id);this.stats.hits++;if(part){part.hp-=b.damage[i];if(part.hp<=0&&!part.dead){part.dead=true;this.stats.parts++;this.stats.score+=1800;this.materials.rare++;this.drop(part.x,part.y,'R');this.emit('part',part.x,part.y);}this.damageEnemy(e,b.damage[i]*.25);}else this.damageEnemy(e,b.damage[i]);
       if([8,10].includes(b.kind[i]))this.areaDamage(b.x[i],b.y[i],b.kind[i]===8?45:70,b.damage[i]*.4,e.id);
       if(b.pierce[i]>0)b.pierce[i]--;else{b.remove(i);break;}
      }
@@ -120,7 +126,7 @@ export class Game {
  damageEnemy(e,damage){if(e.hp<=0||this.phase!=='play')return;e.hp-=damage;if(e.hp>0){if(this.tick%8===0)this.emit('hit',e.x,e.y);return;}
   this.stats.kills++;this.stats.combo++;this.stats.peakCombo=Math.max(this.stats.peakCombo,this.stats.combo);this.comboTime=3;const mult=(1+Math.min(3,this.stats.combo/40))*((SUPPORTS[this.options.support]||{}).kind==='score'?1.2+this.player.supportLevel*.02+(this.player.options-1)*.05:1);this.stats.score+=Math.round((e.boss?e.mid?7000:25000:120+e.type*20)*mult*(this.player.driveTime>0?1.7:1));this.player.drive=Math.min(100,this.player.drive+(e.boss?20:1.2));this.materials.common+=e.boss?20:1;
   this.emit('explosion',e.x,e.y,{boss:e.boss,scale:e.boss?3:1});
-  if(e.boss){this.bullets.clear(0);this.hazards=[];this.boss=null;this.stats.bossTimes.push(e.age);this.drop(e.x-25,e.y,'H');this.drop(e.x+25,e.y,'B');this.drop(e.x,e.y,'X');this.materials.epic+=e.mid?0:1;
+  if(e.boss){this.bullets.clear(0);this.hazards=[];this.boss=null;this.stats.bossTimes.push(e.age);if(this.player.hp<=this.player.maxHp*.5&&this.rng()<.5)this.drop(e.x-25,e.y,'H');this.drop(e.x+25,e.y,'B');this.drop(e.x,e.y,'X');this.materials.epic+=e.mid?0:1;
    if(!e.mid){if(this.stage===4&&!this.secretSpawned&&(this.stats.misses===0||this.stats.parts>=12)){this.secretSpawned=true;this.bossSpawned=false;this.emit('warning',240,200,{text:'隠し中枢 · 真の守護者接近'});const hidden=this.spawnEnemy(11,240,-110,true,false,true);hidden.maxHp*=1.3;hidden.hp=hidden.maxHp;this.bossSpawned=true;}else{if(this.secretSpawned)this.materials.legendary++;this.completeStage();}}
   }else{if(e.type===9)this.drop(e.x,e.y,'P');else if(this.rng()<this.dropChance(e))this.drop(e.x,e.y);}
  }
