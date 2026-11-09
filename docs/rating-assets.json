@@ -1,0 +1,128 @@
+{
+  "title": "Unity MIX / 一流格付けチェック — Original study assets",
+  "version": 1,
+  "provenance": "All SVG assets in /public/rating/ were authored for this project with original vector shapes and text. No third-party images, trademarks, photos, or generative AI outputs are included.",
+  "rights": "Unity Web retains rights; redistribution only as part of Unity MIX. No external licence is claimed.",
+  "questions": [
+    {
+      "id": "rating-sense-01",
+      "assets": [
+        "/rating/r01-a.svg",
+        "/rating/r01-b.svg"
+      ],
+      "correct": "A",
+      "reason": "余白を使い、見出し・日時・行動の順に視線が流れる案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-sense-02",
+      "assets": [
+        "/rating/r02-a.svg",
+        "/rating/r02-b.svg"
+      ],
+      "correct": "B",
+      "reason": "配色より、情報の優先順位と読みやすさを観察。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-ai-image-01",
+      "assets": [
+        "/rating/r03-a.svg",
+        "/rating/r03-b.svg"
+      ],
+      "correct": "A",
+      "reason": "アクセサリーの接続部に不自然な融合がある案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。"
+    },
+    {
+      "id": "rating-ai-image-02",
+      "assets": [
+        "/rating/r04-a.svg",
+        "/rating/r04-b.svg"
+      ],
+      "correct": "B",
+      "reason": "本番のAI/実写問題は出典を確認した画像へ差し替える前提の観察課題。現素材はオリジナルの合成イラストで、実写真ではない。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。"
+    },
+    {
+      "id": "rating-art-01",
+      "assets": [
+        "/rating/r05-a.svg",
+        "/rating/r05-b.svg"
+      ],
+      "correct": "A",
+      "reason": "光源が一貫し、主題へ視線を誘導する案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-art-02",
+      "assets": [
+        "/rating/r06-a.svg",
+        "/rating/r06-b.svg"
+      ],
+      "correct": "B",
+      "reason": "価格を断定せず、構図・光・素材表現の根拠を比べる。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-craft-01",
+      "assets": [
+        "/rating/r07-a.svg",
+        "/rating/r07-b.svg"
+      ],
+      "correct": "A",
+      "reason": "文字の基準線と余白が揃った案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-craft-02",
+      "assets": [
+        "/rating/r08-a.svg",
+        "/rating/r08-b.svg"
+      ],
+      "correct": "B",
+      "reason": "専門家の署名や実在の依頼作品ではなく、制作品質の学習例。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-antique-01",
+      "assets": [
+        "/rating/r09-a.svg",
+        "/rating/r09-b.svg"
+      ],
+      "correct": "A",
+      "reason": "縁・高台・釉薬の摩耗が使用痕として連続する案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-antique-02",
+      "assets": [
+        "/rating/r10-a.svg",
+        "/rating/r10-b.svg"
+      ],
+      "correct": "B",
+      "reason": "年代や金銭価値は断定しない。観察用の架空工芸品。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-plating-01",
+      "assets": [
+        "/rating/r11-a.svg",
+        "/rating/r11-b.svg"
+      ],
+      "correct": "A",
+      "reason": "主役の高さ、ソース、余白のバランスが明快な案。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    },
+    {
+      "id": "rating-plating-02",
+      "assets": [
+        "/rating/r12-a.svg",
+        "/rating/r12-b.svg"
+      ],
+      "correct": "B",
+      "reason": "実在シェフの作品ではないオリジナル盛り付け図。 正解は制作者が指定した観察ポイントに基づきます。",
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    }
+  ]
+}
