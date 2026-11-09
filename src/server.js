@@ -8,11 +8,16 @@ import {games} from './events/catalog.js';
 import { GameEngine,GameError } from './engine.js';
 import { RoomStore } from './store.js';
 import { catalog,questions } from './questions.js';
+import {MahjongStore} from './mahjong/store.js';
+import {MahjongService,MahjongError} from './mahjong/service.js';
 
 const ERROR_TEXT={STALE_STATE:'画面が更新されました。現在の画面から操作してください。',SELF_VOTE:'自分の回答には投票できません。',CAPTAIN_ONLY:'この操作はチーム代表だけができます。',ALREADY_VOTED:'予想は受理済みです。',BUDGET_EXCEEDED:'予算を超えています。案を見直してください。',ROOM_NOT_FOUND:'このルームは見つかりません。コードを確認するか、新しいルームを作ってください。',BAD_NAME:'名前を1〜20文字で入力してください。',ROOM_FULL:'このルームは定員（24人）に達しました。',BAD_SESSION:'参加情報が見つかりません。名前を入力して参加し直してください。',BAD_SETTINGS:'設定を確認してください。',EMPTY_POOL:'このモード・深さ・カテゴリの組合せにはお題がありません。カテゴリを広げてください。',SERVER_FULL:'ただいまルームを作れません。少し待ってからお試しください。',HOST_ONLY:'この操作はホストだけができます。',WAIT_ANSWERS:'まだ回答していない人がいます。全員の回答を待ってください。',NEED_PLAYERS:'準備できた参加者が2人以上必要です。',NOT_READY:'全員の準備ができてからスタートしてください。',ALREADY_ANSWERED:'このお題の回答は、すでに受け付けています。',STALE_ROUND:'お題が変わりました。現在のお題に回答してください。',INVALID_ANSWER:'回答を確認してください。配分は合計100、順位は全項目が必要です。',SPECTATING:'次のお題から参加できます。',NOT_ANSWERING:'今は回答を受け付けていません。',NOT_LOBBY:'この操作は待合室で行ってください。',NOT_TALK:'結果公開のあとに次へ進めます。',BAD_PHASE:'今はこの操作を行えません。',BAD_COMMAND:'操作を確認して、もう一度お試しください。',RATE_LIMIT:'操作が続いています。少し待ってからお試しください。',EXPIRED:'このルームは終了しました。',SERVER_ERROR:'うまくつながりませんでした。少し待って、もう一度お試しください。'};
+const MAHJONG_ERROR_TEXT={...ERROR_TEXT,ROOM_FULL:'このルームは定員（4人）に達しました。',NEED_PLAYERS:'4人全員の参加が必要です。',DUPLICATE_ACTION:'この操作は受理済みです。',ILLEGAL_ACTION:'現在選べる操作を確認してください。',NOT_PLAYING:'まだ対局は始まっていません。'};
 export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.sqlite'),countdownMs=3000,hostGraceMs=12000}={}) {
   const root=resolve(fileURLToPath(new URL('../public/',import.meta.url)));
   const store=new RoomStore(database),engine=new GameEngine(store,{countdownMs,hostGraceMs});
+  const mahjongStore=new MahjongStore(database),mahjong=new MahjongService(mahjongStore);
+  const mahjongSockets=new Map();
   const sockets=new Map(),limits=new Map();let shuttingDown=false;
   const publicUrl=(process.env.PUBLIC_URL||process.env.RENDER_EXTERNAL_URL)?.replace(/\/$/,'');
   if(publicUrl && !/^https?:\/\/[^\s]+$/.test(publicUrl)) throw new Error('PUBLIC_URL must be an HTTP(S) URL');
@@ -27,6 +32,13 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
     res.setHeader('Content-Security-Policy',`default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ws: wss:; object-src 'none'; frame-ancestors '${embedGame?'self':'none'}'; base-uri 'self'; form-action 'self'`);
     try {
       const url=new URL(req.url,'http://local');
+      if(url.pathname.startsWith('/mahjong-engine/')){
+        const moduleName=url.pathname.slice('/mahjong-engine/'.length);
+        if(!['tiles.js','hand.js','yaku.js','score.js','match.js','ai.js','client-view.js'].includes(moduleName))return failResponse(res,'ROOM_NOT_FOUND',404);
+        if(req.method!=='GET'&&req.method!=='HEAD')return failResponse(res,'BAD_COMMAND',405);
+        let source;try{source=await readFile(new URL(`./mahjong/${moduleName}`,import.meta.url));}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
+        res.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'no-cache'});return res.end(req.method==='HEAD'?undefined:source);
+      }
       if(url.pathname==='/api/health'&&req.method==='GET')return json(res,{status:'ok',product:'UNITY MIX'});
       if(url.pathname==='/api/catalog'&&req.method==='GET')return json(res,{...catalog,eventGames:games,questionCount:questions.length,hosting:{ephemeral:process.env.EPHEMERAL_STORAGE==='true'}});
       if(url.pathname==='/api/qr'&&req.method==='GET') {
@@ -34,6 +46,17 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
         const target=`${baseUrl(req)}/?room=${room.code}`;
         const svg=await QRCode.toString(target,{type:'svg',margin:2,errorCorrectionLevel:'M',color:{dark:'#383d30',light:'#fcfaf6'}});
         res.writeHead(200,{'Content-Type':'image/svg+xml','Cache-Control':'no-store'});return res.end(svg);
+      }
+      if(req.method==='POST'&&(url.pathname==='/api/mahjong/rooms'||/^\/api\/mahjong\/rooms\/\d{4}\/join$/.test(url.pathname))) {
+        const origin=req.headers.origin;
+        if(origin&&origin!==new URL(baseUrl(req)).origin&&origin!==`http://${req.headers.host}`&&origin!==`https://${req.headers.host}`)return failResponse(res,'BAD_COMMAND',403);
+        if(!rate(`mahjong-http:${req.socket.remoteAddress}`,40))return failResponse(res,'RATE_LIMIT',429);
+        let body='',bytes=0;
+        for await(const chunk of req){bytes+=Buffer.byteLength(chunk);if(bytes>8192)return failResponse(res,'BAD_COMMAND',413);body+=chunk;}
+        let data;try{data=JSON.parse(body);}catch{return failResponse(res,'BAD_COMMAND');}
+        if(!data||typeof data!=='object'||Array.isArray(data))return failResponse(res,'BAD_COMMAND');
+        const session=url.pathname==='/api/mahjong/rooms'?mahjong.createRoom(data.name):mahjong.joinRoom(url.pathname.split('/')[4],data.name);
+        return json(res,session,201);
       }
       if(req.method==='POST'&&(url.pathname==='/api/rooms'||/^\/api\/rooms\/\d{4}\/join$/.test(url.pathname))) {
         const origin=req.headers.origin;
@@ -60,14 +83,52 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.mp3':'audio/mpeg','.svg':'image/svg+xml'};
       res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':['.html','.js','.mjs','.css'].includes(extname(file))?'no-cache':'public, max-age=3600'});
       res.end(req.method==='HEAD'?undefined:data);
-    }catch(error){failResponse(res,error instanceof GameError?error.code:'SERVER_ERROR',error.code==='ROOM_NOT_FOUND'?404:400);}
+    }catch(error){if(error instanceof MahjongError)return json(res,{error:error.code,message:MAHJONG_ERROR_TEXT[error.code]||MAHJONG_ERROR_TEXT.BAD_COMMAND},error.code==='ROOM_NOT_FOUND'?404:400);failResponse(res,error instanceof GameError?error.code:'SERVER_ERROR',error.code==='ROOM_NOT_FOUND'?404:400);}
   });
   const wss=new WebSocketServer({noServer:true,maxPayload:8192,perMessageDeflate:false});
+  const mahjongWss=new WebSocketServer({noServer:true,maxPayload:8192,perMessageDeflate:false});
   server.on('upgrade',(req,socket,head)=>{
+    if(req.url==='/mahjong-ws'){
+      const origin=req.headers.origin;
+      if((origin&&origin!==new URL(baseUrl(req)).origin&&origin!==`http://${req.headers.host}`&&origin!==`https://${req.headers.host}`)||!rate(`mahjong-ws:${req.socket.remoteAddress}`,80)){socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');socket.destroy();return;}
+      mahjongWss.handleUpgrade(req,socket,head,ws=>mahjongWss.emit('connection',ws,req));return;
+    }
     const origin=req.headers.origin;
     if(req.url!=='/ws'||(origin&&origin!==new URL(baseUrl(req)).origin&&origin!==`http://${req.headers.host}`&&origin!==`https://${req.headers.host}`)||!rate(`ws:${req.socket.remoteAddress}`,80)){socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');socket.destroy();return;}
     wss.handleUpgrade(req,socket,head,ws=>wss.emit('connection',ws,req));
   });
+  mahjongWss.on('connection',(ws,req)=>{
+    ws.alive=true;
+    const authTimer=setTimeout(()=>{if(!ws.session)ws.close(4003);},8000);authTimer.unref();
+    ws.on('pong',()=>{ws.alive=true;});ws.on('error',()=>{});
+    ws.on('message',buffer=>{
+      let actionId;
+      try{
+        const msg=JSON.parse(buffer.toString());
+        if(!msg||typeof msg!=='object'||Array.isArray(msg))throw new MahjongError('BAD_COMMAND');
+        actionId=typeof msg.actionId==='string'&&msg.actionId.length<=100?msg.actionId:undefined;
+        if(!ws.session){
+          if(!rate(`mahjong-auth:${req.socket.remoteAddress}`,100))throw new MahjongError('RATE_LIMIT');
+          if(msg.action!=='auth')throw new MahjongError('BAD_SESSION');
+          const {room,seat}=mahjong.authenticate(msg.code,msg.token),key=`${room.code}:${seat}`,previous=mahjongSockets.get(key);
+          ws.session={code:room.code,seat,key};mahjongSockets.set(key,ws);
+          if(previous&&previous!==ws)previous.close(4001,'Other tab');
+          clearTimeout(authTimer);mahjong.connect(room.code,seat);
+          send(ws,{type:'ack',action:'auth'});return;
+        }
+        const session=ws.session,result=mahjong.command(session.code,session.seat,msg);
+        if(result.ok){send(ws,{type:'ack',action:msg.action,actionId,revision:result.revision});if(msg.action==='leave')ws.close(4005,'Left room');}
+        else send(ws,{type:'error',code:result.error,actionId,message:MAHJONG_ERROR_TEXT[result.error]||MAHJONG_ERROR_TEXT.BAD_COMMAND,state:result.state});
+      }catch(error){send(ws,{type:'error',code:error instanceof MahjongError?error.code:'BAD_COMMAND',actionId,message:MAHJONG_ERROR_TEXT[error.code]||MAHJONG_ERROR_TEXT.BAD_COMMAND});}
+    });
+    ws.on('close',()=>{clearTimeout(authTimer);const s=ws.session;if(s&&mahjongSockets.get(s.key)===ws){mahjongSockets.delete(s.key);if(!shuttingDown)mahjong.disconnect(s.code,s.seat);}});
+  });
+  mahjong.onChange=room=>{
+    for(const ws of mahjongSockets.values())if(ws.session.code===room.code){
+      if(room.expired){send(ws,{type:'error',code:'EXPIRED',message:ERROR_TEXT.EXPIRED});ws.close(4004);}
+      else if(room.players[ws.session.seat])send(ws,{type:'state',state:mahjong.view(room,ws.session.seat)});
+    }
+  };
   wss.on('connection',ws=>{
     ws.alive=true;const authTimer=setTimeout(()=>{if(!ws.session)ws.close(4003);},8000);
     ws.on('pong',()=>{ws.alive=true;});
@@ -101,10 +162,10 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       else if(room.players[ws.session.id]?.left){send(ws,{type:'error',code:'BAD_SESSION',message:'司会によって退出されました。'});ws.close(4003);}else send(ws,{type:'state',state:engine.view(room,ws.session.id)});
     }
   };
-  const clock=setInterval(()=>engine.tick(),100);clock.unref();
-  const heartbeat=setInterval(()=>{for(const ws of wss.clients){if(!ws.alive){ws.terminate();continue;}ws.alive=false;ws.ping();}for(const [key,v]of limits)if(Date.now()-v.at>120000)limits.delete(key);},20000);heartbeat.unref();
-  const close=async()=>{shuttingDown=true;clearInterval(clock);clearInterval(heartbeat);for(const ws of wss.clients)ws.terminate();await new Promise(resolve=>server.close(resolve));store.close();};
-  return {server,engine,store,close};
+  const clock=setInterval(()=>{engine.tick();mahjong.tick();},100);clock.unref();
+  const heartbeat=setInterval(()=>{for(const ws of [...wss.clients,...mahjongWss.clients]){if(!ws.alive){ws.terminate();continue;}ws.alive=false;ws.ping();}for(const [key,v]of limits)if(Date.now()-v.at>120000)limits.delete(key);},20000);heartbeat.unref();
+  const close=async()=>{shuttingDown=true;clearInterval(clock);clearInterval(heartbeat);for(const ws of [...wss.clients,...mahjongWss.clients])ws.terminate();wss.close();mahjongWss.close();await new Promise(resolve=>server.close(resolve));store.close();mahjongStore.close();};
+  return {server,engine,store,mahjong,mahjongStore,close};
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
   const app=createApp();const port=Number(process.env.PORT||3000);

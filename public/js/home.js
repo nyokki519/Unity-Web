@@ -5,7 +5,7 @@ export function home({create,join,resume,session,bonus}){
  const actions=el('div','actions');actions.append(button('ルームをつくる ↗',create),button('ルームに参加する',join,'button secondary'));intro.append(actions,el('p','small muted','2〜24人 · 登録不要 · それぞれのスマートフォンで'));
  if(session)intro.append(button(`ROOM ${session.code} に戻る →`,resume,'resume-link quiet-button'));
  const quick=el('nav','solo-shortcuts');quick.setAttribute('aria-label','ひとりで遊ぶ・CPU対戦');quick.append(el('p','field-label','ひとりで遊ぶ・CPU対戦'));
- const links=el('div','solo-shortcut-links');for(const [label,href]of [['レトロパチンコ','/?bonus=jackpot'],['チンチロ','/chinchiro/index.html'],['シューティング','/shooting/index.html'],['バカラ','/baccarat/index.html']]){const link=el('a','button secondary',label);link.href=href;links.append(link);}quick.append(links);intro.append(quick);
+ const links=el('div','solo-shortcut-links');for(const [label,href]of [['レトロパチンコ','/?bonus=jackpot'],['チンチロ','/chinchiro/index.html'],['シューティング','/shooting/index.html'],['バカラ','/baccarat/index.html'],['麻雀','/mahjong/index.html']]){const link=el('a','button secondary',label);link.href=href;links.append(link);}quick.append(links);intro.append(quick);
  const visual=el('div','home-visual');visual.append(eyebrow('01 / A QUESTION TO START WITH'));
  const card=el('div','sample-card');card.append(el('span','serif sample-index','Align.'),el('h2','','カフェで選ぶなら？'));
  const options=el('div','sample-options');options.append(el('p','','A　いつもの一杯'),el('p','','B　初めてのメニュー'));card.append(options,el('p','small muted','答えは、みんなが選んでから。'));visual.append(card,el('p','home-caption','違いが見つかる。会話がはじまる。'),logo());
