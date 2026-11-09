@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eventScreen} from '../public/js/events/screen.js';
+import {createTierComparison} from '../public/js/events/tier.js';
 
 class TextNode {
   constructor(value){this.textContent=String(value);this.nodeType=3;this.children=[];}
@@ -35,6 +36,7 @@ function stateFor({ownAnswer=null}={}){
     }}};
 }
 function descendants(root){const result=[];const walk=node=>{result.push(node);for(const child of node.children||[])walk(child);};walk(root);return result;}
+function renderedText(node){return (node.children||[]).map(child=>child.nodeType===3?child.textContent:child.textContent||renderedText(child)).join('');}
 
 test('eventScreen mounts server-shaped private Tier ownAnswer as a read-only DOM board',()=>withDom(()=>{
   const {items,state}=stateFor({ownAnswer:{value:{tiers:{S:['coffee'],A:['tea'],B:[],C:['cake'],D:[]}}}});
@@ -60,4 +62,32 @@ test('eventScreen mounts an interactive Tier board as DOM while retaining the an
   const submit=nodes.find(node=>node.className==='tier-submit');assert.ok(submit);
   submit.listeners.click();
   assert.equal(submitted.action,'event_answer');assert.deepEqual(submitted.data.value.tiers,{S:['coffee','tea','cake'],A:[],B:[],C:[],D:[]});
+}));
+
+test('a Tier board unlocks after send rejection and stays locked only after an accepted send',()=>withDom(()=>{
+  const {state}=stateFor();let attempts=0;
+  const root=eventScreen({state,send:(action,data)=>{assert.equal(action,'event_answer');assert.ok(data.value.tiers);return ++attempts===1?false:'request-2';},draft:{},leave:()=>{}});
+  const all=()=>descendants(root),placeAll=()=>{while(all().some(node=>node.className==='tier-tray-cards'&&node.children.some(child=>child.className.startsWith('tier-item')))){const item=all().find(node=>node.className==='tier-tray-cards').children.find(child=>child.className.startsWith('tier-item'));item.listeners.click();all().find(node=>node.className.startsWith('tier-pick ')).listeners.click();}};
+  placeAll();let submit=all().find(node=>node.className==='tier-submit');submit.listeners.click();
+  submit=all().find(node=>node.className==='tier-submit');assert.equal(submit.disabled,false,'a failed send keeps the board editable');assert.equal(submit.textContent,'このTier表で確定');
+  submit.listeners.click();submit=all().find(node=>node.className==='tier-submit');assert.equal(submit.disabled,true,'an accepted send prevents duplicate answers');assert.equal(submit.textContent,'確定しました ✓');
+}));
+
+test('Tier screen keeps motion settings available without pushing repeated instructions above the board',()=>withDom(()=>{
+  const {state}=stateFor();const root=eventScreen({state,send:()=>{},draft:{},leave:()=>{}}),nodes=descendants(root);
+  assert.ok(nodes.some(node=>node.className==='event-display-settings'),'motion preference remains accessible under display settings');
+  assert.ok(!nodes.some(node=>node.textContent.includes('2〜10人で遊べます')),'the board already explains how to play');
+  assert.equal(nodes.find(node=>node.className==='event-rule')?.textContent,'全員のTier表を公開して、違いを話します。正解はありません。');
+}));
+
+test('Tier results provide a per-item matrix across all responding participants',()=>withDom(()=>{
+  const items=[{id:'coffee',label:'コーヒー'},{id:'cake',label:'ケーキ'}],boards=[
+    {playerId:'p1',tiers:{S:['coffee'],A:['cake'],B:[],C:[],D:[]}},
+    {playerId:'p2',tiers:{S:[],A:['coffee'],B:['cake'],C:[],D:[]}}
+  ],participants=[{id:'p1',name:'あおい'},{id:'p2',name:'はる'}];
+  const nodes=descendants(createTierComparison({items,boards,participants,participantCount:2}));
+  assert.ok(nodes.some(node=>node.className==='tier-matrix'),'the comparison matrix is available');
+  assert.deepEqual(nodes.filter(node=>node.className.startsWith('tier-matrix-cell')).map(renderedText),['S','A','A','B']);
+  assert.ok(nodes.some(node=>node.textContent==='あおい'));
+  assert.ok(nodes.some(node=>node.textContent==='はる'));
 }));

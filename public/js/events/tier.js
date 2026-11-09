@@ -3,7 +3,7 @@ import {el,button} from '../dom.js';
 export const TIER_ORDER=Object.freeze(['S','A','B','C','D']);
 const TIER_LABELS=Object.freeze({S:'最高',A:'かなり好き',B:'いいね',C:'ふつう',D:'自分には合わない'});
 let cssRequested=false;
-export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v3';document.head.append(link);}
+export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v4';document.head.append(link);}
 const escapeText=value=>String(value??'');
 function normalizeBoard(items,value={}){const result={};if(TIER_ORDER.some(t=>Array.isArray(value[t]))){for(const tier of TIER_ORDER)for(const id of value[tier]||[])result[String(id)]=tier;return result;}for(const item of items){const tier=value[String(item.id)];if(TIER_ORDER.includes(tier))result[String(item.id)]=tier;}return result;}
 function boardRows(items,tiers){const result=Object.fromEntries(TIER_ORDER.map(tier=>[tier,[]]));for(const item of items){const tier=tiers[String(item.id)];if(result[tier])result[tier].push(String(item.id));}return result;}
@@ -41,7 +41,7 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
  ensureTierStyles();
  const root=el('section','tier-playfield'),placed=normalizeBoard(items,initial);
  root.setAttribute('aria-label','Tier表の回答');
- let selected=null,locked=Boolean(disabled),submitted=false,focusPickerNext=false,restoreItemFocus=null,restoreSubmitFocus=false;
+ const readOnly=Boolean(disabled);let selected=null,locked=readOnly,submitted=false,focusPickerNext=false,restoreItemFocus=null,restoreSubmitFocus=false;
  const render=()=>{
   const focusPicker=focusPickerNext,focusItem=restoreItemFocus,focusSubmit=restoreSubmitFocus;focusPickerNext=false;restoreItemFocus=null;restoreSubmitFocus=false;
   root.replaceChildren();root.classList.toggle('is-locked',locked);
@@ -67,7 +67,7 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
   if(!unassigned.length)trayCards.append(el('p','tier-all-placed','すべてのカードを置きました。Tierを見直してから確定できます。'));
   tray.append(trayCards);root.append(tray);
   if(selected){const picker=el('div','tier-picker');picker.setAttribute('role','group');picker.setAttribute('aria-label','選択中のカードを配置するTier');picker.append(el('span','tier-picker-prompt',`${items.find(item=>String(item.id)===selected)?.label||'カード'}を移動`));for(const tier of TIER_ORDER)picker.append(button(tier,()=>placeSelected(tier),`tier-pick tier-${tier.toLowerCase()}`));picker.append(button('戻す',unassignSelected,'tier-unassign'));root.append(picker);}
-  const submit=button(submitted?'確定しました ✓':'このTier表で確定',()=>{if(locked||unassigned.length)return;validateTierBoard(items,placed);submitted=true;locked=true;restoreSubmitFocus=true;render();onSubmit({tiers:boardRows(items,placed)});},'tier-submit');submit.disabled=locked||unassigned.length>0;root.append(submit);
+  const submit=button(submitted?'確定しました ✓':'このTier表で確定',()=>{if(locked||unassigned.length)return;validateTierBoard(items,placed);submitted=true;locked=true;restoreSubmitFocus=true;render();try{if(onSubmit({tiers:boardRows(items,placed)})===false)retrySubmission();}catch(error){retrySubmission();throw error;}},'tier-submit');submit.disabled=locked||unassigned.length>0;root.append(submit);
   if(submitted)root.append(el('p','tier-waiting','みんなの確定を待っています。結果が出たら、まずは違いを見つけよう。'));
   if(focusPicker)root.querySelector('.tier-picker .tier-pick')?.focus();else if(focusItem)Array.from(root.querySelectorAll('[data-item]')).find(node=>node.dataset.item===focusItem)?.focus();else if(focusSubmit)root.querySelector('.tier-submit')?.focus();
  };
@@ -75,7 +75,8 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
  function move(id,tier){if(locked||!id||!items.some(item=>String(item.id)===id)||!TIER_ORDER.includes(tier))return;placed[id]=tier;selected=null;restoreItemFocus=id;render();}
  function placeSelected(tier){if(selected)move(selected,tier);}
  function unassignSelected(){if(selected){restoreItemFocus=selected;delete placed[selected];selected=null;render();}}
- render();return {element:root,get tiers(){return {...placed};},get complete(){return items.every(item=>TIER_ORDER.includes(placed[item.id]));},get submitted(){return submitted;},setLocked(value){locked=Boolean(value);render();}};
+ function retrySubmission(){if(readOnly)return;submitted=false;locked=false;restoreSubmitFocus=true;render();}
+ render();return {element:root,get tiers(){return {...placed};},get complete(){return items.every(item=>TIER_ORDER.includes(placed[item.id]));},get submitted(){return submitted;},setLocked(value){if(!readOnly)locked=Boolean(value);render();},retrySubmission};
 }
 
 export function createTierComparison({items,submissions,boards,summary,participants=[],participantCount}){
@@ -84,8 +85,19 @@ export function createTierComparison({items,submissions,boards,summary,participa
  const shared=el('section','tier-majority');shared.append(el('h3','','みんなの真ん中'));
  const infos=Array.isArray(calculated.items)?Object.fromEntries(calculated.items.map(info=>[info.id,info])):calculated.items||{};
  const strip=el('div','tier-majority-strip');for(const item of items){const info=infos[item.id]||{},majority=info.majorityTier??info.majority??(info.majorityTiers?.length===1?info.majorityTiers[0]:null),counts=info.counts||info.distribution||{},count=majority?(counts[majority]??0):0,minorityCount=Array.isArray(info.minorityTiers)?info.minorityTiers.reduce((sum,tier)=>sum+(counts[tier]||0),0):(info.minorityCount||0),caption=majority?(minorityCount?`少数派 ${minorityCount}人`:'全員一致'):entries.length===1?'比較できません':entries.length?(info.majorityTiers?.length>1?'同数で分かれた':'票が分かれた'):'回答なし';const piece=el('article',`tier-majority-item${majority?' tier-'+majority.toLowerCase():''}`);piece.append(el('strong','',majority||'—'),el('span','',item.label),el('small','',majority?`${count}人の多数派 · ${caption}`:caption));strip.append(piece);}shared.append(strip);root.append(shared);
+ root.append(comparisonMatrix(items,entries,participants));
  const list=el('div','tier-submission-list');entries.forEach((entry,index)=>{const participant=participants.find(p=>p.id===(entry.playerId??entry.id)),name=participant?.name||entry.name||`参加者 ${index+1}`,tiers=normalizeBoard(items,entry.tiers);const details=el('details','tier-submission');if(index===0)details.open=true;const summaryEl=el('summary');summaryEl.append(el('span','tier-avatar',String(index+1).padStart(2,'0')),el('strong','',name),el('span','tier-submission-hint','タップして表を見る'));details.append(summaryEl);const board=el('div','tier-mini-board');for(const tier of TIER_ORDER){const row=el('section',`tier-mini-row tier-${tier.toLowerCase()}`);row.append(el('strong','',tier));const cell=el('div','tier-mini-items');for(const item of items)if(tiers[String(item.id)]===tier)cell.append(el('span','tier-mini-item',item.label));row.append(cell);board.append(row);}details.append(board);list.append(details);});root.append(list);
  root.append(button('比較結果を画像で保存',()=>saveTierImage({items,entries,participants,calculated,agreement}),'tier-image-button'));return root;
+}
+
+function comparisonMatrix(items,entries,participants){
+ const details=el('details','tier-matrix-details');details.append(el('summary','','項目ごとに全員のTierを見る'),el('p','small muted','横にスワイプして、参加者ごとの評価を比べられます。'));
+ const scroll=el('div','tier-matrix-scroll');scroll.setAttribute('role','region');scroll.setAttribute('aria-label','項目ごとのTier比較。横にスクロールできます。');scroll.tabIndex=0;
+ const table=el('table','tier-matrix'),head=el('thead'),headRow=el('tr');const first=el('th','','項目');first.setAttribute('scope','col');headRow.append(first);
+ const names=entries.map((entry,index)=>participants.find(p=>p.id===(entry.playerId??entry.id))?.name||entry.name||`参加者 ${index+1}`);
+ for(const name of names){const th=el('th','tier-matrix-person',name);th.setAttribute('scope','col');headRow.append(th);}head.append(headRow);table.append(head);
+ const normalized=entries.map(entry=>normalizeBoard(items,entry.tiers)),body=el('tbody');
+ for(const item of items){const row=el('tr'),label=el('th','tier-matrix-item',item.label);label.setAttribute('scope','row');row.append(label);for(const [index,tiers]of normalized.entries()){const tier=tiers[String(item.id)]||'',cell=el('td',`tier-matrix-cell${tier?` tier-${tier.toLowerCase()}`:''}`),grade=el('span','tier-matrix-grade',tier||'—');grade.setAttribute('aria-label',tier?`${names[index]}さん：${tier} Tier`:`${names[index]}さん：未回答`);cell.append(grade);row.append(cell);}body.append(row);}table.append(body);scroll.append(table);details.append(scroll);return details;
 }
 
 function saveTierImage({items,entries,participants,calculated,agreement}){

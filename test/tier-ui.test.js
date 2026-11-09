@@ -34,6 +34,6 @@ test('server row-array tier answers are accepted and aggregated in the same publ
 });
 
 test('both interactive and already-submitted Tier screens mount the returned DOM element, not its controller object',()=>{
- assert.match(screen,/createTierBoard\(\{items:e\.question\.items,onSubmit:value=>send\('event_answer',\{value\}\)\}\)\.element/);
- assert.match(screen,/createTierBoard\(\{items:e\.question\.items,initial:value\.tiers\|\|value,disabled:true\}\)\.element/);
+ assert.match(screen,/const board=createTierBoard\(\{items:e\.question\.items,onSubmit:value=>send\('event_answer',\{value\}\)\}\);screen\.tierBoardController=board;screen\.append\(board\.element\)/);
+ assert.match(screen,/const board=createTierBoard\(\{items:e\.question\.items,initial:value\.tiers\|\|value,disabled:true\}\);screen\.tierBoardController=board;screen\.append\(board\.element\)/);
 });
