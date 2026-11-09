@@ -1,0 +1,18 @@
+"""Actual navigation and state checks; no simulated room or websocket responses."""
+import argparse,json
+from pathlib import Path
+from playwright.sync_api import sync_playwright,expect
+args=argparse.ArgumentParser();args.add_argument('--url',default='http://127.0.0.1:3482');args.add_argument('--output',default='docs/qa/ux-audit-2026-11-08/after/navigation');a=args.parse_args();out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));report=[]
+ for w,h in [(375,667),(390,844),(414,896),(1366,768)]:
+  page.set_viewport_size({'width':w,'height':h});page.goto(a.url);page.locator('.solo-shortcuts').wait_for();nav=page.locator('.solo-shortcuts');assert nav.get_by_role('link').count()==4
+  links=nav.get_by_role('link').evaluate_all('(ns)=>ns.map(n=>{const r=n.getBoundingClientRect();return {name:n.textContent,w:r.width,h:r.height,y:r.y}})');assert all(x['w']>=44 and x['h']>=44 for x in links)
+  page.screenshot(path=str(out/f'01-home-{w}.png'))
+  page.get_by_role('button',name='ルームをつくる ↗',exact=True).click();assert not page.locator('.setup-advanced').evaluate('n=>n.open');expect(page.locator('.setup-summary')).to_contain_text('12問');assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path=str(out/f'02-setup-{w}.png'))
+  page.get_by_label('遊ぶゲーム',exact=True).select_option('WHO');expect(page.locator('.setup-summary')).to_contain_text('1ラウンド');expect(page.locator('.setup-advanced')).to_be_hidden();page.get_by_label('遊ぶゲーム',exact=True).select_option('');page.locator('.setup-advanced summary').click();page.locator('input[name=mode][value=LINE]').check();expect(page.locator('.setup-summary')).to_contain_text('数字で見る違い');page.locator('input[name=mode][value=MIX]').check();page.locator('.setup-advanced summary').click();report.append({'width':w,'shortcutTargets':links,'advancedAndEventSwitch':True})
+ page.set_viewport_size({'width':390,'height':844});page.get_by_label('あなたの名前',exact=True).fill('UIレビュー');page.locator('form').get_by_role('button',name='ルームをつくる ↗',exact=True).click();page.locator('#start-button').wait_for();expect(page.locator('#start-button')).to_be_disabled();expect(page.locator('#lobby-start-hint')).to_contain_text('2人から');page.screenshot(path=str(out/'03-lobby-single-390.png'))
+ page.locator('.cpu-test-details summary').click();page.get_by_role('button',name='合計15人にする',exact=True).click();expect(page.locator('.player-list li')).to_have_count(15);page.get_by_role('button',name='準備できた ✓',exact=True).click();expect(page.locator('#start-button')).to_be_enabled();expect(page.locator('#lobby-start-hint')).to_contain_text('全員そろいました');page.evaluate('scrollTo(0,0)');rect=page.locator('#start-button').bounding_box();assert rect['y']+rect['height']<844,rect;page.screenshot(path=str(out/'04-lobby-ready-15-390.png'));page.locator('#start-button').click();page.locator('#submit-answer').wait_for();page.screenshot(path=str(out/'05-answer-390.png'))
+ workers=page.evaluate('''async()=>{const r=await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('worker timeout')),15000))]);return !!r.active;}''');assert workers
+ assert not errors,errors
+ (out/'report.json').write_text(json.dumps({'checks':report,'fifteenPlayerStartVisible':True,'workerActive':workers,'errors':errors},ensure_ascii=False,indent=2));print('PASS home shortcuts, default/advanced/event settings, 15-player lobby start placement, worker activation; no errors');b.close()

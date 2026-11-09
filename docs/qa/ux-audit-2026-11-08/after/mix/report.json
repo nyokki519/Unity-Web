@@ -1,0 +1,49 @@
+{
+  "viewport_checks": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 414,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 393,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 375,
+      "overflow": false,
+      "errors": []
+    }
+  ],
+  "modes": [
+    "ALIGN",
+    "PREDICT",
+    "LINE",
+    "RANK",
+    "AUCTION",
+    "QUICK"
+  ],
+  "errors": [],
+  "flow": "passed: UI create, QR URL join, ready, 6 modes, reload, Our/Your, actual PNG download, again, disconnection, host takeover, return"
+}

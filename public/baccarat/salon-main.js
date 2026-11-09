@@ -115,6 +115,15 @@ export function bootSalon() {
   pause.hidden = true;
   pause.innerHTML = '<span>画面を離れたため一時停止しています。</span><button class="salon-secondary" data-action="resume-play">再開する</button>';
   root.querySelector('.salon-game').prepend(pause);
+  // Keep the existing full-size table. Explicit step links and mobile transitions
+  // make its lower controls discoverable without changing the game state.
+  app.scrollTo = target => {
+    const node = typeof target === 'string' ? ui.query(target) : target;
+    requestAnimationFrame(() => node?.scrollIntoView({
+      block: 'start', behavior: 'auto'
+    }));
+  };
+  ui.query('[data-action=close-panel]').setAttribute('aria-label', '閉じる');
   app.message = (text) => {
     ui.message.textContent = text;
   };
@@ -298,6 +307,10 @@ export function bootSalon() {
     ui.query('[data-action=skip]').hidden = !['dealing', 'judging'].includes(s.phase);
     const completedRound = s.phase === 'result' || s.phase === 'ended' && s.round?.paid;
     ui.receipt.hidden = !completedRound;
+    const step = ui.query('[data-action=view-step]');
+    step.hidden = !betting && !completedRound;
+    step.textContent = completedRound ? '結果・次のゲームへ ↓' : 'コイン・ベット操作へ ↓';
+    step.setAttribute('aria-controls', completedRound ? 'salon-receipt' : 'salon-controls');
     ui.status.textContent = betting ? (controller.selected ? names[controller.selected] + 'を選択中' : '賭け先を選んでください') : s.phase === 'result' ? 'ラウンド終了' : s.phase === 'ended' ? 'セッション終了' : 'カードを公開中';
     ui.shoe.textContent = `シュー ${s.shoe.serial} · 残り ${416-s.shoe.cursor}枚`;
     if (message && betting) app.message(`${controller.selected?names[controller.selected]+'を選択中 · コインを押すたびに積まれます':'先にPLAYER・TIE・BANKERから賭け先を選んでください'}${TABLES[s.table].min>100?' · 最低'+money(TABLES[s.table].min)+'チップ':''}`);
@@ -386,6 +399,9 @@ export function bootSalon() {
     leave.hidden = !finalSession;
     rebet.disabled = totalBet(s.lastBet) > s.balance;
     rebet.title = rebet.disabled ? '残高が足りません。ベットを変更してください。' : `同じ賭け先へ合計${money(totalBet(s.lastBet))}チップで配札`;
+    ui.query('#salon-rebet-note').hidden = finalSession || !rebet.disabled;
+    if (rebet.disabled) rebet.setAttribute('aria-describedby', 'salon-rebet-note');
+    else rebet.removeAttribute('aria-describedby');
     if (sound && app.shownRound !== r.id) {
       app.shownRound = r.id;
       app.audio.play(p.net > 0 ? 'win' : p.net < 0 ? 'loss' : 'tie');
@@ -412,6 +428,7 @@ export function bootSalon() {
     app.restoreCards();
     app.render();
     app.audio.play('confirm');
+    if (matchMedia('(max-width:760px)').matches) app.scrollTo('.salon-felt');
     app.round.run();
   };
   const skip = () => {
@@ -482,12 +499,14 @@ export function bootSalon() {
         app.render();
         app.audio.play('chip');
       },
+      'view-step': () => app.scrollTo(controller.session.state.phase === 'betting' ? '#salon-controls' : ui.receipt),
       confirm: deal,
       skip,
       next: () => {
         controller.next();
         app.restoreCards();
         app.render();
+        if (matchMedia('(max-width:760px)').matches) app.scrollTo('.salon-betting');
       },
       rebet: () => {
         controller.rebet();
@@ -495,6 +514,7 @@ export function bootSalon() {
         app.shownRound = null;
         app.restoreCards();
         app.render();
+        if (matchMedia('(max-width:760px)').matches) app.scrollTo('.salon-felt');
         app.round.run();
       },
       history: () => app.panels.open('history'),

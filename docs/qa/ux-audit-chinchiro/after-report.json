@@ -1,0 +1,50 @@
+[
+  {
+    "width": 375,
+    "height": 667,
+    "rulesCloseAfterScroll": true,
+    "physicalNotesDisclosed": true,
+    "busyActionLabel": true,
+    "phoneStartVisible": true,
+    "touchLinks44px": true,
+    "actualRoll": true,
+    "pauseResume": true,
+    "pageErrors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "rulesCloseAfterScroll": true,
+    "physicalNotesDisclosed": true,
+    "busyActionLabel": true,
+    "phoneStartVisible": true,
+    "touchLinks44px": true,
+    "actualRoll": true,
+    "pauseResume": true,
+    "pageErrors": []
+  },
+  {
+    "width": 414,
+    "height": 896,
+    "rulesCloseAfterScroll": true,
+    "physicalNotesDisclosed": true,
+    "busyActionLabel": true,
+    "phoneStartVisible": true,
+    "touchLinks44px": true,
+    "actualRoll": true,
+    "pauseResume": true,
+    "pageErrors": []
+  },
+  {
+    "width": 1440,
+    "height": 1000,
+    "rulesCloseAfterScroll": true,
+    "physicalNotesDisclosed": true,
+    "busyActionLabel": true,
+    "phoneStartVisible": false,
+    "touchLinks44px": true,
+    "actualRoll": true,
+    "pauseResume": true,
+    "pageErrors": []
+  }
+]

@@ -22,3 +22,15 @@
 /* Keep native selection controls out of the description's layout flow. */
 .mode-option{grid-template-columns:24px minmax(0,1fr);gap:14px;padding:20px;align-items:start}.mode-option>input{grid-area:auto;align-self:start;width:20px;height:20px;min-height:20px;margin:4px 0 0;padding:0}.mode-copy{display:grid;gap:6px;min-width:0;overflow-wrap:anywhere}.mode-option .mode-code{display:block;font-size:25px;line-height:1.2}.mode-copy strong{font-size:14px;line-height:1.6;margin:0}.mode-copy small{font-size:12px;line-height:1.75}.mode-option:focus-within{outline:2px solid var(--olive);outline-offset:3px}.line-input .line-value{font-size:clamp(38px,13vw,80px);overflow-wrap:anywhere}.line-result .result-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:20px}.line-result .stat strong{font-size:clamp(24px,7vw,46px);overflow-wrap:anywhere}@media(max-width:600px){.mode-picker{grid-template-columns:1fr;gap:12px}.mode-option{padding:18px;gap:14px}.mode-option .mode-code{font-size:23px}.mode-copy strong{font-size:14px}.mode-copy small{font-size:12px}}
 .cpu-controls{margin-top:28px;padding:20px;border:1px solid var(--border);background:var(--paper)}.cpu-controls h2{font-size:20px;margin:0 0 12px}.cpu-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.cpu-actions .button{min-height:48px;padding:12px;white-space:normal;overflow-wrap:anywhere;font-size:13px}.cpu-notice{max-width:1100px;margin:20px auto 0;padding:16px 20px;border-left:4px solid var(--olive);background:var(--pale);font-size:13px;line-height:1.8}.player-role{overflow-wrap:anywhere}@media(max-width:480px){.cpu-actions{grid-template-columns:1fr}.cpu-notice{margin:16px 20px 0}.cpu-controls{padding:16px}}
+
+/* Keep the existing cafe layout while bringing the next action within reach. */
+.solo-shortcuts{margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.solo-shortcut-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.solo-shortcut-links .button{min-height:44px;padding:10px 12px;font-size:13px;white-space:normal;text-align:center}
+.setup-advanced{margin:24px 0;border-block:1px solid var(--border)}
+.setup-advanced summary,.cpu-test-details summary{min-height:48px;padding:12px 0;cursor:pointer}
+.setup-guidance{margin-top:-8px}.setup-summary{padding:16px;background:var(--pale);margin:20px 0;font-size:14px}
+.setup-form .mode-option small{font-size:12px;line-height:1.7}
+.cpu-test-details{margin-top:22px;border-block:1px solid var(--border)}
+.cpu-test-details .cpu-controls{margin:0 0 16px}.room-main>#start-button{margin-top:16px}
+#lobby-start-hint{margin-top:12px}.solo-shortcuts .field-label{font-size:12px}

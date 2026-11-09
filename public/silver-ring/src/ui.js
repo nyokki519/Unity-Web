@@ -39,6 +39,7 @@ export class UI {
   setGyro(on) {
     document.body.classList.toggle('gyro', !!on);
     this.el.mTilt.classList.toggle('on', !!on);
+    this.el.mTilt.setAttribute('aria-pressed', String(!!on));
   }
 
   setFunds(v, danger) {
@@ -88,6 +89,7 @@ export class UI {
   setMuteTag(m) {
     this.el.muteTag.textContent = m ? '🔇' : '🔊';
     this.el.mMute.textContent = m ? '🔇' : '🔊';this.el.mMute.setAttribute('aria-pressed',String(!m));
+    this.el.mMute.setAttribute('aria-label',m?'音を入れる':'音を消す');
   }
   setCamTag(free) {
     this.el.camTag.style.display = free ? '' : 'none';

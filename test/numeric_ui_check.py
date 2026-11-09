@@ -8,7 +8,7 @@ with sync_playwright() as pw:
  for game,values,unit,mean in [('LINE',[2,15],'人','8.5人'),('BOUNDARY',[15,30],'分','22.5分')]:
   contexts=[b.new_context(viewport={'width':390,'height':844}) for _ in range(2)];host,guest=[c.new_page() for c in contexts]
   host.goto(args.url);host.get_by_role('button',name='ルームをつくる ↗',exact=True).click();host.locator('input[name=name]').fill('司会')
-  if game=='LINE':host.locator('input[name=mode][value=LINE]').check();host.locator('select[name=category]').select_option('FRIENDS')
+  if game=='LINE':host.locator('.setup-advanced summary').click();host.locator('input[name=mode][value=LINE]').check();host.locator('select[name=category]').select_option('FRIENDS')
   else:host.locator('select[name=eventGame]').select_option('BOUNDARY')
   host.locator('form').get_by_role('button',name='ルームをつくる ↗',exact=True).click();expect(host.locator('.room-code')).to_be_visible();code=host.locator('.room-code').inner_text()
   guest.goto(args.url+'/?room='+code);guest.locator('input[name=name]').fill('ゲスト');guest.get_by_role('button',name='参加する ↗',exact=True).click();expect(guest.locator('.room-code')).to_be_visible()

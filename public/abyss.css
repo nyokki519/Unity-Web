@@ -1235,3 +1235,8 @@ html:has(.silver-shell){overflow-y:auto;touch-action:pan-y}body:has(.silver-shel
 .silver-scroll-reserve{min-height:112px;padding:20px 12px max(48px,env(safe-area-inset-bottom));font-size:12px;text-align:center;color:#c6d0bb;flex:1;touch-action:pan-y}
 @media(min-width:900px){.silver-game{height:calc(var(--silver-viewport,100svh) - 104px);min-height:520px}.silver-scroll-hint{display:none}}
 @media(max-height:500px) and (min-width:600px){.silver-game{height:max(280px,calc(var(--silver-viewport,100svh) - 112px));min-height:280px}}
+.silver-head .button,.silver-head .quiet-button{min-height:44px;min-width:44px}
+.silver-options{position:fixed;z-index:45;top:56px;left:8px;right:8px;max-width:640px;max-height:calc(100svh - 72px);margin:0 auto;padding:12px;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;background:#102d22;border:1px solid #b3b68f;border-radius:6px;box-shadow:0 12px 40px #0008}
+.silver-options-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}.silver-options-heading .button{min-height:44px;font-size:12px}
+.silver-options .button.secondary{background:#244c38;color:#f4edd9;border-color:#b6c4ab}.silver-options .button.secondary:hover:not(:disabled){background:#325d46}
+.silver-options select,.silver-strength .button{min-height:44px}.silver-strength output{min-width:34px;font-variant-numeric:tabular-nums}.silver-options .silver-strength{max-width:100%;flex-wrap:wrap}.silver-options .silver-strength input{width:110px}

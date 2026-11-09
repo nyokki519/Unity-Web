@@ -6,10 +6,11 @@ p=argparse.ArgumentParser();p.add_argument('--url',default='http://127.0.0.1:330
 with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);report=[];errors=[]
  def click(page,name):
+  if ('CPU' in name or name.startswith('合計')) and page.locator('.cpu-test-details').count() and not page.locator('.cpu-test-details').evaluate('n=>n.open'):page.locator('.cpu-test-details summary').click()
   page.get_by_role('button',name=name,exact=True).click();time.sleep(.7)
  def phase(page,value):expect(page.locator('.event-screen')).to_have_attribute('data-phase',value,timeout=10000)
  for width in [375,390,414]:
-  page=b.new_page(viewport={'width':width,'height':844});page.on('pageerror',lambda e:errors.append(str(e)));page.goto(a.url);click(page,'ルームをつくる ↗');page.locator('input[name=name]').fill('ひとりテスト');page.locator('select[name=rounds]').select_option('6');page.locator('form').get_by_role('button',name='ルームをつくる ↗',exact=True).click();expect(page.locator('.room-code')).to_be_visible()
+  page=b.new_page(viewport={'width':width,'height':844});page.on('pageerror',lambda e:errors.append(str(e)));page.goto(a.url);click(page,'ルームをつくる ↗');page.locator('input[name=name]').fill('ひとりテスト');page.locator('.setup-advanced summary').click();page.locator('select[name=rounds]').select_option('6');page.locator('form').get_by_role('button',name='ルームをつくる ↗',exact=True).click();expect(page.locator('.room-code')).to_be_visible()
   click(page,'CPUを1人追加');expect(page.locator('.player-list li')).to_have_count(2);click(page,'合計6人にする');expect(page.locator('.player-list li')).to_have_count(6);click(page,'合計15人にする');expect(page.locator('.player-list li')).to_have_count(15);expect(page.locator('.player-role').filter(has_text='CPU')).to_have_count(14);expect(page.locator('#cpu-notice')).to_contain_text('CPU14人');assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   for box in page.locator('.cpu-controls button').all():
    size=box.bounding_box();assert size['width']>=44 and size['height']>=44

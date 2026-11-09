@@ -7,6 +7,7 @@ with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
  for width in [375,390,414]:
   page=b.new_page(viewport={'width':width,'height':844});page.goto(args.url);page.get_by_role('button',name='ルームをつくる ↗',exact=True).click()
+  page.locator('.setup-advanced summary').click()
   def geometry():
    return page.locator('.mode-option').evaluate_all('els=>els.map(el=>{const r=el.querySelector("input").getBoundingClientRect(),c=el.getBoundingClientRect();const texts=[...el.querySelectorAll("span,strong,small")].filter(n=>n.textContent.trim());return {mode:el.querySelector("input").value,gap:Math.min(...texts.map(n=>n.getBoundingClientRect().left-r.right)),contained:texts.every(n=>{const t=n.getBoundingClientRect();return t.left>=c.left&&t.right<=c.right+1&&t.bottom<=c.bottom+1}),tapWidth:c.width,tapHeight:c.height}})')
   rows=geometry();assert all(r['gap']>=12 for r in rows),rows;assert all(r['contained'] and r['tapWidth']>=44 and r['tapHeight']>=44 for r in rows),rows

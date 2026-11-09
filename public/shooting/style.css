@@ -47,9 +47,9 @@
  .pickup-idle{font-size:8px}
  #actions{flex:0 0 auto;gap:4px;padding:3px 0 max(4px,env(safe-area-inset-bottom))}
  #actions button{min-height:50px;padding:3px 0;font-size:9px;line-height:12px;border-radius:9px}
- #actions button b{font-size:9px;line-height:12px}
+ #actions button b{font-size:10px;line-height:12px}
  #actions button .action-icon{font-size:17px;line-height:18px}
- #actions button .action-detail{font-size:7px;line-height:9px}
+ #actions button .action-detail{font-size:8px;line-height:10px}
 }
 
 /* Friendly Japanese arcade presentation for menus; the combat palette stays legible. */
@@ -119,3 +119,14 @@ h1{letter-spacing:-.035em;text-shadow:0 5px 28px #54d5d866}
  #flight{max-width:480px}
  #viewport{width:min(100%,calc((100svh - 197px - env(safe-area-inset-top) - env(safe-area-inset-bottom))*.666667));max-height:calc(100svh - 197px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
 }
+
+/* Keep sound controls available without abandoning an active flight. */
+.pause-audio{text-align:left;margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:0 12px}
+.pause-audio>summary{cursor:pointer;min-height:44px;padding:10px 0;color:var(--mint);font-size:13px;font-weight:650}
+.pause-audio .setting-range{padding:5px 0;font-size:12px;grid-template-columns:minmax(70px,1fr) minmax(60px,1fr) 44px;gap:6px}
+.pause-audio .setting-range input[type=range]{min-height:44px}
+.pause-audio output{font-size:12px}
+/* Let short-screen dialog content scroll above, rather than behind, its actions. */
+#overlay .modal{display:flex;flex-direction:column;max-height:100%;overflow:hidden}
+#overlay .report-body{min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding:12px 0}
+#overlay .report-actions{flex:0 0 auto;position:relative;bottom:auto}

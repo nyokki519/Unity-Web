@@ -1,0 +1,42 @@
+[
+  {
+    "width": 375,
+    "roundCompleted": true,
+    "betControlsJump": true,
+    "resultJump": true,
+    "insufficientRebetReason": true,
+    "historyRoads": true,
+    "nextRoundGuidance": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "roundCompleted": true,
+    "betControlsJump": true,
+    "resultJump": true,
+    "insufficientRebetReason": true,
+    "historyRoads": true,
+    "nextRoundGuidance": true,
+    "errors": []
+  },
+  {
+    "width": 414,
+    "roundCompleted": true,
+    "betControlsJump": true,
+    "resultJump": true,
+    "insufficientRebetReason": true,
+    "historyRoads": true,
+    "nextRoundGuidance": true,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "roundCompleted": true,
+    "betControlsJump": true,
+    "resultJump": true,
+    "insufficientRebetReason": true,
+    "historyRoads": true,
+    "nextRoundGuidance": true,
+    "errors": []
+  }
+]

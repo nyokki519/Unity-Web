@@ -55,6 +55,7 @@ body:has(#cameraControls:not([hidden])) #susWrap{bottom:288px}
 #mbar .mbtn.on,body.touch #mbar .mbtn.on{background:#e0c594;color:#172d22;border-color:#e0c594}
 #start #btnStart{position:sticky;bottom:4px;flex-shrink:0;z-index:2}
 #paused{pointer-events:auto}#paused .btn{display:block;margin:12px auto 0;min-height:48px}
+#mtop .mbtn{min-width:44px;height:44px}#roundDetails>summary{min-height:44px}
 #unity-banknote-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:4;background:transparent}
 #unity-banknote-background[hidden]{display:none}#game{z-index:1}
 .unity-note{--coin-size:clamp(112px,30vw,170px);position:absolute;top:0;width:var(--coin-size);height:var(--coin-size);perspective:650px;transform-style:preserve-3d;opacity:1;will-change:transform}

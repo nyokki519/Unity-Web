@@ -42,7 +42,7 @@ function render(){
   const p=match.players[match.current],r=match.results[match.current];$('turn').textContent=`${p.name}の番 / ${match.current===match.dealer?'親':'子'} / ${Math.min(match.attempt+(!match.locked?1:0),3)}投目`;
   $('role').textContent=busy?'出目を待とう。':r?r.label:'サイコロを振ろう';
   $('message').textContent=match.locked?'この出目で勝負。':match.attempt?'役なし。あと'+(3-match.attempt)+'回振れます。':'役が出るまで、最大3回。';
-  $('action').textContent=match.current===1?(busy?'CPUが振っています…':'CPUの番です…'):match.locked?(match.turnIndex===1?'結果を精算する':'CPUの番へ'):'サイコロを振る';
+  $('action').textContent=busy?(match.current===1?'CPUが振っています…':'出目を待っています…'):match.current===1?'CPUの番です…':match.locked?(match.turnIndex===1?'結果を精算する':'CPUの番へ'):'サイコロを振る';
  }
  if(phase==='ROUND_END'){
   const d=match.last.delta;$('turn').textContent=`第${match.hand+1}局の結果`;$('role').textContent=d>0?'あなたの勝ち':d<0?'モカの勝ち':'引き分け';$('message').textContent=match.last.results.some(r=>r.kind==='shonben')?`ションベン！ 場外に出した${match.last.results[0].kind==='shonben'?'あなた':'モカ'}の負け。${Math.abs(d)}枚を支払います。`:d?`${Math.abs(d)}枚のコインが移動しました。`:'この局のコイン移動はありません。';$('settlement').textContent=`あなた ${d>=0?'+':''}${d}枚 / モカ ${d<=0?'+':''}${-d}枚`;$('action').textContent=match.hand===3||match.maxBet<1?'最終結果を見る':'親を交代して次の局へ';

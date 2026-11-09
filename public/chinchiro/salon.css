@@ -22,3 +22,9 @@ body[data-phase=BET] .role-area{display:none}.bet-adjust{margin:8px 0 0;border-t
 @media(max-width:849px){.table{display:flex;flex-direction:column}.table>.table-top{order:0}.table>.players{order:1}.table>.physical-bowl{order:2}.table>.showdown{order:4}.table>.role-area{order:5}.table>.bet-panel{order:6;width:100%}.table>.action-row{order:7;width:100%}.table>#error{order:8}.table>.settlement{order:9}body[data-phase=TURN] .table>.action-row{order:3;margin-top:5px;margin-bottom:6px}}
 @media(max-width:849px) and (max-height:740px){body:not([data-phase=BET]) .physical-bowl canvas{height:235px}}
 @media(max-width:849px){.stage-kicker{display:none}.stage-meta{justify-content:flex-start}.bowl-toolbar{position:absolute;top:0;right:0;bottom:auto;margin:0;min-height:0}.bowl-toolbar button{background:#10382ab8}.physical-bowl{margin-bottom:4px}}
+/* Read rules without losing the close control; model notes stay available on demand. */
+#rules .dialog-head{position:sticky;top:-24px;z-index:1;background:#152c24;padding:12px 0;border-bottom:1px solid #bca16f40}
+#rules .model-notes{border-top:1px solid #bca16f40;margin-top:18px;padding-top:3px}
+#rules .model-notes summary{min-height:44px;display:list-item;cursor:pointer;padding:12px 0;color:#efdcb4;font-size:13px}
+header .brand,header>a:last-child{min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:520px){#rules .dialog-head{top:-20px}header>a:last-child{padding-top:0;padding-bottom:0}}

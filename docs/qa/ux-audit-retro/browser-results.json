@@ -1,0 +1,42 @@
+[
+  {
+    "width": 375,
+    "height": 667,
+    "settingsDoesNotMoveGame": true,
+    "settingsFitsViewport": true,
+    "rapidStrengthClicks": 44,
+    "launchBalance": 49800,
+    "pauseResume": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "settingsDoesNotMoveGame": true,
+    "settingsFitsViewport": true,
+    "rapidStrengthClicks": 44,
+    "launchBalance": 49800,
+    "pauseResume": true,
+    "errors": []
+  },
+  {
+    "width": 414,
+    "height": 896,
+    "settingsDoesNotMoveGame": true,
+    "settingsFitsViewport": true,
+    "rapidStrengthClicks": 44,
+    "launchBalance": 49800,
+    "pauseResume": true,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "settingsDoesNotMoveGame": true,
+    "settingsFitsViewport": true,
+    "rapidStrengthClicks": 44,
+    "launchBalance": 49800,
+    "pauseResume": true,
+    "errors": []
+  }
+]
