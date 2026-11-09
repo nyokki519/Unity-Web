@@ -1,16 +1,20 @@
 import {formatScaleValue} from '../scale.js';
 import {el,button,title,labeledSelect} from '../dom.js';import {invitation} from '../lobby.js';
 import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v4';
+import {ratingScreen,ratingQuestionEditor,ratingCategories} from './rating.js?v=rating-v2';
 export function eventScreen(props){
- const {state,send,draft,leave}=props,e=state.event,host=state.selfId===state.hostId,screen=el('div','screen narrow event-screen');screen.dataset.game=e.gameId;screen.dataset.phase=e.phase;
+ const {state,send,draft,leave}=props,e=state.event,host=state.selfId===state.hostId,screen=el('div',`screen narrow event-screen${e.gameId==='RATING'?' rating-screen':''}`);screen.dataset.game=e.gameId;screen.dataset.phase=e.phase;
  const ruleText=e.gameId==='TIER'?'全員のTier表を公開して、違いを話します。正解はありません。':e.gameId==='BOUNDARY'&&e.question?.scale?`${e.question.scale.min}〜${e.question.scale.max}${e.question.scale.unit}で回答し、締切後に匿名分布を見ます。名前と数値は紐づけて公開しません。自分の数値を話すかは自由。`:e.rule;
- const privacyText=e.gameId==='TIER'?'回答は公開まで本人にだけ表示されます。':'話したくないことはパスできます。ルームは未使用24時間、終了後1時間で削除対象。';
- const top=el('div','game-top');top.append(el('p','eyebrow',`ROOM ${state.code} / イベントゲーム`),button('招待',()=>invitation(state),'quiet-button'));screen.append(top,title(e.name, e.question?.prompt||e.name),el('p','event-rule',ruleText),el('p','small muted',privacyText));
+ const privacyText=e.gameId==='TIER'?'回答は公開まで本人にだけ表示されます。':e.gameId==='RATING'?'A/Bの選択と正解は、発表まで他の参加者に表示されません。':'話したくないことはパスできます。ルームは未使用24時間、終了後1時間で削除対象。';
+ const top=el('div','game-top');top.append(el('p','eyebrow',`ROOM ${state.code} / ${e.gameId==='RATING'?'一流格付けチェック':'イベントゲーム'}`),button('招待',()=>invitation(state),'quiet-button'));screen.append(top,e.gameId==='RATING'?title(e.name):title(e.name,e.question?.prompt||e.name),el('p','event-rule',ruleText),el('p','small muted',privacyText));
  const motion=el('input');motion.type='checkbox';motion.checked=localStorage.getItem('mix-reduce-motion')==='true';motion.addEventListener('change',()=>{localStorage.setItem('mix-reduce-motion',String(motion.checked));document.body.classList.toggle('reduce-motion',motion.checked);});const m=el('label','check-field');m.append(motion,el('span','','動きを減らす'));if(e.gameId==='TIER'){const display=el('details','event-display-settings');display.append(el('summary','','表示設定'),m);screen.append(display);}else screen.append(m);
  if(['WHO','STORY'].includes(e.gameId))screen.append(el('p','small muted',`10〜20分で会話するため、匿名回答はランダムに最大${e.options.itemLimit??(e.gameId==='STORY'?4:6)}件を公開します。他の回答は本人だけに表示。司会は開始前に件数を変更できます。`));
  const self=state.players.find(p=>p.id===state.selfId);if(!self.ready&&e.phase!=='FINAL')screen.append(button('次のラウンドの準備OK',()=>send('ready',{ready:true}),'button secondary'));
  const progress=el('p','event-status');progress.id='event-status';progress.setAttribute('role','status');const timer=el('p','event-timer');timer.id='event-timer';const sent=el('p','small muted');sent.id='event-send-status';sent.setAttribute('role','status');screen.append(progress,timer,sent);
- if(e.phase==='RULES'){
+ if(e.gameId==='RATING'){
+  screen.append(ratingScreen({state,send}));
+  if(e.phase==='RULES'&&host){const qs=e.questions.filter(q=>q.game===e.gameId&&q.enabled&&(!e.options.difficulty||e.options.difficulty==='すべて'||q.difficulty===e.options.difficulty)&&!e.used?.includes(q.id));const sel=labeledSelect('最初のお題',[['','おまかせ'],...qs.map(q=>[q.id,`${q.category||'鑑定'} · ${q.prompt}`])],'');sel.querySelector('select').name='event-question';screen.append(sel,eventSettings(props),ratingQuestionEditor({send,categories:ratingCategories}),button('鑑定を始める →',()=>send('event_begin',{questionId:sel.querySelector('select').value||undefined}),'button wide'));}
+ }else if(e.phase==='RULES'){
   screen.append(el('h2','','ルール説明'),el('p','',`ラウンド ${e.roundIndex+1} / ${e.options.roundLimit}。対面の会話を中心に、10〜20分を目安に遊びます。`),teamRoster(state));
   if(host){const qs=e.questions.filter(q=>q.game===e.gameId&&q.enabled&&(!e.options.difficulty||e.options.difficulty==='すべて'||q.difficulty===e.options.difficulty)&&!e.used?.includes(q.id));const sel=labeledSelect('今回のお題',[['','おまかせ'],...qs.map(q=>[q.id,q.prompt])],'');sel.querySelector('select').name='event-question';screen.append(sel,eventSettings(props),eventQuestionEditor(props),button('回答・相談を始める',()=>send('event_begin',{questionId:sel.querySelector('select').value||undefined}),'button wide'));}else screen.append(el('p','muted','司会がルールを説明し、開始します。'));
  }else if(['ANSWER','CONSULT'].includes(e.phase)){
