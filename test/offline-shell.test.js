@@ -12,7 +12,10 @@ test('the offline shell can install from live HTTP assets without requesting ret
   vm.runInNewContext(source,{self:{addEventListener:(name,fn)=>{handlers[name]=fn;},skipWaiting:async()=>{installed=true;}},Request:class{constructor(path,options){return new Request(new URL(path,base),options);}},caches:{open:async()=>({addAll:async(requests)=>{for(const request of requests){requested.push(request.url);const response=await fetch(request);assert.equal(response.status,200,request.url);}}})}});
   handlers.install({waitUntil:p=>{pending=p;}});await pending;
   assert.equal(installed,true);assert.ok(requested.length>100);assert.ok(requested.every(url=>!url.includes('/mechanical/')));
-  assert.ok(requested.some(url=>url.endsWith('/js/events/tier.js')),'Tier interaction module is included in the offline shell');
-  assert.ok(requested.some(url=>url.endsWith('/js/events/tier.css')),'Tier board styling is included in the offline shell');
+  const cached=new Set(requested.map(url=>new URL(url).pathname+new URL(url).search));
+  assert.ok(cached.has('/js/events/tier.js?v=tier-board-v2'),'Tier interaction module is included with the fresh cache key');
+  assert.ok(cached.has('/js/events/tier.css?v=tier-board-v2'),'Tier board styling is included with the fresh cache key');
+  assert.ok(cached.has('/js/app.js?v=tier-board-v2'),'app module cache key is versioned');
+  assert.ok(cached.has('/js/events/screen.js?v=tier-board-v2'),'event screen cache key is versioned');
  }finally{await app.close();}
 });

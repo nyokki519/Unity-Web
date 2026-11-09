@@ -1,6 +1,6 @@
 import {formatScaleValue} from '../scale.js';
 import {el,button,title,labeledSelect} from '../dom.js';import {invitation} from '../lobby.js';
-import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js';
+import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v2';
 export function eventScreen(props){
  const {state,send,draft,leave}=props,e=state.event,host=state.selfId===state.hostId,screen=el('div','screen narrow event-screen');screen.dataset.game=e.gameId;screen.dataset.phase=e.phase;
  const top=el('div','game-top');top.append(el('p','eyebrow',`ROOM ${state.code} / イベントゲーム`),button('招待',()=>invitation(state),'quiet-button'));screen.append(top,title(e.name, e.question?.prompt||e.name),el('p','event-rule',e.gameId==='BOUNDARY'&&e.question?.scale?`${e.question.scale.min}〜${e.question.scale.max}${e.question.scale.unit}で回答し、締切後に匿名分布を見ます。名前と数値は紐づけて公開しません。自分の数値を話すかは自由。`:e.rule),el('p','small muted','話したくないことはパスできます。ルームは未使用24時間、終了後1時間で削除対象。'));

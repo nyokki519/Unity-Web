@@ -8,7 +8,8 @@ export function title(kicker,heading,description){const n=el('div','screen-headi
 export function logo(size='small'){const n=el('img',`unity-logo ${size}`);n.src='/assets/unity-mark.webp';n.alt='Unityのオリジナルロゴ';n.width=size==='large'?160:56;n.height=size==='large'?168:58;return n;}
 export function row(label,value,cls='stat'){const n=el('div',cls);n.append(el('span','',label),el('strong','',String(value)));return n;}
 export function bar(label,value,caption=''){const n=el('div','bar-row');n.append(row(label,value,'bar-label'));const track=el('div','bar-track'),fill=el('span');fill.style.width=`${Math.max(0,Math.min(100,value))}%`;track.append(fill);n.append(track);if(caption)n.append(el('p','small muted',caption));return n;}
-export function toast(text){const n=$('#toast');n.textContent=text;n.hidden=false;clearTimeout(n._timer);n._timer=setTimeout(()=>{n.hidden=true;},4500);}
+export function toastMessage(value){if(typeof value==='string')return value;if(value instanceof Error&&typeof value.message==='string'&&value.message)return value.message;return'応答を確認できませんでした。通信状態を確認してください。';}
+export function toast(text){const n=$('#toast');n.textContent=toastMessage(text);n.hidden=false;clearTimeout(n._timer);n._timer=setTimeout(()=>{n.hidden=true;},4500);}
 export function modal(heading,...nodes){$('#modal-title').textContent=heading;$('#modal-body').replaceChildren(...nodes);if(!$('#modal').open)$('#modal').showModal();}
 export async function copy(text){try{await navigator.clipboard.writeText(text);toast('コピーしました。');}catch{const box=input('copy','',text);box.readOnly=true;modal('この文字列をコピーしてください',box);box.select();}}
 export function labeledSelect(label,options,value,onChange){const n=el('select');for(const [id,text]of options){const o=el('option','',text);o.value=id;n.append(o);}n.value=value;if(onChange)n.addEventListener('change',()=>onChange(n.value));return field(label,n);}
