@@ -6,8 +6,9 @@ import {eventQuestions,optionsFor,questionsFor,teamGame,guessGame,validateEventQ
 import {validateNarrative,collectGuessItems,openGuess,closeGuess,revealSolution,nextGuessItem,vote} from './guessing.js';
 import {validateIndividual,individualResult} from './individual.js';
 import {validateTierAnswer,tierResult} from './tier.js';
-export function createEvent(gameId,options={},questions=eventQuestions){return{gameId,options:optionsFor(gameId,options),questions:structuredClone(questions),revision:0,phase:'RULES',roundId:randomUUID(),roundIndex:0,deadlineAt:null,answers:{},passes:{},submittedBy:{},participants:[],teams:[],history:[],used:[],question:null,result:null};}
-function rules(e){e.phase='RULES';e.roundId=randomUUID();e.deadlineAt=null;e.answers={};e.passes={};e.submittedBy={};e.result=null;e.question=null;e.items=[];e.votes={};e.itemIndex=0;}
+import {validateRatingAnswer,ratingResult} from './rating.js';
+export function createEvent(gameId,options={},questions=eventQuestions){return{gameId,options:optionsFor(gameId,options),questions:structuredClone(questions),revision:0,phase:'RULES',roundId:randomUUID(),roundIndex:0,deadlineAt:null,revealAt:null,answers:{},passes:{},submittedBy:{},participants:[],teams:[],history:[],used:[],question:null,result:null};}
+function rules(e){e.phase='RULES';e.roundId=randomUUID();e.deadlineAt=null;e.revealAt=null;e.answers={};e.passes={};e.submittedBy={};e.result=null;e.question=null;e.items=[];e.votes={};e.itemIndex=0;}
 function end(room,now){room.event.phase='FINAL';room.event.deadlineAt=null;room.phase='FINAL';room.endedAt=now;room.expiresAt=now+3600000;}
 export function executeEvent(room,id,msg,now){
  const e=room.event;if(!e)fail('BAD_PHASE');
@@ -18,7 +19,7 @@ export function executeEvent(room,id,msg,now){
  }
  if(msg.action==='event_answer'){
   if(!['ANSWER','CONSULT'].includes(e.phase)||now>=e.deadlineAt)fail('NOT_ANSWERING');if(!e.participants.includes(id))fail('SPECTATING');if(teamGame(e.gameId)&&msg.skip&&e.teams.find(t=>t.memberIds.includes(id))?.captainId!==id){if(e.passes?.[id])fail('ALREADY_ANSWERED');(e.passes||={})[id]={skip:true};return;}const key=teamGame(e.gameId)?captainTeam(room,id).id:id;if(Object.hasOwn(e.answers,key))fail('ALREADY_ANSWERED');
-  let value;if(!msg.skip){try{value=teamGame(e.gameId)?validateTeamAnswer(e.gameId,e.question,msg.value):guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):e.gameId==='TIER'?validateTierAnswer(e.question,msg.value):validateIndividual(e.question,msg.value);}catch(error){if(error.code==='BUDGET_EXCEEDED')throw error;fail('INVALID_ANSWER');}}e.answers[key]=msg.skip?{skip:true}:{value};if(teamGame(e.gameId))(e.submittedBy||={})[key]=id;return;
+  let value;if(!msg.skip){try{value=teamGame(e.gameId)?validateTeamAnswer(e.gameId,e.question,msg.value):guessGame(e.gameId)?validateNarrative(e.gameId,msg.value):e.gameId==='TIER'?validateTierAnswer(e.question,msg.value):e.gameId==='RATING'?validateRatingAnswer(msg.value):validateIndividual(e.question,msg.value);}catch(error){if(error.code==='BUDGET_EXCEEDED')throw error;fail('INVALID_ANSWER');}}e.answers[key]=msg.skip?{skip:true}:{value};if(teamGame(e.gameId))(e.submittedBy||={})[key]=id;if(e.gameId==='RATING'&&e.participants.every(playerId=>Object.hasOwn(e.answers,playerId))){e.phase='CLOSED';e.deadlineAt=null;}return;
  }
  if(room.hostId!==id)fail('HOST_ONLY');if(msg.revision!==e.revision)fail('STALE_STATE');
  switch(msg.action){
@@ -30,11 +31,11 @@ export function executeEvent(room,id,msg,now){
   }
   case 'event_begin':{
    if(e.phase!=='RULES')fail('BAD_PHASE');const players=Object.values(room.players).filter(p=>p.connected&&p.ready&&!p.left);if(players.length<2)fail('NEED_PLAYERS');
-   if(e.gameId==='TIER'&&players.length>10)fail('ROOM_FULL');const available=questionsFor(e,e.gameId).filter(q=>!e.used.includes(q.id));if(!available.length)fail('EMPTY_POOL');const q=msg.questionId?available.find(q=>q.id===msg.questionId):available[randomInt(available.length)];if(!q)fail('BAD_SETTINGS');
-   e.question=structuredClone(q);e.used.push(q.id);e.participants=players.map(p=>p.id);if(teamGame(e.gameId))prepareTeams(room);e.phase=teamGame(e.gameId)?'CONSULT':'ANSWER';e.deadlineAt=now+e.options.seconds*1000;break;
+   if((e.gameId==='TIER'||e.gameId==='RATING')&&players.length>10)fail('ROOM_FULL');const available=questionsFor(e,e.gameId).filter(q=>!e.used.includes(q.id));if(!available.length)fail('EMPTY_POOL');const q=msg.questionId?available.find(q=>q.id===msg.questionId):available[randomInt(available.length)];if(!q)fail('BAD_SETTINGS');
+   e.question=structuredClone(q);e.used.push(q.id);e.participants=players.map(p=>p.id);if(e.gameId==='RATING'){e.ratingStandings=Object.fromEntries(e.participants.map(playerId=>[playerId,e.ratingStandings?.[playerId]||{rankIndex:0,correct:0,total:0}]));e.categoryLabel=q.category;}if(teamGame(e.gameId))prepareTeams(room);e.phase=teamGame(e.gameId)?'CONSULT':'ANSWER';e.deadlineAt=now+e.options.seconds*1000;break;
   }
   case 'event_close':if(e.phase==='GUESS'){closeGuess(e);break;}if(!['ANSWER','CONSULT'].includes(e.phase))fail('BAD_PHASE');e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);break;
-  case 'event_reveal':if(e.phase!=='CLOSED')fail('BAD_PHASE');if(guessGame(e.gameId)){e.items||=collectGuessItems(e);e.items=e.items.filter(i=>!i.hidden).slice(0,e.options.itemLimit);e.itemIndex=0;while(e.items[e.itemIndex]?.hidden)e.itemIndex++;if(e.itemIndex<e.items.length)openGuess(e,now);else e.phase='TALK';}else{if(e.gameId==='TIER'){const submitted=Object.entries(e.answers).filter(([,answer])=>answer?.value);const aggregate=submitted.length>=2?tierResult(e.question,Object.fromEntries(submitted)):{participantCount:submitted.length,tiers:['S','A','B','C','D'],agreementPct:null,items:[]};e.result={...aggregate,boards:submitted.map(([playerId,answer])=>({playerId,name:room.players[playerId]?.name||'参加者',tiers:answer.value.tiers}))};}else e.result=teamGame(e.gameId)?teamResult(e):individualResult(e.question,e.answers);e.phase='TALK';}e.history.push({gameId:e.gameId,questionId:e.question.id});break;
+  case 'event_reveal':if(e.phase!=='CLOSED')fail('BAD_PHASE');if(e.gameId==='RATING'){e.phase='REVEAL';e.revealAt=now+6500;}else if(guessGame(e.gameId)){e.items||=collectGuessItems(e);e.items=e.items.filter(i=>!i.hidden).slice(0,e.options.itemLimit);e.itemIndex=0;while(e.items[e.itemIndex]?.hidden)e.itemIndex++;if(e.itemIndex<e.items.length)openGuess(e,now);else e.phase='TALK';}else{if(e.gameId==='TIER'){const submitted=Object.entries(e.answers).filter(([,answer])=>answer?.value);const aggregate=submitted.length>=2?tierResult(e.question,Object.fromEntries(submitted)):{participantCount:submitted.length,tiers:['S','A','B','C','D'],agreementPct:null,items:[]};e.result={...aggregate,boards:submitted.map(([playerId,answer])=>({playerId,name:room.players[playerId]?.name||'参加者',tiers:answer.value.tiers}))};}else e.result=teamGame(e.gameId)?teamResult(e):individualResult(e.question,e.answers);e.phase='TALK';}if(e.gameId!=='RATING')e.history.push({gameId:e.gameId,questionId:e.question.id});break;
   case 'event_solution':revealSolution(e);break;
   case 'event_next_item':nextGuessItem(e,now);break;
   case 'event_hide':{
@@ -49,4 +50,4 @@ export function executeEvent(room,id,msg,now){
  }
  e.revision++;
 }
-export function tickEvent(room,now){const e=room.event;if(!e)return false;let changed=refreshCaptains(room);if(changed)e.revision++;if(['ANSWER','CONSULT','GUESS'].includes(e.phase)&&e.deadlineAt!==null&&now>=e.deadlineAt){if(e.phase==='GUESS')closeGuess(e);else{e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);}e.revision++;return true;}return changed;}
+export function tickEvent(room,now){const e=room.event;if(!e)return false;let changed=refreshCaptains(room);if(changed)e.revision++;if(e.gameId==='RATING'&&e.phase==='REVEAL'&&e.revealAt!==null&&now>=e.revealAt){e.result=ratingResult(e,room);e.phase='TALK';e.revealAt=null;e.history.push({gameId:e.gameId,questionId:e.question.id});e.revision++;return true;}if(['ANSWER','CONSULT','GUESS'].includes(e.phase)&&e.deadlineAt!==null&&now>=e.deadlineAt){if(e.phase==='GUESS')closeGuess(e);else{e.phase='CLOSED';e.deadlineAt=null;if(guessGame(e.gameId))e.items=collectGuessItems(e);}e.revision++;return true;}return changed;}

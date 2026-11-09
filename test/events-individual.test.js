@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {fixture} from './events-helper.js';import {eventQuestions,games} from '../src/events/catalog.js';
 test('each game has 15 ready prompts and quest has five per difficulty',()=>{
- for(const game of Object.keys(games))assert.ok(eventQuestions.filter(q=>q.game===game).length>=15);
+ for(const game of Object.keys(games).filter(game=>game!=='RATING'))assert.ok(eventQuestions.filter(q=>q.game===game).length>=15);
  for(const d of ['気軽','ひと工夫','じっくり'])assert.ok(eventQuestions.filter(q=>q.game==='QUEST'&&q.difficulty===d).length>=5);
 });
 test('host question edits stay in their room and live questions are immutable',()=>{

@@ -3,14 +3,17 @@ import {readFileSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
 import {fail} from '../errors.js';
 import {validateTierQuestion} from './tier.js';
+import {RATING_CATEGORIES,validateRatingQuestion} from './rating.js';
 const builtinTierThemes=JSON.parse(readFileSync(new URL('../../data/tier-themes.json',import.meta.url))).map(theme=>({...validateTierQuestion({id:theme.id,game:'TIER',prompt:theme.prompt,talkPrompt:theme.description,items:theme.items}),difficulty:'気軽',enabled:true,categories:theme.categories}));
-export const games={VALUES:{name:'価値観ランキング',rule:'選択肢を並べ替え、平均順位と匿名分布を見て話します。個別順位は本人だけに表示。',seconds:90},WHO:{name:'この回答、誰でしょう？',rule:'120文字以内の匿名回答を一件ずつ予想。予想締切後に正解を公開して本人が話します。自分の回答への投票は禁止。',seconds:90},BOUNDARY:{name:'みんなの境界線',rule:'お題の単位や両端の意味に沿って数値で回答し、締切後に匿名分布を見ます。名前と数値は紐づけて公開しません。自分の数値を話すかは自由。',seconds:90},QUEST:{name:'共通点クエスト',rule:'チームで対面相談して代表が提出。締切後に公開し、司会が承認します。',seconds:180},CAFE:{name:'架空のカフェ会議',rule:'チームで予算内のカフェ案を相談。代表の下書きは同チームだけに共有します。好みに正解・不正解はありません。',seconds:180},STORY:{name:'エピソードの持ち主',rule:'見出しと600文字以内の体験談を匿名で提出。一件ずつ読んで予想し、正解後は本人とじっくり話します。自分の回答への投票は禁止。',seconds:180},TIER:{name:'みんなのTier会議',rule:'選択肢カードをS〜Dへ振り分けます。全員が確定したら一斉公開し、多数派・少数派をきっかけに話します。順位や正解はありません。',seconds:600}};
+const builtinRatingQuestions=JSON.parse(readFileSync(new URL('../../data/rating-questions.json',import.meta.url))).map(validateRatingQuestion);
+export const games={VALUES:{name:'価値観ランキング',rule:'選択肢を並べ替え、平均順位と匿名分布を見て話します。個別順位は本人だけに表示。',seconds:90},WHO:{name:'この回答、誰でしょう？',rule:'120文字以内の匿名回答を一件ずつ予想。予想締切後に正解を公開して本人が話します。自分の回答への投票は禁止。',seconds:90},BOUNDARY:{name:'みんなの境界線',rule:'お題の単位や両端の意味に沿って数値で回答し、締切後に匿名分布を見ます。名前と数値は紐づけて公開しません。自分の数値を話すかは自由。',seconds:90},QUEST:{name:'共通点クエスト',rule:'チームで対面相談して代表が提出。締切後に公開し、司会が承認します。',seconds:180},CAFE:{name:'架空のカフェ会議',rule:'チームで予算内のカフェ案を相談。代表の下書きは同チームにだけ共有します。好みに正解・不正解はありません。',seconds:180},STORY:{name:'エピソードの持ち主',rule:'見出しと600文字以内の体験談を匿名で提出。一件ずつ読んで予想し、正解後は本人が話します。自分の回答への投票は禁止。',seconds:180},TIER:{name:'みんなのTier会議',rule:'選択肢カードをS〜Dへ振り分けます。全員が確定したら一斉公開し、多数派・少数派をきっかけに話します。順位や正解はありません。',seconds:600},RATING:{name:'一流格付けチェック',rule:'A・Bを見比べて一流だと思う方を選びます。全員の回答後、二つの待機室と扉の演出で結果を発表。不正解でランクが下がります。',seconds:45}};
 export const teamGame=g=>['QUEST','CAFE'].includes(g);
 export const guessGame=g=>['WHO','STORY'].includes(g);
 export const text=(value,max,optional=false)=>{if(typeof value!=='string'||[...value].length>max||(!optional&&!value.trim()))fail('INVALID_ANSWER');return value.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'').trim();};
 export function validateEventQuestion(input){
  if(!input||!games[input.game])fail('BAD_SETTINGS');
  if(input.game==='TIER'){const difficulty=input.difficulty||'気軽';if(!['気軽','ひと工夫','じっくり'].includes(difficulty))fail('BAD_SETTINGS');if(input.enabled!==undefined&&typeof input.enabled!=='boolean')fail('BAD_SETTINGS');const categories=Array.isArray(input.categories)?input.categories.slice(0,8).map(category=>text(category,40)):[];return{...validateTierQuestion(input),difficulty,enabled:input.enabled!==false,categories};}
+ if(input.game==='RATING')return validateRatingQuestion(input);
  const q={id:typeof input.id==='string'&&/^[\w-]{1,80}$/.test(input.id)?input.id:randomUUID(),game:input.game,prompt:text(input.prompt,200),talkPrompt:text(input.talkPrompt,200),difficulty:input.difficulty||'気軽',enabled:input.enabled!==false};
  if(!['気軽','ひと工夫','じっくり'].includes(q.difficulty))fail('BAD_SETTINGS');
  if(q.game==='VALUES'){
@@ -28,9 +31,10 @@ export function validateEventQuestion(input){
  }
  return q;
 }
-export const eventQuestions=[...JSON.parse(readFileSync(new URL('../../data/event-questions.json',import.meta.url))).map(validateEventQuestion),...builtinTierThemes];
-export function questionsFor(event,gameId){return event.questions.filter(q=>q.game===gameId&&q.enabled&&(!event.options.difficulty||event.options.difficulty==='すべて'||q.difficulty===event.options.difficulty));}
+export const eventQuestions=[...JSON.parse(readFileSync(new URL('../../data/event-questions.json',import.meta.url))).map(validateEventQuestion),...builtinTierThemes,...builtinRatingQuestions];
+export function questionsFor(event,gameId){return event.questions.filter(q=>q.game===gameId&&q.enabled&&(!event.options.difficulty||event.options.difficulty==='すべて'||q.difficulty===event.options.difficulty)&&(gameId!=='RATING'||event.options.category==='すべて'||q.category===event.options.category));}
 export function optionsFor(gameId,input={}){
- if(!games[gameId])fail('BAD_SETTINGS');const o={roundLimit:input.roundLimit??(guessGame(gameId)||gameId==='TIER'?1:3),itemLimit:input.itemLimit??(gameId==='STORY'?4:6),seconds:input.seconds??games[gameId].seconds,guessSeconds:input.guessSeconds??45,teamCount:input.teamCount??2,difficulty:input.difficulty??'すべて'};
- if(!Number.isInteger(o.itemLimit)||o.itemLimit<1||o.itemLimit>15||!Number.isInteger(o.roundLimit)||o.roundLimit<1||o.roundLimit>15||!Number.isInteger(o.seconds)||o.seconds<30||o.seconds>600||!Number.isInteger(o.guessSeconds)||o.guessSeconds<30||o.guessSeconds>600||!Number.isInteger(o.teamCount)||o.teamCount<2||o.teamCount>4||!['すべて','気軽','ひと工夫','じっくり'].includes(o.difficulty))fail('BAD_SETTINGS');return o;
+ if(!games[gameId])fail('BAD_SETTINGS');const o={roundLimit:input.roundLimit??(guessGame(gameId)||gameId==='TIER'?1:3),itemLimit:input.itemLimit??(gameId==='STORY'?4:6),seconds:input.seconds??games[gameId].seconds,guessSeconds:input.guessSeconds??45,teamCount:input.teamCount??2,difficulty:input.difficulty??'すべて'};if(gameId==='RATING')o.category=input.category??'すべて';
+ if(!Number.isInteger(o.itemLimit)||o.itemLimit<1||o.itemLimit>15||!Number.isInteger(o.roundLimit)||o.roundLimit<1||o.roundLimit>(gameId==='RATING'?12:15)||!Number.isInteger(o.seconds)||o.seconds<30||o.seconds>600||!Number.isInteger(o.guessSeconds)||o.guessSeconds<30||o.guessSeconds>600||!Number.isInteger(o.teamCount)||o.teamCount<2||o.teamCount>4||!['すべて','気軽','ひと工夫','じっくり'].includes(o.difficulty))fail('BAD_SETTINGS');
+ if(gameId==='RATING'&&!['すべて',...RATING_CATEGORIES].includes(o.category))fail('BAD_SETTINGS');return o;
 }

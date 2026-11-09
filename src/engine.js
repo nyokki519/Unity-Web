@@ -43,7 +43,7 @@ export class GameEngine {
     this.rooms.set(code,room);const session=this.join(code,name);room.hostId=session.playerId;this.changed(room);return session;
   }
   join(code,name) {
-    const room=this.get(code);if(Object.values(room.players).filter(p=>!p.left).length>=24) fail('ROOM_FULL');
+    const room=this.get(code);if(Object.values(room.players).filter(p=>!p.left).length>=(room.settings.eventGame==='RATING'?10:24)) fail('ROOM_FULL');
     const base=validName(name);const names=Object.values(room.players).map(p=>p.name);let final=base,n=2;
     while(names.includes(final)) final=`${base} · ${n++}`;
     const token=randomBytes(32).toString('hex'),id=randomUUID();
@@ -108,7 +108,7 @@ export class GameEngine {
           if(room.phase!=='LOBBY') fail('NOT_LOBBY');
           const online=Object.values(room.players).filter(p=>p.connected&&!p.left);
           if(online.length<2)fail('NEED_PLAYERS');if(online.some(p=>!p.ready)) fail('NOT_READY');
-          if(room.settings.eventGame==='TIER'&&online.length>10)fail('ROOM_FULL');
+          if(['TIER','RATING'].includes(room.settings.eventGame)&&online.length>10)fail('ROOM_FULL');
           room.history=[];room.used=[];room.index=0;room.startedAt=this.now();room.endedAt=null;if(room.settings.eventGame){room.round=null;room.event=createEvent(room.settings.eventGame,room.settings.eventOptions);room.phase='EVENT';}else {room.event=null;this.beginRound(room);}break;
         }
         case 'reveal': if(room.phase!=='ANSWER'||room.paused)fail('NOT_ANSWERING');this.reveal(room);break;
