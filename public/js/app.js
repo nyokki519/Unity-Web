@@ -1,5 +1,5 @@
 import {updateCpuNotice} from './cpu.js';
-import {eventScreen,updateEventScreen} from './events/screen.js?v=tier-board-v4';
+import {eventScreen,updateEventScreen} from './events/screen.js?v=tier-board-v5';
 import {acknowledgementMessage} from './events/status.js';
 import {$,el,button,modal,toast,title} from './dom.js';
 import {Realtime,api} from './realtime.js';
