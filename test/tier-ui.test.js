@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {summarizeTierBoards,validateTierBoard} from '../public/js/events/tier.js';
+import {readFile} from 'node:fs/promises';
 
 const items=[{id:'a',label:'眉毛'},{id:'b',label:'靴'}];
+const screen=await readFile(new URL('../public/js/events/screen.js',import.meta.url),'utf8');
 test('board validation requires each item exactly once in a known tier',()=>{
  assert.equal(validateTierBoard(items,{a:'S',b:'D'}),true);
  assert.equal(validateTierBoard(items,{S:['a'],A:[],B:[],C:[],D:['b']}),true);
@@ -29,4 +31,9 @@ test('server row-array tier answers are accepted and aggregated in the same publ
  assert.equal(validateTierBoard(items,answer),true);
  const summary=summarizeTierBoards(items,[{playerId:'1',tiers:answer},{playerId:'2',tiers:{S:['a'],A:['b'],B:[],C:[],D:[]}}]);
  assert.equal(summary.items.a.majority,'S');assert.equal(summary.items.b.majority,null);
+});
+
+test('both interactive and already-submitted Tier screens mount the returned DOM element, not its controller object',()=>{
+ assert.match(screen,/createTierBoard\(\{items:e\.question\.items,onSubmit:value=>send\('event_answer',\{value\}\)\}\)\.element/);
+ assert.match(screen,/createTierBoard\(\{items:e\.question\.items,initial:value\.tiers\|\|value,disabled:true\}\)\.element/);
 });

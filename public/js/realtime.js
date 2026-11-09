@@ -17,6 +17,7 @@ export class Realtime extends EventTarget {
     socket.addEventListener('error',()=>{});
     socket.addEventListener('close',event=>{
       if(this.socket!==socket||this.stopped)return;
+      this.emit('socket-close',{code:event.code,reason:event.reason||''});
       if(event.code===4001){this.stopped=true;this.emit('connection','other-tab');this.emit('error',{code:'OTHER_TAB',message:'同じ参加情報で別のタブが開かれました。このタブを使う場合は「再接続」を押してください。'});return;}
       this.emit('connection','offline');
       this.timer=setTimeout(()=>this.open(),Math.min(8000,700*2**this.retry++)+Math.random()*300);

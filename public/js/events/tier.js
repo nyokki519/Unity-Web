@@ -3,7 +3,7 @@ import {el,button} from '../dom.js';
 export const TIER_ORDER=Object.freeze(['S','A','B','C','D']);
 const TIER_LABELS=Object.freeze({S:'最高',A:'かなり好き',B:'いいね',C:'ふつう',D:'自分には合わない'});
 let cssRequested=false;
-export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v2';document.head.append(link);}
+export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v3';document.head.append(link);}
 const escapeText=value=>String(value??'');
 function normalizeBoard(items,value={}){const result={};if(TIER_ORDER.some(t=>Array.isArray(value[t]))){for(const tier of TIER_ORDER)for(const id of value[tier]||[])result[String(id)]=tier;return result;}for(const item of items){const tier=value[String(item.id)];if(TIER_ORDER.includes(tier))result[String(item.id)]=tier;}return result;}
 function boardRows(items,tiers){const result=Object.fromEntries(TIER_ORDER.map(tier=>[tier,[]]));for(const item of items){const tier=tiers[String(item.id)];if(result[tier])result[tier].push(String(item.id));}return result;}
