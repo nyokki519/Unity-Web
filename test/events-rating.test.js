@@ -15,7 +15,8 @@ test('RATING question schema and room options validate original A/B assets and b
 
 test('RATING keeps answer key private through CLOSED and synchronized REVEAL, then scores and ranks at TALK',()=>{
  const f=fixture(3,'RATING');try{
-  f.cmd('event_begin');let view=f.engine.view(f.room,f.host.playerId).event,q=f.room.event.question;
+  let view=f.engine.view(f.room,f.host.playerId).event;assert.ok(view.questions.length);assert.ok(view.questions.every(row=>row.correct===undefined&&row.explanation===undefined&&row.source===undefined),'host question picker must not disclose answer keys');
+  f.cmd('event_begin');view=f.engine.view(f.room,f.host.playerId).event;const q=f.room.event.question;
   assert.equal(view.phase,'ANSWER');assert.equal(view.question.correct,undefined);assert.equal(view.question.explanation,undefined);
   const choices=['A','B','A'];for(let i=0;i<3;i++)f.cmd('event_answer',{value:{choice:choices[i]}},f.sessions[i]);
   assert.equal(f.room.event.phase,'CLOSED');view=f.engine.view(f.room,f.host.playerId).event;
