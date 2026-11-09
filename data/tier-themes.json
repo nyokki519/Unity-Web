@@ -1,0 +1,245 @@
+[
+  {
+    "id": "style-cost-performance",
+    "title": "かっこよくなるためのコスパ",
+    "description": "自分が変化を感じやすい身だしなみを、費用対効果で考えよう。",
+    "prompt": "かっこよくなるためのコスパTier表",
+    "categories": ["美容・身だしなみ", "おしゃれ"],
+    "items": [
+      { "id": "eyebrows", "label": "眉毛を整える" },
+      { "id": "glasses", "label": "似合うメガネを選ぶ" },
+      { "id": "shoes", "label": "靴を手入れする" },
+      { "id": "clothes", "label": "サイズの合う服を着る" },
+      { "id": "hair", "label": "髪型を整える" },
+      { "id": "skincare", "label": "肌をケアする" },
+      { "id": "teeth", "label": "歯並びを整える" }
+    ]
+  },
+  {
+    "id": "convenience-sweets",
+    "title": "コンビニスイーツ定番",
+    "description": "つい買いたくなる定番スイーツを、満足度で並べよう。",
+    "prompt": "コンビニスイーツ定番Tier表",
+    "categories": ["食べ物", "スイーツ"],
+    "items": [
+      { "id": "pudding", "label": "プリン" },
+      { "id": "cream-puff", "label": "シュークリーム" },
+      { "id": "roll-cake", "label": "ロールケーキ" },
+      { "id": "cheesecake", "label": "チーズケーキ" },
+      { "id": "mont-blanc", "label": "モンブラン" },
+      { "id": "daifuku", "label": "大福" },
+      { "id": "warabi-mochi", "label": "わらび餅" },
+      { "id": "yokan", "label": "ようかん" }
+    ]
+  },
+  {
+    "id": "cafe-drinks",
+    "title": "カフェで頼みたい飲み物",
+    "description": "気分や季節で変わる、カフェの一杯の好みを比べよう。",
+    "prompt": "カフェで頼みたい飲み物Tier表",
+    "categories": ["カフェ", "飲み物"],
+    "items": [
+      { "id": "drip-coffee", "label": "ドリップコーヒー" },
+      { "id": "latte", "label": "カフェラテ" },
+      { "id": "tea", "label": "紅茶" },
+      { "id": "matcha", "label": "抹茶ラテ" },
+      { "id": "cocoa", "label": "ココア" },
+      { "id": "lemonade", "label": "レモネード" },
+      { "id": "seasonal", "label": "季節限定ドリンク" }
+    ]
+  },
+  {
+    "id": "first-date",
+    "title": "初デートで行きたい場所",
+    "description": "緊張しすぎず、お互いのことを知れそうな場所を選ぼう。",
+    "prompt": "初デートで行きたい場所Tier表",
+    "categories": ["恋愛", "おでかけ"],
+    "items": [
+      { "id": "cafe-date", "label": "落ち着いたカフェ" },
+      { "id": "park-date", "label": "公園を散歩" },
+      { "id": "museum-date", "label": "美術館・博物館" },
+      { "id": "aquarium-date", "label": "水族館" },
+      { "id": "lunch-date", "label": "ランチのお店" },
+      { "id": "bookstore-date", "label": "本屋や雑貨屋" },
+      { "id": "festival-date", "label": "お祭り・イベント" }
+    ]
+  },
+  {
+    "id": "partner-qualities",
+    "title": "一緒に過ごす相手に大切なこと",
+    "description": "人それぞれの心地よさが見える、正解のないテーマです。",
+    "prompt": "パートナーに大切にしたいことTier表",
+    "categories": ["恋愛", "価値観"],
+    "items": [
+      { "id": "honesty", "label": "素直に話せる" },
+      { "id": "humor", "label": "笑いのツボが合う" },
+      { "id": "space", "label": "ひとりの時間を尊重する" },
+      { "id": "money-talk", "label": "お金の感覚が近い" },
+      { "id": "food-talk", "label": "食の好みが近い" },
+      { "id": "support", "label": "困ったときに支え合える" },
+      { "id": "curiosity", "label": "新しいことを一緒に楽しめる" }
+    ]
+  },
+  {
+    "id": "rice-bowl-toppings",
+    "title": "ごはんに合う定番トッピング",
+    "description": "毎日のごはんをちょっと楽しくする組み合わせ。",
+    "prompt": "ごはんに合うトッピングTier表",
+    "categories": ["食べ物", "ごはん"],
+    "items": [
+      { "id": "natto", "label": "納豆" },
+      { "id": "raw-egg", "label": "生卵" },
+      { "id": "furikake", "label": "ふりかけ" },
+      { "id": "kimchi", "label": "キムチ" },
+      { "id": "mentaiko", "label": "明太子" },
+      { "id": "shirasu", "label": "しらす" },
+      { "id": "pickles", "label": "漬物" },
+      { "id": "nori", "label": "海苔" }
+    ]
+  },
+  {
+    "id": "hobby-start",
+    "title": "気軽に始めて楽しい趣味",
+    "description": "これから新しいことを始めるなら、何が自分に合いそう？",
+    "prompt": "気軽に始めて楽しい趣味Tier表",
+    "categories": ["趣味", "暮らし"],
+    "items": [
+      { "id": "reading", "label": "読書" },
+      { "id": "cooking", "label": "料理" },
+      { "id": "walking", "label": "散歩" },
+      { "id": "photography", "label": "スマホ写真" },
+      { "id": "plants", "label": "植物を育てる" },
+      { "id": "fitness", "label": "軽い運動" },
+      { "id": "sketching", "label": "スケッチ" },
+      { "id": "coffee", "label": "コーヒーを淹れる" }
+    ]
+  },
+  {
+    "id": "movie-night",
+    "title": "休日に観たい映画ジャンル",
+    "description": "その日の気分や、一緒に観る人を思い浮かべて選ぼう。",
+    "prompt": "休日に観たい映画ジャンルTier表",
+    "categories": ["趣味", "映画"],
+    "items": [
+      { "id": "comedy", "label": "コメディ" },
+      { "id": "mystery", "label": "ミステリー" },
+      { "id": "animation", "label": "アニメーション" },
+      { "id": "documentary", "label": "ドキュメンタリー" },
+      { "id": "romance", "label": "恋愛もの" },
+      { "id": "action", "label": "アクション" },
+      { "id": "scifi", "label": "SF・ファンタジー" }
+    ]
+  },
+  {
+    "id": "travel-style",
+    "title": "旅行でやりたいこと",
+    "description": "旅先での時間の使い方に、好みの違いが出るテーマ。",
+    "prompt": "旅行でやりたいことTier表",
+    "categories": ["旅行", "おでかけ"],
+    "items": [
+      { "id": "local-food", "label": "地元のごはんを食べる" },
+      { "id": "scenery", "label": "景色を見に行く" },
+      { "id": "museum", "label": "歴史や文化に触れる" },
+      { "id": "onsen", "label": "温泉でゆっくりする" },
+      { "id": "shopping", "label": "街や市場を歩く" },
+      { "id": "activity", "label": "体験・アクティビティ" },
+      { "id": "hotel", "label": "宿でのんびり過ごす" }
+    ]
+  },
+  {
+    "id": "trip-companion",
+    "title": "旅行の移動時間にうれしいもの",
+    "description": "移動中の過ごし方から、旅のペースを話してみよう。",
+    "prompt": "旅行の移動時間にうれしいものTier表",
+    "categories": ["旅行", "過ごし方"],
+    "items": [
+      { "id": "window", "label": "窓から景色を見る" },
+      { "id": "snacks", "label": "おやつを楽しむ" },
+      { "id": "music", "label": "音楽を聴く" },
+      { "id": "sleep", "label": "眠って休む" },
+      { "id": "conversation", "label": "一緒におしゃべり" },
+      { "id": "games", "label": "ゲームや動画" },
+      { "id": "planning", "label": "次の予定を調べる" }
+    ]
+  },
+  {
+    "id": "work-environment",
+    "title": "働く環境でうれしいこと",
+    "description": "仕事の正解を決めず、自分が力を出しやすい条件を考えよう。",
+    "prompt": "働く環境でうれしいことTier表",
+    "categories": ["仕事", "価値観"],
+    "items": [
+      { "id": "flex-time", "label": "時間の融通がきく" },
+      { "id": "team", "label": "相談しやすいチーム" },
+      { "id": "quiet", "label": "集中できる静かな場所" },
+      { "id": "challenge", "label": "新しい挑戦ができる" },
+      { "id": "stability", "label": "安定した働き方" },
+      { "id": "remote", "label": "場所を選ばず働ける" },
+      { "id": "feedback", "label": "成長につながる振り返り" }
+    ]
+  },
+  {
+    "id": "work-break",
+    "title": "仕事や勉強の休憩でリセットできること",
+    "description": "短い休憩の過ごし方は、人によってかなり違うかも。",
+    "prompt": "休憩でリセットできることTier表",
+    "categories": ["仕事", "休息"],
+    "items": [
+      { "id": "coffee-break", "label": "飲み物を買いに行く" },
+      { "id": "stretch", "label": "体を伸ばす" },
+      { "id": "fresh-air", "label": "外の空気を吸う" },
+      { "id": "chat", "label": "誰かと少し話す" },
+      { "id": "music-break", "label": "好きな曲を聴く" },
+      { "id": "quiet-break", "label": "目を閉じて静かにする" },
+      { "id": "snack-break", "label": "軽く何か食べる" }
+    ]
+  },
+  {
+    "id": "life-spending",
+    "title": "お金をかけてよかったと思うもの",
+    "description": "金額よりも、満足や思い出とのつながりを話そう。",
+    "prompt": "お金をかけてよかったものTier表",
+    "categories": ["人生観", "お金"],
+    "items": [
+      { "id": "travel-memory", "label": "旅行や体験" },
+      { "id": "daily-tool", "label": "毎日使う道具" },
+      { "id": "learning", "label": "学びや資格" },
+      { "id": "health", "label": "健康や休息" },
+      { "id": "relationships", "label": "人との時間" },
+      { "id": "food-experience", "label": "食事やおいしいもの" },
+      { "id": "creative", "label": "創作や趣味の道具" }
+    ]
+  },
+  {
+    "id": "ideal-weekend",
+    "title": "理想の休日の過ごし方",
+    "description": "朝から夜までの休日を想像して、優先したい時間を並べよう。",
+    "prompt": "理想の休日の過ごし方Tier表",
+    "categories": ["人生観", "休日"],
+    "items": [
+      { "id": "sleep-in", "label": "ゆっくり起きる" },
+      { "id": "outdoor", "label": "外へ出かける" },
+      { "id": "friends", "label": "友達と会う" },
+      { "id": "home", "label": "家でのんびりする" },
+      { "id": "hobby-time", "label": "趣味に集中する" },
+      { "id": "good-meal", "label": "おいしいものを食べる" },
+      { "id": "small-adventure", "label": "初めての場所へ行く" }
+    ]
+  },
+  {
+    "id": "friendship-values",
+    "title": "友達との関係で心地よいこと",
+    "description": "距離感や連絡の好みを、気軽に比べてみよう。",
+    "prompt": "友達との関係で心地よいことTier表",
+    "categories": ["人間関係", "価値観"],
+    "items": [
+      { "id": "frequent-contact", "label": "こまめに連絡を取る" },
+      { "id": "spontaneous", "label": "急な誘いにも乗る" },
+      { "id": "deep-talk", "label": "深い話もできる" },
+      { "id": "shared-hobby", "label": "一緒に楽しむ趣味がある" },
+      { "id": "comfortable-silence", "label": "無言でも気まずくない" },
+      { "id": "honest-feedback", "label": "率直な意見を言い合える" },
+      { "id": "long-gap", "label": "久しぶりでも自然に話せる" }
+    ]
+  }
+]
