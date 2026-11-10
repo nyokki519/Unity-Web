@@ -166,6 +166,14 @@ test('online app exposes room creation and waits on server state instead of faki
   assert.match(renderApp(app.state),/0421/);assert.match(renderApp(app.state),/参加者を待っています/);assert.match(renderApp(app.state),/data-action="start-online" disabled/);
 });
 
+test('accepting an online ready action remains in the lobby until the server starts a match',async()=>{
+ let state={code:'5317',selfSeat:0,hostSeat:0,phase:'LOBBY',revision:1,players:[{seat:0,name:'Player',ready:false,connected:true}]};
+ let app;const online={status:'connected',get state(){return state;},async setReady(ready){state={...state,revision:state.revision+1,players:state.players.map((p,i)=>i===0?{...p,ready}:p)};app.setOnlineState(state);return{ok:true};}};
+ const [,{createApp,renderApp}]=await load();app=createApp({online});app.selectCharacter('moka');await app.selectMode('online');app.setOnlineState(state);
+ await app.setReady(true);
+ assert.equal(state.phase,'LOBBY');assert.equal(app.state.screen,'lobby');assert.match(renderApp(app.state),/待合室から退出/);assert.match(renderApp(app.state),/準備を取り消す/);assert.doesNotMatch(renderApp(app.state),/東1局/);
+});
+
 test('online lobby only enables the host start action after four players are ready', async () => {
   const [, {renderApp}] = await load();
   const state={screen:'lobby',characterId:'moka',connection:'connected',onlineState:{code:'1234',selfSeat:0,phase:'LOBBY',players:[0,1,2,3].map(seat=>({seat,name:`P${seat}`,ready:seat<3,connected:true}))}};

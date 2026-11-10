@@ -8,7 +8,7 @@ export function createApp({ cpu = createCpuGame(), online = null, sound = create
   const state = { screen:'character', characterId:null, mode:'cpu', view:null, onlineState:null, connection:online?.status||'idle', selectedTile:null, moment:'idle', muted:true, soundAvailable:sound.available, reducedMotion:false, tutorial:false, busy:false, error:'' };
   const changed = () => onChange(state);
   const updateMoment = view => {const duplicate=state.view&&state.view.revision===view?.revision&&state.view.phase===view?.phase;if(duplicate)return;state.moment=transitionMoment(state.view,view,view?.selfSeat??0)||'idle';if(state.moment!=='idle'&&!state.muted)sound.cue(state.moment);};
-  const receive = view => { updateMoment(view);state.view = view; state.screen = view.phase === 'MATCH_RESULT' ? 'result' : 'table'; state.selectedTile = null; };
+  const receive = view => { updateMoment(view);state.view = view; state.screen = view.phase === 'MATCH_RESULT' ? 'result' : view.phase === 'LOBBY' ? 'lobby' : 'table'; state.selectedTile = null; };
   async function perform(work) { if (state.busy) return; state.busy = true; state.error = ''; changed(); try { receive(await work()); } catch (error) { state.error = error.message; } finally { state.busy = false; changed(); } }
   const app = {
     state,

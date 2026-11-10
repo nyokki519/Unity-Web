@@ -35,7 +35,7 @@ npm start
 
 ## 確認記録
 
-- `npm test`: 641 tests passed, 0 failed in the 2026-11-10 reference-upgrade pass. Tests that bind local TCP ports require an execution environment that permits loopback listeners.
+- `npm test`: 642 tests passed, 0 failed in the 2026-11-10 reference-upgrade pass. Tests that bind local TCP ports require an execution environment that permits loopback listeners.
 - Chromium 390×844: キャラクター選択、CPU対局開始、実打牌、CPU応答を確認。
 - Chromium 375/390/414px: 4枚の新規立ち絵が768×960で読み込まれ、横はみ出しなし。390pxのCPU対局中の48×58アバターにも顔が収まる。
 - Chromiumの4ブラウザ: ルーム作成・3人参加・全員準備・開始を確認。各ブラウザに自分の手牌のみ表示されることを確認。
@@ -46,4 +46,5 @@ npm start
 - Chromium 375/390/414px: 改修後の対局盤、手牌、河、副露、打牌演出を確認。ページ幅は各ビューポートと一致し、手牌は画面幅に押しつぶされず横スクロール（[375px](../qa/mahjong-reference-upgrade/mahjong-updated-375.png)、[390px](../qa/mahjong-reference-upgrade/mahjong-updated-390.png)、[414px](../qa/mahjong-reference-upgrade/mahjong-updated-414.png)、[打牌演出](../qa/mahjong-reference-upgrade/mahjong-moment-discard-390.png)）。
 - Chromiumの4ブラウザで、ルーム作成・4席参加・準備・開始・打牌同期を確認。各プレイヤーは自分の手牌のみを受け取り、他席には伏せ牌を表示（[4人対局](../qa/mahjong-reference-upgrade/mahjong-online-390.png)）。サービス・サーバービューの自動テストでもツモ牌の秘匿を確認。
 - 本番URLで更新済みJS/CSS/SVG・Service Worker v60をHTTP確認。390px相当でCPU対局開始・打牌・CPU応答、横幅390px、ブラウザーエラーなしを確認（[本番CPU対局](../qa/mahjong-reference-upgrade/mahjong-production-390.png)）。
+- 本番待合室の準備後に待合室から対局画面へ誤遷移する問題を確認。LOBBY受信時の画面判定を直し、準備済み表示と4人待機が続く回帰テストを追加。
 - CPUの300戦シード付きストレステスト: 132,792手順・2,038局を実行。平均442.6手順・6.79局、最短163・最長1,011手順。5,319回の鳴き候補を含め、全遷移で合法アクション・revision増加・終局・持ち点合計100,000点を確認。流局は36.3%。これはループ・合法性・点数保存の確認で、CPUの強さや実戦勝率の評価ではありません。実機iPhone Safariと実機音声の主観評価は未実施。

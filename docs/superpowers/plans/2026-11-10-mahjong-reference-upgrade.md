@@ -52,10 +52,11 @@
 
 **Files:** Update `public/sw.js` cache revision, browser-check artifact under `docs/qa/`, and this plan's completion marks.
 
-- [x] Run all Mahjong test files, `npm test` (641 passed), `git diff --check`, and cache validation. Full suite needs permission to bind loopback TCP ports.
+- [x] Run all Mahjong test files, `npm test` (642 passed), `git diff --check`, and cache validation. Full suite needs permission to bind loopback TCP ports.
 - [x] Capture and inspect 375/390/414px browser views; confirm page width and tile scrolling.
 - [x] Review diff for copied reference material and hidden-information access; document upstream license/dependency findings in `docs/mahjong/REFERENCE_REVIEW.md`.
 - [x] Add regressions for hidden future kan-dora, called-river double counting, pre-riichi genbutsu, no-yaku open tenpai, malformed tile-label escaping, drawn-tile privacy, and duplicate online state effects.
 - [x] Exercise four simultaneous browser clients through room setup, ready, deal, and discard synchronization; check concealed-hand privacy.
+- [x] Production smoke uncovered a lobby-ready screen-routing bug; preserve `LOBBY` in the shared command receive path and add a regression test.
 - [x] Run 300 seeded CPU matches (132,792 transitions, 2,038 hands); all returned legal actions, increased revisions, terminated and conserved total points.
 - [x] Record exact test totals, screenshots, remaining limits and deployment state. Published to `main` as `3f697b8`; Render served the new assets and passed a 390px production CPU-turn smoke check.
