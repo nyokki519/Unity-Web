@@ -22,7 +22,8 @@ function canWin(match, seat, tile, winType, flags={}) {
   const concealed=winType==='tsumo'?player.hand:[...player.hand,tile];
   if(!isCompleteHand(concealed,player.melds))return false;
   const riverFuriten=winType==='ron'&&[...Array(34).keys()].some(type=>player.discards.some(d=>tileType(d.tile)===type)&&isCompleteHand([...player.hand,type],player.melds));
-  return !!evaluateYaku({...makeContext(match,seat,tile,winType,flags),concealed,furiten:riverFuriten||player.furiten,temporaryFuriten:player.temporaryFuriten,riichiFuriten:player.riichiFuriten});
+  const result=evaluateYaku({...makeContext(match,seat,tile,winType,flags),concealed,furiten:riverFuriten||player.furiten,temporaryFuriten:player.temporaryFuriten,riichiFuriten:player.riichiFuriten});
+  return flags.kokushiOnly?!!result?.yaku.some(yaku=>yaku.id==='kokushi'):!!result;
 }
 function makeMeldChoices(hand, calledTile, kind) {
   const type=tileType(calledTile), choices=[];
@@ -43,6 +44,22 @@ function makeMeldChoices(hand, calledTile, kind) {
   return choices;
 }
 function tileFromType(wall,type){const i=wall.findIndex(t=>tileType(t)===type);return i<0?null:wall.splice(i,1)[0];}
+function waitingTypes(hand,melds){
+  const waits=[];
+  for(let type=0;type<34;type++){
+    if(countType([...hand,...melds.flatMap(m=>m.tiles)],type)>=4)continue;
+    if(isCompleteHand([...hand,type],melds))waits.push(type);
+  }
+  return waits;
+}
+function canDeclareRiichiAnkan(player,drawnTile,tiles){
+  if(drawnTile===null||drawnTile===undefined||!tiles.some(tile=>tile===drawnTile)||tiles.length!==4)return false;
+  const before=[...player.hand],drawIndex=before.indexOf(drawnTile);if(drawIndex<0)return false;before.splice(drawIndex,1);
+  const type=tileType(tiles[0]);if(type<0||tiles.some(tile=>tileType(tile)!==type))return false;
+  const after=[...player.hand];for(const tile of tiles){const index=after.indexOf(tile);if(index<0)return false;after.splice(index,1);}
+  const kan={type:'kan',tiles:[...tiles],open:false},beforeWaits=waitingTypes(before,player.melds),afterWaits=waitingTypes(after,[...player.melds,kan]);
+  return beforeWaits.length>0&&beforeWaits.length===afterWaits.length&&beforeWaits.every((wait,index)=>wait===afterWaits[index]);
+}
 function validDiscardAction(match,seat,action){
   const player=match.players[seat];
   if(action.type==='discard')return player.hand.includes(action.tile);
@@ -72,7 +89,8 @@ function discard(match,seat,action,now){
 }
 function legalReactionActions(match,seat){
   const {tile,seat:from}=match.lastDiscard,player=match.players[seat],actions=[{type:'pass'}];
-  if(canWin(match,seat,tile,'ron',{houtei:match.liveWall.length===0,chankan:!!match.pendingKan}))actions.push({type:'ron'});
+  const ankanRob=match.pendingKan?.kind==='ankan',flags={houtei:match.liveWall.length===0,chankan:!!match.pendingKan,...(ankanRob?{kokushiOnly:true}:{})};
+  if(canWin(match,seat,tile,'ron',flags))actions.push({type:'ron'});
   if(match.pendingKan)return actions;
   if(player.riichi)return actions;
   for(const kind of ['pon','kan','chi']){
@@ -112,7 +130,7 @@ function resolveReactions(match,now){
   for(const seat of match.reactionSeats)if(match.responses[seat]?.type==='pass'&&legalReactionActions(match,seat).some(action=>action.type==='ron')){
     match.players[seat].temporaryFuriten=true;if(match.players[seat].riichi)match.players[seat].riichiFuriten=true;
   }
-  if(match.pendingKan){const pending=match.pendingKan,player=match.players[pending.seat],meld=player.melds[pending.meldIndex];meld.tiles.push(pending.tile);meld.type='kan';match.pendingKan=null;match.lastDiscard=null;match.responses={};match.reactionSeats=[];replacementDraw(match,pending.seat,now);return;}
+  if(match.pendingKan){const pending=match.pendingKan,player=match.players[pending.seat];if(pending.kind==='ankan'){for(const tile of pending.tiles)player.hand.splice(player.hand.indexOf(tile),1);player.melds.push({type:'kan',tiles:[...pending.tiles],open:false});}else{const meld=player.melds[pending.meldIndex];meld.tiles.push(pending.tile);meld.type='kan';}match.pendingKan=null;match.lastDiscard=null;match.responses={};match.reactionSeats=[];match.drawnTile=null;replacementDraw(match,pending.seat,now);return;}
   const claims=match.reactionSeats.map(seat=>({seat,action:match.responses[seat]})).filter(v=>['pon','kan','chi'].includes(v.action.type));
   claims.sort((a,b)=>(({kan:0,pon:0,chi:1}[a.action.type]??2)-({kan:0,pon:0,chi:1}[b.action.type]??2))||(((a.seat-match.lastDiscard.seat+4)%4)-((b.seat-match.lastDiscard.seat+4)%4)));
   if(claims.length){const {seat,action}=claims[0],player=match.players[seat],tiles=[...action.tiles];if(!sameTiles(player.hand,tiles)){delete match.responses[seat];return;}
@@ -189,8 +207,8 @@ export function legalActions(match,seat){
   if(match.phase==='DISCARD'&&match.activeSeat===seat){const player=match.players[seat],actions=(player.riichi?[match.drawnTile]:player.hand).map(tile=>({type:'discard',tile}));
     if(!player.riichi&&!player.melds.some(m=>m.open)&&player.points>=1000){for(const tile of new Set(player.hand))if(validDiscardAction(match,seat,{type:'riichi_discard',tile}))actions.push({type:'riichi_discard',tile});}
     if(canWin(match,seat,match.drawnTile,'tsumo',{haitei:match.liveWall.length===0,rinshan:match.rinshanSeat===seat}))actions.push({type:'tsumo'});
-    if(!player.riichi){const grouped=new Map();for(const tile of player.hand){const type=tileType(tile);if(!grouped.has(type))grouped.set(type,[]);grouped.get(type).push(tile);}for(const tiles of grouped.values())if(tiles.length===4)actions.push({type:'ankan',tiles:[...tiles]});
-      for(let meldIndex=0;meldIndex<player.melds.length;meldIndex++){const meld=player.melds[meldIndex];if(meld.type!=='pon'||!meld.open)continue;const type=tileType(meld.tiles[0]),tile=player.hand.find(value=>tileType(value)===type);if(tile!==undefined)actions.push({type:'kakan',tile,meldIndex});}}
+    const grouped=new Map();for(const tile of player.hand){const type=tileType(tile);if(!grouped.has(type))grouped.set(type,[]);grouped.get(type).push(tile);}for(const tiles of grouped.values())if(tiles.length===4&&(!player.riichi||canDeclareRiichiAnkan(player,match.drawnTile,tiles)))actions.push({type:'ankan',tiles:[...tiles]});
+    if(!player.riichi)for(let meldIndex=0;meldIndex<player.melds.length;meldIndex++){const meld=player.melds[meldIndex];if(meld.type!=='pon'||!meld.open)continue;const type=tileType(meld.tiles[0]),tile=player.hand.find(value=>tileType(value)===type);if(tile!==undefined)actions.push({type:'kakan',tile,meldIndex});}
     return actions;
   }
   if(match.phase==='REACTION'&&match.reactionSeats.includes(seat)&&!match.responses[seat])return legalReactionActions(match,seat);
@@ -204,8 +222,8 @@ export function applyAction(current,seat,action,expectedRevision,now=Date.now())
   if(!allowed.some(candidate=>candidate.type===key&&(key==='discard'||key==='riichi_discard'||key==='kakan'?candidate.tile===action.tile&&(key!=='kakan'||candidate.meldIndex===action.meldIndex):key==='chi'||key==='pon'||key==='kan'||key==='ankan'?JSON.stringify(candidate.tiles)===JSON.stringify(action.tiles):true)))throw new Error('Illegal action');
   if(match.phase==='DISCARD'){
     if(action.type==='tsumo')finishHand(match,{type:'win',winner:seat,loser:null,winType:'tsumo',tile:match.drawnTile},now);
-    else if(action.type==='ankan'){const player=match.players[seat];for(const tile of action.tiles)player.hand.splice(player.hand.indexOf(tile),1);player.melds.push({type:'kan',tiles:[...action.tiles],open:false});for(const p of match.players)p.ippatsu=false;match.drawnTile=null;replacementDraw(match,seat,now);}
-    else if(action.type==='kakan'){const player=match.players[seat];player.hand.splice(player.hand.indexOf(action.tile),1);for(const p of match.players)p.ippatsu=false;match.pendingKan={seat,tile:action.tile,meldIndex:action.meldIndex};match.lastDiscard={tile:action.tile,seat,riverIndex:null,kan:true};match.phase='REACTION';match.activeSeat=null;match.responses={};match.reactionSeats=[0,1,2,3].filter(s=>s!==seat);for(const other of match.reactionSeats){const choices=legalReactionActions(match,other);if(choices.length===1)match.responses[other]={type:'pass'};}match.deadlineAt=now+30000;resolveReactions(match,now);}
+    else if(action.type==='ankan'){for(const p of match.players)p.ippatsu=false;match.pendingKan={kind:'ankan',seat,tiles:[...action.tiles],tile:action.tiles[0]};match.lastDiscard={tile:action.tiles[0],seat,riverIndex:null,kan:true};match.phase='REACTION';match.activeSeat=null;match.responses={};match.reactionSeats=[0,1,2,3].filter(s=>s!==seat);for(const other of match.reactionSeats){const choices=legalReactionActions(match,other);if(choices.length===1)match.responses[other]={type:'pass'};}match.deadlineAt=now+30000;resolveReactions(match,now);}
+    else if(action.type==='kakan'){const player=match.players[seat];player.hand.splice(player.hand.indexOf(action.tile),1);for(const p of match.players)p.ippatsu=false;match.pendingKan={kind:'kakan',seat,tile:action.tile,meldIndex:action.meldIndex};match.lastDiscard={tile:action.tile,seat,riverIndex:null,kan:true};match.phase='REACTION';match.activeSeat=null;match.responses={};match.reactionSeats=[0,1,2,3].filter(s=>s!==seat);for(const other of match.reactionSeats){const choices=legalReactionActions(match,other);if(choices.length===1)match.responses[other]={type:'pass'};}match.deadlineAt=now+30000;resolveReactions(match,now);}
     else discard(match,seat,action,now);
   }else{
     match.responses[seat]=clone(action);resolveReactions(match,now);

@@ -63,6 +63,17 @@ test('concealed kan is declared on the table turn and receives a rinshan tile',(
   assert.equal(match.players[0].melds[0].type,'kan');assert.equal(match.players[0].melds[0].open,false);assert.equal(match.players[0].hand.length,11);assert.equal(match.rinshanSeat,0);assert.equal(match.doraIndicators.length,2);
 });
 
+test('a riichi player may declare ankan only when the drawn fourth tile preserves the wait',()=>{
+ let match=createMatch({players,seed:314,now:0});const player=match.players[0];
+ player.hand=[0,0,0,0,9,10,11,18,19,20,27,27,3,4];player.riichi=true;match.drawnTile=0;match.revision++;
+ const action=legalActions(match,0).find(a=>a.type==='ankan');assert.ok(action,'the same 2m/5m wait remains after the concealed kan');
+ match=applyAction(match,0,action,match.revision,1);assert.equal(match.players[0].melds[0].open,false);assert.equal(match.players[0].melds[0].tiles.length,4);assert.equal(match.rinshanSeat,0);
+ match=createMatch({players,seed:315,now:0});match.players[0].hand=[0,0,0,0,9,10,11,18,19,20,27,27,3,4];match.players[0].riichi=true;match.drawnTile=4;match.revision++;
+ assert.equal(legalActions(match,0).some(a=>a.type==='ankan'),false,'a kan not formed by the current draw is not allowed after riichi');
+ match=createMatch({players,seed:316,now:0});match.players[0].hand=[5,5,5,5,33,13,12,18,33,3,11,33,18,4];match.players[0].riichi=true;match.drawnTile=5;match.revision++;
+ assert.equal(legalActions(match,0).some(a=>a.type==='ankan'),false,'a concealed kan that removes a wait is not allowed after riichi');
+});
+
 test('added kan opens chankan reaction and commits only after all ron passes',()=>{
   let match=createMatch({players,seed:514,now:0});match.players[0].hand=[0,2,3,4,5,6,7,8,9,10,11,12,13,33];match.players[0].melds=[{type:'pon',tiles:[0,0,0],open:true}];
   match.players[1].hand=[1,2,9,10,11,18,19,20,21,22,23,15,15];match.players[1].hand.sort((a,b)=>a-b);match.drawnTile=33;match.revision++;
@@ -76,4 +87,16 @@ test('chankan wins on the added tile before the kan commits',()=>{
   match.players[1].hand=[1,2,9,10,11,18,19,20,21,22,23,15,15];match.players[1].hand.sort((a,b)=>a-b);match.drawnTile=33;match.revision++;
   const action=legalActions(match,0).find(a=>a.type==='kakan');match=applyAction(match,0,action,match.revision,1);match=applyAction(match,1,{type:'ron'},match.revision,2);
   assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds[0].type,'pon');
+});
+
+test('kokushi may rob a concealed kan while ordinary waits cannot',()=>{
+ let match=createMatch({players,seed:516,now:0});match.players[0].hand=[0,0,0,0,1,2,3,4,5,6,7,8,9,10];match.drawnTile=0;match.revision++;
+ match.players[1].hand=[0,8,9,17,18,26,27,28,29,30,31,32,33];match.players[1].hand.sort((a,b)=>a-b);match.revision++;
+ const action=legalActions(match,0).find(a=>a.type==='ankan');assert.ok(action);match=applyAction(match,0,action,match.revision,1);
+ assert.equal(match.phase,'REACTION');assert.ok(legalActions(match,1).some(a=>a.type==='ron'));
+ match=applyAction(match,1,{type:'ron'},match.revision,2);assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds.length,0);
+ match=createMatch({players,seed:517,now:0});match.players[0].hand=[0,0,0,0,1,2,3,4,5,6,7,8,9,10];match.drawnTile=0;match.revision++;
+ match.players[1].hand=[1,2,9,10,11,18,19,20,12,13,14,27,27];match.players[1].hand.sort((a,b)=>a-b);match.revision++;
+ const nextAnkan=legalActions(match,0).find(a=>a.type==='ankan');match=applyAction(match,0,nextAnkan,match.revision,1);
+ assert.equal(match.phase,'DISCARD','non-kokushi waits pass the concealed kan automatically');assert.equal(match.players[0].melds[0].type,'kan');
 });
