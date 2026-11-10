@@ -17,7 +17,8 @@ test('RATING keeps answer key private through CLOSED and synchronized REVEAL, th
  const f=fixture(3,'RATING');try{
   let view=f.engine.view(f.room,f.host.playerId).event;assert.ok(view.questions.length);assert.ok(view.questions.every(row=>row.correct===undefined&&row.explanation===undefined&&row.source===undefined),'host question picker must not disclose answer keys');
   f.cmd('event_begin');view=f.engine.view(f.room,f.host.playerId).event;const q=f.room.event.question;
-  assert.equal(view.phase,'ANSWER');assert.equal(view.question.correct,undefined);assert.equal(view.question.explanation,undefined);
+  assert.equal(view.phase,'ANSWER');assert.equal(view.question.correct,undefined);assert.equal(view.question.explanation,undefined);assert.equal(view.question.source,undefined);assert.equal(view.question.provenance,undefined);if(q.source.kind==='original-created')assert.ok(view.question.practiceNotice,'original practice art must be clearly labeled before answering');
+  const verified=eventQuestions.find(row=>row.game==='RATING'&&row.source.kind==='verified-comparison');if(verified){f.room.event.question=verified;const verifiedView=f.engine.view(f.room,f.host.playerId).event.question;assert.equal(verifiedView.practiceNotice,undefined);assert.equal(verifiedView.source,undefined);f.room.event.question=q;}
   const choices=['A','B','A'];for(let i=0;i<3;i++)f.cmd('event_answer',{value:{choice:choices[i]}},f.sessions[i]);
   assert.equal(f.room.event.phase,'CLOSED');view=f.engine.view(f.room,f.host.playerId).event;
   assert.deepEqual(view.distribution,{A:2,B:1});assert.deepEqual(view.waitingRooms.A,['司会','参加者2']);assert.equal(view.question.correct,undefined);

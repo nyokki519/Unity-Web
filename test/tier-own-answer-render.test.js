@@ -91,3 +91,18 @@ test('Tier results provide a per-item matrix across all responding participants'
   assert.ok(nodes.some(node=>node.textContent==='あおい'));
   assert.ok(nodes.some(node=>node.textContent==='はる'));
 }));
+
+test('Tier results surface the most-divided items with exact vote counts and a neutral discussion prompt',()=>withDom(()=>{
+  const items=[{id:'coffee',label:'コーヒー'},{id:'cake',label:'ケーキ'},{id:'tea',label:'紅茶'}],boards=[
+    {playerId:'p1',tiers:{S:['coffee'],A:['cake'],B:['tea'],C:[],D:[]}},
+    {playerId:'p2',tiers:{S:[],A:['coffee','cake'],B:['tea'],C:[],D:[]}},
+    {playerId:'p3',tiers:{S:[],A:[],B:['coffee','cake','tea'],C:[],D:[]}}
+  ];
+  const nodes=descendants(createTierComparison({items,boards,participants:[],participantCount:3}));
+  const section=nodes.find(node=>node.className==='tier-discussion');assert.ok(section);
+  assert.ok(nodes.some(node=>node.textContent==='コーヒー'));
+  assert.ok(nodes.some(node=>node.textContent==='S · 1人'));
+  assert.ok(nodes.some(node=>node.textContent==='A · 1人'));
+  assert.ok(nodes.some(node=>node.textContent==='B · 1人'));
+  assert.ok(nodes.some(node=>node.textContent==='評価が分かれたポイントはどこ？'));
+}));

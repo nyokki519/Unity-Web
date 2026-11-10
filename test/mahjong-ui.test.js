@@ -24,13 +24,13 @@ test('four original characters have exact Japanese names, readings and presentat
   assert.deepEqual(characters.map(c => [c.name, c.reading, c.genderPresentation]), [
     ['星乃 モカ', 'ほしの・もか', 'female'], ['琥珀 すみれ', 'こはく・すみれ', 'female'],
     ['深山 焙真', 'みやま・ほうま', 'male'], ['小野 コナ', 'おの・こな', 'male']]);
-  for (const c of characters) { assert.equal(c.colors.length, 2); assert.ok(c.role); assert.ok(c.greetings.length); assert.ok(c.reactions.result); }
+  for (const c of characters) { assert.equal(c.colors.length, 2); assert.ok(c.role); assert.ok(c.greetings.length); assert.ok(c.reactions.result); assert.match(c.portrait,/^\.\/assets\/.+\.webp$/); const art=await readFile(new URL(`../public/mahjong/${c.portrait.slice(2)}`,import.meta.url)); assert.equal(art.toString('ascii',0,4),'RIFF'); assert.equal(art.toString('ascii',8,12),'WEBP'); assert.equal(art.toString('ascii',12,16),'VP8 '); assert.equal((art.readUInt16LE(26)&0x3fff),768); assert.equal((art.readUInt16LE(28)&0x3fff),960); assert.ok(c.reactions.win); assert.ok(c.reactions.loss); }
 });
 test('selection opens Japanese CPU and friend mode choices', async () => {
   const [, { createApp, renderApp }] = await load(); const app = createApp();
   assert.match(renderApp(app.state), /キャラクターを選ぶ/);
   app.selectCharacter('moka'); assert.equal(app.state.screen, 'mode');
-  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/);
+  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/); assert.match(renderApp(app.state), /assets\/moka\.webp/);
   assert.throws(() => app.selectCharacter('unknown'), /キャラクター/);
 });
 test('friend mode opens a room lobby shell without claiming a connection', async () => {
@@ -40,7 +40,7 @@ test('friend mode opens a room lobby shell without claiming a connection', async
 test('CPU match and legal tile dispatch use supplied engine and reach its result', async () => {
   const [, { createApp, renderApp }, { createCpuGame }] = await load();
   const app = createApp({ cpu: createCpuGame(fixtureEngine()) }); app.selectCharacter('moka'); await app.selectMode('cpu');
-  assert.equal(app.state.screen, 'table'); assert.match(renderApp(app.state), /東一局/);
+  assert.equal(app.state.screen, 'table'); assert.match(renderApp(app.state), /東一局/); assert.match(renderApp(app.state), /table-character/); assert.match(renderApp(app.state), /assets\/moka\.webp/); assert.match(renderApp(app.state), /expression-focus/);
   app.selectTile('p2'); await assert.rejects(() => app.discard(), /選択/);
   app.selectTile('m1'); await app.discard(); assert.equal(app.state.screen, 'result');
   assert.match(renderApp(app.state), /対局終了/);
@@ -68,7 +68,7 @@ test('page and styles provide accessible Japanese local UI and motion opt out', 
   const html = await readFile(new URL('../public/mahjong/index.html', import.meta.url), 'utf8');
   const css = await readFile(new URL('../public/mahjong/style.css', import.meta.url), 'utf8');
   assert.match(html, /lang="ja"/); assert.match(html, /type="module"/); assert.match(html, /aria-live/);
-  assert.match(css, /prefers-reduced-motion/); assert.match(css, /44px/); assert.doesNotMatch(html, /https?:\/\//);
+  assert.match(css, /prefers-reduced-motion/); assert.match(css, /44px/); assert.match(css, /overflow-x:auto/); assert.match(css, /flex-wrap:nowrap/); assert.match(css,/portrait-compact>img\{position:absolute;left:-40%;top:-15%;width:180%;height:180%/); assert.match(css,/expression-focus>img/); assert.match(css,/expression-down>img/); assert.match(css,/mahjong-cheer/); assert.doesNotMatch(html, /https?:\/\//);
 });
 
 test('mounted controls navigate and preserve selected-tile state through rerenders', async () => {
@@ -118,4 +118,13 @@ test('online table uses own seat for hand display and never renders other hands'
   const html=renderApp(state);
   assert.doesNotMatch(html,/PRIVATE-HAND/);
   assert.match(html,/P2/);
+});
+
+test('table portrait and character line change for own turn, CPU turn, win and loss', async () => {
+  const [, { renderApp }] = await load();
+  const base={screen:'table',characterId:'moka',mode:'cpu',view:{selfSeat:0,activeSeat:0,phase:'DISCARD',players:[{name:'自分',points:25000,hand:[],discards:[]},{name:'CPU',points:25000,handCount:13,discards:[]}],legalActions:[]}};
+  assert.match(renderApp(base),/expression-focus/); assert.match(renderApp(base),/assets\/moka\.webp/);
+  assert.match(renderApp({...base,view:{...base.view,activeSeat:1}}),/相手の一手を見守りましょう/);
+  assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:0}}}),/expression-win/);
+  assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:1}}}),/expression-down/);
 });

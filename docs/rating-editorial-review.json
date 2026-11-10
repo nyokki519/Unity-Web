@@ -1,31 +1,97 @@
 {
   "title": "一流格付けチェック 問題セット編集監査",
   "reviewed": "data/rating-questions.json",
-  "date": "2026-11-09",
-  "finding": "現行12問はプロジェクト制作のSVGを使った観察練習問題。外部の実作品・実写・実績・鑑定・落札価格を裏付ける問題ではない。",
-  "verifiedEvidenceQuestionCount": 0,
-  "practiceQuestionCount": 12,
+  "date": "2026-11-10",
+  "totalQuestions": 14,
+  "activeQuestions": 12,
+  "originalPracticeQuestions": 12,
+  "disabledOriginalQuestions": 2,
+  "verifiedProvenanceComparisonQuestions": 2,
+  "visuallyVerifiableExpertQualityQuestions": 0,
+  "finding": "一次情報と画像利用条件を確認した出題が2問ある。うち1問は画像来歴が検証済みの実写/生成比較、1問はMetの一次コレクション記録で作者が検証された絵画比較。両問とも、見た目だけで出自や作者を必ず判定できるという意味ではない。既存のSVG問題は自作の練習素材で、実在の専門家・真贋・落札価格・料理人の技能を立証しない。",
   "byCategory": [
-    {"category":"センス格付け","count":2,"status":"practice_only","issue":"カフェ告知の可読性を比較しているが、受賞歴や制作実績で一流を定義していない。正解は作者の作問意図で、客観的な一流判定ではない。","safeUse":"『デザイン観察』として出す場合に限る。プロ/受賞作との比較を名乗らない。"},
-    {"category":"AI画像格付け","count":2,"status":"not_valid_for_claim","issue":"A/B双方がオリジナルSVG。実写とAI生成画像の出自比較ではなく、AI生成特有の破綻を示す証拠もない。","safeUse":"実写/AIの出自を明記したライセンス確認済み写真ペアがそろうまで、AI画像格付けの採点対象から外す。"},
-    {"category":"芸術格付け","count":2,"status":"practice_only","issue":"静物画風SVGの構図比較。実作品・作者・評価・落札価格の一次資料がない。","safeUse":"『構図観察』と表示する。美術品の価値/作者を当てる問題として扱わない。"},
-    {"category":"プロの仕事","count":2,"status":"practice_only","issue":"ポスター風SVGの文字組み比較。制作者の経歴・依頼実績・受賞歴が確認されていない。","safeUse":"『レイアウト観察』に限定。プロ作品対初心者作品とは表示しない。"},
-    {"category":"骨董品鑑定","count":2,"status":"not_valid_for_claim","issue":"架空の工芸品SVG。実物、年代、鑑定記録、来歴、レプリカ比較の根拠がない。","safeUse":"鑑定問題から外す。博物館所蔵の実物画像と、明確にラベルされた現代レプリカの画像・所蔵番号・解説がそろってから採用。"},
-    {"category":"盛り付け格付け","count":2,"status":"practice_only","issue":"一皿のイラスト比較。実在シェフの作品・経歴・店舗/大会実績に結びついていない。","safeUse":"『盛り付け観察』に限る。実在の一流シェフを当てる設問として扱わない。"}
+    {
+      "category": "センス格付け",
+      "count": 2,
+      "active": 2,
+      "status": "practice_only",
+      "issue": "カフェ告知の可読性・情報設計を比べるオリジナル図版。受賞歴や制作者の実績を裏付けない。",
+      "safeUse": "オリジナル練習問題として表示。実在のプロ/受賞作の格付けとは呼ばない。"
+    },
+    {
+      "category": "AI画像格付け",
+      "count": 3,
+      "active": 1,
+      "status": "one_verified_provenance_pair_plus_disabled_practice",
+      "issue": "rating-ai-photo-01はCommons CC0実写写真と本プロジェクト生成画像。比較対象の出自は記録されているが、画像だけでAI生成を一般に見分けられる証明ではない。旧SVG2問は出自比較にならないため無効。",
+      "safeUse": "出自の記録を読み解く問題として使用し、見た目のみのAI判定精度を主張しない。"
+    },
+    {
+      "category": "芸術格付け",
+      "count": 3,
+      "active": 3,
+      "status": "one_verified_catalog_authorship_pair_plus_two_practice",
+      "issue": "rating-art-catalog-01はMetの一次記録でJohannes VermeerとPieter de Hoochの作品作者を照合できる。作者記録比較であり、価格・格・技量の優劣を示さない。他2問は自作SVG。",
+      "safeUse": "作者の所蔵記録を問う問題として限定。落札額/美術的価値判定とは表示しない。"
+    },
+    {
+      "category": "プロの仕事",
+      "count": 2,
+      "active": 2,
+      "status": "practice_only",
+      "issue": "架空のタイポグラフィ図版。制作者プロフィール・受賞・依頼実績なし。",
+      "safeUse": "文字組みの観察練習に限定。プロ作品対初心者の判定ではない。"
+    },
+    {
+      "category": "骨董品鑑定",
+      "count": 2,
+      "active": 2,
+      "status": "practice_only",
+      "issue": "架空の工芸品SVG。年代・作者・来歴・鑑定記録の一次資料なし。",
+      "safeUse": "形状観察練習に限定し、真贋や年代鑑定を主張しない。"
+    },
+    {
+      "category": "盛り付け格付け",
+      "count": 2,
+      "active": 2,
+      "status": "practice_only",
+      "issue": "自作の盛り付け図版。実在シェフ/店舗/大会実績を裏付けない。",
+      "safeUse": "構図観察に限定。シェフの技能や経歴の評価と表示しない。"
+    }
   ],
-  "dataIssues": [
-    "既存のsource.kind=original-createdは妥当だが、assetLicenseの文言は外部ライセンスではない点を保つ必要がある。",
-    "多くのexplanationに『正解は制作者が指定した観察ポイント』という文が入り、正解の客観性を示せていない。",
-    "同カテゴリ2問が同一prompt・同一構図テンプレートの左右反転に近く、問題間の多様性が低い。",
-    "AI画像と骨董品のカテゴリ見出しは、現素材の出自と異なる印象を与える。"
-  ],
-  "admissionRequirements": {
-    "common": ["A/B両画像のローカル保存URLとSHA-256", "出典の作品/ファイルページURL", "作者/撮影者", "ライセンス名と再配布条件", "検証済み正解と一次根拠URL", "難易度と編集者レビュー記録"],
-    "AI画像": ["同じ題材・近い構図の実写/AI生成対", "実写側の撮影者・ライセンス", "AI側の生成モデル・生成日・生成記録", "AI側に第三者ロゴ/人物がないこと"],
-    "芸術格付け": ["美術館/競売会社等の作品レコード", "作者・作品名・日付・評価/落札額の根拠", "画像複製ライセンス"],
-    "プロの仕事": ["制作物レコードと制作者プロフィール", "プロ判定に使う受賞/実績の根拠", "画像の掲載/再配布ライセンス"],
-    "骨董品鑑定": ["機関所蔵番号と来歴/年代の記録", "実物とレプリカの定義", "材質/技法の鑑定根拠", "画像ライセンス"],
-    "盛り付け格付け": ["料理人名と実績の根拠", "作品画像の撮影者/店舗許諾", "正解を決める評価軸"]
+  "newEvidenceQuestion": {
+    "id": "rating-art-catalog-01",
+    "institution": "The Metropolitan Museum of Art",
+    "primaryRecords": [
+      "https://collectionapi.metmuseum.org/public/collection/v1/objects/436676",
+      "https://collectionapi.metmuseum.org/public/collection/v1/objects/437881"
+    ],
+    "images": [
+      "/rating/verified/rating-art-de-hooch.jpg",
+      "/rating/verified/rating-art-vermeer.jpg"
+    ],
+    "rights": "Met Open Access policy states images of works it believes public domain are available under CC0; both API records state isPublicDomain=true.",
+    "editorialScope": "作品記録上の作者を問う。作者の評価・値段・視覚的判別可能性を問わない。"
   },
-  "recommendation": "現状12問を『練習用・オリジナル観察イラスト』として明示するか、信頼できる根拠がそろうまで該当ジャンルを出題から一時除外する。確認済みの外部根拠がない現行問題を『一流/本物/プロ』の正解として扱わない。"
+  "allQuestionReview": {
+    "originalPracticeIds": [
+      "rating-sense-01",
+      "rating-sense-02",
+      "rating-ai-image-01",
+      "rating-ai-image-02",
+      "rating-art-01",
+      "rating-art-02",
+      "rating-craft-01",
+      "rating-craft-02",
+      "rating-antique-01",
+      "rating-antique-02",
+      "rating-plating-01",
+      "rating-plating-02"
+    ],
+    "verifiedIds": [
+      "rating-ai-photo-01",
+      "rating-art-catalog-01"
+    ]
+  },
+  "recommendation": "現行SVG12問は回答画面にオリジナル練習問題と明記し、実在作品/専門家/骨董品を当てる問題として誤認させない。客観的な商用格付け問題を増やすには、各分野で作者・実績・所蔵/鑑定・写真権利の一次根拠がそろう問題を個別に追加する。"
 }

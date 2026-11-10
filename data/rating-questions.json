@@ -348,7 +348,7 @@
       },
       "B": {
         "label": "本ゲーム用に生成した画像",
-        "asset": "/rating/verified/ai-latte-generated.png",
+        "asset": "/rating/verified/ai-latte-generated.webp",
         "alt": "木のテーブルに置かれたラテアート入りのカフェラテ。",
         "provenance": {
           "kind": "generated",
@@ -364,6 +364,48 @@
       "kind": "verified-comparison",
       "assetLicense": "A: CC0 (Wikimedia Commons); B: 本プロジェクト用に生成した画像（生成物の権利・利用条件は提供ツールの条件に従う）",
       "editorialNote": "Aの出典・作者・ライセンスはCommonsファイルページで確認。Bの生成記録は本プロジェクト管理台帳。"
+    }
+  },
+  {
+    "id": "rating-art-catalog-01",
+    "game": "RATING",
+    "category": "芸術格付け",
+    "prompt": "二つの17世紀オランダ絵画。メトロポリタン美術館の作品記録で作者がJohannes Vermeerと記されているのはどちら？",
+    "talkPrompt": "作者名を知っていた？それとも色・光・構図から想像した？作者の記録と自分の見方の違いを話してみよう。",
+    "difficulty": "ひと工夫",
+    "enabled": true,
+    "choices": {
+      "A": {
+        "label": "17世紀オランダの室内画",
+        "asset": "/rating/verified/rating-art-de-hooch.jpg",
+        "alt": "室内で女性が水差しを持ち、男性がベッドのそばにいる絵画",
+        "provenance": {
+          "kind": "licensed",
+          "sourceUrl": "https://www.metmuseum.org/art/collection/search/436676",
+          "creator": "Pieter de Hooch",
+          "license": "CC0 (The Met Open Access)",
+          "attribution": "Woman with a Water Pitcher, and a Man by a Bed — Pieter de Hooch, ca. 1667–70; The Metropolitan Museum of Art Open Access, CC0; accession 32.100.15"
+        }
+      },
+      "B": {
+        "label": "17世紀オランダの室内画",
+        "asset": "/rating/verified/rating-art-vermeer.jpg",
+        "alt": "窓辺の若い女性が水差しに手を伸ばす絵画",
+        "provenance": {
+          "kind": "licensed",
+          "sourceUrl": "https://www.metmuseum.org/art/collection/search/437881",
+          "creator": "Johannes Vermeer",
+          "license": "CC0 (The Met Open Access)",
+          "attribution": "Young Woman with a Water Pitcher — Johannes Vermeer, ca. 1662; The Metropolitan Museum of Art Open Access, CC0; accession 89.15.21"
+        }
+      }
+    },
+    "correct": "B",
+    "explanation": "Bの作品記録は作者をJohannes Vermeer（ca. 1662）と記載しています。AはPieter de Hooch（ca. 1667–70）。どちらもMetのコレクションに所蔵され、同館のOpen Access対象画像です。見た目だけで作者を断定できるという問題ではなく、出典を確認できる絵画を比べる問題です。",
+    "source": {
+      "kind": "verified-comparison",
+      "assetLicense": "A・BともThe Metropolitan Museum of Art Open Access対象のパブリックドメイン作品画像（CC0）。",
+      "editorialNote": "一次資料: Met Collection APIのobject records（436676 / 437881）。作者名・制作年代・isPublicDomain=trueを2026-11-10確認。Met公式Open Access方針は画像をCC0で無償・無制限利用可能と説明。作品作者の比較のみを問う。"
     }
   }
 ]

@@ -1,7 +1,7 @@
 import {formatScaleValue} from '../scale.js';
 import {el,button,title,labeledSelect} from '../dom.js';import {invitation} from '../lobby.js';
-import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v4';
-import {ratingScreen,ratingQuestionEditor,ratingCategories} from './rating.js?v=rating-v4';
+import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v5';
+import {ratingScreen,ratingQuestionEditor,ratingCategories} from './rating.js?v=rating-v5';
 export function eventScreen(props){
  const {state,send,draft,leave}=props,e=state.event,host=state.selfId===state.hostId,screen=el('div',`screen narrow event-screen${e.gameId==='RATING'?' rating-screen':''}`);screen.dataset.game=e.gameId;screen.dataset.phase=e.phase;
  const ruleText=e.gameId==='TIER'?'全員のTier表を公開して、違いを話します。正解はありません。':e.gameId==='BOUNDARY'&&e.question?.scale?`${e.question.scale.min}〜${e.question.scale.max}${e.question.scale.unit}で回答し、締切後に匿名分布を見ます。名前と数値は紐づけて公開しません。自分の数値を話すかは自由。`:e.rule;

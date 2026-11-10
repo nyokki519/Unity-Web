@@ -3,7 +3,10 @@ import {el,button} from '../dom.js';
 export const TIER_ORDER=Object.freeze(['S','A','B','C','D']);
 const TIER_LABELS=Object.freeze({S:'最高',A:'かなり好き',B:'いいね',C:'ふつう',D:'自分には合わない'});
 let cssRequested=false;
-export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v4';document.head.append(link);}
+export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v5';document.head.append(link);}
+// This module is loaded before a Tier room is created, so load its scoped CSS
+// early enough to style the setup phase as well as the board and results.
+ensureTierStyles();
 const escapeText=value=>String(value??'');
 function normalizeBoard(items,value={}){const result={};if(TIER_ORDER.some(t=>Array.isArray(value[t]))){for(const tier of TIER_ORDER)for(const id of value[tier]||[])result[String(id)]=tier;return result;}for(const item of items){const tier=value[String(item.id)];if(TIER_ORDER.includes(tier))result[String(item.id)]=tier;}return result;}
 function boardRows(items,tiers){const result=Object.fromEntries(TIER_ORDER.map(tier=>[tier,[]]));for(const item of items){const tier=tiers[String(item.id)];if(result[tier])result[tier].push(String(item.id));}return result;}
@@ -82,12 +85,23 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
 export function createTierComparison({items,submissions,boards,summary,participants=[],participantCount}){
  ensureTierStyles();const root=el('section','tier-results'),entries=boards||submissions||[],calculated=summary||summarizeTierBoards(items,entries),agreement=calculated.agreementPct??calculated.agreement??0,responded=calculated.participantCount??entries.length,total=participantCount??responded;root.setAttribute('aria-label','みんなのTier比較結果');
  root.append(el('p','tier-stage','CAFÉ MIX · REVEAL'),el('h2','tier-results-title','みんなのTierを、見比べよう'),el('p','tier-agreement',`${calculated.agreementPct==null&&calculated.agreement==null?'一致率 —（2人以上で表示）':`一致率 ${agreement}%`} · 回答 ${responded} / 参加 ${total}人`));
- const shared=el('section','tier-majority');shared.append(el('h3','','みんなの真ん中'));
  const infos=Array.isArray(calculated.items)?Object.fromEntries(calculated.items.map(info=>[info.id,info])):calculated.items||{};
+ const shared=el('section','tier-majority');shared.append(el('h3','','みんなの真ん中'));
  const strip=el('div','tier-majority-strip');for(const item of items){const info=infos[item.id]||{},majority=info.majorityTier??info.majority??(info.majorityTiers?.length===1?info.majorityTiers[0]:null),counts=info.counts||info.distribution||{},count=majority?(counts[majority]??0):0,minorityCount=Array.isArray(info.minorityTiers)?info.minorityTiers.reduce((sum,tier)=>sum+(counts[tier]||0),0):(info.minorityCount||0),caption=majority?(minorityCount?`少数派 ${minorityCount}人`:'全員一致'):entries.length===1?'比較できません':entries.length?(info.majorityTiers?.length>1?'同数で分かれた':'票が分かれた'):'回答なし';const piece=el('article',`tier-majority-item${majority?' tier-'+majority.toLowerCase():''}`);piece.append(el('strong','',majority||'—'),el('span','',item.label),el('small','',majority?`${count}人の多数派 · ${caption}`:caption));strip.append(piece);}shared.append(strip);root.append(shared);
+ root.append(discussionPrompts(items,infos,entries.length));
  root.append(comparisonMatrix(items,entries,participants));
  const list=el('div','tier-submission-list');entries.forEach((entry,index)=>{const participant=participants.find(p=>p.id===(entry.playerId??entry.id)),name=participant?.name||entry.name||`参加者 ${index+1}`,tiers=normalizeBoard(items,entry.tiers);const details=el('details','tier-submission');if(index===0)details.open=true;const summaryEl=el('summary');summaryEl.append(el('span','tier-avatar',String(index+1).padStart(2,'0')),el('strong','',name),el('span','tier-submission-hint','タップして表を見る'));details.append(summaryEl);const board=el('div','tier-mini-board');for(const tier of TIER_ORDER){const row=el('section',`tier-mini-row tier-${tier.toLowerCase()}`);row.append(el('strong','',tier));const cell=el('div','tier-mini-items');for(const item of items)if(tiers[String(item.id)]===tier)cell.append(el('span','tier-mini-item',item.label));row.append(cell);board.append(row);}details.append(board);list.append(details);});root.append(list);
  root.append(button('比較結果を画像で保存',()=>saveTierImage({items,entries,participants,calculated,agreement}),'tier-image-button'));return root;
+}
+
+
+function discussionPrompts(items,infos,participantCount){
+ const split=items.map(item=>{const info=infos[item.id]||{},counts=info.counts||info.distribution||{},votes=TIER_ORDER.map(tier=>({tier,count:Number(counts[tier]||0)})).filter(vote=>vote.count>0);return{item,votes,spread:votes.length,minority:votes.length?Math.min(...votes.map(vote=>vote.count)):0};}).filter(row=>row.spread>1).sort((a,b)=>b.spread-a.spread||a.minority-b.minority||a.item.label.localeCompare(b.item.label,'ja')).slice(0,3);
+ const section=el('section','tier-discussion');section.setAttribute('aria-label','話し合いのきっかけ');section.append(el('h3','','話してみよう'));
+ if(!participantCount){section.append(el('p','tier-discussion-intro','回答が集まると、意見が分かれた項目をここに表示します。'));return section;}
+ if(!split.length){section.append(el('p','tier-discussion-intro','今回は全員の評価がそろいました。どうして同じTierになったか、理由を聞いてみよう。'));return section;}
+ section.append(el('p','tier-discussion-intro',`${split.length<3?split.length:'特に分かれた3つの'}項目をきっかけに、選んだ理由を聞いてみよう。`));
+ const list=el('div','tier-discussion-list');for(const row of split){const card=el('article','tier-discussion-card');card.append(el('h4','',row.item.label));const votes=el('div','tier-discussion-votes');for(const vote of row.votes){const chip=el('span',`tier-discussion-vote tier-${vote.tier.toLowerCase()}`,`${vote.tier} · ${vote.count}人`);votes.append(chip);}card.append(votes,el('p','',row.spread>2?'評価が分かれたポイントはどこ？':'このTierに置いた決め手は？'));list.append(card);}section.append(list);return section;
 }
 
 function comparisonMatrix(items,entries,participants){

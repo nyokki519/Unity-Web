@@ -86,7 +86,7 @@ test('chankan wins on the added tile before the kan commits',()=>{
   let match=createMatch({players,seed:515,now:0});match.players[0].hand=[0,2,3,4,5,6,7,8,9,10,11,12,13,33];match.players[0].melds=[{type:'pon',tiles:[0,0,0],open:true}];
   match.players[1].hand=[1,2,9,10,11,18,19,20,21,22,23,15,15];match.players[1].hand.sort((a,b)=>a-b);match.drawnTile=33;match.revision++;
   const action=legalActions(match,0).find(a=>a.type==='kakan');match=applyAction(match,0,action,match.revision,1);match=applyAction(match,1,{type:'ron'},match.revision,2);
-  assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds[0].type,'pon');
+  assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds[0].type,'pon');assert.equal(match.pendingKan,null);
 });
 
 test('kokushi may rob a concealed kan while ordinary waits cannot',()=>{
@@ -94,9 +94,17 @@ test('kokushi may rob a concealed kan while ordinary waits cannot',()=>{
  match.players[1].hand=[0,8,9,17,18,26,27,28,29,30,31,32,33];match.players[1].hand.sort((a,b)=>a-b);match.revision++;
  const action=legalActions(match,0).find(a=>a.type==='ankan');assert.ok(action);match=applyAction(match,0,action,match.revision,1);
  assert.equal(match.phase,'REACTION');assert.ok(legalActions(match,1).some(a=>a.type==='ron'));
- match=applyAction(match,1,{type:'ron'},match.revision,2);assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds.length,0);
+ match=applyAction(match,1,{type:'ron'},match.revision,2);assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.winner,1);assert.equal(match.result.chankan,true);assert.equal(match.players[0].melds.length,0);assert.equal(match.pendingKan,null);
  match=createMatch({players,seed:517,now:0});match.players[0].hand=[0,0,0,0,1,2,3,4,5,6,7,8,9,10];match.drawnTile=0;match.revision++;
  match.players[1].hand=[1,2,9,10,11,18,19,20,12,13,14,27,27];match.players[1].hand.sort((a,b)=>a-b);match.revision++;
  const nextAnkan=legalActions(match,0).find(a=>a.type==='ankan');match=applyAction(match,0,nextAnkan,match.revision,1);
  assert.equal(match.phase,'DISCARD','non-kokushi waits pass the concealed kan automatically');assert.equal(match.players[0].melds[0].type,'kan');
+});
+
+test('four kans abort only when more than one player declared them',()=>{
+ for(const [owners,want] of [[[0,0,0,0],'DISCARD'],[[0,1,1,0],'HAND_RESULT']]){
+  let match=createMatch({players,seed:518,now:0});match.players[0].melds=[0,1,2].map(type=>({type:'kan',tiles:Array(4).fill(type),open:false}));match.players[0].hand=[3,4,4,4,4];match.drawnTile=3;match.kanCount=3;match.kanOwners=owners.slice(0,3);match.revision++;
+  const action=legalActions(match,0).find(a=>a.type==='ankan');assert.ok(action);match=applyAction(match,0,action,match.revision,1);
+  assert.equal(match.phase,want);if(want==='HAND_RESULT')assert.equal(match.result.reason,'four-kans');else assert.deepEqual(match.kanOwners,owners);
+ }
 });

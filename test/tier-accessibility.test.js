@@ -27,3 +27,7 @@ test('reduced-motion preference suppresses transitions and animation',()=>{
  assert.match(css,/animation-duration:\.01ms!important/);
  assert.match(css,/transition-duration:\.01ms!important/);
 });
+
+test('Tier setup phase hides answer counters until the participant set is created',()=>{
+ assert.match(css,/\.event-screen\[data-game="TIER"\]\[data-phase="RULES"\] #event-status,\s*\.event-screen\[data-game="TIER"\]\[data-phase="RULES"\] #event-timer\{display:none\}/);
+});

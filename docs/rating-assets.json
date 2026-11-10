@@ -124,5 +124,11 @@
       "reason": "実在シェフの作品ではないオリジナル盛り付け図。 正解は制作者が指定した観察ポイントに基づきます。",
       "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
     }
-  ]
+  ],
+  "separateVerifiedAssetsManifest": "data/rating-verified-assets.json",
+  "verifiedComparisonQuestionIds": [
+    "rating-ai-photo-01",
+    "rating-art-catalog-01"
+  ],
+  "verifiedEditorialNotice": "Verified means source provenance and the stated comparison fact were checked; it does not mean authorship/value/AI-origin can be reliably judged by visual appearance alone."
 }

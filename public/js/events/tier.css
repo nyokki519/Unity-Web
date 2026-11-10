@@ -43,6 +43,19 @@
  .tier-submission summary{flex-wrap:wrap;gap:7px}
  .tier-submission-hint{margin-left:auto}
 }
+/* Participant answers are not initialized until the host starts the round. */
+.event-screen[data-game="TIER"][data-phase="RULES"] #event-status,
+.event-screen[data-game="TIER"][data-phase="RULES"] #event-timer{display:none}
 @media(prefers-reduced-motion:reduce){
  .tier-playfield *, .tier-results *{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+.tier-discussion{margin:12px 0;padding:14px;border:1px solid #e5c87a55;border-radius:14px;background:linear-gradient(145deg,#1a392f,#10241f)}
+.tier-discussion h3{margin:0 0 5px;color:#f0dcaa;font-size:15px}
+.tier-discussion-intro{margin:0 0 10px;color:#d6d1c3;font-size:12px;line-height:1.5}
+.tier-discussion-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.tier-discussion-card{min-width:0;padding:10px;border:1px solid #ffffff22;border-radius:10px;background:#07181380}
+.tier-discussion-card h4{margin:0 0 8px;color:#fff8e8;font-size:14px;overflow-wrap:anywhere}
+.tier-discussion-votes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.tier-discussion-vote{padding:4px 7px;border-radius:99px;color:#14201a;background:var(--tier-band);font-size:11px;font-weight:900}
+.tier-discussion-card p{margin:0;color:#e2d5b3;font-size:12px;line-height:1.45}
+@media(max-width:414px){.tier-discussion{padding:11px}.tier-discussion-list{grid-template-columns:1fr}.tier-discussion-card{padding:9px}}
