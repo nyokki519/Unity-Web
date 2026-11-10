@@ -46,4 +46,4 @@ CPUキャラクターは牌や勝敗へ影響しません。4人のオリジナ�
 - Chromium 375/390/414px: 改修後の対局盤、手牌、河、副露、打牌演出を確認。ページ幅は各ビューポートと一致し、手牌は画面幅に押しつぶされず横スクロール（[375px](../qa/mahjong-reference-upgrade/mahjong-updated-375.png)、[390px](../qa/mahjong-reference-upgrade/mahjong-updated-390.png)、[414px](../qa/mahjong-reference-upgrade/mahjong-updated-414.png)、[打牌演出](../qa/mahjong-reference-upgrade/mahjong-moment-discard-390.png)）。
 - Chromiumの4ブラウザで、ルーム作成・4席参加・準備・開始・打牌同期を確認。各プレイヤーは自分の手牌のみを受け取り、他席には伏せ牌を表示（[4人対局](../qa/mahjong-reference-upgrade/mahjong-online-390.png)）。サービス・サーバービューの自動テストでもツモ牌の秘匿を確認。
 - 本番URLで更新済みJS/CSS/SVG・Service Worker v60をHTTP確認。390px相当でCPU対局開始・打牌・CPU応答、横幅390px、ブラウザーエラーなしを確認（[本番CPU対局](../qa/mahjong-reference-upgrade/mahjong-production-390.png)）。
-- CPUの12局シード付き統計スモーク: 平均658手順、平均9.6局、最短205・最長1012手順。すべて合法アクションを返し、点数合計を維持。実機iPhone Safariと実機音声の主観評価は未実施。
+- CPUの30戦シード付き統計スモーク: 14,075手順を実行、平均469手順・7.5局、最短217・最長956手順。全遷移で合法アクション・revision増加・終局・持ち点合計100,000点を確認。実機iPhone Safariと実機音声の主観評価は未実施。
