@@ -113,12 +113,12 @@ function draw(match,seat,now){
 }
 function replacementDraw(match,seat,now){
   if(!match.rinshanTiles.length||!match.liveWall.length){finishHand(match,{type:'abortive',reason:'no-rinshan-tile'},now);return;}
-  const tile=match.rinshanTiles.shift();match.liveWall.pop();match.kanCount++;
+  const tile=match.rinshanTiles.shift();match.liveWall.pop();match.kanCount++;match.kanOwners??=[];match.kanOwners.push(seat);
   const dora=match.kanDoraIndicators[match.kanCount-1],ura=match.kanUraIndicators[match.kanCount-1];
   if(dora!==undefined)match.doraIndicators.push(dora);if(ura!==undefined)match.uraIndicators.push(ura);
   const player=match.players[seat];player.hand.push(tile);player.hand=sortHand(player.hand);
   match.activeSeat=seat;match.drawnTile=tile;match.phase='DISCARD';match.rinshanSeat=seat;match.deadlineAt=now+30000;
-  if(match.kanCount>=4)finishHand(match,{type:'abortive',reason:'four-kans'},now);
+  if(match.kanCount>=4&&new Set(match.kanOwners).size>1)finishHand(match,{type:'abortive',reason:'four-kans'},now);
 }
 function resolveReactions(match,now){
   if(match.phase!=='REACTION'||match.reactionSeats.some(seat=>!match.responses[seat]))return;
@@ -147,7 +147,7 @@ function resolveReactions(match,now){
 function findTenpaiSeats(match){return match.players.map((player,seat)=>{for(let type=0;type<34;type++)if(countType(player.hand,type)<4&&isCompleteHand([...player.hand,type],player.melds))return seat;return -1;}).filter(seat=>seat>=0);}
 function finishHand(match,result,now){
   if(match.phase==='HAND_RESULT'||match.phase==='MATCH_RESULT')return;
-  match.phase='HAND_RESULT';match.result={...result,at:now};match.deadlineAt=null;
+  match.phase='HAND_RESULT';match.result={...result,at:now};match.deadlineAt=null;if(result.chankan)match.pendingKan=null;
   if(result.type==='win'){
     const loser=result.loser;
     const flags=result.winType==='tsumo'?{haitei:match.liveWall.length===0,rinshan:match.rinshanSeat===result.winner}:{houtei:match.liveWall.length===0,chankan:!!result.chankan};
@@ -196,7 +196,7 @@ export function createMatch({players,seed=0,now=Date.now()}={}){
   const doraIndicators=[deadWall[4]],uraIndicators=[deadWall[5]];
   const match={players:seats,phase:'DISCARD',dealer:0,roundWind:1,handNumber:1,honba:0,riichiPot:0,riichiDeclarations:0,
     activeSeat:0,liveWall:wall,deadWall,drawnTile:null,lastDiscard:null,responses:{},reactionSeats:[],deadlineAt:now+30000,revision:0,
-    turnNumber:0,doraIndicators,uraIndicators,result:null,history:[],seed,rinshanTiles:[],kanDoraIndicators:[],kanUraIndicators:[],kanCount:0,rinshanSeat:null};
+    turnNumber:0,doraIndicators,uraIndicators,result:null,history:[],seed,rinshanTiles:[],kanDoraIndicators:[],kanUraIndicators:[],kanCount:0,kanOwners:[],rinshanSeat:null};
   setupDeadWall(match,deadWall);
   match.drawnTile=match.liveWall.shift();match.players[0].hand.push(match.drawnTile);match.players[0].hand=sortHand(match.players[0].hand);match.turnNumber=1;
   return match;
