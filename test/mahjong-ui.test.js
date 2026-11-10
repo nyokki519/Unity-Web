@@ -135,5 +135,5 @@ test('table portrait and character line change for own turn, CPU turn, win and l
 });
 test('exhaustive hand result explains tenpai and point settlement and offers next hand',async()=>{
  const [,{renderApp}]=await load();const html=renderApp({screen:'table',mode:'cpu',characterId:'moka',view:{phase:'HAND_RESULT',selfSeat:0,players:[{name:'自分',points:28000,hand:[]},{name:'南さん',points:24000},{name:'西さん',points:24000},{name:'北さん',points:24000}],legalActions:[{type:'next'}],result:{type:'exhaustive',tenpai:[0],deltas:[3000,-1000,-1000,-1000]}}});
- assert.match(html,/聴牌：自分/);assert.match(html,/\+3,000点/);assert.match(html,/−1,000点/);assert.match(html,/次の局へ/);
+ assert.match(html,/聴牌：自分/);assert.match(html,/\+3,000点/);assert.match(html,/−1,000点/);const center=html.slice(html.indexOf('<div class="table-center">'),html.indexOf('<section class="own-seat"'));assert.match(center,/data-action="next-hand"/,'the next-hand action stays close to the result on phones');
 });
