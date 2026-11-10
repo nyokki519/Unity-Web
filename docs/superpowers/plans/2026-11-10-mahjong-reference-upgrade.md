@@ -58,4 +58,4 @@
 - [x] Add regressions for hidden future kan-dora, called-river double counting, pre-riichi genbutsu, no-yaku open tenpai, malformed tile-label escaping, drawn-tile privacy, and duplicate online state effects.
 - [x] Exercise four simultaneous browser clients through room setup, ready, deal, and discard synchronization; check concealed-hand privacy.
 - [x] Run 12 seeded CPU match smoke simulations; all returned legal actions and conserved total points.
-- [x] Record exact test totals, screenshots, remaining limits and deployment state.
+- [x] Record exact test totals, screenshots, remaining limits and deployment state. Published to `main` as `3f697b8`; Render served the new assets and passed a 390px production CPU-turn smoke check.
