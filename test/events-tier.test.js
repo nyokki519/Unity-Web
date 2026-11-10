@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {validateTierQuestion,validateTierAnswer,tierResult,TIER_ORDER} from '../src/events/tier.js';
+import {optionsFor} from '../src/events/catalog.js';
+import {fixture} from './events-helper.js';
 
 const question={id:'theme-1',game:'TIER',prompt:'カッコよくなるコスパTier',talkPrompt:'意外だった項目は？',items:[{id:'shoes',label:'靴'},{id:'brows',label:'眉毛'},{id:'glasses',label:'メガネ'}]};
 const answer=(tiers)=>({tiers});
@@ -46,4 +48,23 @@ test('aggregation rejects fewer than two or more than ten participants and malfo
   assert.throws(()=>tierResult(q,{p1:a}));
   assert.throws(()=>tierResult(q,Object.fromEntries(Array.from({length:11},(_,i)=>[`p${i}`,a]))));
   assert.throws(()=>tierResult(q,{p1:a,p2:{tiers:{S:['not-an-item']}}}));
+});
+
+test('Tier starts with a five-minute response window and publishes as soon as all players answer or pass',()=>{
+  assert.equal(optionsFor('TIER',{}).seconds,300);
+  const f=fixture(2,'TIER');
+  try {
+    f.cmd('event_begin');
+    assert.equal(f.room.event.phase,'ANSWER');
+    const q=f.room.event.question;
+    const a=answer({S:q.items.slice(0,1).map(item=>item.id),A:q.items.slice(1,2).map(item=>item.id),B:[],C:q.items.slice(2).map(item=>item.id),D:[]});
+    f.cmd('event_answer',{value:a},f.sessions[0]);
+    assert.equal(f.room.event.phase,'ANSWER','do not close while another player is still composing');
+    f.cmd('event_answer',{skip:true},f.sessions[1]);
+    assert.equal(f.room.event.phase,'CLOSED','last submitted ballot should move directly to host review');
+    assert.equal(f.room.event.deadlineAt,null);
+    f.cmd('event_reveal');
+    assert.equal(f.room.event.phase,'TALK');
+    assert.equal(f.room.event.result.participantCount,1,'skip is counted as submitted, not as a Tier ballot');
+  } finally { f.store.close(); }
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 // Removing selection, legal-action delegation, or privacy filtering breaks these tests.
-const load = () => Promise.all([import('../public/mahjong/src/characters.js'), import('../public/mahjong/src/app.js'), import('../public/mahjong/src/cpu-game.js')]);
+const load = () => Promise.all([import('../public/mahjong/src/characters.js'), import('../public/mahjong/src/app.js'), import('../public/mahjong/src/cpu-game.js'), import('../public/mahjong/src/sound.js')]);
 const fixtureEngine = () => ({
   createMatch: ({ players }) => ({ players, revision: 0, phase: 'DISCARD', seat: 0 }),
   legalActions: state => state.phase === 'DISCARD' ? [{ type: 'discard', tile: 'm1' }] : [],
@@ -24,13 +24,13 @@ test('four original characters have exact Japanese names, readings and presentat
   assert.deepEqual(characters.map(c => [c.name, c.reading, c.genderPresentation]), [
     ['星乃 モカ', 'ほしの・もか', 'female'], ['琥珀 すみれ', 'こはく・すみれ', 'female'],
     ['深山 焙真', 'みやま・ほうま', 'male'], ['小野 コナ', 'おの・こな', 'male']]);
-  for (const c of characters) { assert.equal(c.colors.length, 2); assert.ok(c.role); assert.ok(c.greetings.length); assert.ok(c.reactions.result); assert.match(c.portrait,/^\.\/assets\/.+\.webp$/); const art=await readFile(new URL(`../public/mahjong/${c.portrait.slice(2)}`,import.meta.url)); assert.equal(art.toString('ascii',0,4),'RIFF'); assert.equal(art.toString('ascii',8,12),'WEBP'); assert.equal(art.toString('ascii',12,16),'VP8 '); assert.equal((art.readUInt16LE(26)&0x3fff),768); assert.equal((art.readUInt16LE(28)&0x3fff),960); assert.ok(c.reactions.win); assert.ok(c.reactions.loss); }
+  for (const c of characters) { assert.equal(c.colors.length, 2); assert.ok(c.role); assert.ok(c.greetings.length); assert.ok(c.reactions.result); assert.match(c.portrait,/^\.\/assets\/.+\.webp$/); const art=await readFile(new URL(`../public/mahjong/${c.portrait.slice(2)}`,import.meta.url)); assert.equal(art.toString('ascii',0,4),'RIFF'); assert.equal(art.toString('ascii',8,12),'WEBP'); assert.equal(art.toString('ascii',12,16),'VP8 '); assert.equal((art.readUInt16LE(26)&0x3fff),768); assert.equal((art.readUInt16LE(28)&0x3fff),1152); assert.ok(c.reactions.win); assert.ok(c.reactions.loss); }
 });
 test('selection opens Japanese CPU and friend mode choices', async () => {
   const [, { createApp, renderApp }] = await load(); const app = createApp();
   assert.match(renderApp(app.state), /キャラクターを選ぶ/);
   app.selectCharacter('moka'); assert.equal(app.state.screen, 'mode');
-  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/); assert.match(renderApp(app.state), /assets\/moka\.webp/);assert.match(renderApp(app.state),/東風戦は最大12局/);
+  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/); assert.match(renderApp(app.state), /assets\/moka-portrait\.webp/);assert.match(renderApp(app.state),/東風戦は最大12局/);
   assert.throws(() => app.selectCharacter('unknown'), /キャラクター/);
 });
 test('friend mode opens a room lobby shell without claiming a connection', async () => {
@@ -40,7 +40,7 @@ test('friend mode opens a room lobby shell without claiming a connection', async
 test('CPU match and legal tile dispatch use supplied engine and reach its result', async () => {
   const [, { createApp, renderApp }, { createCpuGame }] = await load();
   const app = createApp({ cpu: createCpuGame(fixtureEngine()) }); app.selectCharacter('moka'); await app.selectMode('cpu');
-  assert.equal(app.state.screen, 'table'); assert.match(renderApp(app.state), /東一局/); assert.match(renderApp(app.state), /table-character/); assert.match(renderApp(app.state), /assets\/moka\.webp/); assert.match(renderApp(app.state), /expression-focus/);
+  assert.equal(app.state.screen, 'table'); assert.match(renderApp(app.state), /東一局/); assert.match(renderApp(app.state), /table-character/); assert.match(renderApp(app.state), /assets\/moka-portrait\.webp/); assert.match(renderApp(app.state), /expression-focus/);
   app.selectTile('p2'); await assert.rejects(() => app.discard(), /選択/);
   app.selectTile('m1'); await app.discard(); assert.equal(app.state.screen, 'result');
   assert.match(renderApp(app.state), /対局終了/);
@@ -59,15 +59,30 @@ test('missing engine is an explicit unavailable state, never a fabricated game',
   const [, { createApp, renderApp }] = await load(); const app = createApp(); app.selectCharacter('moka'); await app.selectMode('cpu');
   assert.equal(app.state.screen, 'mode'); assert.equal(app.state.view, null); assert.match(renderApp(app.state), /接続|準備/);
 });
-test('table hides opponents concealed hands even if adapter view contains them', async () => {
+test('table hides opponents concealed hands while showing one tile back per real concealed tile', async () => {
   const [, { renderApp }] = await load(); const markup = renderApp({ screen: 'table', characterId: 'moka', view: { phase: 'DISCARD', players: [{name:'自分',hand:['m1']},{name:'相手',hand:['SECRET'],handCount:13}], legalActions: [] } });
-  assert.doesNotMatch(markup, /SECRET/); assert.match(markup, /13枚/);
+  assert.doesNotMatch(markup, /SECRET/); assert.match(markup, /13枚/); assert.equal((markup.match(/class="tile-back"/g)||[]).length,13);
 });
 test('settings and tutorial are user controlled and markup escapes names', async () => {
-  const [, { createApp, renderApp }] = await load(); const app = createApp(); app.toggleMute(); app.toggleReducedMotion(); app.toggleTutorial();
+  const [, { createApp, renderApp }] = await load(); const app = createApp({sound:{available:true,enableFromGesture:()=>true,disable(){},cue(){}}}); app.toggleMute(); app.toggleReducedMotion(); app.toggleTutorial();
   assert.equal(app.state.muted, false); assert.equal(app.state.reducedMotion, true); assert.equal(app.state.tutorial, true);
   assert.match(renderApp(app.state), /手牌/);
   assert.doesNotMatch(renderApp({ ...app.state, screen:'result', view:{result:{title:'<script>',rankings:[]}} }), /<script>/);
+});
+
+test('unmuting unlocks audio from the gesture and plays subtle tile and result cues', async()=>{
+  const [,{createApp},{createCpuGame}]=await load();const events=[];
+  const sound={available:true,enableFromGesture(){events.push('unlock');return true;},disable(){events.push('disable');},cue(name){events.push(name);}};
+  const app=createApp({cpu:createCpuGame(fixtureEngine()),sound});app.selectCharacter('moka');await app.selectMode('cpu');app.toggleMute();app.selectTile('m1');await app.discard();
+  assert.deepEqual(events,['unlock','tile','result']);
+  app.toggleMute();assert.equal(events.at(-1),'disable');
+});
+
+test('original WebAudio cues are gated until an explicit user gesture and handle unsupported browsers',async()=>{
+  const [,,, {createMahjongSound}]=await load();
+  const unsupported=createMahjongSound({audioContextFactory:()=>null});assert.equal(unsupported.enableFromGesture(),false);assert.equal(unsupported.available,false);
+  const made=[];const fake={state:'running',currentTime:1,destination:{},resume(){return Promise.resolve();},createOscillator(){const o={frequency:{value:0,setValueAtTime(){},exponentialRampToValueAtTime(){}},type:'',connect(){},start(){},stop(){}};made.push(o);return o;},createGain(){return{gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){}};}};
+  const sound=createMahjongSound({audioContextFactory:()=>fake});assert.equal(sound.available,true);assert.equal(sound.cue('tile'),false);assert.equal(sound.enableFromGesture(),true);assert.equal(sound.cue('tile'),true);assert.equal(sound.cue('result'),true);assert.equal(made.length,4);sound.disable();assert.equal(sound.cue('tile'),false);
 });
 test('page and styles provide accessible Japanese local UI and motion opt out', async () => {
   const html = await readFile(new URL('../public/mahjong/index.html', import.meta.url), 'utf8');
@@ -128,7 +143,7 @@ test('online table uses own seat for hand display and never renders other hands'
 test('table portrait and character line change for own turn, CPU turn, win and loss', async () => {
   const [, { renderApp }] = await load();
   const base={screen:'table',characterId:'moka',mode:'cpu',view:{selfSeat:0,activeSeat:0,phase:'DISCARD',players:[{name:'自分',points:25000,hand:[],discards:[]},{name:'CPU',points:25000,handCount:13,discards:[]}],legalActions:[]}};
-  assert.match(renderApp(base),/expression-focus/); assert.match(renderApp(base),/assets\/moka\.webp/);
+  assert.match(renderApp(base),/expression-focus/); assert.match(renderApp(base),/assets\/moka-portrait\.webp/);
   assert.match(renderApp({...base,view:{...base.view,activeSeat:1}}),/相手の一手を見守りましょう/);
   assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:0}}}),/expression-win/);
   assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:1}}}),/expression-down/);

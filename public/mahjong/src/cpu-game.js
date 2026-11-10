@@ -11,8 +11,21 @@ import { characters, getCharacter } from './characters.js';
  */
 let configuredEngine;
 export function configureCpuEngine(engine) { configuredEngine = engine; }
+function seededRandom(seed){
+  let value=2166136261;
+  if(typeof seed==='number'&&Number.isFinite(seed))value=seed>>>0;
+  else for(const char of String(seed)){value^=char.codePointAt(0);value=Math.imul(value,16777619)>>>0;}
+  if(value===0)value=0x6d2b79f5;
+  return()=>{
+    value=(value+0x6d2b79f5)>>>0;
+    let result=value;
+    result=Math.imul(result^result>>>15,result|1);
+    result^=result+Math.imul(result^result>>>7,result|61);
+    return((result^result>>>14)>>>0)/4294967296;
+  };
+}
 export function createCpuGame(suppliedEngine) {
-  let match = null, currentView = null;
+  let match = null, currentView = null, random = Math.random;
   const engine = () => {
     const api = suppliedEngine || configuredEngine;
     if (!api) throw new Error('対局エンジンは接続の準備中です。');
@@ -28,7 +41,7 @@ export function createCpuGame(suppliedEngine) {
       let acted = false;
       for (let seat = 1; seat < 4; seat++) {
         if (!(await api.legalActions(match, seat)).length) continue;
-        const action = await api.chooseAction(match, seat, Math.random);
+        const action = await api.chooseAction(match, seat, random);
         match = await api.applyAction(match, seat, action, match.revision, Date.now());
         acted = true; break;
       }
@@ -44,6 +57,7 @@ export function createCpuGame(suppliedEngine) {
     async startCpuMatch(characterId, seed = Date.now()) {
       const api = engine(), chosen = getCharacter(characterId);
       if (!chosen) throw new Error('キャラクターを選択してください。');
+      random=seededRandom(seed);
       const ordered = [chosen, ...characters.filter(c => c.id !== characterId)];
       match = await api.createMatch({ players: ordered.map((c, seat) => ({ id: c.id, name: c.name, characterId: c.id, isCpu: seat !== 0 })), seed, now: Date.now() });
       return settle(api);

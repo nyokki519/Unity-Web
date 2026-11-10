@@ -17,15 +17,15 @@ test('RATING keeps answer key private through CLOSED and synchronized REVEAL, th
  const f=fixture(3,'RATING');try{
   let view=f.engine.view(f.room,f.host.playerId).event;assert.ok(view.questions.length);assert.ok(view.questions.every(row=>row.correct===undefined&&row.explanation===undefined&&row.source===undefined),'host question picker must not disclose answer keys');
   f.cmd('event_begin');view=f.engine.view(f.room,f.host.playerId).event;const q=f.room.event.question;
-  assert.equal(view.phase,'ANSWER');assert.equal(view.question.correct,undefined);assert.equal(view.question.explanation,undefined);assert.equal(view.question.source,undefined);assert.equal(view.question.provenance,undefined);if(q.source.kind==='original-created')assert.ok(view.question.practiceNotice,'original practice art must be clearly labeled before answering');
+  assert.equal(view.phase,'ANSWER');assert.equal(view.question.correct,undefined);assert.equal(view.question.explanation,undefined);assert.equal(view.question.source,undefined);assert.equal(view.question.provenance,undefined);for(const[key,choice]of Object.entries(view.question.choices)){assert.equal(choice.label,`選択肢 ${key}`);assert.equal(choice.alt,`選択肢 ${key}の画像。細部を観察してください。`);assert.equal(choice.provenance,undefined);}if(q.source.kind==='original-created')assert.ok(view.question.practiceNotice,'original practice art must be clearly labeled before answering');
   const verified=eventQuestions.find(row=>row.game==='RATING'&&row.source.kind==='verified-comparison');if(verified){f.room.event.question=verified;const verifiedView=f.engine.view(f.room,f.host.playerId).event.question;assert.equal(verifiedView.practiceNotice,undefined);assert.equal(verifiedView.source,undefined);f.room.event.question=q;}
   const choices=['A','B','A'];for(let i=0;i<3;i++)f.cmd('event_answer',{value:{choice:choices[i]}},f.sessions[i]);
   assert.equal(f.room.event.phase,'CLOSED');view=f.engine.view(f.room,f.host.playerId).event;
   assert.deepEqual(view.distribution,{A:2,B:1});assert.deepEqual(view.waitingRooms.A,['司会','参加者2']);assert.equal(view.question.correct,undefined);
   f.cmd('event_reveal');view=f.engine.view(f.room,f.sessions[1].playerId).event;
-  assert.equal(view.phase,'REVEAL');assert.equal(view.revealAt>view.serverTime,true);assert.equal(view.result,null);assert.equal(view.question.correct,undefined);
+  assert.equal(view.phase,'REVEAL');assert.equal(view.revealStartedAt,view.serverTime);assert.equal(view.revealAt-view.revealStartedAt,6500);assert.equal(view.result,null);assert.equal(view.question.correct,undefined);for(const[key,choice]of Object.entries(view.question.choices)){assert.equal(choice.label,`選択肢 ${key}`);assert.equal(choice.alt,`選択肢 ${key}の画像。細部を観察してください。`);}
   f.advance(6499);assert.equal(f.room.event.phase,'REVEAL');f.advance(1);assert.equal(f.room.event.phase,'TALK');
-  view=f.engine.view(f.room,f.sessions[1].playerId).event;assert.equal(view.question.correct,q.correct);assert.equal(view.result.correctChoice,q.correct);assert.ok(view.result.explanation);
+  view=f.engine.view(f.room,f.sessions[1].playerId).event;assert.equal(view.question.correct,q.correct);assert.equal(view.result.correctChoice,q.correct);assert.ok(view.result.explanation);for(const[key,choice]of Object.entries(view.question.choices)){assert.equal(choice.label,q.choices[key].label);assert.equal(choice.alt,q.choices[key].alt);}
   assert.equal(view.result.standings.length,3);const wrong=f.sessions.find((session,index)=>choices[index]!==q.correct);assert.ok(f.room.event.ratingStandings[wrong.playerId].rankIndex>=1);
  }finally{f.store.close();}
 });

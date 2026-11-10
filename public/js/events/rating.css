@@ -4,3 +4,24 @@
 .rating-question-editor{display:grid;gap:10px;margin:12px 0;padding:16px;border:1px solid #b99a6155;border-radius:13px;background:#171612}.rating-question-editor h3{margin:0;color:#efdfbc;font-family:Georgia,"Yu Mincho",serif}.rating-question-editor input,.rating-question-editor select{min-height:46px;padding:10px;border:1px solid #8f784d;border-radius:8px;color:#f8f2e5;background:#211f1a}.rating-question-editor label{display:grid;gap:5px;color:#d8ccb3;font-size:13px}
 .event-screen[data-game="RATING"][data-phase="RULES"] #event-status,
 .event-screen[data-game="RATING"][data-phase="RULES"] #event-timer{display:none}
+
+/* The suspense phase is server-clocked but truth-neutral; only the result phase opens a door. */
+.is-revealing .rating-door{animation:none!important;transform:none!important}
+.rating-result-theater .rating-doors{min-height:clamp(190px,56vw,310px)}
+.rating-result-theater .rating-door-b{transform-origin:right center}
+.rating-result-theater .rating-door.is-open{animation:rating-result-open-a .9s cubic-bezier(.18,.68,.25,1) .08s both}
+.rating-result-theater .rating-door-b.is-open{animation-name:rating-result-open-b}
+.rating-result-theater .rating-door.is-closed{filter:saturate(.65) brightness(.78)}
+.rating-result-theater .rating-door.is-open .rating-door-caption{color:#fff0c4;text-shadow:0 0 14px #f0d18599}
+.rating-theater[data-beat="approach"] .rating-doors{filter:brightness(.92)}
+.rating-theater[data-beat="hold"] .rating-door{box-shadow:inset 0 0 0 6px #1c1812,inset 0 0 38px #000b,0 14px 26px #000a}
+.rating-theater[data-beat="touch"] .rating-door:after{box-shadow:0 0 14px #e1c17aaa}
+.rating-choice{grid-template-rows:auto auto auto}
+.rating-choice-image{height:auto;min-height:148px;max-height:360px;aspect-ratio:auto;object-fit:contain}
+.rating-choice-art{height:auto;aspect-ratio:4/3}
+@media(max-width:600px){.rating-choice-image{height:auto;min-height:0;max-height:min(66vh,440px);aspect-ratio:auto;object-fit:contain}.rating-choice-art{height:auto;aspect-ratio:4/3}}
+@keyframes rating-result-open-a{from{transform:rotateY(0);filter:brightness(1)}to{transform:rotateY(-82deg);filter:brightness(1.18)}}
+@keyframes rating-result-open-b{from{transform:rotateY(0);filter:brightness(1)}to{transform:rotateY(82deg);filter:brightness(1.18)}}
+@media(prefers-reduced-motion:reduce){.rating-result-theater .rating-door.is-open{transform:rotateY(-82deg);animation:none}.rating-result-theater .rating-door-b.is-open{transform:rotateY(82deg)}}
+body.reduce-motion .rating-result-theater .rating-door.is-open{transform:rotateY(-82deg);animation:none}
+body.reduce-motion .rating-result-theater .rating-door-b.is-open{transform:rotateY(82deg);animation:none}

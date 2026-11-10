@@ -28,7 +28,7 @@ test('deadline closes Tier submissions and late ballots cannot appear in final c
 test('all participants may pass without leaking boards or crashing the comparison phase',()=>{
  const f=fixture(2,'TIER');try{
   f.cmd('event_begin');f.cmd('event_answer',{skip:true},f.sessions[0]);f.cmd('event_answer',{skip:true},f.sessions[1]);
-  f.cmd('event_close');assert.equal(f.engine.view(f.room,f.sessions[0].playerId).event.result,null);
+  assert.equal(f.room.event.phase,'CLOSED','all passes should close the ballot window while keeping the result private');assert.equal(f.engine.view(f.room,f.sessions[0].playerId).event.result,null);
   f.cmd('event_reveal');const view=f.engine.view(f.room,f.sessions[0].playerId).event;
   assert.equal(view.result.participantCount,0);assert.equal(view.result.boards.length,0);assert.equal(view.result.agreementPct,null);
  }finally{f.store.close();}

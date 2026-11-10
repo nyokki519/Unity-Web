@@ -96,7 +96,8 @@ test('Tier screen keeps motion settings available without pushing repeated instr
   const {state}=stateFor();const root=eventScreen({state,send:()=>{},draft:{},leave:()=>{}}),nodes=descendants(root);
   assert.ok(nodes.some(node=>node.className==='event-display-settings'),'motion preference remains accessible under display settings');
   assert.ok(!nodes.some(node=>node.textContent.includes('2〜10人で遊べます')),'the board already explains how to play');
-  assert.equal(nodes.find(node=>node.className==='event-rule')?.textContent,'全員のTier表を公開して、違いを話します。正解はありません。');
+  assert.ok(!nodes.some(node=>node.className==='event-rule'),'the answer board should not be pushed down by repeated rule copy');
+  assert.ok(nodes.some(node=>node.className==='tier-instruction'&&node.textContent.includes('公開まで本人だけ')),'the board keeps the privacy guidance beside the action');
 }));
 
 test('Tier results provide a per-item matrix across all responding participants',()=>withDom(()=>{

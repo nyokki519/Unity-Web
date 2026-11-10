@@ -3,13 +3,33 @@ import {el,button,field} from '../dom.js';
 const LABELS=['一流','二流','三流','四流','映す価値なし'];
 export const ratingCategories=Object.freeze(['センス格付け','AI画像格付け','芸術格付け','プロの仕事','骨董品鑑定','盛り付け格付け']);
 let cssRequested=false;
-function styles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/rating.css?v=rating-v6';document.head.append(link);}
+function styles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/rating.css?v=rating-v8';document.head.append(link);}
 function options(question){return ['A','B'].map(key=>{const value=question?.choices?.[key]||{};return{key,label:String(value.label||`選択肢 ${key}`),asset:String(value.asset||''),alt:String(value.alt||value.label||`選択肢 ${key}`)};});}
-function imageCard(choice,selected,disabled,onSelect,{blind=false}={}){const card=button('',()=>onSelect(choice.key),`rating-choice${blind?' rating-choice-blind':''}`);card.type='button';card.disabled=disabled;card.setAttribute('aria-pressed',String(selected));if(selected)card.className+=' is-selected';card.append(el('span','rating-choice-letter',choice.key));if(choice.asset){const image=el('img','rating-choice-image');image.src=choice.asset;image.alt=choice.alt;image.loading='eager';image.addEventListener('error',()=>{image.hidden=true;card.className+=' rating-image-unavailable';});card.append(image);}else{const visual=el('div','rating-choice-art',choice.key==='A'?'✦':'◈');visual.setAttribute('aria-hidden','true');card.append(visual);}card.append(el('span','rating-choice-label',choice.label));return card;}
+function imageCard(choice,selected,disabled,onSelect,{blind=false}={}){const card=button('',()=>onSelect(choice.key),`rating-choice${blind?' rating-choice-blind':''}`);card.type='button';card.disabled=disabled;card.setAttribute('aria-pressed',String(selected));if(selected)card.className+=' is-selected';card.append(el('span','rating-choice-letter',choice.key));if(choice.asset){const image=el('img','rating-choice-image');image.src=choice.asset;image.alt=choice.alt;image.loading='eager';image.addEventListener('load',()=>{if(image.naturalWidth>0&&image.naturalHeight>0)image.style.aspectRatio=`${image.naturalWidth} / ${image.naturalHeight}`;});image.addEventListener('error',()=>{image.hidden=true;card.className+=' rating-image-unavailable';});card.append(image);}else{const visual=el('div','rating-choice-art',choice.key==='A'?'✦':'◈');visual.setAttribute('aria-hidden','true');card.append(visual);}card.append(el('span','rating-choice-label',choice.label));return card;}
 function questionNotice(question){return typeof question?.practiceNotice==='string'?question.practiceNotice:'';}
 function rankName(row){return row.rankLabel||LABELS[Math.min(LABELS.length-1,Math.max(0,row.rankIndex||0))]||'一流';}
 function standingsList(rows,selfId){const list=el('ol','rating-standings');for(const [index,row]of [...(rows||[])].sort((a,b)=>(a.place??999)-(b.place??999)).entries()){const item=el('li',`rating-standing rank-${Math.min(4,row.rankIndex||0)}${row.playerId===selfId?' is-self':''}`);item.append(el('span','rating-place',String(row.place??index+1).padStart(2,'0')),el('span','rating-standing-name',row.name||'参加者'),el('span','rating-rank-label',rankName(row)),el('span','rating-score',`${row.correct??0} / ${row.total??0} 正解`));list.append(item);}return list;}
 function waitingRoom(title,names,count,side){const room=el('section',`rating-waiting-room rating-room-${side.toLowerCase()}`);room.append(el('p','rating-room-kicker',`${side} ROOM`),el('h3','',title),el('p','rating-room-count',`${count??names.length}人`));const list=el('ul','rating-room-list');for(const entry of names){const name=typeof entry==='string'?entry:entry.name||'参加者';list.append(el('li','rating-room-person',name));}if(!names.length)list.append(el('li','rating-room-empty','まだ誰もいません'));room.append(list);return room;}
+function revealElapsed(state,event,serverNow=Number(state.serverTime)){
+ const startedAt=Number(event.revealStartedAt);
+ if(!Number.isFinite(startedAt)||!Number.isFinite(serverNow))return 0;
+ const endAt=Number(event.revealAt),duration=Number.isFinite(endAt)&&endAt>startedAt?endAt-startedAt:6500;
+ return Math.max(0,Math.min(duration,serverNow-startedAt));
+}
+function revealBeat(elapsed){if(elapsed<1800)return{key:'approach',line:'足音が近づく…'};if(elapsed<3900)return{key:'hold',line:'扉の前で、気配が止まる。'};if(elapsed<5700)return{key:'touch',line:'ノブに手がかかった…'};return{key:'silence',line:'最後の一瞬まで、まだ分からない。'};}
+export function updateRatingReveal(state,offset=0,root=document){
+ const event=state?.event;if(event?.gameId!=='RATING'||event.phase!=='REVEAL')return;
+ const stage=root.querySelector?.('.rating-theater');if(!stage)return;
+ const beat=revealBeat(revealElapsed(state,event,Date.now()+offset));
+ if(stage.dataset.beat===beat.key)return;
+ stage.dataset.beat=beat.key;stage.parentElement.dataset.revealBeat=beat.key;
+ const line=stage.querySelector('.rating-suspense');if(line)line.textContent=beat.line;
+}
+function resultDoors(correct){
+ const stage=el('div','rating-theater rating-result-theater');stage.setAttribute('aria-label',`${correct}の部屋が正解`);
+ stage.append(el('p','rating-kicker','THE REVEAL'),el('p','rating-suspense','正解の扉が開く。'));
+ const doors=el('div','rating-doors');for(const key of ['A','B']){const isCorrect=key===correct,door=el('div',`rating-door rating-door-${key.toLowerCase()} ${isCorrect?'is-open':'is-closed'}`);door.setAttribute('aria-label',isCorrect?`${key}の部屋、正解。扉が開きました。`:`${key}の部屋、不正解。扉は閉じています。`);door.append(el('span','rating-door-letter',`${key} ROOM`),el('span','rating-door-mark',isCorrect?'✧':'◇'),el('span','rating-door-caption',isCorrect?'正解':'こちらではありません'));doors.append(door);}stage.append(doors);return stage;
+}
 
 export function ratingScreen({state,send}){
  styles();const e=state.event,q=e.question||{},self=state.players.find(p=>p.id===state.selfId),host=state.selfId===state.hostId;
@@ -33,14 +53,13 @@ export function ratingScreen({state,send}){
   const rooms=el('div','rating-waiting-grid');rooms.append(waitingRoom('Aの部屋',names.A||[],distribution.A,'A'),waitingRoom('Bの部屋',names.B||[],distribution.B,'B'));root.append(rooms);
   if(!host)root.append(el('p','rating-muted','司会が発表を始めるまで、部屋でお待ちください。'));
  }else if(e.phase==='REVEAL'){
-  const elapsed=Math.max(0,(state.serverTime||Date.now())-(e.revealAt||state.serverTime||Date.now()));root.className+=' is-revealing';
-  const stage=el('div','rating-theater');stage.setAttribute('aria-live','polite');const suspense=el('p','rating-suspense',elapsed<1800?'足音が近づく…':elapsed<3500?'ノブに手がかかった。':'正解の扉は——');stage.append(el('p','rating-kicker','THE REVEAL'),suspense);
-  if(typeof window!=='undefined')for(const [at,text]of [[1800,'ノブに手がかかった。'],[3500,'正解の扉は——']])if(elapsed<at)setTimeout(()=>{suspense.textContent=text;},at-elapsed);
-  const doors=el('div','rating-doors');for(const key of ['A','B']){const door=el('div',`rating-door rating-door-${key.toLowerCase()}`);door.append(el('span','rating-door-letter',`${key} ROOM`),el('span','rating-door-mark','✧'),el('span','rating-door-caption','鑑定の間'));door.style.animationDelay=`-${Math.min(5,elapsed/1000)}s`;doors.append(door);}stage.append(doors);stage.append(el('p','rating-suspense-sub','静寂のあと、真実が明かされます。'));root.append(stage);
+ const elapsed=revealElapsed(state,e),beat=revealBeat(elapsed);root.className+=' is-revealing';root.dataset.revealBeat=beat.key;
+  const stage=el('div','rating-theater');stage.dataset.beat=beat.key;stage.setAttribute('aria-live','polite');const suspense=el('p','rating-suspense',beat.line);stage.append(el('p','rating-kicker','THE REVEAL'),suspense);
+  const doors=el('div','rating-doors');for(const key of ['A','B']){const door=el('div',`rating-door rating-door-${key.toLowerCase()} is-waiting`);door.setAttribute('aria-label',`${key}の部屋、発表待ち`);door.append(el('span','rating-door-letter',`${key} ROOM`),el('span','rating-door-mark','✧'),el('span','rating-door-caption','鑑定の間'));doors.append(door);}stage.append(doors);stage.append(el('p','rating-suspense-sub','二つの部屋は、まだどちらも閉じています。'));root.append(stage);
  }else if(['TALK','FINAL'].includes(e.phase)){
   const notice=questionNotice(q);if(notice)root.append(el('p','rating-note',notice));
   const result=e.result||{},correct=result.correctChoice||'A',dist=result.distribution||{};const titleText=e.phase==='FINAL'?'最終格付け':'鑑定結果';
-  root.append(el('h2','rating-section-title',titleText),el('p','rating-answer-reveal',`正解は ${correct}。`));
+  root.append(el('h2','rating-section-title',titleText),resultDoors(correct),el('p','rating-answer-reveal',`正解は ${correct}。`));
   const choices=el('div','rating-choice-grid rating-result-choices');for(const choice of options(q)){const card=imageCard(choice,false,true,()=>{});card.className+=choice.key===correct?' is-correct':' is-incorrect';choices.append(card);}root.append(choices);
   const explanation=el('article','rating-explanation');explanation.append(el('p','rating-kicker','鑑定メモ'),el('p','',result.explanation||'作品の細部を見比べて、違いを探してみましょう。'));root.append(explanation);if(result.sources){const credits=el('details','rating-sources'),summary=el('summary','','画像の出典・制作情報');credits.append(summary);for(const key of ['A','B']){const source=result.sources[key];if(!source)continue;const row=el('div','rating-source-row');row.append(el('strong','',`${key}：${source.creator||source.tool||source.kind}`),el('p','',source.attribution||source.promptNote||source.license||''));if(source.sourceUrl){const link=el('a','', '出典ページを確認');link.href=source.sourceUrl;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}credits.append(row);}root.append(credits);}
   const distribution=el('div','rating-distribution');for(const key of ['A','B']){const side=el('div',`rating-distribution-side rating-room-${key.toLowerCase()}`);side.append(el('b','',`${key}を選択`),el('span','',`${dist[key]??0}人`));distribution.append(side);}root.append(distribution);

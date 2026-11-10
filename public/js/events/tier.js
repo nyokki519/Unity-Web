@@ -3,7 +3,7 @@ import {el,button} from '../dom.js';
 export const TIER_ORDER=Object.freeze(['S','A','B','C','D']);
 const TIER_LABELS=Object.freeze({S:'最高',A:'かなり好き',B:'いいね',C:'ふつう',D:'自分には合わない'});
 let cssRequested=false;
-export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v5';document.head.append(link);}
+export function ensureTierStyles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/tier.css?v=tier-board-v7';document.head.append(link);}
 // This module is loaded before a Tier room is created, so load its scoped CSS
 // early enough to style the setup phase as well as the board and results.
 ensureTierStyles();
@@ -49,7 +49,7 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
   const focusPicker=focusPickerNext,focusItem=restoreItemFocus,focusSubmit=restoreSubmitFocus;focusPickerNext=false;restoreItemFocus=null;restoreSubmitFocus=false;
   root.replaceChildren();root.classList.toggle('is-locked',locked);
   const header=el('div','tier-board-head');header.append(el('span','tier-stage','CAFÉ MIX · ROUND 01'),el('span','tier-live','● YOUR BOARD'));root.append(header);
-  const instruction=el('p','tier-instruction',locked?'提出済み · みんなの確定を待っています':'カードをつかんで移動。カードをタップしてからTierを選んでもOK');root.append(instruction);
+  const instruction=el('p','tier-instruction',locked?'提出済み · 回答は公開まで本人だけに表示。みんなの確定を待っています':'タップしてS〜Dを選択・配置。ドラッグでも移動できます。回答は公開まで本人だけに表示。');root.append(instruction);
   const count=el('p','tier-count',tierCountText(placed,items));count.setAttribute('role','status');root.append(count);
   const board=el('div','tier-board');board.setAttribute('aria-label','Tier表');
   for(const tier of TIER_ORDER){
@@ -82,16 +82,17 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
  render();return {element:root,get tiers(){return {...placed};},get complete(){return items.every(item=>TIER_ORDER.includes(placed[item.id]));},get submitted(){return submitted;},setLocked(value){if(!readOnly)locked=Boolean(value);render();},retrySubmission};
 }
 
-export function createTierComparison({items,submissions,boards,summary,participants=[],participantCount}){
+export function createTierComparison({items,submissions,boards,summary,participants=[],participantCount,prompt=''}){
  ensureTierStyles();const root=el('section','tier-results'),entries=boards||submissions||[],calculated=summary||summarizeTierBoards(items,entries),agreement=calculated.agreementPct??calculated.agreement??0,responded=calculated.participantCount??entries.length,total=participantCount??responded;root.setAttribute('aria-label','みんなのTier比較結果');
- root.append(el('p','tier-stage','CAFÉ MIX · REVEAL'),el('h2','tier-results-title','みんなのTierを、見比べよう'),el('p','tier-agreement',`${calculated.agreementPct==null&&calculated.agreement==null?'一致率 —（2人以上で表示）':`一致率 ${agreement}%`} · 回答 ${responded} / 参加 ${total}人`));
+ const themePrompt=String(prompt||'').trim();root.append(el('p','tier-stage','CAFÉ MIX · REVEAL'),el('h2','tier-results-title','みんなのTierを、見比べよう'));if(themePrompt)root.append(el('p','tier-theme-prompt',themePrompt));root.append(el('p','tier-agreement',`${calculated.agreementPct==null&&calculated.agreement==null?'一致率 —（2人以上で表示）':`一致率 ${agreement}%`} · 回答 ${responded} / 参加 ${total}人`),el('p','small muted tier-agreement-note','一致率は参加者ペアの一致率を、項目ごとに平均した値です。'));
+ const legend=el('div','tier-result-legend');for(const tier of TIER_ORDER)legend.append(el('span',`tier-discussion-vote tier-${tier.toLowerCase()}`,`${tier} · ${TIER_LABELS[tier]}`));root.append(legend);
  const infos=Array.isArray(calculated.items)?Object.fromEntries(calculated.items.map(info=>[info.id,info])):calculated.items||{};
- const shared=el('section','tier-majority');shared.append(el('h3','','みんなの真ん中'));
+ const shared=el('section','tier-majority');shared.append(el('h3','','項目ごとの最多Tier'));
  const strip=el('div','tier-majority-strip');for(const item of items){const info=infos[item.id]||{},majority=info.majorityTier??info.majority??(info.majorityTiers?.length===1?info.majorityTiers[0]:null),counts=info.counts||info.distribution||{},count=majority?(counts[majority]??0):0,minorityCount=Array.isArray(info.minorityTiers)?info.minorityTiers.reduce((sum,tier)=>sum+(counts[tier]||0),0):(info.minorityCount||0),caption=majority?(minorityCount?`少数派 ${minorityCount}人`:'全員一致'):entries.length===1?'比較できません':entries.length?(info.majorityTiers?.length>1?'同数で分かれた':'票が分かれた'):'回答なし';const piece=el('article',`tier-majority-item${majority?' tier-'+majority.toLowerCase():''}`);piece.append(el('strong','',majority||'—'),el('span','',item.label),el('small','',majority?`${count}人の多数派 · ${caption}`:caption));strip.append(piece);}shared.append(strip);root.append(shared);
  root.append(discussionPrompts(items,infos,responded,total));
  root.append(comparisonMatrix(items,entries,participants));
  const list=el('div','tier-submission-list');entries.forEach((entry,index)=>{const participant=participants.find(p=>p.id===(entry.playerId??entry.id)),name=participant?.name||entry.name||`参加者 ${index+1}`,tiers=normalizeBoard(items,entry.tiers);const details=el('details','tier-submission');if(index===0)details.open=true;const summaryEl=el('summary');summaryEl.append(el('span','tier-avatar',String(index+1).padStart(2,'0')),el('strong','',name),el('span','tier-submission-hint','タップして表を見る'));details.append(summaryEl);const board=el('div','tier-mini-board');for(const tier of TIER_ORDER){const row=el('section',`tier-mini-row tier-${tier.toLowerCase()}`);row.append(el('strong','',tier));const cell=el('div','tier-mini-items');for(const item of items)if(tiers[String(item.id)]===tier)cell.append(el('span','tier-mini-item',item.label));row.append(cell);board.append(row);}details.append(board);list.append(details);});root.append(list);
- root.append(button('比較結果を画像で保存',()=>saveTierImage({items,entries,participants,calculated,agreement}),'tier-image-button'));return root;
+ const save=button('比較結果を画像で保存',()=>saveTierImage({items,entries,participants,calculated,agreement,prompt:themePrompt}),'tier-image-button');save.setAttribute('aria-label',themePrompt?`${themePrompt}｜みんなのTier会議の比較結果を画像で保存`:'みんなのTier会議の比較結果を画像で保存');root.append(save);return root;
 }
 
 
@@ -110,18 +111,24 @@ function comparisonMatrix(items,entries,participants){
  const scroll=el('div','tier-matrix-scroll');scroll.setAttribute('role','region');scroll.setAttribute('aria-label','項目ごとのTier比較。横にスクロールできます。');scroll.tabIndex=0;
  const table=el('table','tier-matrix'),head=el('thead'),headRow=el('tr');const first=el('th','','項目');first.setAttribute('scope','col');headRow.append(first);
  const names=entries.map((entry,index)=>participants.find(p=>p.id===(entry.playerId??entry.id))?.name||entry.name||`参加者 ${index+1}`);
- for(const name of names){const th=el('th','tier-matrix-person',name);th.setAttribute('scope','col');headRow.append(th);}head.append(headRow);table.append(head);
+ for(const name of names){const th=el('th','tier-matrix-person',name);th.setAttribute('scope','col');th.setAttribute('aria-label',name);th.setAttribute('title',name);th.setAttribute('style','width:88px;max-width:88px;white-space:normal;overflow-wrap:anywhere;vertical-align:bottom');headRow.append(th);}head.append(headRow);table.append(head);
  const normalized=entries.map(entry=>normalizeBoard(items,entry.tiers)),body=el('tbody');
  for(const item of items){const row=el('tr'),label=el('th','tier-matrix-item',item.label);label.setAttribute('scope','row');row.append(label);for(const [index,tiers]of normalized.entries()){const tier=tiers[String(item.id)]||'',cell=el('td',`tier-matrix-cell${tier?` tier-${tier.toLowerCase()}`:''}`),grade=el('span','tier-matrix-grade',tier||'—');grade.setAttribute('aria-label',tier?`${names[index]}さん：${tier} Tier`:`${names[index]}さん：未回答`);cell.append(grade);row.append(cell);}body.append(row);}table.append(body);scroll.append(table);details.append(scroll);return details;
 }
 
-function saveTierImage({items,entries,participants,calculated,agreement}){
- const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'),width=1200,rowHeight=72,boardHeight=5*rowHeight+86,height=240+Math.max(1,entries.length)*boardHeight+60;canvas.width=width;canvas.height=height;
- ctx.fillStyle='#102a25';ctx.fillRect(0,0,width,height);ctx.fillStyle='#28564a';ctx.fillRect(0,0,width,190);ctx.strokeStyle='#c89c57';ctx.lineWidth=3;ctx.strokeRect(18,18,width-36,height-36);
- ctx.fillStyle='#e2c98f';ctx.font='700 20px system-ui, sans-serif';ctx.fillText('UNITY MIX  /  CAFÉ TIER MEETING',48,58);ctx.fillStyle='#fff8e8';ctx.font='800 42px system-ui, sans-serif';ctx.fillText('みんなのTier会議',48,116);ctx.font='600 22px system-ui, sans-serif';ctx.fillStyle='#e8e0ce';ctx.fillText(`一致率 ${calculated.agreementPct==null&&calculated.agreement==null?'—':`${agreement}%`}　·　${calculated.participantCount??entries.length}人`,48,158);
- let y=215;const names=entries.map((entry,index)=>participants.find(p=>p.id===(entry.playerId??entry.id))?.name||entry.name||`参加者 ${index+1}`);
+function saveTierImage({items,entries,participants,calculated,agreement,prompt=''}){
+ const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'),width=1200,rowHeight=72,boardHeight=5*rowHeight+86,headerHeight=320,height=headerHeight+Math.max(1,entries.length)*boardHeight+60;canvas.width=width;canvas.height=height;
+ ctx.fillStyle='#102a25';ctx.fillRect(0,0,width,height);ctx.fillStyle='#28564a';ctx.fillRect(0,0,width,headerHeight);ctx.strokeStyle='#c89c57';ctx.lineWidth=3;ctx.strokeRect(18,18,width-36,height-36);
+ ctx.fillStyle='#e2c98f';ctx.font='700 20px system-ui, sans-serif';ctx.fillText('UNITY MIX  /  CAFÉ TIER MEETING',48,54);ctx.fillStyle='#fff8e8';ctx.font='800 42px system-ui, sans-serif';ctx.fillText('みんなのTier会議',48,108);
+ if(prompt){ctx.fillStyle='#f2dfae';ctx.font='700 23px system-ui, sans-serif';for(const [index,line]of wrapPrompt(ctx,prompt,1104,2).entries())ctx.fillText(line,48,150+index*31);}
+ const legend=[['S','最高','#ff7d85'],['A','かなり好き','#ffc07d'],['B','いいね','#f6ed72'],['C','ふつう','#9de783'],['D','自分には合わない','#73b4ef']];let lx=48;ctx.font='600 14px system-ui, sans-serif';for(const[tier,label,color]of legend){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(lx,216,30,30,7);ctx.fill();ctx.fillStyle='#1b2922';ctx.font='900 16px Georgia, serif';ctx.fillText(tier,lx+10,237);ctx.fillStyle='#f6f0e3';ctx.font='600 14px system-ui, sans-serif';const caption=`${tier} · ${label}`;ctx.fillText(caption,lx+38,237);lx+=38+ctx.measureText(caption).width+15;}
+ ctx.font='600 21px system-ui, sans-serif';ctx.fillStyle='#e8e0ce';ctx.fillText(`一致率 ${calculated.agreementPct==null&&calculated.agreement==null?'—':`${agreement}%`}　·　${calculated.participantCount??entries.length}人`,48,272);
+ ctx.font='500 14px system-ui, sans-serif';ctx.fillStyle='#c8d1c8';ctx.fillText('一致率は参加者ペアの一致を項目ごとに平均した値です。',48,296);
+ let y=headerHeight+24;const names=entries.map((entry,index)=>participants.find(p=>p.id===(entry.playerId??entry.id))?.name||entry.name||`参加者 ${index+1}`);
  if(!entries.length){ctx.fillStyle='#fff8e8';ctx.font='600 24px system-ui, sans-serif';ctx.fillText('今回は回答がありませんでした。',48,y+40);}
  entries.forEach((entry,index)=>{ctx.fillStyle='#183e35';ctx.beginPath();ctx.roundRect(32,y,width-64,boardHeight-12,18);ctx.fill();ctx.fillStyle='#f5f0e5';ctx.font='800 24px system-ui, sans-serif';ctx.fillText(names[index],54,y+38);const tiers=normalizeBoard(items,entry.tiers);let ry=y+52;for(const tier of TIER_ORDER){const color={S:'#ff7d85',A:'#ffc07d',B:'#f6ed72',C:'#9de783',D:'#73b4ef'}[tier];ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(48,ry,54,54,8);ctx.fill();ctx.fillStyle='#19211e';ctx.font='900 27px Georgia, serif';ctx.fillText(tier,64,ry+37);ctx.fillStyle='#fff8e8';ctx.font='600 18px system-ui, sans-serif';const labels=items.filter(item=>tiers[String(item.id)]===tier).map(item=>item.label).join('　·　')||'—';ctx.fillText(labels.length>92?`${labels.slice(0,90)}…`:labels,118,ry+32,1015);ry+=rowHeight;}
  y+=boardHeight;});
- canvas.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'unity-mix-tier-result.png',{type:'image/png'});try{if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:'みんなのTier会議'});return;}}catch(error){if(error?.name==='AbortError')return;}const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='unity-mix-tier-result.png';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');
+ canvas.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'unity-mix-tier-result.png',{type:'image/png'}),shareTitle=prompt?`${prompt}｜みんなのTier会議`:'みんなのTier会議';try{if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:shareTitle,text:prompt?`${prompt} のTierをみんなで比べました。`:'みんなのTierを比べました。'});return;}}catch(error){if(error?.name==='AbortError')return;}const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='unity-mix-tier-result.png';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');
 }
+
+function wrapPrompt(ctx,value,maxWidth,maxLines){const chars=Array.from(value),lines=[];let line='',index=0;while(index<chars.length&&lines.length<maxLines){const candidate=line+chars[index];if(line&&ctx.measureText(candidate).width>maxWidth){lines.push(line);line='';continue;}line=candidate;index++;}if(line)lines.push(line);if(index<chars.length&&lines.length){let last=lines.length-1;while(lines[last]&&ctx.measureText(`${lines[last]}…`).width>maxWidth)lines[last]=Array.from(lines[last]).slice(0,-1).join('');lines[last]=`${lines[last]}…`;}return lines;}

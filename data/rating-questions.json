@@ -30,27 +30,27 @@
     "id": "rating-sense-02",
     "game": "RATING",
     "category": "センス格付け",
-    "prompt": "二つのカフェ告知。初見で、情報を迷わず読めるのはどちら？",
-    "talkPrompt": "どの部分を見てそう判断した？正解の理由と、自分が注目したポイントを比べてみよう。",
+    "prompt": "二つのテイクアウトカップ。遠目でもロゴの形が背景に埋もれにくいのはどちら？",
+    "talkPrompt": "色の好みではなく、カップとロゴの明るさの差に注目。手元から少し離して見たときの印象も比べよう。",
     "choices": {
       "A": {
-        "label": "情報を詰め込んだ告知",
+        "label": "背景になじむ配色",
         "asset": "/rating/r02-a.svg",
-        "alt": "センス格付けの比較用オリジナル図版 A"
+        "alt": "深緑のカップに、やや近い明るさの丸いロゴ"
       },
       "B": {
-        "label": "余白と階層のあるカフェ告知",
+        "label": "輪郭が見分けやすい配色",
         "asset": "/rating/r02-b.svg",
-        "alt": "センス格付けの比較用オリジナル図版 B"
+        "alt": "深緑のカップに、明るい金色の丸いロゴ"
       }
     },
     "correct": "B",
-    "explanation": "配色より、情報の優先順位と読みやすさを観察。 正解は制作者が指定した観察ポイントに基づきます。",
+    "explanation": "同じ形のロゴでも、背景との明るさの差があると輪郭を捉えやすくなります。ここではロゴと地色のコントラストを観察基準にしています。",
     "source": {
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+      "editorialNote": "Unity MIX用のオリジナルSVG練習図版。実在の専門家・作品・文化財・料理人の経歴や真贋を示さず、解説に記した視覚要素だけを比較する。"
     }
   },
   {
@@ -140,27 +140,27 @@
     "id": "rating-art-02",
     "game": "RATING",
     "category": "芸術格付け",
-    "prompt": "二つの静物構図。光と視線の設計がより一貫しているのはどちら？",
-    "talkPrompt": "どの部分を見てそう判断した？正解の理由と、自分が注目したポイントを比べてみよう。",
+    "prompt": "二つの抽象画。大きな形と余白の重さが釣り合って見えるのはどちら？",
+    "talkPrompt": "色の好みではなく、左右の形の大きさと余白の受け止め方を比べよう。どこに視線が止まったかも話してみて。",
     "choices": {
       "A": {
-        "label": "装飾を重ねた静物画",
+        "label": "主役と余白を受け止める配置",
         "asset": "/rating/r06-a.svg",
-        "alt": "芸術格付けの比較用オリジナル図版 A"
+        "alt": "濃紺地に大中の円とゆるやかな曲線を配置した抽象構図"
       },
       "B": {
-        "label": "光と構図を丁寧に設計した静物画",
+        "label": "大きな形へ重心が寄る配置",
         "asset": "/rating/r06-b.svg",
-        "alt": "芸術格付けの比較用オリジナル図版 B"
+        "alt": "濃紺地に大きな円と細い曲線を寄せた抽象構図"
       }
     },
-    "correct": "B",
-    "explanation": "価格を断定せず、構図・光・素材表現の根拠を比べる。 正解は制作者が指定した観察ポイントに基づきます。",
+    "correct": "A",
+    "explanation": "この練習図版では、大きな円と小さなアクセントの間に余白が残り、視線の重さが一方へ寄りすぎない構図を基準にしています。",
     "source": {
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+      "editorialNote": "Unity MIX用のオリジナルSVG練習図版。実在の専門家・作品・文化財・料理人の経歴や真贋を示さず、解説に記した視覚要素だけを比較する。"
     }
   },
   {
@@ -194,27 +194,27 @@
     "id": "rating-craft-02",
     "game": "RATING",
     "category": "プロの仕事",
-    "prompt": "二つのイベントポスター。整列と文字組みがより丁寧なのはどちら？",
-    "talkPrompt": "どの部分を見てそう判断した？正解の理由と、自分が注目したポイントを比べてみよう。",
+    "prompt": "三つの案内アイコン。線の太さや間隔が同じセットとして揃っているのはどちら？",
+    "talkPrompt": "一つのアイコンの好みより、丸・十字・三角の線幅と並びの一貫性に注目して比べよう。",
     "choices": {
       "A": {
-        "label": "文字間と整列が不揃いなポスター",
+        "label": "右側だけ線が細い案内アイコン群",
         "asset": "/rating/r08-a.svg",
-        "alt": "プロの仕事の比較用オリジナル図版 A"
+        "alt": "右側の案内記号だけ線が細い図版"
       },
       "B": {
-        "label": "丁寧な文字組みのイベントポスター",
+        "label": "線幅が揃った案内アイコン群",
         "asset": "/rating/r08-b.svg",
-        "alt": "プロの仕事の比較用オリジナル図版 B"
+        "alt": "三つの案内記号が同じ線幅と位置に並んだ図版"
       }
     },
     "correct": "B",
-    "explanation": "専門家の署名や実在の依頼作品ではなく、制作品質の学習例。 正解は制作者が指定した観察ポイントに基づきます。",
+    "explanation": "丸・十字・三角の線幅、位置、間隔が揃った図版を基準にしています。これは制作実績の鑑定ではなく、図版内の一貫性を探す練習です。",
     "source": {
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+      "editorialNote": "Unity MIX用のオリジナルSVG練習図版。実在の専門家・作品・文化財・料理人の経歴や真贋を示さず、解説に記した視覚要素だけを比較する。"
     }
   },
   {
@@ -248,27 +248,27 @@
     "id": "rating-antique-02",
     "game": "RATING",
     "category": "骨董品鑑定",
-    "prompt": "二つの架空の器。使い込まれた質感に説得力があるのはどちら？",
-    "talkPrompt": "どの部分を見てそう判断した？正解の理由と、自分が注目したポイントを比べてみよう。",
+    "prompt": "二つの架空の染付皿。器の縁に沿って文様が収まり、余白が保たれているのはどちら？",
+    "talkPrompt": "年代や本物らしさではなく、皿の円い縁と文様の距離が自然に保たれているかを見よう。",
     "choices": {
       "A": {
-        "label": "模様だけ古く見せた器",
+        "label": "縁から間隔を保つ文様",
         "asset": "/rating/r10-a.svg",
-        "alt": "骨董品鑑定の比較用オリジナル図版 A"
+        "alt": "青い縁取りの白い皿に、縁から距離を置いた染付風の模様"
       },
       "B": {
-        "label": "縁の摩耗が自然につながる器",
+        "label": "縁に近づきすぎた文様",
         "asset": "/rating/r10-b.svg",
-        "alt": "骨董品鑑定の比較用オリジナル図版 B"
+        "alt": "青い縁取りの白い皿に、縁へ近づいた模様"
       }
     },
-    "correct": "B",
-    "explanation": "年代や金銭価値は断定しない。観察用の架空工芸品。 正解は制作者が指定した観察ポイントに基づきます。",
+    "correct": "A",
+    "explanation": "架空の器を使った観察練習です。文様が皿の円周に沿い、縁から一定の間隔を保つ構成を基準にしています。真贋・年代・価値を示すものではありません。",
     "source": {
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+      "editorialNote": "Unity MIX用のオリジナルSVG練習図版。実在の専門家・作品・文化財・料理人の経歴や真贋を示さず、解説に記した視覚要素だけを比較する。"
     }
   },
   {
@@ -302,27 +302,27 @@
     "id": "rating-plating-02",
     "game": "RATING",
     "category": "盛り付け格付け",
-    "prompt": "二つの一皿。主役が引き立ち、余白が活きているのはどちら？",
-    "talkPrompt": "どの部分を見てそう判断した？正解の理由と、自分が注目したポイントを比べてみよう。",
+    "prompt": "同じ前菜を盛り付けた二皿。二つの食材が見分けやすく、互いを隠していないのはどちら？",
+    "talkPrompt": "色の好みではなく、主食材と付け合わせが皿の中で重なりすぎていないかを比べよう。",
     "choices": {
       "A": {
-        "label": "食材を均等に並べた一皿",
+        "label": "食材が近づき輪郭が重なる配置",
         "asset": "/rating/r12-a.svg",
-        "alt": "盛り付け格付けの比較用オリジナル図版 A"
+        "alt": "白い皿に赤茶のソースが食材に重なる前菜"
       },
       "B": {
-        "label": "高さと余白を活かした一皿",
+        "label": "食材の輪郭が分かれる配置",
         "asset": "/rating/r12-b.svg",
-        "alt": "盛り付け格付けの比較用オリジナル図版 B"
+        "alt": "白い皿に赤茶と緑の食材を分けて盛った前菜"
       }
     },
     "correct": "B",
-    "explanation": "実在シェフの作品ではないオリジナル盛り付け図。 正解は制作者が指定した観察ポイントに基づきます。",
+    "explanation": "この図版では、主食材の輪郭と付け合わせが重ならず、皿の中で別々に認識できる配置を基準にしています。実在シェフの作品評価ではありません。",
     "source": {
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+      "editorialNote": "Unity MIX用のオリジナルSVG練習図版。実在の専門家・作品・文化財・料理人の経歴や真贋を示さず、解説に記した視覚要素だけを比較する。"
     }
   },
   {
