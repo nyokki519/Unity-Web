@@ -78,7 +78,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
         res.writeHead(410,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});
         return res.end(req.method==='HEAD'?undefined:'<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>公開停止｜Unity MIX</title><h1>このゲームは公開を停止しています。</h1><p>レトロ版と交流ゲームは引き続き遊べます。</p><a href="/">Unity MIXのホームへ</a></html>');
       }
-      try{const info=await stat(file);if(!info.isFile())throw new Error('not file');}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
+      try{let info=await stat(file);if(info.isDirectory()){file=resolve(file,'index.html');info=await stat(file);}if(!info.isFile())throw new Error('not file');}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
       const data=await readFile(file);
       const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.mp3':'audio/mpeg','.svg':'image/svg+xml'};
       res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':['.html','.js','.mjs','.css'].includes(extname(file))?'no-cache':'public, max-age=3600'});
