@@ -9,5 +9,6 @@ export function view(match,seat=0,{actions=legalActions}={}){
   return {phase:match.phase,revision:match.revision,activeSeat:match.activeSeat,dealer:match.dealer,
     round:`東${match.handNumber}局`,handNumber:match.handNumber,honba:match.honba,riichiPot:match.riichiPot,
     remainingTiles:match.liveWall.length,doraIndicators:[...match.doraIndicators],lastDiscard:match.lastDiscard?structuredClone(match.lastDiscard):null,
+    ...(match.phase==='DISCARD'&&match.activeSeat===seat&&match.drawnTile!==null?{drawnTile:match.drawnTile}:{}),
     players,legalActions:actions(match,seat),deadlineAt:match.deadlineAt,result};
 }

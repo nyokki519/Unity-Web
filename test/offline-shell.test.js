@@ -9,7 +9,7 @@ test('the offline shell can install from live HTTP assets without requesting ret
  try{
   const base=`http://127.0.0.1:${app.server.address().port}`,handlers={},requested=[];let installed=false,pending;
   const source=await readFile(new URL('../public/sw.js',import.meta.url),'utf8');
-  const appSource=await readFile(new URL('../public/js/app.js',import.meta.url),'utf8');assert.match(source,/const CACHE='unity-mix-shell-v58'/);assert.match(appSource,/register\('\/sw\.js\?v=58'/,'the registration URL and cache revision stay aligned');
+  const appSource=await readFile(new URL('../public/js/app.js',import.meta.url),'utf8');assert.match(source,/const CACHE='unity-mix-shell-v60'/);assert.match(appSource,/register\('\/sw\.js\?v=60'/,'the registration URL and cache revision stay aligned');
   vm.runInNewContext(source,{self:{addEventListener:(name,fn)=>{handlers[name]=fn;},skipWaiting:async()=>{installed=true;}},Request:class{constructor(path,options){return new Request(new URL(path,base),options);}},caches:{open:async()=>({addAll:async(requests)=>{for(const request of requests){requested.push(request.url);const response=await fetch(request);assert.equal(response.status,200,request.url);}}})}});
   handlers.install({waitUntil:p=>{pending=p;}});await pending;
   assert.equal(installed,true);assert.ok(requested.length>100);assert.ok(requested.every(url=>!url.includes('/mechanical/')));
@@ -24,6 +24,6 @@ test('the offline shell can install from live HTTP assets without requesting ret
   assert.ok(cached.has('/rating/verified/rating-art-de-hooch.jpg'),'the source-backed art comparison image is cached');
   assert.ok(cached.has('/rating/verified/rating-art-vermeer.jpg'),'the source-backed art comparison image is cached');
   for(const name of ['moka','sumire','houma','kona']){assert.ok(cached.has(`/mahjong/assets/${name}.webp`),`${name} original portrait remains cached`);assert.ok(cached.has(`/mahjong/assets/${name}-portrait.webp`),`${name} new portrait is cached`);}
-  assert.ok(cached.has('/mahjong/src/sound.js'),'the new audio module is cached offline');
+  assert.ok(cached.has('/mahjong/src/sound.js'),'the new audio module is cached offline');assert.ok(cached.has('/mahjong/src/tile-art.js'),'the custom tile-face renderer is cached offline');
  }finally{await app.close();}
 });

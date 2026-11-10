@@ -3,6 +3,7 @@
 .hand-next{display:block;margin:12px auto 4px;background:#294b40;color:#fff;border-color:#294b40;font-weight:700;min-width:132px}.hand-next:hover:not(:disabled){background:#1e3e34}
 /* Concealed opponent hands: tile-count silhouette only, with no face/ID data. */
 .hidden-tiles{display:flex;justify-content:center;gap:1px;min-height:18px;margin:4px auto 7px;letter-spacing:normal}.tile-back{position:relative;display:block;flex:0 1 8px;width:8px;height:14px;min-width:3px;border:1px solid #d5bd86;border-radius:2px;background:linear-gradient(145deg,#376a5d,#173f36 65%,#102f2a);box-shadow:inset 0 0 0 1px #ffffff16}.tile-back::after{content:"";position:absolute;inset:3px 1px;border:1px solid #cbb37470;border-radius:1px;background:repeating-linear-gradient(135deg,transparent 0 2px,#d5bd8622 2px 3px)}
+.tile{display:grid;place-items:center;flex:0 0 46px;width:46px;height:66px;min-width:46px;min-height:66px;padding:0;border:0;border-radius:6px;background:transparent;box-shadow:none;scroll-snap-align:center}.tile:hover:not(:disabled){background:transparent;border:0}.tile.selected{transform:translateY(-8px);outline:2px solid #e6ba70;outline-offset:1px;background:transparent}.mj-tile-svg{display:block;width:44px;height:59px;overflow:visible;filter:drop-shadow(0 2px 2px #10251b55)}.mj-tile-compact{width:16px;height:22px;filter:none}.mj-tile-shadow{fill:#102b24;opacity:.32}.mj-tile-edge{fill:#d1c1a0;stroke:#87795e;stroke-width:1}.mj-tile-face{fill:#fffdf5;stroke:#e9e1d0;stroke-width:.8}.mj-tile-red-five{fill:#fff7e8}.mj-tile-glint{stroke:#fff;stroke-width:1.4;opacity:.8}.mj-pin{fill:#3f6652;stroke:#244835;stroke-width:1}.mj-pin-alt{fill:#a9c88e}.mj-pin.mj-red{fill:#bf503e;stroke:#833a31}.mj-man-number{font: bold 32px 'Yu Mincho',serif;text-anchor:middle;fill:#264337}.mj-suit-word{font:bold 17px 'Yu Mincho',serif;text-anchor:middle;fill:#33473c}.mj-honor{font:bold 36px 'Yu Mincho',serif;text-anchor:middle}.mj-green{fill:#537c58;stroke:#31583b;stroke-width:1}.mj-red{fill:#bb4f3b;stroke:#80372e;stroke-width:1}.mj-bamboo-seam{fill:none;stroke:#dbe5c2;stroke-width:1;stroke-linecap:round;opacity:.8}.mj-white-dragon{fill:#faf9ee;stroke:#849180;stroke-width:1.3}.mj-white-line{fill:none;stroke:#7b8a74;stroke-width:1.5}.mj-red-tag{fill:#b84739}.mj-red-label{font:bold 7px sans-serif;text-anchor:middle;fill:#fff8e7}.mj-unknown{font:bold 34px sans-serif;text-anchor:middle;fill:#8b3e32}.mj-back-shadow{fill:#102b24;opacity:.3}.mj-back-face{fill:#2a6254;stroke:#cfb475;stroke-width:1.5}.mj-back-frame{fill:none;stroke:#e0cb91;stroke-width:1}.mj-back-pattern{fill:none;stroke:#d7c38d;stroke-width:1.3;opacity:.85}.mj-back-seal{fill:#1c483f;stroke:#e3cf9d;stroke-width:1.2}.mj-back-mark{stroke:#e3cf9d;stroke-width:1.3;stroke-linecap:round}.tile-river{display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:center;gap:1px;min-height:24px;margin:5px 0 8px}.river-tile{display:inline-flex;flex:0 0 16px;width:16px;height:22px;align-items:center;justify-content:center}.meld-tiles{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:3px;min-height:24px;margin:2px 0}.meld-set{display:inline-flex;align-items:center;gap:1px;padding:1px 3px;border:1px solid #decf9c44;border-radius:4px}.meld-kind{font-size:8px;color:#f0dba4}.dora-row{display:flex;align-items:center;justify-content:center;gap:5px;margin:7px}.dora-row .mj-tile-svg{width:25px;height:34px}@media(max-width:699px){.tile{flex-basis:45px;width:45px;height:64px;min-width:45px;min-height:64px}.mj-tile-svg{width:42px;height:56px}.mj-tile-compact{width:15px;height:21px}.tile-river{gap:0;margin:4px 0 7px}.meld-set{gap:0}.dora-row .mj-tile-svg{width:22px;height:30px}}
 /* Character portraits: art-led cards with readable faces and distinct café palettes. */
 .character-card{position:relative;border-color:#ded4c2;transition:transform .22s cubic-bezier(.2,.75,.2,1),box-shadow .22s,border-color .22s}
 .character-card:hover:not(:disabled){transform:translateY(-5px);border-color:var(--accent);box-shadow:0 14px 30px #263e2922}
@@ -17,3 +18,103 @@
 .table-character .portrait-compact{border:1px solid #d8bd7e}
 @media(max-width:699px){.character-card{border-radius:13px;padding-bottom:15px}.character-card>strong{font-size:clamp(16px,4.4vw,19px)}.character-card>span:last-child{font-size:11px}.character-card .portrait{aspect-ratio:3/4}.mode-layout .selected-character .portrait{max-width:190px}}
 @media(prefers-reduced-motion:reduce){.character-card{transition:none}}
+/* Play screen: a warm, framed felt table that gives each seat a clear zone. */
+.table{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:grid;
+  gap:14px;
+  padding:22px 24px;
+  border:7px solid #b9a47f;
+  border-radius:30px;
+  background:
+    radial-gradient(ellipse at 50% 48%,#32685a 0,#28594c 50%,#214b40 100%);
+  box-shadow:inset 0 0 0 1px #f0dfb260,inset 0 12px 28px #ffffff0a,inset 0 -20px 35px #102d2740,0 13px 30px #17271c1c;
+}
+.table::before{content:"";position:absolute;z-index:-1;inset:8px;border:1px solid #d8c39355;border-radius:20px;pointer-events:none}
+.opponents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:12px}
+.opponent{padding:10px 8px 8px;border:1px solid #ffffff23;border-radius:13px;background:linear-gradient(145deg,#ffffff0c,#0c342d20);box-shadow:inset 0 1px #ffffff0b}
+.opponent h2{font-family:Georgia,'Yu Mincho',serif;font-size:14px;letter-spacing:.04em;color:#fff7df}
+.opponent p{min-height:1.5em;color:#e3ddc6;font-size:11px;line-height:1.5}
+.hidden-tiles{min-height:15px;margin:5px auto 8px;gap:2px}
+.tile-back{height:17px;border-color:#e1ca94;background:linear-gradient(145deg,#4c826d,#245447 65%,#173d34);box-shadow:0 1px 2px #10261f66,inset 0 0 0 1px #ffffff19}
+.tile-river{min-height:25px;margin:7px 0 4px;gap:2px}
+.river-tile{flex-basis:17px;width:17px;height:24px}
+.meld-tiles{gap:5px;min-height:25px;margin:5px 0}
+.meld-set{padding:2px 4px;border-color:#e8d6a355;background:#173e3530}
+.meld-kind{font-size:9px;color:#f0dba4}
+.table-center{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:170px;padding:20px 14px;border-block:1px solid #dfce9a32;text-align:center}
+.table-center>p:first-child{margin-bottom:8px;color:#e3d7b3;font-size:11px;letter-spacing:.24em}
+.table-center>strong{font-family:Georgia,'Yu Mincho',serif;font-size:clamp(21px,2.5vw,27px);letter-spacing:.04em;text-shadow:0 2px 14px #10271e66}
+.table-center>p:not(:first-child){margin:4px 0;color:#e4d9bb}
+.dora-row{margin:11px 0 4px;color:#fff0c7;font-size:13px}
+.table-character{margin:9px auto 0;min-height:58px}
+.table-character .reaction{border-color:#e5d8b33c;background:#123c338c;box-shadow:0 4px 14px #10251f20;color:#f7ebcb}
+.own-seat{min-width:0;padding:4px 4px 0}
+.own-seat h2{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 5px;color:#fff3d1;font-family:Georgia,'Yu Mincho',serif;font-size:16px;letter-spacing:.04em}
+.own-seat h2 span{margin:0;color:#ead7a6;font-family:system-ui,sans-serif;font-size:13px;font-weight:500}
+.own-seat>.tile-river{justify-content:center;margin:6px 0}
+.own-seat>.meld-tiles{margin:5px 0}
+.hand{gap:5px;padding:12px 4px 14px;scrollbar-color:#d6cbb7 #17483d;scrollbar-width:thin}
+.tile{flex-basis:48px;width:48px;height:68px;min-width:48px;min-height:68px;filter:drop-shadow(0 3px 3px #11251e44)}
+.tile.selected{filter:drop-shadow(0 6px 4px #11251e55)}
+.mj-tile-svg{width:46px;height:62px}
+.actions{gap:9px;margin-top:18px}
+.actions button{box-shadow:0 3px 9px #182a1b12;font-weight:600}
+.actions button:first-child{border-color:#294b40;box-shadow:0 5px 14px #294b4025}
+@media(max-width:699px){
+  .table{gap:9px;padding:11px 8px 12px;border-width:5px;border-radius:22px;box-shadow:inset 0 0 0 1px #f0dfb252,inset 0 10px 25px #ffffff08,inset 0 -14px 27px #102d2740,0 9px 22px #17271c18}
+  .table::before{inset:5px;border-radius:14px}
+  .opponents{gap:5px}
+  .opponent{padding:8px 4px 6px;border-radius:10px}
+  .opponent h2{font-size:clamp(10px,2.8vw,12px);line-height:1.35}
+  .opponent p{min-height:2.8em;margin:3px 0 4px;font-size:9px;line-height:1.4}
+  .hidden-tiles{gap:1px;min-height:13px;margin:4px auto 6px}
+  .tile-back{height:14px}
+  .tile-river{gap:1px;min-height:22px;margin:5px 0 3px}
+  .river-tile{flex-basis:14px;width:14px;height:20px}
+  .mj-tile-compact{width:13px;height:18px}
+  .meld-tiles{gap:2px;min-height:20px;margin:4px 0}
+  .meld-set{padding:1px 2px}
+  .meld-kind{font-size:7px}
+  .table-center{min-height:155px;padding:14px 8px}
+  .table-center>p:first-child{margin-bottom:6px;font-size:10px}
+  .table-center>strong{font-size:22px}
+  .dora-row{margin:8px 0 3px;font-size:12px}
+  .dora-row .mj-tile-svg{width:21px;height:29px}
+  .table-character{gap:8px;min-height:52px;margin:6px auto 0}
+  .table-character .portrait-compact{flex-basis:44px;width:44px;height:52px}
+  .table-character .reaction{max-width:calc(100% - 52px);padding:6px 9px;font-size:11px}
+  .own-seat{padding-inline:0}
+  .own-seat h2{gap:12px;font-size:14px}
+  .own-seat h2 span{font-size:12px}
+  .hand{gap:3px;margin-inline:-2px;padding:12px 3px 14px;scroll-padding-inline:10px;scrollbar-width:none;touch-action:pan-x}
+  .hand::-webkit-scrollbar{display:none}
+  .tile{flex-basis:44px;width:44px;height:62px;min-width:44px;min-height:62px}
+  .mj-tile-svg{width:41px;height:55px}
+  .hand-scroll-hint{margin:5px 0 0;color:#e6d8b7;font-size:10px}
+  .actions{gap:8px;margin-top:14px}
+  .actions button{min-height:48px;padding:11px 14px}
+}
+@media(max-width:380px){
+  .table{padding-inline:6px}
+  .opponents{gap:3px}
+  .opponent{padding-inline:3px}
+  .tile-back{flex-basis:6px;width:6px}
+  .river-tile{flex-basis:12px;width:12px}
+  .meld-set{gap:0}
+  .table-center{min-height:145px}
+}
+/* Small table accents reinforce the latest public action without obscuring play. */
+.table.moment-draw .table-center{border-color:#e5c77c66}
+.table.moment-discard .table-center{background:linear-gradient(90deg,transparent,#102f2820,transparent)}
+.table.moment-call .table-center{border-color:#a9d3a766}
+.table.moment-riichi .table-center{border-color:#d982706e}
+.table.moment-win .table-center,.table.moment-result .table-center{border-color:#e9cb7f88;box-shadow:inset 0 1px #e9cb7f30,inset 0 -1px #e9cb7f30}
+.table.moment-loss .table-center{border-color:#c4c5ba55}
+.table.moment-win .table-center>strong{color:#ffedbc;text-shadow:0 2px 18px #e1b85965}
+.table.moment-loss .table-center>strong{color:#e8e2ce}
+.tile.drawn{position:relative;filter:drop-shadow(0 0 5px #f3d27b99) drop-shadow(0 3px 3px #11251e44)}
+.tile.drawn::after{content:"";position:absolute;inset:2px;border:1px solid #e6bf6b;border-radius:6px;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.tile.drawn{filter:none}}

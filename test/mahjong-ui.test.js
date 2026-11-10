@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import {createMatch} from '../src/mahjong/match.js';
+import {view as localMatchView} from '../src/mahjong/client-view.js';
 
 // Removing selection, legal-action delegation, or privacy filtering breaks these tests.
 const load = () => Promise.all([import('../public/mahjong/src/characters.js'), import('../public/mahjong/src/app.js'), import('../public/mahjong/src/cpu-game.js'), import('../public/mahjong/src/sound.js')]);
@@ -63,6 +65,37 @@ test('table hides opponents concealed hands while showing one tile back per real
   const [, { renderApp }] = await load(); const markup = renderApp({ screen: 'table', characterId: 'moka', view: { phase: 'DISCARD', players: [{name:'自分',hand:['m1']},{name:'相手',hand:['SECRET'],handCount:13}], legalActions: [] } });
   assert.doesNotMatch(markup, /SECRET/); assert.match(markup, /13枚/); assert.equal((markup.match(/class="tile-back"/g)||[]).length,13);
 });
+test('drawn tile is sent only to the active seat while concealed hands remain private',()=>{
+ const match=createMatch({players:['a','b','c','d'],seed:'draw-tile-view',now:0});
+ const active=localMatchView(match,0),other=localMatchView(match,1);
+ assert.equal(active.drawnTile,match.drawnTile);assert.equal(other.drawnTile,undefined);
+ assert.equal(other.players[0].hand,undefined);assert.equal(active.players[1].hand,undefined);
+});
+test('table renders original tile faces in the hand, public rivers, melds and dora display',async()=>{
+ const [,{renderApp}]=await load();const markup=renderApp({screen:'table',characterId:'moka',view:{phase:'DISCARD',selfSeat:0,dealer:0,remainingTiles:50,doraIndicators:[31],players:[{name:'自分',points:25000,hand:[34,9],discards:[{tile:0}],melds:[]},{name:'南さん',points:25000,handCount:13,discards:[{tile:27}],melds:[{type:'pon',tiles:[27,27,27],open:true}]}],legalActions:[]}});
+ assert.match(markup,/class="mj-tile-svg/);assert.match(markup,/aria-label="赤5萬を選択"/);assert.match(markup,/class="tile-river/);assert.match(markup,/class="meld-tiles/);assert.match(markup,/aria-label="白"/);
+});
+test('malformed tile labels remain escaped in button and assistive labels',async()=>{
+ const [,{renderApp}]=await load();const payload='\"><img data-pwn="tile">';
+ const markup=renderApp({screen:'table',characterId:'moka',view:{phase:'DISCARD',activeSeat:0,selfSeat:0,players:[{name:'自分',hand:[payload],discards:[],melds:[]},{name:'相手',handCount:13,discards:[],melds:[]}],legalActions:[{type:'discard',tile:payload}]}});
+ assert.doesNotMatch(markup,/<img data-pwn=/);assert.match(markup,/&lt;img data-pwn=/);
+});
+test('the current draw is highlighted and state transitions identify major mahjong moments',async()=>{
+ const [,{renderApp,transitionMoment}]=await load();
+ const markup=renderApp({screen:'table',characterId:'moka',moment:'draw',view:{phase:'DISCARD',activeSeat:0,selfSeat:0,drawnTile:34,players:[{name:'自分',hand:[4,34],handCount:2,discards:[],melds:[]},{name:'相手',handCount:13,discards:[],melds:[]}]}});
+ assert.match(markup,/class="tile drawn" data-tile="34"/);assert.match(markup,/class="table moment-draw"/);
+ const before={phase:'DISCARD',selfSeat:0,players:[{hand:[1,2],discards:[],melds:[],riichi:false},{handCount:13,discards:[],melds:[],riichi:false}]};
+ assert.equal(transitionMoment(before,{...before,players:[{hand:[1,2,3],discards:[],melds:[],riichi:false},before.players[1]],drawnTile:3}), 'draw');
+ assert.equal(transitionMoment(before,{...before,players:[{hand:[1],discards:[{tile:2}],melds:[],riichi:true},before.players[1]]}), 'riichi');
+});
+test('duplicate synchronized revision keeps its animation moment and never replays its cue',async()=>{
+ const [,{createApp}]=await load();const cues=[],sound={available:true,enableFromGesture:()=>true,disable(){},cue(name){cues.push(name);return true;}};
+ const app=createApp({sound});app.state.muted=false;
+ const first={phase:'DISCARD',revision:1,selfSeat:0,activeSeat:0,players:[{hand:[1,2],discards:[],melds:[]}]};
+ const next={...first,revision:2,players:[{hand:[1,2,3],discards:[],melds:[]}]};
+ app.setOnlineState(first);app.setOnlineState(next);assert.equal(app.state.moment,'draw');assert.deepEqual(cues,['draw']);
+ app.setOnlineState({...next});assert.equal(app.state.moment,'draw');assert.deepEqual(cues,['draw']);
+});
 test('settings and tutorial are user controlled and markup escapes names', async () => {
   const [, { createApp, renderApp }] = await load(); const app = createApp({sound:{available:true,enableFromGesture:()=>true,disable(){},cue(){}}}); app.toggleMute(); app.toggleReducedMotion(); app.toggleTutorial();
   assert.equal(app.state.muted, false); assert.equal(app.state.reducedMotion, true); assert.equal(app.state.tutorial, true);
@@ -93,14 +126,24 @@ test('page and styles provide accessible Japanese local UI and motion opt out', 
 
 test('mounted controls navigate and preserve selected-tile state through rerenders', async () => {
   const [, { mountApp }, { createCpuGame }] = await load();
-  let handler; let focuses = 0;
-  const root = { innerHTML:'', addEventListener(type, callback) { assert.equal(type, 'click'); handler = callback; }, querySelector() { return { focus() { focuses++; } }; } };
+  const handlers={};let focuses = 0;
+  const root = { innerHTML:'', addEventListener(type, callback) { handlers[type] = callback; }, querySelector() { return { focus() { focuses++; } }; } };
   const app = mountApp(root, { cpu: createCpuGame(fixtureEngine()) });
-  const click = dataset => handler({ target:{ closest: () => ({ dataset, disabled:false }) } });
+  const click = dataset => handlers.click({ target:{ closest: () => ({ dataset, disabled:false }) } });
   await click({ character:'moka' }); assert.match(root.innerHTML, /CPUと対局/);
   await click({ mode:'cpu' }); assert.match(root.innerHTML, /自分の手牌/);
   await click({ tile:'m1' }); assert.equal(app.state.selectedTile, 'm1'); assert.match(root.innerHTML, /tile selected/);
   await click({ action:'discard' }); assert.equal(app.state.screen, 'result'); assert.ok(focuses >= 3);
+});
+
+test('hand keyboard arrows move focus to neighboring tiles without triggering a discard',async()=>{
+ const [,{mountApp},{createCpuGame}]=await load();let focused=0,prevented=0;
+ const target={nextElementSibling:{focus(){focused=1;}},previousElementSibling:{focus(){focused=-1;}}};
+ const handlers={},root={innerHTML:'',addEventListener(type,fn){handlers[type]=fn;},querySelector(){return{focus(){}};}};
+ const app=mountApp(root,{cpu:createCpuGame(fixtureEngine())});
+ await handlers.click({target:{closest:()=>({dataset:{character:'moka'},disabled:false})}});await handlers.click({target:{closest:()=>({dataset:{mode:'cpu'},disabled:false})}});
+ handlers.keydown({target:{closest:selector=>selector==='.hand .tile'?target:null},key:'ArrowRight',preventDefault(){prevented++;}});
+ assert.equal(focused,1);assert.equal(prevented,1);assert.equal(app.state.selectedTile,null);
 });
 
 test('CPU adapter advances CPU seats through engine decisions rather than inventing moves', async () => {

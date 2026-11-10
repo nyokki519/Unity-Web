@@ -24,6 +24,7 @@ export function view(room,seat,{actions=legalActions}={}){
         discards:copy(p?.discards||[]),melds:(p?.melds||[]).map(m=>({type:m.type,tiles:copy(m.tiles||[]),...(m.from!==undefined?{from:m.from}:{})})),riichi:Boolean(p?.riichi),...(index===seat?{hand:copy(p?.hand||[])}:{})};
     }),legalActions:match?copy(actions(match,seat)):[],deadlineAt:match?.deadlineAt??null};
   if(match){for(const key of ['activeSeat','dealer','round','roundWind','handNumber','honba','riichiPot','doraIndicators','lastDiscard'])if(match[key]!==undefined)state[key]=copy(match[key]);state.remainingTiles=match.liveWall?.length??match.wall?.length??0;
+    if(match.phase==='DISCARD'&&match.activeSeat===seat&&match.drawnTile!==null)state.drawnTile=copy(match.drawnTile);
     if(['HAND_RESULT','MATCH_RESULT'].includes(match.phase))state.result=publicResult(match.result);
   }
   return state;

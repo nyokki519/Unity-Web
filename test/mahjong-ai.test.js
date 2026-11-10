@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createMatch, legalActions, applyAction} from '../src/mahjong/match.js';
-import {chooseAction, runCpuTurn} from '../src/mahjong/ai.js';
+import {chooseAction, countPublicTiles, rankDiscardCandidates, runCpuTurn} from '../src/mahjong/ai.js';
 
 const players = ['a', 'b', 'c', 'd'];
 const readyHand = [0,1,2,9,10,11,18,19,20,27,27,27,31,33];
@@ -51,10 +51,40 @@ test('equally efficient discards prefer tiles already discarded by a riichi oppo
   assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'discard', tile: 33});
 });
 
+test('a discard made before riichi remains genbutsu against that riichi player', () => {
+  const match = discardMatch(readyHand);
+  const actions = legalActions(match, 0).filter(action => action.type === 'discard');
+  match.players[2].riichi = true;
+  match.players[2].discards = [{tile: 33}, {tile: 30, riichi: true}];
+  const ranked = rankDiscardCandidates(match, 0, actions);
+  assert.equal(ranked.find(row => row.action.tile === 33).danger, 0);
+});
+
+test('called river tiles are counted once through the public meld, not twice',()=>{
+ const match=discardMatch([0,1,2,9,10,11,18,19,20,27,27,31,33,34]);
+ match.players[1].discards=[{tile:5,called:true}];match.players[2].melds=[{type:'pon',tiles:[5,5,5],open:true}];
+ assert.equal(countPublicTiles(match,0)[5],3);
+});
+
 test('a seven-pairs hand preserves its six pairs when discarding', () => {
   const match = discardMatch([0,0,3,3,9,9,12,12,18,18,21,21,30,33]);
   match.players[0].points = 0;
   assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'discard', tile: 30});
+});
+
+test('equal-shanten discards use visible ukeire before a seeded tie break',()=>{
+ const match=discardMatch([0,0,3,3,9,9,12,12,18,18,21,21,30,33]);match.players[0].points=0;
+ const actions=legalActions(match,0).filter(action=>action.type==='discard'),ranked=rankDiscardCandidates(match,0,actions);
+ assert.ok(ranked.length>=2);assert.ok(ranked[0].ukeire>=ranked.at(-1).ukeire);
+ assert.deepEqual(chooseAction(match,0,()=>0),ranked[0].action);
+});
+
+test('CPU choice does not inspect hidden opponents or wall contents',()=>{
+ const match=discardMatch(readyHand);match.players[0].points=0;match.players[2].riichi=true;match.players[2].discards=[{tile:33,turn:4,riichi:true}];
+ const actions=legalActions(match,0).filter(action=>action.type==='discard'),ranking=rankDiscardCandidates(match,0,actions),first=chooseAction(match,0,()=>.37);
+ match.players[1].hand=[...Array(13).fill(0)];match.liveWall.fill(33);match.deadWall.fill(0);match.kanDoraIndicators=[32,0,9,27];
+ assert.deepEqual(rankDiscardCandidates(match,0,actions),ranking,'unrevealed future dora indicators are not part of the public information set');
+ assert.deepEqual(chooseAction(match,0,()=>.37),first);
 });
 
 test('a thirteen-orphans hand discards its unrelated tile', () => {
@@ -69,6 +99,14 @@ test('CPU calls only when a meld improves shanten', () => {
   const ready = reactionMatch([0,1,2,9,10,11,18,19,20,27,27,27,31]);
   assert.ok(legalActions(ready, 1).some(action => action.type === 'chi'));
   assert.deepEqual(chooseAction(ready, 1, () => 0), {type: 'pass'});
+});
+
+test('CPU declines an open call that reaches tenpai with no legal yaku waits', () => {
+  // After the chi, two sequences, a pair, and a 2-sided sequence wait make
+  // tenpai. The open hand has no tanyao, flush, yakuhai, or sanshoku route.
+  const match = reactionMatch([0,2,10,11,12,18,19,20,24,25,27,27,33], 1);
+  const action = chooseAction(match, 1, () => 0);
+  assert.deepEqual(action, {type: 'pass'});
 });
 
 test('runCpuTurn advances one legal action without mutating state or hidden draws', () => {
