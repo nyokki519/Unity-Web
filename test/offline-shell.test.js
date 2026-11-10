@@ -15,10 +15,10 @@ test('the offline shell can install from live HTTP assets without requesting ret
   const cached=new Set(requested.map(url=>new URL(url).pathname+new URL(url).search));
   assert.ok(cached.has('/js/events/rating.js?v=rating-v5'),'Rating choices are cached with the new layout key');
   assert.ok(cached.has('/js/events/rating.css?v=rating-v5'),'Rating images are cached with the new responsive layout');
-  assert.ok(cached.has('/js/events/tier.js?v=tier-board-v5'),'Tier interaction module is included with the fresh cache key');
+  assert.ok(cached.has('/js/events/tier.js?v=tier-board-v6'),'Tier interaction module is included with the fresh cache key');
   assert.ok(cached.has('/js/events/tier.css?v=tier-board-v5'),'Tier board styling is included with the fresh cache key');
   assert.ok(cached.has('/js/app.js?v=tier-board-v8'),'app module cache key is versioned');
-  assert.ok(cached.has('/js/events/screen.js?v=tier-board-v8'),'event screen cache key is versioned');
+  assert.ok(cached.has('/js/events/screen.js?v=tier-board-v9'),'event screen cache key is versioned');
   assert.ok(cached.has('/rating/verified/ai-latte-generated.webp'),'the optimized AI image is cached');
   assert.ok(cached.has('/rating/verified/rating-art-de-hooch.jpg'),'the source-backed art comparison image is cached');
   assert.ok(cached.has('/rating/verified/rating-art-vermeer.jpg'),'the source-backed art comparison image is cached');

@@ -54,7 +54,7 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
   const board=el('div','tier-board');board.setAttribute('aria-label','Tier表');
   for(const tier of TIER_ORDER){
    const row=el('section',`tier-row tier-${tier.toLowerCase()}`);row.dataset.tier=tier;
-   const label=button('',()=>placeSelected(tier),'tier-label');label.disabled=locked;label.setAttribute('aria-label',`${tier} tier、${TIER_LABELS[tier]}。選択中カードをここに配置`);label.append(el('strong','',tier),el('small','',TIER_LABELS[tier]));row.append(label);
+   const label=button('',()=>placeSelected(tier),'tier-label');label.disabled=locked||!selected;label.setAttribute('aria-label',`${tier} tier、${TIER_LABELS[tier]}。${selected?'選択中カードをここに配置':'カードを選択すると配置できます'}`);label.append(el('strong','',tier),el('small','',TIER_LABELS[tier]));row.append(label);
    const cells=el('div','tier-cells');cells.dataset.tier=tier;cells.setAttribute('aria-label',`${tier} Tierのカード`);
    cells.addEventListener('dragover',event=>{if(!locked){event.preventDefault();cells.classList.add('drop-hover');}});
    cells.addEventListener('dragleave',()=>cells.classList.remove('drop-hover'));
@@ -74,7 +74,7 @@ export function createTierBoard({items,initial={},disabled=false,onSubmit=()=>{}
   if(submitted)root.append(el('p','tier-waiting','みんなの確定を待っています。結果が出たら、まずは違いを見つけよう。'));
   if(focusPicker)root.querySelector('.tier-picker .tier-pick')?.focus();else if(focusItem)Array.from(root.querySelectorAll('[data-item]')).find(node=>node.dataset.item===focusItem)?.focus();else if(focusSubmit)root.querySelector('.tier-submit')?.focus();
  };
- function itemCard(item){const card=button(item.label,()=>{if(locked)return;selected=String(item.id);focusPickerNext=true;render();},`tier-item${selected===String(item.id)?' is-selected':''}`);card.dataset.item=String(item.id);card.disabled=locked;card.draggable=!locked;card.setAttribute('aria-pressed',String(selected===String(item.id)));card.setAttribute('aria-label',`${item.label}${placed[item.id]?`、${placed[item.id]} tier`:''}。タップして選択し、Tierを選ぶ`);card.addEventListener('dragstart',event=>{if(locked){event.preventDefault();return;}event.dataTransfer?.setData('text/plain',String(item.id));if(event.dataTransfer)event.dataTransfer.effectAllowed='move';});return card;}
+ function itemCard(item){const card=button(item.label,()=>{if(locked)return;selected=String(item.id);focusPickerNext=true;render();},`tier-item${selected===String(item.id)?' is-selected':''}`);card.dataset.item=String(item.id);card.disabled=locked;card.draggable=!locked;card.setAttribute('aria-pressed',String(selected===String(item.id)));card.setAttribute('aria-label',`${item.label}${placed[item.id]?`、${placed[item.id]} tier`:''}。タップまたはEnterで選択し、画面下のTierボタンで配置`);card.addEventListener('dragstart',event=>{if(locked){event.preventDefault();return;}event.dataTransfer?.setData('text/plain',String(item.id));if(event.dataTransfer)event.dataTransfer.effectAllowed='move';});return card;}
  function move(id,tier){if(locked||!id||!items.some(item=>String(item.id)===id)||!TIER_ORDER.includes(tier))return;placed[id]=tier;selected=null;restoreItemFocus=id;render();}
  function placeSelected(tier){if(selected)move(selected,tier);}
  function unassignSelected(){if(selected){restoreItemFocus=selected;delete placed[selected];selected=null;render();}}
@@ -88,19 +88,19 @@ export function createTierComparison({items,submissions,boards,summary,participa
  const infos=Array.isArray(calculated.items)?Object.fromEntries(calculated.items.map(info=>[info.id,info])):calculated.items||{};
  const shared=el('section','tier-majority');shared.append(el('h3','','みんなの真ん中'));
  const strip=el('div','tier-majority-strip');for(const item of items){const info=infos[item.id]||{},majority=info.majorityTier??info.majority??(info.majorityTiers?.length===1?info.majorityTiers[0]:null),counts=info.counts||info.distribution||{},count=majority?(counts[majority]??0):0,minorityCount=Array.isArray(info.minorityTiers)?info.minorityTiers.reduce((sum,tier)=>sum+(counts[tier]||0),0):(info.minorityCount||0),caption=majority?(minorityCount?`少数派 ${minorityCount}人`:'全員一致'):entries.length===1?'比較できません':entries.length?(info.majorityTiers?.length>1?'同数で分かれた':'票が分かれた'):'回答なし';const piece=el('article',`tier-majority-item${majority?' tier-'+majority.toLowerCase():''}`);piece.append(el('strong','',majority||'—'),el('span','',item.label),el('small','',majority?`${count}人の多数派 · ${caption}`:caption));strip.append(piece);}shared.append(strip);root.append(shared);
- root.append(discussionPrompts(items,infos,entries.length));
+ root.append(discussionPrompts(items,infos,responded,total));
  root.append(comparisonMatrix(items,entries,participants));
  const list=el('div','tier-submission-list');entries.forEach((entry,index)=>{const participant=participants.find(p=>p.id===(entry.playerId??entry.id)),name=participant?.name||entry.name||`参加者 ${index+1}`,tiers=normalizeBoard(items,entry.tiers);const details=el('details','tier-submission');if(index===0)details.open=true;const summaryEl=el('summary');summaryEl.append(el('span','tier-avatar',String(index+1).padStart(2,'0')),el('strong','',name),el('span','tier-submission-hint','タップして表を見る'));details.append(summaryEl);const board=el('div','tier-mini-board');for(const tier of TIER_ORDER){const row=el('section',`tier-mini-row tier-${tier.toLowerCase()}`);row.append(el('strong','',tier));const cell=el('div','tier-mini-items');for(const item of items)if(tiers[String(item.id)]===tier)cell.append(el('span','tier-mini-item',item.label));row.append(cell);board.append(row);}details.append(board);list.append(details);});root.append(list);
  root.append(button('比較結果を画像で保存',()=>saveTierImage({items,entries,participants,calculated,agreement}),'tier-image-button'));return root;
 }
 
 
-function discussionPrompts(items,infos,participantCount){
+function discussionPrompts(items,infos,responded,total){
  const split=items.map(item=>{const info=infos[item.id]||{},counts=info.counts||info.distribution||{},votes=TIER_ORDER.map(tier=>({tier,count:Number(counts[tier]||0)})).filter(vote=>vote.count>0);return{item,votes,spread:votes.length,minority:votes.length?Math.min(...votes.map(vote=>vote.count)):0};}).filter(row=>row.spread>1).sort((a,b)=>b.spread-a.spread||a.minority-b.minority||a.item.label.localeCompare(b.item.label,'ja')).slice(0,3);
  const section=el('section','tier-discussion');section.setAttribute('aria-label','話し合いのきっかけ');section.append(el('h3','','話してみよう'));
- if(!participantCount){section.append(el('p','tier-discussion-intro','回答が集まると、意見が分かれた項目をここに表示します。'));return section;}
- if(!split.length){section.append(el('p','tier-discussion-intro','今回は全員の評価がそろいました。どうして同じTierになったか、理由を聞いてみよう。'));return section;}
- section.append(el('p','tier-discussion-intro',`${split.length<3?split.length:'特に分かれた3つの'}項目をきっかけに、選んだ理由を聞いてみよう。`));
+ if(!responded){section.append(el('p','tier-discussion-intro',`まだ回答はありません（0 / ${total}人）。回答が公開されると、意見が分かれた項目をここに表示します。`));return section;}
+ if(!split.length){section.append(el('p','tier-discussion-intro',responded<total?`現在の回答者は ${responded} / ${total}人です。まだ比較できないので、ほかの人の評価が届いてから見てみましょう。`:'今回は全員の評価がそろいました。どうして同じTierになったか、理由を聞いてみよう。'));return section;}
+ section.append(el('p','tier-discussion-intro',`${responded<total?`現在の回答者 ${responded} / ${total}人で、`:''}${split.length<3?split.length:'特に分かれた3つの'}項目をきっかけに、選んだ理由を聞いてみよう。`));
  const list=el('div','tier-discussion-list');for(const row of split){const card=el('article','tier-discussion-card');card.append(el('h4','',row.item.label));const votes=el('div','tier-discussion-votes');for(const vote of row.votes){const chip=el('span',`tier-discussion-vote tier-${vote.tier.toLowerCase()}`,`${vote.tier} · ${vote.count}人`);votes.append(chip);}card.append(votes,el('p','',row.spread>2?'評価が分かれたポイントはどこ？':'このTierに置いた決め手は？'));list.append(card);}section.append(list);return section;
 }
 

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createMatch,legalActions,applyAction,advanceTurn} from '../src/mahjong/match.js';
+import {createMatch,legalActions,applyAction,advanceTurn,MAX_HANDS} from '../src/mahjong/match.js';
 
 const players=['a','b','c','d'];
 
@@ -107,4 +107,18 @@ test('four kans abort only when more than one player declared them',()=>{
   const action=legalActions(match,0).find(a=>a.type==='ankan');assert.ok(action);match=applyAction(match,0,action,match.revision,1);
   assert.equal(match.phase,want);if(want==='HAND_RESULT')assert.equal(match.result.reason,'four-kans');else assert.deepEqual(match.kanOwners,owners);
  }
+});
+
+test('kan actions are unavailable when the live wall is empty',()=>{
+ let match=createMatch({players,seed:519,now:0});match.players[0].hand=[4,4,4,4,0,1,2,9,10,11,18,19,20,21];match.drawnTile=21;match.liveWall=[];match.revision++;
+ assert.equal(legalActions(match,0).some(action=>['ankan','kakan'].includes(action.type)),false,'a concealed or added kan needs a live-wall replacement draw');
+ match=createMatch({players,seed:520,now:0});match.phase='REACTION';match.lastDiscard={tile:27,seat:0,riverIndex:0};match.reactionSeats=[1];match.players[1].hand=[27,27,27,0,1,2,9,10,11,18,19,20,21];match.liveWall=[];match.revision++;
+ assert.equal(legalActions(match,1).some(action=>action.type==='kan'),false,'a daiminkan also needs a live-wall tile to replenish the dead wall');
+});
+
+test('east-only match has a 12-hand ceiling even when the dealer keeps winning',()=>{
+ let match=createMatch({players,seed:521,now:0});match.phase='HAND_RESULT';match.handNumber=4;match.handsPlayed=MAX_HANDS-1;match.result={type:'win',winner:match.dealer};
+ match=advanceTurn(match,1);assert.equal(match.phase,'MATCH_RESULT');assert.equal(match.handsPlayed,MAX_HANDS);assert.equal(match.result.reason,'hand-limit');assert.match(match.result.title,/最大12局/);assert.equal(match.result.rankings.length,4);
+ match=createMatch({players,seed:522,now:0});match.phase='HAND_RESULT';delete match.handsPlayed;match.handNumber=4;match.history=Array.from({length:MAX_HANDS-1},()=>({type:'exhaustive'}));match.result={type:'win',winner:match.dealer};
+ match=advanceTurn(match,1);assert.equal(match.handsPlayed,MAX_HANDS,'an older saved match derives played hands from its history');assert.equal(match.phase,'MATCH_RESULT');
 });

@@ -27,12 +27,12 @@ function withDom(run){
     if(originalStorage===undefined)delete globalThis.localStorage;else globalThis.localStorage=originalStorage;
   }
 }
-function stateFor({ownAnswer=null}={}){
+function stateFor({ownAnswer=null,participating=true,roundLimit=1,roundIndex=0}={}){
   const items=[{id:'coffee',label:'浅煎りコーヒー'},{id:'tea',label:'紅茶'},{id:'cake',label:'季節のケーキ'}];
   return {items,state:{code:'CAFE',hostId:'host',selfId:'guest',players:[{id:'guest',ready:true}],event:{
-      gameId:'TIER',name:'みんなのTier会議',rule:'カードをTierに分けます。',phase:'ANSWER',roundId:'round-1',roundIndex:0,
-      options:{roundLimit:1},question:{prompt:'カフェで選びたいもの',talkPrompt:'理由を話そう',items},
-      participating:true,answeredCount:1,participantCount:2,revision:0,deadlineAt:null,ownAnswer
+      gameId:'TIER',name:'みんなのTier会議',rule:'カードをTierに分けます。',phase:'ANSWER',roundId:'round-1',roundIndex,
+      options:{roundLimit},question:{prompt:'カフェで選びたいもの',talkPrompt:'理由を話そう',items},
+      participating,answeredCount:1,participantCount:2,revision:0,deadlineAt:null,ownAnswer
     }}};
 }
 function descendants(root){const result=[];const walk=node=>{result.push(node);for(const child of node.children||[])walk(child);};walk(root);return result;}
@@ -62,6 +62,25 @@ test('eventScreen mounts an interactive Tier board as DOM while retaining the an
   const submit=nodes.find(node=>node.className==='tier-submit');assert.ok(submit);
   submit.listeners.click();
   assert.equal(submitted.action,'event_answer');assert.deepEqual(submitted.data.value.tiers,{S:['coffee','tea','cake'],A:[],B:[],C:[],D:[]});
+}));
+
+test('interactive Tier board exposes keyboard placement only while a card is selected',()=>withDom(()=>{
+  const {state}=stateFor(),root=eventScreen({state,send:()=>{},draft:{},leave:()=>{}}),all=()=>descendants(root);
+  assert.ok(all().filter(node=>node.className==='tier-label').every(node=>node.disabled),'empty Tier labels cannot trap keyboard focus');
+  all().find(node=>node.className==='tier-item').listeners.click();
+  assert.ok(all().filter(node=>node.className==='tier-label').every(node=>!node.disabled),'selecting an item enables placement labels');
+  all().find(node=>node.className==='tier-label').listeners.click();
+  assert.ok(all().filter(node=>node.className==='tier-label').every(node=>node.disabled),'placing an item disables labels until another is selected');
+}));
+
+test('Tier answer screen provides a working skip action',()=>withDom(()=>{
+  const {state}=stateFor();let sent;const root=eventScreen({state,send:(action,data)=>{sent={action,data};},draft:{},leave:()=>{}}),skip=descendants(root).find(node=>node.textContent==='今回はパス');
+  assert.ok(skip);skip.listeners.click();assert.deepEqual(sent,{action:'event_answer',data:{skip:true}});
+}));
+
+test('late participant guidance does not promise a next round in a one-round game',()=>withDom(()=>{
+  const {state}=stateFor({participating:false,roundLimit:1}),nodes=descendants(eventScreen({state,send:()=>{},draft:{},leave:()=>{}}));
+  assert.ok(nodes.some(node=>node.textContent.includes('この1ラウンドには途中参加できません')));assert.ok(nodes.some(node=>node.textContent.includes('話し合いには参加できます')));assert.ok(!nodes.some(node=>node.textContent.includes('次のラウンドから回答できます')));
 }));
 
 test('a Tier board unlocks after send rejection and stays locked only after an accepted send',()=>withDom(()=>{
@@ -105,4 +124,10 @@ test('Tier results surface the most-divided items with exact vote counts and a n
   assert.ok(nodes.some(node=>node.textContent==='A · 1人'));
   assert.ok(nodes.some(node=>node.textContent==='B · 1人'));
   assert.ok(nodes.some(node=>node.textContent==='評価が分かれたポイントはどこ？'));
+}));
+
+test('partial Tier results say the discussion reflects respondents rather than everyone',()=>withDom(()=>{
+  const items=[{id:'coffee',label:'コーヒー'},{id:'cake',label:'ケーキ'}],boards=[{playerId:'p1',tiers:{S:['coffee'],A:['cake'],B:[],C:[],D:[]}}];
+  const nodes=descendants(createTierComparison({items,boards,participants:[],participantCount:2})),intro=nodes.find(node=>node.className==='tier-discussion-intro')?.textContent||'';
+  assert.match(intro,/1\s*\/\s*2人|回答者 1\/2人/);assert.ok(!intro.includes('全員の評価がそろいました'));
 }));

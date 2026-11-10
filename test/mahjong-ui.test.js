@@ -30,7 +30,7 @@ test('selection opens Japanese CPU and friend mode choices', async () => {
   const [, { createApp, renderApp }] = await load(); const app = createApp();
   assert.match(renderApp(app.state), /キャラクターを選ぶ/);
   app.selectCharacter('moka'); assert.equal(app.state.screen, 'mode');
-  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/); assert.match(renderApp(app.state), /assets\/moka\.webp/);
+  assert.match(renderApp(app.state), /CPUと対局/); assert.match(renderApp(app.state), /友だちと対局/); assert.match(renderApp(app.state), /assets\/moka\.webp/);assert.match(renderApp(app.state),/東風戦は最大12局/);
   assert.throws(() => app.selectCharacter('unknown'), /キャラクター/);
 });
 test('friend mode opens a room lobby shell without claiming a connection', async () => {

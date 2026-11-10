@@ -1,6 +1,6 @@
 import {formatScaleValue} from '../scale.js';
 import {el,button,title,labeledSelect} from '../dom.js';import {invitation} from '../lobby.js';
-import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v5';
+import {individualInput,individualResults} from './individual.js';import {guessingScreen} from './guessing.js';import {teamInput,teamResults,teamRoster} from './teams.js';import {eventHostControls,eventSettings} from './host.js';import {eventQuestionEditor} from './editor.js';import {createTierBoard,createTierComparison} from './tier.js?v=tier-board-v6';
 import {ratingScreen,ratingQuestionEditor,ratingCategories} from './rating.js?v=rating-v5';
 export function eventScreen(props){
  const {state,send,draft,leave}=props,e=state.event,host=state.selfId===state.hostId,screen=el('div',`screen narrow event-screen${e.gameId==='RATING'?' rating-screen':''}`);screen.dataset.game=e.gameId;screen.dataset.phase=e.phase;
@@ -18,14 +18,14 @@ export function eventScreen(props){
   screen.append(el('h2','','ルール説明'),el('p','',`ラウンド ${e.roundIndex+1} / ${e.options.roundLimit}。対面の会話を中心に、10〜20分を目安に遊びます。`),teamRoster(state));
   if(host){const qs=e.questions.filter(q=>q.game===e.gameId&&q.enabled&&(!e.options.difficulty||e.options.difficulty==='すべて'||q.difficulty===e.options.difficulty)&&!e.used?.includes(q.id));const sel=labeledSelect('今回のお題',[['','おまかせ'],...qs.map(q=>[q.id,q.prompt])],'');sel.querySelector('select').name='event-question';screen.append(sel,eventSettings(props),eventQuestionEditor(props),button('回答・相談を始める',()=>send('event_begin',{questionId:sel.querySelector('select').value||undefined}),'button wide'));}else screen.append(el('p','muted','司会がルールを説明し、開始します。'));
  }else if(['ANSWER','CONSULT'].includes(e.phase)){
-  if(!e.participating){screen.append(el('p','','次のラウンドから参加します。'));}
+  if(!e.participating){const hasNextRound=(e.roundIndex||0)+1<(e.options?.roundLimit||1);screen.append(el('p','',hasNextRound?'このラウンドは進行中です。公開後の話し合いに参加し、次のラウンドから回答できます。':'この1ラウンドには途中参加できません。公開後の話し合いには参加できます。'))}
   else if(e.ownAnswer){screen.append(el('h2','answer-saved',e.ownAnswer.skip?'パスを受理しました':e.ownAnswer.teamSubmitted?'チーム代表が提出しました':'回答を受理しました'),el('p','','公開までスマートフォンを置いて、話して待ちましょう。'));
    if(e.gameId==='TIER'){
     if(e.ownAnswer.skip)screen.append(el('p','small muted','今回はパスしました。ほかの参加者の回答公開を待っています。'));
     else if(e.ownAnswer.value&&e.question?.items?.length){const value=e.ownAnswer.value;const board=createTierBoard({items:e.question.items,initial:value.tiers||value,disabled:true});screen.tierBoardController=board;screen.append(board.element);}
     else screen.append(el('p','small muted','回答は受理されています。公開までお待ちください。'));
    }else if(e.ownAnswer.value!==undefined){const v=e.ownAnswer.value;let readable='回答を受理しました。';if(Array.isArray(v))readable=v.map(id=>e.question.choices?.find(c=>c.id===id)?.label||String(id)).join(' → ');else if(typeof v==='string'||typeof v==='number')readable=e.gameId==='BOUNDARY'?formatScaleValue(e.question,v):String(v);else if(v&&typeof v==='object')readable=[v.title||v.name,v.text||v.concept].filter(part=>typeof part==='string').join('\n')||'回答を受理しました。';screen.append(el('p','small muted event-saved-value',readable));}}
-  else if(e.gameId==='TIER'&&e.question?.items?.length){const board=createTierBoard({items:e.question.items,onSubmit:value=>send('event_answer',{value})});screen.tierBoardController=board;screen.append(board.element);}
+  else if(e.gameId==='TIER'&&e.question?.items?.length){const board=createTierBoard({items:e.question.items,onSubmit:value=>send('event_answer',{value})});screen.tierBoardController=board;screen.append(board.element,button('今回はパス',()=>send('event_answer',{skip:true}),'quiet-button'));}
   else if(e.gameId==='TIER')screen.append(el('p','room-notice','Tier表を読み込めませんでした。接続を確認して、再接続してください.'));
   else{const submit=button('回答を送る',()=>send('event_answer',{value:draft.value}),'button wide');submit.id='event-submit';screen.append(['QUEST','CAFE'].includes(e.gameId)?teamInput(state,send,draft,submit):individualInput(e,draft,submit));screen.append(submit);screen.append(button('今回はパス',()=>send('event_answer',{skip:true}),'quiet-button'));}
  }else if(e.phase==='CLOSED')screen.append(el('p','','締切になりました。司会が内容を確認して公開します。未回答者がいても進行できます。'));

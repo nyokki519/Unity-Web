@@ -3,6 +3,8 @@ import {isCompleteHand} from './hand.js';
 import {evaluateYaku} from './yaku.js';
 import {calculatePayments} from './score.js';
 
+export const MAX_HANDS=12;
+
 const clone = value => structuredClone(value);
 const nextSeat = seat => (seat + 1) % 4;
 const countType = (hand, wanted) => hand.filter(tile => tileType(tile) === wanted).length;
@@ -94,6 +96,7 @@ function legalReactionActions(match,seat){
   if(match.pendingKan)return actions;
   if(player.riichi)return actions;
   for(const kind of ['pon','kan','chi']){
+    if(kind==='kan'&&!match.liveWall.length)continue;
     if(kind==='chi'&&seat!==nextSeat(from))continue;
     for(const choice of makeMeldChoices(player.hand,tile,kind))actions.push(choice);
   }
@@ -196,7 +199,7 @@ export function createMatch({players,seed=0,now=Date.now()}={}){
   const doraIndicators=[deadWall[4]],uraIndicators=[deadWall[5]];
   const match={players:seats,phase:'DISCARD',dealer:0,roundWind:1,handNumber:1,honba:0,riichiPot:0,riichiDeclarations:0,
     activeSeat:0,liveWall:wall,deadWall,drawnTile:null,lastDiscard:null,responses:{},reactionSeats:[],deadlineAt:now+30000,revision:0,
-    turnNumber:0,doraIndicators,uraIndicators,result:null,history:[],seed,rinshanTiles:[],kanDoraIndicators:[],kanUraIndicators:[],kanCount:0,kanOwners:[],rinshanSeat:null};
+    turnNumber:0,doraIndicators,uraIndicators,result:null,history:[],handsPlayed:0,seed,rinshanTiles:[],kanDoraIndicators:[],kanUraIndicators:[],kanCount:0,kanOwners:[],rinshanSeat:null};
   setupDeadWall(match,deadWall);
   match.drawnTile=match.liveWall.shift();match.players[0].hand.push(match.drawnTile);match.players[0].hand=sortHand(match.players[0].hand);match.turnNumber=1;
   return match;
@@ -207,8 +210,8 @@ export function legalActions(match,seat){
   if(match.phase==='DISCARD'&&match.activeSeat===seat){const player=match.players[seat],actions=(player.riichi?[match.drawnTile]:player.hand).map(tile=>({type:'discard',tile}));
     if(!player.riichi&&!player.melds.some(m=>m.open)&&player.points>=1000){for(const tile of new Set(player.hand))if(validDiscardAction(match,seat,{type:'riichi_discard',tile}))actions.push({type:'riichi_discard',tile});}
     if(canWin(match,seat,match.drawnTile,'tsumo',{haitei:match.liveWall.length===0,rinshan:match.rinshanSeat===seat}))actions.push({type:'tsumo'});
-    const grouped=new Map();for(const tile of player.hand){const type=tileType(tile);if(!grouped.has(type))grouped.set(type,[]);grouped.get(type).push(tile);}for(const tiles of grouped.values())if(tiles.length===4&&(!player.riichi||canDeclareRiichiAnkan(player,match.drawnTile,tiles)))actions.push({type:'ankan',tiles:[...tiles]});
-    if(!player.riichi)for(let meldIndex=0;meldIndex<player.melds.length;meldIndex++){const meld=player.melds[meldIndex];if(meld.type!=='pon'||!meld.open)continue;const type=tileType(meld.tiles[0]),tile=player.hand.find(value=>tileType(value)===type);if(tile!==undefined)actions.push({type:'kakan',tile,meldIndex});}
+    const grouped=new Map();for(const tile of player.hand){const type=tileType(tile);if(!grouped.has(type))grouped.set(type,[]);grouped.get(type).push(tile);}if(match.liveWall.length)for(const tiles of grouped.values())if(tiles.length===4&&(!player.riichi||canDeclareRiichiAnkan(player,match.drawnTile,tiles)))actions.push({type:'ankan',tiles:[...tiles]});
+    if(match.liveWall.length&&!player.riichi)for(let meldIndex=0;meldIndex<player.melds.length;meldIndex++){const meld=player.melds[meldIndex];if(meld.type!=='pon'||!meld.open)continue;const type=tileType(meld.tiles[0]),tile=player.hand.find(value=>tileType(value)===type);if(tile!==undefined)actions.push({type:'kakan',tile,meldIndex});}
     return actions;
   }
   if(match.phase==='REACTION'&&match.reactionSeats.includes(seat)&&!match.responses[seat])return legalReactionActions(match,seat);
@@ -234,16 +237,16 @@ export function applyAction(current,seat,action,expectedRevision,now=Date.now())
 
 export function advanceTurn(current,now=Date.now()){
   if(current.phase!=='HAND_RESULT')throw new Error('Cannot advance turn outside hand result phase');
-  const match=clone(current),result=match.result;
+  const match=clone(current),result=match.result;match.handsPlayed=Number.isInteger(match.handsPlayed)?match.handsPlayed:(match.history?.length||0);match.handsPlayed++;
   match.history.push(clone(result));
   const dealerContinues=result.type==='abortive'||result.winner===match.dealer||result.type==='exhaustive'&&(result.tenpai||[]).includes(match.dealer);
   if(dealerContinues)match.honba++;
   else{match.dealer=nextSeat(match.dealer);match.handNumber++;match.honba=0;}
   match.result=null;
-  if(match.handNumber>4){
+  if(match.handNumber>4||match.handsPlayed>=MAX_HANDS){
     match.phase='MATCH_RESULT';match.deadlineAt=null;
     const ranking=match.players.map(p=>({seat:p.seat,id:p.id,name:p.name,points:p.points,uma:p.points-30000})).sort((a,b)=>b.points-a.points);
-    match.result={type:'match',rankings:ranking.map((row,index)=>({...row,rank:index+1})),at:now};
+    match.result={type:'match',title:match.handsPlayed>=MAX_HANDS?`東風戦終了（最大${MAX_HANDS}局）`:'東風戦終了',...(match.handsPlayed>=MAX_HANDS?{reason:'hand-limit'}:{}),rankings:ranking.map((row,index)=>({...row,rank:index+1})),at:now};
   }else dealNextHand(match,now);
   match.revision++;return match;
 }
