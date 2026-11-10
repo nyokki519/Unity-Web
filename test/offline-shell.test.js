@@ -13,9 +13,11 @@ test('the offline shell can install from live HTTP assets without requesting ret
   handlers.install({waitUntil:p=>{pending=p;}});await pending;
   assert.equal(installed,true);assert.ok(requested.length>100);assert.ok(requested.every(url=>!url.includes('/mechanical/')));
   const cached=new Set(requested.map(url=>new URL(url).pathname+new URL(url).search));
+  assert.ok(cached.has('/js/events/rating.js?v=rating-v4'),'Rating choices are cached with the new layout key');
+  assert.ok(cached.has('/js/events/rating.css?v=rating-v4'),'Rating images are cached with the new responsive layout');
   assert.ok(cached.has('/js/events/tier.js?v=tier-board-v6'),'Tier interaction module is included with the fresh cache key');
   assert.ok(cached.has('/js/events/tier.css?v=tier-board-v6'),'Tier board styling is included with the fresh cache key');
-  assert.ok(cached.has('/js/app.js?v=tier-board-v6'),'app module cache key is versioned');
-  assert.ok(cached.has('/js/events/screen.js?v=tier-board-v6'),'event screen cache key is versioned');
+  assert.ok(cached.has('/js/app.js?v=tier-board-v7'),'app module cache key is versioned');
+  assert.ok(cached.has('/js/events/screen.js?v=tier-board-v7'),'event screen cache key is versioned');
  }finally{await app.close();}
 });

@@ -9,8 +9,8 @@ const q={prompt:'どちらが一流のデザイン？',choices:{A:{label:'Aの�
 function state(phase,extra={}){return{selfId:'p1',hostId:'p1',serverTime:10000,players:[{id:'p1',name:'葵'}],event:{gameId:'RATING',phase,roundIndex:0,options:{roundLimit:3,seconds:45},question:q,...extra}};}
 
 test('RATING answer screen offers two accessible image choices and sends only A/B choice',()=>withDocument(()=>{
- let command;const root=ratingScreen({state:state('ANSWER'),send:(...args)=>command=args}),nodes=flatten(root),cards=nodes.filter(n=>n.className==='rating-choice');
- assert.equal(cards.length,2);assert.deepEqual(cards.map(n=>n.attributes['aria-pressed']),['false','false']);assert.equal(nodes.find(n=>n.tagName==='IMG')?.alt,'青い模様');cards[1].listeners.click();assert.deepEqual(command,['event_answer',{value:{choice:'B'}}]);assert.ok(!nodes.some(n=>n.textContent===q.explanation));
+ let command;const root=ratingScreen({state:state('ANSWER'),send:(...args)=>command=args}),nodes=flatten(root),cards=nodes.filter(n=>n.className.startsWith('rating-choice '));
+ assert.equal(cards.length,2);assert.ok(cards.every(n=>n.className.includes('rating-choice-blind')));assert.deepEqual(cards.map(n=>n.attributes['aria-pressed']),['false','false']);assert.equal(nodes.find(n=>n.tagName==='IMG')?.alt,'青い模様');cards[1].listeners.click();assert.deepEqual(command,['event_answer',{value:{choice:'B'}}]);assert.ok(!nodes.some(n=>n.textContent===q.explanation));
 }));
 
 test('CLOSED places respondents into A/B rooms without exposing the answer',()=>withDocument(()=>{
@@ -26,5 +26,5 @@ test('REVEAL uses synchronized server time to start the two-door beat',()=>withD
 test('TALK reveals explanation and standings only after the reveal phase',()=>withDocument(()=>{
  const result={correctChoice:'B',explanation:q.explanation,distribution:{A:1,B:1},standings:[{playerId:'p1',name:'葵',rankIndex:1,rankLabel:'二流',correct:2,total:3,place:1}]};
  const nodes=flatten(ratingScreen({state:state('TALK',{result}),send:()=>{}}));
- assert.ok(nodes.some(n=>n.textContent==='正解は B。'));assert.ok(nodes.some(n=>n.textContent===q.explanation));assert.ok(nodes.some(n=>n.textContent==='葵'));assert.ok(nodes.some(n=>n.textContent==='2 / 3 正解'));
+ assert.ok(nodes.some(n=>n.textContent==='正解は B。'));assert.ok(nodes.some(n=>n.textContent==='Aの作品'));assert.ok(nodes.some(n=>n.textContent==='Bの作品'));assert.ok(nodes.some(n=>n.textContent===q.explanation));assert.ok(nodes.some(n=>n.textContent==='葵'));assert.ok(nodes.some(n=>n.textContent==='2 / 3 正解'));
 }));
