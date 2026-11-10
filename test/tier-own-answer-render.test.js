@@ -129,5 +129,5 @@ test('Tier results surface the most-divided items with exact vote counts and a n
 test('partial Tier results say the discussion reflects respondents rather than everyone',()=>withDom(()=>{
   const items=[{id:'coffee',label:'コーヒー'},{id:'cake',label:'ケーキ'}],boards=[{playerId:'p1',tiers:{S:['coffee'],A:['cake'],B:[],C:[],D:[]}}];
   const nodes=descendants(createTierComparison({items,boards,participants:[],participantCount:2})),intro=nodes.find(node=>node.className==='tier-discussion-intro')?.textContent||'';
-  assert.match(intro,/1\s*\/\s*2人|回答者 1\/2人/);assert.ok(!intro.includes('全員の評価がそろいました'));
+  assert.match(intro,/1\s*\/\s*2人/);assert.ok(!intro.includes('全員の評価がそろいました'));assert.ok(!intro.includes('届いてから'));assert.match(intro,/未回答の人の分は含まれていません/);
 }));

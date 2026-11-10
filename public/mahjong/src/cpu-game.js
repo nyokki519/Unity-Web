@@ -24,7 +24,7 @@ export function createCpuGame(suppliedEngine) {
   async function settle(api) {
     for (let step = 0; step < 500; step++) {
       currentView = await api.view(match, 0);
-      if (currentView.phase === 'MATCH_RESULT' || (await api.legalActions(match, 0)).length) return currentView;
+      if (['HAND_RESULT','MATCH_RESULT'].includes(currentView.phase) || (await api.legalActions(match, 0)).length) return currentView;
       let acted = false;
       for (let seat = 1; seat < 4; seat++) {
         if (!(await api.legalActions(match, seat)).length) continue;
@@ -56,6 +56,10 @@ export function createCpuGame(suppliedEngine) {
       if (!canonical) throw new Error('現在の合法な操作を選んでください。');
       match = await api.applyAction(match, 0, canonical, match.revision, Date.now());
       return settle(api);
+    },
+    async continueMatch() {
+      const api=engine();if(!match||match.phase!=='HAND_RESULT')throw new Error('局の結果を確認してから次へ進んでください。');
+      match=await api.advanceTurn(match,Date.now());return settle(api);
     },
     getView: () => currentView
   };

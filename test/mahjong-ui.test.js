@@ -50,6 +50,11 @@ test('adapter rejects illegal actions without invoking rules or changing revisio
   await assert.rejects(() => game.dispatchCpuAction({ type: 'discard', tile: 'p2' }), /合法/);
   assert.equal(game.getView().revision, 0);
 });
+test('CPU adapter pauses on a hand result before advancing to the next round', async () => {
+  const [, , { createCpuGame }] = await load(); let advances=0;
+  const api={createMatch:({players})=>({players,revision:0,phase:'DISCARD'}),legalActions:m=>m.phase==='DISCARD'?[{type:'discard',tile:'m1'}]:[],applyAction:m=>({...m,revision:m.revision+1,phase:'HAND_RESULT',result:{type:'exhaustive',tenpai:[0],deltas:[3000,-1000,-1000,-1000]}}),advanceTurn:m=>{advances++;return{...m,revision:m.revision+1,phase:'MATCH_RESULT'};},chooseAction:()=>undefined,view:m=>({phase:m.phase,revision:m.revision,players:m.players.map(p=>({name:p.name,points:25000,handCount:13})),legalActions:m.phase==='DISCARD'?[{type:'discard',tile:'m1'}]:[],result:m.result})};
+  const game=createCpuGame(api);await game.startCpuMatch('moka',1);const result=await game.dispatchCpuAction({type:'discard',tile:'m1'});assert.equal(result.phase,'HAND_RESULT');assert.equal(advances,0);assert.equal((await game.continueMatch()).phase,'MATCH_RESULT');assert.equal(advances,1);
+});
 test('missing engine is an explicit unavailable state, never a fabricated game', async () => {
   const [, { createApp, renderApp }] = await load(); const app = createApp(); app.selectCharacter('moka'); await app.selectMode('cpu');
   assert.equal(app.state.screen, 'mode'); assert.equal(app.state.view, null); assert.match(renderApp(app.state), /接続|準備/);
@@ -127,4 +132,8 @@ test('table portrait and character line change for own turn, CPU turn, win and l
   assert.match(renderApp({...base,view:{...base.view,activeSeat:1}}),/相手の一手を見守りましょう/);
   assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:0}}}),/expression-win/);
   assert.match(renderApp({...base,view:{...base.view,phase:'HAND_RESULT',result:{type:'win',winner:1}}}),/expression-down/);
+});
+test('exhaustive hand result explains tenpai and point settlement and offers next hand',async()=>{
+ const [,{renderApp}]=await load();const html=renderApp({screen:'table',mode:'cpu',characterId:'moka',view:{phase:'HAND_RESULT',selfSeat:0,players:[{name:'自分',points:28000,hand:[]},{name:'南さん',points:24000},{name:'西さん',points:24000},{name:'北さん',points:24000}],legalActions:[{type:'next'}],result:{type:'exhaustive',tenpai:[0],deltas:[3000,-1000,-1000,-1000]}}});
+ assert.match(html,/聴牌：自分/);assert.match(html,/\+3,000点/);assert.match(html,/−1,000点/);assert.match(html,/次の局へ/);
 });

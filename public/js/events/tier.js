@@ -98,9 +98,10 @@ export function createTierComparison({items,submissions,boards,summary,participa
 function discussionPrompts(items,infos,responded,total){
  const split=items.map(item=>{const info=infos[item.id]||{},counts=info.counts||info.distribution||{},votes=TIER_ORDER.map(tier=>({tier,count:Number(counts[tier]||0)})).filter(vote=>vote.count>0);return{item,votes,spread:votes.length,minority:votes.length?Math.min(...votes.map(vote=>vote.count)):0};}).filter(row=>row.spread>1).sort((a,b)=>b.spread-a.spread||a.minority-b.minority||a.item.label.localeCompare(b.item.label,'ja')).slice(0,3);
  const section=el('section','tier-discussion');section.setAttribute('aria-label','話し合いのきっかけ');section.append(el('h3','','話してみよう'));
- if(!responded){section.append(el('p','tier-discussion-intro',`まだ回答はありません（0 / ${total}人）。回答が公開されると、意見が分かれた項目をここに表示します。`));return section;}
- if(!split.length){section.append(el('p','tier-discussion-intro',responded<total?`現在の回答者は ${responded} / ${total}人です。まだ比較できないので、ほかの人の評価が届いてから見てみましょう。`:'今回は全員の評価がそろいました。どうして同じTierになったか、理由を聞いてみよう。'));return section;}
- section.append(el('p','tier-discussion-intro',`${responded<total?`現在の回答者 ${responded} / ${total}人で、`:''}${split.length<3?split.length:'特に分かれた3つの'}項目をきっかけに、選んだ理由を聞いてみよう。`));
+ if(!responded){section.append(el('p','tier-discussion-intro',`今回は回答がありませんでした（0 / ${total}人）。次のテーマでまた参加してください。`));return section;}
+ const responsePrefix=responded<total?`今回の比較は回答した ${responded} / ${total}人の評価です。未回答の人の分は含まれていません。`:'';
+ if(!split.length){section.append(el('p','tier-discussion-intro',responded<total?`${responsePrefix}同じTierになった理由や、パスした理由を聞いてみよう。`:'今回は全員の評価がそろいました。どうして同じTierになったか、理由を聞いてみよう。'));return section;}
+ section.append(el('p','tier-discussion-intro',`${responsePrefix}${split.length<3?split.length:'特に分かれた3つの'}項目をきっかけに、選んだ理由を聞いてみよう。`));
  const list=el('div','tier-discussion-list');for(const row of split){const card=el('article','tier-discussion-card');card.append(el('h4','',row.item.label));const votes=el('div','tier-discussion-votes');for(const vote of row.votes){const chip=el('span',`tier-discussion-vote tier-${vote.tier.toLowerCase()}`,`${vote.tier} · ${vote.count}人`);votes.append(chip);}card.append(votes,el('p','',row.spread>2?'評価が分かれたポイントはどこ？':'このTierに置いた決め手は？'));list.append(card);}section.append(list);return section;
 }
 

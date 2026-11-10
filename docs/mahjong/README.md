@@ -32,8 +32,11 @@ CPUキャラクターは牌や勝敗へ影響しません。4人のオリジナ�
 
 ## 確認記録
 
-- `npm test`: 544 tests passed.
+- `npm test`: 607 tests passed in the 2026-11-10 quality pass.
 - Chromium 390×844: キャラクター選択、CPU対局開始、実打牌、CPU応答を確認。
+- Chromium 375/390/414px: 4枚の新規立ち絵が768×960で読み込まれ、横はみ出しなし。390pxのCPU対局中の48×58アバターにも顔が収まる。
 - Chromiumの4ブラウザ: ルーム作成・3人参加・全員準備・開始を確認。各ブラウザに自分の手牌のみ表示されることを確認。
 - 画面証跡: [CPU対局](evidence/mahjong-cpu-turn-smoke.png)、[4人対局](evidence/mahjong-online-mobile-smoke.png)。
+- 新しい立ち絵と対局表示：[375pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-375-rev2.png)、[390pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-390-rev2.png)、[414pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-414-rev2.png)、[390px CPU対局](../qa/three-games-quality/mahjong-cpu-table-390-rev2.png)。
 - 実機iPhone Safariでは未確認。
+- Chromium 375/390/414px：実CPU対局を局結果まで進め、和了・点数移動・次局ボタンを確認。390pxで次局ボタンが対局を再開することも確認（[375px](../qa/three-games-quality/mahjong-cpu-hand-result-375-rev3.png)、[390px](../qa/three-games-quality/mahjong-cpu-hand-result-390-rev3.png)、[414px](../qa/three-games-quality/mahjong-cpu-hand-result-414-rev3.png)）。流局時の聴牌表示と精算欄は同じ画面コードで描画され、実際の1局でも表示を確認。

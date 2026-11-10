@@ -3,7 +3,7 @@ import {el,button,field} from '../dom.js';
 const LABELS=['一流','二流','三流','四流','映す価値なし'];
 export const ratingCategories=Object.freeze(['センス格付け','AI画像格付け','芸術格付け','プロの仕事','骨董品鑑定','盛り付け格付け']);
 let cssRequested=false;
-function styles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/rating.css?v=rating-v5';document.head.append(link);}
+function styles(){if(cssRequested||typeof document==='undefined')return;cssRequested=true;const link=el('link');link.rel='stylesheet';link.href='/js/events/rating.css?v=rating-v6';document.head.append(link);}
 function options(question){return ['A','B'].map(key=>{const value=question?.choices?.[key]||{};return{key,label:String(value.label||`選択肢 ${key}`),asset:String(value.asset||''),alt:String(value.alt||value.label||`選択肢 ${key}`)};});}
 function imageCard(choice,selected,disabled,onSelect,{blind=false}={}){const card=button('',()=>onSelect(choice.key),`rating-choice${blind?' rating-choice-blind':''}`);card.type='button';card.disabled=disabled;card.setAttribute('aria-pressed',String(selected));if(selected)card.className+=' is-selected';card.append(el('span','rating-choice-letter',choice.key));if(choice.asset){const image=el('img','rating-choice-image');image.src=choice.asset;image.alt=choice.alt;image.loading='eager';image.addEventListener('error',()=>{image.hidden=true;card.className+=' rating-image-unavailable';});card.append(image);}else{const visual=el('div','rating-choice-art',choice.key==='A'?'✦':'◈');visual.setAttribute('aria-hidden','true');card.append(visual);}card.append(el('span','rating-choice-label',choice.label));return card;}
 function questionNotice(question){return typeof question?.practiceNotice==='string'?question.practiceNotice:'';}
@@ -16,12 +16,12 @@ export function ratingScreen({state,send}){
  const root=el('section','rating-game');root.dataset.phase=e.phase;root.setAttribute('aria-label','一流格付けチェック');
  const eyebrow=el('p','rating-eyebrow',`EXHIBIT ${String((e.roundIndex||0)+1).padStart(2,'0')} / ${e.categoryLabel||q.category||'鑑定の間'}`);root.append(eyebrow);
  if(e.phase==='RULES'){
-  const panel=el('article','rating-panel');panel.append(el('p','rating-kicker','PRIVATE APPRAISAL'),el('h2','','一流格付けチェック'),el('p','','AとBを見比べ、一流だと思う方を選択。全員の回答後、二つの待機室に分かれてから扉の向こうを発表します。誤答するとランクが下がります。'),el('p','rating-note','ランクは演出上の称号です。正解数とあわせて最後に発表します。'));root.append(panel);
+  const panel=el('article','rating-panel');panel.append(el('p','rating-kicker','PRIVATE APPRAISAL'),el('h2','','一流格付けチェック'),el('p','','AとBを見比べ、お題に合うと思う方を選択。全員の回答後、二つの待機室に分かれてから扉の向こうを発表します。誤答するとランクが下がります。'),el('p','rating-note','ランクは演出上の称号です。正解数とあわせて最後に発表します。'));root.append(panel);
   if(host){const settings=el('section','rating-host-settings');settings.append(el('p','rating-kicker','本日の鑑定'),el('p','',`${e.options?.roundLimit||3}問 · 制限時間 ${e.options?.seconds||45}秒`),el('p','rating-muted','ジャンルは各問題に沿って出題されます。'));root.append(settings);}
   else root.append(el('p','rating-muted','司会が最初の問題を選んでいます。'));
  }else if(['ANSWER','CONSULT'].includes(e.phase)){
   const notice=questionNotice(q);if(notice)root.append(el('p','rating-note',notice));
-  root.append(el('p','rating-prompt',q.prompt||'二つを比べ、一流だと思う方を選んでください。'));
+  root.append(el('p','rating-prompt',q.prompt||'二つを比べ、このお題に合うと思う方を選んでください。'));
   const choices=el('div','rating-choice-grid');const locked=Boolean(e.ownAnswer);
   for(const choice of options(q))choices.append(imageCard(choice,e.ownAnswer?.value?.choice===choice.key,locked,key=>send('event_answer',{value:{choice:key}}),{blind:true}));
   root.append(choices);
