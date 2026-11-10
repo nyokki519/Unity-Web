@@ -28,18 +28,20 @@ test('CPU takes a legal ron before a meld claim', () => {
   assert.deepEqual(chooseAction(match, 1, () => 0), {type: 'ron'});
 });
 
-test('ready closed hands prefer a legal riichi discard with reproducible ties', () => {
+test('Kobalab evaluation chooses a legal riichi discard deterministically', () => {
   const match = discardMatch(readyHand);
   const before = structuredClone(match);
-  assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'riichi_discard', tile: 31});
-  assert.deepEqual(chooseAction(match, 0, () => 0.999), {type: 'riichi_discard', tile: 33});
+  const action=chooseAction(match,0,()=>0);
+  assert.deepEqual(action,{type:'riichi_discard',tile:33});
+  assert.deepEqual(chooseAction(match,0,()=>0.999),action);
+  assert.ok(legalActions(match,0).some(candidate=>JSON.stringify(candidate)===JSON.stringify(action)));
   assert.deepEqual(match, before);
 });
 
 test('ordinary discards minimize shanten instead of choosing an arbitrary legal tile', () => {
   const match = discardMatch([0,1,2,9,10,11,18,19,20,27,27,27,31,33]);
   match.players[0].points = 0;
-  assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'discard', tile: 31});
+  assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'discard', tile: 33});
   assert.deepEqual(chooseAction(match, 0, () => 0.999), {type: 'discard', tile: 33});
 });
 
@@ -114,7 +116,7 @@ test('runCpuTurn advances one legal action without mutating state or hidden draw
   const before = structuredClone(match);
   const next = runCpuTurn(match, 0, () => 0, 42);
   assert.equal(next.revision, match.revision + 1);
-  assert.equal(next.players[0].discards.at(-1).tile, 31);
+  assert.equal(next.players[0].discards.at(-1).tile, 33);
   assert.equal(next.players[0].riichi, true);
   assert.deepEqual(match, before);
   assert.deepEqual(next.deadWall, before.deadWall);

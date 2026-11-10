@@ -12,15 +12,21 @@
     "dev": "node --watch src/server.js",
     "test": "node --test test/*.test.js",
     "check:questions": "node tools/check-questions.js",
+    "build:mahjong-ai": "node tools/build-mahjong-ai.mjs",
     "vendor:three": "node tools/vendor-three.js",
     "test:abyss": "node --test test/abyss-*.test.js",
     "vendor:physics": "node tools/vendor-physics.js"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",
+    "@kobalab/majiang-ai": "1.2.0",
+    "@kobalab/majiang-core": "1.3.5",
     "earcut": "3.2.4",
     "qrcode": "1.5.4",
     "three": "0.180.0",
     "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

@@ -34,7 +34,7 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       const url=new URL(req.url,'http://local');
       if(url.pathname.startsWith('/mahjong-engine/')){
         const moduleName=url.pathname.slice('/mahjong-engine/'.length);
-        if(!['tiles.js','hand.js','yaku.js','score.js','match.js','ai.js','client-view.js'].includes(moduleName))return failResponse(res,'ROOM_NOT_FOUND',404);
+        if(!['tiles.js','hand.js','yaku.js','score.js','match.js','ai.js','reference-ai.js','client-view.js'].includes(moduleName))return failResponse(res,'ROOM_NOT_FOUND',404);
         if(req.method!=='GET'&&req.method!=='HEAD')return failResponse(res,'BAD_COMMAND',405);
         let source;try{source=await readFile(new URL(`./mahjong/${moduleName}`,import.meta.url));}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
         res.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'no-cache'});return res.end(req.method==='HEAD'?undefined:source);

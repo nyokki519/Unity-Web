@@ -73,7 +73,7 @@ test('drawn tile is sent only to the active seat while concealed hands remain pr
 });
 test('table renders original tile faces in the hand, public rivers, melds and dora display',async()=>{
  const [,{renderApp}]=await load();const markup=renderApp({screen:'table',characterId:'moka',view:{phase:'DISCARD',selfSeat:0,dealer:0,remainingTiles:50,doraIndicators:[31],players:[{name:'自分',points:25000,hand:[34,9],discards:[{tile:0}],melds:[]},{name:'南さん',points:25000,handCount:13,discards:[{tile:27}],melds:[{type:'pon',tiles:[27,27,27],open:true}]}],legalActions:[]}});
- assert.match(markup,/class="mj-tile-svg/);assert.match(markup,/aria-label="赤5萬を選択"/);assert.match(markup,/class="tile-river/);assert.match(markup,/class="meld-tiles/);assert.match(markup,/aria-label="白"/);
+ assert.match(markup,/class="mj-tile-svg/);assert.match(markup,/aria-label="赤5萬を選択"/);assert.match(markup,/class="tile-river/);assert.match(markup,/class="meld-tiles/);assert.match(markup,/aria-label="白"/);assert.match(markup,/pai\.gif/);
 });
 test('malformed tile labels remain escaped in button and assistive labels',async()=>{
  const [,{renderApp}]=await load();const payload='\"><img data-pwn="tile">';

@@ -54,3 +54,24 @@ test('overlapping cues are bounded and unsupported cue names are ignored',()=>{
  assert.ok(accepted>0&&accepted<20,'voice budget should admit some cues and reject excess overlap');
  context.currentTime=10;assert.equal(sound.cue('draw'),true,'voice budget recovers after prior sounds end');
 });
+
+test('licensed Kobalab WAV cues are local, gesture gated and mapped by action',()=>{
+ const made=[],factory=src=>{const voice={src,volume:1,preload:'',currentTime:0,play(){made.push(['play',this.src,this.volume]);return Promise.resolve();},addEventListener(name,fn){this[name]=fn;}};made.push(['create',src]);return voice;};
+ const sound=createMahjongSound({assetAudioFactory:factory});
+ assert.equal(sound.cue('discard'),false,'no sound before a user gesture');
+ assert.equal(sound.enableFromGesture(),true);
+ for(const [cue,file] of [['discard','dahai11.wav'],['chi','chii.wav'],['pon','pon.wav'],['kan','kan.wav'],['ron','ron.wav'],['tsumo','tsumo.wav'],['riichi','richi.wav'],['result','nc43994.wav']]){
+  assert.equal(sound.cue(cue),true,cue);
+  assert.ok(made.some(([kind,src])=>kind==='create'&&src.endsWith(file)),file);
+ }
+ assert.ok(made.filter(row=>row[0]==='play').every(([,src,volume])=>src.startsWith('/mahjong/assets/kobalab/audio/')&&volume>0&&volume<=.3));
+ sound.disable();assert.equal(sound.cue('tile'),false);
+});
+
+test('reference WAV voice cap bounds simultaneous playback and recovers on end',()=>{
+ const voices=[],sound=createMahjongSound({assetAudioFactory:src=>{const voice={src,addEventListener(name,fn){this[name]=fn;},play(){return Promise.resolve();}};voices.push(voice);return voice;}});
+ sound.enableFromGesture();
+ let accepted=0;for(let index=0;index<12;index++)if(sound.cue('discard'))accepted++;
+ assert.equal(accepted,10);
+ voices[0].ended();assert.equal(sound.cue('draw'),true);
+});

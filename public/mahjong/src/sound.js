@@ -1,11 +1,14 @@
-/** Original, quiet Web Audio cues for Mahjong actions and hand results.
- * The context is created/resumed only from the explicit sound-toggle gesture. */
-export function createMahjongSound({audioContextFactory}={}) {
+/** Licensed Kobalab WAV cues with a quiet Web Audio fallback, both gesture-gated. */
+export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
   const AudioContextClass=globalThis.AudioContext||globalThis.webkitAudioContext;
   const factory=audioContextFactory||(AudioContextClass?()=>new AudioContextClass():null);
-  let context=null, enabled=false, supported=!!factory;
+  const audioFactory=assetAudioFactory||(typeof globalThis.Audio==='function'?src=>new Audio(src):null);
+  let context=null, enabled=false, supported=!!audioFactory||!!factory;
   const activeVoices=[];
+  const activeAssets=new Set();
   const maxVoices=12;
+  const cues={tile:'beep.wav',draw:'beep.wav',discard:'dahai11.wav',call:'pon.wav',chi:'chii.wav',pon:'pon.wav',kan:'kan.wav',ankan:'kan.wav',kakan:'kan.wav',riichi:'richi.wav',win:'tsumo.wav',tsumo:'tsumo.wav',ron:'ron.wav',loss:'beep.wav',result:'nc43994.wav'};
+  const volume={tile:.14,draw:.12,discard:.2,call:.22,chi:.22,pon:.22,kan:.24,ankan:.2,kakan:.22,riichi:.25,win:.3,tsumo:.3,ron:.3,loss:.12,result:.18};
 
   // Frequency, offset, duration, peak volume, waveform, optional slide endpoint.
   const patterns={
@@ -20,12 +23,9 @@ export function createMahjongSound({audioContextFactory}={}) {
   };
 
   function enableFromGesture(){
-    if(!supported||!factory)return false;
+    if(!supported)return false;
     try{
-      context ||= factory();
-      if(!context){supported=false;return false;}
-      const resumed=context.resume?.();
-      if(resumed?.catch)resumed.catch(()=>{enabled=false;});
+      if(!audioFactory){context ||= factory?.();if(!context){supported=false;return false;}const resumed=context.resume?.();if(resumed?.catch)resumed.catch(()=>{enabled=false;});}
       enabled=true;
       return true;
     }catch{
@@ -33,7 +33,7 @@ export function createMahjongSound({audioContextFactory}={}) {
     }
   }
 
-  function disable(){enabled=false;}
+  function disable(){enabled=false;for(const voice of activeAssets){try{voice.pause?.();voice.currentTime=0;}catch{}}activeAssets.clear();}
 
   function tone({frequency,endFrequency=frequency,at,duration,volume,type}){
     const oscillator=context.createOscillator(),gain=context.createGain();
@@ -49,7 +49,22 @@ export function createMahjongSound({audioContextFactory}={}) {
   }
 
   function cue(name){
-    if(!enabled||!context||context.state==='suspended'||context.state==='closed')return false;
+    if(!enabled)return false;
+    const file=cues[name];if(!file)return false;
+    if(audioFactory){
+      if(activeAssets.size>=10)return false;
+      try{
+        const voice=audioFactory(`/mahjong/assets/kobalab/audio/${file}`);
+        if(!voice)return false;
+        voice.preload='auto';voice.volume=volume[name]??.18;voice.currentTime=0;
+        activeAssets.add(voice);
+        const release=()=>activeAssets.delete(voice);
+        voice.addEventListener?.('ended',release,{once:true});voice.addEventListener?.('error',release,{once:true});
+        const result=voice.play?.();if(result?.catch)result.catch(release);
+        return true;
+      }catch{return false;}
+    }
+    if(!context||context.state==='suspended'||context.state==='closed')return false;
     const pattern=patterns[name];
     if(!pattern)return false;
     try{

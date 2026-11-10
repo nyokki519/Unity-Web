@@ -28,14 +28,17 @@ npm start
 - `public/mahjong/`: 日本語画面、4名のオリジナル生成立ち絵、CPU接続、WebSocket通信
 - `src/mahjong/service.js`: ルーム、権限、締切、復帰、6時間の期限切れ
 - `src/mahjong/store.js`: 既存DBと分離した `mahjong_rooms` 名前空間
-- `public/mahjong/src/tile-art.js`: 牌のSVG描画とアクセシブルな牌名
+- `public/mahjong/src/tile-art.js`: 参照元の牌画像をローカル表示し、日本語アクセシブル名を付与
+- `src/mahjong/reference-ai.js`: Kobalab AIへ自分の手牌と公開情報だけを渡すアダプター。AI推薦はUnity MIXの合法アクションに一致した場合だけ採用
+- `public/mahjong/assets/kobalab/`: MIT表記付きのローカル牌画像・局面音声
+- `public/mahjong/vendor/majiang-ai.bundle.js`: 固定したMIT版AIをオフライン利用できるようブラウザー用にbundle
 - 参考実装のライセンス・技術比較: [REFERENCE_REVIEW.md](REFERENCE_REVIEW.md)
 
-4人のオリジナル立ち絵を選択画面と対局画面に表示します。キャラクターごとに思考の傾向がわずかに違い、配牌やルールを操作しませんが、判断差が勝敗へ影響することはあります。作画素材の生成記録とトリミング方針は [ARTWORK.md](ARTWORK.md) を参照してください。リーチ後は、ツモ牌で成立し待ちが変わらない暗槓のみ許可します。暗槓への国士無双の槍槓に対応します。槓の補充牌を取れないときは槓を選べません。CPUは向聴数・見えている受け入れ・公開済みドラ・河の安全情報を使います。伏せ牌・王牌・未公開の槓ドラ表示牌は判断に使いません。チー／ポンが即聴牌になる場合は、採点器で役のある待ちを確認してから鳴きます。流し満貫など一部の細則は未実装です。対局中はWeb Audioで生成する短い牌選択・ツモ・打牌・鳴き・リーチ・和了・敗北音を用意し、端末操作で有効化します。キャラクターボイスや実機収録音はありません。
+4人のオリジナル立ち絵を選択画面と対局画面に表示します。キャラクターごとに思考の傾向がわずかに違い、配牌やルールを操作しませんが、判断差が勝敗へ影響することはあります。作画素材の生成記録とトリミング方針は [ARTWORK.md](ARTWORK.md) を参照してください。リーチ後は、ツモ牌で成立し待ちが変わらない暗槓のみ許可します。暗槓への国士無双の槍槓に対応します。槓の補充牌を取れないときは槓を選べません。CPUの打牌・鳴き判断はKobalab AI 1.2.0を参考情報と公開河から動かし、推薦がUnity MIXの合法アクションに一致した場合だけ採用します。伏せ牌・王牌・未公開の槓ドラ表示牌はAIへ渡しません。アダプター失敗時は既存の安全なCPU方針へ戻ります。流し満貫など一部の細則は未実装です。対局音はMIT表記付きのKobalab同梱WAVを、最初の音声ボタン操作後に再生します。端末の音声機能が使えない場合はWeb Audioの短い生成音を代替し、キャラクターボイスはありません。
 
 ## 確認記録
 
-- `npm test`: 642 tests passed, 0 failed in the 2026-11-10 reference-upgrade pass. Tests that bind local TCP ports require an execution environment that permits loopback listeners.
+- `npm test`: 648 tests passed, 0 failed in the 2026-11-10 reference-upgrade pass. Tests that bind local TCP ports require an execution environment that permits loopback listeners.
 - Chromium 390×844: キャラクター選択、CPU対局開始、実打牌、CPU応答を確認。
 - Chromium 375/390/414px: 4枚の新規立ち絵が768×960で読み込まれ、横はみ出しなし。390pxのCPU対局中の48×58アバターにも顔が収まる。
 - Chromiumの4ブラウザ: ルーム作成・3人参加・全員準備・開始を確認。各ブラウザに自分の手牌のみ表示されることを確認。
@@ -43,6 +46,8 @@ npm start
 - 新しい立ち絵と対局表示：[375pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-375-rev2.png)、[390pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-390-rev2.png)、[414pxキャラクター選択](../qa/three-games-quality/mahjong-portrait-selection-414-rev2.png)、[390px CPU対局](../qa/three-games-quality/mahjong-cpu-table-390-rev2.png)。
 - 実機iPhone Safariでは未確認。
 - Chromium 375/390/414px：実CPU対局を局結果まで進め、和了・点数移動・次局ボタンを確認。390pxで次局ボタンが対局を再開することも確認（[375px](../qa/three-games-quality/mahjong-cpu-hand-result-375-rev3.png)、[390px](../qa/three-games-quality/mahjong-cpu-hand-result-390-rev3.png)、[414px](../qa/three-games-quality/mahjong-cpu-hand-result-414-rev3.png)）。流局時の聴牌表示と精算欄は同じ画面コードで描画され、実際の1局でも表示を確認。
+- Chromium 390×844: Kobalabの牌画像15枚を読み込み、実打牌とCPU応答を確認。375/390/414pxで横はみ出しなし（[CPU対局390px](../qa/mahjong-kobalab-gradeup/cpu-390.png)、[打牌後390px](../qa/mahjong-kobalab-gradeup/cpu-after-discard-390.png)）。盤面の自作図形牌を実牌画像に切替え、局面別WAVを追加。音声の開始・消音時停止はテスト済みだが、実機スピーカーでの主観確認は未実施。
+- CPU判断はKobalab AI 1.2.0から打牌・鳴きの提案を受け、Unity MIX側の合法手と一致する場合だけ採用。自分の手牌・公開河・公開副露だけを渡し、伏せ牌・牌山を変えても判断が変わらないテストを追加。CPU 4人の通し対局も合格。
 - Chromium 375/390/414px: 改修後の対局盤、手牌、河、副露、打牌演出を確認。ページ幅は各ビューポートと一致し、手牌は画面幅に押しつぶされず横スクロール（[375px](../qa/mahjong-reference-upgrade/mahjong-updated-375.png)、[390px](../qa/mahjong-reference-upgrade/mahjong-updated-390.png)、[414px](../qa/mahjong-reference-upgrade/mahjong-updated-414.png)、[打牌演出](../qa/mahjong-reference-upgrade/mahjong-moment-discard-390.png)）。
 - Chromiumの4ブラウザで、ルーム作成・4席参加・準備・開始・打牌同期を確認。各プレイヤーは自分の手牌のみを受け取り、他席には伏せ牌を表示（[4人対局](../qa/mahjong-reference-upgrade/mahjong-online-390.png)）。サービス・サーバービューの自動テストでもツモ牌の秘匿を確認。
 - 本番URLで更新済みJS/CSS/SVG・Service Worker v60をHTTP確認。390px相当でCPU対局開始・打牌・CPU応答、横幅390px、ブラウザーエラーなしを確認（[本番CPU対局](../qa/mahjong-reference-upgrade/mahjong-production-390.png)）。

@@ -18,6 +18,12 @@
 .table-character .portrait-compact{border:1px solid #d8bd7e}
 @media(max-width:699px){.character-card{border-radius:13px;padding-bottom:15px}.character-card>strong{font-size:clamp(16px,4.4vw,19px)}.character-card>span:last-child{font-size:11px}.character-card .portrait{aspect-ratio:3/4}.mode-layout .selected-character .portrait{max-width:190px}}
 @media(prefers-reduced-motion:reduce){.character-card{transition:none}}
+/* Reference tile backs remain visible as small, locally cached face-down tiles. */
+.tile-back{display:block;flex:0 1 8px;width:8px;min-width:3px;height:14px;padding:0;border:0;border-radius:2px;background:transparent;box-shadow:none;object-fit:fill}
+.tile-back::after{display:none}
+.mj-tile-svg{object-fit:fill;image-rendering:auto}
+.mj-tile-invalid{width:44px;height:59px;border:1px solid #8e473d;border-radius:5px;background:#fff7e6}
+@media(max-width:699px){.mj-tile-svg{object-fit:fill}.mj-tile-compact{object-fit:fill}}
 /* Play screen: a warm, framed felt table that gives each seat a clear zone. */
 .table{
   position:relative;

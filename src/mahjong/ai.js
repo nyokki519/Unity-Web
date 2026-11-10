@@ -2,6 +2,7 @@ import {legalActions, applyAction, advanceTurn} from './match.js';
 import {tileType} from './tiles.js';
 import {ORPHANS, isCompleteHand} from './hand.js';
 import {evaluateYaku} from './yaku.js';
+import {referenceAction} from './reference-ai.js';
 
 // Count the fewest tile improvements needed, considering every way to divide
 // the concealed hand into melds, partial melds, a pair and unused tiles.
@@ -159,9 +160,11 @@ export function chooseAction(match, seat, random = Math.random) {
     if (!cache.has(key)) cache.set(key, shanten(hand, melds));
     return cache.get(key);
   };
+  const reference=referenceAction(match,seat,actions);
+  if(reference)return reference;
   const riichi = actions.filter(action => action.type === 'riichi_discard');
-  if (riichi.length) return bestDiscard(riichi, match, seat, random);
   const discards = actions.filter(action => action.type === 'discard');
+  if (riichi.length) return bestDiscard(riichi, match, seat, random);
   if (discards.length) return bestDiscard(discards, match, seat, random);
 
   let best = distance(player.hand, player.melds.length), claims = [];
