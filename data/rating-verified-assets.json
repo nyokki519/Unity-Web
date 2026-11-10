@@ -78,6 +78,25 @@
       "width": 1280,
       "height": 960,
       "editorialUseNote": "料理写真。写真家の撮影作品として利用許諾条件を記録。料理人の経歴・プロ級の判定根拠にはしない。"
+    },
+    {
+      "id": "ai-latte-generated",
+      "category": "AI画像格付け",
+      "title": "Original AI-generated latte image for rating-quiz comparison",
+      "filePageUrl": null,
+      "directUrl": null,
+      "localAsset": "/rating/verified/ai-latte-generated.png",
+      "creator": "OpenAI image generation",
+      "license": "Generated original; terms of generation tool apply; no separate open license asserted",
+      "licenseUrl": null,
+      "attribution": "Generated for Unity MIX rating quiz; prompt note: original cafe latte scene, no brand or artist imitation",
+      "sourceInstitution": null,
+      "accessed": "2026-11-09",
+      "sha256": "dbce9144895afb12f276a1f988a5ea3ec28009f3615952daeed2f90ac8692c39",
+      "bytes": 2691043,
+      "width": 1254,
+      "height": 1254,
+      "editorialUseNote": "生成素材。実写との出自比較専用。画像だけで生成物を一般に判別可能との主張には使わない。"
     }
   ]
 }

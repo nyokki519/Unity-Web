@@ -13,13 +13,15 @@ export function validateRatingQuestion(input){
  const choices={};
  for(const key of ['A','B']){
   const choice=input.choices[key];if(!choice||typeof choice!=='object')fail('BAD_SETTINGS');
-  const asset=text(choice.asset,160);if(!/^\/rating\/[a-z0-9-]+\.svg$/.test(asset))fail('BAD_SETTINGS');
-  choices[key]={label:text(choice.label,100),asset,alt:text(choice.alt,160)};
+  const asset=text(choice.asset,200);if(!/^\/rating\/(?:verified\/)?[a-z0-9-]+\.(?:svg|png|jpe?g|webp)$/.test(asset))fail('BAD_SETTINGS');
+  const row={label:text(choice.label,100),asset,alt:text(choice.alt,160)};
+  if(choice.provenance){const p=choice.provenance;if(!['licensed','generated'].includes(p.kind))fail('BAD_SETTINGS');if(p.kind==='licensed'){if(!/^https:\/\//.test(p.sourceUrl||'')||!text(p.creator,160)||!text(p.license,80)||!text(p.attribution,300))fail('BAD_SETTINGS');row.provenance={kind:'licensed',sourceUrl:text(p.sourceUrl,300),creator:text(p.creator,160),license:text(p.license,80),attribution:text(p.attribution,300)};}else{row.provenance={kind:'generated',tool:text(p.tool,120),createdAt:text(p.createdAt,40),promptNote:text(p.promptNote,240)};}}
+  choices[key]=row;
  }
  if(input.correct!=='A'&&input.correct!=='B')fail('BAD_SETTINGS');
  if(input.enabled!==undefined&&typeof input.enabled!=='boolean')fail('BAD_SETTINGS');
- const source=input.source;if(!source||source.kind!=='original-created'||typeof source.assetLicense!=='string'||!source.assetLicense.trim())fail('BAD_SETTINGS');
- return{id,game:'RATING',category:input.category,prompt:text(input.prompt,220),talkPrompt:text(input.talkPrompt,240),choices,correct:input.correct,explanation:text(input.explanation,500),source:{kind:'original-created',assetLicense:text(source.assetLicense,300),editorialNote:text(source.editorialNote||'本プロジェクト用オリジナル問題',300)},difficulty:input.difficulty||'気軽',enabled:input.enabled!==false};
+ const source=input.source;if(!source||!['original-created','verified-comparison'].includes(source.kind))fail('BAD_SETTINGS');if(source.kind==='verified-comparison'&&(!choices.A.provenance||!choices.B.provenance))fail('BAD_SETTINGS');if(typeof source.assetLicense!=='string'||!source.assetLicense.trim())fail('BAD_SETTINGS');
+ return{id,game:'RATING',category:input.category,prompt:text(input.prompt,220),talkPrompt:text(input.talkPrompt,240),choices,correct:input.correct,explanation:text(input.explanation,500),source:{kind:source.kind,assetLicense:text(source.assetLicense,300),editorialNote:text(source.editorialNote||'本プロジェクト用オリジナル問題',300)},difficulty:input.difficulty||'気軽',enabled:input.enabled!==false};
 }
 
 export function validateRatingAnswer(value){
@@ -38,5 +40,5 @@ export function ratingResult(event,room){
  }
  const ordered=event.participants.map(id=>({playerId:id,name:room.players[id]?.name||'参加者',...event.ratingStandings[id],rankLabel:RATING_RANKS[event.ratingStandings[id].rankIndex]})).sort((a,b)=>a.rankIndex-b.rankIndex||b.correct-a.correct||a.name.localeCompare(b.name,'ja'));
  let place=0,lastKey='';const standings=ordered.map((row,index)=>{const key=`${row.rankIndex}:${row.correct}`;if(key!==lastKey)place=index+1;lastKey=key;return{...row,place};});
- return{correctChoice:event.question.correct,explanation:event.question.explanation,distribution,waitingRooms,standings};
+ return{correctChoice:event.question.correct,explanation:event.question.explanation,distribution,waitingRooms,standings,sources:Object.fromEntries(Object.entries(event.question.choices).map(([key,choice])=>[key,choice.provenance||null]))};
 }

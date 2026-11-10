@@ -77,8 +77,9 @@
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。"
-    }
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。 出典を確認できる写真との比較問題ではないため、検証問題プールから除外。"
+    },
+    "enabled": false
   },
   {
     "id": "rating-ai-image-02",
@@ -104,8 +105,9 @@
       "kind": "original-created",
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
-      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。"
-    }
+      "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実写写真・AI生成写真・実在作家/職人/シェフ/骨董品を示す資料ではない。AI画像ジャンルは本物の実写素材を権利確認した後に差し替える必要がある。 出典を確認できる写真との比較問題ではないため、検証問題プールから除外。"
+    },
+    "enabled": false
   },
   {
     "id": "rating-art-01",
@@ -321,6 +323,47 @@
       "creator": "Unity Web",
       "assetLicense": "Unity Web original artwork; redistribution only as part of Unity MIX; third-party assets none",
       "editorialNote": "画像は本プロジェクト用のオリジナルSVG観察図版。実在の専門家の仕事・作品・骨董品・料理を示す資料ではない。"
+    }
+  },
+  {
+    "id": "rating-ai-photo-01",
+    "game": "RATING",
+    "category": "AI画像格付け",
+    "prompt": "どちらが出典を確認できる実写のカフェラテ写真？",
+    "talkPrompt": "泡の形や光だけで決めず、写真と生成画像の違いをどう見たか話そう。",
+    "difficulty": "気軽",
+    "enabled": true,
+    "choices": {
+      "A": {
+        "label": "Wikimedia Commons掲載の実写写真",
+        "asset": "/rating/verified/real-coffee.jpg",
+        "alt": "黒いテーブルの上に置かれたデカフェラテ。泡にハート模様がある。",
+        "provenance": {
+          "kind": "licensed",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Decaf_latte_-_Trading_Post_Coffee_Roasters_2025-03-09.jpg",
+          "creator": "Andy Li",
+          "license": "CC0",
+          "attribution": "Decaf latte - Trading Post Coffee Roasters 2025-03-09.jpg — Andy Li; CC0; via Wikimedia Commons"
+        }
+      },
+      "B": {
+        "label": "本ゲーム用に生成した画像",
+        "asset": "/rating/verified/ai-latte-generated.png",
+        "alt": "木のテーブルに置かれたラテアート入りのカフェラテ。",
+        "provenance": {
+          "kind": "generated",
+          "tool": "OpenAI image generation",
+          "createdAt": "2026-11-09",
+          "promptNote": "木のテーブルに置いたラテアートのあるカフェラテ。特定作家やブランドを模倣しない。"
+        }
+      }
+    },
+    "correct": "A",
+    "explanation": "Aは撮影者Andy LiがWikimedia Commonsへ掲載し、CC0と表示された写真です。Bはこの問題用に画像生成ツールで新規作成した画像です。出自が記録された素材同士を比較する問題で、見た目だけで生成物を確実に判定できるという意味ではありません。",
+    "source": {
+      "kind": "verified-comparison",
+      "assetLicense": "A: CC0 (Wikimedia Commons); B: 本プロジェクト用に生成した画像（生成物の権利・利用条件は提供ツールの条件に従う）",
+      "editorialNote": "Aの出典・作者・ライセンスはCommonsファイルページで確認。Bの生成記録は本プロジェクト管理台帳。"
     }
   }
 ]
