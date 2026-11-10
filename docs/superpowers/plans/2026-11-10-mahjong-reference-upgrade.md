@@ -57,5 +57,5 @@
 - [x] Review diff for copied reference material and hidden-information access; document upstream license/dependency findings in `docs/mahjong/REFERENCE_REVIEW.md`.
 - [x] Add regressions for hidden future kan-dora, called-river double counting, pre-riichi genbutsu, no-yaku open tenpai, malformed tile-label escaping, drawn-tile privacy, and duplicate online state effects.
 - [x] Exercise four simultaneous browser clients through room setup, ready, deal, and discard synchronization; check concealed-hand privacy.
-- [x] Run 30 seeded CPU match smoke simulations (14,075 transitions); all returned legal actions, increased revisions, terminated and conserved total points.
+- [x] Run 300 seeded CPU matches (132,792 transitions, 2,038 hands); all returned legal actions, increased revisions, terminated and conserved total points.
 - [x] Record exact test totals, screenshots, remaining limits and deployment state. Published to `main` as `3f697b8`; Render served the new assets and passed a 390px production CPU-turn smoke check.
