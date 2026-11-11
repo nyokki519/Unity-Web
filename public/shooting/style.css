@@ -130,3 +130,11 @@ h1{letter-spacing:-.035em;text-shadow:0 5px 28px #54d5d866}
 #overlay .modal{display:flex;flex-direction:column;max-height:100%;overflow:hidden}
 #overlay .report-body{min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding:12px 0}
 #overlay .report-actions{flex:0 0 auto;position:relative;bottom:auto}
+
+/* Portrait-only play: keep the board readable and freeze the run during device rotation. */
+#rotate-notice{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));background:#06100ef2;backdrop-filter:blur(12px)}
+.rotate-card{width:min(100%,440px);padding:clamp(22px,6vw,38px);border:1px solid #91f5c655;border-radius:24px;background:radial-gradient(ellipse at 50% 0,#234536,#0b1713 72%);box-shadow:0 24px 90px #000a;text-align:center}
+.rotate-card>span{display:inline-grid;place-items:center;width:76px;height:76px;border:1px solid #e6c98c88;border-radius:50%;color:var(--gold);font-size:48px;line-height:1;animation:rotate-hint 2.8s ease-in-out infinite}
+.rotate-card .eyebrow{margin:18px 0 4px}.rotate-card h1{font-size:clamp(22px,4vw,32px);line-height:1.35;letter-spacing:0;margin:6px 0 12px}.rotate-card p:last-child{margin:0;color:#bfd0c5;font-size:14px;line-height:1.8}
+@keyframes rotate-hint{50%{transform:rotate(90deg)}}
+@media(prefers-reduced-motion:reduce){.rotate-card>span{animation:none}}

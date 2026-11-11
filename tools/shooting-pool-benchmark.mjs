@@ -1,5 +1,4 @@
-import {execFileSync} from 'node:child_process';
-import {mkdtempSync,writeFileSync,readFileSync,rmSync,mkdirSync,readdirSync,copyFileSync,statSync} from 'node:fs';
+import {mkdtempSync,rmSync,mkdirSync,readdirSync,copyFileSync,statSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -7,10 +6,13 @@ import {Game} from '../public/shooting/core.js';
 
 const root=mkdtempSync(join(tmpdir(),'shooting-pool-before-'));
 const baseline=join(root,'baseline');mkdirSync(baseline);
+const baselineRef=process.env.SHOOTING_SIM_BASELINE||'294d846';
+const baselineSource=process.env.SHOOTING_BASELINE_DIR;
+if(!baselineSource)throw new Error('Set SHOOTING_BASELINE_DIR; run via bash tools/with-shooting-baseline.sh node tools/shooting-pool-benchmark.mjs');
 for(const file of readdirSync('public/shooting')){
  const source=join('public/shooting',file);if(statSync(source).isFile())copyFileSync(source,join(baseline,file));
 }
-for(const name of ['pool.js','core.js','combat.js'])writeFileSync(join(baseline,name),execFileSync('git',['show',`HEAD:public/shooting/${name}`]));
+for(const name of ['pool.js','core.js','combat.js','balance.js'])copyFileSync(join(baselineSource,name),join(baseline,name));
 const {Game:BaselineGame}=await import(`${pathToFileURL(join(baseline,'core.js')).href}?baseline=${Date.now()}`);
 function setup(Type){
  const game=new Type({seed:'active-pool-bench',mode:'campaign',difficulty:'normal'});
@@ -35,6 +37,6 @@ const summary=values=>{const sorted=[...values].sort((a,b)=>a-b);return{median:s
 const old=before.game.snapshot(),now=after.game.snapshot();
 const invariant={sameSnapshot:JSON.stringify(old)===JSON.stringify(now),sameStats:JSON.stringify(before.game.stats)===JSON.stringify(after.game.stats),samePlayer:JSON.stringify(before.game.player)===JSON.stringify(after.game.player),sameBulletCount:before.game.bullets.count===after.game.bullets.count};
 const baselineSummary=summary(baselineTimes),currentSummary=summary(currentTimes);
-const report={scenario:{activeHostileBullets:2200,capacity:8192,warmupTicks:120,measuredTicks:480,pairedTrials:21,order:'alternating',invulnerable:true,unmovingBullets:true},beforeMs:baselineSummary,afterMs:currentSummary,medianSpeedup:Number((baselineSummary.median/currentSummary.median).toFixed(2)),invariant,note:'Node V8 CPU-only fixed-step simulation; does not measure browser GPU, phone frame rate, or gameplay difficulty.'};
+const report={baseline:`${baselineRef} (v1.3.0)`,candidate:'working tree',scenario:{activeHostileBullets:2200,capacity:8192,warmupTicks:120,measuredTicks:480,pairedTrials:21,order:'alternating',invulnerable:true,unmovingBullets:true},beforeMs:baselineSummary,afterMs:currentSummary,medianSpeedup:Number((baselineSummary.median/currentSummary.median).toFixed(2)),invariant,note:'Node V8 CPU-only fixed-step simulation; does not measure browser GPU, phone frame rate, or gameplay difficulty.'};
 console.log(JSON.stringify(report,null,2));rmSync(root,{recursive:true,force:true});
 if(!Object.values(invariant).every(Boolean))process.exitCode=1;

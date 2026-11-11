@@ -1,0 +1,34 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "pilot": "stationary, invulnerable, no player fire; fixed seeded live enemy simulation",
+  "frames": [
+    {
+      "formation": 1,
+      "image": "docs/shooting/qa/formations-v1.4/final-review-30/formation-1-after-3s.png",
+      "enemies": 4,
+      "activeBullets": 55
+    },
+    {
+      "formation": 2,
+      "image": "docs/shooting/qa/formations-v1.4/final-review-30/formation-2-after-3s.png",
+      "enemies": 5,
+      "activeBullets": 37
+    },
+    {
+      "formation": 3,
+      "image": "docs/shooting/qa/formations-v1.4/final-review-30/formation-3-after-3s.png",
+      "enemies": 5,
+      "activeBullets": 33
+    },
+    {
+      "formation": 4,
+      "image": "docs/shooting/qa/formations-v1.4/final-review-30/formation-4-after-3s.png",
+      "enemies": 4,
+      "activeBullets": 36
+    }
+  ],
+  "errors": []
+}

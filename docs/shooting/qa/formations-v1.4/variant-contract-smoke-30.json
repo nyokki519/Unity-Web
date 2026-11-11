@@ -1,0 +1,3136 @@
+{
+  "date": "2026-11-11T05:14:41.308Z",
+  "baseline": "294d846 (v1.3.0)",
+  "difficulty": "extreme",
+  "build": "default starter loadout",
+  "sourceHashes": {
+    "workingCore": "dc5d4cdaf83ea4be0cb8147b35a59c05b09b57c1a7e97c64ffa285bb9bfb8c8a",
+    "baseline": "bcee6eb049c3bf7a45357fd32568abde85d897ab025c3a33e3c09138f5e2b312",
+    "priorLinePositions": "e6a9e8bb9b2af6e53a036b8ca490913620039a4d38ce9706a7f1a19224a24b4d",
+    "currentProduct": "dc5d4cdaf83ea4be0cb8147b35a59c05b09b57c1a7e97c64ffa285bb9bfb8c8a",
+    "newShapes12px": "5cbc94ecadef1a8efed86e0c7f64733a5db2612738f3539da55c63e72632be64",
+    "newShapes24px": "4572d0743bd0def88165007b042a1f4cb3a48925edae416c08b4480a63f8337b",
+    "newShapes30px": "dc5d4cdaf83ea4be0cb8147b35a59c05b09b57c1a7e97c64ffa285bb9bfb8c8a",
+    "newShapes36px": "927d0e5142a4adbc8a5ff087dcfec448a7b3648024382dc4640da3d037b97382",
+    "noEntryStagger": "9af7bda78afe5a8416fd52fc97ef5748ebc47d2bc74d4ad592c152d56739c0fd",
+    "allShapes24px": "82f122c3c54ab6fc7db77310dc49f3eb4d7f304064e2d59af50ec17234fce95d"
+  },
+  "note": "Fixed heuristic pilot, not human play data. Variants are created from one frozen working core source and coordinate fingerprints are asserted for the line and V waves before simulation. priorLinePositions retains new layouts but restores the old straight-line spawn route; noEntryStagger removes staggering from new layouts; allShapes24px applies 24px vertical staging to every shape; newShapes12/24/30/36 apply only to non-line layouts. These analysis variants are not product claims.",
+  "summary": {
+    "n": 1,
+    "before": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 24,
+      "branchRate": 0
+    },
+    "currentProduct": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 76,
+      "branchRate": 1
+    },
+    "priorLinePositions": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 34,
+      "branchRate": 0
+    },
+    "newShapes12px": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 65,
+      "branchRate": 1
+    },
+    "newShapes24px": {
+      "clears": 1,
+      "meanHits": 1,
+      "meanGrazes": 25,
+      "branchRate": 0
+    },
+    "newShapes30px": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 76,
+      "branchRate": 1
+    },
+    "newShapes36px": {
+      "clears": 1,
+      "meanHits": 3,
+      "meanGrazes": 46,
+      "branchRate": 0
+    },
+    "noEntryStagger": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 96,
+      "branchRate": 1
+    },
+    "allShapes24px": {
+      "clears": 0,
+      "meanHits": 4,
+      "meanGrazes": 107,
+      "branchRate": 1
+    },
+    "regressions": []
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "before": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 79.6,
+        "misses": 4,
+        "graze": 24,
+        "branch": false,
+        "kills": 106,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 26.57,
+            "tick": 3189,
+            "wave": 10,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 52.785797119140625,
+              "y": 633.2738647460938,
+              "vx": 12.633047103881836,
+              "vy": 267.87677001953125,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 57.3,
+              "y": 636.2,
+              "hp": 3,
+              "bombs": 3,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": -34.8,
+                "y": 659.9,
+                "distance": 95.2
+              },
+              {
+                "kind": 8,
+                "x": 157.3,
+                "y": 606,
+                "distance": 104.5
+              },
+              {
+                "kind": 8,
+                "x": 162.8,
+                "y": 612.7,
+                "distance": 108.1
+              },
+              {
+                "kind": 8,
+                "x": 132.3,
+                "y": 716.9,
+                "distance": 110.2
+              },
+              {
+                "kind": 8,
+                "x": 26.1,
+                "y": 529.8,
+                "distance": 110.8
+              },
+              {
+                "kind": 8,
+                "x": 191.1,
+                "y": 724.6,
+                "distance": 160.4
+              },
+              {
+                "kind": 8,
+                "x": 215.5,
+                "y": 593.9,
+                "distance": 163.8
+              },
+              {
+                "kind": 20,
+                "x": 125,
+                "y": 479.1,
+                "distance": 171.1
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 179.5,
+                "y": 416.1,
+                "baseX": 162,
+                "age": 7.5,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 51.95,
+            "tick": 6234,
+            "wave": 21,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 93.62390899658203,
+              "y": 685.98779296875,
+              "vx": -17.42163848876953,
+              "vy": 311.5634765625,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 91.1,
+              "y": 691.4,
+              "hp": 2,
+              "bombs": 1,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 6,
+                "x": -35.7,
+                "y": 692.5,
+                "distance": 126.9
+              },
+              {
+                "kind": 6,
+                "x": -23.2,
+                "y": 607.8,
+                "distance": 141.6
+              },
+              {
+                "kind": 8,
+                "x": 251.3,
+                "y": 673.6,
+                "distance": 161.1
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 61.57,
+            "tick": 7388,
+            "wave": 24,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 216.7901611328125,
+              "y": 685.8308715820312,
+              "vx": -129.81846618652344,
+              "vy": 247.57986450195312,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 217.9,
+              "y": 691.4,
+              "hp": 1,
+              "bombs": 1,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 10,
+                "x": 315.8,
+                "y": 656.4,
+                "distance": 104
+              },
+              {
+                "kind": 11,
+                "x": 244.9,
+                "y": 589.6,
+                "distance": 105.3
+              },
+              {
+                "kind": 10,
+                "x": 302.5,
+                "y": 619.6,
+                "distance": 111
+              },
+              {
+                "kind": 8,
+                "x": 332.7,
+                "y": 727.6,
+                "distance": 120.4
+              },
+              {
+                "kind": 11,
+                "x": 149,
+                "y": 585.4,
+                "distance": 126.4
+              },
+              {
+                "kind": 8,
+                "x": 114.9,
+                "y": 616,
+                "distance": 127.6
+              },
+              {
+                "kind": 10,
+                "x": 345.4,
+                "y": 668.2,
+                "distance": 129.6
+              },
+              {
+                "kind": 10,
+                "x": 377.2,
+                "y": 674,
+                "distance": 160.3
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 380.5,
+                "y": 689.8,
+                "baseX": 370,
+                "age": 9.9,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 79.64,
+            "tick": 9557,
+            "wave": 32,
+            "context": "bullets",
+            "source": {
+              "kind": 6,
+              "owner": 0,
+              "x": 372.1681213378906,
+              "y": 680.7655029296875,
+              "vx": 3.4542653560638428,
+              "vy": 100.74078369140625,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 379,
+              "y": 678.8,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 6,
+                "x": 338.3,
+                "y": 594.2,
+                "distance": 93.8
+              },
+              {
+                "kind": 20,
+                "x": 457.6,
+                "y": 625,
+                "distance": 95.2
+              },
+              {
+                "kind": 20,
+                "x": 437.5,
+                "y": 602.8,
+                "distance": 95.9
+              },
+              {
+                "kind": 5,
+                "x": 351.7,
+                "y": 573.6,
+                "distance": 108.6
+              },
+              {
+                "kind": 6,
+                "x": 387.8,
+                "y": 568.5,
+                "distance": 110.6
+              },
+              {
+                "kind": 6,
+                "x": 470.1,
+                "y": 612.1,
+                "distance": 112.9
+              },
+              {
+                "kind": 6,
+                "x": 286.4,
+                "y": 613.4,
+                "distance": 113.4
+              },
+              {
+                "kind": 20,
+                "x": 479.4,
+                "y": 733.2,
+                "distance": 114.2
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 3,
+                "boss": false,
+                "mid": false,
+                "x": 310.9,
+                "y": 399.7,
+                "baseX": 318,
+                "age": 15.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 6,
+                "boss": false,
+                "mid": false,
+                "x": 151.5,
+                "y": 579,
+                "baseX": 110,
+                "age": 5.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          }
+        ]
+      },
+      "priorLinePositions": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 83.7,
+        "misses": 4,
+        "graze": 34,
+        "branch": false,
+        "kills": 109,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 26.57,
+            "tick": 3189,
+            "wave": 10,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 52.785797119140625,
+              "y": 633.2738647460938,
+              "vx": 12.633047103881836,
+              "vy": 267.87677001953125,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 57.3,
+              "y": 636.2,
+              "hp": 3,
+              "bombs": 3,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": -34.8,
+                "y": 659.9,
+                "distance": 95.2
+              },
+              {
+                "kind": 8,
+                "x": 157.3,
+                "y": 606,
+                "distance": 104.5
+              },
+              {
+                "kind": 8,
+                "x": 162.8,
+                "y": 612.7,
+                "distance": 108.1
+              },
+              {
+                "kind": 8,
+                "x": 132.3,
+                "y": 716.9,
+                "distance": 110.2
+              },
+              {
+                "kind": 8,
+                "x": 26.1,
+                "y": 529.8,
+                "distance": 110.8
+              },
+              {
+                "kind": 8,
+                "x": 191.1,
+                "y": 724.6,
+                "distance": 160.4
+              },
+              {
+                "kind": 8,
+                "x": 215.5,
+                "y": 593.9,
+                "distance": 163.8
+              },
+              {
+                "kind": 20,
+                "x": 125,
+                "y": 479.1,
+                "distance": 171.1
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 179.5,
+                "y": 416.1,
+                "baseX": 162,
+                "age": 7.5,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 51.95,
+            "tick": 6234,
+            "wave": 21,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 93.62390899658203,
+              "y": 685.98779296875,
+              "vx": -17.42163848876953,
+              "vy": 311.5634765625,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 91.1,
+              "y": 691.4,
+              "hp": 2,
+              "bombs": 1,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 6,
+                "x": -35.7,
+                "y": 692.5,
+                "distance": 126.9
+              },
+              {
+                "kind": 6,
+                "x": -23.2,
+                "y": 607.8,
+                "distance": 141.6
+              },
+              {
+                "kind": 8,
+                "x": 251.3,
+                "y": 673.6,
+                "distance": 161.1
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 61.57,
+            "tick": 7388,
+            "wave": 24,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 216.7901611328125,
+              "y": 685.8308715820312,
+              "vx": -129.81846618652344,
+              "vy": 247.57986450195312,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 217.9,
+              "y": 691.4,
+              "hp": 1,
+              "bombs": 1,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 10,
+                "x": 315.8,
+                "y": 656.4,
+                "distance": 104
+              },
+              {
+                "kind": 11,
+                "x": 244.9,
+                "y": 589.6,
+                "distance": 105.3
+              },
+              {
+                "kind": 10,
+                "x": 302.5,
+                "y": 619.6,
+                "distance": 111
+              },
+              {
+                "kind": 8,
+                "x": 332.7,
+                "y": 727.6,
+                "distance": 120.4
+              },
+              {
+                "kind": 11,
+                "x": 149,
+                "y": 585.4,
+                "distance": 126.4
+              },
+              {
+                "kind": 8,
+                "x": 114.9,
+                "y": 616,
+                "distance": 127.6
+              },
+              {
+                "kind": 10,
+                "x": 345.4,
+                "y": 668.2,
+                "distance": 129.6
+              },
+              {
+                "kind": 10,
+                "x": 377.2,
+                "y": 674,
+                "distance": 160.3
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 380.5,
+                "y": 689.8,
+                "baseX": 370,
+                "age": 9.9,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 83.69,
+            "tick": 10043,
+            "wave": 33,
+            "context": "bullets",
+            "source": {
+              "kind": 6,
+              "owner": 0,
+              "x": 440.5102844238281,
+              "y": 632.586181640625,
+              "vx": -19.446374893188477,
+              "vy": 115.98103332519531,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 440.4,
+              "y": 638.3,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": 354.5,
+                "y": 608.3,
+                "distance": 91
+              },
+              {
+                "kind": 8,
+                "x": 505.3,
+                "y": 716.1,
+                "distance": 101.3
+              },
+              {
+                "kind": 5,
+                "x": 516.5,
+                "y": 570.6,
+                "distance": 101.8
+              },
+              {
+                "kind": 8,
+                "x": 486.7,
+                "y": 535,
+                "distance": 113.2
+              },
+              {
+                "kind": 5,
+                "x": 461.2,
+                "y": 526.8,
+                "distance": 113.5
+              },
+              {
+                "kind": 20,
+                "x": 523.9,
+                "y": 718.7,
+                "distance": 115.9
+              },
+              {
+                "kind": 6,
+                "x": 326.8,
+                "y": 662.6,
+                "distance": 116.2
+              },
+              {
+                "kind": 8,
+                "x": 339.6,
+                "y": 710,
+                "distance": 123.7
+              }
+            ],
+            "nearbyEnemies": []
+          }
+        ]
+      },
+      "currentProduct": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 75.1,
+        "misses": 4,
+        "graze": 76,
+        "branch": true,
+        "kills": 86,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 56.48,
+            "tick": 6778,
+            "wave": 22,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 252.78082275390625,
+              "y": 663.1451416015625,
+              "vx": -55.55707931518555,
+              "vy": 256.2642822265625,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 256.5,
+              "y": 667.7,
+              "hp": 3,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": 358.7,
+                "y": 673.3,
+                "distance": 102.4
+              },
+              {
+                "kind": 8,
+                "x": 153.1,
+                "y": 626.5,
+                "distance": 111.3
+              },
+              {
+                "kind": 8,
+                "x": 290,
+                "y": 556,
+                "distance": 116.6
+              },
+              {
+                "kind": 5,
+                "x": 362.4,
+                "y": 617.9,
+                "distance": 117.1
+              },
+              {
+                "kind": 8,
+                "x": 238.3,
+                "y": 545.5,
+                "distance": 123.6
+              },
+              {
+                "kind": 8,
+                "x": 359.3,
+                "y": 582.4,
+                "distance": 133.6
+              },
+              {
+                "kind": 8,
+                "x": 342.1,
+                "y": 562.5,
+                "distance": 135.6
+              },
+              {
+                "kind": 8,
+                "x": 119.7,
+                "y": 646.5,
+                "distance": 138.4
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 59.62,
+            "tick": 7154,
+            "wave": 24,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 305.4171447753906,
+              "y": 663.9620971679688,
+              "vx": -22.308849334716797,
+              "vy": 284.0931396484375,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 311.6,
+              "y": 665.5,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 10,
+                "x": 413.5,
+                "y": 646.7,
+                "distance": 103.6
+              },
+              {
+                "kind": 8,
+                "x": 202.4,
+                "y": 635.9,
+                "distance": 113.1
+              },
+              {
+                "kind": 8,
+                "x": 388.1,
+                "y": 578.7,
+                "distance": 115.7
+              },
+              {
+                "kind": 8,
+                "x": 434.4,
+                "y": 658.8,
+                "distance": 122.9
+              },
+              {
+                "kind": 8,
+                "x": 259.6,
+                "y": 783.3,
+                "distance": 128.7
+              },
+              {
+                "kind": 8,
+                "x": 326.8,
+                "y": 797.1,
+                "distance": 132.4
+              },
+              {
+                "kind": 8,
+                "x": 179.6,
+                "y": 636.5,
+                "distance": 135.2
+              },
+              {
+                "kind": 10,
+                "x": 444.6,
+                "y": 640,
+                "distance": 135.4
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 340.9,
+                "y": 692,
+                "baseX": 310.9,
+                "age": 10.5,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              },
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 82.4,
+                "y": 659.6,
+                "baseX": 110,
+                "age": 8,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 72.86,
+            "tick": 8743,
+            "wave": 29,
+            "context": "bullets",
+            "source": {
+              "kind": 10,
+              "owner": 0,
+              "x": 54.91425704956055,
+              "y": 637.603271484375,
+              "vx": -101.93614196777344,
+              "vy": 74.06094360351562,
+              "r": 3.5
+            },
+            "player": {
+              "x": 52.3,
+              "y": 631.7,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 0,
+                "x": 139,
+                "y": 605.5,
+                "distance": 90.6
+              },
+              {
+                "kind": 0,
+                "x": 64.4,
+                "y": 541.1,
+                "distance": 91.4
+              },
+              {
+                "kind": 0,
+                "x": 144.5,
+                "y": 620.7,
+                "distance": 92.9
+              },
+              {
+                "kind": 0,
+                "x": 66.1,
+                "y": 724.3,
+                "distance": 93.6
+              },
+              {
+                "kind": 0,
+                "x": 68.1,
+                "y": 724.1,
+                "distance": 93.7
+              },
+              {
+                "kind": 0,
+                "x": 139.8,
+                "y": 595.6,
+                "distance": 94.7
+              },
+              {
+                "kind": 0,
+                "x": -37.8,
+                "y": 667.8,
+                "distance": 97
+              },
+              {
+                "kind": 0,
+                "x": 81.9,
+                "y": 727.9,
+                "distance": 100.7
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 10,
+                "boss": false,
+                "mid": false,
+                "x": 288.8,
+                "y": 495.2,
+                "baseX": 288.8,
+                "age": 18.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 332,
+                "y": 582,
+                "baseX": 332,
+                "age": 16.2,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 598.2,
+                "baseX": 313.8,
+                "age": 13.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 487.3,
+                "baseX": 111.2,
+                "age": 13.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 560.7,
+                "baseX": 313.8,
+                "age": 8.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 523.1,
+                "baseX": 313.8,
+                "age": 3.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 75.08,
+            "tick": 9009,
+            "wave": 30,
+            "context": "bullets",
+            "source": {
+              "kind": 0,
+              "owner": 0,
+              "x": 41.48377990722656,
+              "y": 620.7330322265625,
+              "vx": -77.3272476196289,
+              "vy": 64.66171264648438,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 34.8,
+              "y": 619.1,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 101.2,
+                "y": 681.8,
+                "distance": 91.3
+              },
+              {
+                "kind": 0,
+                "x": -49.7,
+                "y": 582.4,
+                "distance": 92.1
+              },
+              {
+                "kind": 0,
+                "x": 112.7,
+                "y": 672.7,
+                "distance": 94.6
+              },
+              {
+                "kind": 10,
+                "x": 73,
+                "y": 705.9,
+                "distance": 94.8
+              },
+              {
+                "kind": 0,
+                "x": 96.7,
+                "y": 547.2,
+                "distance": 94.9
+              },
+              {
+                "kind": 0,
+                "x": -17.5,
+                "y": 701.9,
+                "distance": 98
+              },
+              {
+                "kind": 0,
+                "x": -39.8,
+                "y": 682.6,
+                "distance": 98
+              },
+              {
+                "kind": 1,
+                "x": 126,
+                "y": 655.5,
+                "distance": 98.2
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 686.8,
+                "baseX": 313.8,
+                "age": 15.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 576,
+                "baseX": 111.2,
+                "age": 15.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 245.2,
+                "y": 573.8,
+                "baseX": 288.8,
+                "age": 13.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 649.3,
+                "baseX": 313.8,
+                "age": 10.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 611.8,
+                "baseX": 313.8,
+                "age": 5.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          }
+        ]
+      },
+      "newShapes12px": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 79.3,
+        "misses": 4,
+        "graze": 65,
+        "branch": true,
+        "kills": 104,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 57.81,
+            "tick": 6937,
+            "wave": 23,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 304.8444519042969,
+              "y": 674.0313720703125,
+              "vx": -19.82503890991211,
+              "vy": 286.4483642578125,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 305.1,
+              "y": 678.6,
+              "hp": 3,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": 436,
+                "y": 667.6,
+                "distance": 131.3
+              },
+              {
+                "kind": 8,
+                "x": 175.8,
+                "y": 649.6,
+                "distance": 132.5
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 71.74,
+            "tick": 8609,
+            "wave": 29,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 185.8109130859375,
+              "y": 650.4081420898438,
+              "vx": -2.042909622192383,
+              "vy": 100.779296875,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 184.8,
+              "y": 657.5,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 0,
+                "x": 190.4,
+                "y": 564.4,
+                "distance": 93.3
+              },
+              {
+                "kind": 0,
+                "x": 130.3,
+                "y": 581.5,
+                "distance": 93.5
+              },
+              {
+                "kind": 2,
+                "x": 161.3,
+                "y": 567,
+                "distance": 93.5
+              },
+              {
+                "kind": 1,
+                "x": 278,
+                "y": 650,
+                "distance": 93.5
+              },
+              {
+                "kind": 20,
+                "x": 218.9,
+                "y": 746,
+                "distance": 94.8
+              },
+              {
+                "kind": 0,
+                "x": 201.8,
+                "y": 563.8,
+                "distance": 95.2
+              },
+              {
+                "kind": 2,
+                "x": 280.4,
+                "y": 658.6,
+                "distance": 95.6
+              },
+              {
+                "kind": 1,
+                "x": 278,
+                "y": 686.5,
+                "distance": 97.6
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 118.8,
+                "y": 579.5,
+                "baseX": 118.8,
+                "age": 12.6,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 442.7,
+                "baseX": 111.2,
+                "age": 12.5,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 58.8,
+                "y": 467.1,
+                "baseX": 93.8,
+                "age": 10,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 2,
+                "boss": false,
+                "mid": false,
+                "x": 314.2,
+                "y": 477.5,
+                "baseX": 386.3,
+                "age": 10,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 74.08,
+            "tick": 8889,
+            "wave": 29,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 180.76495361328125,
+              "y": 621.3715209960938,
+              "vx": -79.77655029296875,
+              "vy": 61.61445999145508,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 178.7,
+              "y": 627.7,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 233.7,
+                "y": 555.7,
+                "distance": 90.6
+              },
+              {
+                "kind": 2,
+                "x": 92.6,
+                "y": 595.6,
+                "distance": 91.9
+              },
+              {
+                "kind": 0,
+                "x": 269.7,
+                "y": 612.3,
+                "distance": 92.4
+              },
+              {
+                "kind": 2,
+                "x": 254.3,
+                "y": 681.5,
+                "distance": 92.8
+              },
+              {
+                "kind": 2,
+                "x": 141.9,
+                "y": 534.9,
+                "distance": 99.8
+              },
+              {
+                "kind": 1,
+                "x": 278,
+                "y": 644.7,
+                "distance": 100.8
+              },
+              {
+                "kind": 2,
+                "x": 250.7,
+                "y": 699,
+                "distance": 101.4
+              },
+              {
+                "kind": 2,
+                "x": 105.1,
+                "y": 701.2,
+                "distance": 104
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 118.8,
+                "y": 672.8,
+                "baseX": 118.8,
+                "age": 14.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 536,
+                "baseX": 111.2,
+                "age": 14.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 368.8,
+                "y": 512,
+                "baseX": 368.8,
+                "age": 14.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 79.7,
+                "y": 583.8,
+                "baseX": 93.8,
+                "age": 12.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 2,
+                "boss": false,
+                "mid": false,
+                "x": 345.5,
+                "y": 617.5,
+                "baseX": 386.3,
+                "age": 12.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 2,
+                "boss": false,
+                "mid": false,
+                "x": 323.2,
+                "y": 441,
+                "baseX": 396,
+                "age": 9.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 79.29,
+            "tick": 9515,
+            "wave": 32,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 27.961524963378906,
+              "y": 625.2886962890625,
+              "vx": -96.10449981689453,
+              "vy": 30.40666961669922,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 21.8,
+              "y": 627.9,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 5,
+                "x": -39.6,
+                "y": 550.2,
+                "distance": 99.1
+              },
+              {
+                "kind": 2,
+                "x": 69.4,
+                "y": 716,
+                "distance": 100.1
+              },
+              {
+                "kind": 2,
+                "x": 8.8,
+                "y": 527.3,
+                "distance": 101.4
+              },
+              {
+                "kind": 6,
+                "x": 63.3,
+                "y": 534,
+                "distance": 102.7
+              },
+              {
+                "kind": 6,
+                "x": 11.9,
+                "y": 516.2,
+                "distance": 112.2
+              },
+              {
+                "kind": 8,
+                "x": 122.5,
+                "y": 576.4,
+                "distance": 113.1
+              },
+              {
+                "kind": 5,
+                "x": 115.1,
+                "y": 560.9,
+                "distance": 114.9
+              },
+              {
+                "kind": 5,
+                "x": 102.5,
+                "y": 535.6,
+                "distance": 122.6
+              }
+            ],
+            "nearbyEnemies": []
+          }
+        ]
+      },
+      "newShapes24px": {
+        "seed": 0,
+        "clear": true,
+        "phase": "stageclear",
+        "seconds": 183.9,
+        "misses": 1,
+        "graze": 25,
+        "branch": false,
+        "kills": 280,
+        "firstBoss": null,
+        "hits": [
+          {
+            "time": 81.88,
+            "tick": 9825,
+            "wave": 33,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 391.8070373535156,
+              "y": 672.7653198242188,
+              "vx": 50.650794982910156,
+              "vy": 306.8143615722656,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 386.4,
+              "y": 674,
+              "hp": 3,
+              "bombs": 1,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 20,
+                "x": 303.7,
+                "y": 638.4,
+                "distance": 90
+              },
+              {
+                "kind": 20,
+                "x": 335.7,
+                "y": 791.7,
+                "distance": 128.1
+              },
+              {
+                "kind": 8,
+                "x": 235,
+                "y": 677.3,
+                "distance": 151.4
+              }
+            ],
+            "nearbyEnemies": []
+          }
+        ]
+      },
+      "newShapes30px": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 75.1,
+        "misses": 4,
+        "graze": 76,
+        "branch": true,
+        "kills": 86,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 56.48,
+            "tick": 6778,
+            "wave": 22,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 252.78082275390625,
+              "y": 663.1451416015625,
+              "vx": -55.55707931518555,
+              "vy": 256.2642822265625,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 256.5,
+              "y": 667.7,
+              "hp": 3,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": 358.7,
+                "y": 673.3,
+                "distance": 102.4
+              },
+              {
+                "kind": 8,
+                "x": 153.1,
+                "y": 626.5,
+                "distance": 111.3
+              },
+              {
+                "kind": 8,
+                "x": 290,
+                "y": 556,
+                "distance": 116.6
+              },
+              {
+                "kind": 5,
+                "x": 362.4,
+                "y": 617.9,
+                "distance": 117.1
+              },
+              {
+                "kind": 8,
+                "x": 238.3,
+                "y": 545.5,
+                "distance": 123.6
+              },
+              {
+                "kind": 8,
+                "x": 359.3,
+                "y": 582.4,
+                "distance": 133.6
+              },
+              {
+                "kind": 8,
+                "x": 342.1,
+                "y": 562.5,
+                "distance": 135.6
+              },
+              {
+                "kind": 8,
+                "x": 119.7,
+                "y": 646.5,
+                "distance": 138.4
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 59.62,
+            "tick": 7154,
+            "wave": 24,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 305.4171447753906,
+              "y": 663.9620971679688,
+              "vx": -22.308849334716797,
+              "vy": 284.0931396484375,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 311.6,
+              "y": 665.5,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 10,
+                "x": 413.5,
+                "y": 646.7,
+                "distance": 103.6
+              },
+              {
+                "kind": 8,
+                "x": 202.4,
+                "y": 635.9,
+                "distance": 113.1
+              },
+              {
+                "kind": 8,
+                "x": 388.1,
+                "y": 578.7,
+                "distance": 115.7
+              },
+              {
+                "kind": 8,
+                "x": 434.4,
+                "y": 658.8,
+                "distance": 122.9
+              },
+              {
+                "kind": 8,
+                "x": 259.6,
+                "y": 783.3,
+                "distance": 128.7
+              },
+              {
+                "kind": 8,
+                "x": 326.8,
+                "y": 797.1,
+                "distance": 132.4
+              },
+              {
+                "kind": 8,
+                "x": 179.6,
+                "y": 636.5,
+                "distance": 135.2
+              },
+              {
+                "kind": 10,
+                "x": 444.6,
+                "y": 640,
+                "distance": 135.4
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 340.9,
+                "y": 692,
+                "baseX": 310.9,
+                "age": 10.5,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              },
+              {
+                "type": 9,
+                "boss": false,
+                "mid": false,
+                "x": 82.4,
+                "y": 659.6,
+                "baseX": 110,
+                "age": 8,
+                "aiming": false,
+                "windup": false,
+                "charging": true
+              }
+            ]
+          },
+          {
+            "time": 72.86,
+            "tick": 8743,
+            "wave": 29,
+            "context": "bullets",
+            "source": {
+              "kind": 10,
+              "owner": 0,
+              "x": 54.91425704956055,
+              "y": 637.603271484375,
+              "vx": -101.93614196777344,
+              "vy": 74.06094360351562,
+              "r": 3.5
+            },
+            "player": {
+              "x": 52.3,
+              "y": 631.7,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 0,
+                "x": 139,
+                "y": 605.5,
+                "distance": 90.6
+              },
+              {
+                "kind": 0,
+                "x": 64.4,
+                "y": 541.1,
+                "distance": 91.4
+              },
+              {
+                "kind": 0,
+                "x": 144.5,
+                "y": 620.7,
+                "distance": 92.9
+              },
+              {
+                "kind": 0,
+                "x": 66.1,
+                "y": 724.3,
+                "distance": 93.6
+              },
+              {
+                "kind": 0,
+                "x": 68.1,
+                "y": 724.1,
+                "distance": 93.7
+              },
+              {
+                "kind": 0,
+                "x": 139.8,
+                "y": 595.6,
+                "distance": 94.7
+              },
+              {
+                "kind": 0,
+                "x": -37.8,
+                "y": 667.8,
+                "distance": 97
+              },
+              {
+                "kind": 0,
+                "x": 81.9,
+                "y": 727.9,
+                "distance": 100.7
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 10,
+                "boss": false,
+                "mid": false,
+                "x": 288.8,
+                "y": 495.2,
+                "baseX": 288.8,
+                "age": 18.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 332,
+                "y": 582,
+                "baseX": 332,
+                "age": 16.2,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 598.2,
+                "baseX": 313.8,
+                "age": 13.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 487.3,
+                "baseX": 111.2,
+                "age": 13.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 560.7,
+                "baseX": 313.8,
+                "age": 8.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 523.1,
+                "baseX": 313.8,
+                "age": 3.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 75.08,
+            "tick": 9009,
+            "wave": 30,
+            "context": "bullets",
+            "source": {
+              "kind": 0,
+              "owner": 0,
+              "x": 41.48377990722656,
+              "y": 620.7330322265625,
+              "vx": -77.3272476196289,
+              "vy": 64.66171264648438,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 34.8,
+              "y": 619.1,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 101.2,
+                "y": 681.8,
+                "distance": 91.3
+              },
+              {
+                "kind": 0,
+                "x": -49.7,
+                "y": 582.4,
+                "distance": 92.1
+              },
+              {
+                "kind": 0,
+                "x": 112.7,
+                "y": 672.7,
+                "distance": 94.6
+              },
+              {
+                "kind": 10,
+                "x": 73,
+                "y": 705.9,
+                "distance": 94.8
+              },
+              {
+                "kind": 0,
+                "x": 96.7,
+                "y": 547.2,
+                "distance": 94.9
+              },
+              {
+                "kind": 0,
+                "x": -17.5,
+                "y": 701.9,
+                "distance": 98
+              },
+              {
+                "kind": 0,
+                "x": -39.8,
+                "y": 682.6,
+                "distance": 98
+              },
+              {
+                "kind": 1,
+                "x": 126,
+                "y": 655.5,
+                "distance": 98.2
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 686.8,
+                "baseX": 313.8,
+                "age": 15.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 111.2,
+                "y": 576,
+                "baseX": 111.2,
+                "age": 15.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 245.2,
+                "y": 573.8,
+                "baseX": 288.8,
+                "age": 13.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 649.3,
+                "baseX": 313.8,
+                "age": 10.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 313.8,
+                "y": 611.8,
+                "baseX": 313.8,
+                "age": 5.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          }
+        ]
+      },
+      "newShapes36px": {
+        "seed": 0,
+        "clear": true,
+        "phase": "stageclear",
+        "seconds": 186.4,
+        "misses": 3,
+        "graze": 46,
+        "branch": false,
+        "kills": 277,
+        "firstBoss": null,
+        "hits": [
+          {
+            "time": 55.41,
+            "tick": 6649,
+            "wave": 22,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 160.6646728515625,
+              "y": 640.7461547851562,
+              "vx": -47.2022590637207,
+              "vy": 300.2375793457031,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 158.2,
+              "y": 645.5,
+              "hp": 3,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 8,
+                "x": 103.7,
+                "y": 768.6,
+                "distance": 134.6
+              },
+              {
+                "kind": 8,
+                "x": 193.8,
+                "y": 785.6,
+                "distance": 144.5
+              },
+              {
+                "kind": 8,
+                "x": 16.9,
+                "y": 600.3,
+                "distance": 148.3
+              },
+              {
+                "kind": 8,
+                "x": 309.7,
+                "y": 643.9,
+                "distance": 151.5
+              },
+              {
+                "kind": 8,
+                "x": 16.1,
+                "y": 741.1,
+                "distance": 171.2
+              }
+            ],
+            "nearbyEnemies": []
+          },
+          {
+            "time": 79.58,
+            "tick": 9549,
+            "wave": 32,
+            "context": "bullets",
+            "source": {
+              "kind": 6,
+              "owner": 0,
+              "x": 415.5057373046875,
+              "y": 661.8429565429688,
+              "vx": 20.13534927368164,
+              "vy": 98.76837921142578,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 415.9,
+              "y": 668.9,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 4,
+                "x": 475,
+                "y": 748.5,
+                "distance": 99.1
+              },
+              {
+                "kind": 5,
+                "x": 405.6,
+                "y": 774.4,
+                "distance": 106
+              },
+              {
+                "kind": 5,
+                "x": 314.9,
+                "y": 625.4,
+                "distance": 109.9
+              },
+              {
+                "kind": 6,
+                "x": 312.6,
+                "y": 708.9,
+                "distance": 110.7
+              },
+              {
+                "kind": 5,
+                "x": 462.1,
+                "y": 550.9,
+                "distance": 126.7
+              },
+              {
+                "kind": 6,
+                "x": 275.6,
+                "y": 716.9,
+                "distance": 148.2
+              },
+              {
+                "kind": 5,
+                "x": 491.2,
+                "y": 539.5,
+                "distance": 149.7
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 6,
+                "boss": false,
+                "mid": false,
+                "x": 156,
+                "y": 534.3,
+                "baseX": 110,
+                "age": 5.3,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 165.73,
+            "tick": 19888,
+            "wave": 66,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 232.99063110351562,
+              "y": 676.4166870117188,
+              "vx": -29.563844680786133,
+              "vy": 96.36710357666016,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 230.2,
+              "y": 683.1,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 4,
+                "x": 129.9,
+                "y": 683.5,
+                "distance": 100.3
+              },
+              {
+                "kind": 2,
+                "x": 304.2,
+                "y": 569.9,
+                "distance": 135.2
+              },
+              {
+                "kind": 2,
+                "x": 260,
+                "y": 551,
+                "distance": 135.4
+              },
+              {
+                "kind": 2,
+                "x": 350.1,
+                "y": 584.5,
+                "distance": 155.1
+              },
+              {
+                "kind": 2,
+                "x": 89.3,
+                "y": 613.7,
+                "distance": 157.1
+              },
+              {
+                "kind": 2,
+                "x": 218.6,
+                "y": 526.4,
+                "distance": 157.1
+              },
+              {
+                "kind": 2,
+                "x": 387.2,
+                "y": 704.3,
+                "distance": 158.4
+              }
+            ],
+            "nearbyEnemies": []
+          }
+        ]
+      },
+      "unstaggered": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 106.1,
+        "misses": 4,
+        "graze": 96,
+        "branch": true,
+        "kills": 133,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 81.47,
+            "tick": 9776,
+            "wave": 32,
+            "context": "bullets",
+            "source": {
+              "kind": 1,
+              "owner": 0,
+              "x": 354,
+              "y": 664.979248046875,
+              "vx": 7.200922699107399e-15,
+              "vy": 117.5999984741211,
+              "r": 5
+            },
+            "player": {
+              "x": 348.3,
+              "y": 669.1,
+              "hp": 3,
+              "bombs": 0,
+              "energy": 97.6
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 5,
+                "x": 344.9,
+                "y": 577.7,
+                "distance": 91.5
+              },
+              {
+                "kind": 5,
+                "x": 256.7,
+                "y": 694.3,
+                "distance": 95
+              },
+              {
+                "kind": 6,
+                "x": 363,
+                "y": 574.3,
+                "distance": 96
+              },
+              {
+                "kind": 6,
+                "x": 249.2,
+                "y": 638,
+                "distance": 103.9
+              },
+              {
+                "kind": 5,
+                "x": 466,
+                "y": 681.4,
+                "distance": 118.3
+              },
+              {
+                "kind": 1,
+                "x": 354,
+                "y": 792.4,
+                "distance": 123.4
+              },
+              {
+                "kind": 6,
+                "x": 386.3,
+                "y": 551.2,
+                "distance": 123.9
+              },
+              {
+                "kind": 5,
+                "x": 224.1,
+                "y": 664.1,
+                "distance": 124.4
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 3,
+                "boss": false,
+                "mid": false,
+                "x": 339.1,
+                "y": 517.8,
+                "baseX": 318,
+                "age": 17.3,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 3,
+                "boss": false,
+                "mid": false,
+                "x": 127.9,
+                "y": 466.5,
+                "baseX": 148,
+                "age": 14.7,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 3,
+                "boss": false,
+                "mid": false,
+                "x": 219.9,
+                "y": 422.5,
+                "baseX": 240,
+                "age": 14.7,
+                "aiming": true,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 91.23,
+            "tick": 10947,
+            "wave": 36,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 37.29977035522461,
+              "y": 657.8519897460938,
+              "vx": -90.367431640625,
+              "vy": 220.59043884277344,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 38.6,
+              "y": 662.7,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 5,
+                "x": -2.4,
+                "y": 581.2,
+                "distance": 91.2
+              },
+              {
+                "kind": 7,
+                "x": -40.5,
+                "y": 590.2,
+                "distance": 107.3
+              },
+              {
+                "kind": 12,
+                "x": 51.7,
+                "y": 549,
+                "distance": 114.4
+              },
+              {
+                "kind": 7,
+                "x": -18,
+                "y": 562.6,
+                "distance": 115
+              },
+              {
+                "kind": 8,
+                "x": 161.3,
+                "y": 684.5,
+                "distance": 124.6
+              },
+              {
+                "kind": 10,
+                "x": -23.9,
+                "y": 550.2,
+                "distance": 128.7
+              },
+              {
+                "kind": 7,
+                "x": 165,
+                "y": 619.4,
+                "distance": 133.5
+              },
+              {
+                "kind": 11,
+                "x": 165.1,
+                "y": 558,
+                "distance": 164.1
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 8,
+                "boss": false,
+                "mid": false,
+                "x": 111,
+                "y": 407.4,
+                "baseX": 111.2,
+                "age": 12,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 97.72,
+            "tick": 11726,
+            "wave": 39,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 166.1065673828125,
+              "y": 646.81005859375,
+              "vx": -64.99836730957031,
+              "vy": 77.04448699951172,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 168,
+              "y": 653.5,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 228.4,
+                "y": 586.5,
+                "distance": 90.2
+              },
+              {
+                "kind": 2,
+                "x": 239.8,
+                "y": 598,
+                "distance": 90.7
+              },
+              {
+                "kind": 9,
+                "x": 216.8,
+                "y": 576.8,
+                "distance": 90.9
+              },
+              {
+                "kind": 9,
+                "x": 90.4,
+                "y": 604.8,
+                "distance": 91.7
+              },
+              {
+                "kind": 9,
+                "x": 112,
+                "y": 580.3,
+                "distance": 92.2
+              },
+              {
+                "kind": 12,
+                "x": 174.1,
+                "y": 746,
+                "distance": 92.6
+              },
+              {
+                "kind": 9,
+                "x": 181.4,
+                "y": 561.9,
+                "distance": 92.6
+              },
+              {
+                "kind": 2,
+                "x": 217.8,
+                "y": 574.3,
+                "distance": 93.5
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 11,
+                "boss": false,
+                "mid": false,
+                "x": 98.1,
+                "y": 754.5,
+                "baseX": 191.3,
+                "age": 13.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 2,
+                "boss": false,
+                "mid": false,
+                "x": 430.7,
+                "y": 577,
+                "baseX": 357,
+                "age": 10.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 276.9,
+                "y": 423.7,
+                "baseX": 240,
+                "age": 10.9,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 2,
+                "boss": false,
+                "mid": false,
+                "x": 379.5,
+                "y": 446.2,
+                "baseX": 368.8,
+                "age": 8.4,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 106.06,
+            "tick": 12727,
+            "wave": 42,
+            "context": "bullets",
+            "source": {
+              "kind": 5,
+              "owner": 0,
+              "x": 140.9879608154297,
+              "y": 669.4027099609375,
+              "vx": 10.598170280456543,
+              "vy": 100.24129486083984,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 134.8,
+              "y": 670.9,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 5,
+                "x": 119.2,
+                "y": 763.8,
+                "distance": 94.2
+              },
+              {
+                "kind": 6,
+                "x": 65.7,
+                "y": 604.8,
+                "distance": 95.6
+              },
+              {
+                "kind": 5,
+                "x": 27.7,
+                "y": 667.1,
+                "distance": 107.1
+              },
+              {
+                "kind": 5,
+                "x": 240.7,
+                "y": 650.8,
+                "distance": 107.9
+              },
+              {
+                "kind": 5,
+                "x": 255.6,
+                "y": 701.9,
+                "distance": 124.8
+              },
+              {
+                "kind": 6,
+                "x": 264.8,
+                "y": 678.6,
+                "distance": 130.3
+              },
+              {
+                "kind": 6,
+                "x": 6,
+                "y": 566.3,
+                "distance": 165.9
+              },
+              {
+                "kind": 5,
+                "x": 280.4,
+                "y": 757.6,
+                "distance": 169.5
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 3,
+                "boss": false,
+                "mid": false,
+                "x": 261,
+                "y": 535.1,
+                "baseX": 240,
+                "age": 16.8,
+                "aiming": true,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          }
+        ]
+      },
+      "allShapes24px": {
+        "seed": 0,
+        "clear": false,
+        "phase": "result",
+        "seconds": 96.4,
+        "misses": 4,
+        "graze": 107,
+        "branch": true,
+        "kills": 112,
+        "firstBoss": "門衛アオ",
+        "hits": [
+          {
+            "time": 20.11,
+            "tick": 2413,
+            "wave": 8,
+            "context": "enemies",
+            "source": {
+              "kind": "collision",
+              "enemy": [
+                {
+                  "type": 6,
+                  "boss": false,
+                  "x": 373.1,
+                  "y": 603.7
+                }
+              ]
+            },
+            "player": {
+              "x": 361.7,
+              "y": 616,
+              "hp": 3,
+              "bombs": 2,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 6,
+                "x": 272.7,
+                "y": 503.8,
+                "distance": 143.2
+              },
+              {
+                "kind": 6,
+                "x": 288.6,
+                "y": 491.1,
+                "distance": 144.8
+              },
+              {
+                "kind": 6,
+                "x": 255.6,
+                "y": 514.8,
+                "distance": 146.6
+              },
+              {
+                "kind": 6,
+                "x": 302.9,
+                "y": 476.7,
+                "distance": 151.3
+              },
+              {
+                "kind": 6,
+                "x": 237.5,
+                "y": 523.9,
+                "distance": 154.7
+              },
+              {
+                "kind": 6,
+                "x": 477.2,
+                "y": 502.7,
+                "distance": 161.8
+              },
+              {
+                "kind": 6,
+                "x": 315.6,
+                "y": 460.8,
+                "distance": 161.9
+              },
+              {
+                "kind": 6,
+                "x": 326.5,
+                "y": 443.7,
+                "distance": 175.9
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 6,
+                "boss": false,
+                "mid": false,
+                "x": 373.1,
+                "y": 603.7,
+                "baseX": 370,
+                "age": 6.1,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 77.92,
+            "tick": 9350,
+            "wave": 31,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 58.79016876220703,
+              "y": 611.375732421875,
+              "vx": -82.86566925048828,
+              "vy": 57.39268493652344,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 53.7,
+              "y": 615,
+              "hp": 2,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 0,
+                "x": 126.4,
+                "y": 679.4,
+                "distance": 97.1
+              },
+              {
+                "kind": 0,
+                "x": -44.2,
+                "y": 627.3,
+                "distance": 98.6
+              },
+              {
+                "kind": 2,
+                "x": 131.7,
+                "y": 694.6,
+                "distance": 111.5
+              },
+              {
+                "kind": 2,
+                "x": 6.5,
+                "y": 513.8,
+                "distance": 111.7
+              },
+              {
+                "kind": 4,
+                "x": 88.4,
+                "y": 725.5,
+                "distance": 115.8
+              },
+              {
+                "kind": 4,
+                "x": 165.9,
+                "y": 666.3,
+                "distance": 123.4
+              },
+              {
+                "kind": 2,
+                "x": -33.2,
+                "y": 708.1,
+                "distance": 127.3
+              },
+              {
+                "kind": 5,
+                "x": -15,
+                "y": 507.7,
+                "distance": 127.5
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 249.1,
+                "y": 667.8,
+                "baseX": 288.8,
+                "age": 16.2,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 6,
+                "boss": false,
+                "mid": false,
+                "x": 162.6,
+                "y": 650.3,
+                "baseX": 162,
+                "age": 6.2,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 6,
+                "boss": false,
+                "mid": false,
+                "x": 318.6,
+                "y": 542.3,
+                "baseX": 318,
+                "age": 6.2,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 91.81,
+            "tick": 11017,
+            "wave": 37,
+            "context": "bullets",
+            "source": {
+              "kind": 8,
+              "owner": 0,
+              "x": 71.5923843383789,
+              "y": 651.4620971679688,
+              "vx": -185.72386169433594,
+              "vy": 220.40000915527344,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 74.2,
+              "y": 656.1,
+              "hp": 1,
+              "bombs": 0,
+              "energy": 100
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 137,
+                "y": 721.8,
+                "distance": 91
+              },
+              {
+                "kind": 5,
+                "x": 163.6,
+                "y": 636.4,
+                "distance": 91.5
+              },
+              {
+                "kind": 5,
+                "x": 117,
+                "y": 737,
+                "distance": 91.6
+              },
+              {
+                "kind": 0,
+                "x": 23.8,
+                "y": 732.7,
+                "distance": 91.7
+              },
+              {
+                "kind": 0,
+                "x": 81.8,
+                "y": 747.7,
+                "distance": 92
+              },
+              {
+                "kind": 5,
+                "x": 68.7,
+                "y": 562.8,
+                "distance": 93.4
+              },
+              {
+                "kind": 8,
+                "x": -0.6,
+                "y": 716.8,
+                "distance": 96.3
+              },
+              {
+                "kind": 8,
+                "x": 33.5,
+                "y": 567.5,
+                "distance": 97.5
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 8,
+                "boss": false,
+                "mid": false,
+                "x": 345.3,
+                "y": 528.3,
+                "baseX": 332,
+                "age": 15.1,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          },
+          {
+            "time": 96.38,
+            "tick": 11565,
+            "wave": 38,
+            "context": "bullets",
+            "source": {
+              "kind": 2,
+              "owner": 0,
+              "x": 34.91316223144531,
+              "y": 665.4992065429688,
+              "vx": -37.55210876464844,
+              "vy": 111.44325256347656,
+              "r": 4.199999809265137
+            },
+            "player": {
+              "x": 30.1,
+              "y": 668.1,
+              "hp": 0,
+              "bombs": 0,
+              "energy": 93.3
+            },
+            "nearbyHostileBullets": [
+              {
+                "kind": 2,
+                "x": 111.8,
+                "y": 628.6,
+                "distance": 90.7
+              },
+              {
+                "kind": 0,
+                "x": -3.7,
+                "y": 757.1,
+                "distance": 95.2
+              },
+              {
+                "kind": 1,
+                "x": 50,
+                "y": 572.6,
+                "distance": 97.5
+              },
+              {
+                "kind": 1,
+                "x": 126,
+                "y": 646.8,
+                "distance": 98.2
+              },
+              {
+                "kind": 1,
+                "x": 126,
+                "y": 692.4,
+                "distance": 98.9
+              },
+              {
+                "kind": 1,
+                "x": 50,
+                "y": 766.6,
+                "distance": 100.5
+              },
+              {
+                "kind": 20,
+                "x": 64.2,
+                "y": 570.2,
+                "distance": 103.6
+              },
+              {
+                "kind": 1,
+                "x": 126,
+                "y": 622,
+                "distance": 106.4
+              }
+            ],
+            "nearbyEnemies": [
+              {
+                "type": 8,
+                "boss": false,
+                "mid": false,
+                "x": 176.1,
+                "y": 584.5,
+                "baseX": 240,
+                "age": 17.1,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 0,
+                "boss": false,
+                "mid": false,
+                "x": 240,
+                "y": 495.3,
+                "baseX": 240,
+                "age": 14.6,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 201.7,
+                "y": 529,
+                "baseX": 191.3,
+                "age": 12.1,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              },
+              {
+                "type": 1,
+                "boss": false,
+                "mid": false,
+                "x": 98,
+                "y": 444.6,
+                "baseX": 148,
+                "age": 9.6,
+                "aiming": false,
+                "windup": false,
+                "charging": false
+              }
+            ]
+          }
+        ]
+      },
+      "clearChanged": false
+    }
+  ]
+}

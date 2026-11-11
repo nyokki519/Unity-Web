@@ -6,6 +6,7 @@ import * as THREE from '../vendor/three/three.module.js';
 // presentation layer; the deterministic simulation is only ever read.
 const W=480,H=720,TAU=Math.PI*2;
 const palettes=[['#071f29','#0a3d42','#5ee4c0','#d3bc78'],['#130e26','#352244','#be83ff','#f6a66b'],['#071f32','#163d57','#a6eaff','#d4e9ed'],['#081a25','#193947','#44d8de','#efc77c'],['#241c17','#413528','#ffc982','#8cffe2'],['#160e2b','#382148','#e28aff','#72ffe0']];
+export function warningNoticeRect(playerX=240,sourceX=240){const width=184,height=62,left=12,right=284,y=239,px=Number.isFinite(playerX)?playerX:240,leftDistance=Math.abs(px-(left+width/2)),rightDistance=Math.abs(px-(right+width/2)),x=leftDistance===rightDistance?(sourceX>240?left:right):leftDistance>rightDistance?left:right;return{x,y,width,height};}
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 function rng(seed){return()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};}
 function canvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c;}
@@ -141,15 +142,15 @@ export class ShootingRenderer {
   for(const list of [this.effects,this.rings,this.particles,this.sequences,this.smokes,this.fragments,this.muzzles])list.length=0;
   for(const list of [this.smokeSprites,this.debrisSprites,this.beamSprites,this.muzzleSprites,this.damageSprites,this.engineSprites,this.enemySprites,this.partSprites,this.hpSprites,this.itemSprites,this.hazardSprites,this.threatSprites,this.optionSprites,this.orbitSprites,this.turretSprites])this.hideTail(list,0);
   for(const mesh of [this.particleMesh,this.enemyBullets,this.allyBullets])mesh.count=0;
-  this.shake=0;this.flash=0;this.warning=0;this.warningText='';this.flashMesh.visible=false;this.camera.position.set(0,0,50);this.bossPhases=new WeakMap();this.hudKey='';this.last=performance.now();
+  this.shake=0;this.flash=0;this.warning=0;this.warningText='';this.warningSourceX=240;this.flashMesh.visible=false;this.camera.position.set(0,0,50);this.bossPhases=new WeakMap();this.hudKey='';this.last=performance.now();
  }
  setQuality(value){this.quality=value==='low'?'low':'high';this.resize();}
  setReduced(value){this.reduced=!!value;this.shake=0;this.flash=0;if(this.reduced){this.smokes.length=0;this.fragments.splice(8);this.particles.splice(120);}}
  resize(){if(this.dead)return;const rect=this.canvas.getBoundingClientRect();const width=Math.max(1,Math.round(rect.width||480)),height=Math.max(1,Math.round(rect.height||720));this.renderer.setPixelRatio(this.quality==='low'?1:Math.min(window.devicePixelRatio||1,2));this.renderer.setSize(width,height,false);}
  event(e){
   if(!e||this.dead)return;const x=Number.isFinite(e.x)?e.x:240,y=Number.isFinite(e.y)?e.y:300;const type=e.type;
-  if(type==='warning'||type==='boss'){if(type==='warning'&&(!e.text||e.text==='照射予告'))return;this.warning=3.2;this.warningText=e.text||'高エネルギー反応 · 戦闘態勢へ';this.warningBoss=type==='boss';return;}
-  if(type==='reflect'){this.warning=1.55;this.warningText='弾をはね返された！';this.warningBoss=false;this.rings.push({x,y,age:0,life:.48,size:95,color:0xffd879,mesh:null});for(let i=0;i<8;i++){const a=i/8*TAU;this.particles.push({x,y,vx:Math.cos(a)*105,vy:Math.sin(a)*105,life:.24,maxLife:.24,size:2.5,color:0xffdf8a});}return;}
+  if(type==='warning'||type==='boss'){if(type==='warning'&&(!e.text||e.text==='照射予告'))return;this.warning=type==='boss'?3.2:2.35;this.warningText=e.text||'高エネルギー反応 · 戦闘態勢へ';this.warningSourceX=x;this.warningBoss=type==='boss';return;}
+  if(type==='reflect'){this.warning=1.55;this.warningText='弾をはね返された！';this.warningSourceX=x;this.warningBoss=false;this.rings.push({x,y,age:0,life:.48,size:95,color:0xffd879,mesh:null});for(let i=0;i<8;i++){const a=i/8*TAU;this.particles.push({x,y,vx:Math.cos(a)*105,vy:Math.sin(a)*105,life:.24,maxLife:.24,size:2.5,color:0xffdf8a});}return;}
   if(type==='chain'&&Number.isFinite(e.fromX)&&Number.isFinite(e.fromY)){const points=[[e.fromX,e.fromY]];for(let j=1;j<5;j++)points.push([e.fromX+(x-e.fromX)*j/5+(Math.random()-.5)*16,e.fromY+(y-e.fromY)*j/5+(Math.random()-.5)*12]);points.push([x,y]);this.effects.push({points,life:.14});if(this.effects.length>48)this.effects.shift();return;}
   if(type==='shot'){if(this.effectSettings.particleAmount>0&&this.muzzles.length<12)this.muzzles.push({x,y:y-23,life:.06,maxLife:.06,color:[0x7affe0,0xc4eeff,0xffd18b,0xaeeaff][(e.weapon||0)%4]});return;}
   if(type==='bomb'){this.sequences.push({x,y,age:0,next:0,kind:'bomb'});if(this.sequences.length>12)this.sequences.shift();return;}
@@ -248,7 +249,7 @@ export class ShootingRenderer {
   this.warning=Math.max(0,this.warning-dt);this.flash=Math.max(0,this.flash-dt*.8);
   this.flashMesh.visible=this.flash>0&&!this.reduced&&this.effectSettings.flash;this.flashMesh.material.opacity=this.flash;
   const boss=game?.boss||game?.enemies?.find(e=>e.boss||e.mid),player=game?.player;
-  const key=[!!game,game?.stats?.combo,boss?.id,Math.ceil(boss?.hp||0),boss?.maxHp,player?.hp,player?.maxHp,Math.floor(player?.drive||0),Math.ceil(this.warning*20),this.warningText].join(':');
+  const warningBox=this.warning>0?warningNoticeRect(player?.x,this.warningBoss?(boss?.x??this.warningSourceX):this.warningSourceX):null;const key=[!!game,game?.stats?.combo,boss?.id,Math.ceil(boss?.hp||0),boss?.maxHp,player?.hp,player?.maxHp,Math.floor(player?.drive||0),Math.ceil(this.warning*20),this.warningText,this.warningBoss,warningBox?.x].join(':');
   if(key===this.hudKey)return;this.hudKey=key;
   const g=this.hudCanvas.getContext('2d');g.clearRect(0,0,960,1440);g.save();g.scale(2,2);const gradient=g.createLinearGradient(0,0,0,100);gradient.addColorStop(0,'#03151dbb');gradient.addColorStop(1,'transparent');g.fillStyle=gradient;g.fillRect(0,0,480,100);
   // Fine illuminated cockpit frame leaves the center of the action clear.
@@ -259,8 +260,8 @@ export class ShootingRenderer {
    const combo=game.stats?.combo||0;if(combo>=10){g.font='italic 19px sans-serif';g.textAlign='right';g.fillStyle='#e4f8dc';g.fillText(`${combo}`,462,103);g.font='7px monospace';g.fillStyle='#8cbeaf';g.fillText('CHAIN',461,115);g.textAlign='left';}
   }else{g.font='9px monospace';g.fillStyle='#b2d7c288';g.fillText('ORBITAL DEFENSE SYSTEM',22,33);g.textAlign='right';g.fillText('IDLE / AWAITING PILOT',458,691);g.textAlign='left';}
   if(this.warning>0){
-   const sideNotice=this.warningBoss,boxW=sideNotice?184:370,boxH=sideNotice?62:60,boxX=sideNotice&&boss?.x>240?12:sideNotice?284:55,boxY=sideNotice?239:245,centerX=boxX+boxW/2;
-   g.globalAlpha=Math.min(sideNotice ? .94 : 1,this.warning*2);g.fillStyle='#081e20e8';g.strokeStyle=this.warningBoss?'#ffb19c':'#90eec7';g.lineWidth=1.2;g.beginPath();g.roundRect(boxX,boxY,boxW,boxH,12);g.fill();g.stroke();g.textAlign='center';g.font=`bold ${sideNotice?13:14}px system-ui,sans-serif`;g.fillStyle=this.warningBoss?'#ffc6b4':'#a6f4cf';g.fillText(this.warningBoss?'大型機接近':'航路情報',centerX,boxY+20);g.font=`${sideNotice?11:12}px system-ui,sans-serif`;g.fillStyle='#e1eee5';g.fillText(this.warningText||'戦闘態勢へ',centerX,boxY+42,boxW-12);g.textAlign='left';g.globalAlpha=1;
+   const box=warningBox||warningNoticeRect(game?.player?.x,this.warningSourceX),boxW=box.width,boxH=box.height,boxX=box.x,boxY=box.y,centerX=boxX+boxW/2;
+   g.globalAlpha=Math.min(.94,this.warning*2);g.fillStyle='#081e20e8';g.strokeStyle=this.warningBoss?'#ffb19c':'#90eec7';g.lineWidth=1.2;g.beginPath();g.roundRect(boxX,boxY,boxW,boxH,12);g.fill();g.stroke();g.textAlign='center';g.font='bold 15px system-ui,sans-serif';g.fillStyle=this.warningBoss?'#ffc6b4':'#a6f4cf';g.fillText(this.warningBoss?'大型機接近':'戦闘警告',centerX,boxY+21);g.font='13px system-ui,sans-serif';g.fillStyle='#e1eee5';g.fillText(this.warningText||'戦闘態勢へ',centerX,boxY+45,boxW-12);g.textAlign='left';g.globalAlpha=1;
   }
   g.restore();for(let i=0;i<this.hudRegions.length;i++){const region=this.hudRegions[i];region.mesh.visible=i!==2||this.warning>0;if(!region.mesh.visible)continue;const context=region.canvas.getContext('2d');context.clearRect(0,0,960,region.h*2);context.drawImage(this.hudCanvas,0,region.y*2,960,region.h*2,0,0,960,region.h*2);region.map.needsUpdate=true;}
  }

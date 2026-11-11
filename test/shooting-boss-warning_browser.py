@@ -27,6 +27,13 @@ with sync_playwright() as p:
         bounds=page.evaluate("()=>({width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,buttons:[...document.querySelectorAll('#actions button')].map(b=>{const r=b.getBoundingClientRect();return{width:r.width,height:r.height,bottom:r.bottom}})})")
         assert not bounds['overflow'] and all(button['width']>=44 and button['height']>=44 and button['bottom']<=667 for button in bounds['buttons']),bounds
         mobile.append({'path':str(path),**bounds})
+    page.set_viewport_size({'width':390,'height':844})
+    page.evaluate('''()=>{SHOOTING.game.player.x=60;SHOOTING.game.player.y=270;SHOOTING.renderer.hudKey='';SHOOTING.renderer.render(SHOOTING.game,0)}''')
+    page.wait_for_timeout(100)
+    page.screenshot(path=str(out/'boss-warning-player-left-390.png'))
+    page.evaluate('''()=>{SHOOTING.game.player.x=420;SHOOTING.game.player.y=270;SHOOTING.renderer.hudKey='';SHOOTING.renderer.render(SHOOTING.game,0)}''')
+    page.wait_for_timeout(100)
+    page.screenshot(path=str(out/'boss-warning-player-right-390.png'))
     state=page.evaluate('''()=>({warning:SHOOTING.renderer.warning,text:SHOOTING.renderer.warningText,boss:{x:__warningBoss.x,y:__warningBoss.y},player:{x:SHOOTING.game.player.x,y:SHOOTING.game.player.y},viewport:[innerWidth,innerHeight]})''')
     state['mobileViewports']=mobile;state['errors']=errors
     assert state['warning']>0 and state['text'] and not errors,state

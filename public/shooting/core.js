@@ -5,16 +5,20 @@ import {shootPlayer} from './combat.js';
 import {stageScaling} from './balance.js';
 const STEP=1/120,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),TAU=Math.PI*2;
 export {GAME_VERSION} from './balance.js';
+export const FORMATION_ENTRY_STAGGER=30;
 export function wavePositions(count,wave,stage){
  count=Math.max(2,Math.min(8,Math.floor(Number(count)||2)));const index=(Math.max(1,Math.floor(Number(wave)||1)+Math.floor(Number(stage)||0)*3)-1)%4,center=240,spread=Math.min(78,300/Math.max(1,count-1));
  return Array.from({length:count},(_,i)=>{
   const offset=i-(count-1)/2;
   const rowX=45+(i+.5)*(390/count),baseY=-35;
-  if(index===0)return{x:rowX,y:baseY-i*30};
-  if(index===1)return{x:rowX,y:baseY-Math.abs(offset)*34};
-  if(index===2){const rank=Math.floor(i/2);if(count%2&&i===count-1)return{x:center,y:baseY-rank*44};const side=i%2?1:-1;return{x:center+side*(92+rank*25),y:baseY-rank*44};}
-  const angle=count===1?0:offset/(count-1)*1.72;
-  return{x:center+Math.sin(angle)*170,y:baseY-(1-Math.cos(angle))*70};
+  let position;
+  if(index===0)position={x:rowX,y:baseY-i*30};
+  else if(index===1)position={x:rowX,y:baseY-Math.abs(offset)*34};
+  else if(index===2){const rank=Math.floor(i/2);if(count%2&&i===count-1)position={x:center,y:baseY-rank*44};else{const side=i%2?1:-1;position={x:center+side*(92+rank*25),y:baseY-rank*44};}}
+  else{const angle=count===1?0:offset/(count-1)*1.72;position={x:center+Math.sin(angle)*170,y:baseY-(1-Math.cos(angle))*70};}
+  // Keep the established line-wave timing unchanged. Stagger only the new x silhouettes:
+  // synchronized grouped arrivals exposed overlapping aimed fans on EXTREME.
+  return{x:position.x,y:position.y-(index===0?0:i*FORMATION_ENTRY_STAGGER)};
  });
 }
 export function bossPosition(stage,age,mid=false){
