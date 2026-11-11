@@ -1,0 +1,2755 @@
+{
+  "date": "2026-11-11T00:52:23.074Z",
+  "baseline": "HEAD (v1.3.0)",
+  "candidate": "v1.4-after-review-fixes",
+  "seedsPerDifficulty": 20,
+  "note": "20 deterministic scripted-pilot seeds per difficulty. The pilot is not a human player, and these results are not estimates of player win rates.",
+  "summary": {
+    "easy": {
+      "n": 20,
+      "beforeClears": 20,
+      "afterClears": 20,
+      "clearChanges": 0,
+      "meanBeforeMisses": 0.65,
+      "meanAfterMisses": 0.75,
+      "meanBeforeKills": 120.5,
+      "meanAfterKills": 120.8
+    },
+    "normal": {
+      "n": 20,
+      "beforeClears": 18,
+      "afterClears": 17,
+      "clearChanges": 5,
+      "meanBeforeMisses": 1.6,
+      "meanAfterMisses": 1.9,
+      "meanBeforeKills": 142.4,
+      "meanAfterKills": 133.1
+    },
+    "hard": {
+      "n": 20,
+      "beforeClears": 17,
+      "afterClears": 20,
+      "clearChanges": 3,
+      "meanBeforeMisses": 2.1,
+      "meanAfterMisses": 1.6,
+      "meanBeforeKills": 166.8,
+      "meanAfterKills": 173.5
+    },
+    "extreme": {
+      "n": 20,
+      "beforeClears": 2,
+      "afterClears": 4,
+      "clearChanges": 6,
+      "meanBeforeMisses": 3.9,
+      "meanAfterMisses": 3.6,
+      "meanBeforeKills": 137.8,
+      "meanAfterKills": 165.4
+    }
+  },
+  "rows": [
+    {
+      "difficulty": "easy",
+      "seed": 0,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.94,
+        "kills": 122,
+        "misses": 0,
+        "graze": 0,
+        "score": 106072,
+        "items": 21,
+        "bossSeconds": [
+          10.09,
+          4.95
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 210.56,
+        "kills": 122,
+        "misses": 0,
+        "graze": 1,
+        "score": 97205,
+        "items": 20,
+        "bossSeconds": [
+          7.96,
+          35.57
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 0
+    },
+    {
+      "difficulty": "easy",
+      "seed": 1,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.28,
+        "kills": 122,
+        "misses": 0,
+        "graze": 1,
+        "score": 106754,
+        "items": 19,
+        "bossSeconds": [
+          8.56,
+          5.28
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.38,
+        "kills": 123,
+        "misses": 0,
+        "graze": 1,
+        "score": 108796,
+        "items": 23,
+        "bossSeconds": [
+          3.04,
+          4.39
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "easy",
+      "seed": 2,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.18,
+        "kills": 122,
+        "misses": 1,
+        "graze": 1,
+        "score": 105049,
+        "items": 22,
+        "bossSeconds": [
+          5.68,
+          5.19
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 194.78,
+        "kills": 124,
+        "misses": 1,
+        "graze": 1,
+        "score": 92869,
+        "items": 21,
+        "bossSeconds": [
+          3.98,
+          19.79
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 3,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.78,
+        "kills": 120,
+        "misses": 1,
+        "graze": 2,
+        "score": 98952,
+        "items": 21,
+        "bossSeconds": [
+          10.75,
+          4.79
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 196.35,
+        "kills": 123,
+        "misses": 1,
+        "graze": 1,
+        "score": 95396,
+        "items": 23,
+        "bossSeconds": [
+          8.34,
+          21.36
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 3
+    },
+    {
+      "difficulty": "easy",
+      "seed": 4,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.96,
+        "kills": 120,
+        "misses": 0,
+        "graze": 1,
+        "score": 107128,
+        "items": 19,
+        "bossSeconds": [
+          10.31,
+          6.97
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.52,
+        "kills": 120,
+        "misses": 1,
+        "graze": 3,
+        "score": 106641,
+        "items": 23,
+        "bossSeconds": [
+          33.53,
+          6.53
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": 0
+    },
+    {
+      "difficulty": "easy",
+      "seed": 5,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 204.95,
+        "kills": 121,
+        "misses": 1,
+        "graze": 1,
+        "score": 88097,
+        "items": 22,
+        "bossSeconds": [
+          8.59,
+          29.96
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 200.61,
+        "kills": 115,
+        "misses": 1,
+        "graze": 3,
+        "score": 88231,
+        "items": 17,
+        "bossSeconds": [
+          15.2,
+          25.62
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -6
+    },
+    {
+      "difficulty": "easy",
+      "seed": 6,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 178.93,
+        "kills": 121,
+        "misses": 1,
+        "graze": 1,
+        "score": 102523,
+        "items": 22,
+        "bossSeconds": [
+          10.83,
+          3.93
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.27,
+        "kills": 122,
+        "misses": 1,
+        "graze": 1,
+        "score": 113614,
+        "items": 21,
+        "bossSeconds": [
+          3.07,
+          4.28
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "easy",
+      "seed": 7,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.81,
+        "kills": 122,
+        "misses": 1,
+        "graze": 1,
+        "score": 103293,
+        "items": 19,
+        "bossSeconds": [
+          10.95,
+          4.82
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.13,
+        "kills": 124,
+        "misses": 0,
+        "graze": 0,
+        "score": 112072,
+        "items": 18,
+        "bossSeconds": [
+          6.15,
+          5.14
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 8,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.09,
+        "kills": 122,
+        "misses": 1,
+        "graze": 0,
+        "score": 102406,
+        "items": 19,
+        "bossSeconds": [
+          3.67,
+          8.1
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.53,
+        "kills": 121,
+        "misses": 2,
+        "graze": 2,
+        "score": 106554,
+        "items": 24,
+        "bossSeconds": [
+          20.67,
+          7.54
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -1
+    },
+    {
+      "difficulty": "easy",
+      "seed": 9,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 187.71,
+        "kills": 115,
+        "misses": 1,
+        "graze": 1,
+        "score": 85425,
+        "items": 16,
+        "bossSeconds": [
+          21.69,
+          12.72
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.51,
+        "kills": 117,
+        "misses": 0,
+        "graze": 5,
+        "score": 105567,
+        "items": 20,
+        "bossSeconds": [
+          28.1,
+          6.52
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 10,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 187.08,
+        "kills": 121,
+        "misses": 0,
+        "graze": 2,
+        "score": 90429,
+        "items": 24,
+        "bossSeconds": [
+          24.97,
+          12.09
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.67,
+        "kills": 124,
+        "misses": 1,
+        "graze": 1,
+        "score": 108018,
+        "items": 24,
+        "bossSeconds": [
+          9.93,
+          4.68
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": 3
+    },
+    {
+      "difficulty": "easy",
+      "seed": 11,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.59,
+        "kills": 119,
+        "misses": 0,
+        "graze": 1,
+        "score": 106133,
+        "items": 22,
+        "bossSeconds": [
+          11.99,
+          5.6
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.76,
+        "kills": 110,
+        "misses": 1,
+        "graze": 5,
+        "score": 99002,
+        "items": 22,
+        "bossSeconds": [
+          14.55,
+          5.77
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -9
+    },
+    {
+      "difficulty": "easy",
+      "seed": 12,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 202.17,
+        "kills": 123,
+        "misses": 1,
+        "graze": 2,
+        "score": 89076,
+        "items": 24,
+        "bossSeconds": [
+          12.55,
+          27.18
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 198.07,
+        "kills": 125,
+        "misses": 0,
+        "graze": 3,
+        "score": 97478,
+        "items": 20,
+        "bossSeconds": [
+          7.42,
+          23.07
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 13,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.59,
+        "kills": 120,
+        "misses": 1,
+        "graze": 1,
+        "score": 103283,
+        "items": 23,
+        "bossSeconds": [
+          10.66,
+          4.6
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.03,
+        "kills": 119,
+        "misses": 0,
+        "graze": 3,
+        "score": 102081,
+        "items": 29,
+        "bossSeconds": [
+          15.86,
+          5.03
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": -1
+    },
+    {
+      "difficulty": "easy",
+      "seed": 14,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.18,
+        "kills": 122,
+        "misses": 0,
+        "graze": 2,
+        "score": 90761,
+        "items": 25,
+        "bossSeconds": [
+          15.32,
+          8.19
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 194.43,
+        "kills": 120,
+        "misses": 1,
+        "graze": 1,
+        "score": 89904,
+        "items": 21,
+        "bossSeconds": [
+          15.18,
+          19.44
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 15,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.61,
+        "kills": 122,
+        "misses": 1,
+        "graze": 2,
+        "score": 98677,
+        "items": 17,
+        "bossSeconds": [
+          11.13,
+          4.62
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.53,
+        "kills": 124,
+        "misses": 1,
+        "graze": 2,
+        "score": 107799,
+        "items": 23,
+        "bossSeconds": [
+          6.52,
+          4.53
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 2
+    },
+    {
+      "difficulty": "easy",
+      "seed": 16,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 187.73,
+        "kills": 119,
+        "misses": 2,
+        "graze": 1,
+        "score": 87103,
+        "items": 20,
+        "bossSeconds": [
+          18.52,
+          12.74
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180,
+        "kills": 119,
+        "misses": 1,
+        "graze": 3,
+        "score": 104831,
+        "items": 16,
+        "bossSeconds": [
+          14.09,
+          5.01
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 0
+    },
+    {
+      "difficulty": "easy",
+      "seed": 17,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.57,
+        "kills": 122,
+        "misses": 0,
+        "graze": 1,
+        "score": 107445,
+        "items": 18,
+        "bossSeconds": [
+          9.93,
+          5.58
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.03,
+        "kills": 119,
+        "misses": 1,
+        "graze": 1,
+        "score": 104429,
+        "items": 27,
+        "bossSeconds": [
+          13.12,
+          4.03
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -3
+    },
+    {
+      "difficulty": "easy",
+      "seed": 18,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.49,
+        "kills": 117,
+        "misses": 0,
+        "graze": 1,
+        "score": 100938,
+        "items": 19,
+        "bossSeconds": [
+          19.88,
+          4.5
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.42,
+        "kills": 121,
+        "misses": 0,
+        "graze": 1,
+        "score": 107874,
+        "items": 25,
+        "bossSeconds": [
+          12.38,
+          5.43
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 4
+    },
+    {
+      "difficulty": "easy",
+      "seed": 19,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 194.57,
+        "kills": 119,
+        "misses": 1,
+        "graze": 1,
+        "score": 87467,
+        "items": 29,
+        "bossSeconds": [
+          17.86,
+          19.57
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.34,
+        "kills": 123,
+        "misses": 2,
+        "graze": 2,
+        "score": 90302,
+        "items": 24,
+        "bossSeconds": [
+          4.87,
+          8.35
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": 4
+    },
+    {
+      "difficulty": "normal",
+      "seed": 0,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 203.8,
+        "kills": 140,
+        "misses": 2,
+        "graze": 31,
+        "score": 108935,
+        "items": 24,
+        "bossSeconds": [
+          28.79,
+          28.81
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.44,
+        "kills": 148,
+        "misses": 1,
+        "graze": 12,
+        "score": 125110,
+        "items": 29,
+        "bossSeconds": [
+          25.74,
+          5.45
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 8
+    },
+    {
+      "difficulty": "normal",
+      "seed": 1,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.13,
+        "kills": 148,
+        "misses": 3,
+        "graze": 29,
+        "score": 122993,
+        "items": 24,
+        "bossSeconds": [
+          19.57,
+          6.14
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 204.72,
+        "kills": 149,
+        "misses": 2,
+        "graze": 25,
+        "score": 101159,
+        "items": 34,
+        "bossSeconds": [
+          16.97,
+          29.73
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "normal",
+      "seed": 2,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 191.12,
+        "kills": 151,
+        "misses": 1,
+        "graze": 7,
+        "score": 97893,
+        "items": 28,
+        "bossSeconds": [
+          3.76,
+          16.12
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 105.86,
+        "kills": 73,
+        "misses": 4,
+        "graze": 30,
+        "score": 37697,
+        "items": 10,
+        "bossSeconds": [
+          16.41
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": 3,
+      "killDelta": -78
+    },
+    {
+      "difficulty": "normal",
+      "seed": 3,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 201.52,
+        "kills": 140,
+        "misses": 1,
+        "graze": 25,
+        "score": 96649,
+        "items": 23,
+        "bossSeconds": [
+          34.9,
+          26.52
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.59,
+        "kills": 153,
+        "misses": 0,
+        "graze": 10,
+        "score": 135869,
+        "items": 33,
+        "bossSeconds": [
+          15.82,
+          4.6
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 13
+    },
+    {
+      "difficulty": "normal",
+      "seed": 4,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 201.29,
+        "kills": 146,
+        "misses": 2,
+        "graze": 11,
+        "score": 93985,
+        "items": 24,
+        "bossSeconds": [
+          12.76,
+          26.3
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 186.75,
+        "kills": 139,
+        "misses": 3,
+        "graze": 40,
+        "score": 92694,
+        "items": 26,
+        "bossSeconds": [
+          10.71,
+          11.76
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -7
+    },
+    {
+      "difficulty": "normal",
+      "seed": 5,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 191.25,
+        "kills": 148,
+        "misses": 0,
+        "graze": 19,
+        "score": 101327,
+        "items": 29,
+        "bossSeconds": [
+          33.47,
+          16.26
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.16,
+        "kills": 148,
+        "misses": 2,
+        "graze": 33,
+        "score": 101271,
+        "items": 19,
+        "bossSeconds": [
+          31.77,
+          8.17
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 2,
+      "killDelta": 0
+    },
+    {
+      "difficulty": "normal",
+      "seed": 6,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 187.64,
+        "kills": 143,
+        "misses": 1,
+        "graze": 24,
+        "score": 104218,
+        "items": 23,
+        "bossSeconds": [
+          31.21,
+          12.65
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 203.66,
+        "kills": 142,
+        "misses": 2,
+        "graze": 29,
+        "score": 96693,
+        "items": 25,
+        "bossSeconds": [
+          33.83,
+          28.67
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -1
+    },
+    {
+      "difficulty": "normal",
+      "seed": 7,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 210.7,
+        "kills": 150,
+        "misses": 3,
+        "graze": 18,
+        "score": 105621,
+        "items": 26,
+        "bossSeconds": [
+          19.31,
+          35.71
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 192.63,
+        "kills": 140,
+        "misses": 3,
+        "graze": 37,
+        "score": 95044,
+        "items": 21,
+        "bossSeconds": [
+          46.18,
+          17.64
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -10
+    },
+    {
+      "difficulty": "normal",
+      "seed": 8,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 95.73,
+        "kills": 72,
+        "misses": 4,
+        "graze": 30,
+        "score": 23905,
+        "items": 6,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.58,
+        "kills": 147,
+        "misses": 2,
+        "graze": 27,
+        "score": 121305,
+        "items": 29,
+        "bossSeconds": [
+          22.87,
+          6.59
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -2,
+      "killDelta": 75
+    },
+    {
+      "difficulty": "normal",
+      "seed": 9,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.54,
+        "kills": 153,
+        "misses": 2,
+        "graze": 12,
+        "score": 122770,
+        "items": 33,
+        "bossSeconds": [
+          24.08,
+          7.55
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.9,
+        "kills": 148,
+        "misses": 3,
+        "graze": 20,
+        "score": 132353,
+        "items": 27,
+        "bossSeconds": [
+          10.88,
+          4.91
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -5
+    },
+    {
+      "difficulty": "normal",
+      "seed": 10,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.75,
+        "kills": 149,
+        "misses": 1,
+        "graze": 11,
+        "score": 110300,
+        "items": 24,
+        "bossSeconds": [
+          18.93,
+          4.76
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.52,
+        "kills": 150,
+        "misses": 0,
+        "graze": 5,
+        "score": 134516,
+        "items": 24,
+        "bossSeconds": [
+          12.45,
+          6.53
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "normal",
+      "seed": 11,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.08,
+        "kills": 150,
+        "misses": 0,
+        "graze": 8,
+        "score": 136978,
+        "items": 27,
+        "bossSeconds": [
+          10.02,
+          4.09
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.22,
+        "kills": 149,
+        "misses": 0,
+        "graze": 11,
+        "score": 118197,
+        "items": 24,
+        "bossSeconds": [
+          21.88,
+          7.23
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -1
+    },
+    {
+      "difficulty": "normal",
+      "seed": 12,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.06,
+        "kills": 154,
+        "misses": 2,
+        "graze": 12,
+        "score": 125051,
+        "items": 30,
+        "bossSeconds": [
+          13.37,
+          5.07
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.37,
+        "kills": 149,
+        "misses": 0,
+        "graze": 4,
+        "score": 146372,
+        "items": 28,
+        "bossSeconds": [
+          8.98,
+          6.38
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -2,
+      "killDelta": -5
+    },
+    {
+      "difficulty": "normal",
+      "seed": 13,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.43,
+        "kills": 152,
+        "misses": 1,
+        "graze": 10,
+        "score": 109795,
+        "items": 30,
+        "bossSeconds": [
+          10.38,
+          5.44
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 197.14,
+        "kills": 149,
+        "misses": 0,
+        "graze": 11,
+        "score": 106674,
+        "items": 33,
+        "bossSeconds": [
+          6.82,
+          22.15
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": -3
+    },
+    {
+      "difficulty": "normal",
+      "seed": 14,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 141.41,
+        "kills": 99,
+        "misses": 6,
+        "graze": 45,
+        "score": 40093,
+        "items": 15,
+        "bossSeconds": [
+          43
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 203.47,
+        "kills": 139,
+        "misses": 3,
+        "graze": 38,
+        "score": 90444,
+        "items": 16,
+        "bossSeconds": [
+          37.47,
+          28.48
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -3,
+      "killDelta": 40
+    },
+    {
+      "difficulty": "normal",
+      "seed": 15,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.68,
+        "kills": 154,
+        "misses": 0,
+        "graze": 17,
+        "score": 117604,
+        "items": 26,
+        "bossSeconds": [
+          24.44,
+          5.69
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.47,
+        "kills": 142,
+        "misses": 2,
+        "graze": 37,
+        "score": 112245,
+        "items": 31,
+        "bossSeconds": [
+          45.42,
+          5.48
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 2,
+      "killDelta": -12
+    },
+    {
+      "difficulty": "normal",
+      "seed": 16,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.67,
+        "kills": 148,
+        "misses": 3,
+        "graze": 38,
+        "score": 115236,
+        "items": 29,
+        "bossSeconds": [
+          31.07,
+          7.68
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 193.99,
+        "kills": 152,
+        "misses": 3,
+        "graze": 23,
+        "score": 110442,
+        "items": 33,
+        "bossSeconds": [
+          21.99,
+          19
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 4
+    },
+    {
+      "difficulty": "normal",
+      "seed": 17,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 179.66,
+        "kills": 150,
+        "misses": 0,
+        "graze": 8,
+        "score": 125860,
+        "items": 21,
+        "bossSeconds": [
+          11.47,
+          4.67
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 57.41,
+        "kills": 34,
+        "misses": 4,
+        "graze": 26,
+        "score": 9217,
+        "items": 2,
+        "bossSeconds": []
+      },
+      "clearChanged": true,
+      "missDelta": 4,
+      "killDelta": -116
+    },
+    {
+      "difficulty": "normal",
+      "seed": 18,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.38,
+        "kills": 153,
+        "misses": 0,
+        "graze": 21,
+        "score": 111930,
+        "items": 22,
+        "bossSeconds": [
+          33.07,
+          8.39
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.3,
+        "kills": 150,
+        "misses": 0,
+        "graze": 16,
+        "score": 133523,
+        "items": 24,
+        "bossSeconds": [
+          26.93,
+          7.31
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -3
+    },
+    {
+      "difficulty": "normal",
+      "seed": 19,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 180.69,
+        "kills": 148,
+        "misses": 0,
+        "graze": 7,
+        "score": 118843,
+        "items": 29,
+        "bossSeconds": [
+          10.85,
+          5.7
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 89.53,
+        "kills": 61,
+        "misses": 4,
+        "graze": 26,
+        "score": 21589,
+        "items": 5,
+        "bossSeconds": []
+      },
+      "clearChanged": true,
+      "missDelta": 4,
+      "killDelta": -87
+    },
+    {
+      "difficulty": "hard",
+      "seed": 0,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.69,
+        "kills": 167,
+        "misses": 2,
+        "graze": 29,
+        "score": 125445,
+        "items": 31,
+        "bossSeconds": [
+          16.59,
+          6.7
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.6,
+        "kills": 171,
+        "misses": 2,
+        "graze": 27,
+        "score": 123433,
+        "items": 31,
+        "bossSeconds": [
+          11.95,
+          6.61
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 4
+    },
+    {
+      "difficulty": "hard",
+      "seed": 1,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 236.25,
+        "kills": 164,
+        "misses": 2,
+        "graze": 57,
+        "score": 103496,
+        "items": 31,
+        "bossSeconds": [
+          28.54,
+          61.26
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.77,
+        "kills": 174,
+        "misses": 1,
+        "graze": 35,
+        "score": 112490,
+        "items": 36,
+        "bossSeconds": [
+          22.93,
+          8.78
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 10
+    },
+    {
+      "difficulty": "hard",
+      "seed": 2,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 120.01,
+        "kills": 104,
+        "misses": 4,
+        "graze": 27,
+        "score": 40621,
+        "items": 11,
+        "bossSeconds": [
+          21.77
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 188.47,
+        "kills": 176,
+        "misses": 1,
+        "graze": 33,
+        "score": 152131,
+        "items": 33,
+        "bossSeconds": [
+          22.3,
+          13.47
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -3,
+      "killDelta": 72
+    },
+    {
+      "difficulty": "hard",
+      "seed": 3,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.73,
+        "kills": 173,
+        "misses": 1,
+        "graze": 19,
+        "score": 135906,
+        "items": 31,
+        "bossSeconds": [
+          9.16,
+          6.74
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.35,
+        "kills": 180,
+        "misses": 1,
+        "graze": 11,
+        "score": 117203,
+        "items": 37,
+        "bossSeconds": [
+          15.32,
+          8.36
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 7
+    },
+    {
+      "difficulty": "hard",
+      "seed": 4,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 191.97,
+        "kills": 172,
+        "misses": 4,
+        "graze": 35,
+        "score": 112356,
+        "items": 25,
+        "bossSeconds": [
+          16.62,
+          16.98
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.38,
+        "kills": 175,
+        "misses": 0,
+        "graze": 15,
+        "score": 138226,
+        "items": 27,
+        "bossSeconds": [
+          7.38,
+          7.39
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -4,
+      "killDelta": 3
+    },
+    {
+      "difficulty": "hard",
+      "seed": 5,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.48,
+        "kills": 175,
+        "misses": 1,
+        "graze": 30,
+        "score": 145144,
+        "items": 29,
+        "bossSeconds": [
+          18.15,
+          6.49
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.53,
+        "kills": 176,
+        "misses": 0,
+        "graze": 22,
+        "score": 133972,
+        "items": 31,
+        "bossSeconds": [
+          7.43,
+          6.54
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "hard",
+      "seed": 6,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 192.07,
+        "kills": 165,
+        "misses": 4,
+        "graze": 35,
+        "score": 65448,
+        "items": 23,
+        "bossSeconds": [
+          16.01
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.17,
+        "kills": 170,
+        "misses": 2,
+        "graze": 43,
+        "score": 107225,
+        "items": 18,
+        "bossSeconds": [
+          37.53,
+          8.18
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -2,
+      "killDelta": 5
+    },
+    {
+      "difficulty": "hard",
+      "seed": 7,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.07,
+        "kills": 179,
+        "misses": 3,
+        "graze": 15,
+        "score": 123618,
+        "items": 33,
+        "bossSeconds": [
+          18.42,
+          7.08
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 236.14,
+        "kills": 169,
+        "misses": 1,
+        "graze": 55,
+        "score": 105117,
+        "items": 20,
+        "bossSeconds": [
+          31.01,
+          61.15
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -2,
+      "killDelta": -10
+    },
+    {
+      "difficulty": "hard",
+      "seed": 8,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 198.27,
+        "kills": 176,
+        "misses": 0,
+        "graze": 22,
+        "score": 123438,
+        "items": 26,
+        "bossSeconds": [
+          23.57,
+          23.27
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 185.42,
+        "kills": 173,
+        "misses": 3,
+        "graze": 19,
+        "score": 113732,
+        "items": 30,
+        "bossSeconds": [
+          17.46,
+          10.43
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 3,
+      "killDelta": -3
+    },
+    {
+      "difficulty": "hard",
+      "seed": 9,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.73,
+        "kills": 181,
+        "misses": 2,
+        "graze": 15,
+        "score": 164584,
+        "items": 20,
+        "bossSeconds": [
+          4.43,
+          7.74
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.17,
+        "kills": 175,
+        "misses": 0,
+        "graze": 21,
+        "score": 128228,
+        "items": 28,
+        "bossSeconds": [
+          16.87,
+          8.18
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -2,
+      "killDelta": -6
+    },
+    {
+      "difficulty": "hard",
+      "seed": 10,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.94,
+        "kills": 179,
+        "misses": 1,
+        "graze": 28,
+        "score": 155392,
+        "items": 29,
+        "bossSeconds": [
+          16.67,
+          6.95
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 193.17,
+        "kills": 182,
+        "misses": 2,
+        "graze": 52,
+        "score": 115972,
+        "items": 32,
+        "bossSeconds": [
+          17.1,
+          18.18
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": 3
+    },
+    {
+      "difficulty": "hard",
+      "seed": 11,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 188.01,
+        "kills": 184,
+        "misses": 2,
+        "graze": 20,
+        "score": 123128,
+        "items": 23,
+        "bossSeconds": [
+          28.86,
+          13.02
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 191.51,
+        "kills": 177,
+        "misses": 0,
+        "graze": 27,
+        "score": 133348,
+        "items": 35,
+        "bossSeconds": [
+          17.28,
+          16.52
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -2,
+      "killDelta": -7
+    },
+    {
+      "difficulty": "hard",
+      "seed": 12,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.84,
+        "kills": 181,
+        "misses": 1,
+        "graze": 11,
+        "score": 153026,
+        "items": 33,
+        "bossSeconds": [
+          16.63,
+          6.85
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 240.9,
+        "kills": 174,
+        "misses": 2,
+        "graze": 31,
+        "score": 129539,
+        "items": 30,
+        "bossSeconds": [
+          36.54,
+          65.91
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -7
+    },
+    {
+      "difficulty": "hard",
+      "seed": 13,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.09,
+        "kills": 173,
+        "misses": 2,
+        "graze": 41,
+        "score": 140652,
+        "items": 31,
+        "bossSeconds": [
+          22.25,
+          7.1
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.15,
+        "kills": 173,
+        "misses": 3,
+        "graze": 29,
+        "score": 126743,
+        "items": 33,
+        "bossSeconds": [
+          21.18,
+          7.16
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": 0
+    },
+    {
+      "difficulty": "hard",
+      "seed": 14,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 203.77,
+        "kills": 180,
+        "misses": 2,
+        "graze": 22,
+        "score": 119295,
+        "items": 30,
+        "bossSeconds": [
+          16.39,
+          28.77
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 235.5,
+        "kills": 162,
+        "misses": 3,
+        "graze": 60,
+        "score": 105535,
+        "items": 28,
+        "bossSeconds": [
+          10.35,
+          60.51
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -18
+    },
+    {
+      "difficulty": "hard",
+      "seed": 15,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 245.01,
+        "kills": 178,
+        "misses": 3,
+        "graze": 30,
+        "score": 105580,
+        "items": 26,
+        "bossSeconds": [
+          13.73,
+          70.02
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 188.52,
+        "kills": 165,
+        "misses": 2,
+        "graze": 35,
+        "score": 99004,
+        "items": 32,
+        "bossSeconds": [
+          35.68,
+          13.52
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": -13
+    },
+    {
+      "difficulty": "hard",
+      "seed": 16,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.7,
+        "kills": 176,
+        "misses": 1,
+        "graze": 31,
+        "score": 170567,
+        "items": 25,
+        "bossSeconds": [
+          28.49,
+          7.71
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.76,
+        "kills": 179,
+        "misses": 3,
+        "graze": 23,
+        "score": 152190,
+        "items": 23,
+        "bossSeconds": [
+          7.46,
+          6.77
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 2,
+      "killDelta": 3
+    },
+    {
+      "difficulty": "hard",
+      "seed": 17,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 94.37,
+        "kills": 81,
+        "misses": 4,
+        "graze": 66,
+        "score": 28660,
+        "items": 9,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 182.11,
+        "kills": 175,
+        "misses": 3,
+        "graze": 38,
+        "score": 127126,
+        "items": 35,
+        "bossSeconds": [
+          38.27,
+          7.12
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -1,
+      "killDelta": 94
+    },
+    {
+      "difficulty": "hard",
+      "seed": 18,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 208.52,
+        "kills": 175,
+        "misses": 1,
+        "graze": 32,
+        "score": 106602,
+        "items": 34,
+        "bossSeconds": [
+          17.56,
+          33.53
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 196.97,
+        "kills": 171,
+        "misses": 1,
+        "graze": 61,
+        "score": 114926,
+        "items": 32,
+        "bossSeconds": [
+          21.37,
+          21.98
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -4
+    },
+    {
+      "difficulty": "hard",
+      "seed": 19,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 208.23,
+        "kills": 172,
+        "misses": 2,
+        "graze": 38,
+        "score": 126985,
+        "items": 24,
+        "bossSeconds": [
+          7.97,
+          33.24
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 181.73,
+        "kills": 173,
+        "misses": 2,
+        "graze": 31,
+        "score": 139823,
+        "items": 31,
+        "bossSeconds": [
+          5.16,
+          6.74
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 1
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 0,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 197.15,
+        "kills": 276,
+        "misses": 0,
+        "graze": 69,
+        "score": 272522,
+        "items": 51,
+        "bossSeconds": [
+          7.28,
+          22.16
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 139.53,
+        "kills": 198,
+        "misses": 4,
+        "graze": 74,
+        "score": 145430,
+        "items": 28,
+        "bossSeconds": [
+          9.86
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": 4,
+      "killDelta": -78
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 1,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 87.64,
+        "kills": 112,
+        "misses": 4,
+        "graze": 52,
+        "score": 37979,
+        "items": 12,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 81.09,
+        "kills": 103,
+        "misses": 4,
+        "graze": 57,
+        "score": 39171,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -9
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 2,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 74.95,
+        "kills": 96,
+        "misses": 4,
+        "graze": 54,
+        "score": 30847,
+        "items": 11,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 84.1,
+        "kills": 94,
+        "misses": 4,
+        "graze": 105,
+        "score": 31245,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -2
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 3,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 122.25,
+        "kills": 160,
+        "misses": 5,
+        "graze": 62,
+        "score": 81325,
+        "items": 19,
+        "bossSeconds": [
+          20.98
+        ]
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.71,
+        "kills": 273,
+        "misses": 1,
+        "graze": 34,
+        "score": 201614,
+        "items": 44,
+        "bossSeconds": [
+          25.77,
+          8.72
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -4,
+      "killDelta": 113
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 4,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 74.29,
+        "kills": 87,
+        "misses": 4,
+        "graze": 79,
+        "score": 30309,
+        "items": 7,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 202.96,
+        "kills": 278,
+        "misses": 4,
+        "graze": 75,
+        "score": 190256,
+        "items": 69,
+        "bossSeconds": [
+          14.34,
+          27.97
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": 0,
+      "killDelta": 191
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 5,
+      "before": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 212.11,
+        "kills": 267,
+        "misses": 3,
+        "graze": 130,
+        "score": 234947,
+        "items": 40,
+        "bossSeconds": [
+          31.77,
+          37.12
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 80.91,
+        "kills": 102,
+        "misses": 4,
+        "graze": 79,
+        "score": 33916,
+        "items": 11,
+        "bossSeconds": []
+      },
+      "clearChanged": true,
+      "missDelta": 1,
+      "killDelta": -165
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 6,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 96.12,
+        "kills": 113,
+        "misses": 4,
+        "graze": 101,
+        "score": 57889,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 184.22,
+        "kills": 254,
+        "misses": 4,
+        "graze": 113,
+        "score": 142797,
+        "items": 28,
+        "bossSeconds": [
+          6.59
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 141
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 7,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 94.23,
+        "kills": 107,
+        "misses": 4,
+        "graze": 125,
+        "score": 40754,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 75.59,
+        "kills": 90,
+        "misses": 4,
+        "graze": 63,
+        "score": 31633,
+        "items": 7,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -17
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 8,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 75.03,
+        "kills": 95,
+        "misses": 4,
+        "graze": 66,
+        "score": 33275,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.96,
+        "kills": 280,
+        "misses": 2,
+        "graze": 55,
+        "score": 230678,
+        "items": 40,
+        "bossSeconds": [
+          17.17,
+          8.97
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -2,
+      "killDelta": 185
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 9,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 94.59,
+        "kills": 129,
+        "misses": 5,
+        "graze": 62,
+        "score": 43835,
+        "items": 14,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 109.31,
+        "kills": 160,
+        "misses": 4,
+        "graze": 64,
+        "score": 86591,
+        "items": 21,
+        "bossSeconds": [
+          6.51
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 31
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 10,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 93.32,
+        "kills": 107,
+        "misses": 4,
+        "graze": 91,
+        "score": 36479,
+        "items": 12,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 79.7,
+        "kills": 111,
+        "misses": 4,
+        "graze": 36,
+        "score": 37832,
+        "items": 12,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 4
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 11,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 99.15,
+        "kills": 116,
+        "misses": 4,
+        "graze": 118,
+        "score": 46177,
+        "items": 9,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "stageclear",
+        "clear": true,
+        "seconds": 183.21,
+        "kills": 280,
+        "misses": 0,
+        "graze": 30,
+        "score": 210225,
+        "items": 33,
+        "bossSeconds": [
+          8.55,
+          8.22
+        ]
+      },
+      "clearChanged": true,
+      "missDelta": -4,
+      "killDelta": 164
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 12,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 80.78,
+        "kills": 87,
+        "misses": 4,
+        "graze": 102,
+        "score": 30827,
+        "items": 9,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 111.73,
+        "kills": 147,
+        "misses": 4,
+        "graze": 121,
+        "score": 73171,
+        "items": 23,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 60
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 13,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 120.01,
+        "kills": 153,
+        "misses": 4,
+        "graze": 116,
+        "score": 90416,
+        "items": 25,
+        "bossSeconds": [
+          31.11
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 97.79,
+        "kills": 134,
+        "misses": 4,
+        "graze": 110,
+        "score": 58214,
+        "items": 22,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -19
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 14,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 72.98,
+        "kills": 88,
+        "misses": 5,
+        "graze": 81,
+        "score": 27564,
+        "items": 7,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 82.06,
+        "kills": 100,
+        "misses": 4,
+        "graze": 64,
+        "score": 39836,
+        "items": 12,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": -1,
+      "killDelta": 12
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 15,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 79.27,
+        "kills": 85,
+        "misses": 4,
+        "graze": 100,
+        "score": 26923,
+        "items": 10,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 93.3,
+        "kills": 124,
+        "misses": 4,
+        "graze": 46,
+        "score": 45269,
+        "items": 13,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 39
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 16,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 157.03,
+        "kills": 233,
+        "misses": 4,
+        "graze": 125,
+        "score": 115208,
+        "items": 31,
+        "bossSeconds": [
+          39.28
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 91.89,
+        "kills": 114,
+        "misses": 5,
+        "graze": 78,
+        "score": 39346,
+        "items": 10,
+        "bossSeconds": []
+      },
+      "clearChanged": false,
+      "missDelta": 1,
+      "killDelta": -119
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 17,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 72.7,
+        "kills": 92,
+        "misses": 4,
+        "graze": 86,
+        "score": 32033,
+        "items": 9,
+        "bossSeconds": []
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 126.5,
+        "kills": 181,
+        "misses": 4,
+        "graze": 120,
+        "score": 124029,
+        "items": 25,
+        "bossSeconds": [
+          24.47
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 89
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 18,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 155.73,
+        "kills": 223,
+        "misses": 4,
+        "graze": 93,
+        "score": 115240,
+        "items": 26,
+        "bossSeconds": [
+          9.79
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 121.33,
+        "kills": 153,
+        "misses": 4,
+        "graze": 68,
+        "score": 84991,
+        "items": 20,
+        "bossSeconds": [
+          5.63
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": -70
+    },
+    {
+      "difficulty": "extreme",
+      "seed": 19,
+      "before": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 105.3,
+        "kills": 130,
+        "misses": 4,
+        "graze": 140,
+        "score": 72316,
+        "items": 20,
+        "bossSeconds": [
+          13.02
+        ]
+      },
+      "after": {
+        "phase": "result",
+        "clear": false,
+        "seconds": 94.17,
+        "kills": 132,
+        "misses": 4,
+        "graze": 35,
+        "score": 56206,
+        "items": 15,
+        "bossSeconds": [
+          24.37
+        ]
+      },
+      "clearChanged": false,
+      "missDelta": 0,
+      "killDelta": 2
+    }
+  ]
+}

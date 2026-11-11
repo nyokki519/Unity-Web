@@ -37,10 +37,11 @@ with sync_playwright() as p:
  assert page.evaluate('SHOOTING.profile.stages.includes(1)');credits=page.evaluate('SHOOTING.profile.credits');page.wait_for_timeout(200);assert page.evaluate('SHOOTING.profile.credits')==credits
  page.screenshot(path=str(out/'result-390.png'));page.locator('[data-do=next]').click();assert page.evaluate('SHOOTING.game.stage')==1
  for width in [375,390,414]:
-  page.set_viewport_size({'width':width,'height':812});page.evaluate('SHOOTING.resume()');page.wait_for_timeout(150)
-  bounds=page.evaluate("()=>({overflow:document.documentElement.scrollWidth>innerWidth,buttons:[...document.querySelectorAll('#actions button')].map(b=>{const r=b.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,bottom:r.bottom};})})")
-  assert not bounds['overflow'];assert all(x['w']>=44 and x['h']>=44 and x['bottom']<=812 for x in bounds['buttons']),bounds
-  page.screenshot(path=str(out/f'play-{width}.png'))
+  for height in [667,812]:
+   page.set_viewport_size({'width':width,'height':height});page.evaluate('SHOOTING.resume()');page.wait_for_timeout(150)
+   bounds=page.evaluate("()=>({overflow:document.documentElement.scrollWidth>innerWidth,buttons:[...document.querySelectorAll('#actions button')].map(b=>{const r=b.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,bottom:r.bottom};})})")
+   assert not bounds['overflow'];assert all(x['w']>=44 and x['h']>=44 and x['bottom']<=height for x in bounds['buttons']),bounds
+   if height==812:page.screenshot(path=str(out/f'play-{width}.png'))
  page.evaluate("SHOOTING.pause()");page.locator('[data-do=abandon]').click();page.evaluate("SHOOTING.navigate('achievements')");assert page.locator('.card').count()==100
  page.evaluate("SHOOTING.navigate('codex')");assert page.locator('.card').count()>=12
  page.locator('[data-do="codex:bosses"]').click();assert page.locator('.card').count()==7
@@ -48,6 +49,10 @@ with sync_playwright() as p:
  page.goto(base+'/');page.get_by_role('link',name='シューティングで遊ぶ ↗').wait_for(timeout=30000)
  assert not errors,errors
  page.close()
+ stale=b.new_page(viewport={'width':390,'height':844});stale.add_init_script("localStorage.setItem('unity-shooting-checkpoint-v1',JSON.stringify({version:1,gameVersion:'1.3.0'}))")
+ stale.goto(base+'/shooting/index.html');stale.wait_for_function('()=>!!window.SHOOTING',timeout=90000)
+ assert stale.get_by_text('ゲーム更新により古い中断データとリプレイは再生できません。機体・強化・記録は引き継がれています。').count()==1
+ assert stale.evaluate("localStorage.getItem('unity-shooting-checkpoint-v1')") is None;stale.close()
  denied=b.new_page();denied.add_init_script("Object.defineProperty(window,'localStorage',{get(){throw new DOMException('blocked','SecurityError')}})");denied.goto(base+'/shooting/index.html');denied.wait_for_function('()=>!!window.SHOOTING',timeout=90000);assert denied.evaluate('SHOOTING.profile.storageError');denied.locator('[data-do=hangar]').first.click();denied.locator('[data-do=launch]').click();denied.wait_for_function('()=>SHOOTING.game?.tick>0',timeout=30000);denied.close()
- (out/'report.json').write_text(json.dumps(dict(workshop=True,developmentPersisted=True,keyboard=True,touchDrag=True,manualFire=True,focusToggle=True,pause=True,replayExact=True,replayRewards=False,controlledBossResult=True,nextStage=True,widths=[375,390,414],achievements=100,codex=True,homeLink=True,deniedStoragePlayable=True,errors=errors),indent=2))
+ (out/'report.json').write_text(json.dumps(dict(workshop=True,developmentPersisted=True,keyboard=True,touchDrag=True,manualFire=True,focusToggle=True,pause=True,replayExact=True,replayRewards=False,controlledBossResult=True,nextStage=True,widths=[375,390,414],heights=[667,812],achievements=100,codex=True,homeLink=True,staleCheckpointNotice=True,deniedStoragePlayable=True,errors=errors),indent=2))
  print('shooting browser integration passed',flush=True);b.close()

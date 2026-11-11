@@ -5,6 +5,30 @@ import {shootPlayer} from './combat.js';
 import {stageScaling} from './balance.js';
 const STEP=1/120,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),TAU=Math.PI*2;
 export {GAME_VERSION} from './balance.js';
+export function wavePositions(count,wave,stage){
+ count=Math.max(2,Math.min(8,Math.floor(Number(count)||2)));const index=(Math.max(1,Math.floor(Number(wave)||1)+Math.floor(Number(stage)||0)*3)-1)%4,center=240,spread=Math.min(78,300/Math.max(1,count-1));
+ return Array.from({length:count},(_,i)=>{
+  const offset=i-(count-1)/2;
+  const rowX=45+(i+.5)*(390/count),baseY=-35;
+  if(index===0)return{x:rowX,y:baseY-i*30};
+  if(index===1)return{x:rowX,y:baseY-Math.abs(offset)*34};
+  if(index===2){const rank=Math.floor(i/2);if(count%2&&i===count-1)return{x:center,y:baseY-rank*44};const side=i%2?1:-1;return{x:center+side*(92+rank*25),y:baseY-rank*44};}
+  const angle=count===1?0:offset/(count-1)*1.72;
+  return{x:center+Math.sin(angle)*170,y:baseY-(1-Math.cos(angle))*70};
+ });
+}
+export function bossPosition(stage,age,mid=false){
+ const t=Math.max(0,Number(age)||0),s=Math.max(0,Math.min(5,Math.floor(Number(stage)||0))),baseY=mid?125:135;
+ const motion=[
+  [Math.sin(t*.46)*65,0],
+  [Math.sin(t*.36)*86,Math.sin(t*.72)*8],
+  [Math.sin(t*.28)*112,Math.sin(t*.5)*16],
+  [Math.sin(t*.5)*55+Math.sin(t*.18)*22,Math.cos(t*.42)*10],
+  [Math.sin(t*.63)*76,Math.sin(t*.34)*12],
+  [Math.sin(t*.42)*98+Math.sin(t*.16)*24,Math.cos(t*.51)*14]
+ ][s];
+ return{x:240+motion[0],y:baseY+motion[1]};
+}
 export class Game {
  constructor(options={}){
   this.options={seed:'unity-shooting',ship:0,weapon:0,support:0,difficulty:'normal',mode:'campaign',stage:0,upgrades:{},...options};
@@ -44,7 +68,7 @@ export class Game {
  spawnEnemy(type=0,x=240,y=-40,boss=false,mid=false,secret=false){
   const scaling=stageScaling(this.stage),baseHp=boss?(mid?520:1800)+this.stage*430:18+(type%5)*9+this.stage*4;
   const hp=baseHp*(boss?scaling.bossHp:scaling.enemyHp)*this.difficulty.hp;
-  const e={id:this.nextId++,x,y,baseX:x,baseY:y,r:boss?(mid?35:55):14+(type%3)*4,hp,maxHp:hp,type:type%12,age:0,shoot:boss?1.4:.8+this.rng()*1.6,boss,mid,secret,name:secret?'真核・アカツキ零式':mid?STAGES[this.stage].midName:STAGES[this.stage].bossName,phase:0,parts:[],color:STAGES[this.stage].color,entry:0,reflectReady:!boss&&type%12===8,reflectSpent:false,aiming:false,windup:false,chargeDone:false};
+  const e={id:this.nextId++,x,y,baseX:x,baseY:y,r:boss?(mid?35:55):14+(type%3)*4,hp,maxHp:hp,type:type%12,age:0,shoot:boss?1.4:.8+this.rng()*1.6,boss,mid,secret,entered:!boss,motionBlend:0,name:secret?'真核・アカツキ零式':mid?STAGES[this.stage].midName:STAGES[this.stage].bossName,phase:0,parts:[],color:STAGES[this.stage].color,entry:0,reflectReady:!boss&&type%12===8,reflectSpent:false,aiming:false,windup:false,chargeDone:false};
   this.encounters.add(type%12);
   if(boss){if(!mid)this.bossesSeen.add(secret?6:this.stage);const count=mid?2:4;for(let i=0;i<count;i++)e.parts.push({x:x+(i%2?1:-1)*(i<2?48:78),y:y+(i<2?10:30),hp:hp*(mid?.12:.09),maxHp:hp*(mid?.12:.09),dead:false,dx:(i%2?1:-1)*(i<2?48:78),dy:i<2?10:30,r:14});this.boss=e;this.bullets.clear(0);this.hazards=[];this.emit('boss',x,130,{text:e.name});}
   this.enemies.push(e);return e;
@@ -58,12 +82,12 @@ export class Game {
   this.wave++;const count=2+this.wave%3+stageScaling(this.stage).extraWaveEnemies+(this.options.difficulty==='extreme'?1:0),type=(this.wave+(s.enemyOffset||this.stage*2))%12;
   if(!this.branch&&this.stats.graze>=50){this.branch=true;this.emit('warning',240,180,{text:'分岐：外周航路を捕捉'});}
   const route=this.options.mode==='daily'?1:this.stats.graze>=50?2:0;
-  for(let i=0;i<count;i++){const x=45+(i+.5)*(390/count);this.spawnEnemy((type+(i%2)+route)%12,x,-35-i*30);}
+  for(const [i,position] of wavePositions(count,this.wave,this.stage).entries())this.spawnEnemy((type+(i%2)+route)%12,position.x,position.y);
   this.waveCD=Math.max(1.1,(3.5-this.stage*.12)/this.difficulty.rate);
  }
  moveEnemies(dt){
   for(const e of this.enemies){if(e.hp<=0)continue;e.age+=dt;
-   if(e.boss){e.y=Math.min(e.mid?125:135,e.y+dt*55);e.x=240+Math.sin(e.age*.46)*(e.mid?105:65);const ratio=e.hp/e.maxHp;e.phase=ratio<.28?2:ratio<.65?1:0;for(const part of e.parts){part.x=e.x+part.dx;part.y=e.y+part.dy;}
+   if(e.boss){const baseY=e.mid?125:135,pose=bossPosition(this.stage,e.age,e.mid);e.x=pose.x;if(!e.entered){e.y=Math.min(baseY,e.y+dt*55);if(e.y>=baseY){e.y=baseY;e.entered=true;}}if(e.entered){e.motionBlend=Math.min(1,e.motionBlend+dt*2);e.y=baseY+(pose.y-baseY)*e.motionBlend;}const ratio=e.hp/e.maxHp;e.phase=ratio<.28?2:ratio<.65?1:0;for(const part of e.parts){part.x=e.x+part.dx;part.y=e.y+part.dy;}
     e.shoot-=dt;if(e.y>60&&e.shoot<=0){const lost=e.parts.filter(p=>p.dead).length;const kind=((STAGES[this.stage].patternOffset||0)+e.phase*5+Math.floor(e.age/9))%20;pattern(this,e,kind);if(e.phase>=1&&lost<2)pattern(this,{...e,x:e.x+45,y:e.y+12},(kind+3)%20);e.shoot=(e.mid?1.35:1.0)/(this.difficulty.rate*(1+e.phase*.16))*(1+lost*.12);}
     if(e.age>(e.mid?75:100)){e.shoot-=dt*.5;if(e.age>(e.mid?105:145)){this.emit('warning',240,200,{text:'敵機退避 · タイムアウト'});this.finish(false,'ボス制限時間');return;}}
    }else{

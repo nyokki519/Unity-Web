@@ -1,0 +1,130 @@
+{
+  "warning": 2.869600000083448,
+  "text": "\u8ecc\u9053\u6bbb\u30df\u30c9\u30ea",
+  "boss": {
+    "x": 261.40637331710684,
+    "y": 135
+  },
+  "player": {
+    "x": 240,
+    "y": 610
+  },
+  "viewport": [
+    414,
+    667
+  ],
+  "mobileViewports": [
+    {
+      "path": "docs/shooting/qa/formations-v1.4/boss-intro-warning-375x667.png",
+      "width": 375,
+      "overflow": false,
+      "buttons": [
+        {
+          "width": 57.828125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 57.84375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 57.828125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 57.84375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 57.828125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 57.828125,
+          "height": 50,
+          "bottom": 664.984375
+        }
+      ]
+    },
+    {
+      "path": "docs/shooting/qa/formations-v1.4/boss-intro-warning-390x667.png",
+      "width": 390,
+      "overflow": false,
+      "buttons": [
+        {
+          "width": 60.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 60.34375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 60.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 60.34375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 60.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 60.328125,
+          "height": 50,
+          "bottom": 664.984375
+        }
+      ]
+    },
+    {
+      "path": "docs/shooting/qa/formations-v1.4/boss-intro-warning-414x667.png",
+      "width": 414,
+      "overflow": false,
+      "buttons": [
+        {
+          "width": 64.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 64.34375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 64.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 64.34375,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 64.328125,
+          "height": 50,
+          "bottom": 664.984375
+        },
+        {
+          "width": 64.328125,
+          "height": 50,
+          "bottom": 664.984375
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

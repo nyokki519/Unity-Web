@@ -1,5 +1,5 @@
 // Gameplay revision; old replays are not interpreted using changed combat rules.
-export const GAME_VERSION='1.3.0';
+export const GAME_VERSION='1.4.0';
 export const UPGRADE_BALANCE=Object.freeze({powerPerLevel:.11,powerLatePerLevel:.025,rapidPerLevel:.12,rapidLatePerLevel:.04,auxInterval:.65,auxReferenceInterval:1.2,laserBase:3,laserPerLevel:2,missileBase:5,missilePerLevel:3,sideDamage:.08,ricochetInterval:.65,orbitInterval:.42});
 export const STAGE_SCALING=Object.freeze([
  {enemyHp:1,bossHp:1,extraWaveEnemies:0},

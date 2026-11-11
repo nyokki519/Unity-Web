@@ -50,7 +50,8 @@ function checkpointValid(c){return c&&c.version===1&&c.gameVersion===GAME_VERSIO
 export function saveCheckpoint(c,storage=defaultStorage()){
  try{if(!storage||!checkpointValid(c))return false;const raw=JSON.stringify(c);if(raw.length>MAX_CHECKPOINT_CHARS)return false;storage.setItem(CHECKPOINT,raw);return true;}catch{return false;}
 }
-export function loadCheckpoint(storage=defaultStorage()){
- try{if(!storage)return null;const raw=storage.getItem(CHECKPOINT);if(!raw)return null;const value=JSON.parse(raw);if(checkpointValid(value))return value;storage.removeItem(CHECKPOINT);return null;}catch{return null;}
+export function loadCheckpointState(storage=defaultStorage()){
+ try{if(!storage)return{checkpoint:null,retired:false};const raw=storage.getItem(CHECKPOINT);if(!raw)return{checkpoint:null,retired:false};const value=JSON.parse(raw);if(checkpointValid(value))return{checkpoint:value,retired:false};const retired=value?.version===1&&typeof value.gameVersion==='string'&&value.gameVersion!==GAME_VERSION;storage.removeItem(CHECKPOINT);return{checkpoint:null,retired};}catch{return{checkpoint:null,retired:false};}
 }
+export function loadCheckpoint(storage=defaultStorage()){return loadCheckpointState(storage).checkpoint;}
 export function clearCheckpoint(storage=defaultStorage()){try{storage?.removeItem(CHECKPOINT);return true;}catch{return false;}}

@@ -1,15 +1,16 @@
 export class BulletPool {
- constructor(capacity=8192){this.capacity=capacity;this.count=0;this.free=[];this.hitTargets=Array(capacity).fill(null);
+ constructor(capacity=8192){this.capacity=capacity;this.count=0;this.free=[];this.hitTargets=Array(capacity).fill(null);this.renderIndices=[];this.renderPosition=new Int32Array(capacity);this.renderPosition.fill(-1);
  for(const key of ['x','y','px','py','vx','vy','r','age','life','damage','turn','acceleration','splitAt'])this[key]=new Float32Array(capacity);
  for(const key of ['active','owner','grazed','homing','split','bounces'])this[key]=new Uint8Array(capacity);
  this.kind=new Int16Array(capacity);this.pierce=new Int16Array(capacity);this.lastHit=new Int32Array(capacity);
  for(let i=capacity-1;i>=0;i--)this.free.push(i);
  }
  add(x,y,vx,vy,opt={}){if(!this.free.length)return-1;const i=this.free.pop();this.count++;this.active[i]=1;this.hitTargets[i]=null;this.x[i]=this.px[i]=x;this.y[i]=this.py[i]=y;this.vx[i]=vx;this.vy[i]=vy;
+ this.renderPosition[i]=this.renderIndices.length;this.renderIndices.push(i);
  for(const k of ['age','grazed','lastHit'])this[k][i]=0;
  for(const[k,v]of Object.entries({r:4,life:9,damage:1,owner:0,kind:0,pierce:0,turn:0,acceleration:0,homing:0,split:0,splitAt:1.1,bounces:0}))this[k][i]=opt[k]??v;
  return i;}
- remove(i){if(this.active[i]){this.active[i]=0;this.hitTargets[i]=null;this.count--;this.free.push(i);}}
+ remove(i){if(this.active[i]){this.active[i]=0;const position=this.renderPosition[i],last=this.renderIndices.pop();if(position<this.renderIndices.length){this.renderIndices[position]=last;this.renderPosition[last]=position;}this.renderPosition[i]=-1;this.hitTargets[i]=null;this.count--;this.free.push(i);}}
  clear(owner){for(let i=0;i<this.capacity;i++)if(this.active[i]&&(owner===undefined||this.owner[i]===owner))this.remove(i);}
 }
 export function segmentDistance2(x,y,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,d=dx*dx+dy*dy,t=d?Math.max(0,Math.min(1,((x-ax)*dx+(y-ay)*dy)/d)):0;return(x-ax-dx*t)**2+(y-ay-dy*t)**2;}

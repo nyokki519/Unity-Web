@@ -1,0 +1,42 @@
+{
+  "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "softwareRenderer": "WebKit WebGL",
+  "results": [
+    {
+      "active": 64,
+      "capacity": 8192,
+      "repeats": 900,
+      "fullScanMedianMs": 8.600000023841858,
+      "bitsetMedianMs": 0.19999998807907104,
+      "speedup": 43,
+      "fullScanP95Ms": 39.5,
+      "bitsetP95Ms": 1.899999976158142
+    },
+    {
+      "active": 512,
+      "capacity": 8192,
+      "repeats": 900,
+      "fullScanMedianMs": 4.099999964237213,
+      "bitsetMedianMs": 0.30000001192092896,
+      "speedup": 13.67,
+      "fullScanP95Ms": 31.5,
+      "bitsetP95Ms": 3.5
+    },
+    {
+      "active": 2200,
+      "capacity": 8192,
+      "repeats": 900,
+      "fullScanMedianMs": 5.199999988079071,
+      "bitsetMedianMs": 1.899999976158142,
+      "speedup": 2.74,
+      "fullScanP95Ms": 27.299999952316284,
+      "bitsetP95Ms": 10.699999988079071
+    }
+  ],
+  "drawBullets2200": {
+    "calls": 80,
+    "medianMs": 28.299999952316284
+  },
+  "pageWidth": 390,
+  "errors": []
+}
