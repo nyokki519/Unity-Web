@@ -112,3 +112,10 @@ Request: substantially upgrade the 2D shooter, work for at least 120 minutes bef
 - Final mobile warning capture remained clean at widths 375, 390, and 414px; combat buttons measured 50px high, no horizontal overflow, and the player-aware warning stayed clear of the ship. The 390px software-browser active-list benchmark remained 2.65× faster than an 8,192-slot scan with 2,200 active projectiles; hardware-phone FPS remains unverified.
 - A transient smoke failure was in the analysis harness’s string match (`FORMATION_ENTRY_STAGGER` was referenced by name while the harness searched for the literal `30`). The matcher now uses the exact source expression and the fresh 30px contract smoke passed. No product runtime failure was observed.
 - Cumulative improvement time is estimated at roughly 125 active minutes before this QA phase; about 20 additional active minutes have been spent in final regression, sensitivity review, and browser evidence (CPU simulation wait and browser waits excluded). Estimated total active work is ~145 minutes, below the 180-minute cap. No production push/deploy yet.
+
+## 2026-11-11 release verification, 05:17–05:23 UTC
+
+- Commit `4506860` was pushed to `origin/main` after the earlier local checkpoint `b98fe7b`.
+- Render served the new `shooting/index.html` with the rotate-guide markup and `core.js` with `FORMATION_ENTRY_STAGGER=30`; `/api/health` returned `{"status":"ok","product":"UNITY MIX"}`.
+- Against the public URL, `test/shooting_browser.py` passed workshop/persistence/controls/exact replay, and `test/shooting-orientation_browser.py` passed the rotated-phone pause/focus/resume flow. No physical iPhone/Safari test was available.
+- Estimated total active work is approximately 152 minutes: ~125 improvement minutes before final QA, about 20 QA minutes, and about 7 release/public smoke-test minutes. CPU-only simulation and browser wait time are excluded. The 180-minute cap was not exceeded.
