@@ -9,7 +9,7 @@ test('the offline shell can install from live HTTP assets without requesting ret
  try{
   const base=`http://127.0.0.1:${app.server.address().port}`,handlers={},requested=[];let installed=false,pending;
   const source=await readFile(new URL('../public/sw.js',import.meta.url),'utf8');
-  const appSource=await readFile(new URL('../public/js/app.js',import.meta.url),'utf8');assert.match(source,/const CACHE='unity-mix-shell-v61'/);assert.match(appSource,/register\('\/sw\.js\?v=61'/,'the registration URL and cache revision stay aligned');
+  const appSource=await readFile(new URL('../public/js/app.js',import.meta.url),'utf8');assert.match(source,/const CACHE='unity-mix-shell-v62'/);assert.match(appSource,/register\('\/sw\.js\?v=62'/,'the registration URL and cache revision stay aligned');
   vm.runInNewContext(source,{self:{addEventListener:(name,fn)=>{handlers[name]=fn;},skipWaiting:async()=>{installed=true;}},Request:class{constructor(path,options){return new Request(new URL(path,base),options);}},caches:{open:async()=>({addAll:async(requests)=>{for(const request of requests){requested.push(request.url);const response=await fetch(request);assert.equal(response.status,200,request.url);}}})}});
   handlers.install({waitUntil:p=>{pending=p;}});await pending;
   assert.equal(installed,true);assert.ok(requested.length>100);assert.ok(requested.every(url=>!url.includes('/mechanical/')));

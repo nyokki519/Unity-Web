@@ -4,7 +4,7 @@ const copy=value=>value===undefined?undefined:structuredClone(value);
 const fields=(value,keys)=>Object.fromEntries(keys.filter(key=>['string','number','boolean'].includes(typeof value?.[key])).map(key=>[key,value[key]]));
 const publicResult=result=>{
   if(!result)return null;
-  const out=fields(result,['type','title','reason','winner','loser','han','fu','chankan']);
+  const out=fields(result,['type','title','reason','winner','loser','winType','han','fu','chankan']);
   for(const key of ['winners','deltas','tenpai'])if(Array.isArray(result[key]))out[key]=result[key].filter(v=>typeof v==='number');
   if(Array.isArray(result.yaku))out.yaku=result.yaku.map(y=>fields(y,['id','name','han','yakuman']));
   if(Array.isArray(result.rankings))out.rankings=result.rankings.map(r=>fields(r,['seat','rank','name','points','uma']));

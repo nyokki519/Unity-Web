@@ -37,6 +37,50 @@ test('rate limits commands without mutating room and rejects missing action IDs/
 
 test('dedicated SQLite namespace recovers sessions and removes expired rooms on restart and tick',async()=>{const[{MahjongService},{MahjongStore}]=await load();const dir=mkdtempSync(join(tmpdir(),'mahjong-store-')),file=join(dir,'rooms.sqlite');let store=new MahjongStore(file);let now=100;let service=new MahjongService(store,{engine,now:()=>now,roomTtlMs:500});const ss=four(service),s=ss[0],room=start(service,ss);const request={action:'discard',tile:'draw-0',actionId:'persist-once',expectedRevision:room.revision};assert.equal(service.command(s.code,0,request).ok,true);const snapshot=structuredClone(room.match);store.db.exec("CREATE TABLE rooms(code TEXT PRIMARY KEY,data TEXT); INSERT INTO rooms VALUES('legacy','untouched')");store.close();store=new MahjongStore(file);service=new MahjongService(store,{engine,now:()=>now,roomTtlMs:500});assert.equal(service.authenticate(s.code,s.token).seat,0);assert.deepEqual(service.get(s.code).match,snapshot);assert.equal(service.command(s.code,0,request).error,'DUPLICATE_ACTION');assert.equal(store.db.prepare('SELECT data FROM rooms').get().data,'untouched');now=601;service.tick();assert.throws(()=>service.authenticate(s.code,s.token),/ROOM_NOT_FOUND/);assert.equal(store.load(now).length,0);store.close();store=new MahjongStore(file);service=new MahjongService(store,{engine,now:()=>now});assert.equal(service.rooms.size,0);store.close();rmSync(dir,{recursive:true,force:true});});
 
+test('restart preserves a lobby with vacated seats and lets replacements join and start',async t=>{
+ const[{MahjongService},{MahjongStore}]=await load();const dir=mkdtempSync(join(tmpdir(),'mahjong-vacated-')),file=join(dir,'rooms.sqlite');
+ let store=new MahjongStore(file);let service=new MahjongService(store,{engine,now:()=>1000});
+ const ss=four(service);for(const s of ss)service.connect(s.code,s.seat);
+ assert.equal(command(service,ss[0],'leave').ok,true);assert.equal(command(service,ss[2],'leave').ok,true);
+ store.close();store=new MahjongStore(file);t.after(()=>{store.close();rmSync(dir,{recursive:true,force:true});});
+ service=new MahjongService(store,{engine,now:()=>1000});const room=service.get(ss[1].code);
+ assert.equal(room.hostSeat,1);assert.deepEqual(room.players.map(p=>p?.connected??null),[null,false,null,false]);
+ assert.equal(service.authenticate(ss[1].code,ss[1].token).seat,1);
+ assert.throws(()=>service.authenticate(ss[0].code,ss[0].token),/BAD_SESSION/);
+ const replacements=[service.joinRoom(room.code,'New A'),service.joinRoom(room.code,'New C')];assert.deepEqual(replacements.map(s=>s.seat),[0,2]);
+ for(const s of [ss[1],ss[3],...replacements])assert.equal(command(service,s,'ready',{ready:true}).ok,true);
+ assert.equal(command(service,ss[1],'start').ok,true);assert.equal(room.match.players.length,4);
+});
+
+test('successful command dedupe stays bounded while recent retries and old revisions remain safe',async t=>{
+ const[{MahjongService},{MahjongStore}]=await load();const dir=mkdtempSync(join(tmpdir(),'mahjong-id-window-')),file=join(dir,'rooms.sqlite');
+ const store=new MahjongStore(file),service=new MahjongService(store,{engine,now:()=>1000,commandLimit:400}),session=service.createRoom('Retry test');
+ t.after(()=>{store.close();rmSync(dir,{recursive:true,force:true});});
+ const oldest={action:'ready',ready:true,actionId:'retry-0',expectedRevision:service.get(session.code).revision};
+ for(let i=0;i<300;i++){
+  const room=service.get(session.code),request=i===0?oldest:{action:'ready',ready:i%2===0,actionId:`retry-${i}`,expectedRevision:room.revision};
+  assert.equal(service.command(session.code,session.seat,request).ok,true);
+ }
+ const room=service.get(session.code),saved=store.load(1000).find(row=>row.code===session.code);
+ assert.equal(room.actionIds[session.seat].length,256,'only the most recent successful action IDs are retained');
+ assert.equal(saved.actionIds[session.seat].length,256,'the persisted idempotency window remains bounded too');
+ const newest={action:'ready',ready:false,actionId:'retry-299',expectedRevision:room.revision};
+ assert.equal(service.command(session.code,session.seat,newest).error,'DUPLICATE_ACTION','retained retries remain idempotent');
+ assert.equal(service.command(session.code,session.seat,oldest).error,'STALE_STATE','an evicted action cannot replay against an older revision');
+ assert.equal(service.get(session.code).actionIds[session.seat].length,256);
+});
+
+test('startup migrates legacy unbounded action IDs before exposing rooms or retaining them in SQLite',async t=>{
+ const[{MahjongService},{MahjongStore}]=await load();const store=new MahjongStore(':memory:'),first=new MahjongService(store,{engine,now:()=>1000});
+ const session=first.createRoom('Legacy retry history'),room=first.get(session.code);
+ room.actionIds[session.seat]=Array.from({length:1200},(_,index)=>`legacy-${index}`);store.save(room);
+ const resumed=new MahjongService(store,{engine,now:()=>1000});
+ assert.equal(resumed.get(session.code).actionIds[session.seat].length,256);
+ assert.equal(store.load(1000)[0].actionIds[session.seat].length,256,'the migrated history is persisted as well as bounded in memory');
+ assert.equal(resumed.command(session.code,session.seat,{action:'ready',ready:true,actionId:'legacy-1199',expectedRevision:room.revision}).error,'DUPLICATE_ACTION');
+ store.close();
+});
+
 test('any seat advances hand result and eight-second auto-advance resolves once',async t=>{const transitionEngine={...engine,advanceTurn:(m,now)=>({...m,phase:'MATCH_RESULT',revision:m.revision+1,result:{title:'complete'},deadlineAt:null})};const{store,service,clock}=await setup({engine:transitionEngine});t.after(()=>store.close());const ss=four(service),room=start(service,ss);room.match.phase='HAND_RESULT';room.match.result={type:'draw',at:clock.now};room.match.deadlineAt=null;assert.equal(command(service,ss[2],'next').ok,true);assert.equal(room.match.phase,'MATCH_RESULT');const other=four(service),r=start(service,other);r.match.phase='HAND_RESULT';r.match.result={type:'draw',at:clock.now};r.match.deadlineAt=null;clock.now+=7999;service.tick();assert.equal(r.match.phase,'HAND_RESULT');clock.now++;service.tick();assert.equal(r.match.phase,'MATCH_RESULT');const revision=r.revision;service.tick();assert.equal(r.revision,revision);});
 
 test('privacy allowlist holds in reaction, hand result and match result including nested rankings',async t=>{const{store,service}=await setup();t.after(()=>store.close());const ss=four(service),room=start(service,ss);for(const phase of ['REACTION','HAND_RESULT','MATCH_RESULT']){room.match.phase=phase;room.match.result={type:'match',rankings:[{seat:1,rank:1,points:26000,name:'B',hand:['NESTED_SECRET']}],wall:['SECRET_WALL']};for(const s of ss){const state=service.view(room,s.seat),json=JSON.stringify(state);assert.equal(state.players.filter(p=>p.hand).length,1);for(const other of ss.filter(x=>x.seat!==s.seat))assert.ok(!json.includes(`secret-${other.seat}`));assert.ok(!json.includes('NESTED_SECRET'));assert.ok(!json.includes('SECRET_WALL'));}}});

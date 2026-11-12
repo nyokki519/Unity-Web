@@ -195,6 +195,13 @@ test('abortive draws preserve points and nagashi mangan uses mangan tsumo paymen
   assert.deepEqual(calculatePayments({type:'abortive'}).deltas,[0,0,0,0]);
   assert.deepEqual(calculatePayments({type:'nagashi',winner:1,dealer:0,honba:1}).deltas,[-4100,8300,-2100,-2100]);
 });
+
+test('multiple nagashi mangan winners exchange mangan payments and award the riichi pot once',()=>{
+ const result=calculatePayments({type:'nagashi',winner:1,winners:[1,2],dealer:0,winType:'tsumo',honba:1,riichiPot:1000});
+ assert.deepEqual(result.deltas,[-8200,7200,6200,-4200]);
+ assert.deepEqual(result.honbaDelta,[-200,200,200,-200]);
+ assert.equal(result.riichiPotWinner,1);assert.equal(result.deltas.reduce((sum,value)=>sum+value,0),1000);
+});
 test('invalid scoring contexts are rejected instead of creating NaN or fractional deltas', () => {
   assert.throws(() => calculatePayments({winner:1,loser:1,dealer:0,winType:'ron',han:1,fu:30}), /invalid/i);
   assert.throws(() => calculatePayments({winner:1,loser:2,dealer:0,winType:'ron',han:0,fu:30}), /invalid/i);

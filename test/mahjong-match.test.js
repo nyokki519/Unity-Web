@@ -109,6 +109,17 @@ test('four kans abort only when more than one player declared them',()=>{
  }
 });
 
+test('a fifth kan cannot be declared after four kans by the same player',()=>{
+ let match=createMatch({players,seed:5151,now:0});match.kanCount=4;match.kanOwners=[0,0,0,0];
+ match.players[0].melds=[0,1,2,3].map(type=>({type:'kan',tiles:Array(4).fill(type),open:false}));
+ match.phase='DISCARD';match.activeSeat=1;match.players[1].hand=[27,27,27,27,0,1,2,9,10,11,18,19,20,21];match.drawnTile=21;
+ assert.equal(legalActions(match,1).some(action=>action.type==='ankan'),false);
+ match.players[1].melds=[{type:'pon',tiles:[28,28,28],open:true}];match.players[1].hand=[28,0,1,2,9,10,11,18,19,20,23,24,25,26];
+ assert.equal(legalActions(match,1).some(action=>action.type==='kakan'),false);
+ match.phase='REACTION';match.activeSeat=null;match.reactionSeats=[1];match.responses={};match.lastDiscard={tile:29,seat:0,riverIndex:0};match.players[0].discards=[{tile:29,called:false}];match.players[1].melds=[];match.players[1].hand=[29,29,29,0,1,2,9,10,11,18,19,20,21];
+ assert.equal(legalActions(match,1).some(action=>action.type==='kan'),false);
+});
+
 test('kan actions are unavailable when the live wall is empty',()=>{
  let match=createMatch({players,seed:519,now:0});match.players[0].hand=[4,4,4,4,0,1,2,9,10,11,18,19,20,21];match.drawnTile=21;match.liveWall=[];match.revision++;
  assert.equal(legalActions(match,0).some(action=>['ankan','kakan'].includes(action.type)),false,'a concealed or added kan needs a live-wall replacement draw');
@@ -121,4 +132,206 @@ test('east-only match has a 12-hand ceiling even when the dealer keeps winning',
  match=advanceTurn(match,1);assert.equal(match.phase,'MATCH_RESULT');assert.equal(match.handsPlayed,MAX_HANDS);assert.equal(match.result.reason,'hand-limit');assert.match(match.result.title,/最大12局/);assert.equal(match.result.rankings.length,4);
  match=createMatch({players,seed:522,now:0});match.phase='HAND_RESULT';delete match.handsPlayed;match.handNumber=4;match.history=Array.from({length:MAX_HANDS-1},()=>({type:'exhaustive'}));match.result={type:'win',winner:match.dealer};
  match=advanceTurn(match,1);assert.equal(match.handsPlayed,MAX_HANDS,'an older saved match derives played hands from its history');assert.equal(match.phase,'MATCH_RESULT');
+});
+
+test('new hands clear riichi and furiten restrictions so a former riichi seat may choose any discard',()=>{
+ let match=createMatch({players,seed:601,now:0});
+ for(const player of match.players)Object.assign(player,{riichi:true,doubleRiichi:true,ippatsu:true,furiten:true,temporaryFuriten:true,riichiFuriten:true});
+ match.phase='HAND_RESULT';match.result={type:'abortive',reason:'four-riichi'};match.riichiDeclarations=4;
+ match=advanceTurn(match,1);
+ assert.equal(match.phase,'DISCARD');
+ for(const player of match.players)for(const flag of ['riichi','doubleRiichi','ippatsu','furiten','temporaryFuriten','riichiFuriten'])assert.equal(player[flag],false,`${flag} belongs to the previous hand`);
+ assert.equal(match.riichiDeclarations,0);
+ assert.deepEqual(new Set(legalActions(match,match.dealer).filter(action=>action.type==='discard').map(action=>action.tile)),new Set(match.players[match.dealer].hand));
+});
+
+test('a previous hand cannot contribute kan owners to the next hand four-kan abort check',()=>{
+ let match=createMatch({players,seed:602,now:0});
+ match.kanOwners=[1,2,1,2];match.kanCount=4;match.phase='HAND_RESULT';match.result={type:'abortive',reason:'four-kans'};
+ match=advanceTurn(match,1);
+ assert.equal(match.kanCount,0);
+ assert.deepEqual(match.kanOwners,[]);
+ match.players[0].melds=[0,1,2].map(type=>({type:'kan',tiles:Array(4).fill(type),open:false}));match.players[0].hand=[3,4,4,4,4];match.drawnTile=3;match.kanCount=3;match.kanOwners.push(0,0,0);
+ const action=legalActions(match,0).find(candidate=>candidate.type==='ankan');assert.ok(action);
+ match=applyAction(match,0,action,match.revision,2);
+ assert.equal(match.phase,'DISCARD','four kans by the same player in this hand do not abort');
+ assert.deepEqual(match.kanOwners,[0,0,0,0]);
+});
+
+test('a kan robbed by triple ron leaves no pending declaration in the next hand',()=>{
+ let match=createMatch({players,seed:603,now:0});
+ match.pendingKan={kind:'kakan',seat:0,tile:0,meldIndex:0};match.phase='HAND_RESULT';match.result={type:'abortive',reason:'triple-ron'};
+ match=advanceTurn(match,1);
+ assert.equal(match.pendingKan,null);
+});
+
+test('a later seat can declare double-riichi on its first discard after uninterrupted earlier discards',()=>{
+ let match=createMatch({players,seed:604,now:0});
+ match.activeSeat=2;match.players[0].discards=[{tile:27,called:false}];match.players[1].discards=[{tile:28,called:false}];
+ match.players[2].hand=[0,1,2,3,4,5,10,11,12,23,24,25,13,33];match.drawnTile=33;
+ assert.ok(legalActions(match,2).some(action=>action.type==='riichi_discard'&&action.tile===33));
+ match=applyAction(match,2,{type:'riichi_discard',tile:33},match.revision,1);
+ assert.equal(match.players[2].doubleRiichi,true);
+});
+
+test('a previous own discard or any earlier call prevents double-riichi',()=>{
+ for(const interruption of ['own-discard','open-call','concealed-kan']){
+  let match=createMatch({players,seed:605,now:0});match.activeSeat=2;
+  match.players[2].hand=[0,1,2,3,4,5,10,11,12,23,24,25,13,33];match.drawnTile=33;
+  if(interruption==='own-discard')match.players[2].discards=[{tile:28,called:false}];
+  else match.players[1].melds=[interruption==='open-call'?{type:'pon',tiles:[27,27,27],open:true}:{type:'kan',tiles:[27,27,27,27],open:false}];
+  match=applyAction(match,2,{type:'riichi_discard',tile:33},match.revision,1);
+  assert.equal(match.players[2].riichi,true);
+  assert.equal(match.players[2].doubleRiichi,false,interruption);
+ }
+});
+
+test('exhaustive draws increment honba even when a noten dealer rotates',()=>{
+ for(const [tenpai,wantDealer,wantHand] of [[[1],1,2],[[0],0,1]]){
+  let match=createMatch({players,seed:606,now:0});match.honba=2;match.phase='HAND_RESULT';match.result={type:'exhaustive',tenpai};
+  match=advanceTurn(match,1);
+  assert.equal(match.dealer,wantDealer);assert.equal(match.handNumber,wantHand);assert.equal(match.honba,3);
+ }
+ let match=createMatch({players,seed:607,now:0});match.honba=2;match.phase='HAND_RESULT';match.result={type:'win',winner:1};
+ match=advanceTurn(match,1);assert.equal(match.honba,0,'a nondealer win still resets honba');
+});
+
+test('consecutive dealer continuations use unique walls while replaying the same seed remains deterministic',()=>{
+ const sequences=[];
+ for(let replay=0;replay<2;replay++){
+  let match=createMatch({players,seed:'continuation-regression',now:0});const walls=[];
+  for(let hand=0;hand<3;hand++){
+   match.phase='HAND_RESULT';match.result={type:'abortive',reason:'nine-terminals'};match=advanceTurn(match,hand+1);
+   assert.equal(match.dealer,0);assert.equal(match.handNumber,1);
+   walls.push({hands:match.players.map(player=>player.hand),liveWall:match.liveWall,deadWall:match.deadWall});
+  }
+  assert.notDeepEqual(walls[0],walls[1],'the second and third dealt hands must not repeat a wall');
+  assert.notDeepEqual(walls[1],walls[2]);sequences.push(walls);
+ }
+ assert.deepEqual(sequences[0],sequences[1]);
+});
+
+function fourRiichiFixture(ronOnFourth=false){
+ const match=createMatch({players,seed:701,now:0});
+ const waiting=[0,1,2,3,4,5,9,10,11,18,19,20];
+ for(let seat=0;seat<4;seat++)match.players[seat].hand=[...waiting,ronOnFourth&&seat===0?32:27];
+ match.players[0].hand.push(33);match.drawnTile=33;match.liveWall=[33,33,ronOnFourth?32:33,30];
+ return match;
+}
+
+function firstWindDiscardFixture(wind=27){
+ const match=createMatch({players,seed:702,now:0});
+ const hand=[0,2,4,6,8,9,11,13,15,17,18,20,22];
+ for(const player of match.players)player.hand=[...hand];
+ match.players[0].hand.push(wind);match.drawnTile=wind;match.liveWall=[wind,wind,wind,31];
+ return match;
+}
+
+test('four riichi abort only after all declaration discards resolve without ron and carry all sticks',()=>{
+ let match=fourRiichiFixture();
+ for(let seat=0;seat<4;seat++){
+  assert.equal(match.activeSeat,seat);
+  match=applyAction(match,seat,{type:'riichi_discard',tile:33},match.revision,seat+1);
+  if(seat<3)assert.equal(match.phase,'DISCARD','three declarations do not abort');
+ }
+ assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.type,'abortive');assert.equal(match.result.reason,'four-riichi');
+ assert.equal(match.riichiPot,4000);assert.deepEqual(match.players.map(player=>player.points),[24000,24000,24000,24000]);
+ assert.equal(match.liveWall.length,1,'the hand ends before the next draw');
+ match=advanceTurn(match,5);assert.equal(match.dealer,0);assert.equal(match.honba,1);assert.equal(match.riichiPot,4000);
+});
+
+test('ron on the fourth riichi declaration wins before the abortive-draw check',()=>{
+ let match=fourRiichiFixture(true);
+ for(let seat=0;seat<4;seat++)match=applyAction(match,seat,{type:'riichi_discard',tile:seat===3?32:33},match.revision,seat+1);
+ assert.equal(match.phase,'REACTION');assert.equal(match.result,null);
+ assert.ok(legalActions(match,0).some(action=>action.type==='ron'));
+ match=applyAction(match,0,{type:'ron'},match.revision,5);
+ assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.type,'win');assert.equal(match.result.winner,0);assert.equal(match.result.winType,'ron');
+});
+
+test('passing ron on the fourth riichi declaration then resolves four-riichi',()=>{
+ let match=fourRiichiFixture(true);
+ for(let seat=0;seat<4;seat++)match=applyAction(match,seat,{type:'riichi_discard',tile:seat===3?32:33},match.revision,seat+1);
+ assert.equal(match.phase,'REACTION');
+ match=applyAction(match,0,{type:'pass'},match.revision,5);
+ assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.reason,'four-riichi');assert.equal(match.riichiPot,4000);
+});
+
+test('four uninterrupted first identical wind discards abort before the next draw',()=>{
+ for(const wind of [27,28,29,30]){
+  let match=firstWindDiscardFixture(wind);
+  for(let seat=0;seat<4;seat++){
+   match=applyAction(match,seat,{type:'discard',tile:wind},match.revision,seat+1);
+   if(seat<3)assert.equal(match.phase,'DISCARD');
+  }
+  assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.type,'abortive');assert.equal(match.result.reason,'four-winds');
+  assert.equal(match.liveWall.length,1);assert.deepEqual(match.players.map(player=>player.points),[25000,25000,25000,25000]);
+ }
+});
+
+test('dragons, differing winds and a second discard cannot trigger four-winds',()=>{
+ for(const invalid of ['dragon','different-wind','second-discard']){
+  const wind=invalid==='dragon'?31:27;let match=firstWindDiscardFixture(wind);
+  if(invalid==='different-wind')match.players[0].hand[match.players[0].hand.length-1]=28;
+  if(invalid==='second-discard')match.players[0].discards=[{tile:27,called:false}];
+  for(let seat=0;seat<4;seat++)match=applyAction(match,seat,{type:'discard',tile:invalid==='different-wind'&&seat===0?28:wind},match.revision,seat+1);
+  assert.equal(match.phase,'DISCARD',invalid);assert.equal(match.result,null,invalid);
+ }
+});
+
+test('nine-terminals abort is available on an uninterrupted first draw and ends the hand without payment',()=>{
+ let match=createMatch({players,seed:808,now:0});
+ match.activeSeat=1;match.players[0].discards=[{tile:27,called:false}];
+ match.players[1].hand=[0,8,9,17,18,26,27,28,29,30,31,32,33,1];match.drawnTile=1;match.revision++;
+ assert.ok(legalActions(match,1).some(action=>action.type==='nine_terminals'));
+ match=applyAction(match,1,{type:'nine_terminals'},match.revision,1);
+ assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.type,'abortive');assert.equal(match.result.reason,'nine-terminals');
+ assert.deepEqual(match.players.map(player=>player.points),[25000,25000,25000,25000]);
+});
+
+test('nine-terminals requires nine distinct terminal or honor types and an uncalled closed first turn',()=>{
+ for(const invalid of ['eight-types','own-discard','call']){
+  const match=createMatch({players,seed:809,now:0});match.players[0].hand=[0,8,9,17,18,26,27,28,29,30,31,32,1,2];match.drawnTile=2;
+  if(invalid==='eight-types')match.players[0].hand=[0,8,9,17,18,26,27,28,1,2,3,4,5,6];
+  if(invalid==='own-discard')match.players[0].discards=[{tile:27,called:false}];
+  if(invalid==='call')match.players[2].melds=[{type:'pon',tiles:[31,31,31],open:true}];
+  assert.equal(legalActions(match,0).some(action=>action.type==='nine_terminals'),false,invalid);
+  assert.throws(()=>applyAction(match,0,{type:'nine_terminals'},match.revision,1),/illegal/i,invalid);
+ }
+});
+
+function lastDiscardNagashiFixture(rivers){
+ const match=createMatch({players,seed:810,now:0});match.activeSeat=3;match.liveWall=[];match.players.forEach((player,seat)=>{player.discards=(rivers[seat]||[]).map(tile=>({tile,called:false}));});
+ for(const player of match.players.slice(0,3))player.hand=[0,1,2,3,4,5,6,7,8,9,10,11,12];
+ match.players[3].hand=[0,1,2,3,4,5,6,7,8,9,10,11,12,27];match.drawnTile=27;match.revision++;return match;
+}
+
+test('exhaustive draw recognizes one or multiple uncalled terminal-only rivers as nagashi mangan',()=>{
+ let match=lastDiscardNagashiFixture([[27],[28],[4],[4]]);
+ match=applyAction(match,3,{type:'discard',tile:27},match.revision,1);
+ assert.equal(match.phase,'HAND_RESULT');assert.equal(match.result.type,'nagashi');assert.deepEqual(match.result.winners,[0,1]);
+ assert.equal(match.players.reduce((sum,player)=>sum+player.points,0),100000);
+ assert.ok(match.result.deltas.some(delta=>delta>0));
+});
+
+test('nagashi mangan requires no call anywhere, only uncalled terminal or honor discards, and a closed hand',()=>{
+ for(const invalid of ['called','simple','meld','other-meld']){
+  let match=lastDiscardNagashiFixture([[27],[4],[4],[4]]);
+  if(invalid==='called')match.players[0].discards[0].called=true;
+  if(invalid==='simple')match.players[0].discards[0].tile=4;
+  if(invalid==='meld'||invalid==='other-meld')match.players[invalid==='meld'?0:2].melds=[{type:'kan',tiles:[31,31,31,31],open:invalid==='other-meld'}];
+  match=applyAction(match,3,{type:'discard',tile:27},match.revision,1);
+  assert.equal(match.result.type,'exhaustive',invalid);
+ }
+});
+
+test('a called discard or any earlier meld interrupts four-winds',()=>{
+ for(const interruption of ['called-discard','open-meld','concealed-kan']){
+  let match=firstWindDiscardFixture();
+  for(let seat=0;seat<3;seat++)match=applyAction(match,seat,{type:'discard',tile:27},match.revision,seat+1);
+  if(interruption==='called-discard')match.players[0].discards[0].called=true;
+  else {match.players[0].melds=[interruption==='open-meld'?{type:'chi',tiles:[0,1,2],open:true}:{type:'kan',tiles:[31,31,31,31],open:false}];match.players[0].hand=match.players[0].hand.slice(0,10);}
+  match=applyAction(match,3,{type:'discard',tile:27},match.revision,4);
+  assert.equal(match.phase,'DISCARD',interruption);assert.equal(match.result,null,interruption);
+ }
 });

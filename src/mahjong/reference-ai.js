@@ -66,6 +66,12 @@ function decreaseVisible(ai, tile) {
   const code=tileCode(tile);if(code)ai._suanpai.decrease(code);
 }
 
+function markDiscardSafe(ai, wind, tile) {
+  const code=tileCode(tile);if(!code)return;
+  const rank=Number(code[1])||5;
+  ai._suanpai._dapai[wind][`${code[0]}${rank}`]=true;
+}
+
 /**
  * Ask the pinned Kobalab discard evaluator, then translate its tile back to an
  * exact legal Unity action. Only the acting hand and already-public tiles are
@@ -95,8 +101,15 @@ function makeAdvisor(match, seat) {
   for(let index=1;index<dora.length;index++)decreaseVisible(advisor,dora[index]);
   for(let wind=0;wind<4;wind++){
     const opponent=windPlayers[wind];
-    if(wind!==selfWind&&opponent?.riichi)advisor._model.shoupai[wind]._lizhi=true;
-    for(const discard of opponent?.discards||[])if(!discard?.called)decreaseVisible(advisor,discard.tile??discard);
+    if(wind!==selfWind&&opponent?.riichi){
+      advisor._model.shoupai[wind]._lizhi=true;
+      advisor._suanpai._lizhi[wind]=true;
+    }
+    for(const discard of opponent?.discards||[]){
+      const tile=discard.tile??discard;
+      if(!discard?.called)decreaseVisible(advisor,tile);
+      if(wind!==selfWind)markDiscardSafe(advisor,wind,tile);
+    }
     if(wind!==selfWind)for(const meld of opponent?.melds||[])for(const tile of meld.tiles||[])decreaseVisible(advisor,tile);
   }
   return {advisor,selfWind,seatForWind};
@@ -130,15 +143,18 @@ export function referenceReactionAction(match, seat, actions) {
     const {advisor,selfWind,seatForWind}=setup;
     const sourceWind=(match.lastDiscard.seat-match.dealer+4)%4;
     advisor._model.lunban=sourceWind;
-    const direction=['','+','=','-'][(4+sourceWind-selfWind)%4];
     const source=tileCode(match.lastDiscard.tile);if(!source)return null;
-    const recommendation=advisor.select_fulou(source+direction);
+    const recommendation=advisor.select_fulou({l:sourceWind,p:source});
     if(!recommendation)return actions.find(action=>action.type==='pass')||null;
-    const matchResult=recommendation.match(/^([mpsz])([0-9]+)([+\-=])$/);if(!matchResult)return null;
-    const suit={m:0,p:1,s:2,z:3}[matchResult[1]],digits=[...matchResult[2]];
+    const matchResult=recommendation.match(/^([mpsz])((?:\d[+\-=]?)+)$/);if(!matchResult)return null;
+    const suit={m:0,p:1,s:2,z:3}[matchResult[1]],body=matchResult[2],digits=body.match(/\d/g)||[];
     const referenceTiles=digits.map(value=>{const rank=Number(value);return suit<3?rank===0?[34,35,36][suit]:suit*9+rank-1:27+rank-1;});
     const tileType=tile=>tile>=34?[4,13,22][tile-34]:tile;
-    let sourceIndex=referenceTiles.indexOf(match.lastDiscard.tile);
+    const markerIndex=body.search(/[+\-=]/);
+    let sourceIndex=markerIndex<0?-1:body.slice(0,markerIndex).match(/\d/g)?.length-1;
+    if(!Number.isInteger(sourceIndex)||sourceIndex<0)sourceIndex=-1;
+    if(sourceIndex>=0&&tileType(referenceTiles[sourceIndex])!==tileType(match.lastDiscard.tile))sourceIndex=-1;
+    if(sourceIndex<0)sourceIndex=referenceTiles.indexOf(match.lastDiscard.tile);
     if(sourceIndex<0)sourceIndex=referenceTiles.findIndex(tile=>tileType(tile)===tileType(match.lastDiscard.tile));
     if(sourceIndex<0)return null;referenceTiles.splice(sourceIndex,1);
     const recommendationType=digits.length===4?'kan':new Set(digits).size===1?'pon':'chi';

@@ -1,0 +1,1633 @@
+{
+  "generatedAt": "2026-11-12T15:09:37.616Z",
+  "nodeVersion": "v24.19.0",
+  "sourceSHA256": {
+    "match.js": "84738c0dadc285f42a38472fbf8e543c87959e154b9d3ca590690a7064f0a908",
+    "ai.js": "91855ea5b38f70c7cb14f12c335a86d28684991f348d72d4961059b91d0cc6d4",
+    "reference-ai.js": "125345b0e2f718927f6d3441a07980eca4a674e9aaafe97f437e22112c4edd3c",
+    "hand.js": "b0550b27f1e4e5f81d170825a725d0a42f558dd0504503348abe8220fb5c0b23",
+    "score.js": "7a7b7838138d5ebbbbe73f92683a7ccbbfcea7b15f0441d206bdb1562b70ab07",
+    "yaku.js": "695c013b577909e0bc6a575e193cb42ec5530979865ec01f7d89632882d85156",
+    "tiles.js": "b0956781bb60c0ae0faf2d74d67586386f8046caf815d7bfafb2e7b47ef78fe6",
+    "harness": "2b126c6361c8c3a2b96b4a6705ad51cbd1a9eb01aad31c56067174db2b9bccc7",
+    "package-lock.json": "6de3e509aad9d2e43786eb84d686092e78624055142abcd0f97c9f11104debac"
+  },
+  "method": "All four existing character IDs rotate one seat per match. normalDraws includes the opening dealer draw and excludes kan replacement draws. Runtime includes assertions and instrumentation, not rendering or network transport.",
+  "seed": "followup-rules-20261112",
+  "maxSteps": 12000,
+  "matches": 10,
+  "terminatedMatches": 10,
+  "hands": 60,
+  "transitions": 4132,
+  "checks": {
+    "legalActions": 4072,
+    "revisions": 4132,
+    "pointConservation": 4142
+  },
+  "handOutcomes": {
+    "win": 39,
+    "exhaustive": 19,
+    "abortive": 2,
+    "nagashi": 0
+  },
+  "actionCounts": {
+    "discard": 3210,
+    "pass": 635,
+    "chi": 56,
+    "riichi_discard": 65,
+    "tsumo": 18,
+    "pon": 66,
+    "ron": 21,
+    "nine_terminals": 1
+  },
+  "yakuCoverage": {
+    "riichi": 32,
+    "menzen-tsumo": 15,
+    "aka-dora": 16,
+    "dora": 12,
+    "ura-dora": 12,
+    "yakuhai-dragon-31": 3,
+    "chiitoitsu": 1,
+    "ippatsu": 9,
+    "tanyao": 6,
+    "haitei": 1,
+    "pinfu": 7,
+    "houtei": 2,
+    "sanankou": 1,
+    "yakuhai-round": 1,
+    "iipeikou": 1,
+    "yakuhai-seat": 1
+  },
+  "averageHandLength": {
+    "actions": 67.86666666666666,
+    "discards": 54.583333333333336,
+    "normalDraws": 52.88333333333333
+  },
+  "bySeat": [
+    {
+      "seat": 0,
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 9,
+      "firstPlaces": 0,
+      "winRatePerHand": 0.15,
+      "firstPlaceRate": 0
+    },
+    {
+      "seat": 1,
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 14,
+      "firstPlaces": 6,
+      "winRatePerHand": 0.23333333333333334,
+      "firstPlaceRate": 0.6
+    },
+    {
+      "seat": 2,
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 6,
+      "firstPlaces": 2,
+      "winRatePerHand": 0.1,
+      "firstPlaceRate": 0.2
+    },
+    {
+      "seat": 3,
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 10,
+      "firstPlaces": 2,
+      "winRatePerHand": 0.16666666666666666,
+      "firstPlaceRate": 0.2
+    }
+  ],
+  "byCharacter": [
+    {
+      "characterId": "moka",
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 8,
+      "firstPlaces": 1,
+      "winRatePerHand": 0.13333333333333333,
+      "firstPlaceRate": 0.1
+    },
+    {
+      "characterId": "sumire",
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 9,
+      "firstPlaces": 1,
+      "winRatePerHand": 0.15,
+      "firstPlaceRate": 0.1
+    },
+    {
+      "characterId": "houma",
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 12,
+      "firstPlaces": 4,
+      "winRatePerHand": 0.2,
+      "firstPlaceRate": 0.4
+    },
+    {
+      "characterId": "kona",
+      "matches": 10,
+      "handOpportunities": 60,
+      "wins": 10,
+      "firstPlaces": 4,
+      "winRatePerHand": 0.16666666666666666,
+      "firstPlaceRate": 0.4
+    }
+  ],
+  "runtime": {
+    "totalMs": 71900.399725,
+    "meanMatchMs": 7190.0399725,
+    "meanTransitionMs": 17.400871182236205
+  },
+  "interpretation": "Offline deterministic CPU self-play is stability and coverage evidence, not a competitive AI rating or a human gameplay evaluation. Seat and character win shares are descriptive samples; they do not establish relative strength.",
+  "records": [
+    {
+      "seed": "followup-rules-20261112:0",
+      "characters": [
+        "moka",
+        "sumire",
+        "houma",
+        "kona"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 490,
+      "hands": [
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 77,
+          "normalDraws": 55,
+          "discards": 57,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "aka-dora",
+            "dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 67,
+          "normalDraws": 53,
+          "discards": 54,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 97,
+          "normalDraws": 70,
+          "discards": 79,
+          "yaku": []
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 92,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 63,
+          "normalDraws": 49,
+          "discards": 53,
+          "yaku": [
+            "yakuhai-dragon-31",
+            "aka-dora",
+            "dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 88,
+          "normalDraws": 70,
+          "discards": 74,
+          "yaku": []
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 41000
+        },
+        {
+          "seat": 0,
+          "rank": 2,
+          "points": 23300
+        },
+        {
+          "seat": 2,
+          "rank": 3,
+          "points": 19900
+        },
+        {
+          "seat": 3,
+          "rank": 4,
+          "points": 15800
+        }
+      ],
+      "actionCounts": {
+        "discard": 385,
+        "pass": 67,
+        "chi": 13,
+        "riichi_discard": 4,
+        "tsumo": 3,
+        "pon": 12
+      },
+      "checks": {
+        "legalActions": 484,
+        "revisions": 490,
+        "pointConservation": 491
+      },
+      "finalPoints": [
+        23300,
+        41000,
+        19900,
+        15800
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 1,
+      "traceHash": "4acbd703b96e00f7d03c754db7dc36d5552922becd17ab4130eabaddf7abad3d",
+      "runtimeMs": 10974.823871
+    },
+    {
+      "seed": "followup-rules-20261112:1",
+      "characters": [
+        "sumire",
+        "houma",
+        "kona",
+        "moka"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 398,
+      "hands": [
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 98,
+          "normalDraws": 70,
+          "discards": 77,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 38,
+          "normalDraws": 32,
+          "discards": 32,
+          "yaku": [
+            "riichi",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 84,
+          "normalDraws": 65,
+          "discards": 64,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 89,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 42,
+          "normalDraws": 32,
+          "discards": 34,
+          "yaku": [
+            "riichi",
+            "chiitoitsu"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 41,
+          "normalDraws": 32,
+          "discards": 32,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "tanyao",
+            "ura-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 37300
+        },
+        {
+          "seat": 3,
+          "rank": 2,
+          "points": 31200
+        },
+        {
+          "seat": 0,
+          "rank": 3,
+          "points": 17700
+        },
+        {
+          "seat": 2,
+          "rank": 4,
+          "points": 13800
+        }
+      ],
+      "actionCounts": {
+        "discard": 303,
+        "pon": 6,
+        "chi": 5,
+        "pass": 66,
+        "riichi_discard": 8,
+        "ron": 3,
+        "tsumo": 1
+      },
+      "checks": {
+        "legalActions": 392,
+        "revisions": 398,
+        "pointConservation": 399
+      },
+      "finalPoints": [
+        17700,
+        37300,
+        13800,
+        31200
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 1,
+      "traceHash": "00cc1fe2331f964acbb5f7a7ba63b466516bc907784941fddeed00219f930f5c",
+      "runtimeMs": 5516.639912999999
+    },
+    {
+      "seed": "followup-rules-20261112:2",
+      "characters": [
+        "houma",
+        "kona",
+        "moka",
+        "sumire"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 442,
+      "hands": [
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 84,
+          "normalDraws": 70,
+          "discards": 70,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 89,
+          "normalDraws": 70,
+          "discards": 70,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "haitei",
+            "yakuhai-dragon-31",
+            "aka-dora",
+            "dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 50,
+          "normalDraws": 34,
+          "discards": 36,
+          "yaku": [
+            "tanyao",
+            "dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 50,
+          "normalDraws": 41,
+          "discards": 40,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "menzen-tsumo",
+            "pinfu",
+            "dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 77,
+          "normalDraws": 61,
+          "discards": 64,
+          "yaku": [
+            "riichi",
+            "pinfu",
+            "dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 55,
+          "normalDraws": 44,
+          "discards": 45,
+          "yaku": [
+            "tanyao"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 30,
+          "normalDraws": 23,
+          "discards": 24,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "aka-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 34600
+        },
+        {
+          "seat": 2,
+          "rank": 2,
+          "points": 31200
+        },
+        {
+          "seat": 0,
+          "rank": 3,
+          "points": 27200
+        },
+        {
+          "seat": 3,
+          "rank": 4,
+          "points": 7000
+        }
+      ],
+      "actionCounts": {
+        "discard": 340,
+        "pass": 70,
+        "riichi_discard": 9,
+        "pon": 9,
+        "tsumo": 4,
+        "chi": 1,
+        "ron": 2
+      },
+      "checks": {
+        "legalActions": 435,
+        "revisions": 442,
+        "pointConservation": 443
+      },
+      "finalPoints": [
+        27200,
+        34600,
+        31200,
+        7000
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 1,
+      "traceHash": "3a4dde82c0fc6f7771eeed8ab5bc6bf9e12aed0d6f0aa71aeda64c96b6485c5d",
+      "runtimeMs": 9337.298379
+    },
+    {
+      "seed": "followup-rules-20261112:3",
+      "characters": [
+        "kona",
+        "moka",
+        "sumire",
+        "houma"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 256,
+      "hands": [
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 85,
+          "normalDraws": 70,
+          "discards": 71,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 25,
+          "normalDraws": 23,
+          "discards": 22,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "menzen-tsumo",
+            "pinfu"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 57,
+          "normalDraws": 47,
+          "discards": 47,
+          "yaku": [
+            "riichi",
+            "pinfu",
+            "aka-dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 85,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 3,
+          "rank": 1,
+          "points": 35400
+        },
+        {
+          "seat": 1,
+          "rank": 2,
+          "points": 23300
+        },
+        {
+          "seat": 2,
+          "rank": 3,
+          "points": 22600
+        },
+        {
+          "seat": 0,
+          "rank": 4,
+          "points": 17700
+        }
+      ],
+      "actionCounts": {
+        "discard": 206,
+        "pass": 35,
+        "pon": 3,
+        "riichi_discard": 6,
+        "tsumo": 1,
+        "ron": 1
+      },
+      "checks": {
+        "legalActions": 252,
+        "revisions": 256,
+        "pointConservation": 257
+      },
+      "finalPoints": [
+        17700,
+        23300,
+        22600,
+        35400
+      ],
+      "riichiPot": 1000,
+      "firstPlaceSeat": 3,
+      "traceHash": "423c8f8b7e9feb6f3d8fe811ce68b5f77ddec5682ffafa9c342bcb3f223ee9dd",
+      "runtimeMs": 4385.104342999999
+    },
+    {
+      "seed": "followup-rules-20261112:4",
+      "characters": [
+        "moka",
+        "sumire",
+        "houma",
+        "kona"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 372,
+      "hands": [
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 39,
+          "normalDraws": 31,
+          "discards": 31,
+          "yaku": [
+            "riichi",
+            "dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 38,
+          "normalDraws": 28,
+          "discards": 30,
+          "yaku": [
+            "riichi",
+            "ippatsu"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 89,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 77,
+          "normalDraws": 62,
+          "discards": 63,
+          "yaku": [
+            "riichi",
+            "aka-dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 86,
+          "normalDraws": 70,
+          "discards": 73,
+          "yaku": [
+            "riichi",
+            "houtei",
+            "dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 37,
+          "normalDraws": 29,
+          "discards": 30,
+          "yaku": [
+            "riichi",
+            "sanankou",
+            "aka-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 3,
+          "rank": 1,
+          "points": 36100
+        },
+        {
+          "seat": 0,
+          "rank": 2,
+          "points": 27900
+        },
+        {
+          "seat": 1,
+          "rank": 3,
+          "points": 26200
+        },
+        {
+          "seat": 2,
+          "rank": 4,
+          "points": 9800
+        }
+      ],
+      "actionCounts": {
+        "discard": 291,
+        "pass": 53,
+        "riichi_discard": 8,
+        "ron": 5,
+        "pon": 5,
+        "chi": 4
+      },
+      "checks": {
+        "legalActions": 366,
+        "revisions": 372,
+        "pointConservation": 373
+      },
+      "finalPoints": [
+        27900,
+        26200,
+        9800,
+        36100
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 3,
+      "traceHash": "244f15ba6a97b12a97028fdf00f9e1de44a7df756c1b99ac89d94786c935a2da",
+      "runtimeMs": 5662.513070000001
+    },
+    {
+      "seed": "followup-rules-20261112:5",
+      "characters": [
+        "sumire",
+        "houma",
+        "kona",
+        "moka"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 346,
+      "hands": [
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 87,
+          "normalDraws": 70,
+          "discards": 70,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 59,
+          "normalDraws": 45,
+          "discards": 46,
+          "yaku": [
+            "riichi",
+            "ippatsu"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 86,
+          "normalDraws": 68,
+          "discards": 69,
+          "yaku": [
+            "riichi",
+            "aka-dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 54,
+          "normalDraws": 40,
+          "discards": 43,
+          "yaku": [
+            "riichi"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 55,
+          "normalDraws": 46,
+          "discards": 46,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "aka-dora",
+            "ura-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 39600
+        },
+        {
+          "seat": 2,
+          "rank": 2,
+          "points": 23100
+        },
+        {
+          "seat": 0,
+          "rank": 3,
+          "points": 21800
+        },
+        {
+          "seat": 3,
+          "rank": 4,
+          "points": 15500
+        }
+      ],
+      "actionCounts": {
+        "discard": 268,
+        "pass": 57,
+        "riichi_discard": 6,
+        "chi": 3,
+        "ron": 3,
+        "pon": 3,
+        "tsumo": 1
+      },
+      "checks": {
+        "legalActions": 341,
+        "revisions": 346,
+        "pointConservation": 347
+      },
+      "finalPoints": [
+        21800,
+        39600,
+        23100,
+        15500
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 1,
+      "traceHash": "c932542c064005d5db1257babcbb3b5600727e9a75e699e0cdc62474d1ef6097",
+      "runtimeMs": 5587.706737
+    },
+    {
+      "seed": "followup-rules-20261112:6",
+      "characters": [
+        "houma",
+        "kona",
+        "moka",
+        "sumire"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 250,
+      "hands": [
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 73,
+          "normalDraws": 60,
+          "discards": 59,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "yakuhai-round",
+            "dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 90,
+          "normalDraws": 70,
+          "discards": 73,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 56,
+          "normalDraws": 47,
+          "discards": 47,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "aka-dora",
+            "dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 27,
+          "normalDraws": 27,
+          "discards": 26,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "ura-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 36400
+        },
+        {
+          "seat": 3,
+          "rank": 2,
+          "points": 27300
+        },
+        {
+          "seat": 2,
+          "rank": 3,
+          "points": 19700
+        },
+        {
+          "seat": 0,
+          "rank": 4,
+          "points": 16600
+        }
+      ],
+      "actionCounts": {
+        "discard": 199,
+        "pass": 34,
+        "riichi_discard": 6,
+        "tsumo": 3,
+        "pon": 3,
+        "chi": 1
+      },
+      "checks": {
+        "legalActions": 246,
+        "revisions": 250,
+        "pointConservation": 251
+      },
+      "finalPoints": [
+        16600,
+        36400,
+        19700,
+        27300
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 1,
+      "traceHash": "327d07c865d3e0a233fa31100fbb354532d5e34e8762e6a429429a1184a87a25",
+      "runtimeMs": 4027.058456999999
+    },
+    {
+      "seed": "followup-rules-20261112:7",
+      "characters": [
+        "kona",
+        "moka",
+        "sumire",
+        "houma"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 625,
+      "hands": [
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 82,
+          "normalDraws": 56,
+          "discards": 62,
+          "yaku": [
+            "yakuhai-dragon-31",
+            "dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 95,
+          "normalDraws": 70,
+          "discards": 74,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 73,
+          "normalDraws": 56,
+          "discards": 56,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "menzen-tsumo",
+            "aka-dora",
+            "ura-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 82,
+          "normalDraws": 63,
+          "discards": 66,
+          "yaku": [
+            "iipeikou"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 92,
+          "normalDraws": 70,
+          "discards": 73,
+          "yaku": []
+        },
+        {
+          "type": "abortive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": "nine-terminals",
+          "actions": 2,
+          "normalDraws": 2,
+          "discards": 1,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 35,
+          "normalDraws": 29,
+          "discards": 28,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "menzen-tsumo",
+            "pinfu",
+            "aka-dora"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 0,
+          "winners": [
+            0
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 66,
+          "normalDraws": 51,
+          "discards": 53,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "tanyao",
+            "pinfu"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 89,
+          "normalDraws": 70,
+          "discards": 73,
+          "yaku": []
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 1,
+          "rank": 1,
+          "points": 34600
+        },
+        {
+          "seat": 2,
+          "rank": 2,
+          "points": 31500
+        },
+        {
+          "seat": 0,
+          "rank": 3,
+          "points": 24800
+        },
+        {
+          "seat": 3,
+          "rank": 4,
+          "points": 8100
+        }
+      ],
+      "actionCounts": {
+        "discard": 480,
+        "pon": 11,
+        "pass": 100,
+        "chi": 13,
+        "ron": 2,
+        "riichi_discard": 6,
+        "tsumo": 3,
+        "nine_terminals": 1
+      },
+      "checks": {
+        "legalActions": 616,
+        "revisions": 625,
+        "pointConservation": 626
+      },
+      "finalPoints": [
+        24800,
+        34600,
+        31500,
+        8100
+      ],
+      "riichiPot": 1000,
+      "firstPlaceSeat": 1,
+      "traceHash": "707baf9db344fd1a27480e11d99c8a8c9de853bfbd4506a7557d4f22c999c6a0",
+      "runtimeMs": 8485.964817
+    },
+    {
+      "seed": "followup-rules-20261112:8",
+      "characters": [
+        "moka",
+        "sumire",
+        "houma",
+        "kona"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 397,
+      "hands": [
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 61,
+          "normalDraws": 44,
+          "discards": 50,
+          "yaku": [
+            "tanyao",
+            "aka-dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 87,
+          "normalDraws": 70,
+          "discards": 70,
+          "yaku": []
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 99,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 73,
+          "normalDraws": 58,
+          "discards": 61,
+          "yaku": [
+            "riichi"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 72,
+          "normalDraws": 57,
+          "discards": 59,
+          "yaku": [
+            "riichi"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 2,
+          "rank": 1,
+          "points": 27200
+        },
+        {
+          "seat": 0,
+          "rank": 2,
+          "points": 26400
+        },
+        {
+          "seat": 3,
+          "rank": 3,
+          "points": 23400
+        },
+        {
+          "seat": 1,
+          "rank": 4,
+          "points": 23000
+        }
+      ],
+      "actionCounts": {
+        "discard": 308,
+        "pon": 6,
+        "pass": 64,
+        "chi": 7,
+        "ron": 3,
+        "riichi_discard": 4
+      },
+      "checks": {
+        "legalActions": 392,
+        "revisions": 397,
+        "pointConservation": 398
+      },
+      "finalPoints": [
+        26400,
+        23000,
+        27200,
+        23400
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 2,
+      "traceHash": "cbc844ad0abc7abaaa13b88ebe92f8695afe5c5a9aad4794bd1995a41c5bc04e",
+      "runtimeMs": 7623.598948999999
+    },
+    {
+      "seed": "followup-rules-20261112:9",
+      "characters": [
+        "sumire",
+        "houma",
+        "kona",
+        "moka"
+      ],
+      "phase": "MATCH_RESULT",
+      "transitions": 556,
+      "hands": [
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 87,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 1,
+          "winners": [
+            1
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 94,
+          "normalDraws": 70,
+          "discards": 76,
+          "yaku": [
+            "houtei",
+            "yakuhai-seat",
+            "aka-dora"
+          ]
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 98,
+          "normalDraws": 70,
+          "discards": 74,
+          "yaku": []
+        },
+        {
+          "type": "exhaustive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": null,
+          "actions": 88,
+          "normalDraws": 70,
+          "discards": 72,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "ron",
+          "reason": null,
+          "actions": 50,
+          "normalDraws": 39,
+          "discards": 39,
+          "yaku": [
+            "riichi",
+            "ippatsu",
+            "tanyao",
+            "aka-dora",
+            "dora"
+          ]
+        },
+        {
+          "type": "abortive",
+          "winner": null,
+          "winners": [],
+          "winType": null,
+          "reason": "four-winds",
+          "actions": 4,
+          "normalDraws": 4,
+          "discards": 4,
+          "yaku": []
+        },
+        {
+          "type": "win",
+          "winner": 3,
+          "winners": [
+            3
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 88,
+          "normalDraws": 67,
+          "discards": 67,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo"
+          ]
+        },
+        {
+          "type": "win",
+          "winner": 2,
+          "winners": [
+            2
+          ],
+          "winType": "tsumo",
+          "reason": null,
+          "actions": 39,
+          "normalDraws": 33,
+          "discards": 34,
+          "yaku": [
+            "riichi",
+            "menzen-tsumo",
+            "pinfu",
+            "aka-dora",
+            "ura-dora"
+          ]
+        }
+      ],
+      "rankings": [
+        {
+          "seat": 2,
+          "rank": 1,
+          "points": 35500
+        },
+        {
+          "seat": 3,
+          "rank": 2,
+          "points": 32700
+        },
+        {
+          "seat": 1,
+          "rank": 3,
+          "points": 28700
+        },
+        {
+          "seat": 0,
+          "rank": 4,
+          "points": 3100
+        }
+      ],
+      "actionCounts": {
+        "discard": 430,
+        "pass": 89,
+        "chi": 9,
+        "pon": 8,
+        "riichi_discard": 8,
+        "ron": 2,
+        "tsumo": 2
+      },
+      "checks": {
+        "legalActions": 548,
+        "revisions": 556,
+        "pointConservation": 557
+      },
+      "finalPoints": [
+        3100,
+        28700,
+        35500,
+        32700
+      ],
+      "riichiPot": 0,
+      "firstPlaceSeat": 2,
+      "traceHash": "fdf6f243e19799d1ca933a1011da80d6751edc3c3d49e28147802c22743e1f32",
+      "runtimeMs": 10299.691189000005
+    }
+  ]
+}

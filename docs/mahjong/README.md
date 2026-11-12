@@ -10,7 +10,7 @@
 4. 人間同士の対局では、作成者が4桁コードを共有し、4人全員が「準備できた」状態にしてから開始します。
 5. 手牌は左右にスクロールできます。ツモ牌には印が付き、キーボードの左右キーでも牌を選べます。初回操作で音を有効にでき、設定から動きを減らせます。
 
-対局は東風戦、25000点持ち、30000点返し、喰いタン・赤ドラありです。連荘で長引く場合も最大12局で終了します。チー・ポン・大明槓・暗槓・加槓・加槓への槍槓に対応します。残り牌がない局面では槓を宣言できません。持ち時間は各操作30秒で、時間切れの打牌はツモ切り、ロンや鳴きは見送ります。待合室では退出した席を再利用でき、作成者が退出すると残った参加者へ開始権限を渡します。対局中は同じブラウザで再接続できます。ルームは最長6時間で期限切れになりますが、無料構成のRenderではサービス再起動時に一時データが失われる可能性があります。
+対局は東風戦、25000点持ち、30000点返し、喰いタン・赤ドラありです。連荘で長引く場合も最大12局で終了します。チー・ポン・大明槓・暗槓・加槓・加槓への槍槓に対応し、4人立直・4風連打はロンや鳴きの応答後に途中流局します。九種九牌は、本人の初回打牌前でまだ誰も副露していないとき、么九牌・字牌の種類が9種以上あれば宣言できます。ダブル立直は本人の最初の打牌で、途中に鳴きがなく、誰も副露していない場合だけ成立します。流局時は親が移る場合も本場が1つ増えます。流し満貫は、流局時に鳴きが一度もなく、本人の全河が么九牌・字牌で、河の牌を鳴かれていない席に成立します。複数成立時は各成立者が互いを含む他の3席から満貫ツモ相当を受け取り、本場も各精算に加算します。立直棒は同時成立者の席順で最初の席が一括して受け取ります。槓は同局で合計4回までで、残り牌がない局面では宣言できません。持ち時間は各操作30秒で、時間切れの打牌はツモ切り、ロンや鳴きは見送ります。通信再送の重複判定IDは、席ごとに直近256件の成功操作を保持します。それより古い再送は、元のrevisionを送る限り古い状態として拒否されます。待合室では退出した席を再利用でき、作成者が退出すると残った参加者へ開始権限を渡します。対局中は同じブラウザで再接続できます。ルームは最長6時間で期限切れになりますが、無料構成のRenderではサービス再起動時に一時データが失われる可能性があります。
 
 ## 開発・テスト
 
@@ -34,11 +34,15 @@ npm start
 - `public/mahjong/vendor/majiang-ai.bundle.js`: 固定したMIT版AIをオフライン利用できるようブラウザー用にbundle
 - 参考実装のライセンス・技術比較: [REFERENCE_REVIEW.md](REFERENCE_REVIEW.md)
 
-4人のオリジナル立ち絵を選択画面と対局画面に表示します。キャラクターごとに思考の傾向がわずかに違い、配牌やルールを操作しませんが、判断差が勝敗へ影響することはあります。作画素材の生成記録とトリミング方針は [ARTWORK.md](ARTWORK.md) を参照してください。リーチ後は、ツモ牌で成立し待ちが変わらない暗槓のみ許可します。暗槓への国士無双の槍槓に対応します。槓の補充牌を取れないときは槓を選べません。CPUの打牌・鳴き判断はKobalab AI 1.2.0を参考情報と公開河から動かし、推薦がUnity MIXの合法アクションに一致した場合だけ採用します。伏せ牌・王牌・未公開の槓ドラ表示牌はAIへ渡しません。アダプター失敗時は既存の安全なCPU方針へ戻ります。流し満貫など一部の細則は未実装です。対局音はMIT表記付きのKobalab同梱WAVを、最初の音声ボタン操作後に再生します。端末の音声機能が使えない場合はWeb Audioの短い生成音を代替し、キャラクターボイスはありません。
+4人のオリジナル立ち絵を選択画面と対局画面に表示します。キャラクターごとに思考の傾向がわずかに違い、配牌やルールを操作しませんが、判断差が勝敗へ影響することはあります。作画素材の生成記録とトリミング方針は [ARTWORK.md](ARTWORK.md) を参照してください。リーチ後は、ツモ牌で成立し待ちが変わらない暗槓のみ許可します。暗槓への国士無双の槍槓に対応します。槓の補充牌を取れないときは槓を選べません。CPUの打牌・鳴き判断はKobalab AI 1.2.0を参考情報と公開河から動かし、推薦がUnity MIXの合法アクションに一致した場合だけ採用します。鳴きの提案、リーチ者の危険牌、現物情報も渡します。アダプターはピン留めしたKobalab AI 1.2.0の内部状態フィールドを利用するため、依存更新時は回帰テストが必要です。伏せ牌・王牌・未公開の槓ドラ表示牌はAIへ渡しません。アダプター失敗時は既存の安全なCPU方針へ戻ります。対局音はMIT表記付きのKobalab同梱WAVを、ユーザー操作で再開したWeb Audio経由で再生します。iPhone Safari実機では未確認です。端末の音声機能が使えない場合はWeb Audioの短い生成音を代替し、キャラクターボイスはありません。
 
 ## 確認記録
 
+- 2026-11-12 quality pass: `npm test` 710 tests passed, 0 failed. Added focused regressions for per-hand state reset, double-riichi, four-riichi/four-winds abort order, nine-terminals, nagashi mangan including multi-winner settlement, fifth-kan prevention, exhaustive-draw honba, deterministic dealer-continuation walls, real Kobalab chi mapping, bounded retry IDs, compact river tiles, keyboard focus, and opponent river markers.
+- Updated Chromium CPU hand-result screens at 375/390/414px and four-browser online first-discard synchronization at 390px: [375](../qa/mahjong-quality-20261111/mahjong-result-375.png), [390](../qa/mahjong-quality-20261111/mahjong-result-390.png), [414](../qa/mahjong-quality-20261111/mahjong-result-414.png), [online room](../qa/mahjong-quality-20261111/mahjong-online-390-seat-1.png). No page errors or horizontal overflow occurred.
+- Compact tile browser check: at 375px river art is 12×18 and dora is 21×29; at 390/414px river art is 15×21 and dora is 21×29. See [375](../qa/mahjong-quality-20261111/mahjong-compact-375.png), [390](../qa/mahjong-quality-20261111/mahjong-compact-390.png), [414](../qa/mahjong-quality-20261111/mahjong-compact-414.png). The physical iPhone/Safari output remains unverified.
 - `npm test`: 648 tests passed, 0 failed in the 2026-11-10 reference-upgrade pass. Tests that bind local TCP ports require an execution environment that permits loopback listeners.
+- Post-rule CPU simulation: 10 seeded matches terminated, 60 hands and 4,132 transitions; 4,072 legal actions checked and points conserved on 4,142 snapshots. Outcomes were 39 wins, 19 exhaustive draws, 2 abortive draws, and no nagashi mangan. One CPU chose nine-terminals. The sample validates progression stability only, not CPU strength or rare-rule frequency; report: [simulation JSON](../qa/mahjong-quality-20261111/mahjong-selfplay-10-followup.json).
 - Chromium 390×844: キャラクター選択、CPU対局開始、実打牌、CPU応答を確認。
 - Chromium 375/390/414px: 4枚の新規立ち絵が768×960で読み込まれ、横はみ出しなし。390pxのCPU対局中の48×58アバターにも顔が収まる。
 - Chromiumの4ブラウザ: ルーム作成・3人参加・全員準備・開始を確認。各ブラウザに自分の手牌のみ表示されることを確認。

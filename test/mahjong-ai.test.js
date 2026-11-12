@@ -23,6 +23,15 @@ test('CPU takes a legal tsumo before riichi or discarding', () => {
   assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'tsumo'});
 });
 
+test('CPU may take nine-terminals when its nine-type opening hand has no workable shape',()=>{
+ const match=discardMatch([0,8,9,27,28,29,30,31,32,1,3,5,10,12]);
+ assert.ok(legalActions(match,0).some(action=>action.type==='nine_terminals'));
+ assert.deepEqual(chooseAction(match,0,()=>0),{type:'nine_terminals'});
+ const kokushi=discardMatch([0,8,9,17,18,26,27,28,29,30,31,32,33,1]);
+ assert.ok(legalActions(kokushi,0).some(action=>action.type==='nine_terminals'));
+ assert.notEqual(chooseAction(kokushi,0,()=>0).type,'nine_terminals','the CPU should keep a promising kokushi-shaped hand');
+});
+
 test('CPU takes a legal ron before a meld claim', () => {
   const match = reactionMatch([0,1,2,9,10,11,18,19,20,27,27,27,31], 31);
   assert.deepEqual(chooseAction(match, 1, () => 0), {type: 'ron'});
