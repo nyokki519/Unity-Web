@@ -27,6 +27,10 @@ with sync_playwright() as p:
         page.wait_for_timeout(1000)
         initial = page.evaluate('''() => ({
           boardChildren: SILVER_GAME.refs.boardG.children.length,
+          machineBounds: (() => {
+            const box = new SILVER_GAME.refs.THREE.Box3().setFromObject(SILVER_GAME.refs.machineG);
+            return {min:box.min.toArray(), max:box.max.toArray()};
+          })(),
           lampCount: SILVER_GAME.refs.cabinetLampN,
           renderCalls: SILVER_GAME.refs.renderer.info.render.calls,
           triangles: SILVER_GAME.refs.renderer.info.render.triangles,
@@ -36,6 +40,10 @@ with sync_playwright() as p:
           scrollWidth: document.documentElement.scrollWidth
         })''')
         assert initial['boardChildren'] == 54, initial
+        for value, expected in zip(initial['machineBounds']['min'], [-1, -0.02, -1.161]):
+            assert abs(value - expected) < 1e-4, initial['machineBounds']
+        for value, expected in zip(initial['machineBounds']['max'], [1, 3.056, 0.839]):
+            assert abs(value - expected) < 1e-4, initial['machineBounds']
         assert initial['lampCount'] == 18, initial
         assert initial['scrollWidth'] <= w, initial
         assert initial['renderCalls'] <= 210, initial

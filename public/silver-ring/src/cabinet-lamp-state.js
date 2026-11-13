@@ -6,10 +6,11 @@ export const CABINET_PULSE_SECONDS = Object.freeze({
 });
 
 const PULSE_PRIORITY = Object.freeze({ gate: 1, bowl: 2, sink: 3, jackpot: 4 });
+const hasPulseKind = (kind) => Object.prototype.hasOwnProperty.call(CABINET_PULSE_SECONDS, kind);
 
 export function chooseCabinetPulse(current, next) {
-  if (!next || !Object.hasOwn(CABINET_PULSE_SECONDS, next.kind)) return current ?? null;
-  if (!current || !Object.hasOwn(CABINET_PULSE_SECONDS, current.kind)) return next;
+  if (!next || !hasPulseKind(next.kind)) return current ?? null;
+  if (!current || !hasPulseKind(current.kind)) return next;
   const priority = (pulse) => (PULSE_PRIORITY[pulse.kind] ?? 0)
     + (pulse.kind === 'bowl' || pulse.kind === 'sink' ? clamp(Number.isFinite(pulse.tier) ? pulse.tier : 0, 0, 2) * 0.1 : 0)
     + (pulse.kind === 'sink' && pulse.win ? 0.5 : 0);
@@ -39,7 +40,7 @@ export function sampleCabinetLampState({ time = 0, mode = 'idle', pulse = null, 
     level = reduced ? 0.38 : 0.34 + Math.sin(t * 2.6) * 0.045;
   }
 
-  if (pulse && Object.hasOwn(CABINET_PULSE_SECONDS, pulse.kind)) {
+  if (pulse && hasPulseKind(pulse.kind)) {
     const duration = CABINET_PULSE_SECONDS[pulse.kind];
     const age = Number.isFinite(pulse.age) ? Math.max(0, pulse.age) : 0;
     if (age < duration) {

@@ -354,7 +354,7 @@ export class FX {
   setCamMode(mode, tier = 0) { this.camMode = mode; this.camTier = tier; }
   setNeonMode(m) { this.neonMode = m; }
   pulseCabinet(kind, tier = 0, win = false) {
-    if (Object.hasOwn(CABINET_PULSE_SECONDS, kind)) {
+    if (Object.prototype.hasOwnProperty.call(CABINET_PULSE_SECONDS, kind)) {
       this.cabinetPulse = chooseCabinetPulse(this.cabinetPulse, { kind, tier, win, age: 0 });
     }
   }
