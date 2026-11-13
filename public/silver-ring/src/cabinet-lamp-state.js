@@ -58,7 +58,9 @@ export function sampleCabinetLampState({ time = 0, mode = 'idle', pulse = null, 
         const strength = pulse.kind === 'jackpot' ? 1.12 : pulse.kind === 'sink' ? 0.82 : 0.68 + tierBoost;
         level = 0.2 + (strength - 0.2) * attack * release;
         if (pulse.kind === 'jackpot') level += Math.sin(age * 13) * 0.045 * release;
-        chase = (Math.floor(progress * 18) + (pulse.kind === 'bowl' ? tier * 3 : 0)) % 18;
+        const chaseStart = pulse.kind === 'bowl' ? 8 + tier * 2 : pulse.kind === 'sink' ? 14 + tier : 0;
+        const chaseSpan = pulse.kind === 'bowl' ? 4 : pulse.kind === 'sink' ? 2 : 18;
+        chase = Math.min(17, Math.floor(chaseStart + progress * chaseSpan));
       }
     }
   } else if (mode === 'jackpot') {

@@ -35,6 +35,18 @@ test('deeper bowl entries advance the light path and gently increase emphasis', 
   assert.ok(final.level > first.level);
 });
 
+test('gate, bowls, and sinks continue forward along one lamp path', () => {
+  const gate = sampleCabinetLampState({ pulse: { kind: 'gate', age: 0.2 } });
+  const firstBowl = sampleCabinetLampState({ pulse: { kind: 'bowl', tier: 0, age: 0.2 } });
+  const finalBowl = sampleCabinetLampState({ pulse: { kind: 'bowl', tier: 2, age: 0.2 } });
+  const firstSink = sampleCabinetLampState({ pulse: { kind: 'sink', tier: 0, win: false, age: 0.2 } });
+  const finalSink = sampleCabinetLampState({ pulse: { kind: 'sink', tier: 2, win: true, age: 0.2 } });
+  assert.ok(gate.chase < firstBowl.chase, [gate, firstBowl]);
+  assert.ok(firstBowl.chase < finalBowl.chase, [firstBowl, finalBowl]);
+  assert.ok(finalBowl.chase < firstSink.chase, [finalBowl, firstSink]);
+  assert.ok(firstSink.chase < finalSink.chase, [firstSink, finalSink]);
+});
+
 test('lower-priority events cannot replace an active jackpot lamp pulse', () => {
   const jackpot = { kind: 'jackpot', tier: 2, win: true, age: 0.35 };
   assert.equal(chooseCabinetPulse(jackpot, { kind: 'gate', tier: 0, win: false, age: 0 }), jackpot);
@@ -46,6 +58,14 @@ test('newer equal-priority pulses replace stale pulses', () => {
   const prior = { kind: 'bowl', tier: 0, win: false, age: 0.25 };
   const next = { kind: 'bowl', tier: 2, win: false, age: 0 };
   assert.equal(chooseCabinetPulse(prior, next), next);
+});
+
+test('an active successful sink cannot be replaced by a miss or unknown event', () => {
+  const win = { kind: 'sink', tier: 1, win: true, age: 0.2 };
+  const miss = { kind: 'sink', tier: 1, win: false, age: 0 };
+  assert.equal(chooseCabinetPulse(win, miss), win);
+  assert.equal(chooseCabinetPulse(win, { kind: 'toString', tier: 0, age: 0 }), win);
+  assert.equal(chooseCabinetPulse(null, { kind: 'constructor', tier: 0, age: 0 }), null);
 });
 
 test('jackpot is a short champagne crescendo then returns to idle', () => {
