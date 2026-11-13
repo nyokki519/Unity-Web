@@ -501,8 +501,11 @@ export class FX {
         const rgb = cabinetState.rgb;
         this._c.setRGB(rgb[0] * intensity, rgb[1] * intensity, rgb[2] * intensity);
         R.cabinetLampIM.setColorAt(i, this._c);
+        this._c.multiplyScalar(0.46);
+        R.cabinetLampGlow.setColorAt(i, this._c);
       }
       if (R.cabinetLampIM.instanceColor) R.cabinetLampIM.instanceColor.needsUpdate = true;
+      if (R.cabinetLampGlow.instanceColor) R.cabinetLampGlow.instanceColor.needsUpdate = true;
     }
 
     // ---- 霓虹 / 金属导光线 ----

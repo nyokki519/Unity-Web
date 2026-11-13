@@ -28,6 +28,9 @@ with sync_playwright() as p:
         initial = page.evaluate('''() => ({
           boardChildren: SILVER_GAME.refs.boardG.children.length,
           lampCount: SILVER_GAME.refs.cabinetLampN,
+          renderCalls: SILVER_GAME.refs.renderer.info.render.calls,
+          triangles: SILVER_GAME.refs.renderer.info.render.triangles,
+          canvas: [SILVER_GAME.refs.renderer.domElement.width, SILVER_GAME.refs.renderer.domElement.height],
           phase: SILVER_GAME.S.phase,
           width: innerWidth,
           scrollWidth: document.documentElement.scrollWidth
@@ -35,7 +38,10 @@ with sync_playwright() as p:
         assert initial['boardChildren'] == 54, initial
         assert initial['lampCount'] == 18, initial
         assert initial['scrollWidth'] <= w, initial
+        assert initial['renderCalls'] <= 210, initial
+        assert initial['triangles'] <= 170000, initial
         idle_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
+        idle_glow_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampGlow.instanceColor.array)')
         idle_bulb_palette = page.evaluate('''() => {
           const c = SILVER_GAME.refs.bulbIM.instanceColor.array;
           return Math.max(...Array.from({length:SILVER_GAME.refs.bulbN}, (_, i) => c[i*3+1] - c[i*3]));
@@ -67,11 +73,13 @@ with sync_playwright() as p:
         assert pulse == 'bowl', pulse
         page.wait_for_function('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array) > 0.5', timeout=15000)
         event_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
+        event_glow_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampGlow.instanceColor.array)')
         event_bulb_palette = page.evaluate('''() => {
           const c = SILVER_GAME.refs.bulbIM.instanceColor.array;
           return Math.max(...Array.from({length:SILVER_GAME.refs.bulbN}, (_, i) => c[i*3+1] - c[i*3]));
         }''')
         assert event_max > idle_max + 0.2, (idle_max, event_max)
+        assert event_glow_max > idle_glow_max + 0.08, (idle_glow_max, event_glow_max)
         assert event_bulb_palette > idle_bulb_palette + 0.2, (idle_bulb_palette, event_bulb_palette)
         page.screenshot(path=str(out / f'{w}x{h}-event.png'))
 
@@ -85,6 +93,7 @@ with sync_playwright() as p:
         page.wait_for_function("() => SILVER_GAME.fx._cabinetLampSignature === 'champagne:0.72:-1'")
         page.wait_for_timeout(250)
         reduced_lights_a = page.evaluate('Array.from(SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
+        reduced_glow_a = page.evaluate('Array.from(SILVER_GAME.refs.cabinetLampGlow.instanceColor.array)')
         reduced_marquee_a = page.evaluate('Array.from(SILVER_GAME.refs.bulbIM.instanceColor.array)')
         reduced_lines_a = page.evaluate('SILVER_GAME.refs.neonMats.map(m => m.color.toArray())')
         assert page.evaluate("""async () => {
@@ -95,12 +104,14 @@ with sync_playwright() as p:
         }""")
         page.wait_for_function('() => SILVER_GAME.fx.cabinetPulse?.age > 0.3')
         reduced_lights_b = page.evaluate('Array.from(SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
+        reduced_glow_b = page.evaluate('Array.from(SILVER_GAME.refs.cabinetLampGlow.instanceColor.array)')
         reduced_marquee_b = page.evaluate('Array.from(SILVER_GAME.refs.bulbIM.instanceColor.array)')
         reduced_lines_b = page.evaluate('SILVER_GAME.refs.neonMats.map(m => m.color.toArray())')
         if reduced_lights_a != reduced_lights_b:
             changed = [(i, round(a, 4), round(b, 4)) for i, (a, b) in enumerate(zip(reduced_lights_a, reduced_lights_b)) if a != b]
             raise AssertionError(f'reduced-motion cabinet lamps changed between frames: {changed[:12]} state={page.evaluate("({mode:SILVER_GAME.fx.neonMode,pulse:SILVER_GAME.fx.cabinetPulse,reduced:SILVER_GAME.S.reduce})")!r}')
         assert reduced_marquee_a == reduced_marquee_b, 'reduced-motion marquee lamps changed between frames'
+        assert reduced_glow_a == reduced_glow_b, 'reduced-motion lamp glow changed between frames'
         assert reduced_lines_a == reduced_lines_b, 'reduced-motion light bars changed between frames'
         page.screenshot(path=str(out / f'{w}x{h}-reduced.png'))
         page.evaluate('SILVER_GAME.fx.jackpotOn = false; SILVER_GAME.S.jackpotLock = false; SILVER_GAME.fx.setNeonMode("idle")')
@@ -114,7 +125,7 @@ with sync_playwright() as p:
         assert page.evaluate('SILVER_GAME.S.fired') == 1
         assert page.evaluate('SILVER_GAME.S.funds') == 49800
         assert not errors, errors
-        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'tierChaseAndMissPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
+        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleGlowMax': idle_glow_max, 'eventGlowMax': event_glow_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'tierChaseAndMissPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
         page.close()
     for w, h in [(375, 667), (844, 390)]:
         page = browser.new_page(viewport={'width': w, 'height': h}, device_scale_factor=1, has_touch=True, is_mobile=True)

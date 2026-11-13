@@ -690,7 +690,18 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   // ---------- 机柜 ----------
   // Cabinet shell only: keep the board group, its art, collision surfaces and framing untouched.
-  const cabMat = new THREE.MeshStandardMaterial({ color: 0x123b2c, roughness: 0.31, metalness: 0.58, envMapIntensity: 1.0 });
+  const cabinetEnamelTexture = canvasTex(256, 256, (g, w, h) => {
+    g.fillStyle = '#f7faf7'; g.fillRect(0, 0, w, h);
+    let seed = 0x51f15e;
+    const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    for (let i = 0; i < 112; i++) {
+      const x = rand() * w, y = rand() * h, length = 18 + rand() * 104;
+      g.strokeStyle = rand() > 0.42 ? 'rgba(18,58,43,0.055)' : 'rgba(255,255,255,0.11)';
+      g.lineWidth = 0.35 + rand() * 0.65;
+      g.beginPath(); g.moveTo(x, y); g.lineTo(Math.min(w, x + length), y + (rand() - 0.5) * 1.4); g.stroke();
+    }
+  });
+  const cabMat = new THREE.MeshStandardMaterial({ color: 0x123b2c, map: cabinetEnamelTexture, roughness: 0.31, metalness: 0.58, envMapIntensity: 1.0 });
   const cabinetBrass = new THREE.MeshStandardMaterial({ color: 0xb18b4d, roughness: 0.3, metalness: 0.88, envMapIntensity: 1.15 });
   const cabinetDarkBrass = new THREE.MeshStandardMaterial({ color: 0x604820, roughness: 0.42, metalness: 0.78 });
   const addCab = (w, h, d, x, y, z, mat = cabMat) => {
@@ -775,6 +786,19 @@ export function buildScene(canvas,layout=buildLayout()) {
     new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false }),
     cabinetLampN
   );
+  const lampGlowTex = canvasTex(64, 64, (g, w, h) => {
+    const glow = g.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2);
+    glow.addColorStop(0, 'rgba(255,255,255,0.32)');
+    glow.addColorStop(0.22, 'rgba(255,255,255,0.12)');
+    glow.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = glow; g.fillRect(0, 0, w, h);
+  });
+  const cabinetLampGlow = new THREE.InstancedMesh(
+    new THREE.PlaneGeometry(0.075, 0.075),
+    new THREE.MeshBasicMaterial({ map: lampGlowTex, color: 0xffffff, transparent: true, opacity: 0.58, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }),
+    cabinetLampN
+  );
+  cabinetLampGlow.renderOrder = 2;
   const cabinetLampHousings = new THREE.InstancedMesh(
     new THREE.BoxGeometry(0.025, 0.058, 0.02), cabinetDarkBrass, cabinetLampN
   );
@@ -791,6 +815,9 @@ export function buildScene(canvas,layout=buildLayout()) {
       lampMatrix.compose(new THREE.Vector3(x, y, 0.218), lampQuat, lampScale);
       cabinetLampIM.setMatrixAt(index, lampMatrix);
       cabinetLampIM.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.232), lampQuat, lampScale);
+      cabinetLampGlow.setMatrixAt(index, lampMatrix);
+      cabinetLampGlow.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
       lampMatrix.compose(new THREE.Vector3(x, y, 0.207), lampQuat, lampScale);
       cabinetLampHousings.setMatrixAt(index, lampMatrix);
       lampMatrix.compose(new THREE.Vector3(x, y, 0.221), lampQuat, lampScale);
@@ -798,9 +825,10 @@ export function buildScene(canvas,layout=buildLayout()) {
     }
   }
   cabinetLampIM.instanceColor.needsUpdate = true;
+  cabinetLampGlow.instanceColor.needsUpdate = true;
   cabinetLampHousings.instanceMatrix.needsUpdate = true;
   cabinetLampBezels.instanceMatrix.needsUpdate = true;
-  machineG.add(cabinetLampHousings, cabinetLampBezels, cabinetLampIM);
+  machineG.add(cabinetLampHousings, cabinetLampBezels, cabinetLampGlow, cabinetLampIM);
 
   // 看板(沼)
   const marqueeTex = canvasTex(1024, 512, (g, w, h) => {
@@ -1051,7 +1079,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG,
     swampUniforms, bubbleIM, sheen,
-    neonMats, bulbIM, bulbN, cabinetLampIM, cabinetLampN,
+    neonMats, bulbIM, bulbN, cabinetLampIM, cabinetLampGlow, cabinetLampN,
     handleG, hKnobG, ballsIM,
     dust, dustGeo, dustVel, dustN,
     alcoveLight, swampLight, key,

@@ -8,7 +8,10 @@ const main = await readFile(new URL('../public/silver-ring/src/main.js', import.
 const fx = await readFile(new URL('../public/silver-ring/src/fx.js', import.meta.url), 'utf8');
 
 test('exterior trim and lamp instances are attached to the cabinet, outside board geometry', () => {
-  assert.match(scene, /machineG\.add\(cabinetLampHousings, cabinetLampBezels, cabinetLampIM\)/);
+  assert.match(scene, /cabinetEnamelTexture/);
+  assert.match(scene, /map: cabinetEnamelTexture/);
+  assert.match(scene, /cabinetLampGlow/);
+  assert.match(scene, /machineG\.add\(cabinetLampHousings, cabinetLampBezels, cabinetLampGlow, cabinetLampIM\)/);
   assert.match(scene, /const cabinetLampN = 18/);
   assert.match(scene, /const badgeN = 2/);
   assert.match(scene, /machineG\.add\(badgeFaces, badgeRings, cupBadges\)/);
