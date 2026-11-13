@@ -1,6 +1,6 @@
 import {holeGeometry} from './hole-geometry.js';
 import {updateRainbowRim} from './rainbow-rim.js?v=rainbow3';
-import {CABINET_PULSE_SECONDS,chooseCabinetPulse,sampleCabinetLampState} from './cabinet-lamp-state.js';
+import {CABINET_PULSE_SECONDS,chooseCabinetPulse,sampleCabinetLampState} from './cabinet-lamp-state.js?v=cabinetlamps4';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」动态特效 —— 粒子 / 运镜 / 霓虹 / ざわざわ / 珠雨
