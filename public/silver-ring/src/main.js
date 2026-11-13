@@ -12,8 +12,8 @@ import{renderFrame}from'./render-frame.js';
 import { CFG,buildLayout } from './config.js';
 import {createRng} from './seed.js';
 import { Sim, clearPower, randPowerRange } from './physics.js';
-import { buildScene, TOUCH } from './scene.js?v=center1';
-import { FX } from './fx.js?v=credits1';
+import { buildScene, TOUCH } from './scene.js?v=cabinetlamps2';
+import { FX } from './fx.js?v=cabinetlamps2';
 import { AudioEngine } from './audio.js?v=credits1';
 import { UI } from './ui.js';
 import {mountPresentation} from './presentation.js';
@@ -98,10 +98,12 @@ const sim = new Sim((ev, d) => {
       S.gates++;
       audio.gateIn();
       fx.gateBurst();
+      fx.pulseCabinet('gate');
       break;
     case 'bowlenter':
       if(wallet.starter(d.ball,d.tier))ui.toast('始動入賞 ＋100枚', 'gold');
       fx.spawnZawa();
+      fx.pulseCabinet('bowl', d.tier);
       if (d.tier === 1) { ui.big('第二皿…!', 'amber'); }
       if (d.tier === 2) { ui.big('最終皿——!!', 'red', 1800); }
       break;
@@ -109,6 +111,7 @@ const sim = new Sim((ev, d) => {
     case 'sink':
       if(d.tier===2&&d.win){replayHistory.mark(d.ballId,sim.time);liveEntryTime=sim.time;}
       fx.sinkFX(d.tier, d.win, d.x, d.y, d.z);
+      fx.pulseCabinet('sink', d.tier, d.win);
       if (d.win) {
         audio.sinkWin(d.tier);
         if (d.tier >= 1) slowmo(0.35, 0.6);
@@ -132,6 +135,7 @@ async function onJackpot(ball) {
   S.jacks++;
   fx.jackpotOn = true;
   fx.setNeonMode('jackpot');
+  fx.pulseCabinet('jackpot', 2, true);
   fx.setCamMode('JACKPOT');
   const clip=ball?replayHistory.winningClip(ball.id):[];
   // Fanfare and replay kyuiin are independent; neither cancels the other.
@@ -449,6 +453,7 @@ function checkGameOver() {
   if (S.phase !== 'play' || S.jackpotLock) return;
   if (S.funds >= CFG.eco.ballCost || sim.liveCount() > 0) return;
   S.phase = 'over';
+  fx.clearCabinetPulse();
   S.auto = false; ui.setAuto(false);
   audio.overSting();
   const q = QUOTES[(Math.random() * QUOTES.length) | 0];
@@ -621,7 +626,7 @@ function frame(now) {
   if(S.reduce){fx.shakeAmp=0;fx.mouse.x=fx.mouse.y=0;}
   fx.banknotesEnabled=S.banknotes;
   refs.applyPendingResize();
-  fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam });
+  fx.update(sdt, sim, { tension:S.reduce?0:tension, freeCam: S.freeCam }, dt);
   entryFX.draw(sim.time-liveEntryTime,S.reduce);
   refs.maskBackground();
   refs.renderMode=renderFrame(refs,{mobile:TOUCH,freeCamera:S.freeCam});
@@ -663,7 +668,7 @@ window.SILVER_GAME = {
 
 // Unity MIX lifecycle/settings bridge. The parent is same-origin and checked.
 function publishState(){document.body.dataset.phase=S.phase;if(parent!==window)parent.postMessage({source:'silver-game',phase:S.phase,power:Math.round(S.memory*100)},location.origin);}
-function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';panHold=0;audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';last=performance.now();audio.resume();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
+function pauseGame(paused=true){if(paused&&S.phase==='play'){S.phase='paused';fx.clearCabinetPulse();panHold=0;audio.ctx?.suspend();S.auto=false;ui.setAuto(false);S.holdFire=false;S.charging=false;S.tiltKey=S.tiltBtn=S.tiltIn=0;sim.tilt=0;gyro.val=0;gyro.base=null;touches.clear();tap=null;}else if(!paused&&S.phase==='paused'){S.phase='play';last=performance.now();audio.resume();}document.getElementById('paused').hidden=S.phase!=='paused';presentation.update(S,sim);publishState();}
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.source!=='silver-shell')return;const {type,value}=e.data;if(type==='setPaused'&&typeof value==='boolean')pauseGame(value);if(type==='pause')pauseGame(S.phase!=='paused');if(type==='suspend')pauseGame(true);if(type==='power'&&Number.isFinite(value)){S.memory=Math.max(.02,Math.min(1,value/100));ui.setPowerMark(S.memory);}
  if(type==='quality'&&['auto','high','low'].includes(value)){S.qualityLocked=value!=='auto';S.degrade=0;refs.setQuality(value==='high'?2:value==='low'?0:TOUCH?1:2);}
  if(type==='camera'&&['auto','wide','cradle1','cradle2','cradle3'].includes(value)){S.manualCamera=value;leaveFreeCamera();}if(type==='banknotes'){S.banknotes=!!value;refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}if(type==='motion'){S.reduce=!!value;document.body.classList.toggle('reduced',S.reduce);refs.banknoteRain.update(0,{reduced:S.reduce,enabled:S.banknotes});}});

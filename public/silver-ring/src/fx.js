@@ -1,5 +1,6 @@
 import {holeGeometry} from './hole-geometry.js';
 import {updateRainbowRim} from './rainbow-rim.js?v=rainbow3';
+import {CABINET_PULSE_SECONDS,chooseCabinetPulse,sampleCabinetLampState} from './cabinet-lamp-state.js';
 // Adapted with author permission reported by the user. See ../NOTICE.txt.
 // ============================================================
 // 「沼」动态特效 —— 粒子 / 运镜 / 霓虹 / ざわざわ / 珠雨
@@ -25,6 +26,8 @@ export class FX {
     this.viewOff = 0; this.viewOffTarget = 0;   // ↑↓ 视角上下平移
     this.blockT = 9;                            // ブロック红灯爆闪计时
     this.neonMode = 'idle';
+    this.cabinetPulse = null;
+    this._cabinetLampAcc = 0;
     this.handleCharge = 0; this.handleKick = 0;
     this.activeTiers = new Set();
     this.ledFlash = [0, 0, 0]; this.ledFlashCol = [null, null, null];
@@ -350,9 +353,15 @@ export class FX {
 
   setCamMode(mode, tier = 0) { this.camMode = mode; this.camTier = tier; }
   setNeonMode(m) { this.neonMode = m; }
+  pulseCabinet(kind, tier = 0, win = false) {
+    if (Object.hasOwn(CABINET_PULSE_SECONDS, kind)) {
+      this.cabinetPulse = chooseCabinetPulse(this.cabinetPulse, { kind, tier, win, age: 0 });
+    }
+  }
+  clearCabinetPulse() { this.cabinetPulse = null; }
 
   // ============================================================
-  update(dt, sim, state) {
+  update(dt, sim, state, wallDt = dt) {
     this.t += dt;
     const R = this.R, t = this.t;
     R.banknoteRain.update(dt,{reduced:document.body.classList.contains('reduced'),enabled:this.banknotesEnabled!==false});
@@ -465,31 +474,77 @@ export class FX {
     // ---- 玻璃流光 ----
     R.sheen.material.map.offset.x = (t * 0.018) % 1;
 
-    // ---- 霓虹 ----
-    const mode = this.neonMode;
-    R.neonMats.forEach((m, i) => {
-      if (mode === 'jackpot') {
-        this._c.setRGB(1, 0.72, 0.3);
-        m.color.setRGB(this._c.r * 2.0, this._c.g * 2.0, this._c.b * 2.0);
-      } else if (mode === 'tension') {
-        const b = 0.85 + 0.4 * Math.sin(t * 5.5 + i * 1.3);
-        m.color.setRGB(1.6 * b, 1.0 * b, 0.22 * b);
-      } else {
-        const b = 0.85 + 0.05 * Math.sin(t * 1.6 + i * 2.1);
-        m.color.setRGB(0.65 * b, 0.47 * b, 0.22 * b);
-      }
+    // ---- 筐体灯光：只消费事件表现，不接触物理与盘面状态 ----
+    if (this.cabinetPulse) {
+      this.cabinetPulse.age += wallDt;
+      if (this.cabinetPulse.age >= CABINET_PULSE_SECONDS[this.cabinetPulse.kind]) this.cabinetPulse = null;
+    }
+    const reducedMotion = document.body.classList.contains('reduced');
+    const cabinetState = sampleCabinetLampState({
+      time: t, mode: this.neonMode, pulse: this.cabinetPulse,
+      reduced: reducedMotion,
     });
+    const cabinetLampSignature = `${cabinetState.color}:${cabinetState.level}:${cabinetState.chase}`;
+    if (!reducedMotion) this._cabinetLampAcc = Math.min(1 / 15, this._cabinetLampAcc + wallDt);
+    if ((!reducedMotion && this._cabinetLampAcc >= 1 / 30)
+      || (reducedMotion && cabinetLampSignature !== this._cabinetLampSignature)) {
+      this._cabinetLampAcc = 0;
+      this._cabinetLampSignature = cabinetLampSignature;
+      const lampN = R.cabinetLampN || 0;
+      for (let i = 0; i < lampN; i++) {
+        const row = i % 9;
+        const pathIndex = i < 9 ? row : 17 - row;
+        const distance = cabinetState.chase < 0 ? 99 : Math.abs(pathIndex - cabinetState.chase);
+        const chaseBoost = distance === 0 ? 2.15 : distance === 1 ? 0.64 : distance === 2 ? 0.16 : 0;
+        const jackpot = this.neonMode === 'jackpot' || this.cabinetPulse?.kind === 'jackpot';
+        const intensity = cabinetState.level + chaseBoost * (jackpot ? 0.92 : 0.72);
+        const rgb = cabinetState.rgb;
+        this._c.setRGB(rgb[0] * intensity, rgb[1] * intensity, rgb[2] * intensity);
+        R.cabinetLampIM.setColorAt(i, this._c);
+      }
+      if (R.cabinetLampIM.instanceColor) R.cabinetLampIM.instanceColor.needsUpdate = true;
+    }
+
+    // ---- 霓虹 / 金属导光线 ----
+    const mode = this.neonMode;
+    const neonSignature = `${mode}:${reducedMotion}`;
+    if (!reducedMotion || neonSignature !== this._neonSignature) {
+      this._neonSignature = neonSignature;
+      R.neonMats.forEach((m, i) => {
+        if (mode === 'jackpot') {
+          const b = reducedMotion ? 0.9 : 0.8 + 0.2 * Math.sin(t * 8 + i * 0.42);
+          m.color.setRGB(1.35 * b, 1.06 * b, 0.62 * b);
+        } else if (mode === 'tension') {
+          const b = reducedMotion ? 0.94 : 0.9 + 0.12 * Math.sin(t * 3.2 + i * 0.7);
+          m.color.setRGB(0.82 * b, 0.68 * b, 0.31 * b);
+        } else {
+          const b = reducedMotion ? 0.89 : 0.86 + 0.05 * Math.sin(t * 1.1 + i * 1.3);
+          m.color.setRGB(0.54 * b, 0.39 * b, 0.16 * b);
+        }
+      });
+    }
 
     // ---- 看板灯泡跑马 ----
     if (!this._bulbAcc) this._bulbAcc = 0;
-    this._bulbAcc += dt;
-    if (this._bulbAcc > 0.033) {
+    const pulse = this.cabinetPulse;
+    const pulseActive = pulse && pulse.age < CABINET_PULSE_SECONDS[pulse.kind];
+    const bulbSignature = `${mode}:${reducedMotion}:${pulseActive ? pulse.kind : 'idle'}:${pulseActive ? pulse.tier : 0}:${pulseActive ? pulse.win : false}`;
+    if (!reducedMotion) this._bulbAcc = Math.min(0.066, this._bulbAcc + dt);
+    if ((!reducedMotion && this._bulbAcc > 0.033)
+      || (reducedMotion && bulbSignature !== this._bulbSignature)) {
       this._bulbAcc = 0;
-      const speed = mode === 'jackpot' ? 14 : mode === 'tension' ? 5 : 2.4;
+      this._bulbSignature = bulbSignature;
+      const speed = reducedMotion ? 0 : mode === 'jackpot' ? 14 : mode === 'tension' ? 5 : 2.4;
       for (let i = 0; i < R.bulbN; i++) {
-        const ph = 0.5 + 0.5 * Math.sin(i * (Math.PI * 2 / R.bulbN) * 3 - t * speed);
+        const ph = reducedMotion ? 0.16 : 0.5 + 0.5 * Math.sin(i * (Math.PI * 2 / R.bulbN) * 3 - t * speed);
         const v = Math.pow(ph, 3);
-        if (mode === 'jackpot') {
+        if (pulseActive) {
+          const pathIndex = Math.min(17, Math.floor(i * 18 / R.bulbN));
+          const distance = cabinetState.chase < 0 ? 99 : Math.abs(pathIndex - cabinetState.chase);
+          const chaseBoost = distance === 0 ? 2.15 : distance === 1 ? 0.64 : distance === 2 ? 0.16 : 0;
+          const intensity = cabinetState.level + chaseBoost * (pulse.kind === 'jackpot' ? 0.92 : 0.72);
+          this._c.setRGB(cabinetState.rgb[0] * intensity, cabinetState.rgb[1] * intensity, cabinetState.rgb[2] * intensity);
+        } else if (mode === 'jackpot') {
           this._c.setRGB(1, 0.72 + v * 0.15, 0.28);
           this._c.multiplyScalar(0.6 + v * 2.4);
         } else {

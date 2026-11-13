@@ -689,7 +689,10 @@ export function buildScene(canvas,layout=buildLayout()) {
   boardG.add(sheen);
 
   // ---------- 机柜 ----------
-  const cabMat = new THREE.MeshStandardMaterial({ color: 0x30090f, roughness: 0.22, metalness: 0.55, envMapIntensity: 1.1 });
+  // Cabinet shell only: keep the board group, its art, collision surfaces and framing untouched.
+  const cabMat = new THREE.MeshStandardMaterial({ color: 0x123b2c, roughness: 0.31, metalness: 0.58, envMapIntensity: 1.0 });
+  const cabinetBrass = new THREE.MeshStandardMaterial({ color: 0xb18b4d, roughness: 0.3, metalness: 0.88, envMapIntensity: 1.15 });
+  const cabinetDarkBrass = new THREE.MeshStandardMaterial({ color: 0x604820, roughness: 0.42, metalness: 0.78 });
   const addCab = (w, h, d, x, y, z, mat = cabMat) => {
     const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
     m.position.set(x, y, z);
@@ -704,6 +707,100 @@ export function buildScene(canvas,layout=buildLayout()) {
   // 操作台
   addCab(1.56, 0.64, 0.52, 0, 0.30, -0.04);
   addCab(1.30, 0.10, 0.42, 0, 0.05, -0.02, new THREE.MeshStandardMaterial({ color: 0x08070a, roughness: 0.6 }));
+
+  // Slim continuous brass lines frame the outside of the cabinet without crossing the playfield.
+  const brassTrimInstances = [], darkTrimInstances = [];
+  const trimBar = (w, h, d, x, y, z, dark = false) => (dark ? darkTrimInstances : brassTrimInstances).push([w, h, d, x, y, z]);
+  for (const side of [-1, 1]) {
+    trimBar(0.008, 2.12, 0.012, side * 0.777, 1.68, 0.207);
+    trimBar(0.0035, 1.92, 0.009, side * 0.756, 1.68, 0.207, true);
+    trimBar(0.012, 0.022, 0.014, side * 0.777, 2.76, 0.207);
+    trimBar(0.012, 0.022, 0.014, side * 0.777, 0.61, 0.207);
+  }
+  const addTrimInstances = (items, material) => {
+    const instances = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), material, items.length);
+    for (let i = 0; i < items.length; i++) {
+      const [w, h, d, x, y, z] = items[i];
+      lampMatrixForTrim.compose(new THREE.Vector3(x, y, z), trimQuat, new THREE.Vector3(w, h, d));
+      instances.setMatrixAt(i, lampMatrixForTrim);
+    }
+    instances.instanceMatrix.needsUpdate = true;
+    instances.castShadow = false;
+    machineG.add(instances);
+  };
+  const lampMatrixForTrim = new THREE.Matrix4(), trimQuat = new THREE.Quaternion();
+  addTrimInstances(brassTrimInstances, cabinetBrass);
+  addTrimInstances(darkTrimInstances, cabinetDarkBrass);
+
+  // Small enamel-and-brass coffee medallions give the otherwise plain side posts a house identity.
+  const badgeN = 2, badgeX = [-0.695, 0.695], badgeY = 2.35;
+  const badgeFaceMat = new THREE.MeshStandardMaterial({ color: 0x174531, metalness: 0.66, roughness: 0.3 });
+  const badgeRingMat = new THREE.MeshStandardMaterial({ color: 0xb18b4d, metalness: 0.82, roughness: 0.28, emissive: 0x38250a, emissiveIntensity: 0.2 });
+  const badgeFaces = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.054, 0.054, 0.009, 32), badgeFaceMat, badgeN);
+  const badgeRings = new THREE.InstancedMesh(new THREE.TorusGeometry(0.054, 0.0028, 6, 28), badgeRingMat, badgeN);
+  const badgeQuats = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+  const badgeScale = new THREE.Vector3(1, 1, 1), badgeM = new THREE.Matrix4();
+  for (let i = 0; i < badgeN; i++) {
+    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.207), badgeQuats, badgeScale);
+    badgeFaces.setMatrixAt(i, badgeM);
+    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.214), new THREE.Quaternion(), badgeScale);
+    badgeRings.setMatrixAt(i, badgeM);
+  }
+  const cupBadgeTex = canvasTex(128, 128, (g, w, h) => {
+    g.clearRect(0, 0, w, h); g.strokeStyle = '#f5db9c'; g.lineWidth = 8; g.lineCap = 'round'; g.lineJoin = 'round';
+    g.beginPath(); g.moveTo(32, 50); g.lineTo(36, 77); g.quadraticCurveTo(62, 94, 88, 77); g.lineTo(92, 50); g.stroke();
+    g.beginPath(); g.moveTo(91, 56); g.bezierCurveTo(115, 50, 115, 77, 90, 75); g.stroke();
+    g.beginPath(); g.moveTo(27, 91); g.quadraticCurveTo(63, 104, 99, 91); g.stroke();
+    g.lineWidth = 5;
+    g.beginPath(); g.moveTo(46, 40); g.bezierCurveTo(35, 29, 52, 24, 46, 15); g.stroke();
+    g.beginPath(); g.moveTo(65, 39); g.bezierCurveTo(54, 29, 72, 23, 66, 14); g.stroke();
+  });
+  const cupBadges = new THREE.InstancedMesh(
+    new THREE.PlaneGeometry(0.072, 0.072),
+    new THREE.MeshBasicMaterial({ map: cupBadgeTex, transparent: true, toneMapped: false, depthWrite: false }),
+    badgeN
+  );
+  for (let i = 0; i < badgeN; i++) {
+    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.221), new THREE.Quaternion(), badgeScale);
+    cupBadges.setMatrixAt(i, badgeM);
+  }
+  badgeFaces.instanceMatrix.needsUpdate = badgeRings.instanceMatrix.needsUpdate = cupBadges.instanceMatrix.needsUpdate = true;
+  badgeFaces.castShadow = badgeRings.castShadow = cupBadges.castShadow = false;
+  machineG.add(badgeFaces, badgeRings, cupBadges);
+
+  // Diffused lens capsules sit in the shell rails, outside the board glass and placard faces.
+  const cabinetLampN = 18;
+  const cabinetLampIM = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(0.0115, 10, 8),
+    new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false }),
+    cabinetLampN
+  );
+  const cabinetLampHousings = new THREE.InstancedMesh(
+    new THREE.BoxGeometry(0.025, 0.058, 0.02), cabinetDarkBrass, cabinetLampN
+  );
+  const cabinetLampBezels = new THREE.InstancedMesh(
+    new THREE.TorusGeometry(0.015, 0.0022, 6, 16), cabinetBrass, cabinetLampN
+  );
+  const lampMatrix = new THREE.Matrix4(), lampQuat = new THREE.Quaternion(), lampScale = new THREE.Vector3(1, 1, 1);
+  for (let sideIndex = 0; sideIndex < 2; sideIndex++) {
+    const side = sideIndex === 0 ? -1 : 1;
+    for (let row = 0; row < 9; row++) {
+      const y = 0.78 + row * 0.215;
+      const index = sideIndex * 9 + row;
+      const x = side * 0.765;
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.218), lampQuat, lampScale);
+      cabinetLampIM.setMatrixAt(index, lampMatrix);
+      cabinetLampIM.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.207), lampQuat, lampScale);
+      cabinetLampHousings.setMatrixAt(index, lampMatrix);
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.221), lampQuat, lampScale);
+      cabinetLampBezels.setMatrixAt(index, lampMatrix);
+    }
+  }
+  cabinetLampIM.instanceColor.needsUpdate = true;
+  cabinetLampHousings.instanceMatrix.needsUpdate = true;
+  cabinetLampBezels.instanceMatrix.needsUpdate = true;
+  machineG.add(cabinetLampHousings, cabinetLampBezels, cabinetLampIM);
 
   // 看板(沼)
   const marqueeTex = canvasTex(1024, 512, (g, w, h) => {
@@ -766,17 +863,18 @@ export function buildScene(canvas,layout=buildLayout()) {
   // 霓虹灯管
   const neonMats = [];
   const mkNeon = (w, h, d, x, y, z) => {
-    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.8, 0.25, 0.5), toneMapped: false });
+    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.65, 0.38, 0.13), toneMapped: false });
     const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
     m.position.set(x, y, z);
     machineG.add(m);
     neonMats.push(mat);
     return m;
   };
-  mkNeon(0.02, 2.35, 0.02, -0.63, 1.42, 0.19);
-  mkNeon(0.02, 2.35, 0.02, 0.63, 1.42, 0.19);
-  mkNeon(1.30, 0.018, 0.018, 0, 2.686, 0.185);
-  mkNeon(1.30, 0.018, 0.018, 0, 0.635, 0.23);
+  mkNeon(0.008, 2.20, 0.012, -0.63, 1.42, 0.19);
+  mkNeon(0.008, 2.20, 0.012, 0.63, 1.42, 0.19);
+  // The lower marquee light follows the sign's bottom lip, leaving its small subtitle clear.
+  mkNeon(1.28, 0.009, 0.012, 0, 2.612, 0.185);
+  mkNeon(1.28, 0.009, 0.012, 0, 0.635, 0.23);
 
   // 侧柱告示牌
   const placard = (lines, x) => {
@@ -953,7 +1051,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG,
     swampUniforms, bubbleIM, sheen,
-    neonMats, bulbIM, bulbN,
+    neonMats, bulbIM, bulbN, cabinetLampIM, cabinetLampN,
     handleG, hKnobG, ballsIM,
     dust, dustGeo, dustVel, dustN,
     alcoveLight, swampLight, key,
