@@ -68,11 +68,20 @@ with sync_playwright() as p:
         }''')
         assert priority == 'jackpot', priority
         page.evaluate('SILVER_GAME.fx.clearCabinetPulse()')
+        page.evaluate("SILVER_GAME.fx.pulseCabinet('sink',1,false)")
+        page.wait_for_function("() => SILVER_GAME.fx._neonSignature.endsWith(':sink:1:false')")
+        miss_line = page.evaluate('SILVER_GAME.refs.neonMats[0].color.toArray()')
+        page.evaluate("SILVER_GAME.fx.pulseCabinet('sink',1,true)")
+        page.wait_for_function("() => SILVER_GAME.fx._neonSignature.endsWith(':sink:1:true')")
+        win_line = page.evaluate('SILVER_GAME.refs.neonMats[0].color.toArray()')
+        assert abs((miss_line[0] - miss_line[1]) - 0.3848) < 0.01, miss_line
+        assert abs((win_line[0] - win_line[1]) - 0.1456) < 0.01, win_line
+        page.evaluate('SILVER_GAME.fx.clearCabinetPulse()')
 
         page.evaluate('SILVER_GAME.toBowl(1)')
         pulse = page.evaluate('SILVER_GAME.fx.cabinetPulse?.kind')
         assert pulse == 'bowl', pulse
-        page.wait_for_function('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array) > 0.5', timeout=15000)
+        page.wait_for_function("() => SILVER_GAME.fx.cabinetPulse?.kind === 'bowl' && SILVER_GAME.fx.cabinetPulse.age > 0.1 && SILVER_GAME.fx._bulbSignature.includes(':bowl:') && SILVER_GAME.fx._neonSignature.includes(':bowl:')", timeout=15000)
         event_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
         event_glow_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampGlow.instanceColor.array)')
         event_bulb_palette = page.evaluate('''() => {
@@ -128,7 +137,7 @@ with sync_playwright() as p:
         assert page.evaluate('SILVER_GAME.S.fired') == 1
         assert page.evaluate('SILVER_GAME.S.funds') == 49800
         assert not errors, errors
-        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleGlowMax': idle_glow_max, 'eventGlowMax': event_glow_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'idleLinePalette': idle_line_palette, 'eventLinePalette': event_line_palette, 'tierChaseAndMissPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
+        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleGlowMax': idle_glow_max, 'eventGlowMax': event_glow_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'idleLinePalette': idle_line_palette, 'eventLinePalette': event_line_palette, 'tierChaseAndMissPalette': True, 'sinkMissAndWinPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
         page.close()
     for w, h in [(375, 667), (844, 390)]:
         page = browser.new_page(viewport={'width': w, 'height': h}, device_scale_factor=1, has_touch=True, is_mobile=True)
