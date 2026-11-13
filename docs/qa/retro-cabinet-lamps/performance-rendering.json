@@ -1,0 +1,67 @@
+{
+  "viewport": "390x844 CSS px",
+  "renderer": "Chromium software WebGL (SwiftShader)",
+  "warmupFrames": 20,
+  "cases": [
+    {
+      "version": "main-a",
+      "frames": 120,
+      "medianFrameMs": 183.3000000000029,
+      "p95FrameMs": 466.7000000000007,
+      "renderCalls": 194,
+      "triangles": 153790,
+      "pixelRatio": 1,
+      "canvas": [
+        390,
+        844
+      ],
+      "errors": []
+    },
+    {
+      "version": "cabinet-a",
+      "frames": 120,
+      "medianFrameMs": 183.29999999999927,
+      "p95FrameMs": 433.3000000000029,
+      "renderCalls": 198,
+      "triangles": 154178,
+      "pixelRatio": 1,
+      "canvas": [
+        390,
+        844
+      ],
+      "errors": []
+    },
+    {
+      "version": "cabinet-b",
+      "frames": 120,
+      "medianFrameMs": 183.3000000000029,
+      "p95FrameMs": 383.40000000000146,
+      "renderCalls": 198,
+      "triangles": 154178,
+      "pixelRatio": 1,
+      "canvas": [
+        390,
+        844
+      ],
+      "errors": []
+    },
+    {
+      "version": "main-b",
+      "frames": 120,
+      "medianFrameMs": 183.29999999999927,
+      "p95FrameMs": 416.60000000000036,
+      "renderCalls": 194,
+      "triangles": 153790,
+      "pixelRatio": 1,
+      "canvas": [
+        390,
+        844
+      ],
+      "errors": []
+    }
+  ],
+  "baselineMedianMs": 183.3000000000029,
+  "updatedMedianMs": 183.3000000000029,
+  "medianFrameDeltaPct": 0.0,
+  "physicalDeviceClaim": false
+}

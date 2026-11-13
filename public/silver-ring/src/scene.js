@@ -690,18 +690,7 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   // ---------- 机柜 ----------
   // Cabinet shell only: keep the board group, its art, collision surfaces and framing untouched.
-  const cabinetEnamelTexture = canvasTex(256, 256, (g, w, h) => {
-    g.fillStyle = '#f7faf7'; g.fillRect(0, 0, w, h);
-    let seed = 0x51f15e;
-    const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    for (let i = 0; i < 112; i++) {
-      const x = rand() * w, y = rand() * h, length = 18 + rand() * 104;
-      g.strokeStyle = rand() > 0.42 ? 'rgba(18,58,43,0.055)' : 'rgba(255,255,255,0.11)';
-      g.lineWidth = 0.35 + rand() * 0.65;
-      g.beginPath(); g.moveTo(x, y); g.lineTo(Math.min(w, x + length), y + (rand() - 0.5) * 1.4); g.stroke();
-    }
-  });
-  const cabMat = new THREE.MeshStandardMaterial({ color: 0x123b2c, map: cabinetEnamelTexture, roughness: 0.31, metalness: 0.58, envMapIntensity: 1.0 });
+  const cabMat = new THREE.MeshStandardMaterial({ color: 0x123b2c, roughness: 0.31, metalness: 0.58, envMapIntensity: 1.0 });
   const cabinetBrass = new THREE.MeshStandardMaterial({ color: 0xb18b4d, roughness: 0.3, metalness: 0.88, envMapIntensity: 1.15 });
   const cabinetDarkBrass = new THREE.MeshStandardMaterial({ color: 0x604820, roughness: 0.42, metalness: 0.78 });
   const addCab = (w, h, d, x, y, z, mat = cabMat) => {
@@ -745,20 +734,14 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   // Small enamel-and-brass coffee medallions give the otherwise plain side posts a house identity.
   const badgeN = 2, badgeX = [-0.695, 0.695], badgeY = 2.35;
-  const badgeFaceMat = new THREE.MeshStandardMaterial({ color: 0x174531, metalness: 0.66, roughness: 0.3 });
-  const badgeRingMat = new THREE.MeshStandardMaterial({ color: 0xb18b4d, metalness: 0.82, roughness: 0.28, emissive: 0x38250a, emissiveIntensity: 0.2 });
-  const badgeFaces = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.054, 0.054, 0.009, 32), badgeFaceMat, badgeN);
-  const badgeRings = new THREE.InstancedMesh(new THREE.TorusGeometry(0.054, 0.0028, 6, 28), badgeRingMat, badgeN);
-  const badgeQuats = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-  const badgeScale = new THREE.Vector3(1, 1, 1), badgeM = new THREE.Matrix4();
-  for (let i = 0; i < badgeN; i++) {
-    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.207), badgeQuats, badgeScale);
-    badgeFaces.setMatrixAt(i, badgeM);
-    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.214), new THREE.Quaternion(), badgeScale);
-    badgeRings.setMatrixAt(i, badgeM);
-  }
   const cupBadgeTex = canvasTex(128, 128, (g, w, h) => {
-    g.clearRect(0, 0, w, h); g.strokeStyle = '#f5db9c'; g.lineWidth = 8; g.lineCap = 'round'; g.lineJoin = 'round';
+    const cx = w / 2, cy = h / 2;
+    const enamel = g.createRadialGradient(cx - 15, cy - 18, 2, cx, cy, 68);
+    enamel.addColorStop(0, '#286447'); enamel.addColorStop(1, '#0c2b1f');
+    g.beginPath(); g.arc(cx, cy, 60, 0, Math.PI * 2); g.fillStyle = enamel; g.fill();
+    g.lineWidth = 9; g.strokeStyle = '#fff2ce'; g.stroke();
+    g.beginPath(); g.arc(cx, cy, 48, 0, Math.PI * 2); g.lineWidth = 2; g.strokeStyle = 'rgba(255,242,206,0.62)'; g.stroke();
+    g.strokeStyle = '#fff2ce'; g.lineWidth = 7; g.lineCap = 'round'; g.lineJoin = 'round';
     g.beginPath(); g.moveTo(32, 50); g.lineTo(36, 77); g.quadraticCurveTo(62, 94, 88, 77); g.lineTo(92, 50); g.stroke();
     g.beginPath(); g.moveTo(91, 56); g.bezierCurveTo(115, 50, 115, 77, 90, 75); g.stroke();
     g.beginPath(); g.moveTo(27, 91); g.quadraticCurveTo(63, 104, 99, 91); g.stroke();
@@ -766,45 +749,45 @@ export function buildScene(canvas,layout=buildLayout()) {
     g.beginPath(); g.moveTo(46, 40); g.bezierCurveTo(35, 29, 52, 24, 46, 15); g.stroke();
     g.beginPath(); g.moveTo(65, 39); g.bezierCurveTo(54, 29, 72, 23, 66, 14); g.stroke();
   });
-  const cupBadges = new THREE.InstancedMesh(
-    new THREE.PlaneGeometry(0.072, 0.072),
-    new THREE.MeshBasicMaterial({ map: cupBadgeTex, transparent: true, toneMapped: false, depthWrite: false }),
-    badgeN
-  );
+  const badgeMat = new THREE.MeshStandardMaterial({ map: cupBadgeTex, metalness: 0.52, roughness: 0.34, side: THREE.DoubleSide });
+  const cabinetBadges = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.054, 0.054, 0.009, 32), badgeMat, badgeN);
+  const badgeQuats = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+  const badgeScale = new THREE.Vector3(1, 1, 1), badgeM = new THREE.Matrix4();
   for (let i = 0; i < badgeN; i++) {
-    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.221), new THREE.Quaternion(), badgeScale);
-    cupBadges.setMatrixAt(i, badgeM);
+    badgeM.compose(new THREE.Vector3(badgeX[i], badgeY, 0.207), badgeQuats, badgeScale);
+    cabinetBadges.setMatrixAt(i, badgeM);
   }
-  badgeFaces.instanceMatrix.needsUpdate = badgeRings.instanceMatrix.needsUpdate = cupBadges.instanceMatrix.needsUpdate = true;
-  badgeFaces.castShadow = badgeRings.castShadow = cupBadges.castShadow = false;
-  machineG.add(badgeFaces, badgeRings, cupBadges);
+  cabinetBadges.instanceMatrix.needsUpdate = true;
+  cabinetBadges.castShadow = false;
+  machineG.add(cabinetBadges);
 
   // Diffused lens capsules sit in the shell rails, outside the board glass and placard faces.
   const cabinetLampN = 18;
-  const cabinetLampIM = new THREE.InstancedMesh(
-    new THREE.SphereGeometry(0.0115, 10, 8),
-    new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false }),
-    cabinetLampN
-  );
-  const lampGlowTex = canvasTex(64, 64, (g, w, h) => {
-    const glow = g.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2);
-    glow.addColorStop(0, 'rgba(255,255,255,0.32)');
-    glow.addColorStop(0.22, 'rgba(255,255,255,0.12)');
-    glow.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = glow; g.fillRect(0, 0, w, h);
+  // Bake the tiny housing, brass rim, lens and halo into one transparent sprite per lamp.
+  // At phone scale the layered geometry is sub-pixel detail, but costs four draw calls.
+  const lampSpriteTex = canvasTex(128, 128, (g, w, h) => {
+    const cx = w / 2, cy = h / 2;
+    const halo = g.createRadialGradient(cx, cy, 8, cx, cy, 62);
+    halo.addColorStop(0, 'rgba(255,255,255,0.30)');
+    halo.addColorStop(0.38, 'rgba(255,255,255,0.10)');
+    halo.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = halo; g.fillRect(0, 0, w, h);
+    g.beginPath(); g.roundRect(40, 15, 48, 98, 20);
+    g.fillStyle = '#29251b'; g.fill();
+    g.lineWidth = 7; g.strokeStyle = '#fff'; g.stroke();
+    g.beginPath(); g.roundRect(49, 25, 30, 78, 14);
+    const lens = g.createLinearGradient(49, 25, 79, 103);
+    lens.addColorStop(0, 'rgba(255,255,255,0.25)');
+    lens.addColorStop(0.48, 'rgba(255,255,255,0.95)');
+    lens.addColorStop(1, 'rgba(255,255,255,0.48)');
+    g.fillStyle = lens; g.fill();
   });
-  const cabinetLampGlow = new THREE.InstancedMesh(
-    new THREE.PlaneGeometry(0.075, 0.075),
-    new THREE.MeshBasicMaterial({ map: lampGlowTex, color: 0xffffff, transparent: true, opacity: 0.58, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }),
+  const cabinetLampSprite = new THREE.InstancedMesh(
+    new THREE.PlaneGeometry(0.066, 0.084),
+    new THREE.MeshBasicMaterial({ map: lampSpriteTex, color: 0xffffff, transparent: true, depthWrite: false, toneMapped: false }),
     cabinetLampN
   );
-  cabinetLampGlow.renderOrder = 2;
-  const cabinetLampHousings = new THREE.InstancedMesh(
-    new THREE.BoxGeometry(0.025, 0.058, 0.02), cabinetDarkBrass, cabinetLampN
-  );
-  const cabinetLampBezels = new THREE.InstancedMesh(
-    new THREE.TorusGeometry(0.015, 0.0022, 6, 16), cabinetBrass, cabinetLampN
-  );
+  cabinetLampSprite.renderOrder = 2;
   const lampMatrix = new THREE.Matrix4(), lampQuat = new THREE.Quaternion(), lampScale = new THREE.Vector3(1, 1, 1);
   for (let sideIndex = 0; sideIndex < 2; sideIndex++) {
     const side = sideIndex === 0 ? -1 : 1;
@@ -812,23 +795,14 @@ export function buildScene(canvas,layout=buildLayout()) {
       const y = 0.78 + row * 0.215;
       const index = sideIndex * 9 + row;
       const x = side * 0.765;
-      lampMatrix.compose(new THREE.Vector3(x, y, 0.218), lampQuat, lampScale);
-      cabinetLampIM.setMatrixAt(index, lampMatrix);
-      cabinetLampIM.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
-      lampMatrix.compose(new THREE.Vector3(x, y, 0.232), lampQuat, lampScale);
-      cabinetLampGlow.setMatrixAt(index, lampMatrix);
-      cabinetLampGlow.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
-      lampMatrix.compose(new THREE.Vector3(x, y, 0.207), lampQuat, lampScale);
-      cabinetLampHousings.setMatrixAt(index, lampMatrix);
-      lampMatrix.compose(new THREE.Vector3(x, y, 0.221), lampQuat, lampScale);
-      cabinetLampBezels.setMatrixAt(index, lampMatrix);
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.233), lampQuat, lampScale);
+      cabinetLampSprite.setMatrixAt(index, lampMatrix);
+      cabinetLampSprite.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
     }
   }
-  cabinetLampIM.instanceColor.needsUpdate = true;
-  cabinetLampGlow.instanceColor.needsUpdate = true;
-  cabinetLampHousings.instanceMatrix.needsUpdate = true;
-  cabinetLampBezels.instanceMatrix.needsUpdate = true;
-  machineG.add(cabinetLampHousings, cabinetLampBezels, cabinetLampGlow, cabinetLampIM);
+  cabinetLampSprite.instanceColor.needsUpdate = true;
+  cabinetLampSprite.instanceMatrix.needsUpdate = true;
+  machineG.add(cabinetLampSprite);
 
   // 看板(沼)
   const marqueeTex = canvasTex(1024, 512, (g, w, h) => {
@@ -1079,7 +1053,7 @@ export function buildScene(canvas,layout=buildLayout()) {
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG,
     swampUniforms, bubbleIM, sheen,
-    neonMats, bulbIM, bulbN, cabinetLampIM, cabinetLampGlow, cabinetLampN,
+    neonMats, bulbIM, bulbN, cabinetLampIM: cabinetLampSprite, cabinetLampN,
     handleG, hKnobG, ballsIM,
     dust, dustGeo, dustVel, dustN,
     alcoveLight, swampLight, key,

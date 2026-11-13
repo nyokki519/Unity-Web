@@ -1,0 +1,16 @@
+{
+  "state": {
+    "phase": "play",
+    "auto": false,
+    "fired": 21,
+    "funds": 45800,
+    "gates": 0,
+    "lamps": 0.2448044866323471,
+    "boardChildren": 54,
+    "renderCalls": 199,
+    "triangles": 165098,
+    "scrollWidth": 390,
+    "bowlPulseLamp": 2.064866781234741
+  },
+  "errors": []
+}

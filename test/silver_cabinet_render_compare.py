@@ -40,7 +40,7 @@ with sync_playwright() as p:
             return intervals;
           };
           await capture(20); // Warm shader caches and let the camera settle.
-          const intervals=await capture(50);
+          const intervals=await capture(120);
           const sorted=[...intervals].sort((a,b)=>a-b);
           const percentile=p=>sorted[Math.min(sorted.length-1,Math.floor((sorted.length-1)*p))];
           const r=SILVER_GAME.refs.renderer;

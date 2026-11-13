@@ -8,13 +8,16 @@ const main = await readFile(new URL('../public/silver-ring/src/main.js', import.
 const fx = await readFile(new URL('../public/silver-ring/src/fx.js', import.meta.url), 'utf8');
 
 test('exterior trim and lamp instances are attached to the cabinet, outside board geometry', () => {
-  assert.match(scene, /cabinetEnamelTexture/);
-  assert.match(scene, /map: cabinetEnamelTexture/);
-  assert.match(scene, /cabinetLampGlow/);
-  assert.match(scene, /machineG\.add\(cabinetLampHousings, cabinetLampBezels, cabinetLampGlow, cabinetLampIM\)/);
+  assert.match(scene, /const cabMat = new THREE\.MeshStandardMaterial\(\{ color: 0x123b2c, roughness: 0\.31, metalness: 0\.58, envMapIntensity: 1\.0 \}\)/);
+  assert.doesNotMatch(scene, /cabinetEnamelTexture/);
+  assert.match(scene, /cabinetLampSprite/);
+  assert.match(scene, /machineG\.add\(cabinetLampSprite\)/);
+  assert.doesNotMatch(scene, /cabinetLampGlow|cabinetLampHousings|cabinetLampBezels/);
   assert.match(scene, /const cabinetLampN = 18/);
   assert.match(scene, /const badgeN = 2/);
-  assert.match(scene, /machineG\.add\(badgeFaces, badgeRings, cupBadges\)/);
+  assert.match(scene, /const cabinetBadges = new THREE\.InstancedMesh\(/);
+  assert.match(scene, /machineG\.add\(cabinetBadges\)/);
+  assert.doesNotMatch(scene, /badgeFaces|badgeRings|cupBadges/);
   assert.doesNotMatch(scene, /boardG\.add\(cabinetLamp/);
 });
 
