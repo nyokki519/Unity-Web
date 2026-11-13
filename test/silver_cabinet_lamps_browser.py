@@ -166,6 +166,27 @@ with sync_playwright() as p:
         assert not errors, errors
         rows.append({'width': w, 'height': h, 'controlsVisible': True, 'scrollWidth': w, 'errors': errors})
         page.close()
+    # Retina-like iPhone emulation: the app caps renderer DPR rather than scaling without bound.
+    page = browser.new_page(viewport={'width': 390, 'height': 844}, device_scale_factor=3, has_touch=True, is_mobile=True)
+    errors = []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    page.goto(base, wait_until='domcontentloaded')
+    page.wait_for_function('() => !!window.SILVER_GAME', timeout=60000)
+    page.locator('#btnStart').click()
+    page.wait_for_function("() => SILVER_GAME.S.phase === 'play'")
+    page.evaluate("SILVER_GAME.S.manualCamera = 'wide'")
+    page.wait_for_function("() => SILVER_GAME.fx.camMode === 'WIDE'")
+    retina = page.evaluate('''() => ({dpr:devicePixelRatio, rendererRatio:SILVER_GAME.refs.renderer.getPixelRatio(),
+      scrollWidth:document.documentElement.scrollWidth, width:innerWidth, boardChildren:SILVER_GAME.refs.boardG.children.length})''')
+    assert retina['dpr'] == 3, retina
+    assert retina['rendererRatio'] <= 2, retina
+    assert retina['scrollWidth'] <= retina['width'] and retina['boardChildren'] == 54, retina
+    page.evaluate('SILVER_GAME.toBowl(2)')
+    page.wait_for_function("() => SILVER_GAME.fx.cabinetPulse?.kind === 'bowl' && SILVER_GAME.fx.cabinetPulse.age > 0.1")
+    assert page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array) > 0.5')
+    assert not errors, errors
+    rows.append({'retinaIphone': retina, 'eventLampVisible': True, 'errors': errors})
+    page.close()
     browser.close()
 
 (out / 'browser-results.json').write_text(json.dumps(rows, ensure_ascii=False, indent=2))
