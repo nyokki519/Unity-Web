@@ -1,0 +1,52 @@
+{
+  "room": "2480",
+  "discards": 70,
+  "passedReactions": 15,
+  "clients": [
+    {
+      "status": "流局",
+      "deltas": [
+        "0点",
+        "0点",
+        "0点",
+        "0点"
+      ],
+      "riverCount": 70,
+      "width": 390
+    },
+    {
+      "status": "流局",
+      "deltas": [
+        "0点",
+        "0点",
+        "0点",
+        "0点"
+      ],
+      "riverCount": 70,
+      "width": 390
+    },
+    {
+      "status": "流局",
+      "deltas": [
+        "0点",
+        "0点",
+        "0点",
+        "0点"
+      ],
+      "riverCount": 70,
+      "width": 390
+    },
+    {
+      "status": "流局",
+      "deltas": [
+        "0点",
+        "0点",
+        "0点",
+        "0点"
+      ],
+      "riverCount": 70,
+      "width": 390
+    }
+  ],
+  "pageErrors": []
+}

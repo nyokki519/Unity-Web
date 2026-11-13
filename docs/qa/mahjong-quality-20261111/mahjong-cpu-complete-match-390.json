@@ -1,0 +1,22 @@
+{
+  "screen": "東風戦終了",
+  "rankRows": [
+    "琥珀 すみれ 36,200点",
+    "小野 コナ 28,100点",
+    "星乃 モカ 21,000点",
+    "深山 焙真 14,700点"
+  ],
+  "scores": [
+    36200,
+    28100,
+    21000,
+    14700
+  ],
+  "pointTotal": 100000,
+  "continuedHands": 5,
+  "humanDiscards": 57,
+  "passedReactions": 12,
+  "pageErrors": [],
+  "viewport": 390,
+  "documentWidth": 390
+}

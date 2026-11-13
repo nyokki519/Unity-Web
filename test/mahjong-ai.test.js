@@ -23,6 +23,50 @@ test('CPU takes a legal tsumo before riichi or discarding', () => {
   assert.deepEqual(chooseAction(match, 0, () => 0), {type: 'tsumo'});
 });
 
+test('CPU takes a value-positive kakan instead of short-circuiting to a discard', () => {
+  const match=discardMatch([0,1,2,9,10,11,18,19,20,27]);
+  match.players[0].melds=[{type:'pon',tiles:[31,31,31],open:true}];
+  match.players[0].hand.push(31);
+  match.drawnTile=31;
+  const kakan=legalActions(match,0).find(action=>action.type==='kakan');
+  assert.ok(kakan);
+  const action=chooseAction(match,0,()=>0);
+  assert.deepEqual(action,kakan);
+  const afterKan=applyAction(match,0,action,match.revision,10);
+  assert.equal(afterKan.phase,'DISCARD');
+  assert.equal(afterKan.players[0].melds[0].type,'kan');
+  assert.equal(afterKan.kanCount,1);
+  assert.equal(afterKan.rinshanSeat,0);
+  assert.equal(afterKan.doraIndicators.length,2);
+});
+
+test('CPU maps a reference ankan recommendation to a legal concealed-kan action',()=>{
+  const match=discardMatch([0,1,2,9,10,11,18,19,20,27,31,31,31,31]);
+  match.drawnTile=31;
+  const ankan=legalActions(match,0).find(action=>action.type==='ankan');
+  assert.ok(ankan);
+  assert.deepEqual(chooseAction(match,0,()=>0),ankan);
+});
+
+test('CPU maps a red-five kakan recommendation to the matching physical tile',()=>{
+  const match=discardMatch([0,1,2,9,10,11,18,19,20,27]);
+  match.players[0].melds=[{type:'pon',tiles:[4,4,4],open:true}];
+  match.players[0].hand.push(34);
+  match.drawnTile=34;
+  const kakan=legalActions(match,0).find(action=>action.type==='kakan');
+  assert.deepEqual(kakan,{type:'kakan',tile:34,meldIndex:0});
+  assert.deepEqual(chooseAction(match,0,()=>0),kakan);
+});
+
+test('CPU may take nine-terminals when its nine-type opening hand has no workable shape',()=>{
+ const match=discardMatch([0,8,9,27,28,29,30,31,32,1,3,5,10,12]);
+ assert.ok(legalActions(match,0).some(action=>action.type==='nine_terminals'));
+ assert.deepEqual(chooseAction(match,0,()=>0),{type:'nine_terminals'});
+ const kokushi=discardMatch([0,8,9,17,18,26,27,28,29,30,31,32,33,1]);
+ assert.ok(legalActions(kokushi,0).some(action=>action.type==='nine_terminals'));
+ assert.notEqual(chooseAction(kokushi,0,()=>0).type,'nine_terminals','the CPU should keep a promising kokushi-shaped hand');
+});
+
 test('CPU takes a legal ron before a meld claim', () => {
   const match = reactionMatch([0,1,2,9,10,11,18,19,20,27,27,27,31], 31);
   assert.deepEqual(chooseAction(match, 1, () => 0), {type: 'ron'});

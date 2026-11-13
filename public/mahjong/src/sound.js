@@ -1,11 +1,13 @@
 /** Licensed Kobalab WAV cues with a quiet Web Audio fallback, both gesture-gated. */
-export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
+export function createMahjongSound({audioContextFactory,assetAudioFactory,fetchImpl=globalThis.fetch}={}) {
   const AudioContextClass=globalThis.AudioContext||globalThis.webkitAudioContext;
   const factory=audioContextFactory||(AudioContextClass?()=>new AudioContextClass():null);
   const audioFactory=assetAudioFactory||(typeof globalThis.Audio==='function'?src=>new Audio(src):null);
   let context=null, enabled=false, supported=!!audioFactory||!!factory;
   const activeVoices=[];
   const activeAssets=new Set();
+  const decodedAssets=new Map();
+  let useWebAudioAssets=false;
   const maxVoices=12;
   const cues={tile:'beep.wav',draw:'beep.wav',discard:'dahai11.wav',call:'pon.wav',chi:'chii.wav',pon:'pon.wav',kan:'kan.wav',ankan:'kan.wav',kakan:'kan.wav',riichi:'richi.wav',win:'tsumo.wav',tsumo:'tsumo.wav',ron:'ron.wav',loss:'beep.wav',result:'nc43994.wav'};
   const volume={tile:.14,draw:.12,discard:.2,call:.22,chi:.22,pon:.22,kan:.24,ankan:.2,kakan:.22,riichi:.25,win:.3,tsumo:.3,ron:.3,loss:.12,result:.18};
@@ -21,11 +23,26 @@ export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
     loss:[[392,0,.14,.019,'triangle'],[329.63,.12,.17,.02,'triangle'],[261.63,.26,.25,.022,'triangle']],
     result:[[587.33,0,.12,.02,'sine'],[739.99,.1,.14,.022,'sine'],[880,.2,.21,.025,'sine']]
   };
+  const fallbackCues={chi:'call',pon:'call',kan:'call',ankan:'call',kakan:'call',ron:'win',tsumo:'win'};
 
   function enableFromGesture(){
     if(!supported)return false;
     try{
-      if(!audioFactory){context ||= factory?.();if(!context){supported=false;return false;}const resumed=context.resume?.();if(resumed?.catch)resumed.catch(()=>{enabled=false;});}
+      if(factory){
+        context ||= factory?.();
+        if(context){
+          const resumed=context.resume?.();if(resumed?.catch)resumed.catch(()=>{enabled=false;});
+          useWebAudioAssets=typeof context.decodeAudioData==='function'&&typeof fetchImpl==='function';
+          if(useWebAudioAssets)for(const file of new Set(Object.values(cues)))if(!decodedAssets.has(file)){
+            const promise=Promise.resolve().then(()=>fetchImpl(`/mahjong/assets/kobalab/audio/${file}`,{credentials:'same-origin'}))
+              .then(response=>{if(!response?.ok)throw new Error(`Unable to load audio cue ${file}`);return response.arrayBuffer();})
+              .then(bytes=>context.decodeAudioData(bytes)).then(buffer=>{decodedAssets.set(file,buffer);return buffer;})
+              .catch(()=>{decodedAssets.set(file,null);return null;});
+            decodedAssets.set(file,promise);
+          }
+        }else if(!audioFactory){supported=false;return false;}
+      }
+      if(!context&&!audioFactory){supported=false;return false;}
       enabled=true;
       return true;
     }catch{
@@ -33,7 +50,21 @@ export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
     }
   }
 
-  function disable(){enabled=false;for(const voice of activeAssets){try{voice.pause?.();voice.currentTime=0;}catch{}}activeAssets.clear();}
+  function releaseVoice(voice){
+    const index=activeVoices.indexOf(voice);
+    if(index!==-1)activeVoices.splice(index,1);
+    try{voice.oscillator.disconnect?.();voice.gain.disconnect?.();}catch{}
+  }
+
+  function disable(){
+    enabled=false;
+    for(const voice of activeAssets){try{voice.pause?.();voice.currentTime=0;}catch{}}
+    activeAssets.clear();
+    for(const voice of [...activeVoices]){
+      try{voice.source.stop(context.currentTime);}catch{}
+      releaseVoice(voice);
+    }
+  }
 
   function tone({frequency,endFrequency=frequency,at,duration,volume,type}){
     const oscillator=context.createOscillator(),gain=context.createGain();
@@ -44,13 +75,44 @@ export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
     gain.gain.exponentialRampToValueAtTime(volume,at+.008);
     gain.gain.exponentialRampToValueAtTime(.0001,at+duration);
     oscillator.connect(gain);gain.connect(context.destination);
-    oscillator.start(at);oscillator.stop(at+duration+.008);
-    activeVoices.push(at+duration+.008);
+    const voice={source:oscillator,gain,endsAt:at+duration+.008};
+    activeVoices.push(voice);
+    oscillator.onended=()=>releaseVoice(voice);
+    oscillator.start(at);oscillator.stop(voice.endsAt);
+  }
+
+  function playDecodedAsset(name,buffer,at){
+    const source=context.createBufferSource(),gain=context.createGain();
+    source.buffer=buffer;source.connect(gain);gain.connect(context.destination);
+    gain.gain.setValueAtTime(volume[name]??.18,at);
+    const voice={source,gain,endsAt:at+buffer.duration+.01};
+    activeVoices.push(voice);source.onended=()=>releaseVoice(voice);source.start(at);return true;
+  }
+
+  function playProcedural(name,at){
+    if(!context||context.state==='suspended'||context.state==='closed')return false;
+    const pattern=patterns[fallbackCues[name]||name];
+    if(!pattern||activeVoices.length+pattern.length>maxVoices)return false;
+    try{
+      for(const [frequency,offset,duration,volume,type,endFrequency] of pattern)tone({frequency,endFrequency,at:at+offset,duration,volume,type});
+      return true;
+    }catch{return false;}
   }
 
   function cue(name){
     if(!enabled)return false;
     const file=cues[name];if(!file)return false;
+    const at=context?.currentTime||0;
+    for(const voice of [...activeVoices])if(voice.endsAt<=at)releaseVoice(voice);
+    if(useWebAudioAssets){
+      const buffer=decodedAssets.get(file);
+      if(typeof buffer?.then==='function')return false;
+      if(buffer){
+        if(!context||context.state!=='running'||activeVoices.length>=maxVoices)return false;
+        try{return playDecodedAsset(name,buffer,at);}catch{return false;}
+      }
+      return playProcedural(name,at);
+    }
     if(audioFactory){
       if(activeAssets.size>=10)return false;
       try{
@@ -64,18 +126,7 @@ export function createMahjongSound({audioContextFactory,assetAudioFactory}={}) {
         return true;
       }catch{return false;}
     }
-    if(!context||context.state==='suspended'||context.state==='closed')return false;
-    const pattern=patterns[name];
-    if(!pattern)return false;
-    try{
-      const at=context.currentTime;
-      for(let i=activeVoices.length-1;i>=0;i--)if(activeVoices[i]<=at)activeVoices.splice(i,1);
-      if(activeVoices.length+pattern.length>maxVoices)return false;
-      for(const [frequency,offset,duration,volume,type,endFrequency] of pattern){
-        tone({frequency,endFrequency,at:at+offset,duration,volume,type});
-      }
-      return true;
-    }catch{return false;}
+    return playProcedural(name,at);
   }
 
   return {get available(){return supported;},get enabled(){return enabled;},enableFromGesture,disable,cue};

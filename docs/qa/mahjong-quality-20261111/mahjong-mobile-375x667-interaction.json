@@ -1,0 +1,18 @@
+{
+  "viewport": {
+    "w": 375,
+    "h": 667
+  },
+  "doc": {
+    "w": 375,
+    "h": 948
+  },
+  "status": "あなたの一手",
+  "discardReady": true,
+  "pointsVisible": true,
+  "handCount": 14,
+  "actionTop": 502.859375,
+  "scrollY": 252,
+  "scrollMax": 281,
+  "errors": []
+}

@@ -1,5 +1,5 @@
 import { tileType } from './tiles.js';
-import { enumerateWinningForms, isTerminalOrHonor } from './hand.js';
+import { ORPHANS, enumerateWinningForms, isTerminalOrHonor } from './hand.js';
 import { basicPoints } from './score.js';
 
 function nextDora(indicator) {
@@ -31,8 +31,26 @@ function suitYaku(tiles, closed, add) {
   if (tiles.every(isTerminalOrHonor)) add('honroutou',2);
   if (tiles.every(t => !isTerminalOrHonor(t))) add('tanyao',1);
 }
-function yakumanFor(form, tiles, groups, concealedTriplets, closed, add) {
-  if (form.type === 'kokushi') add('kokushi',13,1);
+function beforeWinningTile(concealed,winningType){
+  const remaining=[...concealed],index=remaining.findIndex(tile=>tileType(tile)===winningType);
+  if(index>=0)remaining.splice(index,1);
+  return remaining;
+}
+function hasThirteenSidedKokushi(concealed,winningType){
+  const before=beforeWinningTile(concealed,winningType),types=before.map(tileType);
+  return types.length===13&&ORPHANS.every(type=>types.filter(value=>value===type).length===1);
+}
+function hasNineSidedChuuren(concealed,winningType){
+  const before=beforeWinningTile(concealed,winningType),types=before.map(tileType);
+  if(types.length!==13||types.some(type=>type<0||type>=27)||new Set(types.map(type=>Math.floor(type/9))).size!==1)return false;
+  const counts=Array(9).fill(0);for(const type of types)counts[type%9]++;
+  return counts[0]===3&&counts[8]===3&&counts.slice(1,8).every(count=>count===1);
+}
+function yakumanFor(context,form, concealed,winningType,tiles, groups, concealedTriplets, closed, add) {
+  const tsumo=context.winType==='tsumo';
+  if(context.tenhou)add('tenhou',13,1);
+  if(context.chiihou)add('chiihou',13,1);
+  if (form.type === 'kokushi') add('kokushi',13,hasThirteenSidedKokushi(concealed,winningType)?2:1);
   if (tiles.every(t => t >= 27)) add('tsuuiisou',13,1);
   if (tiles.every(t => t < 27 && isTerminalOrHonor(t))) add('chinroutou',13,1);
   if (tiles.every(t => [19,20,21,23,25,32].includes(t))) add('ryuuiisou',13,1);
@@ -40,17 +58,17 @@ function yakumanFor(form, tiles, groups, concealedTriplets, closed, add) {
   const trips = groups.filter(g => g.type !== 'chi').map(g => g.tiles[0]);
   if ([31,32,33].every(t => trips.includes(t))) add('daisangen',13,1);
   const winds = [27,28,29,30].filter(t => trips.includes(t)).length;
-  if (winds === 4) add('daisuushii',13,1);
+  if (winds === 4) add('daisuushii',13,2);
   else if (winds === 3 && form.pair >= 27 && form.pair < 31) add('shousuushii',13,1);
-  if (concealedTriplets === 4) add('suuankou',13,1);
+  if (concealedTriplets === 4) add('suuankou',13,form.pair===winningType?2:1);
   if (groups.filter(g => g.type === 'kan').length === 4) add('suukantsu',13,1);
   if (closed && groups.every(g => g.type !== 'kan') && tiles.every(t => t < 27 && Math.floor(t/9) === Math.floor(tiles[0]/9))) {
     const counts = Array(9).fill(0);
     for (const t of tiles) counts[t%9]++;
-    if (counts[0] >= 3 && counts[8] >= 3 && counts.slice(1,8).every(n => n >= 1)) add('chuuren',13,1);
+    if (counts[0] >= 3 && counts[8] >= 3 && counts.slice(1,8).every(n => n >= 1)) add('chuuren',13,hasNineSidedChuuren(concealed,winningType)?2:1);
   }
 }
-function scoreForm(context, form, placement, concealed, closed) {
+function scoreForm(context, form, placement, concealed, closed,winningType) {
   const groups = form.groups ?? [];
   const tsumo = context.winType === 'tsumo';
   const seatWind = 26+(context.seatWind ?? 1);
@@ -58,8 +76,8 @@ function scoreForm(context, form, placement, concealed, closed) {
   const allTiles = [...concealed,...(context.melds ?? []).flatMap(m => m.tiles)].map(tileType);
   const concealedTriplets = groups.filter((g,i) => g.type !== 'chi' && !g.open && (tsumo || i !== placement.group)).length;
   const yaku = [];
-  const add = (id,han,yakuman) => yaku.push(yakuman ? {id,han,yakuman} : {id,han});
-  yakumanFor(form,allTiles,groups,concealedTriplets,closed,add);
+  const add = (id,han,yakuman) => yaku.push(yakuman ? {id,han:han*yakuman,yakuman} : {id,han});
+  yakumanFor(context,form,concealed,winningType,allTiles,groups,concealedTriplets,closed,add);
   if (yaku.length) return {yaku,han:yaku.reduce((sum,y) => sum+y.han,0),fu:0};
   if (closed && (context.doubleRiichi || context.riichi)) add(context.doubleRiichi ? 'double-riichi':'riichi',context.doubleRiichi ? 2:1);
   if (closed && (context.doubleRiichi || context.riichi) && context.ippatsu) add('ippatsu',1);
@@ -142,7 +160,7 @@ export function evaluateYaku(context) {
   const candidates = [];
   for (const form of enumerateWinningForms(concealed,melds)) {
     for (const placement of waitPlacements(form,winningType,4-melds.length)) {
-      const result = scoreForm(context,form,placement,concealed,closed);
+      const result = scoreForm(context,form,placement,concealed,closed,winningType);
       if (result) candidates.push(result);
     }
   }

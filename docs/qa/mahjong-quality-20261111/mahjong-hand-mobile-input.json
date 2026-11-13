@@ -1,0 +1,95 @@
+[
+  {
+    "width": 375,
+    "doc": 375,
+    "handWidth": 327,
+    "handContent": 661,
+    "handScroll": 334,
+    "selected": 2,
+    "tiles": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "buttons": true,
+    "settings": [
+      44,
+      44,
+      44
+    ]
+  },
+  {
+    "width": 390,
+    "doc": 390,
+    "handWidth": 337,
+    "handContent": 661,
+    "handScroll": 324,
+    "selected": 1,
+    "tiles": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "buttons": true,
+    "settings": [
+      44,
+      44,
+      44
+    ]
+  },
+  {
+    "width": 414,
+    "doc": 414,
+    "handWidth": 359,
+    "handContent": 661,
+    "handScroll": 302,
+    "selected": 1,
+    "tiles": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "buttons": true,
+    "settings": [
+      44,
+      44,
+      44
+    ]
+  }
+]

@@ -6,10 +6,18 @@ export class MahjongError extends Error {constructor(code){super(code);this.code
 const fail=code=>{throw new MahjongError(code);};
 const hash=token=>createHash('sha256').update(token).digest('hex');
 const nameFor=value=>{if(typeof value!=='string')fail('BAD_NAME');const name=value.trim();if(!name||Array.from(name).length>20||/[\p{Cc}\p{Cf}]/u.test(name))fail('BAD_NAME');return name;};
+const ACTION_ID_HISTORY=256;
 export class MahjongService {
   constructor(store,{engine=matchEngine,now=Date.now,roomTtlMs=6*60*60*1000,seed=()=>randomInt(0x100000000),commandLimit=100}={}){
     this.store=store;this.engine=engine;this.now=now;this.roomTtlMs=roomTtlMs;this.seed=seed;this.commandLimit=commandLimit;this.limits=new Map();this.onChange=()=>{};
-    this.rooms=new Map(store.load(now()).map(room=>{for(const p of room.players)p.connected=false;return[room.code,room];}));
+    const loaded=store.load(now());
+    for(const room of loaded){
+      let migrated=false;
+      for(const ids of room.actionIds||[])if(Array.isArray(ids)&&ids.length>ACTION_ID_HISTORY){ids.splice(0,ids.length-ACTION_ID_HISTORY);migrated=true;}
+      for(const player of room.players||[])if(player)player.connected=false;
+      if(migrated)store.save(room);
+    }
+    this.rooms=new Map(loaded.map(room=>[room.code,room]));
   }
   get(code){const room=this.rooms.get(String(code));if(!room)fail('ROOM_NOT_FOUND');if(room.expiresAt<=this.now()){this.expire(room);fail('ROOM_NOT_FOUND');}return room;}
   expire(room){this.rooms.delete(room.code);this.store.remove(room.code);for(const key of this.limits.keys())if(key.startsWith(`${room.code}:`))this.limits.delete(key);this.onChange({...room,expired:true});}
@@ -55,7 +63,7 @@ export class MahjongService {
         room.match=this.engine.applyAction(structuredClone(room.match),seat,action,room.match.revision,now);
       }
     }catch(error){return reject(error.code||'ILLEGAL_ACTION');}
-    room.revision++;if(room.actionIds[seat])room.actionIds[seat].push(message.actionId);this.changed(room);return{ok:true,actionId:message.actionId,revision:room.revision,state:message.action==='leave'?null:this.view(room,seat)};
+    room.revision++;if(room.actionIds[seat]){room.actionIds[seat].push(message.actionId);if(room.actionIds[seat].length>ACTION_ID_HISTORY)room.actionIds[seat].splice(0,room.actionIds[seat].length-ACTION_ID_HISTORY);}this.changed(room);return{ok:true,actionId:message.actionId,revision:room.revision,state:message.action==='leave'?null:this.view(room,seat)};
   }
   settle(room,now){
     const match=room.match;

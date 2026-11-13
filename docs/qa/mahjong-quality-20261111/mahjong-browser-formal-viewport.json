@@ -1,0 +1,110 @@
+[
+  {
+    "viewport": 375,
+    "document": 375,
+    "table": 345,
+    "hand": 327,
+    "portrait": [
+      {
+        "loaded": true,
+        "w": 768
+      }
+    ],
+    "targets": [
+      {
+        "label": "音声 オフ",
+        "w": 50,
+        "h": 44,
+        "name": "音声 オフ"
+      },
+      {
+        "label": "動きを抑える",
+        "w": 66,
+        "h": 44,
+        "name": "動きを抑える"
+      },
+      {
+        "label": "遊び方",
+        "w": 44,
+        "h": 44,
+        "name": "遊び方"
+      }
+    ],
+    "labels": 0,
+    "points": "星乃 モカ\n25,000点",
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "viewport": 390,
+    "document": 390,
+    "table": 359,
+    "hand": 337,
+    "portrait": [
+      {
+        "loaded": true,
+        "w": 768
+      }
+    ],
+    "targets": [
+      {
+        "label": "音声 オフ",
+        "w": 59,
+        "h": 44,
+        "name": "音声 オフ"
+      },
+      {
+        "label": "動きを抑える",
+        "w": 76,
+        "h": 44,
+        "name": "動きを抑える"
+      },
+      {
+        "label": "遊び方",
+        "w": 46,
+        "h": 44,
+        "name": "遊び方"
+      }
+    ],
+    "labels": 0,
+    "points": "星乃 モカ\n25,000点",
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "viewport": 414,
+    "document": 414,
+    "table": 381,
+    "hand": 359,
+    "portrait": [
+      {
+        "loaded": true,
+        "w": 768
+      }
+    ],
+    "targets": [
+      {
+        "label": "音声 オフ",
+        "w": 59,
+        "h": 44,
+        "name": "音声 オフ"
+      },
+      {
+        "label": "動きを抑える",
+        "w": 76,
+        "h": 44,
+        "name": "動きを抑える"
+      },
+      {
+        "label": "遊び方",
+        "w": 46,
+        "h": 44,
+        "name": "遊び方"
+      }
+    ],
+    "labels": 0,
+    "points": "星乃 モカ\n25,000点",
+    "pageErrors": [],
+    "failedRequests": []
+  }
+]

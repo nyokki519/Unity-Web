@@ -1,0 +1,13 @@
+{
+  "controller": "http://127.0.0.1:3033/sw.js?v=63",
+  "cached_yaku": true,
+  "started": true,
+  "viewport": {
+    "width": 390,
+    "doc": 390
+  },
+  "points_visible": true,
+  "hand_tiles": 14,
+  "tile_images_loaded": true,
+  "errors": []
+}

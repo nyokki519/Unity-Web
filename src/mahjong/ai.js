@@ -160,6 +160,8 @@ export function chooseAction(match, seat, random = Math.random) {
     if (!cache.has(key)) cache.set(key, shanten(hand, melds));
     return cache.get(key);
   };
+  const nineTerminals=actions.find(action=>action.type==='nine_terminals');
+  if(nineTerminals&&shanten(player.hand,player.melds.length)>=3)return nineTerminals;
   const reference=referenceAction(match,seat,actions);
   if(reference)return reference;
   const riichi = actions.filter(action => action.type === 'riichi_discard');

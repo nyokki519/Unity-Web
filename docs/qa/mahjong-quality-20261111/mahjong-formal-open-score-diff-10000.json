@@ -1,0 +1,26 @@
+{
+  "seed": 20261113,
+  "samples": 10000,
+  "compared": 4024,
+  "noYaku": 5976,
+  "mismatches": 0,
+  "byMeld": {
+    "chi": {
+      "samples": 3672,
+      "compared": 1272,
+      "mismatches": 0
+    },
+    "pon": {
+      "samples": 3367,
+      "compared": 1449,
+      "mismatches": 0
+    },
+    "kan": {
+      "samples": 2961,
+      "compared": 1303,
+      "mismatches": 0
+    }
+  },
+  "examples": [],
+  "coverage": "Generated complete hands with one exposed chi, pon, or kan; alternating ron and tsumo and varied winds. For tsumo, the winning tile is removed from the concealed base and appended as the draw, matching the game adapter. Compares han/fu or yakuman units to pinned Kobalab. No bonus tiles, multiple melds, optional rules or match progression."
+}

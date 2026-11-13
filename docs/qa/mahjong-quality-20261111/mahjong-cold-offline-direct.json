@@ -1,0 +1,26 @@
+{
+  "worker": [
+    {
+      "url": "http://127.0.0.1:3033/sw.js?v=64",
+      "state": "activated"
+    }
+  ],
+  "cached_assets": {
+    "/mahjong/": true,
+    "/mahjong/index.html": true,
+    "/mahjong/src/main.js": true,
+    "/mahjong/src/app.js": true,
+    "/mahjong/src/yaku-labels.js": true,
+    "/mahjong/src/cpu-game.js": true,
+    "/mahjong/assets/kobalab/tiles/m1.gif": true
+  },
+  "direct_offline_navigation": true,
+  "hand": 14,
+  "tile_images_loaded": true,
+  "width": {
+    "w": 390,
+    "d": 390
+  },
+  "errors": [],
+  "failed_requests": []
+}
