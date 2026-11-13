@@ -510,11 +510,17 @@ export class FX {
 
     // ---- 霓虹 / 金属导光线 ----
     const mode = this.neonMode;
-    const neonSignature = `${mode}:${reducedMotion}`;
+    const pulse = this.cabinetPulse;
+    const pulseActive = pulse && pulse.age < CABINET_PULSE_SECONDS[pulse.kind];
+    const pulseKey = pulseActive ? `${pulse.kind}:${pulse.tier}:${pulse.win}` : 'idle';
+    const neonSignature = `${mode}:${reducedMotion}:${pulseKey}`;
     if (!reducedMotion || neonSignature !== this._neonSignature) {
       this._neonSignature = neonSignature;
       R.neonMats.forEach((m, i) => {
-        if (mode === 'jackpot') {
+        if (pulseActive) {
+          const gain = pulse.kind === 'jackpot' ? 1.18 : 1.04;
+          m.color.setRGB(cabinetState.rgb[0] * gain, cabinetState.rgb[1] * gain, cabinetState.rgb[2] * gain);
+        } else if (mode === 'jackpot') {
           const b = reducedMotion ? 0.9 : 0.8 + 0.2 * Math.sin(t * 8 + i * 0.42);
           m.color.setRGB(1.35 * b, 1.06 * b, 0.62 * b);
         } else if (mode === 'tension') {
@@ -529,8 +535,6 @@ export class FX {
 
     // ---- 看板灯泡跑马 ----
     if (!this._bulbAcc) this._bulbAcc = 0;
-    const pulse = this.cabinetPulse;
-    const pulseActive = pulse && pulse.age < CABINET_PULSE_SECONDS[pulse.kind];
     const bulbSignature = `${mode}:${reducedMotion}:${pulseActive ? pulse.kind : 'idle'}:${pulseActive ? pulse.tier : 0}:${pulseActive ? pulse.win : false}`;
     if (!reducedMotion) this._bulbAcc = Math.min(0.066, this._bulbAcc + dt);
     if ((!reducedMotion && this._bulbAcc > 0.033)

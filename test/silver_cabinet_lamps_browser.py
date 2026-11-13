@@ -46,6 +46,7 @@ with sync_playwright() as p:
           const c = SILVER_GAME.refs.bulbIM.instanceColor.array;
           return Math.max(...Array.from({length:SILVER_GAME.refs.bulbN}, (_, i) => c[i*3+1] - c[i*3]));
         }''')
+        idle_line_palette = page.evaluate('''() => Math.max(...SILVER_GAME.refs.neonMats.map(m => m.color.g - m.color.r))''')
         page.screenshot(path=str(out / f'{w}x{h}-idle.png'))
 
         # Tier 2 reads farther along the rail path than tier 0 without touching game state.
@@ -78,9 +79,11 @@ with sync_playwright() as p:
           const c = SILVER_GAME.refs.bulbIM.instanceColor.array;
           return Math.max(...Array.from({length:SILVER_GAME.refs.bulbN}, (_, i) => c[i*3+1] - c[i*3]));
         }''')
+        event_line_palette = page.evaluate('''() => Math.max(...SILVER_GAME.refs.neonMats.map(m => m.color.g - m.color.r))''')
         assert event_max > idle_max + 0.2, (idle_max, event_max)
         assert event_glow_max > idle_glow_max + 0.08, (idle_glow_max, event_glow_max)
         assert event_bulb_palette > idle_bulb_palette + 0.2, (idle_bulb_palette, event_bulb_palette)
+        assert event_line_palette > idle_line_palette + 0.2, (idle_line_palette, event_line_palette)
         page.screenshot(path=str(out / f'{w}x{h}-event.png'))
 
         page.evaluate("SILVER_GAME.S.manualCamera = 'wide'; SILVER_GAME.S.jackpotLock = true; SILVER_GAME.fx.jackpotOn = true; SILVER_GAME.fx.setNeonMode('jackpot'); SILVER_GAME.fx.pulseCabinet('jackpot', 2, true)")
@@ -125,7 +128,7 @@ with sync_playwright() as p:
         assert page.evaluate('SILVER_GAME.S.fired') == 1
         assert page.evaluate('SILVER_GAME.S.funds') == 49800
         assert not errors, errors
-        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleGlowMax': idle_glow_max, 'eventGlowMax': event_glow_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'tierChaseAndMissPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
+        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleGlowMax': idle_glow_max, 'eventGlowMax': event_glow_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'idleLinePalette': idle_line_palette, 'eventLinePalette': event_line_palette, 'tierChaseAndMissPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
         page.close()
     for w, h in [(375, 667), (844, 390)]:
         page = browser.new_page(viewport={'width': w, 'height': h}, device_scale_factor=1, has_touch=True, is_mobile=True)
