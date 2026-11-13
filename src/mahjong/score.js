@@ -18,6 +18,7 @@ export function calculatePayments(context) {
   const {type, honba = 0, riichiPot = 0} = context;
   const deltas = [0,0,0,0];
   const honbaDelta = [0,0,0,0];
+  if (type !== undefined && !['win','nagashi','exhaustive','abortive'].includes(type)) throw new RangeError('Invalid result type');
   if (!nonnegative(honba) || !nonnegative(riichiPot)) throw new RangeError('Invalid counters');
   if (type === 'abortive') return {deltas,honbaDelta,riichiPotWinner:null};
   if (type === 'exhaustive') {

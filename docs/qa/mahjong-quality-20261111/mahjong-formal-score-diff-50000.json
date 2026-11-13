@@ -1,0 +1,9 @@
+{
+  "seed": 20261113,
+  "samples": 50000,
+  "compared": 37380,
+  "noYaku": 12620,
+  "mismatches": 0,
+  "examples": [],
+  "coverage": "Generated closed standard four-group-and-pair hands; alternating ron/tsumo. This is a differential smoke test, not exhaustive proof and does not cover calls, dora, or optional rule variants."
+}

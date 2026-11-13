@@ -89,10 +89,10 @@ test('dragon and matching seat/round wind triplets award separate yakuhai', () =
   assert.deepEqual(names(result).sort(), ['yakuhai-dragon-31','yakuhai-round','yakuhai-seat']);
   assert.equal(result.fu, 50);
 });
-test('seven pairs have fixed 25 fu and thirteen orphans score one yakuman', () => {
+test('seven pairs have fixed 25 fu and a single-wait thirteen orphans scores one yakuman', () => {
   const pairs = evaluateYaku({...base,concealed:[0,0,2,2,10,10,12,12,20,20,28,28,33,33],winningTile:33});
   assert.deepEqual(pairs, {yaku:[{id:'chiitoitsu',han:2}],han:2,fu:25});
-  const orphans = evaluateYaku({...base,concealed:[0,8,9,17,18,26,27,28,29,30,31,32,33,33],winningTile:33});
+  const orphans = evaluateYaku({...base,concealed:[0,0,8,9,17,18,26,27,28,29,30,31,32,33],winningTile:33});
   assert.deepEqual(orphans, {yaku:[{id:'kokushi',han:13,yakuman:1}],han:13,fu:0});
 });
 test('ron rejects permanent, temporary and riichi furiten while tsumo remains legal', () => {
@@ -164,6 +164,37 @@ test('yakuman triplet and honor patterns override ordinary yaku and dora', () =>
     assert.equal(result.yaku.every(y => y.yakuman), true);
   }
 });
+
+test('tenhou and chiihou are first-draw yakuman in the scoring context',()=>{
+ const hand=[0,1,2,9,10,11,18,19,20,27,27,27,31,31];
+ for(const flag of ['tenhou','chiihou']){
+  const result=evaluateYaku({...base,concealed:hand,winningTile:31,winType:'tsumo',[flag]:true,doraIndicators:[31]});
+  assert.equal(result.yaku[0].id,flag);assert.equal(result.yaku[0].yakuman,1);assert.equal(result.han,13);assert.equal(result.fu,0);
+  assert.equal(result.yaku.some(yaku=>yaku.id==='dora'),false,'dora does not add to yakuman');
+ }
+});
+
+test('double-yakuman waits and four big winds use two-limit payment units',()=>{
+ const cases=[
+  {id:'kokushi',yakuman:2,hand:[0,8,9,17,18,26,27,28,29,30,31,32,33,33],winningTile:33},
+  {id:'suuankou',yakuman:2,hand:[0,0,0,9,9,9,18,18,18,27,27,27,31,31],winningTile:31,winType:'ron'},
+  {id:'suuankou',yakuman:2,hand:[0,0,0,9,9,9,18,18,18,27,27,27,31,31],winningTile:31,winType:'tsumo'},
+  {id:'chuuren',yakuman:2,hand:[0,0,0,1,2,3,4,4,5,6,7,8,8,8],winningTile:4},
+  {id:'daisuushii',yakuman:5,hand:[27,27,27,28,28,28,29,29,29,30,30,30,31,31],winningTile:31}
+ ];
+ for(const fixture of cases){
+  const result=evaluateYaku({...base,concealed:fixture.hand,winningTile:fixture.winningTile,winType:fixture.winType||'tsumo'});
+  assert.equal(result.yaku.find(yaku=>yaku.id===fixture.id)?.yakuman,2,fixture.id);
+  assert.equal(result.yaku.reduce((sum,yaku)=>sum+(yaku.yakuman||0),0),fixture.yakuman,fixture.id);
+  assert.equal(result.han,13*fixture.yakuman,fixture.id);
+ }
+ assert.deepEqual(calculatePayments({winner:1,loser:2,dealer:0,winType:'ron',han:26,fu:0,yakuman:2}).deltas,[0,64000,-64000,0]);
+});
+test('ambiguous hand selects the higher-value suuankou tanki decomposition',()=>{
+ const result=evaluateYaku({...base,concealed:[0,0,0,1,1,1,2,2,2,3,3,3,4,4],winningTile:4,winType:'tsumo'});
+ assert.equal(result.yaku.find(yaku=>yaku.id==='suuankou')?.yakuman,2);
+ assert.equal(result.han,26);
+});
 const paymentFixtures = [
   {winner:1,loser:2,dealer:0,winType:'ron',han:1,fu:30,want:[0,1000,-1000,0]},
   {winner:0,loser:2,dealer:0,winType:'ron',han:1,fu:30,want:[1500,0,-1500,0]},
@@ -205,11 +236,14 @@ test('multiple nagashi mangan winners exchange mangan payments and award the rii
 test('invalid scoring contexts are rejected instead of creating NaN or fractional deltas', () => {
   assert.throws(() => calculatePayments({winner:1,loser:1,dealer:0,winType:'ron',han:1,fu:30}), /invalid/i);
   assert.throws(() => calculatePayments({winner:1,loser:2,dealer:0,winType:'ron',han:0,fu:30}), /invalid/i);
+  assert.throws(() => calculatePayments({type:'garbage',winner:1,loser:2,dealer:0,winType:'ron',han:1,fu:30}), /invalid/i);
+  assert.deepEqual(calculatePayments({type:'win',winner:1,loser:2,dealer:0,winType:'ron',han:1,fu:30}),calculatePayments({winner:1,loser:2,dealer:0,winType:'ron',han:1,fu:30}));
 });
-test('multiple yakuman remain separate for the payment caller to count', () => {
+test('multiple and double yakuman remain separate for the payment caller to count', () => {
   const result = evaluateYaku({...base,concealed:[27,27,27,28,28,28,29,29,29,30,30,30,31,31],winningTile:31,winType:'tsumo'});
   assert.deepEqual(names(result).sort(), ['daisuushii','suuankou','tsuuiisou']);
-  assert.equal(result.han,39);
+  assert.equal(result.yaku.reduce((sum,yaku)=>sum+(yaku.yakuman||0),0),5);
+  assert.equal(result.han,65);
 });
 test('three concealed triplets and small three dragons are ordinary two-han yaku', () => {
   const result = evaluateYaku({...base,concealed:[31,31,31,32,32,32,0,0,0,9,10,11,33,33],winningTile:10});

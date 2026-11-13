@@ -62,8 +62,16 @@ test('missing engine is an explicit unavailable state, never a fabricated game',
   assert.equal(app.state.screen, 'mode'); assert.equal(app.state.view, null); assert.match(renderApp(app.state), /接続|準備/);
 });
 test('table hides opponents concealed hands while showing one tile back per real concealed tile', async () => {
-  const [, { renderApp }] = await load(); const markup = renderApp({ screen: 'table', characterId: 'moka', view: { phase: 'DISCARD', players: [{name:'自分',hand:['m1']},{name:'相手',hand:['SECRET'],handCount:13}], legalActions: [] } });
+  const [, { renderApp }] = await load(); const markup = renderApp({ screen: 'table', characterId: 'moka', view: { phase: 'DISCARD', players: [{name:'自分',points:25000,hand:['m1']},{name:'相手',hand:['SECRET'],points:25000,handCount:13}], legalActions: [] } });
   assert.doesNotMatch(markup, /SECRET/); assert.match(markup, /13枚/); assert.equal((markup.match(/class="tile-back"/g)||[]).length,13);
+  assert.match(markup,/class="opponent-hand-count"[^>]*>手牌 13枚/, 'opponent hand count stays together when metadata wraps on phones');
+  assert.match(markup,/class="opponent-points"[^>]*>25,000点/, 'opponent score uses grouped thousands for faster reading');
+  assert.match(markup,/<span>25,000点<\/span>/, 'own score uses grouped thousands for faster reading');
+});
+test('final standings group point totals for quick scanning',async()=>{
+ const [,{renderApp}]=await load();
+ const markup=renderApp({screen:'result',characterId:'moka',view:{result:{title:'対局終了',rankings:[{name:'自分',points:25000},{name:'相手',points:24800}]}}});
+ assert.match(markup,/自分 <strong>25,000点<\/strong>/);assert.match(markup,/相手 <strong>24,800点<\/strong>/);
 });
 test('drawn tile is sent only to the active seat while concealed hands remain private',()=>{
  const match=createMatch({players:['a','b','c','d'],seed:'draw-tile-view',now:0});
@@ -123,6 +131,8 @@ test('page and styles provide accessible Japanese local UI and motion opt out', 
   assert.match(html, /lang="ja"/); assert.match(html, /type="module"/); assert.match(html, /aria-live/);
   assert.match(css, /prefers-reduced-motion/); assert.match(css, /44px/); assert.match(css, /overflow-x:auto/); assert.match(css, /flex-wrap:nowrap/); assert.match(css,/portrait-compact>img\{position:absolute;left:-40%;top:-15%;width:180%;height:180%/); assert.match(css,/expression-focus>img/); assert.match(css,/expression-down>img/); assert.match(css,/mahjong-cheer/); assert.doesNotMatch(html, /https?:\/\//);
   assert.match(css.slice(css.indexOf('@media(max-width:380px)')), /header\{flex-wrap:nowrap/, 'small phones keep the title and all settings on one compact row');
+  assert.match(css.slice(css.indexOf('@media(max-width:380px)')), /\.settings button\{[^}]*min-width:44px/, 'small-phone settings controls keep at least a 44px touch target');
+  assert.match(css, /\.opponent p\{[^}]*font-size:11px;line-height:1\.3\}/, 'opponent score and hand count remain readable on narrow phones');
 });
 
 test('compact river and meld tiles override full-size hand tile dimensions at every phone breakpoint',async()=>{
@@ -131,6 +141,12 @@ test('compact river and meld tiles override full-size hand tile dimensions at ev
   assert.ok(compact,'15×21 compact tile selector must be more specific than the later 41×55 hand tile selector');
   assert.match(css,/\.dora-row \.mj-tile-svg\.mj-tile-compact\s*\{[^}]*width:\s*21px;[^}]*height:\s*29px;[^}]*\}/,'dora indicators retain their larger readable size');
   assert.match(css,/\.mj-tile-svg\.mj-tile-compact\s*\{[^}]*width:\s*12px;[^}]*height:\s*18px;[^}]*\}/,'the narrow river column stays within its 12px cells');
+});
+
+test('compact-height phones keep sticky discard controls from covering the hand',async()=>{
+  const css=await readFile(new URL('../public/mahjong/style.css',import.meta.url),'utf8');
+  assert.match(css,/@media\s*\(max-height:\s*760px\)[^{]*\{[^}]*\.table\s*\+\s*\.actions\s*\{[^}]*position:\s*static/,
+    'short viewports must put the action bar in document flow so it cannot overlay selectable tiles');
 });
 
 test('mounted controls navigate and preserve selected-tile state through rerenders', async () => {

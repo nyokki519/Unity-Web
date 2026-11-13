@@ -19,12 +19,18 @@ function makeContext(match, seat, winningTile, winType, flags={}) {
     roundWind:match.roundWind, riichi:player.riichi, doubleRiichi:player.doubleRiichi, ippatsu:player.ippatsu,
     furiten:player.furiten, doraIndicators:match.doraIndicators, uraIndicators:player.riichi?match.uraIndicators:[], ...flags};
 }
+function firstDrawYaku(match,seat,winType){
+  if(winType!=='tsumo'||match.players.some(player=>player.melds.length))return {};
+  if(seat===match.dealer&&match.turnNumber===1&&match.players.every(player=>player.discards.length===0))return {tenhou:true};
+  if(seat!==match.dealer&&match.players[seat].discards.length===0)return {chiihou:true};
+  return {};
+}
 function canWin(match, seat, tile, winType, flags={}) {
   const player=match.players[seat];
   const concealed=winType==='tsumo'?player.hand:[...player.hand,tile];
   if(!isCompleteHand(concealed,player.melds))return false;
   const riverFuriten=winType==='ron'&&[...Array(34).keys()].some(type=>player.discards.some(d=>tileType(d.tile)===type)&&isCompleteHand([...player.hand,type],player.melds));
-  const result=evaluateYaku({...makeContext(match,seat,tile,winType,flags),concealed,furiten:riverFuriten||player.furiten,temporaryFuriten:player.temporaryFuriten,riichiFuriten:player.riichiFuriten});
+  const result=evaluateYaku({...makeContext(match,seat,tile,winType,{...firstDrawYaku(match,seat,winType),...flags}),concealed,furiten:riverFuriten||player.furiten,temporaryFuriten:player.temporaryFuriten,riichiFuriten:player.riichiFuriten});
   return flags.kokushiOnly?!!result?.yaku.some(yaku=>yaku.id==='kokushi'):!!result;
 }
 function makeMeldChoices(hand, calledTile, kind) {
@@ -179,7 +185,7 @@ function finishHand(match,result,now){
   match.phase='HAND_RESULT';match.result={...result,at:now};match.deadlineAt=null;if(result.chankan)match.pendingKan=null;
   if(result.type==='win'){
     const loser=result.loser;
-    const flags=result.winType==='tsumo'?{haitei:match.liveWall.length===0,rinshan:match.rinshanSeat===result.winner}:{houtei:match.liveWall.length===0,chankan:!!result.chankan};
+    const flags=result.winType==='tsumo'?{...firstDrawYaku(match,result.winner,'tsumo'),haitei:match.liveWall.length===0,rinshan:match.rinshanSeat===result.winner}:{houtei:match.liveWall.length===0,chankan:!!result.chankan};
     const scored=evaluateYaku(makeContext(match,result.winner,result.tile,result.winType,flags));
     const yakuman=scored.yaku.reduce((sum,item)=>sum+(item.yakuman||0),0);
     const settlement=calculatePayments({winner:result.winner,loser,dealer:match.dealer,winType:result.winType,han:scored.han,fu:scored.fu,yakuman,honba:match.honba,riichiPot:match.riichiPot});

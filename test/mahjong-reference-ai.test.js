@@ -34,6 +34,31 @@ test('reference state adapter supports exposed melds and red fives without leaki
  assert.ok(actions.some(action=>JSON.stringify(action)===JSON.stringify(recommendation)));
 });
 
+test('reference state adapter encodes chi, red pon and daiminkan in Kobalab notation',()=>{
+ const match=createMatch({players,seed:'reference-ai-open-chi-notation',now:0});
+ match.players[0].hand=[0,1,2,3,4];
+ match.players[0].melds=[
+  {type:'chi',tiles:[18,19,20],open:true},
+  {type:'pon',tiles:[34,4,4],open:true},
+  {type:'kan',tiles:[27,27,27,27],open:true}
+ ];
+ match.drawnTile=4;
+ let serialized;
+ class ChiNotationProbe {
+  action(message){
+   if(message.kaiju)this._model={shoupai:Array.from({length:4},()=>({_lizhi:false}))};
+   if(message.qipai){serialized=message.qipai.shoupai[0];this._suanpai={_n_zimo:0,_dapai:Array.from({length:4},()=>({})),_lizhi:[],decrease(){}};}
+  }
+  select_dapai(){return 'm5';}
+ }
+ configureReferenceAI(ChiNotationProbe);
+ try{assert.deepEqual(referenceDiscardAction(match,0,[{type:'discard',tile:4}]),{type:'discard',tile:4});}
+ finally{configureReferenceAI(MajiangAI,MajiangCore.rule);}
+ const parsed=MajiangCore.Shoupai.fromString(serialized);
+ assert.deepEqual(parsed._fulou,['s123-','m505+','z1111+'],`Kobalab must parse every open meld from ${serialized}`);
+ assert.equal(parsed.menqian,false);
+});
+
 test('reference CPU weighs open-call value and returns only a matching legal meld',()=>{
  const match=createMatch({players,seed:'reference-ai-call',now:0}),tile=29;
  match.players[0].hand=[tile,0,2,3,4,5,6,7,8,9,10,11,12,13];

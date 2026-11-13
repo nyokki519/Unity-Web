@@ -1,0 +1,62 @@
+[
+  {
+    "viewport": [
+      375,
+      667
+    ],
+    "docWidth": 375,
+    "docHeight": 919,
+    "hand": {
+      "top": 549.859375,
+      "bottom": 637.859375
+    },
+    "actions": {
+      "top": 664.859375,
+      "bottom": 732.859375
+    },
+    "overlapPx": 0,
+    "actionPosition": "static",
+    "canScroll": true,
+    "errors": []
+  },
+  {
+    "viewport": [
+      320,
+      720
+    ],
+    "docWidth": 320,
+    "docHeight": 934,
+    "hand": {
+      "top": 563.90625,
+      "bottom": 651.90625
+    },
+    "actions": {
+      "top": 678.90625,
+      "bottom": 746.90625
+    },
+    "overlapPx": 0,
+    "actionPosition": "static",
+    "canScroll": true,
+    "errors": []
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "docWidth": 390,
+    "docHeight": 925,
+    "hand": {
+      "top": 551.21875,
+      "bottom": 639.21875
+    },
+    "actions": {
+      "top": 666.21875,
+      "bottom": 734.21875
+    },
+    "overlapPx": 0,
+    "actionPosition": "sticky",
+    "canScroll": true,
+    "errors": []
+  }
+]

@@ -34,32 +34,42 @@ function tileCode(tile) {
   return suit + (tile >= 34 ? '0' : rank);
 }
 
+function tileIndexFromCode(suit, rank) {
+  const suitIndex={m:0,p:1,s:2,z:3}[suit];
+  if(suitIndex===undefined)return -1;
+  if(rank==='0')return suitIndex<3?[4,13,22][suitIndex]:-1;
+  const value=Number(rank);
+  if(!Number.isInteger(value)||value<1||value>(suitIndex<3?9:7))return -1;
+  return suitIndex<3?suitIndex*9+value-1:27+value-1;
+}
+
 function meldCode(meld) {
   if (!meld || !Array.isArray(meld.tiles) || !meld.tiles.length) return null;
-  const called = meld.open ? meld.tiles.at(-1) : null;
   const ordered = meld.type === 'chi'
     ? [...meld.tiles].sort((a,b)=>(a<34?a:[4,13,22][a-34])-(b<34?b:[4,13,22][b-34]))
     : [...meld.tiles];
-  let calledMarked = false;
-  const codes = ordered.map(tile => {
-    const code = tileCode(tile);
-    if (!code) return null;
-    if (meld.open && tile === called && !calledMarked) { calledMarked = true; return `${code}+`; }
-    return code;
-  });
+  const codes = ordered.map(tile => tileCode(tile));
   if (codes.some(code=>!code)) return null;
   const suit = codes[0][0];
   if (codes.some(code=>code[0]!==suit)) return null;
-  return codes.join('').replaceAll(suit,'');
+  // Kobalab's parser requires '-' on an exposed sequence, while triplets and
+  // open kans accept any source marker. Exact source direction is irrelevant
+  // to hand evaluation, but the marker must still make the meld parse as open.
+  const marker=meld.open?(meld.type==='chi'?'-':'+'):'';
+  return `${suit}${codes.map(code=>code[1]).join('')}${marker}`;
 }
 
-function concealedNotation(hand) {
+function concealedNotation(hand,drawnTile) {
   const bySuit = {m:[],p:[],s:[],z:[]};
-  for (const tile of hand) {
+  const tiles=[...hand];
+  if(drawnTile!==undefined&&drawnTile!==null){const index=tiles.indexOf(drawnTile);if(index>=0)tiles.splice(index,1);}
+  for (const tile of tiles) {
     const code=tileCode(tile);if(!code)return null;
     bySuit[code[0]].push(code[1]);
   }
-  return ['m','p','s','z'].map(suit=>bySuit[suit].length?suit+bySuit[suit].join(''):'').join('');
+  const notation=['m','p','s','z'].map(suit=>bySuit[suit].length?suit+bySuit[suit].join(''):'').join('');
+  const drawnCode=drawnTile===undefined||drawnTile===null?'':tileCode(drawnTile);
+  return notation+(drawnCode||'');
 }
 
 function decreaseVisible(ai, tile) {
@@ -82,7 +92,7 @@ function makeAdvisor(match, seat) {
   if(!player||!Array.isArray(player.hand))return null;
   const ownMelds=(player.melds||[]).map(meldCode);
   if(ownMelds.some(code=>!code))return null;
-  const ownHand=concealedNotation(player.hand),dora=match.doraIndicators||[],doraCode=tileCode(dora[0]);
+  const ownHand=concealedNotation(player.hand,match.drawnTile),dora=match.doraIndicators||[],doraCode=tileCode(dora[0]);
   if(ownHand===null||!doraCode)return null;
   const dealer=Number.isInteger(match.dealer)?match.dealer:0;
   const selfWind=(seat-dealer+4)%4;
@@ -136,6 +146,33 @@ export function referenceDiscardAction(match, seat, actions) {
   }catch{return null;}
 }
 
+export function referenceGangAction(match,seat,actions){
+  if(!MajiangAI||!Array.isArray(actions)||!actions.some(action=>action.type==='kakan'||action.type==='ankan'))return null;
+  try{
+    const {advisor}=makeAdvisor(match,seat)||{};if(!advisor)return null;
+    const recommendation=advisor.select_gang();
+    if(typeof recommendation!=='string')return null;
+    const markerIndex=recommendation.search(/[+\-=]/);
+    const digits=recommendation.match(/\d/g)||[];
+    if(!digits.length)return null;
+    if(markerIndex>=0){
+      const parsed=recommendation.match(/^([mpsz])/);
+      const rank=digits.at(-1);
+      if(!parsed||!rank)return null;
+      const type=tileIndexFromCode(parsed[1],rank);
+      if(type<0)return null;
+      const candidate=actions.find(action=>action.type==='kakan'&&tileTypeCode(action.tile)===type);
+      return candidate||null;
+    }
+    if(digits.length!==4)return null;
+    const suit=recommendation[0],type=tileIndexFromCode(suit,digits.at(-1));
+    if(type<0)return null;
+    return actions.find(action=>action.type==='ankan'&&action.tiles?.length===4&&action.tiles.every(tile=>tileTypeCode(tile)===type)&&action.tiles.includes(match.drawnTile))||null;
+  }catch{return null;}
+}
+
+function tileTypeCode(tile){return tile>=34?[4,13,22][tile-34]:tile;}
+
 export function referenceReactionAction(match, seat, actions) {
   if(!MajiangAI||match?.phase!=='REACTION'||!match.lastDiscard||!Array.isArray(actions)||!actions.length)return null;
   try{
@@ -172,5 +209,7 @@ export function referenceReactionAction(match, seat, actions) {
 export function referenceAction(match, seat, actions) {
   const reaction=referenceReactionAction(match,seat,actions);
   if(reaction)return reaction;
+  const gang=referenceGangAction(match,seat,actions);
+  if(gang)return gang;
   return referenceDiscardAction(match,seat,actions);
 }

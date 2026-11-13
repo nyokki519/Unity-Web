@@ -13,6 +13,39 @@ test('a seeded match deals thirteen tiles to each seat and one extra to dealer',
   assert.ok(legalActions(match,match.activeSeat).some(a=>a.type==='discard'));
 });
 
+test('dealer first-draw tsumo is scored as tenhou',()=>{
+  const match=createMatch({players,seed:'tenhou',now:0}),hand=[0,1,2,9,10,11,18,19,20,27,27,27,31,31];
+  match.players[0].hand=[...hand];match.drawnTile=31;
+  assert.ok(legalActions(match,0).some(action=>action.type==='tsumo'));
+  const result=applyAction(match,0,{type:'tsumo'},match.revision,1).result;
+  assert.equal(result.yaku[0].id,'tenhou');assert.equal(result.han,13);assert.equal(result.deltas.reduce((sum,value)=>sum+value,0),0);
+});
+
+test('stacked double yakuman settle the full five-limit tsumo through the match path',()=>{
+ const match=createMatch({players,seed:'stacked-double-yakuman',now:0});
+ match.players[0].hand=[27,27,27,28,28,28,29,29,29,30,30,30,31,31];
+ match.drawnTile=31;match.turnNumber=2;
+ assert.ok(legalActions(match,0).some(action=>action.type==='tsumo'));
+ const result=applyAction(match,0,{type:'tsumo'},match.revision,1).result;
+ assert.equal(result.yaku.reduce((sum,yaku)=>sum+(yaku.yakuman||0),0),5);
+ assert.equal(result.han,65);
+ assert.deepEqual(result.deltas,[240000,-80000,-80000,-80000]);
+ assert.equal(result.deltas.reduce((sum,value)=>sum+value,0),0);
+});
+
+test('a non-dealer first-draw tsumo is chiihou only before any call',()=>{
+  const match=createMatch({players,seed:'chiihou',now:0}),hand=[0,1,2,9,10,11,18,19,20,27,27,27,31,31];
+  match.players[0].discards=[{tile:3,turn:1,called:false}];
+  match.players[1].hand=[...hand];match.activeSeat=1;match.drawnTile=31;match.turnNumber=2;
+  const result=applyAction(match,1,{type:'tsumo'},match.revision,1).result;
+  assert.equal(result.yaku[0].id,'chiihou');assert.equal(result.han,13);
+
+  const afterCall=structuredClone(match);afterCall.players[0].melds=[{type:'chi',tiles:[0,1,2],open:true}];
+  assert.equal(legalActions(afterCall,1).some(action=>action.type==='tsumo'),true,'the hand still has its ordinary yakuhai win');
+  const ordinary=applyAction(afterCall,1,{type:'tsumo'},afterCall.revision,1).result;
+  assert.equal(ordinary.yaku.some(yaku=>yaku.id==='chiihou'),false);
+});
+
 test('discard plus universal pass advances exactly one draw and never double-advances',()=>{
   let match=createMatch({players,seed:55,now:0});
   const seat=match.activeSeat,tile=match.players[seat].hand[0];
