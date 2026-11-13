@@ -85,3 +85,15 @@ test('reduced motion removes chasing and strobing without hiding state', () => {
   assert.equal(reduced.chase, -1);
   assert.equal(reduced.level, reducedLater.level);
 });
+
+test('invalid clock and tier inputs fall back to bounded finite lamp output', () => {
+  for (const time of [NaN, Infinity, -4]) {
+    for (const tier of [NaN, Infinity, -99, 99]) {
+      const state = sampleCabinetLampState({ time, pulse: { kind: 'bowl', tier, age: Infinity } });
+      assert.ok(Number.isFinite(state.level));
+      assert.ok(state.level >= 0.12 && state.level <= 1.2);
+      assert.ok(state.chase === -1 || (state.chase >= 0 && state.chase <= 17));
+      assert.ok(state.rgb.every(Number.isFinite));
+    }
+  }
+});
