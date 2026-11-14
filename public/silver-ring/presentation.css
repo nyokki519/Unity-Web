@@ -11,13 +11,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Y
 #mtop,body.touch #mtop{display:flex;position:fixed;right:10px;top:12px;z-index:16}
 #mtop .mbtn{border-radius:3px;height:40px;min-width:40px;background:#162a22}
 #powerWrap,#lamps,#hintBar,#mhint,body.touch #mhint{display:none!important}
-.play-dock{position:fixed;z-index:18;left:0;right:0;bottom:0;padding:8px max(12px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom));background:#11271ff5;border-top:1px solid #8c8062;box-shadow:0 -6px 24px #0002}
+.play-dock{position:fixed;z-index:18;left:6px;right:6px;bottom:4px;padding:12px max(12px,env(safe-area-inset-right)) max(22px,env(safe-area-inset-bottom));background:linear-gradient(0deg,#382719 0 12px,#b18b4d 12px 14px,transparent 14px),linear-gradient(180deg,#3b5848 0%,#1a3027 13%,#0c2019 100%);border:1px solid #b39258;border-radius:15px 15px 7px 7px;box-shadow:0 -8px 26px #0007,inset 0 0 0 2px #ffffff10,inset 0 1px 0 #fff6,inset 0 -4px 0 #050d0a;isolation:isolate}
+.play-dock::before,.play-dock::after{content:"";position:absolute;pointer-events:none;z-index:-1}
+.play-dock::before{left:10px;right:10px;top:4px;height:3px;background:linear-gradient(90deg,transparent,#f4d99d 12%,#806438 50%,#f4d99d 88%,transparent);opacity:.8}
+.play-dock::after{inset:9px 3px 6px;border-left:2px solid #d4b879;border-right:2px solid #d4b879;box-shadow:inset 0 0 0 1px #0008;opacity:.52}
+.play-dock>*{position:relative;z-index:1}
 .strength-row{display:flex;gap:12px;align-items:center;max-width:620px;margin:0 auto 7px;font-size:11px;color:#ddd1b9}
 .strength-row label{white-space:nowrap;display:flex;gap:6px;align-items:center}.strength-row output{min-width:32px;color:#f5efe5;font-variant-numeric:tabular-nums}
 #shotPower{flex:1;width:60px;height:24px;accent-color:#c9a66b;touch-action:pan-x}#randomState{color:#d5b277;font-size:10px;white-space:nowrap}
 #mbar,body.touch #mbar{position:static;display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;gap:7px;pointer-events:auto;max-width:620px;margin:auto;padding:0;transform:none}
-#mbar .mbtn,body.touch #mbar .mbtn{min-width:0;min-height:46px;height:46px;border-radius:4px;font-size:13px;letter-spacing:0;padding:5px;background:#223c30;border-color:#6a7765;box-shadow:none;animation:none;flex-direction:row;gap:2px}
-#mbar .primary-shot,body.touch #mbar .primary-shot{background:#d2b581;color:#182c23;border-color:#dfc99d;font-size:15px}
+#mbar .mbtn,body.touch #mbar .mbtn{min-width:0;min-height:46px;height:46px;border-radius:7px;font-size:13px;letter-spacing:0;padding:5px;background:linear-gradient(180deg,#365849,#183126 72%,#10251c);border:1px solid #a28a59;box-shadow:inset 0 1px 0 #fff5,inset 0 -3px 0 #0007,0 2px 4px #0007;animation:none;flex-direction:row;gap:2px}
+#mbar .primary-shot,body.touch #mbar .primary-shot{background:linear-gradient(180deg,#f0d9a8,#c3a36b 72%,#947448);color:#182c23;border-color:#f3ddb1;font-size:15px;box-shadow:inset 0 1px 0 #fff9,inset 0 -3px 0 #886b3e,0 2px 5px #0008}
 #mbar .mbtn.on{background:#e0c594;color:#182c23;border-color:#e0c594}
 #mbar i{font-size:13px;margin:0;opacity:1}
 #toasts{position:static;transform:none;display:block;min-height:17px;max-width:620px;margin:5px auto 0;text-align:center;font-size:10px;line-height:1.4;color:#b9c7b8;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;pointer-events:none}
@@ -42,7 +46,7 @@ body.touch .btn,.btn{font-size:15px;letter-spacing:.08em;border-radius:4px;box-s
 /* Direct controls are restored; the document around the game can scroll. */
 html,body{touch-action:auto;overscroll-behavior:auto}.play-dock{touch-action:pan-y}
 #quickControls,#cameraControls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;max-width:620px;margin:6px auto 0}
-#quickControls .mbtn,#cameraControls .mbtn{min-width:0;min-height:44px;height:44px;padding:3px;font-size:11px;letter-spacing:0;border-radius:4px;background:#1d352b}
+#quickControls .mbtn,#cameraControls .mbtn{min-width:0;min-height:44px;height:44px;padding:3px;font-size:11px;letter-spacing:0;border-radius:6px;background:linear-gradient(180deg,#2c493a,#152a22 80%);border-color:#897446;box-shadow:inset 0 1px 0 #fff3,inset 0 -2px 0 #0006}
 #quickControls .mbtn.on{background:#dcc08a;color:#132c20}
 #cameraControls{grid-template-columns:repeat(4,minmax(0,1fr));position:relative;padding-bottom:16px}
 #cameraControls[hidden]{display:none}#cameraReadout{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#d2bea0}

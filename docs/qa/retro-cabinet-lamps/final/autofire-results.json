@@ -5,12 +5,12 @@
     "fired": 21,
     "funds": 45800,
     "gates": 0,
-    "lamps": 0.2448044866323471,
+    "lamps": 0.2436821013689041,
     "boardChildren": 54,
-    "renderCalls": 199,
-    "triangles": 165098,
+    "renderCalls": 207,
+    "triangles": 167936,
     "scrollWidth": 390,
-    "bowlPulseLamp": 2.064866781234741
+    "bowlPulseLamp": 2.1041998863220215
   },
   "errors": []
 }

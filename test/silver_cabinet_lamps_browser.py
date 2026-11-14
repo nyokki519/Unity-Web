@@ -40,14 +40,28 @@ with sync_playwright() as p:
           scrollWidth: document.documentElement.scrollWidth
         })''')
         assert initial['boardChildren'] == 54, initial
-        for value, expected in zip(initial['machineBounds']['min'], [-1, -0.02, -1.161]):
+        for value, expected in zip(initial['machineBounds']['min'], [-1.125, -0.295, -1.161]):
             assert abs(value - expected) < 1e-4, initial['machineBounds']
-        for value, expected in zip(initial['machineBounds']['max'], [1, 3.056, 0.839]):
+        for value, expected in zip(initial['machineBounds']['max'], [1.125, 3.855, 0.839]):
             assert abs(value - expected) < 1e-4, initial['machineBounds']
         assert initial['lampCount'] == 18, initial
+        page.wait_for_function('() => SILVER_GAME.refs.cabinetFrameTexture.image?.naturalWidth === 1086', timeout=15000)
+        frame = page.evaluate('''() => {
+          const {cabinetFrameTexture, cabinetFrameArt} = SILVER_GAME.refs;
+          const image = cabinetFrameTexture.image;
+          const canvas = document.createElement('canvas');
+          canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+          const ctx = canvas.getContext('2d', {willReadFrequently:true});
+          ctx.drawImage(image, 0, 0);
+          return {loaded:image.complete && image.naturalWidth === 1086,
+            alphaWindow:ctx.getImageData(543,724,1,1).data[3],
+            framePixel:ctx.getImageData(50,724,1,1).data[3],
+            composited:cabinetFrameArt.parent === SILVER_GAME.refs.machineG};
+        }''')
+        assert frame['loaded'] and frame['alphaWindow'] == 0 and frame['framePixel'] > 200 and frame['composited'], frame
         assert initial['scrollWidth'] <= w, initial
-        assert initial['renderCalls'] <= 198, initial
-        assert initial['triangles'] <= 155000, initial
+        assert initial['renderCalls'] <= 210, initial
+        assert initial['triangles'] <= 160000, initial
         idle_max = page.evaluate('Math.max(...SILVER_GAME.refs.cabinetLampIM.instanceColor.array)')
         idle_bulb_palette = page.evaluate('''() => {
           const c = SILVER_GAME.refs.bulbIM.instanceColor.array;
@@ -139,7 +153,7 @@ with sync_playwright() as p:
         assert page.evaluate('SILVER_GAME.S.fired') == 1
         assert page.evaluate('SILVER_GAME.S.funds') == 49800
         assert not errors, errors
-        rows.append({**initial, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'idleLinePalette': idle_line_palette, 'eventLinePalette': event_line_palette, 'tierChaseAndMissPalette': True, 'sinkMissAndWinPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
+        rows.append({**initial, 'frameArtwork':frame, 'eventLamp': pulse, 'idleMaxLampColor': idle_max, 'eventMaxLampColor': event_max, 'idleMarqueePalette': idle_bulb_palette, 'eventMarqueePalette': event_bulb_palette, 'idleLinePalette': idle_line_palette, 'eventLinePalette': event_line_palette, 'tierChaseAndMissPalette': True, 'sinkMissAndWinPalette': True, 'priorityPulse': priority, 'jackpotModePersists': True, 'reducedMotionStatic': True, 'pauseClearsPulse': True, 'singleShot': 1, 'errors': errors})
         page.close()
     for w, h in [(375, 667), (844, 390)]:
         page = browser.new_page(viewport={'width': w, 'height': h}, device_scale_factor=1, has_touch=True, is_mobile=True)

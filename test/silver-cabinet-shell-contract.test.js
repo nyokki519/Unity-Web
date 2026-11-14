@@ -10,8 +10,8 @@ const fx = await readFile(new URL('../public/silver-ring/src/fx.js', import.meta
 test('exterior trim and lamp instances are attached to the cabinet, outside board geometry', () => {
   assert.match(scene, /const cabMat = new THREE\.MeshStandardMaterial\(\{ color: 0x123b2c, roughness: 0\.31, metalness: 0\.58, envMapIntensity: 1\.0 \}\)/);
   assert.doesNotMatch(scene, /cabinetEnamelTexture/);
-  assert.match(scene, /cabinetLampSprite/);
-  assert.match(scene, /machineG\.add\(cabinetLampSprite\)/);
+  assert.match(scene, /cabinetPillarLights/);
+  assert.match(scene, /machineG\.add\(cabinetPillarLights\)/);
   assert.doesNotMatch(scene, /cabinetLampGlow|cabinetLampHousings|cabinetLampBezels/);
   assert.match(scene, /const cabinetLampN = 18/);
   assert.match(scene, /const badgeN = 2/);

@@ -10,6 +10,7 @@ import{renderProfile}from'./render-profile.js';
 // ============================================================
 import {paintCabinetArt} from './cabinet-art.js';
 import {createBanknoteRain} from './banknote-rain.js';
+import {createCabinetEnvelope} from './cabinet-envelope.js';
 import * as THREE from '../../vendor/three/three.module.js';
 import { EffectComposer } from '../../vendor/three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from '../../vendor/three/addons/postprocessing/RenderPass.js';
@@ -94,15 +95,15 @@ export function buildScene(canvas,layout=buildLayout()) {
   }
   scene.environmentIntensity = 1.0;
 
-  // 竖屏手机横向视野会被切掉,按画幅比反算 fov,保证机台整台入画
+  // Portrait fit includes the external cabinet shell, so the playfield sits inside a visible physical bezel.
   function fitFov(a) {
-    const D = 3.88, HH = 1.647, HW = 0.875;   // 参考机位距离 / 机台半高 / 半宽(桌面正好 46°)
+    const D = 3.88, HH = 2.18, HW = 1.30;   // reference distance / complete cabinet half-height / tall alpha-frame half-width
     const deg = THREE.MathUtils.radToDeg(Math.max(2 * Math.atan(HH / D), 2 * Math.atan(HW / (D * a))));
-    return THREE.MathUtils.clamp(deg, 40, 60);
+    return THREE.MathUtils.clamp(deg, 40, 70);
   }
   const camera = new THREE.PerspectiveCamera(fitFov(innerWidth / innerHeight), innerWidth / innerHeight, 0.05, 40);
-  camera.position.set(0, 1.85, 3.6);
-  camera.lookAt(0, 1.5, 0);
+  camera.position.set(0, 2.30, 3.6);
+  camera.lookAt(0, 1.95, 0);
 
   // ---------- 灯光 ----------
   scene.add(new THREE.HemisphereLight(0xfff2e0, 0xb0a894, 0.7));
@@ -135,6 +136,22 @@ export function buildScene(canvas,layout=buildLayout()) {
   // ============================================================
   const machineG = new THREE.Group();
   scene.add(machineG);
+  const cabinetEnvelope = createCabinetEnvelope(THREE);
+  machineG.add(cabinetEnvelope);
+  // Transparent, high-detail cabinet artwork is a presentation overlay only: its center
+  // remains a real alpha window so the existing physical board and all balls stay visible.
+  const cabinetFrameTexture = new THREE.TextureLoader().load('./assets/cabinet-frame.png');
+  cabinetFrameTexture.colorSpace = THREE.SRGBColorSpace;
+  cabinetFrameTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const cabinetFrameArt = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.25, 4.15),
+    new THREE.MeshBasicMaterial({ map: cabinetFrameTexture, transparent: true, alphaTest: 0.015, depthWrite: false, side: THREE.DoubleSide, toneMapped: false })
+  );
+  cabinetFrameArt.name = 'cabinetFrameArt';
+  cabinetFrameArt.position.set(0, 1.78, 0.34);
+  cabinetFrameArt.renderOrder = 15;
+  cabinetFrameArt.userData.presentationOnly = true;
+  machineG.add(cabinetFrameArt);
   const boardG = new THREE.Group();
   boardG.position.y = CFG.machineY;
   machineG.add(boardG);
@@ -782,27 +799,27 @@ export function buildScene(canvas,layout=buildLayout()) {
     lens.addColorStop(1, 'rgba(255,255,255,0.48)');
     g.fillStyle = lens; g.fill();
   });
-  const cabinetLampSprite = new THREE.InstancedMesh(
+  const cabinetPillarLights = new THREE.InstancedMesh(
     new THREE.PlaneGeometry(0.066, 0.084),
     new THREE.MeshBasicMaterial({ map: lampSpriteTex, color: 0xffffff, transparent: true, depthWrite: false, toneMapped: false }),
     cabinetLampN
   );
-  cabinetLampSprite.renderOrder = 2;
+  cabinetPillarLights.renderOrder = 20;
   const lampMatrix = new THREE.Matrix4(), lampQuat = new THREE.Quaternion(), lampScale = new THREE.Vector3(1, 1, 1);
   for (let sideIndex = 0; sideIndex < 2; sideIndex++) {
     const side = sideIndex === 0 ? -1 : 1;
     for (let row = 0; row < 9; row++) {
-      const y = 0.78 + row * 0.215;
+      const y = 1.43 + row * 0.09;
       const index = sideIndex * 9 + row;
-      const x = side * 0.765;
-      lampMatrix.compose(new THREE.Vector3(x, y, 0.233), lampQuat, lampScale);
-      cabinetLampSprite.setMatrixAt(index, lampMatrix);
-      cabinetLampSprite.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
+      const x = side * 0.865;
+      lampMatrix.compose(new THREE.Vector3(x, y, 0.405), lampQuat, lampScale);
+      cabinetPillarLights.setMatrixAt(index, lampMatrix);
+      cabinetPillarLights.setColorAt(index, new THREE.Color(0.20, 0.12, 0.055));
     }
   }
-  cabinetLampSprite.instanceColor.needsUpdate = true;
-  cabinetLampSprite.instanceMatrix.needsUpdate = true;
-  machineG.add(cabinetLampSprite);
+  cabinetPillarLights.instanceColor.needsUpdate = true;
+  cabinetPillarLights.instanceMatrix.needsUpdate = true;
+  machineG.add(cabinetPillarLights);
 
   // 看板(沼)
   const marqueeTex = canvasTex(1024, 512, (g, w, h) => {
@@ -834,6 +851,24 @@ export function buildScene(canvas,layout=buildLayout()) {
     new THREE.MeshBasicMaterial({ map: marqueeTex, toneMapped: false }));
   marquee.position.set(0, 2.83, 0.162);
   machineG.add(marquee);
+
+  const crestTex = canvasTex(1024, 256, (g, w, h) => {
+    g.clearRect(0, 0, w, h);
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillStyle = '#f2dfb4'; g.font = '600 57px Georgia, serif'; g.letterSpacing = '7px';
+    g.fillText('KISSA', 302, 92); g.fillText('UNITY', 722, 92);
+    g.beginPath(); g.arc(w / 2, 82, 47, 0, Math.PI * 2); g.strokeStyle = '#d8b875'; g.lineWidth = 5; g.stroke();
+    g.beginPath(); g.moveTo(w / 2 - 6, 48); g.bezierCurveTo(w / 2 + 34, 58, w / 2 + 28, 102, w / 2 - 6, 115);
+    g.bezierCurveTo(w / 2 - 26, 99, w / 2 - 26, 66, w / 2 - 6, 48); g.stroke();
+    g.beginPath(); g.moveTo(w / 2 - 20, 82); g.quadraticCurveTo(w / 2 + 2, 82, w / 2 + 18, 64); g.stroke();
+    g.fillStyle = '#dfc38e'; g.font = 'italic 54px Georgia, serif'; g.letterSpacing = '4px';
+    g.fillText('Retro', w / 2, 205);
+  });
+  const crestMark = new THREE.Mesh(new THREE.PlaneGeometry(1.22, 0.22),
+    new THREE.MeshBasicMaterial({ map: crestTex, transparent: true, toneMapped: false }));
+  crestMark.name = 'cabinetCrestMark';
+  crestMark.position.set(0, 3.28, 0.405);
+  machineG.add(crestMark);
 
   // 看板跑马灯泡
   const bulbN = 26;
@@ -1049,11 +1084,11 @@ export function buildScene(canvas,layout=buildLayout()) {
 
   return {
     THREE, renderer, scene, camera, composer, bloom, controls, banknoteRain, maskBackground,
-    machineG, boardG, boardTex,
+    machineG, boardG, boardTex, cabinetFrameTexture, cabinetFrameArt,
     pinsIM, pinBase, discGs, wingL, wingR, tulipLampMat, gateRing, gateFlash,
     bowlRefs, pkRingMat, pocketG,
     swampUniforms, bubbleIM, sheen,
-    neonMats, bulbIM, bulbN, cabinetLampIM: cabinetLampSprite, cabinetLampN,
+    neonMats, bulbIM, bulbN, cabinetLampIM: cabinetPillarLights, cabinetLampN,
     handleG, hKnobG, ballsIM,
     dust, dustGeo, dustVel, dustN,
     alcoveLight, swampLight, key,
