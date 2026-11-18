@@ -1,41 +1,256 @@
-import * as THREE from '../vendor/three/three.module.js';
-const $=s=>document.querySelector(s),viewport=$('#viewport'),canvas=$('#scene'),tilt=$('#tilt');
-const scene=new THREE.Scene();scene.background=new THREE.Color('#79583e');
-const camera=new THREE.PerspectiveCamera(38,1,.1,30);camera.position.set(0,6.6,8.7);camera.lookAt(0,1.1,0);
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-scene.add(new THREE.HemisphereLight(0xffedda,0x4b3324,2));const key=new THREE.DirectionalLight(0xffe7c9,3.2);key.position.set(-3,7,4);key.castShadow=true;scene.add(key);const fill=new THREE.PointLight(0xd8e4ff,1.2,12);fill.position.set(4,4,-3);scene.add(fill);
-const mat=(color,roughness=.45,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
-const woodCanvas=document.createElement('canvas');woodCanvas.width=1024;woodCanvas.height=1024;const wood=woodCanvas.getContext('2d');
-wood.fillStyle='#775338';wood.fillRect(0,0,1024,1024);let woodSeed=19381;const rand=()=>{woodSeed=(woodSeed*1664525+1013904223)>>>0;return woodSeed/4294967296};
-for(let row=0;row<75;row++){const y=row*15+(rand()-.5)*5;wood.beginPath();wood.moveTo(0,y);for(let x=0;x<=1024;x+=32){const yy=y+Math.sin(x*.012+row)*1.8+(rand()-.5)*2;wood.lineTo(x,yy)}wood.strokeStyle=`rgba(${rand()>.5?'214,170,123':'45,27,16'},${.035+rand()*.075})`;wood.lineWidth=1+rand()*3;wood.stroke()}
-for(let i=0;i<85;i++){const x=rand()*1024,y=rand()*1024;wood.beginPath();wood.ellipse(x,y,12+rand()*38,2+rand()*4,0,0,Math.PI*2);wood.strokeStyle='rgba(41,24,14,.16)';wood.lineWidth=1;wood.stroke()}
-const woodTex=new THREE.CanvasTexture(woodCanvas);woodTex.wrapS=woodTex.wrapT=THREE.RepeatWrapping;woodTex.repeat.set(2,2);woodTex.colorSpace=THREE.SRGBColorSpace;
-const table=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.MeshStandardMaterial({map:woodTex,color:'#d8c2a5',roughness:.82}));table.rotation.x=-Math.PI/2;table.position.y=-.13;table.receiveShadow=true;scene.add(table);
-const coaster=new THREE.Mesh(new THREE.CylinderGeometry(2.5,2.5,.12,64),mat('#526c99',.55));coaster.position.set(.3,0,0);coaster.receiveShadow=true;coaster.castShadow=true;scene.add(coaster);
-const cup=new THREE.Group();cup.position.set(.3,.06,0);scene.add(cup);
-const cupBody=new THREE.Mesh(new THREE.CylinderGeometry(1.55,1.27,1.4,64,1,true),new THREE.MeshStandardMaterial({color:'#f2eee6',roughness:.22,metalness:.02,side:THREE.DoubleSide}));cupBody.position.y=.72;cupBody.castShadow=true;cupBody.receiveShadow=true;cup.add(cupBody);
-const bottom=new THREE.Mesh(new THREE.CircleGeometry(1.28,64),mat('#eee8da',.24));bottom.rotation.x=-Math.PI/2;bottom.position.y=.08;cup.add(bottom);
-const rim=new THREE.Mesh(new THREE.TorusGeometry(1.55,.075,12,72),mat('#fffaf0',.18,.08));rim.rotation.x=Math.PI/2;rim.position.y=1.42;rim.castShadow=true;cup.add(rim);
-const handle=new THREE.Mesh(new THREE.TorusGeometry(.62,.13,16,48),mat('#e7e1d5',.2));handle.position.set(1.57,.8,0);handle.rotation.y=Math.PI/2;cup.add(handle);
-const surfaceCanvas=document.createElement('canvas');surfaceCanvas.width=512;surfaceCanvas.height=512;const sctx=surfaceCanvas.getContext('2d');const surfaceTex=new THREE.CanvasTexture(surfaceCanvas);surfaceTex.colorSpace=THREE.SRGBColorSpace;
-const liquid=new THREE.Mesh(new THREE.CircleGeometry(1.48,72),new THREE.MeshStandardMaterial({map:surfaceTex,roughness:.28,metalness:0}));liquid.rotation.x=-Math.PI/2;liquid.position.y=1.31;cup.add(liquid);
-const pitcher=new THREE.Group();pitcher.position.set(-.8,2,-1.4);scene.add(pitcher);const pitcherBody=new THREE.Mesh(new THREE.CylinderGeometry(.48,.7,1.2,40,1,true),new THREE.MeshStandardMaterial({color:'#d7d5ce',metalness:.38,roughness:.3,side:THREE.DoubleSide}));pitcherBody.position.y=.5;pitcher.add(pitcherBody);const pitcherBottom=new THREE.Mesh(new THREE.CircleGeometry(.69,40),mat('#c8c9c5',.3,.48));pitcherBottom.rotation.x=-Math.PI/2;pitcherBottom.position.y=-.1;pitcher.add(pitcherBottom);const pitcherMilk=new THREE.Mesh(new THREE.CylinderGeometry(.455,.455,.028,40),mat('#f2ebdb',.2));pitcherMilk.position.y=1.02;pitcher.add(pitcherMilk);const pitcherHandle=new THREE.Mesh(new THREE.TorusGeometry(.48,.095,12,32),mat('#c8c9c5',.3,.48));pitcherHandle.position.set(-.52,.48,0);pitcherHandle.rotation.y=Math.PI/2;pitcher.add(pitcherHandle);const spout=new THREE.Mesh(new THREE.ConeGeometry(.21,.42,32),mat('#bfc0ba',.23,.8));spout.rotation.z=-Math.PI/2;spout.position.set(.55,1.02,0);pitcher.add(spout);pitcher.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true}});
-const stream=new THREE.Mesh(new THREE.CylinderGeometry(.025,.07,1,16),new THREE.MeshStandardMaterial({color:'#f6ead6',roughness:.18,transparent:true,opacity:.82}));scene.add(stream);stream.visible=false;const raycaster=new THREE.Raycaster(),pointerNdc=new THREE.Vector2(),pourPlane=new THREE.Plane(new THREE.Vector3(0,1,0),-1.37),streamA=new THREE.Vector3(),streamB=new THREE.Vector3(),streamDir=new THREE.Vector3();
-function resize(){const r=viewport.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();projectSurface()}new ResizeObserver(resize).observe(viewport);resize();
-function projectSurface(){const r=viewport.getBoundingClientRect();if(!r.width||!r.height)return;const point=(x,y,z)=>{const v=new THREE.Vector3(x,y,z).project(camera);return{x:(v.x*.5+.5)*r.width,y:(-v.y*.5+.5)*r.height}};const center=point(.3,1.37,0),edgeX=point(1.78,1.37,0),edgeZ=point(.3,1.37,1.48),rx=Math.abs(edgeX.x-center.x),ry=Math.abs(edgeZ.y-center.y);const layer=$('#drawingLayer');layer.style.left=`${center.x-r.left-rx}px`;layer.style.top=`${center.y-r.top-ry}px`;layer.style.width=`${rx*2}px`;layer.style.height=`${ry*2}px`}
-const state={pour:0,px:.3,pz:0,phase:'pour',strokes:[],stroke:null,color:'#58331f',width:7,motion:false};let foamSeed=7341;const foamRand=()=>{foamSeed=(foamSeed*1664525+1013904223)>>>0;return foamSeed/4294967296};const foamDots=Array.from({length:560},()=>{const a=foamRand()*Math.PI*2,r=Math.sqrt(foamRand())*246;return{x:256+Math.cos(a)*r,y:256+Math.sin(a)*r,radius:.35+foamRand()*1.15,alpha:.08+foamRand()*.26}});
-function paintSurface(){const g=sctx,w=512;g.clearRect(0,0,w,w);const cream=state.pour/100;const base=g.createRadialGradient(205,180,15,256,256,290);base.addColorStop(0,`rgb(${Math.round(122+116*cream)},${Math.round(69+168*cream)},${Math.round(42+193*cream)})`);base.addColorStop(1,`rgb(${Math.round(88+155*cream)},${Math.round(48+190*cream)},${Math.round(30+205*cream)})`);g.fillStyle=base;g.fillRect(0,0,w,w);if(cream<.3){g.globalAlpha=.16*(1-cream);for(let i=0;i<85;i++){const a=foamRand()*Math.PI*2,r=foamRand()*235,x=256+Math.cos(a)*r,y=256+Math.sin(a)*r;g.beginPath();g.ellipse(x,y,1+foamRand()*3,.6+foamRand()*1.6,foamRand()*Math.PI,0,Math.PI*2);g.fillStyle=i%3?'#56341f':'#f1c58c';g.fill()}g.globalAlpha=1}if(cream>.08){g.globalAlpha=Math.min(.28,cream*.34);for(let i=0;i<8;i++){g.beginPath();g.ellipse(256,256,222-i*17+Math.sin(i*2)*2,218-i*16+Math.cos(i)*2,i*.08,0,Math.PI*2);g.strokeStyle='#fff6e5';g.lineWidth=1.4+i%2;g.stroke()}for(const dot of foamDots){g.beginPath();g.arc(dot.x,dot.y,dot.radius,0,Math.PI*2);g.fillStyle=`rgba(255,250,238,${dot.alpha*cream})`;g.fill()}g.globalAlpha=1}for(const s of state.strokes){if(s.points.length===1){g.beginPath();g.arc(s.points[0].x,s.points[0].y,s.width*.62,0,Math.PI*2);g.fillStyle=s.color;g.fill();continue}if(s.points.length<2)continue;g.beginPath();g.moveTo(s.points[0].x,s.points[0].y);for(let i=1;i<s.points.length;i++){const a=s.points[i-1],b=s.points[i];g.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2)}g.strokeStyle=s.color;g.lineWidth=s.width;g.lineCap='round';g.lineJoin='round';g.stroke()}surfaceTex.needsUpdate=true}
-function applyTilt(v){state.pour=v;const t=v/100;pitcher.rotation.z=-.03-t*.95;pitcher.position.x=-.8+t*.18;pitcher.position.y=2+t*.05;$('#tiltValue').textContent=v<6?'止':`${v}%`;$('#status').textContent=`注ぐ量 ${Math.round(v)}% · 表面をなぞって位置を動かす`;if(v>4){stream.visible=true;pitcher.updateMatrixWorld(true);spout.getWorldPosition(streamA);streamB.set(state.px,1.37,state.pz);streamDir.subVectors(streamB,streamA);const distance=streamDir.length();stream.position.copy(streamA).add(streamB).multiplyScalar(.5);stream.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),streamDir.normalize());stream.scale.set(1,Math.max(.05,distance),1)}else stream.visible=false;paintSurface()}
-tilt.addEventListener('input',()=>applyTilt(+tilt.value));let pointerDown=false;viewport.addEventListener('pointerdown',e=>{if(state.phase!=='pour'||e.target.closest('.pour-controls,.lesson,button'))return;pointerDown=true;viewport.setPointerCapture(e.pointerId);movePour(e)});viewport.addEventListener('pointermove',e=>{if(pointerDown)movePour(e)});viewport.addEventListener('pointerup',()=>pointerDown=false);viewport.addEventListener('pointercancel',()=>pointerDown=false);
-function movePour(e){const r=viewport.getBoundingClientRect();pointerNdc.set(((e.clientX-r.left)/r.width)*2-1,-(((e.clientY-r.top)/r.height)*2-1));raycaster.setFromCamera(pointerNdc,camera);const hit=raycaster.ray.intersectPlane(pourPlane,new THREE.Vector3());if(hit){const dx=hit.x-.3,dz=hit.z,radius=Math.hypot(dx,dz),limit=1.35;if(radius>limit){hit.x=.3+dx/radius*limit;hit.z=dz/radius*limit}state.px=hit.x;state.pz=hit.z;if(+tilt.value>4)applyTilt(+tilt.value)}}
-const art=$('#art'),dctx=art.getContext('2d');function sizeArt(){const r=art.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);art.width=r.width*d;art.height=r.height*d;paintSurface()}new ResizeObserver(sizeArt).observe(art);
-function drawPointer(e){const r=art.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*512,y:(e.clientY-r.top)/r.height*512}}
-function updateDrawStatus(){const count=state.strokes.length;$('#status').textContent=`チョコペンで描画中 · 線 ${count} 本 · 色と太さを試す`;$('#undo').disabled=count===0}
-art.addEventListener('pointerdown',e=>{if(state.phase!=='draw')return;e.preventDefault();art.setPointerCapture(e.pointerId);state.stroke={color:state.color,width:state.width,points:[drawPointer(e)]};state.strokes.push(state.stroke);updateDrawStatus();paintSurface()});art.addEventListener('pointermove',e=>{if(state.stroke){const p=drawPointer(e),dx=(p.x-256)/256,dy=(p.y-256)/256;if(dx*dx+dy*dy>1){state.stroke=null;return}state.stroke.points.push(p);paintSurface()}});for(const ev of ['pointerup','pointercancel','lostpointercapture'])art.addEventListener(ev,()=>state.stroke=null);
-function phase(name){state.phase=name;const pour=name==='pour',draw=name==='draw',finish=name==='finish';$('#stageName').textContent=pour?'01 · ミルクを注ぐ':draw?'02 · チョコで描く':'03 · 仕上がり';$('#pourControls').hidden=!pour;pitcher.visible=pour;stream.visible=pour&&state.pour>4;$('#drawingLayer').hidden=pour||finish;$('#drawControls').hidden=!draw;$('#finishPanel').hidden=!finish;document.body.classList.toggle('phase-draw',draw);document.body.classList.toggle('finish-visible',finish);$('#next').hidden=!pour;$('#finish').hidden=!draw;$('#restart').hidden=!finish;$('#lesson').classList.toggle('closed',finish);$('#lessonTitle').textContent=pour?'まずはミルクを注いでみましょう':draw?'フォームの上にチョコで描きます':'できあがりを見てみましょう';$('#lessonText').textContent=pour?'エスプレッソに、きめ細かく温めたミルクフォームを合わせます。左のレバーで注ぐ量を調整し、画面をなぞると注ぐ位置が動きます。':draw?'ラテの表面ができたら、チョコペンの先を近づけて線を描きます。輪郭をゆっくり描き、線を重ねたり点を添えたりして模様を仕上げましょう。':`フォームは光沢があり、細かな泡が均一な状態が描きやすい目安です。実際のチョコは温度や粘度で線の太さが変わります。この画面では注ぎと線の位置関係を試すため、液体の動きは簡略化しています。`;$('#status').textContent=pour?'レバーで量を調節 · 画面をなぞって注ぐ位置を動かす':draw?'チョコペンで描画中 · 色と太さを試す':'手順を見ながら自由に描き足せます';if(draw)updateDrawStatus();}
-$('#next').onclick=()=>{if(state.pour<25)applyTilt(36);phase('draw')};$('#finish').onclick=()=>{phase('finish');makePreview()};$('#editAgain').onclick=()=>phase('draw');$('#restart').onclick=()=>{state.strokes=[];tilt.value=0;applyTilt(0);phase('pour')};$('#resetPour').onclick=()=>{tilt.value=0;applyTilt(0)};$('#undo').onclick=()=>{state.strokes.pop();updateDrawStatus();paintSurface()};$('#clear').onclick=()=>{if(confirm('チョコの線を消しますか？')){state.strokes=[];updateDrawStatus();paintSurface()}};document.querySelectorAll('.color').forEach(b=>{b.style.setProperty('--swatch',b.dataset.color);b.onclick=()=>{state.color=b.dataset.color;document.querySelectorAll('.color').forEach(x=>x.classList.toggle('active',x===b))}});$('#width').oninput=e=>state.width=+e.target.value;$('#helpToggle').onclick=()=>{$('#lesson').classList.toggle('closed');$('#helpToggle').setAttribute('aria-expanded',String(!$('#lesson').classList.contains('closed')))};$('#closeHelp').onclick=()=>{$('#lesson').classList.add('closed');$('#helpToggle').setAttribute('aria-expanded','false')};$('#motion').onclick=()=>{state.motion=!state.motion;document.body.classList.toggle('reduce-motion',state.motion);$('#motion').setAttribute('aria-pressed',String(state.motion))};$('#sound').onclick=()=>{$('#sound').textContent=$('#sound').textContent.endsWith('OFF')?'音 ON':'音 OFF';$('#sound').setAttribute('aria-pressed',String($('#sound').textContent.endsWith('ON')))};
+import { ChocolateDrawing } from './drawing.js';
+import { createCupScene, createSurface } from './cup-scene.js';
 
-function makePreview(){const out=document.createElement('canvas');out.width=1024;out.height=1280;const g=out.getContext('2d');const bg=g.createLinearGradient(0,0,0,1280);bg.addColorStop(0,'#f5ebd7');bg.addColorStop(1,'#dfc8a4');g.fillStyle=bg;g.fillRect(0,0,1024,1280);g.fillStyle='#3e3024';g.font='26px Georgia';g.textAlign='center';g.fillText('UNITY MIX  ·  LATTE ART',512,92);g.fillStyle='#2a3c30';g.font='46px "Yu Mincho",serif';g.fillText('チョコペン・ラテアート',512,158);g.save();g.shadowColor='#48301e55';g.shadowBlur=32;g.shadowOffsetY=24;g.fillStyle='#f4eee2';g.beginPath();g.ellipse(512,610,405,340,0,0,Math.PI*2);g.fill();g.restore();g.save();g.beginPath();g.ellipse(512,590,365,296,0,0,Math.PI*2);g.clip();g.drawImage(surfaceCanvas,147,294,730,592);g.restore();g.strokeStyle='#fffdf6';g.lineWidth=20;g.beginPath();g.ellipse(512,590,375,306,0,0,Math.PI*2);g.stroke();g.fillStyle='#435a48';g.font='28px sans-serif';g.fillText('ミルクフォームの上に描いた一杯',512,1035);g.fillStyle='#75654f';g.font='20px sans-serif';g.fillText(new Date().toLocaleDateString('ja-JP'),512,1090);g.fillStyle='#f7f1e6';g.beginPath();g.roundRect(400,1130,224,50,25);g.fill();g.fillStyle='#445545';g.font='20px Georgia';g.fillText('KISSA UNITY',512,1162);$('#preview').src=out.toDataURL('image/png');}
-$('#saveImage').onclick=async()=>{const encoded=$('#preview').src.split(',')[1],bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0)),blob=new Blob([bytes],{type:'image/png'}),file=new File([blob],'unity-latte-art.png',{type:'image/png'});if(navigator.canShare?.({files:[file]})){try{await navigator.share({files:[file],title:'Unity MIX ラテアート'})}catch(error){if(error.name!=='AbortError')download(blob)}}else download(blob)};
-function download(blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='unity-latte-art.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-function animate(){requestAnimationFrame(animate);projectSurface();if(!state.motion&&stream.visible)stream.material.opacity=.65+Math.sin(performance.now()*.012)*.12;renderer.render(scene,camera)}paintSurface();phase('pour');animate();
+const $ = id => document.getElementById(id);
+const drawing = new ChocolateDrawing();
+const surface = createSurface();
+const cup = createCupScene($('scene'), $('fallback'), surface);
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let mode = 'draw';
+let pourAmount = 0;
+let pourPointerId = null;
+let drawPointerId = null;
+let servingTimer = 0;
+let photoFile = null;
+let photoUrl = '';
+let resultCycle = 0;
+
+function redraw() {
+  cup.setArtwork(mode === 'pour' ? pourAmount : 1, drawing.strokes);
+}
+
+function updateToolbar(message) {
+  $('undo').disabled = $('clear').disabled = drawing.strokes.length === 0;
+  if (message) $('status').textContent = message;
+}
+
+function closeMenus() {
+  $('menuButton').setAttribute('aria-expanded', 'false');
+  $('menu').hidden = true;
+  $('widthButton').setAttribute('aria-expanded', 'false');
+  $('widthPanel').hidden = true;
+}
+
+function setMode(next, animate = false) {
+  mode = next;
+  closeMenus();
+  drawing.cancel();
+  drawPointerId = pourPointerId = null;
+  $('hud').hidden = next === 'serve';
+  $('serving').hidden = next !== 'serve';
+  $('pourControls').hidden = $('next').hidden = next !== 'pour';
+  $('drawControls').hidden = next !== 'draw';
+  $('tip').textContent = next === 'pour'
+    ? '量を調整し、カップの上で注ぐ位置を動かします。'
+    : '泡に触れて一滴。指を動かして一筆。';
+  cup.setMode(next, animate);
+  cup.setPour(pourAmount);
+  redraw();
+  updateToolbar();
+}
+
+function updatePour(value, position) {
+  pourAmount = value;
+  $('tiltValue').value = Math.round(value * 100) + '%';
+  cup.setPour(value, position);
+  redraw();
+}
+
+function penWidth() {
+  return 0.008 + Number($('width').value) * 0.0056;
+}
+
+cup.input.addEventListener('pointerdown', event => {
+  if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+  const point = cup.sample(event);
+  closeMenus();
+  if (!point) return;
+  if (mode === 'draw') {
+    if (!drawing.start(event.pointerId, point, penWidth())) return;
+    drawPointerId = event.pointerId;
+    updateToolbar();
+    redraw();
+  } else if (mode === 'pour') {
+    if (Math.hypot(point.x, point.y) > 1.45) return;
+    pourPointerId = event.pointerId;
+    updatePour(pourAmount, point);
+  } else {
+    return;
+  }
+  cup.input.setPointerCapture(event.pointerId);
+});
+
+cup.input.addEventListener('pointermove', event => {
+  if (mode === 'draw' && event.pointerId === drawPointerId) {
+    const events = event.getCoalescedEvents?.();
+    const samples = (events?.length ? events : [event]).map(sample => cup.sample(sample));
+    if (drawing.move(event.pointerId, samples)) redraw();
+  } else if (mode === 'pour' && event.pointerId === pourPointerId) {
+    const point = cup.sample(event);
+    if (point) updatePour(pourAmount, point);
+  }
+});
+
+function endGesture(event) {
+  if (event.pointerId === drawPointerId) {
+    if (event.type === 'pointerup' && drawing.move(event.pointerId, [cup.sample(event)])) redraw();
+    drawing.end(event.pointerId);
+    drawPointerId = null;
+  }
+  if (event.pointerId === pourPointerId) pourPointerId = null;
+}
+
+for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+  cup.input.addEventListener(name, endGesture);
+}
+window.addEventListener('resize', () => {
+  drawing.cancel();
+  drawPointerId = pourPointerId = null;
+});
+
+$('menuButton').onclick = () => {
+  const open = $('menu').hidden;
+  closeMenus();
+  $('menu').hidden = !open;
+  $('menuButton').setAttribute('aria-expanded', String(open));
+};
+$('widthButton').onclick = () => {
+  const open = $('widthPanel').hidden;
+  closeMenus();
+  $('widthPanel').hidden = !open;
+  $('widthButton').setAttribute('aria-expanded', String(open));
+  if (open) $('width').focus({ preventScroll: true });
+};
+$('width').oninput = () => {
+  $('widthButton').querySelector('i').style.setProperty('--dot', (5 + Number($('width').value)) + 'px');
+};
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || ($('widthPanel').hidden && $('menu').hidden)) return;
+  const button = $('widthPanel').hidden ? $('menuButton') : $('widthButton');
+  closeMenus();
+  button.focus();
+});
+$('showHelp').onclick = () => {
+  closeMenus();
+  $('helpDialog').showModal();
+};
+$('helpDialog').addEventListener('close', () => $('menuButton').focus());
+$('showPour').onclick = () => setMode('pour');
+$('showDraw').onclick = $('next').onclick = () => setMode('draw');
+$('tilt').oninput = () => updatePour(Number($('tilt').value) / 100);
+$('resetPour').onclick = () => {
+  $('tilt').value = '0';
+  updatePour(0);
+};
+$('undo').onclick = () => {
+  drawing.undo();
+  redraw();
+  updateToolbar('直前の一筆を取り消しました。');
+};
+$('clear').onclick = () => {
+  const dialog = $('clearDialog');
+  dialog.returnValue = 'cancel';
+  dialog.showModal();
+};
+$('clearDialog').addEventListener('close', () => {
+  if ($('clearDialog').returnValue === 'clear') {
+    drawing.clear();
+    redraw();
+    updateToolbar('チョコの線を消しました。');
+    $('widthButton').focus();
+  } else {
+    $('clear').focus();
+  }
+});
+
+function releasePhoto() {
+  if (photoUrl) URL.revokeObjectURL(photoUrl);
+  photoUrl = '';
+  photoFile = null;
+}
+
+function preparePhoto(cycle) {
+  if (cycle !== resultCycle) return;
+  function ready(blob) {
+    if (cycle !== resultCycle) return;
+    $('resultPhoto').setAttribute('aria-busy', 'false');
+    if (!blob) {
+      $('photoLabel').textContent = '画像を作れませんでした。編集に戻って再度お試しください。';
+      return;
+    }
+    photoFile = new File([blob], 'unity-latte-art.png', { type: 'image/png' });
+    photoUrl = URL.createObjectURL(photoFile);
+    $('preview').src = photoUrl;
+    $('preview').hidden = false;
+    $('photoLabel').hidden = true;
+    $('saveImage').disabled = false;
+  }
+  try {
+    cup.photo().toBlob(ready, 'image/png');
+  } catch {
+    ready(null);
+  }
+}
+
+$('finish').onclick = () => {
+  if (mode !== 'draw') return;
+  const cycle = ++resultCycle;
+  $('saveImage').disabled = true;
+  $('saveStatus').textContent = '';
+  $('resultPhoto').setAttribute('aria-busy', 'true');
+  $('photoLabel').textContent = '画像を準備中…';
+  $('photoLabel').hidden = false;
+  $('preview').hidden = true;
+  $('preview').removeAttribute('src');
+  releasePhoto();
+  setMode('serve', true);
+  // Give the serving view a frame before rendering the higher resolution photo.
+  requestAnimationFrame(() => requestAnimationFrame(() => preparePhoto(cycle)));
+  servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 1350);
+};
+
+function openResult() {
+  if (mode !== 'serve' || $('finishPanel').open) return;
+  clearTimeout(servingTimer);
+  $('serving').hidden = true;
+  $('finishPanel').showModal();
+  $('editAgain').focus({ preventScroll: true });
+}
+$('serving').onclick = openResult;
+$('closeResult').onclick = $('editAgain').onclick = () => $('finishPanel').close();
+$('finishPanel').addEventListener('close', () => {
+  resultCycle++;
+  releasePhoto();
+  setMode('draw');
+  $('finish').focus({ preventScroll: true });
+});
+$('restart').onclick = () => {
+  drawing.clear();
+  pourAmount = 0;
+  $('tilt').value = '0';
+  $('tiltValue').value = '0%';
+  $('finishPanel').close();
+};
+$('saveImage').onclick = async () => {
+  const file = photoFile;
+  if (!file) return;
+  const options = { files: [file], title: 'Unity MIX ラテアート' };
+  if (navigator.share && navigator.canShare?.(options)) {
+    try {
+      await navigator.share(options);
+      return;
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+    }
+  }
+  if (photoFile !== file || !photoUrl) return;
+  const link = document.createElement('a');
+  link.href = photoUrl;
+  link.download = file.name;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  $('saveStatus').textContent = 'PNGをダウンロードしました。';
+};
+
+setMode('draw');
