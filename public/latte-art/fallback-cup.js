@@ -94,10 +94,12 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   let ratio = 1;
   let pending = 0;
   function layout(w, h, view) {
-    const portrait = (view === 'draw' || view === 'pour') && w < h * .75;
+    const widthBlend = Math.max(0, Math.min(1, (w / h - .57) / .23));
+    const portrait = view === 'draw' || view === 'pour'
+      ? 1 - widthBlend ** 2 * (3 - 2 * widthBlend) : 0;
     return {
-      x: w * (portrait ? .58 : .5),
-      y: h * (portrait ? .355 : view === 'photo' ? .455 : .47),
+      x: w * (.5 + .104 * portrait),
+      y: h * (view === 'photo' ? .455 : .47 - .119 * portrait),
       r: Math.min(w * (view === 'photo' ? .248 : .34), h * .31),
     };
   }

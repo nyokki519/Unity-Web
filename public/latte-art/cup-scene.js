@@ -1,14 +1,13 @@
 import * as THREE from '../vendor/three/three.module.js';
 import {
-  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, PITCHER_LIP,
+  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, CUP_PROFILE, FOAM_PLANE, PITCHER_LIP,
   shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 
-const FOAM_RADIUS = 1.332;
-const FOAM_HEIGHT = 1.17;
+const { radius: FOAM_RADIUS, height: FOAM_HEIGHT } = FOAM_PLANE;
 const DRAW_HANDLE_ANGLE = -1.46;
 
 function walnutTextures() {
@@ -71,13 +70,7 @@ function buildTableware(scene, foam) {
   scene.add(saucer);
 
   const cup = new THREE.Group();
-  const bowl = lathe([
-    [0, .15], [.58, .15], [.64, .15], [.69, .17], [.71, .20], [.8, .25], [.93, .32],
-    [1.05, .44], [1.16, .57], [1.26, .73], [1.35, .92], [1.41, 1.12], [1.43, 1.28],
-    [1.43, 1.34], [1.415, 1.37], [1.39, 1.38], [1.367, 1.36], [1.353, 1.324],
-    [1.347, 1.22], [1.30, 1.03], [1.25, .87], [1.15, .69], [1.02, .51],
-    [.85, .38], [.68, .33], [0, .33],
-  ], porcelain);
+  const bowl = lathe(CUP_PROFILE, porcelain);
   cup.add(bowl);
   const handleRing = new THREE.Mesh(createHandleGeometry(), porcelain);
   handleRing.castShadow = handleRing.receiveShadow = true;
@@ -290,7 +283,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
     invalidate();
   }
   new ResizeObserver(resize).observe(mainCanvas);
-  mainCanvas.addEventListener('webglcontextlost', () => {
+
+  function activateFallback() {
     contextUnavailable = true;
     animating = false;
     substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
@@ -302,7 +296,10 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
     substitute.setPour(artwork.fill, pourAim);
     substitute.setArtwork(artwork.fill, artwork.strokes, artwork.active);
     revealControls();
-  });
+    return substitute;
+  }
+
+  mainCanvas.addEventListener('webglcontextlost', activateFallback);
   mainCanvas.addEventListener('webglcontextrestored', () => {
     contextUnavailable = false;
     artworkDirty = true;
@@ -365,7 +362,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
   }
 
   function photo() {
-    if (contextUnavailable) return substitute.photo();
+    const gl = renderer.getContext();
+    if (contextUnavailable || gl.isContextLost()) return activateFallback().photo();
     // Capture the actual cup with the same textured surface. Nothing in the HTML is composited.
     foam.paintPhoto(artwork.fill, artwork.strokes);
     foamTexture.needsUpdate = true;
@@ -386,6 +384,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
       renderer.shadowMap.needsUpdate = true;
       renderer.render(scene, framing);
       picture.getContext('2d').drawImage(mainCanvas, 0, 0);
+    } catch (error) {
+      if (!gl.isContextLost()) throw error;
     } finally {
       handle.rotation.y = angle;
       spoon.visible = hadSpoon;
@@ -395,6 +395,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
       backdropDirty = true;
       invalidate();
     }
+    if (gl.isContextLost()) return activateFallback().photo();
     return picture;
   }
 

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { LatheGeometry, Vector2 } from '../public/vendor/three/three.module.js';
 import {
   createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
-  PITCHER_LIP, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
+  FOAM_PLANE, PITCHER_LIP, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from '../public/latte-art/cup-model.js';
 
 test('handle opens around a ceramic grip without crossing into milk', () => {
@@ -17,8 +17,8 @@ test('handle opens around a ceramic grip without crossing into milk', () => {
   const geometry = createHandleGeometry();
   const positions = geometry.getAttribute('position');
   for (let index = 0; index < positions.count; index++) {
-    if (positions.getY(index) < 1.17) continue;
-    assert.ok(Math.hypot(positions.getX(index), positions.getZ(index)) >= 1.332);
+    if (positions.getY(index) < FOAM_PLANE.height) continue;
+    assert.ok(Math.hypot(positions.getX(index), positions.getZ(index)) >= FOAM_PLANE.radius);
   }
   geometry.dispose();
 });
