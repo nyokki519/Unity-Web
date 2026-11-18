@@ -42,3 +42,9 @@ Chromiumのタッチ入力を用いて、390×844で以下を実行した。
 - `latte-art-export.png`: 実際に保存された作品画像
 
 色と太さを変更した後の描画、Undo、全消しの確定と取消も確認した。375/390/414pxで横はみ出しなし。編集へ戻ると線数1本が保持され、続きを描けることを確認。実機iPhone Safariでの保存先選択は未確認。
+
+## 公開版の再検証
+
+`main` commit `4dda492` で更新後、公開HTMLが `app.js?v=5` を返すことと、公開ページのHTTP 200を確認。公開URLでも390pxタッチ操作と375/414px幅、1280×800 PC表示を再実行した。公開版の保存操作はWeb Share APIへ `unity-latte-art.png`（image/png、487,356 bytes）を渡すことをブラウザ内の検証用受け口で確認した。OSのネイティブ共有シートやiPhone Safari実機での「写真に保存」はこの環境では直接確認できない。
+
+公開版スクリーンショット: `06-prod-initial-390.png`, `07-prod-drawing-390.png`, `08-prod-finish-390.png`, `09-prod-edit-again-390.png`, `10-prod-finish-1280.png`。
