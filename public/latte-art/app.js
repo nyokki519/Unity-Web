@@ -192,7 +192,7 @@ function preparePhoto(cycle) {
   }
 }
 
-$('finish').onclick = () => {
+function finishDrawing() {
   if (mode !== 'draw') return;
   const cycle = ++resultCycle;
   $('saveImage').disabled = true;
@@ -206,8 +206,28 @@ $('finish').onclick = () => {
   setMode('serve', true);
   // Give the serving view a frame before rendering the higher resolution photo.
   requestAnimationFrame(() => requestAnimationFrame(() => preparePhoto(cycle)));
-  servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 1350);
-};
+  if (!reducedMotion.matches) $('serving').focus({ preventScroll: true });
+  servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 3000);
+}
+
+const finishButton = $('finish');
+let finishTouch = null;
+finishButton.onclick = finishDrawing;
+finishButton.addEventListener('pointerdown', event => {
+  if (event.pointerType !== 'touch' || !event.isPrimary) return;
+  finishTouch = { id: event.pointerId, x: event.clientX, y: event.clientY };
+});
+finishButton.addEventListener('pointercancel', () => { finishTouch = null; });
+finishButton.addEventListener('pointerup', event => {
+  const touch = finishTouch;
+  if (touch?.id !== event.pointerId) return;
+  finishTouch = null;
+  if (Math.hypot(event.clientX - touch.x, event.clientY - touch.y) > 12) return;
+  if (!finishButton.contains(document.elementFromPoint(event.clientX, event.clientY))) return;
+  // Real taps can lose their synthesized click immediately after a captured canvas drag.
+  // Keep keyboard/mouse clicks and let the mode check make both paths safe.
+  requestAnimationFrame(finishDrawing);
+});
 
 function openResult() {
   if (mode !== 'serve' || $('finishPanel').open) return;
@@ -235,13 +255,13 @@ $('saveImage').onclick = async () => {
   const file = photoFile;
   if (!file) return;
   const options = { files: [file], title: 'Unity MIX ラテアート' };
-  if (navigator.share && navigator.canShare?.(options)) {
-    try {
+  try {
+    if (navigator.share && navigator.canShare?.(options)) {
       await navigator.share(options);
       return;
-    } catch (error) {
-      if (error.name === 'AbortError') return;
     }
+  } catch (error) {
+    if (error.name === 'AbortError') return;
   }
   if (photoFile !== file || !photoUrl) return;
   const link = document.createElement('a');

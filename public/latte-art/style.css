@@ -168,7 +168,7 @@ input[type="range"] { accent-color: var(--accent); }
   background: var(--glass);
   padding: .42em 1.1em;
   border-radius: 999px;
-  animation: reveal-message 330ms 260ms both;
+  animation: reveal-message 450ms 750ms both;
 }
 @media (prefers-reduced-motion: reduce) {
   .serve-overlay span { animation: none; }

@@ -1,8 +1,8 @@
 import * as THREE from '../vendor/three/three.module.js';
 import { paintChocolate } from './drawing.js';
 
-const FOAM_RADIUS = 1.346;
-const FOAM_HEIGHT = 1.25;
+const FOAM_RADIUS = 1.332;
+const FOAM_HEIGHT = 1.17;
 const ART_SIZE = 1024;
 const PHOTO_SIZE = 1200;
 const DRAW_HANDLE_ANGLE = -1.43;
@@ -124,6 +124,31 @@ function walnutTexture() {
   return texture;
 }
 
+function windowReflection() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 128;
+  const context = canvas.getContext('2d');
+  const room = context.createLinearGradient(0, 0, 0, 128);
+  room.addColorStop(0, '#8f8175');
+  room.addColorStop(.43, '#6c5747');
+  room.addColorStop(.64, '#3d2e24');
+  room.addColorStop(1, '#241a14');
+  context.fillStyle = room;
+  context.fillRect(0, 0, 256, 128);
+  context.fillStyle = '#dcd7cf';
+  context.fillRect(53, 21, 46, 33);
+  context.fillStyle = '#fffaf1';
+  context.fillRect(55, 23, 19, 29);
+  context.fillRect(77, 23, 20, 29);
+  context.fillStyle = '#a48b73';
+  context.fillRect(177, 50, 31, 19);
+  const map = new THREE.CanvasTexture(canvas);
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.mapping = THREE.EquirectangularReflectionMapping;
+  return map;
+}
+
 function lathe(rows, material) {
   const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 112), material);
   mesh.castShadow = mesh.receiveShadow = true;
@@ -153,9 +178,9 @@ function buildTableware(scene, foam) {
     [.85, .38], [.68, .33], [0, .33],
   ], porcelain);
   cup.add(bowl);
-  const handleRing = new THREE.Mesh(new THREE.TorusGeometry(.41, .105, 14, 56), porcelain);
+  const handleRing = new THREE.Mesh(new THREE.TorusGeometry(.37, .105, 14, 56), porcelain);
   handleRing.scale.set(1.12, .82, 1.24);
-  handleRing.position.set(1.59, .88, 0);
+  handleRing.position.set(1.72, .88, 0);
   handleRing.castShadow = handleRing.receiveShadow = true;
   const handle = new THREE.Group();
   handle.add(handleRing);
@@ -169,6 +194,7 @@ function buildTableware(scene, foam) {
   }));
   disk.rotation.x = -Math.PI / 2;
   disk.position.y = FOAM_HEIGHT;
+  disk.receiveShadow = true;
   cup.add(disk);
   scene.add(cup);
   return { foamTexture, handle };
@@ -209,12 +235,15 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   }
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#554a40');
+  scene.environment = windowReflection();
+  scene.environmentIntensity = .38;
+  scene.environmentRotation.y = .32;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.18;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  const atmosphere = new THREE.HemisphereLight('#fff5e8', '#655345', 2.15);
+  const atmosphere = new THREE.HemisphereLight('#fff5e8', '#655345', 1.91);
   const windowLight = new THREE.DirectionalLight('#fff8f1', 3.1);
   windowLight.position.set(-5, 8, -3.4);
   windowLight.castShadow = true;
@@ -365,19 +394,22 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     placeCamera(framing, 'photo', 1);
     const oldSize = renderer.getSize(new THREE.Vector2());
     const oldRatio = renderer.getPixelRatio();
-    renderer.setPixelRatio(1);
-    renderer.setSize(PHOTO_SIZE, PHOTO_SIZE, false);
     const angle = handle.rotation.y;
     const hadSpoon = spoon.visible;
-    handle.rotation.y = 0;
-    spoon.visible = true;
-    renderer.render(scene, framing);
-    handle.rotation.y = angle;
-    spoon.visible = hadSpoon;
-    picture.getContext('2d').drawImage(mainCanvas, 0, 0);
-    renderer.setPixelRatio(oldRatio);
-    renderer.setSize(oldSize.x, oldSize.y, false);
-    invalidate();
+    try {
+      renderer.setPixelRatio(1);
+      renderer.setSize(PHOTO_SIZE, PHOTO_SIZE, false);
+      handle.rotation.y = 0;
+      spoon.visible = true;
+      renderer.render(scene, framing);
+      picture.getContext('2d').drawImage(mainCanvas, 0, 0);
+    } finally {
+      handle.rotation.y = angle;
+      spoon.visible = hadSpoon;
+      renderer.setPixelRatio(oldRatio);
+      renderer.setSize(oldSize.x, oldSize.y, false);
+      invalidate();
+    }
     return picture;
   }
 
