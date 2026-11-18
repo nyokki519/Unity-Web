@@ -1,18 +1,21 @@
 # Unity MIX ラテアート手ほどきデモ
 
-## Reference review
+## 参考確認
 
-Reviewed `https://caen.games/latteart-maker` in a 390×844 mobile browser on 2026-11-18. The visible interaction is a full-viewport 3D scene on a wood tabletop: an espresso cup, a milk pitcher, a vertical pour lever on the left, touch/mouse positioning over the cup, a brief instruction overlay, and audio/device controls. The source page metadata describes controlling pour position and pitcher tilt; the interactive page keeps most controls in WebGL/canvas, so the DOM text exposed by automation is limited.
+唯一の基準として `https://lattestudio.pages.dev/play` を確認。390×844のChromiumで起動すると、18秒後も「Almost ready…」のローダーから進まず、参考ゲームの開始・プレイ・完成操作はこのブラウザ環境では確認できなかった。起動時の暗いエスプレッソ色、シャンパン色のアクセント、カップのロゴ演出は確認。公開ページのHTML/CSS/JavaScriptは取得できたが、独自資産は複製せず、UIの余白、暗いガラス調の操作パネル、押下状態、ボタン形状を参照して実装した。WebGL実プレイ画面は未確認として区別する。
 
-## Unity MIX adaptation
+## Unity MIX版
 
-- Retains the 3D tabletop, cup and pitcher composition, vertical pour control, drag-to-position, brief per-stage help, and mobile-first full-screen scene.
-- Adds a separate chocolate-pen stage because the intended community demonstration teaches design latte art after the milk base is made.
-- Includes short explanations for espresso, microfoam, outline-first drawing, and differences between this simplified simulation and real milk/chocolate behavior.
-- Does not add score, ranking, opponents, rewards, or challenge modes.
-- The 3D liquid is a visual approximation; it does not solve fluid dynamics or teach food-safety/steaming temperatures.
-- No reference site code or image assets are included in this first implementation.
+- 3Dの木製テーブル、陶器カップ、ミルクピッチャーと、注ぐ／描くの工程を保持。
+- Latte Studioの暗いエスプレッソ色、シャンパンアクセント、半透明ガラス調パネルを操作UIに反映。
+- 泡の上にチョコペンで描く機能、細い線・単タップの点、色・太さ、Undo、全消し、完成プレビュー、PNG保存、編集復帰を実装。
+- 画像プレビューは1024×1280 PNG。3DシーンのUIやボタンは書き出し画像に含めない。
+- タッチ描画は円形のフォーム領域でのみ線をつなぎ、指が領域外へ出た場合は線を切る。
+- 画面回転後もストローク状態から再描画する。
+- 得点・対戦・報酬要素は追加しない。
 
-## Verification
+## 検証
 
-Chromium: 390×844 mobile emulation and 1280×800 desktop. Checked pour control, drag position, projected drawing surface alignment, pointer drawing, finish and restart. No page errors, horizontal overflow, or missing app resources. Screenshots are in `docs/qa/latte-art/`.
+Chromiumタッチエミュレーションで375×844、390×844、414×844、PC相当で1280×800を確認。タップ、ドラッグ、泡の外へ出て戻る、色・太さ、Undo、全消しの確認・取消、完成、PNG保存、編集復帰、回転、横はみ出しを検証する。iPhone Safari実機は未確認。
+
+詳細スクリーンショット、比較、保存ファイル、今回確認できなかった参考ページ範囲は `docs/qa/latte-art-review/README.md` を参照。
