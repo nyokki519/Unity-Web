@@ -1,127 +1,27 @@
 import * as THREE from '../vendor/three/three.module.js';
-import { paintChocolate } from './drawing.js';
+import { createHandleGeometry, createMilkStreamGeometry, updateMilkStream } from './cup-model.js';
+import { createCanvasFallback } from './fallback-cup.js';
+import { canvasOf, PHOTO_SIZE } from './surface.js';
+import { createWalnutImages } from './walnut.js';
+
+export { createSurface } from './surface.js';
 
 const FOAM_RADIUS = 1.332;
 const FOAM_HEIGHT = 1.17;
-const ART_SIZE = 1024;
-const PHOTO_SIZE = 1200;
-const DRAW_HANDLE_ANGLE = -1.43;
-const PEN_COLORS = { espresso: '#8b4a29', foam: '#f8eee0' };
+const DRAW_HANDLE_ANGLE = -1.08;
 
-function canvasOf(size) {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = size;
-  return canvas;
-}
-
-function randomFrom(seed) {
-  return () => {
-    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-    return seed / 4294967296;
-  };
-}
-
-export function createSurface() {
-  const surface = canvasOf(ART_SIZE);
-  const base = canvasOf(ART_SIZE);
-  const context = surface.getContext('2d');
-  const ground = base.getContext('2d');
-  const random = randomFrom(7123);
-  const bubbles = Array.from({ length: 2500 }, () => {
-    const angle = random() * Math.PI * 2;
-    const distance = Math.sqrt(random());
-    return {
-      x: Math.cos(angle) * distance,
-      y: Math.sin(angle) * distance,
-      radius: (0.4 + random() ** 4 * 3.2) / (ART_SIZE / 2),
-      highlight: random() > 0.38,
-    };
-  });
-  let baseFill = -1;
-
-  function updateBase(fill) {
-    const half = ART_SIZE / 2;
-    ground.setTransform(half, 0, 0, half, half, half);
-    ground.fillStyle = PEN_COLORS.espresso;
-    ground.fillRect(-1, -1, 2, 2);
-    const edge = 0.22 + fill * 0.72;
-    const espresso = ground.createRadialGradient(-0.16, -0.19, 0.12, 0, 0, 1.06);
-    espresso.addColorStop(0, '#a8693f');
-    espresso.addColorStop(.78, '#9c5f37');
-    espresso.addColorStop(1, '#6d361c');
-    ground.fillStyle = espresso;
-    ground.fillRect(-1, -1, 2, 2);
-    if (fill > 0) {
-      const foam = ground.createRadialGradient(-.18, -.2, .04, 0, 0, edge + .055);
-      foam.addColorStop(0, '#fffdf4');
-      foam.addColorStop(.7, PEN_COLORS.foam);
-      foam.addColorStop(.92, '#e5cfb6');
-      foam.addColorStop(1, '#dec2a100');
-      ground.globalAlpha = Math.min(1, fill * 2.1);
-      ground.fillStyle = foam;
-      ground.fillRect(-1, -1, 2, 2);
-      ground.globalAlpha = 1;
-    }
-    for (const bubble of bubbles) {
-      const insideFoam = fill > 0 && Math.hypot(bubble.x, bubble.y) < edge;
-      ground.fillStyle = insideFoam
-        ? (bubble.highlight ? '#ffffff8a' : '#8d694525')
-        : (bubble.highlight ? '#ebbc7f3c' : '#522d212e');
-      ground.beginPath();
-      ground.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
-      ground.fill();
-    }
+function walnutTextures() {
+  const { colorCanvas, reliefCanvas } = createWalnutImages();
+  function repeatingTexture(canvas) {
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(3.5, 3.5);
+    texture.anisotropy = 4;
+    return texture;
   }
-
-  return {
-    canvas: surface,
-    paint(fill, strokes) {
-      if (baseFill !== fill) {
-        updateBase(fill);
-        baseFill = fill;
-      }
-      context.resetTransform();
-      context.drawImage(base, 0, 0);
-      const radius = ART_SIZE / 2;
-      context.save();
-      context.setTransform(radius, 0, 0, radius, radius, radius);
-      context.beginPath();
-      context.arc(0, 0, 1, 0, Math.PI * 2);
-      context.clip();
-      paintChocolate(context, strokes);
-      context.restore();
-    },
-  };
-}
-
-function walnutTexture() {
-  const canvas = canvasOf(512);
-  const context = canvas.getContext('2d');
-  const image = context.createImageData(512, 512);
-  const random = randomFrom(701);
-  const bands = Float32Array.from({ length: 512 }, () => random());
-  for (let y = 0; y < 512; y++) {
-    for (let x = 0; x < 512; x++) {
-      const wave = 5 * Math.sin(x / 58 + y / 49) + 1.5 * Math.sin(x / 19 + y / 33);
-      const track = y + wave + 512;
-      const row = Math.floor(track) % 512;
-      const fraction = track - Math.floor(track);
-      const fiber = THREE.MathUtils.lerp(bands[row], bands[(row + 1) % 512], fraction);
-      const grain = 12 * fiber + 6 * Math.sin(y / 17 + Math.sin(x / 53)) + 4 * random();
-      const offset = (y * 512 + x) * 4;
-      image.data[offset] = 84 + grain;
-      image.data[offset + 1] = 74 + grain;
-      image.data[offset + 2] = 66 + grain;
-      image.data[offset + 3] = 255;
-    }
-  }
-  context.putImageData(image, 0, 0);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(3.5, 3.5);
-  texture.anisotropy = 4;
-  return texture;
+  const map = repeatingTexture(colorCanvas);
+  map.colorSpace = THREE.SRGBColorSpace;
+  return { map, bumpMap: repeatingTexture(reliefCanvas) };
 }
 
 function windowReflection() {
@@ -157,7 +57,7 @@ function lathe(rows, material) {
 
 function buildTableware(scene, foam) {
   const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#eee8de', roughness: .31, clearcoat: .55, clearcoatRoughness: .24,
+    color: '#eae7e1', roughness: .26, clearcoat: .83, clearcoatRoughness: .15,
   });
   const saucer = lathe([
     [0, .04], [.78, .04], [.96, .02], [1.12, .02], [1.38, .035], [1.72, .08],
@@ -178,9 +78,7 @@ function buildTableware(scene, foam) {
     [.85, .38], [.68, .33], [0, .33],
   ], porcelain);
   cup.add(bowl);
-  const handleRing = new THREE.Mesh(new THREE.TorusGeometry(.37, .105, 14, 56), porcelain);
-  handleRing.scale.set(1.12, .82, 1.24);
-  handleRing.position.set(1.72, .88, 0);
+  const handleRing = new THREE.Mesh(createHandleGeometry(), porcelain);
   handleRing.castShadow = handleRing.receiveShadow = true;
   const handle = new THREE.Group();
   handle.add(handleRing);
@@ -203,7 +101,7 @@ function buildTableware(scene, foam) {
 function buildSpoon(scene) {
   const spoon = new THREE.Group();
   const material = new THREE.MeshStandardMaterial({
-    color: '#d5ccc0', metalness: .45, roughness: .26,
+    color: '#dad7d2', metalness: .81, roughness: .20,
   });
   // Hollow, shallow spoon bowl. It is on the saucer only at service.
   const bowl = lathe([
@@ -236,12 +134,12 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#554a40');
   scene.environment = windowReflection();
-  scene.environmentIntensity = .38;
+  scene.environmentIntensity = .47;
   scene.environmentRotation.y = .32;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.18;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
 
   const atmosphere = new THREE.HemisphereLight('#fff5e8', '#655345', 1.91);
   const windowLight = new THREE.DirectionalLight('#fff8f1', 3.1);
@@ -252,10 +150,12 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   windowLight.shadow.normalBias = .018;
   windowLight.shadow.bias = -.0002;
   windowLight.shadow.intensity = .66;
+  windowLight.shadow.radius = 2.5;
   scene.add(atmosphere, windowLight);
 
+  const wood = walnutTextures();
   const table = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), new THREE.MeshStandardMaterial({
-    map: walnutTexture(), color: '#d8d0c7', roughness: .84,
+    ...wood, bumpScale: .006, color: '#d8d0c7', roughness: .77,
   }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
@@ -264,15 +164,14 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   const spoon = buildSpoon(scene);
   const { pitcher, spout } = buildPitcher(scene);
   const stream = new THREE.Mesh(
-    new THREE.CylinderGeometry(.021, .038, 1, 16),
+    createMilkStreamGeometry(),
     new THREE.MeshStandardMaterial({ color: '#fff6de', roughness: .24 }),
   );
   stream.visible = false;
+  stream.frustumCulled = false;
   scene.add(stream);
   const streamStart = new THREE.Vector3();
   const streamEnd = new THREE.Vector3();
-  const streamAxis = new THREE.Vector3();
-  const vertical = new THREE.Vector3(0, 1, 0);
   let pourAim = { x: 0, y: 0 };
   const camera = new THREE.PerspectiveCamera(28, 1, .1, 80);
   const target = new THREE.Vector3();
@@ -283,8 +182,11 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   const drawingMode = window.matchMedia('(prefers-reduced-motion: reduce)');
   let mode = 'draw';
   let pending = 0;
-  let pendingArtwork = null;
+  let artwork = { fill: 1, strokes: [], active: null };
+  let artworkDirty = false;
   let animating = false;
+  let contextUnavailable = false;
+  let substitute = null;
 
   function placeCamera(camera, view, aspect) {
     const tall = aspect < .75;
@@ -306,19 +208,22 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   }
 
   function paintPendingArtwork() {
-    if (!pendingArtwork) return;
-    foam.paint(pendingArtwork.fill, pendingArtwork.strokes);
-    pendingArtwork = null;
+    if (!artworkDirty) return;
+    const { fill, strokes, active } = artwork;
+    foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
+    artworkDirty = false;
     foamTexture.needsUpdate = true;
   }
 
   function drawFrame() {
+    if (contextUnavailable) return;
     paintPendingArtwork();
     renderer.render(scene, camera);
+    if (substitute) fallbackCanvas.hidden = true;
   }
 
   function invalidate() {
-    if (pending) return;
+    if (pending || contextUnavailable) return;
     pending = requestAnimationFrame(() => {
       pending = 0;
       drawFrame();
@@ -326,6 +231,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   }
 
   function resize() {
+    if (contextUnavailable) return;
     const { width, height } = mainCanvas.getBoundingClientRect();
     if (!width || !height) return;
     animating = false;
@@ -336,10 +242,31 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     invalidate();
   }
   new ResizeObserver(resize).observe(mainCanvas);
-  mainCanvas.addEventListener('webglcontextrestored', resize);
+  mainCanvas.addEventListener('webglcontextlost', () => {
+    contextUnavailable = true;
+    animating = false;
+    substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
+      overlay: true, tableImage: wood.map.image,
+    });
+    fallbackCanvas.hidden = false;
+    substitute.resize();
+    substitute.setMode(mode);
+    substitute.setPour(artwork.fill, pourAim);
+    substitute.setArtwork(artwork.fill, artwork.strokes, artwork.active);
+  });
+  mainCanvas.addEventListener('webglcontextrestored', () => {
+    contextUnavailable = false;
+    artworkDirty = true;
+    setMode(mode);
+    if (mode === 'pour') setPour(artwork.fill, pourAim);
+  });
 
   function setMode(next, animate = false) {
     mode = next;
+    if (contextUnavailable) {
+      substitute.setMode(next);
+      return;
+    }
     pitcher.visible = next === 'pour';
     spoon.visible = next === 'serve';
     if (next !== 'pour') stream.visible = false;
@@ -378,6 +305,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   }
 
   function sample(event) {
+    if (contextUnavailable) return substitute.sample(event);
     const rect = mainCanvas.getBoundingClientRect();
     if (!rect.width || !rect.height) return null;
     coords.set((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2);
@@ -387,8 +315,11 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   }
 
   function photo() {
+    if (contextUnavailable) return substitute.photo();
     // Capture the actual cup with the same textured surface. Nothing in the HTML is composited.
-    paintPendingArtwork();
+    foam.paintPhoto(artwork.fill, artwork.strokes);
+    foamTexture.needsUpdate = true;
+    artworkDirty = true;
     const picture = canvasOf(PHOTO_SIZE);
     const framing = new THREE.PerspectiveCamera(28, 1, .1, 80);
     placeCamera(framing, 'photo', 1);
@@ -413,31 +344,36 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     return picture;
   }
 
+  function setPour(fill, position = pourAim) {
+    const length = Math.max(1, Math.hypot(position.x, position.y));
+    pourAim = { x: position.x / length, y: position.y / length };
+    if (contextUnavailable) {
+      substitute.setPour(fill, pourAim);
+      return;
+    }
+    pitcher.rotation.z = .08 + fill * .62;
+    pitcher.position.x = 1.8 + pourAim.x * .38;
+    pitcher.position.z = -.48 + pourAim.y * .5;
+    stream.visible = mode === 'pour' && fill > .02;
+    if (stream.visible) {
+      spout.getWorldPosition(streamStart);
+      streamEnd.set(pourAim.x * FOAM_RADIUS, FOAM_HEIGHT, pourAim.y * FOAM_RADIUS);
+      updateMilkStream(stream.geometry, streamStart, streamEnd, fill);
+    }
+    invalidate();
+  }
+
   resize();
   return {
     input: mainCanvas,
     sample, setMode, resize, photo,
-    setArtwork(fill, strokes) {
-      pendingArtwork = { fill, strokes };
-      invalidate();
+    setArtwork(fill, strokes, active) {
+      artwork = { fill, strokes, active };
+      artworkDirty = true;
+      if (contextUnavailable) substitute.setArtwork(fill, strokes, active);
+      else invalidate();
     },
-    setPour(fill, position = pourAim) {
-      const length = Math.max(1, Math.hypot(position.x, position.y));
-      pourAim = { x: position.x / length, y: position.y / length };
-      pitcher.rotation.z = .08 + fill * .62;
-      pitcher.position.x = 1.8 + pourAim.x * .38;
-      pitcher.position.z = -.48 + pourAim.y * .5;
-      stream.visible = mode === 'pour' && fill > .02;
-      if (stream.visible) {
-        spout.getWorldPosition(streamStart);
-        streamEnd.set(pourAim.x * FOAM_RADIUS, FOAM_HEIGHT, pourAim.y * FOAM_RADIUS);
-        streamAxis.subVectors(streamStart, streamEnd);
-        stream.position.copy(streamStart).lerp(streamEnd, .5);
-        stream.scale.y = streamAxis.length();
-        stream.quaternion.setFromUnitVectors(vertical, streamAxis.normalize());
-      }
-      invalidate();
-    },
+    setPour,
   };
 }
 
@@ -467,87 +403,4 @@ function buildPitcher(scene) {
   pivot.add(lip);
   scene.add(pivot);
   return { pitcher: pivot, spout };
-}
-
-function createCanvasFallback(mainCanvas, canvas, foam) {
-  mainCanvas.hidden = true;
-  canvas.hidden = false;
-  const context = canvas.getContext('2d');
-  let mode = 'draw';
-  let width = 1;
-  let height = 1;
-  let ratio = 1;
-  function layout(w, h, view) {
-    return {
-      x: w * .5,
-      y: h * (view === 'photo' ? .49 : .47),
-      r: Math.min(w * (view === 'photo' ? .315 : .34), h * .31),
-    };
-  }
-  function paint(ctx, w, h, view) {
-    const { x, y, r } = layout(w, h, view);
-    const backdrop = ctx.createLinearGradient(0, 0, w, h);
-    backdrop.addColorStop(0, '#b2a18e');
-    backdrop.addColorStop(1, '#574437');
-    ctx.fillStyle = backdrop;
-    ctx.fillRect(0, 0, w, h);
-    function ellipse(rx, ry, color, offsetY = 0) {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.ellipse(x, y + offsetY, r * rx, r * ry, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.save();
-    ctx.shadowColor = '#1c130aa0';
-    ctx.shadowBlur = r * .20;
-    ctx.shadowOffsetX = r * .08;
-    ctx.shadowOffsetY = r * .16;
-    ellipse(1.50, 1.28, '#e8e3da', .13 * r);
-    ctx.restore();
-    ctx.strokeStyle = '#ded8cd';
-    ctx.lineWidth = r * .15;
-    ctx.beginPath();
-    ctx.ellipse(x + r * 1.09, y + r * .09, r * .31, r * .20, 0, 0, Math.PI * 2);
-    ctx.stroke();
-    ellipse(1.05, .94, '#bdb4a5', r * .08);
-    ellipse(1.055, .934, '#fff7e9');
-    ctx.save();
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
-    ctx.clip();
-    ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
-    ctx.restore();
-  }
-  function draw() {
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    paint(context, width, height, mode);
-  }
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    width = rect.width;
-    height = rect.height;
-    ratio = Math.min(devicePixelRatio || 1, 1.75);
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    draw();
-  }
-  new ResizeObserver(resize).observe(canvas);
-  resize();
-  return {
-    input: canvas,
-    setArtwork(fill, strokes) { foam.paint(fill, strokes); draw(); },
-    resize,
-    setMode(next) { mode = next; draw(); },
-    setPour() {},
-    sample(event) {
-      const rect = canvas.getBoundingClientRect();
-      const { x, y, r } = layout(width, height, mode);
-      return { x: (event.clientX - rect.left - x) / r, y: (event.clientY - rect.top - y) / (r * .88) };
-    },
-    photo() {
-      const picture = canvasOf(PHOTO_SIZE);
-      paint(picture.getContext('2d'), PHOTO_SIZE, PHOTO_SIZE, 'photo');
-      return picture;
-    },
-  };
 }

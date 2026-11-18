@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ChocolateDrawing } from '../public/latte-art/drawing.js';
+import { ChocolateDrawing, paintChocolate } from '../public/latte-art/drawing.js';
 
 test('each tap makes a dot that can be undone independently', () => {
   const drawing = new ChocolateDrawing();
@@ -38,4 +38,38 @@ test('a second finger and events after release cannot alter the current drawing'
   drawing.end(1);
   drawing.move(1, [{ x: 0.9, y: 0 }]);
   assert.deepEqual(drawing.strokes[0].paths, [[{ x: 0, y: 0 }, { x: 0.4, y: 0 }]]);
+});
+
+test('painted acute corners go through the finger position', () => {
+  const segments = [];
+  const context = {
+    beginPath() {},
+    moveTo() {},
+    lineTo: (x, y) => segments.push([x, y]),
+    quadraticCurveTo() {},
+    stroke() {},
+  };
+  paintChocolate(context, [{
+    paths: [[{ x: -.2, y: .14 }, { x: 0, y: .4 }, { x: .2, y: .14 }]],
+    width: .024,
+    color: '#4c281b',
+  }]);
+  assert.ok(segments.some(([x, y]) => x === 0 && y === .4));
+});
+
+test('gradual folds keep their rounded brush motion', () => {
+  const controls = [];
+  const context = {
+    beginPath() {},
+    moveTo() {},
+    lineTo() {},
+    quadraticCurveTo: (x, y) => controls.push([x, y]),
+    stroke() {},
+  };
+  paintChocolate(context, [{
+    paths: [[{ x: -.2, y: .14 }, { x: 0, y: .30 }, { x: .2, y: .14 }]],
+    width: .024,
+    color: '#4c281b',
+  }]);
+  assert.ok(controls.some(([x, y]) => x === 0 && y === .30));
 });

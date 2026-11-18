@@ -22,6 +22,7 @@ html, body {
 #studio { position: relative; height: 100dvh; overflow: hidden; }
 #scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-touch-callout: none; }
 #scene { cursor: crosshair; }
+#fallback.paint-overlay { pointer-events: none; }
 .hud { pointer-events: none; position: absolute; inset: 0; user-select: none; }
 .hud a, .hud button, .hud nav, .hud input, .hud .bar, .hud .width-panel { pointer-events: auto; }
 .glass {
@@ -251,11 +252,27 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 .sheet button:not(.go) { background: #41342a; }
 .sr-only { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
 
-@media (max-width: 760px) {
+@media (max-width: 760px) and (orientation: portrait) {
   .shot[open] { align-items: flex-start; }
-  .result { flex-direction: column; align-items: stretch; gap: 18px; margin: 0 auto; max-width: 420px; }
+  .result {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    margin: 0 auto;
+    max-width: 420px;
+    min-height: min(86dvh, calc(100dvh - 56px - env(safe-area-inset-bottom)));
+  }
   .result-photo { width: min(100%, 65vw, 52dvh); margin-inline: auto; }
+  .result-info { display: flex; flex-direction: column; }
   .result-info h1 { font-size: 23px; }
+  .result-actions { margin-top: auto; }
+}
+@media (max-height: 700px) and (orientation: portrait) {
+  .hint { top: calc(60px + env(safe-area-inset-top)); }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .result { gap: 16px; }
+  .result-photo { width: min(42vw, 65dvh); }
 }
 @media (max-height: 520px) {
   .hint { top: calc(16px + env(safe-area-inset-top)); }

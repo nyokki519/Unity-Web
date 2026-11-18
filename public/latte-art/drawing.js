@@ -15,6 +15,8 @@ export class ChocolateDrawing {
   strokes = [];
   #active = null;
 
+  get activeStroke() { return this.#active?.stroke ?? null; }
+
   start(pointerId, point, width, color = '#4c281b') {
     if (this.#active || !point || !inside(point)) return false;
     const stroke = { width, color, paths: [[point]] };
@@ -65,13 +67,28 @@ export class ChocolateDrawing {
   }
 }
 
+function formsCorner(previous, point, next) {
+  const ax = point.x - previous.x;
+  const ay = point.y - previous.y;
+  const bx = next.x - point.x;
+  const by = next.y - point.y;
+  const before = ax * ax + ay * ay;
+  const after = bx * bx + by * by;
+  if (Math.min(before, after) < .0001) return false;
+  return ax * bx + ay * by <= 0;
+}
+
 function trace(context, points, offset) {
   context.beginPath();
   context.moveTo(points[0].x, points[0].y - offset);
   for (let i = 1; i < points.length - 1; i++) {
     const from = points[i];
     const to = points[i + 1];
-    context.quadraticCurveTo(from.x, from.y - offset, (from.x + to.x) / 2, (from.y + to.y) / 2 - offset);
+    if (formsCorner(points[i - 1], from, to)) {
+      context.lineTo(from.x, from.y - offset);
+    } else {
+      context.quadraticCurveTo(from.x, from.y - offset, (from.x + to.x) / 2, (from.y + to.y) / 2 - offset);
+    }
   }
   const end = points.at(-1);
   context.lineTo(end.x, end.y - offset);

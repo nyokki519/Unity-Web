@@ -16,7 +16,7 @@ let photoUrl = '';
 let resultCycle = 0;
 
 function redraw() {
-  cup.setArtwork(mode === 'pour' ? pourAmount : 1, drawing.strokes);
+  cup.setArtwork(mode === 'pour' ? pourAmount : 1, drawing.strokes, drawing.activeStroke);
 }
 
 function updateToolbar(message) {
@@ -103,10 +103,16 @@ function endGesture(event) {
 for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
   cup.input.addEventListener(name, endGesture);
 }
-window.addEventListener('resize', () => {
+function releaseGesture() {
   drawing.cancel();
+  if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
+  if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
   drawPointerId = pourPointerId = null;
-});
+  redraw();
+}
+window.addEventListener('resize', releaseGesture);
+cup.input.addEventListener('webglcontextlost', releaseGesture);
+cup.input.addEventListener('webglcontextrestored', releaseGesture);
 
 $('menuButton').onclick = () => {
   const open = $('menu').hidden;
@@ -135,8 +141,14 @@ $('showHelp').onclick = () => {
   $('helpDialog').showModal();
 };
 $('helpDialog').addEventListener('close', () => $('menuButton').focus());
-$('showPour').onclick = () => setMode('pour');
-$('showDraw').onclick = $('next').onclick = () => setMode('draw');
+$('showPour').onclick = () => {
+  setMode('pour');
+  $('tilt').focus({ preventScroll: true });
+};
+$('showDraw').onclick = $('next').onclick = () => {
+  setMode('draw');
+  $('widthButton').focus({ preventScroll: true });
+};
 $('tilt').oninput = () => updatePour(Number($('tilt').value) / 100);
 $('resetPour').onclick = () => {
   $('tilt').value = '0';
@@ -194,7 +206,7 @@ function preparePhoto(cycle) {
 
 function finishDrawing() {
   if (mode !== 'draw') return;
-  const cycle = ++resultCycle;
+  resultCycle++;
   $('saveImage').disabled = true;
   $('saveStatus').textContent = '';
   $('resultPhoto').setAttribute('aria-busy', 'true');
@@ -204,8 +216,6 @@ function finishDrawing() {
   $('preview').removeAttribute('src');
   releasePhoto();
   setMode('serve', true);
-  // Give the serving view a frame before rendering the higher resolution photo.
-  requestAnimationFrame(() => requestAnimationFrame(() => preparePhoto(cycle)));
   if (!reducedMotion.matches) $('serving').focus({ preventScroll: true });
   servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 3000);
 }
@@ -235,6 +245,9 @@ function openResult() {
   $('serving').hidden = true;
   $('finishPanel').showModal();
   $('editAgain').focus({ preventScroll: true });
+  // Open the controls before the high-resolution render can block the next tap.
+  const cycle = resultCycle;
+  requestAnimationFrame(() => requestAnimationFrame(() => preparePhoto(cycle)));
 }
 $('serving').onclick = openResult;
 $('closeResult').onclick = $('editAgain').onclick = () => $('finishPanel').close();
