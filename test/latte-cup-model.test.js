@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createHandleGeometry, handleProfile, createMilkStreamGeometry, sampleFallingMilk, updateMilkStream } from '../public/latte-art/cup-model.js';
+import {
+  createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
+  sampleFallingMilk, tableCameraFraming, updateMilkStream,
+} from '../public/latte-art/cup-model.js';
 
 test('handle opens around a ceramic grip without crossing into milk', () => {
   const rings = Array.from({ length: 49 }, (_, i) => handleProfile(i / 48));
@@ -37,4 +40,32 @@ test('the milk stream falls toward the same surface and narrows as it accelerate
   );
   assert.ok(thickness(vertices.count - 8) < thickness(0));
   geometry.dispose();
+});
+
+test('the spoon stem has a flat cross-section and widens at the grip', () => {
+  const stem = createSpoonStemGeometry();
+  stem.computeBoundingBox();
+  const { min, max } = stem.boundingBox;
+  assert.ok(max.x - min.x > 1.55);
+  assert.ok(max.y - min.y < .08);
+  const positions = stem.getAttribute('position');
+  let neck = 0;
+  let grip = 0;
+  for (let index = 0; index < positions.count; index++) {
+    const x = positions.getX(index);
+    const radius = Math.abs(positions.getZ(index));
+    if (x > -.2 && x < .18) neck = Math.max(neck, radius);
+    if (x > .72 && x < 1.04) grip = Math.max(grip, radius);
+  }
+  assert.ok(neck > 0 && grip > neck * 1.5);
+  stem.dispose();
+});
+
+test('passing through the old portrait boundary keeps table framing continuous', () => {
+  const before = tableCameraFraming('draw', 599 / 800);
+  const after = tableCameraFraming('draw', 601 / 800);
+  assert.ok(Math.abs(before.distance - after.distance) < .15);
+  assert.ok(Math.abs(before.elevation - after.elevation) < .2);
+  assert.ok(Math.abs(before.shiftY - after.shiftY) < .005);
+  assert.equal(tableCameraFraming('photo', 1).distance, 10.9);
 });

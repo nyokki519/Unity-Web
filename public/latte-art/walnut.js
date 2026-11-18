@@ -58,10 +58,10 @@ export function createWalnutImages(withRelief = true) {
       const offset = (y * size + x) * 4;
 
       // Dark vascular lines sit under the polish and follow the same warped grain.
-      const pore = 15 * Math.max(0, .55 - fiber);
-      colorImage.data[offset] = 73 + 38 * tone - pore;
-      colorImage.data[offset + 1] = 63 + 36 * tone - pore;
-      colorImage.data[offset + 2] = 55 + 34 * tone - pore;
+      const pore = 12 * Math.max(0, .55 - fiber);
+      colorImage.data[offset] = 70 + 36 * tone - pore;
+      colorImage.data[offset + 1] = 63 + 34 * tone - pore;
+      colorImage.data[offset + 2] = 58 + 32 * tone - pore;
       colorImage.data[offset + 3] = 255;
       if (reliefImage) {
         reliefImage.data.fill(Math.round(100 + 55 * fiber), offset, offset + 3);

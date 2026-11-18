@@ -1,10 +1,29 @@
 import { ChocolateDrawing } from './drawing.js';
-import { createCupScene, createSurface } from './cup-scene.js';
+import { createCanvasFallback } from './fallback-cup.js';
+import { createSurface } from './surface.js';
 
 const $ = id => document.getElementById(id);
 const drawing = new ChocolateDrawing();
 const surface = createSurface();
-const cup = createCupScene($('scene'), $('fallback'), surface);
+function revealStudio() {
+  $('studio').removeAttribute('aria-busy');
+  $('hud').inert = false;
+}
+
+async function loadCup() {
+  const canvas = $('scene');
+  const fallback = $('fallback');
+  try {
+    const { createCupScene } = await import('./cup-scene.js');
+    return createCupScene(canvas, fallback, surface, revealStudio);
+  } catch {
+    const cup = createCanvasFallback(canvas, fallback, surface);
+    revealStudio();
+    return cup;
+  }
+}
+
+const cup = await loadCup();
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let mode = 'draw';
 let pourAmount = 0;
@@ -13,6 +32,7 @@ let drawPointerId = null;
 let servingTimer = 0;
 let photoFile = null;
 let photoUrl = '';
+let sharingFile = null;
 let resultCycle = 0;
 
 function redraw() {
@@ -266,15 +286,18 @@ $('restart').onclick = () => {
 };
 $('saveImage').onclick = async () => {
   const file = photoFile;
-  if (!file) return;
+  if (!file || sharingFile === file) return;
   const options = { files: [file], title: 'Unity MIX ラテアート' };
   try {
     if (navigator.share && navigator.canShare?.(options)) {
+      sharingFile = file;
       await navigator.share(options);
       return;
     }
   } catch (error) {
     if (error.name === 'AbortError') return;
+  } finally {
+    if (sharingFile === file) sharingFile = null;
   }
   if (photoFile !== file || !photoUrl) return;
   const link = document.createElement('a');
@@ -283,7 +306,7 @@ $('saveImage').onclick = async () => {
   document.body.append(link);
   link.click();
   link.remove();
-  $('saveStatus').textContent = 'PNGをダウンロードしました。';
+  $('saveStatus').textContent = 'PNGの保存を開始しました。';
 };
 
 setMode('draw');

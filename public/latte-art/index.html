@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#292018">
   <title>チョコペン・ラテアート｜Unity MIX</title>
-  <link rel="stylesheet" href="./style.css?v=6">
+  <link rel="stylesheet" href="./style.css?v=7">
+  <link rel="modulepreload" href="../vendor/three/three.module.js">
+  <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
 <body>
-  <main id="studio">
+  <main id="studio" aria-busy="true">
     <canvas id="scene" aria-label="カップのミルクフォームに指でチョコを描く"></canvas>
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
-    <div id="hud" class="hud">
+    <div id="hud" class="hud" inert>
       <a class="brand" href="/" aria-label="Unity MIX ホーム"><b>UNITY</b> MIX</a>
       <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
@@ -75,6 +77,6 @@
       <form method="dialog"><button class="go">描く画面へ</button></form>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=6"></script>
+  <script type="module" src="./app.js?v=7"></script>
 </body>
 </html>

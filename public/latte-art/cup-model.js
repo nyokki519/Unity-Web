@@ -1,5 +1,23 @@
 import * as THREE from '../vendor/three/three.module.js';
 
+export function tableCameraFraming(view, aspect) {
+  const portrait = 1 - THREE.MathUtils.smoothstep(aspect, .57, .80);
+  const served = view === 'serve' || view === 'photo';
+  const blend = (wide, tall) => THREE.MathUtils.lerp(wide, tall, portrait);
+  const distance = view === 'photo' ? 10.9 : served
+    ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
+    : blend(11.25, Math.max(11.25, 17.4 * .462 / aspect));
+  return {
+    distance,
+    elevation: served ? 73 : blend(57, 66),
+    targetX: blend(.18, .02),
+    targetY: served ? .67 : .69,
+    targetZ: served ? .08 : blend(.08, .22),
+    shiftX: served ? 0 : -.083 * portrait,
+    shiftY: served ? 0 : .097 * portrait,
+  };
+}
+
 // Two ceramic roots joined by a rounded, tapered strap.
 const LEAN = .58;
 const rootTop = new THREE.Vector2(1.355, 1.045);
@@ -50,6 +68,30 @@ export function createHandleGeometry() {
   mesh.setIndex(indices);
   mesh.computeVertexNormals();
   return mesh;
+}
+
+export function createSpoonStemGeometry() {
+  const outline = new THREE.Shape();
+  outline.moveTo(-.49, 0);
+  outline.quadraticCurveTo(-.48, .042, -.41, .043);
+  outline.bezierCurveTo(-.22, .04, .11, .027, .38, .052);
+  outline.bezierCurveTo(.65, .076, .82, .089, 1.01, .082);
+  outline.bezierCurveTo(1.08, .079, 1.11, .052, 1.11, 0);
+  outline.bezierCurveTo(1.11, -.052, 1.08, -.079, 1.01, -.082);
+  outline.bezierCurveTo(.82, -.089, .65, -.076, .38, -.052);
+  outline.bezierCurveTo(.11, -.027, -.22, -.04, -.41, -.043);
+  outline.quadraticCurveTo(-.48, -.042, -.49, 0);
+  const stem = new THREE.ExtrudeGeometry(outline, {
+    depth: .021, bevelThickness: .011, bevelSize: .013, bevelSegments: 3, curveSegments: 12,
+  });
+  stem.rotateX(-Math.PI / 2);
+  const positions = stem.getAttribute('position');
+  for (let i = 0; i < positions.count; i++) {
+    const along = (positions.getX(i) + .49) / 1.6;
+    positions.setY(i, positions.getY(i) + .03 * Math.sin(Math.PI * along));
+  }
+  stem.computeVertexNormals();
+  return stem;
 }
 
 const STREAM_SEGMENTS = 20;

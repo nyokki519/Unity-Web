@@ -1,6 +1,83 @@
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 
+function paintSpoon(ctx, x, y, scale) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  ctx.rotate(-.065);
+  const steel = ctx.createLinearGradient(0, -.15, 0, .15);
+  steel.addColorStop(0, '#f4ede4');
+  steel.addColorStop(.43, '#d6cfc5');
+  steel.addColorStop(.74, '#9b9184');
+  steel.addColorStop(1, '#eee5d9');
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = steel;
+  ctx.lineWidth = .07;
+  ctx.beginPath();
+  ctx.moveTo(-.4, 0);
+  ctx.lineTo(.76, 0);
+  ctx.stroke();
+  ctx.fillStyle = steel;
+  ctx.beginPath();
+  ctx.ellipse(-.64, 0, .32, .17, 0, 0, Math.PI * 2);
+  ctx.fill();
+  const well = ctx.createRadialGradient(-.71, .046, .02, -.64, 0, .3);
+  well.addColorStop(0, '#f7eee2');
+  well.addColorStop(.62, '#a69c8c');
+  well.addColorStop(1, '#e7ddd1');
+  ctx.fillStyle = well;
+  ctx.beginPath();
+  ctx.ellipse(-.64, 0, .28, .135, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function paintPitcher(ctx, x, y, scale, aim, fill) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  const left = 1.05 + .20 * aim.x;
+  const top = -.80 + .30 * aim.y;
+  if (fill > .02) {
+    ctx.strokeStyle = '#fff6e4';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = .018 + .026 * fill;
+    ctx.beginPath();
+    ctx.moveTo(left - .11, top + .065);
+    ctx.quadraticCurveTo((left + aim.x) * .52, top + .10, aim.x, .88 * aim.y);
+    ctx.stroke();
+  }
+  ctx.translate(left, top);
+  ctx.rotate(.12 + .55 * fill);
+  const steel = ctx.createLinearGradient(-.1, 0, .65, .25);
+  steel.addColorStop(0, '#786b5e');
+  steel.addColorStop(.22, '#eee7df');
+  steel.addColorStop(.52, '#c5b9aa');
+  steel.addColorStop(.82, '#9a8d7e');
+  steel.addColorStop(1, '#e3d9ce');
+  ctx.strokeStyle = steel;
+  ctx.lineWidth = .06;
+  ctx.beginPath();
+  ctx.ellipse(.53, .21, .16, .19, .12, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.fillStyle = steel;
+  ctx.beginPath();
+  ctx.moveTo(-.12, .03);
+  ctx.quadraticCurveTo(.06, .12, .02, .25);
+  ctx.quadraticCurveTo(.01, .57, .36, .56);
+  ctx.quadraticCurveTo(.65, .55, .57, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#f7eddd';
+  ctx.beginPath();
+  ctx.ellipse(.25, .025, .35, .10, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.lineWidth = .032;
+  ctx.stroke();
+  ctx.restore();
+}
+
 export function createCanvasFallback(mainCanvas, canvas, foam, {
   overlay = false, tableImage = createWalnutImages(false).colorCanvas,
 } = {}) {
@@ -10,16 +87,17 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   const context = canvas.getContext('2d');
   let mode = 'draw';
   let pourAim = { x: 0, y: 0 };
-  let artwork = { fill: 1, strokes: [] };
+  let artwork = { fill: 1, strokes: [], active: null };
   let width = 1;
   let height = 1;
   let ratio = 1;
+  let pending = 0;
   function layout(w, h, view) {
-    const portrait = view === 'draw' && w < h * .75;
+    const portrait = (view === 'draw' || view === 'pour') && w < h * .75;
     return {
       x: w * (portrait ? .58 : .5),
-      y: h * (portrait ? .355 : view === 'photo' ? .49 : .47),
-      r: Math.min(w * (view === 'photo' ? .315 : .34), h * .31),
+      y: h * (portrait ? .355 : view === 'photo' ? .455 : .47),
+      r: Math.min(w * (view === 'photo' ? .248 : .34), h * .31),
     };
   }
   function paint(ctx, w, h, view) {
@@ -30,52 +108,77 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     backdrop.addColorStop(1, '#24150b35');
     ctx.fillStyle = backdrop;
     ctx.fillRect(0, 0, w, h);
-    function ellipse(rx, ry, color, offsetY = 0) {
+    function ellipse(rx, ry, color, offsetY = 0, offsetX = 0) {
       ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.ellipse(x, y + offsetY, r * rx, r * ry, 0, 0, Math.PI * 2);
+      ctx.ellipse(x + offsetX, y + offsetY, r * rx, r * ry, 0, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.save();
-    ctx.shadowColor = '#1c130aa0';
-    ctx.shadowBlur = r * .20;
-    ctx.shadowOffsetX = r * .08;
-    ctx.shadowOffsetY = r * .16;
-    const saucer = ctx.createRadialGradient(x - .56 * r, y - .48 * r, .22 * r, x, y, 1.6 * r);
-    saucer.addColorStop(0, '#fffdf5');
-    saucer.addColorStop(.66, '#e8e5df');
-    saucer.addColorStop(1, '#b8aea1');
-    ellipse(1.50, 1.28, saucer, .13 * r);
+    ctx.shadowColor = '#1c130a80';
+    ctx.shadowBlur = r * .15;
+    ctx.shadowOffsetX = r * .09;
+    ctx.shadowOffsetY = r * .17;
+    ellipse(1.58, 1.4, '#c8bfb2', r * .39, -r * .13);
     ctx.restore();
-    const front = view === 'draw';
-    ctx.strokeStyle = '#c9c3b7';
-    ctx.lineWidth = r * .17;
+    const saucer = ctx.createRadialGradient(x - .50 * r, y - .24 * r, .34 * r, x - r * .13, y + r * .35, 1.6 * r);
+    saucer.addColorStop(0, '#fffdf5');
+    saucer.addColorStop(.72, '#e9e5dd');
+    saucer.addColorStop(.91, '#d0c7bb');
+    saucer.addColorStop(1, '#f1e9dc');
+    ellipse(1.58, 1.4, saucer, r * .35, -r * .13);
+    ctx.save();
+    ctx.shadowColor = '#44392752';
+    ctx.shadowOffsetX = r * .04;
+    ctx.shadowOffsetY = r * .09;
+    ctx.shadowBlur = r * .09;
+    ellipse(.91, .77, '#c9c1b5', .20 * r);
+    ctx.restore();
+    const front = view === 'draw' || view === 'pour';
+    const glaze = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
+    glaze.addColorStop(0, '#faf6ee');
+    glaze.addColorStop(.56, '#f0ece4');
+    glaze.addColorStop(1, '#afa598');
+    ctx.strokeStyle = '#b1a99d';
+    ctx.lineWidth = r * .21;
     ctx.beginPath();
-    ctx.ellipse(x + r * (front ? .46 : 1.09), y + r * (front ? .96 : .09),
-      r * .31, r * .19, front ? 1.08 : 0, 0, Math.PI * 2);
+    ctx.ellipse(x + r * (front ? .55 : 1.1), y + r * (front ? .94 : .09),
+      r * .32, r * .14, front ? 1 : .08, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.strokeStyle = '#f4efe6';
-    ctx.lineWidth = r * .08;
+    ctx.strokeStyle = glaze;
+    ctx.lineWidth = r * .165;
     ctx.stroke();
-    ellipse(1.05, .94, '#c9c0b1', r * .08);
-    ellipse(1.055, .934, '#fff7e9');
+    ellipse(1.068, .935, glaze, r * .085);
+    ellipse(1.074, .949, '#f8f4eb');
     ctx.save();
     ctx.beginPath();
     ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
     ctx.clip();
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
+    if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
+    if (view === 'pour') paintPitcher(ctx, x, y, r, pourAim, artwork.fill);
   }
   function draw() {
+    const { fill, strokes, active } = artwork;
+    foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     paint(context, width, height, mode);
+  }
+  function invalidate() {
+    if (pending) return;
+    pending = requestAnimationFrame(() => {
+      pending = 0;
+      draw();
+    });
   }
   function resize() {
     const rect = canvas.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    width = rect.width;
-    height = rect.height;
-    ratio = Math.min(devicePixelRatio || 1, 1.75);
+    const nextRatio = Math.min(devicePixelRatio || 1, 1.75);
+    if (width === rect.width && height === rect.height && ratio === nextRatio) return;
+    ({ width, height } = rect);
+    ratio = nextRatio;
     canvas.width = width * ratio;
     canvas.height = height * ratio;
     draw();
@@ -85,12 +188,11 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   return {
     input: canvas,
     setArtwork(fill, strokes, active) {
-      artwork = { fill, strokes };
-      foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
-      draw();
+      artwork = { fill, strokes, active };
+      invalidate();
     },
     resize,
-    setMode(next) { mode = next; draw(); },
+    setMode(next) { mode = next; invalidate(); },
     setPour(_fill, point) {
       if (!point) return;
       const length = Math.max(1, Math.hypot(point.x, point.y));

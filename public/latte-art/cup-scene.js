@@ -1,10 +1,10 @@
 import * as THREE from '../vendor/three/three.module.js';
-import { createHandleGeometry, createMilkStreamGeometry, updateMilkStream } from './cup-model.js';
+import {
+  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, tableCameraFraming, updateMilkStream,
+} from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
-
-export { createSurface } from './surface.js';
 
 const FOAM_RADIUS = 1.332;
 const FOAM_HEIGHT = 1.17;
@@ -95,13 +95,13 @@ function buildTableware(scene, foam) {
   disk.receiveShadow = true;
   cup.add(disk);
   scene.add(cup);
-  return { foamTexture, handle };
+  return { disk, foamTexture, handle };
 }
 
 function buildSpoon(scene) {
   const spoon = new THREE.Group();
   const material = new THREE.MeshStandardMaterial({
-    color: '#dad7d2', metalness: .81, roughness: .20,
+    color: '#dfdedb', metalness: .89, roughness: .22,
   });
   // Hollow, shallow spoon bowl. It is on the saucer only at service.
   const bowl = lathe([
@@ -111,10 +111,8 @@ function buildSpoon(scene) {
   bowl.scale.x = 1.6;
   bowl.position.x = -.61;
   spoon.add(bowl);
-  const handle = new THREE.Mesh(new THREE.CapsuleGeometry(.07, 1.34, 8, 24), material);
-  handle.rotateZ(Math.PI / 2);
-  handle.scale.set(1, 1, .66);
-  handle.position.set(.40, .082, 0);
+  const handle = new THREE.Mesh(createSpoonStemGeometry(), material);
+  handle.position.set(.24, .085, 0);
   handle.castShadow = true;
   spoon.add(handle);
   spoon.position.set(-.07, .25, 1.54);
@@ -124,13 +122,10 @@ function buildSpoon(scene) {
   return spoon;
 }
 
-export function createCupScene(mainCanvas, fallbackCanvas, foam) {
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas: mainCanvas, antialias: true, powerPreference: 'low-power' });
-  } catch {
-    return createCanvasFallback(mainCanvas, fallbackCanvas, foam);
-  }
+export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
+  const renderer = new THREE.WebGLRenderer({
+    canvas: mainCanvas, antialias: true, powerPreference: 'low-power', preserveDrawingBuffer: true,
+  });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#554a40');
   scene.environment = windowReflection();
@@ -140,6 +135,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   renderer.toneMappingExposure = 1.18;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.autoUpdate = false;
 
   const atmosphere = new THREE.HemisphereLight('#fff5e8', '#655345', 1.91);
   const windowLight = new THREE.DirectionalLight('#fff8f1', 3.1);
@@ -160,7 +156,12 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
-  const { foamTexture, handle } = buildTableware(scene, foam);
+  const { disk, foamTexture, handle } = buildTableware(scene, foam);
+  const liveFoam = canvasOf(512);
+  const liveFoamContext = liveFoam.getContext('2d');
+  const liveFoamTexture = new THREE.CanvasTexture(liveFoam);
+  liveFoamTexture.colorSpace = THREE.SRGBColorSpace;
+  liveFoamTexture.anisotropy = foamTexture.anisotropy;
   const spoon = buildSpoon(scene);
   const { pitcher, spout } = buildPitcher(scene);
   const stream = new THREE.Mesh(
@@ -179,25 +180,33 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
   const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -FOAM_HEIGHT);
   const hit = new THREE.Vector3();
   const coords = new THREE.Vector2();
+  const bufferSize = new THREE.Vector2();
+  const foamBounds = new THREE.Vector4();
   const drawingMode = window.matchMedia('(prefers-reduced-motion: reduce)');
   let mode = 'draw';
   let pending = 0;
   let artwork = { fill: 1, strokes: [], active: null };
   let artworkDirty = false;
+  let backdropDirty = true;
   let animating = false;
   let contextUnavailable = false;
   let substitute = null;
+  let firstFrame = onReady;
+
+  function revealControls() {
+    firstFrame?.();
+    firstFrame = null;
+  }
 
   function placeCamera(camera, view, aspect) {
-    const tall = aspect < .75;
-    const served = view === 'serve' || view === 'photo';
-    const elevation = THREE.MathUtils.degToRad(served ? 73 : tall ? 66 : 57);
-    const dist = view === 'photo' ? 10.9 : tall ? (served ? 12.2 : 17.4) * Math.max(.9, .462 / aspect) : served ? 10.6 : 11.25;
-    target.set(tall ? .02 : .18, served ? .67 : .69, tall && !served ? .22 : .08);
+    const framing = tableCameraFraming(view, aspect);
+    const elevation = THREE.MathUtils.degToRad(framing.elevation);
+    const dist = framing.distance;
+    target.set(framing.targetX, framing.targetY, framing.targetZ);
     camera.aspect = aspect;
     const { clientWidth: width, clientHeight: height } = mainCanvas;
-    if (tall && !served && width && height) {
-      camera.setViewOffset(width, height, -width * .083, height * .097, width, height);
+    if (framing.shiftX && width && height) {
+      camera.setViewOffset(width, height, width * framing.shiftX, height * framing.shiftY, width, height);
     } else {
       camera.clearViewOffset();
     }
@@ -212,14 +221,27 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     const { fill, strokes, active } = artwork;
     foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
     artworkDirty = false;
-    foamTexture.needsUpdate = true;
+    if (disk.material.map === liveFoamTexture) {
+      liveFoamContext.drawImage(foam.canvas, 0, 0, liveFoam.width, liveFoam.height);
+      liveFoamTexture.needsUpdate = true;
+    } else {
+      foamTexture.needsUpdate = true;
+    }
   }
 
   function drawFrame() {
     if (contextUnavailable) return;
+    const paintRegion = mode === 'draw' && artworkDirty && !backdropDirty;
     paintPendingArtwork();
+    if (paintRegion) {
+      renderer.setScissor(foamBounds);
+      renderer.setScissorTest(true);
+    }
     renderer.render(scene, camera);
+    if (paintRegion) renderer.setScissorTest(false);
+    backdropDirty = false;
     if (substitute) fallbackCanvas.hidden = true;
+    revealControls();
   }
 
   function invalidate() {
@@ -235,10 +257,35 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     const { width, height } = mainCanvas.getBoundingClientRect();
     if (!width || !height) return;
     animating = false;
+    backdropDirty = true;
     handle.rotation.y = mode === 'serve' ? 0 : DRAW_HANDLE_ANGLE;
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
-    renderer.setSize(width, height, false);
+    renderer.shadowMap.needsUpdate = true;
+    const ratio = Math.min(devicePixelRatio || 1, 1.75);
+    const texture = Math.min(width, height) * ratio <= 740 ? liveFoamTexture : foamTexture;
+    if (disk.material.map !== texture) {
+      disk.material.map = texture;
+      artworkDirty = true;
+    }
+    renderer.getSize(bufferSize);
+    if (bufferSize.x !== width || bufferSize.y !== height || renderer.getPixelRatio() !== ratio) {
+      renderer.setDrawingBufferSize(width, height, ratio);
+    }
     placeCamera(camera, mode, width / height);
+    if (mode === 'draw') {
+      let left = width, right = 0, bottom = height, top = 0;
+      for (const x of [-FOAM_RADIUS, FOAM_RADIUS]) {
+        for (const z of [-FOAM_RADIUS, FOAM_RADIUS]) {
+          const point = new THREE.Vector3(x, FOAM_HEIGHT, z).project(camera);
+          left = Math.min(left, (point.x + 1) * width / 2);
+          right = Math.max(right, (point.x + 1) * width / 2);
+          bottom = Math.min(bottom, (point.y + 1) * height / 2);
+          top = Math.max(top, (point.y + 1) * height / 2);
+        }
+      }
+      left = Math.max(0, Math.floor(left) - 2);
+      bottom = Math.max(0, Math.floor(bottom) - 2);
+      foamBounds.set(left, bottom, Math.min(width, Math.ceil(right) + 2) - left, Math.min(height, Math.ceil(top) + 2) - bottom);
+    }
     invalidate();
   }
   new ResizeObserver(resize).observe(mainCanvas);
@@ -253,6 +300,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     substitute.setMode(mode);
     substitute.setPour(artwork.fill, pourAim);
     substitute.setArtwork(artwork.fill, artwork.strokes, artwork.active);
+    revealControls();
   });
   mainCanvas.addEventListener('webglcontextrestored', () => {
     contextUnavailable = false;
@@ -291,6 +339,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
           camera.clearViewOffset();
         }
         handle.rotation.y = THREE.MathUtils.lerp(fromAngle, handleAngle, ease);
+        renderer.shadowMap.needsUpdate = true;
         camera.updateMatrixWorld(true);
         drawFrame();
         if (t < 1) requestAnimationFrame(move);
@@ -327,18 +376,22 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     const oldRatio = renderer.getPixelRatio();
     const angle = handle.rotation.y;
     const hadSpoon = spoon.visible;
+    const displayTexture = disk.material.map;
     try {
-      renderer.setPixelRatio(1);
-      renderer.setSize(PHOTO_SIZE, PHOTO_SIZE, false);
+      renderer.setDrawingBufferSize(PHOTO_SIZE, PHOTO_SIZE, 1);
       handle.rotation.y = 0;
       spoon.visible = true;
+      disk.material.map = foamTexture;
+      renderer.shadowMap.needsUpdate = true;
       renderer.render(scene, framing);
       picture.getContext('2d').drawImage(mainCanvas, 0, 0);
     } finally {
       handle.rotation.y = angle;
       spoon.visible = hadSpoon;
-      renderer.setPixelRatio(oldRatio);
-      renderer.setSize(oldSize.x, oldSize.y, false);
+      disk.material.map = displayTexture;
+      renderer.setDrawingBufferSize(oldSize.x, oldSize.y, oldRatio);
+      renderer.shadowMap.needsUpdate = true;
+      backdropDirty = true;
       invalidate();
     }
     return picture;
@@ -355,6 +408,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam) {
     pitcher.position.x = 1.8 + pourAim.x * .38;
     pitcher.position.z = -.48 + pourAim.y * .5;
     stream.visible = mode === 'pour' && fill > .02;
+    if (mode === 'pour') renderer.shadowMap.needsUpdate = true;
     if (stream.visible) {
       spout.getWorldPosition(streamStart);
       streamEnd.set(pourAim.x * FOAM_RADIUS, FOAM_HEIGHT, pourAim.y * FOAM_RADIUS);
