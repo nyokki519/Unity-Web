@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { LatheGeometry, Vector2 } from '../public/vendor/three/three.module.js';
 import {
   createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
-  sampleFallingMilk, tableCameraFraming, updateMilkStream,
+  PITCHER_LIP, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from '../public/latte-art/cup-model.js';
 
 test('handle opens around a ceramic grip without crossing into milk', () => {
@@ -68,4 +69,20 @@ test('passing through the old portrait boundary keeps table framing continuous',
   assert.ok(Math.abs(before.elevation - after.elevation) < .2);
   assert.ok(Math.abs(before.shiftY - after.shiftY) < .005);
   assert.equal(tableCameraFraming('photo', 1).distance, 10.9);
+});
+
+test('the milk stream starts at the flared pitcher lip with an unchanged base', () => {
+  const geometry = new LatheGeometry([new Vector2(.58, .2), new Vector2(.45, 1.18)], 144);
+  shapePitcherSpout(geometry);
+  const positions = geometry.getAttribute('position');
+  let tipDistance = Infinity;
+  for (let index = 0; index < positions.count; index++) {
+    const x = positions.getX(index);
+    const y = positions.getY(index);
+    const z = positions.getZ(index);
+    if (y < .3) assert.ok(Math.abs(Math.hypot(x, z) - .58) < 1e-6);
+    else tipDistance = Math.min(tipDistance, Math.hypot(x - PITCHER_LIP.x, y - PITCHER_LIP.y, z));
+  }
+  assert.ok(tipDistance < .01);
+  geometry.dispose();
 });

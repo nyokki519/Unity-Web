@@ -9,12 +9,12 @@ export function tableCameraFraming(view, aspect) {
     : blend(11.25, Math.max(11.25, 17.4 * .462 / aspect));
   return {
     distance,
-    elevation: served ? 73 : blend(57, 66),
+    elevation: served ? 73 : blend(57, 63),
     targetX: blend(.18, .02),
     targetY: served ? .67 : .69,
     targetZ: served ? .08 : blend(.08, .22),
-    shiftX: served ? 0 : -.083 * portrait,
-    shiftY: served ? 0 : .097 * portrait,
+    shiftX: served ? 0 : -.111 * portrait,
+    shiftY: served ? 0 : .109 * portrait,
   };
 }
 
@@ -92,6 +92,23 @@ export function createSpoonStemGeometry() {
   }
   stem.computeVertexNormals();
   return stem;
+}
+
+export const PITCHER_LIP = Object.freeze({ x: -.67, y: 1.17, z: 0 });
+
+export function shapePitcherSpout(geometry) {
+  const positions = geometry.getAttribute('position');
+  for (let index = 0; index < positions.count; index++) {
+    const x = positions.getX(index);
+    const y = positions.getY(index);
+    const z = positions.getZ(index);
+    if (y < .78 || x >= 0) continue;
+    const angle = Math.atan2(z, -x);
+    const rim = THREE.MathUtils.smoothstep(y, .78, 1.18);
+    const pinch = Math.exp(-((angle / .34) ** 2)) * rim;
+    positions.setXYZ(index, x - .22 * pinch, y - .014 * pinch, z);
+  }
+  geometry.computeVertexNormals();
 }
 
 const STREAM_SEGMENTS = 20;

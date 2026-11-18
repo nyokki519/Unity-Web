@@ -18,6 +18,32 @@ function randomFrom(seed) {
   };
 }
 
+function cremaTexture() {
+  const size = 256;
+  const canvas = canvasOf(size);
+  const ctx = canvas.getContext('2d');
+  const image = ctx.createImageData(size, size);
+  const random = randomFrom(6529);
+  for (let row = 0; row < size; row++) {
+    for (let column = 0; column < size; column++) {
+      const x = (column - size / 2) / (size / 2);
+      const y = (row - size / 2) / (size / 2);
+      const radius = Math.hypot(x, y);
+      const flow = Math.atan2(y, x) + 4.5 * radius;
+      const ribbons = .5 + .5 * Math.sin(5 * flow + 2.1 * Math.sin(3.6 * radius));
+      const streaks = .5 + .5 * Math.sin(13 * flow + 3.2 * Math.cos(flow + 8 * radius));
+      const shade = .67 * ribbons + .25 * streaks + .08 * random();
+      const offset = (row * size + column) * 4;
+      image.data[offset] = 129 + 89 * shade;
+      image.data[offset + 1] = 64 + 85 * shade;
+      image.data[offset + 2] = 26 + 49 * shade;
+      image.data[offset + 3] = 62 * Math.min(1, radius * 4);
+    }
+  }
+  ctx.putImageData(image, 0, 0);
+  return canvas;
+}
+
 export function createSurface() {
   const surface = canvasOf(ART_SIZE);
   const base = canvasOf(ART_SIZE);
@@ -26,6 +52,7 @@ export function createSurface() {
   const ground = base.getContext('2d');
   const inkContext = ink.getContext('2d');
   const radius = ART_SIZE / 2;
+  const crema = cremaTexture();
   function paintInk(layer, strokes) {
     layer.save();
     layer.setTransform(radius, 0, 0, radius, radius, radius);
@@ -66,6 +93,7 @@ export function createSurface() {
     espresso.addColorStop(1, '#6d361c');
     ground.fillStyle = espresso;
     ground.fillRect(-1, -1, 2, 2);
+    ground.drawImage(crema, -1, -1, 2, 2);
     if (fill > 0) {
       const foam = ground.createRadialGradient(x - .18, y - .2, .04, x, y, edge + .055);
       foam.addColorStop(0, '#fffdf4');

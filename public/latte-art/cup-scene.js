@@ -1,6 +1,7 @@
 import * as THREE from '../vendor/three/three.module.js';
 import {
-  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, tableCameraFraming, updateMilkStream,
+  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, PITCHER_LIP,
+  shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
@@ -8,7 +9,7 @@ import { createWalnutImages } from './walnut.js';
 
 const FOAM_RADIUS = 1.332;
 const FOAM_HEIGHT = 1.17;
-const DRAW_HANDLE_ANGLE = -1.08;
+const DRAW_HANDLE_ANGLE = -1.46;
 
 function walnutTextures() {
   const { colorCanvas, reliefCanvas } = createWalnutImages();
@@ -50,14 +51,14 @@ function windowReflection() {
 }
 
 function lathe(rows, material) {
-  const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 112), material);
+  const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 144), material);
   mesh.castShadow = mesh.receiveShadow = true;
   return mesh;
 }
 
 function buildTableware(scene, foam) {
   const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#eae7e1', roughness: .26, clearcoat: .83, clearcoatRoughness: .15,
+    color: '#eae7e1', roughness: .30, clearcoat: .83, clearcoatRoughness: .17,
   });
   const saucer = lathe([
     [0, .04], [.78, .04], [.96, .02], [1.12, .02], [1.38, .035], [1.72, .08],
@@ -65,8 +66,8 @@ function buildTableware(scene, foam) {
     [2.04, .35], [1.86, .27], [1.65, .2], [1.41, .17], [1.17, .16], [.96, .16],
     [.89, .13], [.82, .12], [0, .12],
   ], porcelain);
-  saucer.scale.set(1.045, 1, 1.045);
-  saucer.position.set(-.14, 0, .05);
+  saucer.scale.set(1.08, 1, 1.08);
+  saucer.position.set(-.20, 0, .19);
   scene.add(saucer);
 
   const cup = new THREE.Group();
@@ -143,7 +144,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
   windowLight.castShadow = true;
   windowLight.shadow.mapSize.set(1024, 1024);
   Object.assign(windowLight.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 16 });
-  windowLight.shadow.normalBias = .018;
+  windowLight.shadow.normalBias = .022;
   windowLight.shadow.bias = -.0002;
   windowLight.shadow.intensity = .66;
   windowLight.shadow.radius = 2.5;
@@ -397,17 +398,17 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
     return picture;
   }
 
-  function setPour(fill, position = pourAim) {
+  function setPour(fill, position = pourAim, flowing = false) {
     const length = Math.max(1, Math.hypot(position.x, position.y));
     pourAim = { x: position.x / length, y: position.y / length };
     if (contextUnavailable) {
-      substitute.setPour(fill, pourAim);
+      substitute.setPour(fill, pourAim, flowing);
       return;
     }
-    pitcher.rotation.z = .08 + fill * .62;
-    pitcher.position.x = 1.8 + pourAim.x * .38;
+    pitcher.rotation.z = .08 + (flowing ? fill * .62 : 0);
+    pitcher.position.x = 1.53 + pourAim.x * .30;
     pitcher.position.z = -.48 + pourAim.y * .5;
-    stream.visible = mode === 'pour' && fill > .02;
+    stream.visible = mode === 'pour' && flowing && fill > .02;
     if (mode === 'pour') renderer.shadowMap.needsUpdate = true;
     if (stream.visible) {
       spout.getWorldPosition(streamStart);
@@ -439,6 +440,7 @@ function buildPitcher(scene) {
     [0, 0], [.51, 0], [.58, .07], [.60, .22], [.54, .72], [.47, 1.13],
     [.45, 1.18], [.43, 1.16], [.47, .65], [.52, .2], [0, .10],
   ], steel);
+  shapePitcherSpout(pitcher.geometry);
   pivot.add(pitcher);
   const milk = new THREE.Mesh(new THREE.CircleGeometry(.46, 56), new THREE.MeshStandardMaterial({ color: '#f6eee1' }));
   milk.rotation.x = -Math.PI / 2;
@@ -449,12 +451,8 @@ function buildPitcher(scene) {
   handle.scale.y = 1.22;
   pivot.add(handle);
   const spout = new THREE.Object3D();
-  spout.position.set(-.59, 1.1, 0);
+  spout.position.set(PITCHER_LIP.x, PITCHER_LIP.y, PITCHER_LIP.z);
   pivot.add(spout);
-  const lip = new THREE.Mesh(new THREE.ConeGeometry(.16, .33, 20), steel);
-  lip.rotation.z = Math.PI / 2;
-  lip.position.set(-.49, 1.085, 0);
-  pivot.add(lip);
   scene.add(pivot);
   return { pitcher: pivot, spout };
 }

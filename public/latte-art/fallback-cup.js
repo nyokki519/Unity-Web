@@ -33,13 +33,13 @@ function paintSpoon(ctx, x, y, scale) {
   ctx.restore();
 }
 
-function paintPitcher(ctx, x, y, scale, aim, fill) {
+function paintPitcher(ctx, x, y, scale, aim, fill, flowing) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
   const left = 1.05 + .20 * aim.x;
   const top = -.80 + .30 * aim.y;
-  if (fill > .02) {
+  if (flowing && fill > .02) {
     ctx.strokeStyle = '#fff6e4';
     ctx.lineCap = 'round';
     ctx.lineWidth = .018 + .026 * fill;
@@ -49,7 +49,7 @@ function paintPitcher(ctx, x, y, scale, aim, fill) {
     ctx.stroke();
   }
   ctx.translate(left, top);
-  ctx.rotate(.12 + .55 * fill);
+  ctx.rotate(.12 + (flowing ? .55 * fill : 0));
   const steel = ctx.createLinearGradient(-.1, 0, .65, .25);
   steel.addColorStop(0, '#786b5e');
   steel.addColorStop(.22, '#eee7df');
@@ -87,6 +87,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   const context = canvas.getContext('2d');
   let mode = 'draw';
   let pourAim = { x: 0, y: 0 };
+  let pouring = false;
   let artwork = { fill: 1, strokes: [], active: null };
   let width = 1;
   let height = 1;
@@ -157,7 +158,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
-    if (view === 'pour') paintPitcher(ctx, x, y, r, pourAim, artwork.fill);
+    if (view === 'pour') paintPitcher(ctx, x, y, r, pourAim, artwork.fill, pouring);
   }
   function draw() {
     const { fill, strokes, active } = artwork;
@@ -193,10 +194,11 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     },
     resize,
     setMode(next) { mode = next; invalidate(); },
-    setPour(_fill, point) {
-      if (!point) return;
+    setPour(_fill, point = pourAim, flowing = false) {
       const length = Math.max(1, Math.hypot(point.x, point.y));
       pourAim = { x: point.x / length, y: point.y / length };
+      pouring = flowing;
+      if (mode === 'pour') invalidate();
     },
     sample(event) {
       const rect = canvas.getBoundingClientRect();
