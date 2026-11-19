@@ -16,7 +16,7 @@ try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled
 const draft = readDraft(draftStorage);
 drawing.strokes = draft.strokes;
 const milk = new MilkPour(draft.milk);
-if (milk.amount || drawing.strokes.length) {
+if (draft.stage === 'draw' || milk.amount || drawing.strokes.length) {
   $('studio').dataset.restoring = 'true';
   $('loadingHint').textContent = '作りかけの一杯を復元中…';
 } else $('studio').dataset.freshCup = 'true';

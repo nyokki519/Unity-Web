@@ -1,7 +1,7 @@
 /* The tokens and rounded HUD controls follow the permitted Latte Studio UI styles. */
 :root {
   --ink: #f4ede4;
-  --ink-dim: rgba(244,237,228,.72);
+  --ink-dim: rgba(244,237,228,.78);
   --glass: rgba(24,16,11,.72);
   --line: rgba(244,237,228,.14);
   --accent: #e8c9a0;
