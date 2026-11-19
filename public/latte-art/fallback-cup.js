@@ -147,7 +147,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     const portrait = view === 'draw' || view === 'pour'
       ? 1 - widthBlend ** 2 * (3 - 2 * widthBlend) : 0;
     return {
-      x: w * (view === 'photo' ? .532 : .5 + .142 * portrait),
+      x: w * (view === 'photo' ? .532 : .5 + .121 * portrait),
       y: h * (view === 'photo' ? .439 : .47 - .108 * portrait),
       r: Math.min(w * (view === 'photo' ? .277 : .34 - .022 * portrait), h * .31),
     };

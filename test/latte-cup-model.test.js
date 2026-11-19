@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { LatheGeometry, Vector2 } from '../public/vendor/three/three.module.js';
+import { LatheGeometry, PerspectiveCamera, Vector2, Vector3 } from '../public/vendor/three/three.module.js';
+import { CUP_PROFILE } from '../public/latte-art/foam-geometry.js';
 import {
   createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
   FOAM_PLANE, PITCHER_LIP, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
@@ -82,6 +83,25 @@ test('passing through the old portrait boundary keeps table framing continuous',
   assert.ok(Math.abs(before.elevation - after.elevation) < .2);
   assert.ok(Math.abs(before.shiftY - after.shiftY) < .005);
   assert.deepEqual(tableCameraFraming('photo', .6), tableCameraFraming('photo', 1));
+});
+
+test('the cup rim has breathing room on narrow portrait screens without trimming the painting surface', () => {
+  for (const [width, height] of [[320, 568], [375, 812], [390, 844], [414, 896]]) {
+    const aspect = width / height;
+    const framing = tableCameraFraming('pour', aspect);
+    const camera = new PerspectiveCamera(28, aspect, .1, 80);
+    camera.setViewOffset(width, height, width * framing.shiftX, height * framing.shiftY, width, height);
+    camera.position.copy(framing.eye);
+    camera.lookAt(framing.targetX, framing.targetY, framing.targetZ);
+    camera.updateMatrixWorld();
+    for (const [radius, level] of CUP_PROFILE) {
+      for (let sample = 0; sample < 48; sample++) {
+        const angle = sample * Math.PI / 24;
+        const { x } = new Vector3(radius * Math.cos(angle), level, radius * Math.sin(angle)).project(camera);
+        assert.ok(Math.abs(x) * width / 2 < width / 2 - 6, `rim meets the edge at ${width}px`);
+      }
+    }
+  }
 });
 
 test('the milk stream starts at the flared pitcher lip with an unchanged base', () => {

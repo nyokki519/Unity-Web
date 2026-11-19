@@ -35,7 +35,7 @@ export function tableCameraFraming(view, aspect) {
     distance, elevation, targetY, targetZ,
     targetX: photo ? -.18 : blend(.18, .02),
     eye: { x: 0, y: targetY + distance * Math.sin(angle), z: targetZ + distance * Math.cos(angle) },
-    shiftX: served ? 0 : -.147 * portrait,
+    shiftX: served ? 0 : -.126 * portrait,
     shiftY: served ? 0 : .095 * portrait,
   };
 }

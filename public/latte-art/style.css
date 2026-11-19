@@ -359,7 +359,7 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 @media (max-width: 600px) and (orientation: portrait) {
   #studio[data-stage="pour"] #tip {
     left: max(14px, env(safe-area-inset-left));
-    top: calc(70px + env(safe-area-inset-top));
+    top: calc(66px + env(safe-area-inset-top));
     max-width: min(55vw, 230px);
     border-radius: 14px;
     text-align: left;
