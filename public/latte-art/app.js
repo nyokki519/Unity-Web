@@ -145,7 +145,8 @@ function setMode(next, animate = false) {
 }
 
 function presentPour(paintNow = false) {
-  const amount = `${Math.round(milk.amount)} mL`;
+  const volume = milk.amount >= .05 && milk.amount < 1 ? milk.amount.toFixed(1) : Math.round(milk.amount);
+  const amount = `${volume} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
   $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));

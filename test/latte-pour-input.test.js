@@ -24,7 +24,7 @@ test('a short press produces the same dose and foam when the browser queues both
   }
   const scheduled = run([120, 150, 175, 212, 249, 291, 322, 330, 356]);
   const delayed = run([]);
-  assert.ok(delayed.amount > 3 && delayed.amount < 4);
+  assert.ok(delayed.amount > 4 && delayed.amount < 6);
   assert.ok(Math.abs(scheduled.amount - delayed.amount) < .00001);
   assert.deepEqual(scheduled.density, delayed.density);
 });

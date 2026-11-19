@@ -140,10 +140,15 @@ export function createSurface(milk) {
       const density = milk.density;
       for (let i = 0; i < density.length; i++) {
         const level = density[i];
+        const offset = i * 4;
+        // Below this level the foam's eight-bit alpha rounds to zero.
+        if (level <= .001) {
+          foamImage.data[offset + 3] = 0;
+          continue;
+        }
         const cream = 1 - Math.exp(-.42 * level);
         const boundary = Math.max(0, Math.min(1, (level - .21) / 1.45));
         const cover = .43 * cream + .57 * boundary ** 2 * (3 - 2 * boundary);
-        const offset = i * 4;
         foamImage.data[offset] = 233 + 19 * cream;
         foamImage.data[offset + 1] = 188 + 59 * cream;
         foamImage.data[offset + 2] = 142 + 94 * cream;

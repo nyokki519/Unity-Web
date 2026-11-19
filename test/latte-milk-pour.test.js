@@ -157,6 +157,18 @@ test('the pitcher reaches the cup smoothly before depositing milk and recovers f
   assert.ok(cup.flow > 0 && cup.amount > 0);
 });
 
+test('a brief mobile tap leaves a faint local mark once the spout reaches the cup', () => {
+  const point = { x: -.47, y: .08 };
+  const cup = new MilkPour();
+  cup.start(point);
+  cup.advance(115);
+  cup.stop();
+  cup.settle();
+  assert.ok(cup.amount > .05 && cup.amount < .55, cup.amount);
+  assert.ok(at(cup, point.x, point.y) > .1);
+  assert.equal(at(cup, .45, .08), 0);
+});
+
 test('a slow pass lays down more foam than a fast pass on the same stroke', () => {
   const cup = new MilkPour();
   const left = { x: -.72, y: .12 };
