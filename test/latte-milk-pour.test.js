@@ -106,3 +106,24 @@ test('the quick handoff settles the same shape as waiting for the stream to fini
   assert.equal(direct.amount, waited.amount);
   assert.deepEqual(direct.density, waited.density);
 });
+
+test('the pitcher reaches the cup smoothly before depositing milk and recovers from a cancelled gesture', () => {
+  const origin = { x: -.4, y: 0 };
+  const cup = new MilkPour();
+  cup.start(origin);
+  assert.equal(cup.resting, 1);
+  cup.advance(50);
+  assert.ok(cup.resting > 0 && cup.resting < 1);
+  assert.equal(cup.amount, 0);
+  const releasePose = cup.resting;
+  cup.stop();
+  assert.equal(cup.resting, releasePose);
+  cup.settle();
+  assert.equal(cup.resting, 1);
+  assert.equal(cup.amount, 0);
+
+  cup.start(origin);
+  cup.advance(200);
+  assert.equal(cup.resting, 0);
+  assert.ok(cup.flow > 0 && cup.amount > 0);
+});

@@ -5,11 +5,17 @@ export const MAX_POUR_RADIUS = .91;
 
 const STEP = 1000 / 60;
 const MAX_FLOW = 58;
+const APPROACH_TIME = 100;
+const OPENING_TIME = 138;
 const SETTLE_STEPS = 16;
 const STREAM_TAIL_STEPS = 7;
 const SIZE = MILK_GRID_SIZE;
 const CELL_COUNT = SIZE * SIZE;
 const CENTER = { x: 0, y: 0 };
+const smooth = value => {
+  const t = Math.max(0, Math.min(1, value));
+  return t * t * (3 - 2 * t);
+};
 const directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [1, -1], [-1, -1]];
 const coordinate = index => (index + .5) * 2 / SIZE - 1;
 const active = Uint8Array.from({ length: CELL_COUNT }, (_, i) =>
@@ -54,6 +60,7 @@ export class MilkPour {
   #age = 0;
   #tail = 0;
   #stopFlow = 0;
+  #stopRest = 0;
   #settling = 0;
   #pouring = false;
   #flow = 0;
@@ -75,7 +82,10 @@ export class MilkPour {
   get legacy() { return this.#legacy; }
   get position() { return this.#position; }
   get flow() { return this.#flow; }
-  get resting() { return this.#pouring ? 0 : 1 - this.#settling / SETTLE_STEPS; }
+  get resting() {
+    if (this.#pouring) return 1 - smooth(this.#age / APPROACH_TIME);
+    return 1 - (1 - this.#stopRest) * smooth(this.#settling / SETTLE_STEPS);
+  }
   get pouring() { return this.#pouring; }
   get moving() { return this.#pouring || this.#settling > 0; }
 
@@ -113,10 +123,11 @@ export class MilkPour {
 
   stop() {
     if (!this.#pouring) return;
+    this.#stopRest = this.resting;
     this.#pouring = false;
     this.#stopFlow = this.#flow;
     this.#tail = STREAM_TAIL_STEPS;
-    this.#settling = this.#amount > 0 ? SETTLE_STEPS : 0;
+    this.#settling = this.#age > 0 ? SETTLE_STEPS : 0;
     if (!this.#settling) this.#flow = 0;
   }
 
@@ -144,11 +155,10 @@ export class MilkPour {
   #tick(point, rate) {
     if (this.#pouring) {
       this.#age += STEP;
-      const rise = Math.min(1, this.#age / 185);
-      this.#flow = rate * rise ** 2 * (3 - 2 * rise);
+      this.#flow = rate * smooth((this.#age - APPROACH_TIME) / OPENING_TIME);
       const dose = Math.min(MILK_CAPACITY - this.#amount, STEP / 1000 * MAX_FLOW * this.#flow);
       this.#spread(point, this.#flow);
-      this.#deposit(point, dose);
+      if (dose > 0) this.#deposit(point, dose);
       this.#amount += dose;
       if (this.#amount >= MILK_CAPACITY) this.stop();
     } else {

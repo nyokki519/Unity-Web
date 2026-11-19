@@ -25,7 +25,7 @@ async function loadCup() {
   try {
     const deadline = new Promise(resolve => { timer = setTimeout(resolve, 7000, null); });
     const module = await Promise.race([import('./cup-scene.js'), deadline]);
-    if (module) return module.createCupScene(canvas, fallback, $('ink'), surface, revealStudio);
+    if (module) return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio);
   } catch {
     // A blocked module or unavailable graphics context can use the same drawing tools in 2D.
   } finally {
@@ -137,10 +137,12 @@ function setMode(next, animate = false) {
 }
 
 function presentPour() {
-  cup.setPour({ position: milk.position, flow: milk.flow, resting: milk.resting });
+  cup.setPour({ position: milk.position, flow: milk.flow, resting: milk.resting, amount: milk.amount });
   const amount = `${Math.round(milk.amount)} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
-  $('pourCenter').disabled = milk.pouring || milk.amount >= MILK_CAPACITY;
+  const full = milk.amount >= MILK_CAPACITY;
+  $('pourCenter').disabled = milk.pouring || full;
+  if (full) $('tip').textContent = 'カップが満量です。チョコペンで描けます。';
   redraw();
 }
 
@@ -174,8 +176,8 @@ function beginPour(position, duration = 0) {
 }
 
 function stopPour(immediately = false, timestamp = performance.now(), position = milk.position) {
-  if (!milk.moving) return;
-  advancePour(timestamp, position);
+  if (!milk.moving && !pourFrame) return;
+  if (milk.moving) advancePour(timestamp, position);
   centerUntil = 0;
   milk.stop();
   if (immediately) {
@@ -308,7 +310,8 @@ function openDrawing() {
   setMode('draw');
   $('widthButton').focus({ preventScroll: true });
 }
-$('showDraw').onclick = $('next').onclick = openDrawing;
+bindActivation($('showDraw'), openDrawing);
+bindActivation($('next'), openDrawing);
 $('tilt').oninput = () => {
   if (milk.moving) advancePour(performance.now());
   pourRate = Number($('tilt').value) / 100;

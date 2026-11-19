@@ -132,18 +132,33 @@ export function createSurface(milk) {
     context.drawImage(base, 0, 0);
   }
 
+  function clipLayer(layer, clips) {
+    layer.beginPath();
+    layer.arc(radius, radius, radius, 0, Math.PI * 2);
+    layer.clip();
+    for (const circle of clips) {
+      layer.beginPath();
+      layer.arc((circle.x + 1) * radius, (circle.y + 1) * radius, circle.radius * radius, 0, Math.PI * 2);
+      layer.clip();
+    }
+  }
+
   return {
     canvas: surface,
     paintBlank: paintBase,
+    paintPourPreview(layer, clips) {
+      if (paintedRevision !== milk.revision) updateBase();
+      layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
+      layer.save();
+      clipLayer(layer, clips);
+      layer.drawImage(base, 0, 0);
+      layer.restore();
+    },
     paintInkPreview(layer, strokes, active, clips = []) {
       cache.sync(strokes, active);
       layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
       layer.save();
-      for (const circle of clips) {
-        layer.beginPath();
-        layer.arc((circle.x + 1) * radius, (circle.y + 1) * radius, circle.radius * radius, 0, Math.PI * 2);
-        layer.clip();
-      }
+      clipLayer(layer, clips);
       layer.drawImage(ink, 0, 0);
       if (active) paintInk(layer, [active]);
       layer.restore();

@@ -57,6 +57,10 @@ function innerWallClips(eye) {
 
 export const PHOTO_FOAM_CLIPS = innerWallClips(tableCameraFraming('photo', 1).eye);
 
+export function visibleFoamClips(view, aspect) {
+  return innerWallClips(tableCameraFraming(view, aspect).eye);
+}
+
 export function drawingFoamClips(aspect) {
-  return [...PHOTO_FOAM_CLIPS, ...innerWallClips(tableCameraFraming('draw', aspect).eye)];
+  return [...PHOTO_FOAM_CLIPS, ...visibleFoamClips('draw', aspect)];
 }

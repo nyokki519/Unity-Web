@@ -1,6 +1,7 @@
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 import { drawingFoamClips, PHOTO_FOAM_CLIPS } from './foam-geometry.js';
+import { MILK_CAPACITY } from './milk-pour.js';
 
 function paintSpoon(ctx, x, y, scale) {
   ctx.save();
@@ -34,13 +35,14 @@ function paintSpoon(ctx, x, y, scale) {
   ctx.restore();
 }
 
-function paintPitcher(ctx, x, y, scale, { position, flow, resting }) {
+function paintPitcher(ctx, x, y, scale, { position, flow, resting, amount }) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
   const left = (position.x + .18) * (1 - resting) + .62 * resting;
   const top = (.88 * position.y - .65) * (1 - resting) - 1.17 * resting;
-  const angle = .10 + .56 * flow;
+  const used = amount / MILK_CAPACITY;
+  const angle = .10 * resting + (.25 + .40 * used + .27 * flow) * (1 - resting);
   if (flow > .016) {
     const tipX = left - .12 * Math.cos(angle) - .03 * Math.sin(angle);
     const tipY = top - .12 * Math.sin(angle) + .03 * Math.cos(angle);
@@ -73,12 +75,21 @@ function paintPitcher(ctx, x, y, scale, { position, flow, resting }) {
   ctx.quadraticCurveTo(.65, .55, .57, 0);
   ctx.closePath();
   ctx.fill();
-  ctx.fillStyle = '#f7eddd';
+  ctx.fillStyle = '#685c4c';
   ctx.beginPath();
   ctx.ellipse(.25, .025, .35, .10, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.lineWidth = .032;
   ctx.stroke();
+  ctx.save();
+  ctx.clip();
+  ctx.translate(.25, .025 + .06 * used);
+  ctx.rotate(-angle);
+  ctx.fillStyle = '#f7eddd';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, .33 - .09 * used, .075, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
   ctx.restore();
 }
 
@@ -117,7 +128,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   canvas.hidden = false;
   const context = canvas.getContext('2d');
   let mode = 'pour';
-  let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1 };
+  let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1, amount: 0 };
   let artwork = { strokes: [], active: null };
   let width = 1;
   let height = 1;

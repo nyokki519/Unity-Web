@@ -5,7 +5,7 @@
   --glass: rgba(24,16,11,.72);
   --line: rgba(244,237,228,.14);
   --accent: #e8c9a0;
-  --table-still: url('./cup-wide.webp?v=2');
+  --table-still: url('./cup-wide.webp?v=3');
   --table-position: center 47%;
   color-scheme: dark;
 }
@@ -28,11 +28,12 @@ html, body {
 #studio:not([aria-busy="true"]) #loadingHint { display: none; }
 #hud[inert] button { opacity: .56; }
 @media (max-aspect-ratio: 17 / 25) {
-  :root { --table-still: url('./cup-portrait.webp?v=2'); --table-position: 58% 35.5%; }
+  :root { --table-still: url('./cup-portrait.webp?v=3'); --table-position: 58% 35.5%; }
 }
 #scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-touch-callout: none; }
 #scene { cursor: crosshair; }
-#ink { position: absolute; inset: 0 auto auto 0; transform-origin: top left; pointer-events: none; }
+#pourStill { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#ink, #pourSurface { position: absolute; inset: 0 auto auto 0; transform-origin: top left; pointer-events: none; }
 #fallback.paint-overlay { pointer-events: none; }
 .hud { pointer-events: none; position: absolute; inset: 0; user-select: none; }
 .hud a, .hud button, .hud nav, .hud input, .hud .bar, .hud .width-panel { pointer-events: auto; }
