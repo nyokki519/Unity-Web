@@ -1,5 +1,6 @@
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
+import { drawingFoamClips, PHOTO_FOAM_CLIPS } from './foam-geometry.js';
 
 function paintSpoon(ctx, x, y, scale) {
   ctx.save();
@@ -157,6 +158,12 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.beginPath();
     ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
     ctx.clip();
+    const clips = view === 'photo' ? PHOTO_FOAM_CLIPS : view === 'draw' ? drawingFoamClips(w / h) : [];
+    for (const circle of clips) {
+      ctx.beginPath();
+      ctx.ellipse(x + r * circle.x, y + r * .88 * circle.y, r * circle.radius, r * .88 * circle.radius, 0, 0, Math.PI * 2);
+      ctx.clip();
+    }
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
@@ -190,6 +197,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   resize();
   return {
     input: canvas,
+    get drawingClips() { return drawingFoamClips(width / height); },
     setArtwork(fill, strokes, active) {
       artwork = { fill, strokes, active };
       invalidate();

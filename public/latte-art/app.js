@@ -134,7 +134,7 @@ cup.input.addEventListener('pointerdown', event => {
   closeMenus();
   if (!point) return;
   if (mode === 'draw') {
-    if (!drawing.start(event.pointerId, point, penWidth())) return;
+    if (!drawing.start(event.pointerId, point, penWidth(), undefined, cup.drawingClips)) return;
     invalidatePhoto();
     drawPointerId = event.pointerId;
     updateToolbar();

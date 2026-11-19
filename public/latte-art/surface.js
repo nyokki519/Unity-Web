@@ -132,11 +132,18 @@ export function createSurface() {
   return {
     canvas: surface,
     paintBlank(fill) { paintBase(fill); },
-    paintInkPreview(layer, strokes, active) {
+    paintInkPreview(layer, strokes, active, clips = []) {
       cache.sync(strokes, active);
       layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
+      layer.save();
+      for (const circle of clips) {
+        layer.beginPath();
+        layer.arc((circle.x + 1) * radius, (circle.y + 1) * radius, circle.radius * radius, 0, Math.PI * 2);
+        layer.clip();
+      }
       layer.drawImage(ink, 0, 0);
       if (active) paintInk(layer, [active]);
+      layer.restore();
     },
     paint(fill, strokes, active, aim) {
       paintBase(fill, aim);

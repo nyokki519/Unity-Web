@@ -1,13 +1,21 @@
-const inside = point => point.x ** 2 + point.y ** 2 <= 1;
+const foamDisk = { x: 0, y: 0, radius: 1 };
+const inside = (point, bounds) => bounds.every(circle =>
+  (point.x - circle.x) ** 2 + (point.y - circle.y) ** 2 <= circle.radius ** 2);
 
 // Exactly one endpoint is on the foam. Keep the part of the gesture that reaches the rim.
-function rimIntersection(interior, exterior) {
+function rimIntersection(interior, exterior, bounds) {
   const dx = exterior.x - interior.x;
   const dy = exterior.y - interior.y;
   const a = dx ** 2 + dy ** 2;
-  const b = interior.x * dx + interior.y * dy;
-  const c = interior.x ** 2 + interior.y ** 2 - 1;
-  const t = Math.min(1, Math.max(0, (-b + Math.sqrt(Math.max(0, b * b - a * c))) / a));
+  let t = 1;
+  for (const circle of bounds) {
+    const x = interior.x - circle.x;
+    const y = interior.y - circle.y;
+    const b = x * dx + y * dy;
+    const c = x ** 2 + y ** 2 - circle.radius ** 2;
+    const exit = (-b + Math.sqrt(Math.max(0, b * b - a * c))) / a;
+    t = Math.min(t, Math.max(0, exit));
+  }
   return { x: interior.x + t * dx, y: interior.y + t * dy };
 }
 
@@ -17,30 +25,31 @@ export class ChocolateDrawing {
 
   get activeStroke() { return this.#active?.stroke ?? null; }
 
-  start(pointerId, point, width, color = '#4c281b') {
-    if (this.#active || !point || !inside(point)) return false;
+  start(pointerId, point, width, color = '#4c281b', clips = []) {
+    const bounds = [foamDisk, ...clips];
+    if (this.#active || !point || !inside(point, bounds)) return false;
     const stroke = { width, color, paths: [[point]] };
     this.strokes.push(stroke);
-    this.#active = { pointerId, stroke, previous: point };
+    this.#active = { pointerId, stroke, bounds, previous: point };
     return true;
   }
 
   move(pointerId, points) {
     const active = this.#active;
     if (active?.pointerId !== pointerId) return false;
-    const { stroke } = active;
+    const { stroke, bounds } = active;
     let changed = false;
     for (const point of points) {
       const previous = active.previous;
-      const wasInside = previous && inside(previous);
-      const isInside = point && inside(point);
+      const wasInside = previous && inside(previous, bounds);
+      const isInside = point && inside(point, bounds);
       if (wasInside && isInside && Math.hypot(point.x - previous.x, point.y - previous.y) < 0.0005) continue;
       if (wasInside && isInside) {
         stroke.paths.at(-1).push(point);
       } else if (wasInside && point) {
-        stroke.paths.at(-1).push(rimIntersection(previous, point));
+        stroke.paths.at(-1).push(rimIntersection(previous, point, bounds));
       } else if (isInside) {
-        stroke.paths.push(previous ? [rimIntersection(point, previous), point] : [point]);
+        stroke.paths.push(previous ? [rimIntersection(point, previous, bounds), point] : [point]);
       }
       changed ||= Boolean(wasInside || isInside);
       active.previous = point;

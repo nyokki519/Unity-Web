@@ -1,9 +1,9 @@
 import * as THREE from '../vendor/three/three.module.js';
 import {
-  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, CUP_PROFILE, FOAM_PLANE, PITCHER_LIP,
-  shapePitcherSpout, tableCameraFraming, updateMilkStream,
+  createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry, PITCHER_LIP, shapePitcherSpout, updateMilkStream,
 } from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
+import { CUP_PROFILE, drawingFoamClips, FOAM_PLANE, tableCameraFraming } from './foam-geometry.js';
 import { projectInkPlane } from './ink-overlay.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
@@ -183,6 +183,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
   let mode = 'draw';
   let pending = 0;
   let artwork = { fill: 1, strokes: [], active: null };
+  let foamClips = [];
   let artworkDirty = false;
   let backdropDirty = true;
   let animating = false;
@@ -197,8 +198,6 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
 
   function placeCamera(camera, view, aspect) {
     const framing = tableCameraFraming(view, aspect);
-    const elevation = THREE.MathUtils.degToRad(framing.elevation);
-    const dist = framing.distance;
     target.set(framing.targetX, framing.targetY, framing.targetZ);
     camera.aspect = aspect;
     const { clientWidth: width, clientHeight: height } = mainCanvas;
@@ -207,7 +206,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
     } else {
       camera.clearViewOffset();
     }
-    camera.position.set(0, target.y + dist * Math.sin(elevation), target.z + dist * Math.cos(elevation));
+    camera.position.set(framing.eye.x, framing.eye.y, framing.eye.z);
     camera.lookAt(target);
     camera.updateProjectionMatrix();
     camera.updateMatrixWorld(true);
@@ -218,7 +217,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
     if (!artworkDirty && !(drawing && backdropDirty)) return;
     const { fill, strokes, active } = artwork;
     if (drawing) {
-      if (artworkDirty) foam.paintInkPreview(ink, strokes, active);
+      if (artworkDirty) foam.paintInkPreview(ink, strokes, active, foamClips);
       if (backdropDirty) foam.paintBlank(fill);
     } else {
       foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
@@ -272,6 +271,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
     }
     placeCamera(camera, mode, width / height);
     if (mode === 'draw') {
+      foamClips = drawingFoamClips(width / height);
+      artworkDirty = true;
       projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
       const matrix = projectInkPlane(projection.elements, { width, height }, FOAM_PLANE, inkCanvas.width);
       inkCanvas.style.transform = `matrix3d(${matrix.join(',')})`;
@@ -422,6 +423,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
   resize();
   return {
     input: mainCanvas,
+    get drawingClips() { return contextUnavailable ? substitute.drawingClips : foamClips; },
     sample, setMode, resize, photo,
     setArtwork(fill, strokes, active) {
       artwork = { fill, strokes, active };

@@ -284,7 +284,7 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
     max-width: 420px;
     min-height: min(86dvh, calc(100dvh - 56px - env(safe-area-inset-bottom)));
   }
-  .result-photo { width: min(100%, 65vw, 52dvh); margin-inline: auto; }
+  .result-photo { width: min(65vw, calc(100% - 88px), 52dvh); margin-inline: auto; }
   .result-info { display: flex; flex-direction: column; }
   .result-info h1 { font-size: 23px; }
   .result-actions { margin-top: auto; }

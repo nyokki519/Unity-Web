@@ -1,41 +1,6 @@
 import * as THREE from '../vendor/three/three.module.js';
 
-const innerWall = [
-  [1.367, 1.36], [1.353, 1.324], [1.347, 1.22], [1.30, 1.03], [1.25, .87],
-  [1.15, .69], [1.02, .51], [.85, .38], [.68, .33], [0, .33],
-];
-
-export const CUP_PROFILE = [
-  [0, .15], [.58, .15], [.64, .15], [.69, .17], [.71, .20], [.8, .25], [.93, .32],
-  [1.05, .44], [1.16, .57], [1.26, .73], [1.35, .92], [1.41, 1.12], [1.43, 1.28],
-  [1.43, 1.34], [1.415, 1.37], [1.39, 1.38], ...innerWall,
-];
-
-const foamHeight = 1.06;
-const lowerWall = innerWall.findIndex(([, height]) => height <= foamHeight);
-const [upperRadius, upperHeight] = innerWall[lowerWall - 1];
-const [lowerRadius, lowerHeight] = innerWall[lowerWall];
-const radiusAtFoam = THREE.MathUtils.lerp(lowerRadius, upperRadius, (foamHeight - lowerHeight) / (upperHeight - lowerHeight));
-export const FOAM_PLANE = Object.freeze({ height: foamHeight, radius: radiusAtFoam - .003 });
-
-export function tableCameraFraming(view, aspect) {
-  const portrait = 1 - THREE.MathUtils.smoothstep(aspect, .57, .80);
-  const photo = view === 'photo';
-  const served = view === 'serve' || photo;
-  const blend = (wide, tall) => THREE.MathUtils.lerp(wide, tall, portrait);
-  const distance = photo ? 10.15 : served
-    ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
-    : blend(11.25, Math.max(11.25, 17.4 * .462 / aspect));
-  return {
-    distance,
-    elevation: photo ? 61 : served ? 64 : blend(57, 60),
-    targetX: photo ? -.18 : blend(.18, .02),
-    targetY: served ? .67 : .69,
-    targetZ: photo ? .16 : served ? .08 : blend(.08, .22),
-    shiftX: served ? 0 : -.111 * portrait,
-    shiftY: served ? 0 : .109 * portrait,
-  };
-}
+export { CUP_PROFILE, FOAM_PLANE, tableCameraFraming } from './foam-geometry.js';
 
 // Two ceramic roots joined by a rounded, tapered strap.
 const LEAN = .58;
