@@ -142,6 +142,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   let ratio = 1;
   let pending = 0;
   const glazeGrain = ceramicGlaze();
+  const drawingBackdrop = canvasOf(0);
   function layout(w, h, view) {
     const widthBlend = Math.max(0, Math.min(1, (w / h - .57) / .23));
     const portrait = view === 'draw' || view === 'pour'
@@ -152,7 +153,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       r: Math.min(w * (view === 'photo' ? .277 : .34 - .022 * portrait), h * .31),
     };
   }
-  function paint(ctx, w, h, view) {
+  function paintBackdrop(ctx, w, h, view) {
     const { x, y, r } = layout(w, h, view);
     ctx.drawImage(tableImage, 136, 56, 240, 400, 0, 0, w, h);
     const backdrop = ctx.createRadialGradient(w * .07, h * .19, 0, w * .07, h * .19, Math.hypot(w, h) * .82);
@@ -181,12 +182,6 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     saucer.addColorStop(1, '#d3b493');
     ellipse(1.58, 1.4, saucer, r * .35, -r * .13);
     paintCafeMark(ctx, x - r * 1.14, y + r * .99, r * .40, '#6b4230');
-    ctx.save();
-    ctx.fillStyle = '#6b4230';
-    ctx.font = `${r * .12}px Georgia, serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText('Unity', x - r * .94, y + r * 1.44);
-    ctx.restore();
     ctx.save();
     ctx.shadowColor = '#44392752';
     ctx.shadowOffsetX = r * .04;
@@ -224,6 +219,10 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.globalAlpha = .65;
     ctx.drawImage(glazeGrain, x - 1.08 * r, y - r, 2.16 * r, 2.16 * r);
     ctx.restore();
+  }
+
+  function paintLiquid(ctx, w, h, view) {
+    const { x, y, r } = layout(w, h, view);
     ctx.save();
     ctx.beginPath();
     ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
@@ -239,16 +238,50 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     }
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
+  }
+
+  function paintTools(ctx, w, h, view) {
+    const { x, y, r } = layout(w, h, view);
+    ctx.save();
+    ctx.fillStyle = '#6b4230';
+    ctx.font = `${r * .12}px Georgia, serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Unity', x - r * .94, y + r * 1.44);
+    ctx.restore();
     paintCafeMark(ctx, x + r * .24, y + r * .895, r * .16, '#68412b');
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
     if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
     if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
   }
+
+  function paint(ctx, w, h, view) {
+    paintBackdrop(ctx, w, h, view);
+    paintLiquid(ctx, w, h, view);
+    paintTools(ctx, w, h, view);
+  }
+
   function draw() {
+    if (canvas.hidden) return;
     const { strokes, active } = artwork;
     foam.paint(strokes, active, mode === 'pour' && !reducedMotion.matches);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    paint(context, width, height, mode);
+    if (mode !== 'draw') {
+      paint(context, width, height, mode);
+      return;
+    }
+    if (drawingBackdrop.width !== canvas.width || drawingBackdrop.height !== canvas.height) {
+      drawingBackdrop.width = canvas.width;
+      drawingBackdrop.height = canvas.height;
+      const backdrop = drawingBackdrop.getContext('2d');
+      backdrop.setTransform(ratio, 0, 0, ratio, 0, 0);
+      paintBackdrop(backdrop, width, height, mode);
+    }
+    context.save();
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.drawImage(drawingBackdrop, 0, 0);
+    context.restore();
+    paintLiquid(context, width, height, mode);
+    paintTools(context, width, height, mode);
   }
   function invalidate() {
     if (pending) return;
@@ -259,13 +292,17 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   }
   function resize() {
     const rect = canvas.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
+    if (!rect.width || !rect.height) {
+      drawingBackdrop.width = drawingBackdrop.height = 0;
+      return;
+    }
     const nextRatio = Math.min(devicePixelRatio || 1, 1.75);
     if (width === rect.width && height === rect.height && ratio === nextRatio) return;
     ({ width, height } = rect);
     ratio = nextRatio;
     canvas.width = width * ratio;
     canvas.height = height * ratio;
+    if (drawingBackdrop.width) drawingBackdrop.width = drawingBackdrop.height = 0;
     draw();
   }
   new ResizeObserver(resize).observe(canvas);
@@ -279,7 +316,11 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       invalidate();
     },
     resize,
-    setMode(next) { mode = next; invalidate(); },
+    setMode(next) {
+      mode = next;
+      if (next !== 'draw' && drawingBackdrop.width) drawingBackdrop.width = drawingBackdrop.height = 0;
+      invalidate();
+    },
     setPour(view, paintNow = false) {
       pourView = view;
       if (mode !== 'pour') return;

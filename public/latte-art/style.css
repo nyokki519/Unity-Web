@@ -23,11 +23,15 @@ html, body {
 }
 #studio { position: relative; height: 100dvh; overflow: hidden; }
 #studio[aria-busy="true"] {
-  background: radial-gradient(ellipse at 19% 23%, #725039, #2c1a13 69%, #180e0b);
+  --loading-backdrop: radial-gradient(ellipse at 19% 23%, #725039, #2c1a13 69%, #180e0b);
+  background: var(--loading-backdrop);
 }
-#studio[aria-busy="true"][data-fresh-cup] { background: #554a40 var(--table-still) var(--table-position) / cover no-repeat; }
+#studio[aria-busy="true"][data-fresh-cup] {
+  background: var(--table-still) var(--table-position) / cover no-repeat, var(--loading-backdrop);
+}
 #studio[aria-busy="true"] #scene { visibility: hidden; }
 #studio[aria-busy="true"] #tip,
+#studio[aria-busy="true"] #bar,
 #studio:not([aria-busy="true"]) #loadingHint { display: none; }
 #hud[inert] button { opacity: .56; }
 @media (max-aspect-ratio: 17 / 25) {

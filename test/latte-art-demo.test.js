@@ -16,3 +16,8 @@ test('the home exposes the independent latte demo', async () => {
   const home = await readFile(new URL('../public/js/home.js', import.meta.url), 'utf8');
   assert.match(home, /ラテアート.*\/latte-art\/index\.html/);
 });
+
+test('drawing controls stay hidden until the studio selects a stage', async () => {
+  const html = await readFile(new URL('index.html', root), 'utf8');
+  assert.match(html, /<div id="drawControls"[^>]*\bhidden\b/);
+});
