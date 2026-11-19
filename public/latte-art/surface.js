@@ -107,20 +107,29 @@ export function createSurface(milk) {
     grain.fill();
   }
 
+  let coatRevision = -1;
   let paintedRevision = -1;
-  function updateBase() {
-    ground.drawImage(coffee, 0, 0);
+  function compositeBase(layer, size) {
+    layer.drawImage(coffee, 0, 0, size, size);
     if (milk.legacy) {
       // Drafts from the previous studio already had a full cup of milk.
-      const filled = ground.createRadialGradient(.82 * radius, .80 * radius, .04 * radius,
-        radius, radius, .995 * radius);
+      const half = size / 2;
+      const filled = layer.createRadialGradient(.82 * half, .80 * half, .04 * half,
+        half, half, .995 * half);
       filled.addColorStop(0, '#fffdf4');
       filled.addColorStop(.7, '#f8eee0');
       filled.addColorStop(.92, '#e5cfb6');
       filled.addColorStop(1, '#dec2a100');
-      ground.fillStyle = filled;
-      ground.fillRect(0, 0, ART_SIZE, ART_SIZE);
+      layer.fillStyle = filled;
+      layer.fillRect(0, 0, size, size);
     } else if (milk.amount > 0) {
+      updateFoam();
+      layer.drawImage(foamCoat, 0, 0, size, size);
+    }
+  }
+
+  function updateFoam() {
+    if (coatRevision !== milk.revision) {
       const density = milk.density;
       for (let i = 0; i < density.length; i++) {
         const level = density[i];
@@ -139,13 +148,15 @@ export function createSurface(milk) {
       coat.globalCompositeOperation = 'source-atop';
       coat.drawImage(foamGrain, 0, 0);
       coat.globalCompositeOperation = 'source-over';
-      ground.drawImage(foamCoat, 0, 0, ART_SIZE, ART_SIZE);
+      coatRevision = milk.revision;
     }
-    paintedRevision = milk.revision;
   }
 
   function paintBase() {
-    if (paintedRevision !== milk.revision) updateBase();
+    if (paintedRevision !== milk.revision) {
+      compositeBase(ground, ART_SIZE);
+      paintedRevision = milk.revision;
+    }
     context.drawImage(base, 0, 0);
   }
 
@@ -188,12 +199,12 @@ export function createSurface(milk) {
     canvas: surface,
     paintBlank: paintBase,
     paintPourPreview(layer, clips, showImpact) {
-      if (paintedRevision !== milk.revision) updateBase();
       const size = layer.canvas.width;
       layer.clearRect(0, 0, size, size);
       layer.save();
       clipLayer(layer, clips);
-      layer.drawImage(base, 0, 0, size, size);
+      // Composite at the visible texture size while the pitcher is moving.
+      compositeBase(layer, size);
       if (showImpact) paintImpact(layer);
       layer.restore();
     },
