@@ -306,7 +306,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   let pourClips = [];
   let artworkDirty = false;
   let backdropDirty = true;
-  let animating = false;
+  let cameraMotion = null;
   let contextUnavailable = false;
   let substitute = null;
   let firstFrame = onReady;
@@ -400,7 +400,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   }
 
   function invalidate() {
-    if (pending || contextUnavailable) return;
+    if (pending || cameraMotion || contextUnavailable) return;
     pending = requestAnimationFrame(() => {
       pending = 0;
       drawFrame();
@@ -411,7 +411,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     if (contextUnavailable) return;
     const { width, height } = mainCanvas.getBoundingClientRect();
     if (!width || !height) return;
-    animating = false;
+    cameraMotion = null;
     backdropDirty = true;
     handle.rotation.y = mode === 'serve' ? 0 : DRAW_HANDLE_ANGLE;
     renderer.shadowMap.needsUpdate = true;
@@ -444,7 +444,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
 
   function activateFallback() {
     contextUnavailable = true;
-    animating = false;
+    cameraMotion = null;
     inkCanvas.hidden = true;
     discardPourLayers();
     substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
@@ -484,9 +484,10 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       placeCamera(to, next, width / height);
       const start = performance.now();
       const fromAngle = handle.rotation.y;
-      animating = true;
+      cancelAnimationFrame(pending);
+      pending = 0;
       function move(now) {
-        if (!animating || mode !== next) return;
+        if (cameraMotion !== move || mode !== next) return;
         const t = Math.min(1, (now - start) / 680);
         const ease = t * t * (3 - 2 * t);
         camera.position.lerpVectors(from.position, to.position, ease);
@@ -501,11 +502,12 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
         camera.updateMatrixWorld(true);
         drawFrame();
         if (t < 1) requestAnimationFrame(move);
-        else animating = false;
+        else cameraMotion = null;
       }
+      cameraMotion = move;
       requestAnimationFrame(move);
     } else {
-      animating = false;
+      cameraMotion = null;
       handle.rotation.y = handleAngle;
       resize();
     }
