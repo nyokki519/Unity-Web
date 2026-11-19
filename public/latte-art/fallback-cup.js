@@ -40,7 +40,7 @@ function paintPitcher(ctx, x, y, scale, { position, flow, resting, amount }) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
-  const left = (position.x + .18) * (1 - resting) + .62 * resting;
+  const left = (position.x + .18) * (1 - resting) + .48 * resting;
   const top = (.88 * position.y - .65) * (1 - resting) - 1.17 * resting;
   const used = amount / MILK_CAPACITY;
   const angle = .10 * resting + (.25 + .40 * used + .27 * flow) * (1 - resting);

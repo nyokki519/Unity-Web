@@ -270,7 +270,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   pourScene.add(stream);
   const streamStart = new THREE.Vector3();
   const streamEnd = new THREE.Vector3();
-  const idlePitcher = new THREE.Vector3(.73, 1.52, -1.49);
+  const idlePitcher = new THREE.Vector3(.54, 1.52, -1.52);
   let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1, amount: 0 };
   const camera = new THREE.PerspectiveCamera(28, 1, .1, 80);
   const target = new THREE.Vector3();
@@ -594,7 +594,10 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
 function buildPitcher(scene) {
   const pivot = new THREE.Group();
   pivot.position.set(1.9, 1.43, -.5);
-  const steel = new THREE.MeshStandardMaterial({ color: '#bdb9b0', metalness: .58, roughness: .29 });
+  const steel = new THREE.MeshPhysicalMaterial({
+    color: '#c9c2b7', metalness: .84, roughness: .26,
+    anisotropy: .49, anisotropyRotation: Math.PI / 2, envMapIntensity: 1.46,
+  });
   const pitcher = lathe([
     [0, 0], [.51, 0], [.58, .07], [.60, .22], [.54, .72], [.47, 1.13],
     [.45, 1.18], [.43, 1.16], [.47, .65], [.52, .2], [0, .10],
@@ -603,9 +606,20 @@ function buildPitcher(scene) {
   shapePitcherSpout(pitcher.geometry);
   pivot.add(pitcher);
   const pitcherMilk = createPitcherLiquid();
-  const handle = new THREE.Mesh(new THREE.TorusGeometry(.35, .052, 10, 30), steel);
-  handle.position.set(.58, .55, 0);
-  handle.scale.y = 1.22;
+  const strap = new THREE.Shape();
+  strap.moveTo(.43, .91);
+  strap.quadraticCurveTo(.95, 1.05, .98, .79);
+  strap.quadraticCurveTo(1.01, .33, .67, .26);
+  strap.lineTo(.54, .23);
+  strap.lineTo(.53, .32);
+  strap.quadraticCurveTo(.86, .37, .87, .74);
+  strap.quadraticCurveTo(.87, .88, .45, .82);
+  strap.closePath();
+  const handleGeometry = new THREE.ExtrudeGeometry(strap, {
+    depth: .066, bevelEnabled: true, bevelThickness: .018, bevelSize: .012, bevelSegments: 2, curveSegments: 12,
+  });
+  handleGeometry.translate(0, 0, -.033);
+  const handle = new THREE.Mesh(handleGeometry, steel);
   pivot.add(handle);
   const spout = new THREE.Object3D();
   spout.position.set(PITCHER_LIP.x, PITCHER_LIP.y, PITCHER_LIP.z);
