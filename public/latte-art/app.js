@@ -17,8 +17,13 @@ drawing.strokes = draft.strokes;
 const milk = new MilkPour(draft.milk);
 const pourInput = new PourInput(milk);
 const surface = createSurface(milk);
+if (milk.amount || drawing.strokes.length) {
+  $('studio').dataset.restoring = 'true';
+  $('loadingHint').textContent = '作りかけの一杯を復元中…';
+}
 function revealStudio() {
   $('studio').removeAttribute('aria-busy');
+  delete $('studio').dataset.restoring;
   $('hud').inert = false;
 }
 

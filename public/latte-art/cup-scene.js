@@ -55,6 +55,23 @@ function windowReflection() {
   return map;
 }
 
+function windowLightMask() {
+  const canvas = canvasOf(128);
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#9e9e9e';
+  context.fillRect(0, 0, 128, 128);
+  context.translate(64, 64);
+  context.rotate(-.15);
+  context.filter = 'blur(4px)';
+  context.fillStyle = '#fff';
+  for (const x of [-43, 2]) {
+    context.fillRect(x, -53, 40, 44);
+    context.fillRect(x, -4, 40, 54);
+  }
+  const map = new THREE.CanvasTexture(canvas);
+  return map;
+}
+
 function lathe(rows, material, rimY = Infinity, rimRadius = 0) {
   const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 144), material);
   if (material.vertexColors) {
@@ -246,9 +263,10 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
-  const lamp = new THREE.SpotLight('#ffc180', 67, 16, .65, .88, 2);
+  const lamp = new THREE.SpotLight('#ffc180', 76, 16, .65, .88, 2);
   lamp.position.set(-4.6, 4.7, -1.6);
   lamp.target.position.set(-1.7, 0, 1.7);
+  lamp.map = windowLightMask();
   scene.add(lamp, lamp.target);
   const { disk, foamTexture, handle } = buildTableware(scene, foam);
   const liveFoam = canvasOf(512);
