@@ -78,6 +78,30 @@ export function createSpoonStemGeometry() {
   return stem;
 }
 
+export function createChocolatePen() {
+  const pen = new THREE.Group();
+  const wrapper = new THREE.MeshStandardMaterial({ color: '#8d5f47', roughness: .76 });
+  const nozzle = new THREE.MeshStandardMaterial({ color: '#4d3224', metalness: .32, roughness: .44 });
+  const paper = new THREE.Mesh(new THREE.LatheGeometry([
+    [.021, .14], [.048, .23], [.086, .40], [.123, .65], [.141, .88],
+    [.133, .96], [.106, 1.01], [0, 1.04],
+  ].map(([x, y]) => new THREE.Vector2(x, y)), 40), wrapper);
+  const tip = new THREE.Mesh(new THREE.LatheGeometry([
+    [0, 0], [.013, .009], [.021, .095], [.026, .154],
+  ].map(([x, y]) => new THREE.Vector2(x, y)), 24), nozzle);
+  const fold = new THREE.Mesh(new THREE.BoxGeometry(.25, .055, .037), wrapper);
+  fold.position.y = 1;
+  fold.rotation.z = -.06;
+  pen.add(paper, tip, fold);
+  for (const part of pen.children) {
+    part.castShadow = true;
+    part.receiveShadow = true;
+  }
+  pen.position.set(.12, .145, 2.59);
+  pen.rotation.set(Math.PI / 2, 0, -.94);
+  return pen;
+}
+
 export const PITCHER_LIP = Object.freeze({ x: -.67, y: 1.17, z: 0 });
 
 export function shapePitcherSpout(geometry) {

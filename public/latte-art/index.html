@@ -6,13 +6,13 @@
   <meta name="theme-color" content="#292018">
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
-  <link rel="stylesheet" href="./style.css?v=12">
+  <link rel="stylesheet" href="./style.css?v=13">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
 <body>
   <main id="studio" aria-busy="true">
-    <canvas id="scene" role="img" aria-label="カップのミルクフォームに指でチョコを描く"></canvas>
+    <canvas id="scene" role="img" aria-label="カップの液面を押してミルクを注ぐ"></canvas>
     <canvas id="ink" aria-hidden="true" hidden></canvas>
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
     <p id="loadingHint" class="hint" role="status">カップを準備中…</p>
@@ -21,16 +21,15 @@
       <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
         <button type="button" id="showHelp">遊び方</button>
-        <button type="button" id="showPour">ミルクを注ぐ</button>
         <button type="button" id="showDraw">チョコペンで描く</button>
         <a href="/">Unity MIX ホーム</a>
       </nav>
-      <p id="tip" class="hint">泡に触れて一滴。指を動かして一筆。</p>
-      <section id="pourControls" class="glass pour-controls" aria-label="注ぎ方を試す" hidden>
-        <label for="tilt">注ぐ量</label>
-        <input id="tilt" type="range" min="0" max="100" value="0">
-        <output for="tilt" id="tiltValue">0%</output>
-        <button id="resetPour" type="button">注ぎ直す</button>
+      <p id="tip" class="hint">液面を押して注ぎ、そのまま指で位置を動かせます。</p>
+      <section id="pourControls" class="glass pour-controls" aria-label="ミルクの注ぎ方" hidden>
+        <span>注いだ量 <output id="poured" aria-live="off">0 mL</output></span>
+        <label for="tilt">流量 <output for="tilt" id="tiltValue">62%</output></label>
+        <input id="tilt" type="range" min="8" max="100" value="62">
+        <button id="pourCenter" type="button">中央に注ぐ</button>
       </section>
       <div id="bar" class="bar glass" role="group" aria-label="ラテアートの操作">
         <div id="drawControls" class="control-group">
@@ -62,7 +61,7 @@
             <button id="saveImage" class="primary" type="button">画像を保存</button>
             <button id="editAgain" class="go" type="button">編集に戻る</button>
           </div>
-          <button id="restart" class="new-cup" type="button">新しい一杯</button>
+          <button id="restart" class="new-cup" type="button">もう一杯作る</button>
           <p id="saveStatus" role="status"></p>
         </div>
       </div>
@@ -76,15 +75,14 @@
     </dialog>
     <dialog id="helpDialog" class="sheet" aria-labelledby="helpTitle">
       <h2 id="helpTitle">ラテアートの手順</h2>
-      <p><strong>ミルクフォームを注ぐ</strong><br>まず細く注いでコーヒーとなじませます。ピッチャーの先を液面に近づけると、泡を表面に広げやすくなります。</p>
-      <p><strong>チョコペンで描く</strong><br>泡の表面にペン先を近づけます。猫の目は軽く触れて一滴、ひげは先をすべらせて一筆ずつ。太さを変えたり、直前の一筆を取り消したりできます。</p>
+      <p><strong>ミルクを注ぐ</strong><br>液面を押すとミルクが落ち、置いたままだと泡が広がります。指をすべらせると泡の跡が伸びます。コーヒー色の余白を残して「チョコペンで描く」に進めます。</p>
+      <p><strong>チョコペンで描く</strong><br>泡の表面にペン先を近づけます。猫の目は軽く触れて一滴、ひげは先をすべらせて一筆ずつ。チョコを消しても、注いだミルクは残ります。</p>
       <p>「完成」から、一杯の写真を保存できます。</p>
       <form method="dialog">
-        <button value="pour">注ぎ方を試す</button>
-        <button class="go" value="draw" autofocus>描く画面へ</button>
+        <button class="go" value="close" autofocus>戻る</button>
       </form>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=9"></script>
+  <script type="module" src="./app.js?v=10"></script>
 </body>
 </html>

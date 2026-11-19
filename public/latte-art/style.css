@@ -305,6 +305,16 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 @media (max-height: 700px) and (orientation: portrait) {
   .hint { top: calc(60px + env(safe-area-inset-top)); }
 }
+@media (max-width: 600px) and (orientation: portrait) {
+  #studio[data-stage="pour"] #tip {
+    left: max(14px, env(safe-area-inset-left));
+    top: calc(70px + env(safe-area-inset-top));
+    max-width: min(55vw, 230px);
+    border-radius: 14px;
+    text-align: left;
+    transform: none;
+  }
+}
 @media (orientation: landscape) and (max-height: 520px) {
   .hint { top: calc(16px + env(safe-area-inset-top)); }
   .width-panel {

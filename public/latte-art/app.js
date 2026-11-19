@@ -1,6 +1,7 @@
 import { ChocolateDrawing } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
+import { DEFAULT_POUR_RATE, MILK_CAPACITY, MilkPour } from './milk-pour.js';
 import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
@@ -8,8 +9,10 @@ const $ = id => document.getElementById(id);
 const drawing = new ChocolateDrawing();
 let draftStorage;
 try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled. */ }
-drawing.strokes = readDraft(draftStorage);
-const surface = createSurface();
+const draft = readDraft(draftStorage);
+drawing.strokes = draft.strokes;
+const milk = new MilkPour(draft.milk);
+const surface = createSurface(milk);
 function revealStudio() {
   $('studio').removeAttribute('aria-busy');
   $('hud').inert = false;
@@ -35,12 +38,16 @@ async function loadCup() {
 
 const cup = await loadCup();
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let mode = 'draw';
-let pourAmount = 0;
+let stage = draft.stage;
+let mode = stage;
+let pourRate = DEFAULT_POUR_RATE;
 let pourPointerId = null;
-let pourFlowTimer = 0;
+let pourFrame = 0;
+let pouredAt = 0;
+let centerUntil = 0;
 let drawPointerId = null;
 let servingTimer = 0;
+let returnStage = 'draw';
 let photoFile = null;
 let photoUrl = '';
 let sharingFile = null;
@@ -49,12 +56,18 @@ let cachedPhoto = null;
 let photoRevision = 0;
 let draftTimer = 0;
 let draftDirty = false;
+let savedMilkRevision = -1;
+let savedMilk;
 
 function flushDraft() {
   clearTimeout(draftTimer);
   if (!draftDirty) return;
   draftDirty = false;
-  writeDraft(draftStorage, drawing.strokes);
+  if (savedMilkRevision !== milk.revision) {
+    savedMilk = milk.snapshot();
+    savedMilkRevision = milk.revision;
+  }
+  writeDraft(draftStorage, { stage, milk: savedMilk, strokes: drawing.strokes });
 }
 
 function queueDraft() {
@@ -77,7 +90,7 @@ function invalidatePhoto() {
 }
 
 function redraw() {
-  cup.setArtwork(mode === 'pour' ? pourAmount : 1, drawing.strokes, drawing.activeStroke);
+  cup.setArtwork(drawing.strokes, drawing.activeStroke);
 }
 
 function updateToolbar(message) {
@@ -93,35 +106,87 @@ function closeMenus() {
 }
 
 function setMode(next, animate = false) {
-  clearTimeout(pourFlowTimer);
+  if (mode === 'pour' && next !== 'pour') stopPour(true);
   mode = next;
+  $('studio').dataset.stage = next;
   closeMenus();
   if (drawing.activeStroke) queueDraft();
   drawing.cancel();
+  if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
   drawPointerId = pourPointerId = null;
   $('hud').hidden = next === 'serve';
   $('serving').hidden = next !== 'serve';
   $('pourControls').hidden = $('next').hidden = next !== 'pour';
+  $('showDraw').hidden = next !== 'pour';
   $('drawControls').hidden = next !== 'draw';
   $('tip').textContent = next === 'pour'
-    ? '量を調整し、カップの上で注ぐ位置を動かします。'
+    ? '液面を押して注ぎ、そのまま指で位置を動かせます。'
     : '泡に触れて一滴。指を動かして一筆。';
+  const label = next === 'pour' ? 'カップの液面を押してミルクを注ぐ' : 'カップの液面に指でチョコを描く';
+  $('scene').setAttribute('aria-label', label);
+  $('fallback').setAttribute('aria-label', label);
   cup.setMode(next, animate);
-  cup.setPour(pourAmount);
-  redraw();
+  if (next === 'pour') presentPour();
+  else redraw();
   updateToolbar();
+  const nextStage = next === 'serve' ? 'draw' : next;
+  if (stage !== nextStage) {
+    stage = nextStage;
+    queueDraft();
+  }
 }
 
-function updatePour(value, position) {
-  pourAmount = value;
-  $('tiltValue').value = Math.round(value * 100) + '%';
-  cup.setPour(value, position, value > 0);
+function presentPour() {
+  cup.setPour({ position: milk.position, flow: milk.flow, resting: milk.resting });
+  const amount = `${Math.round(milk.amount)} mL`;
+  if ($('poured').value !== amount) $('poured').value = amount;
+  $('pourCenter').disabled = milk.pouring || milk.amount >= MILK_CAPACITY;
   redraw();
 }
 
-function stopPour() {
-  clearTimeout(pourFlowTimer);
-  cup.setPour(pourAmount);
+function advancePour(timestamp, position = milk.position) {
+  const now = Math.max(pouredAt, timestamp);
+  if (centerUntil && now >= centerUntil) {
+    milk.advance(centerUntil - pouredAt, position, pourRate);
+    milk.stop();
+    pouredAt = centerUntil;
+    centerUntil = 0;
+  }
+  milk.advance(now - pouredAt, position, pourRate);
+  pouredAt = now;
+}
+
+function paintPourFrame(now) {
+  pourFrame = 0;
+  advancePour(now);
+  presentPour();
+  if (milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
+  else queueDraft();
+}
+
+function beginPour(position, duration = 0) {
+  if (!milk.start(position)) return false;
+  invalidatePhoto();
+  pouredAt = performance.now();
+  centerUntil = duration ? pouredAt + duration : 0;
+  if (!pourFrame) pourFrame = requestAnimationFrame(paintPourFrame);
+  return true;
+}
+
+function stopPour(immediately = false, timestamp = performance.now(), position = milk.position) {
+  if (!milk.moving) return;
+  advancePour(timestamp, position);
+  centerUntil = 0;
+  milk.stop();
+  if (immediately) {
+    cancelAnimationFrame(pourFrame);
+    pourFrame = 0;
+    milk.settle();
+    presentPour();
+    queueDraft();
+  } else if (!pourFrame) {
+    pourFrame = requestAnimationFrame(paintPourFrame);
+  }
 }
 
 function penWidth() {
@@ -140,10 +205,9 @@ cup.input.addEventListener('pointerdown', event => {
     updateToolbar();
     redraw();
   } else if (mode === 'pour') {
-    if (Math.hypot(point.x, point.y) > 1.45) return;
-    clearTimeout(pourFlowTimer);
+    if (Math.hypot(point.x, point.y) > 1 || cup.drawingClips.some(circle =>
+      Math.hypot(point.x - circle.x, point.y - circle.y) > circle.radius) || !beginPour(point)) return;
     pourPointerId = event.pointerId;
-    updatePour(pourAmount, point);
   } else {
     return;
   }
@@ -156,8 +220,11 @@ cup.input.addEventListener('pointermove', event => {
     const samples = (events?.length ? events : [event]).map(sample => cup.sample(sample));
     if (drawing.move(event.pointerId, samples)) redraw();
   } else if (mode === 'pour' && event.pointerId === pourPointerId) {
-    const point = cup.sample(event);
-    if (point) updatePour(pourAmount, point);
+    const events = event.getCoalescedEvents?.();
+    for (const sample of events?.length ? events : [event]) {
+      const point = cup.sample(sample);
+      if (point) advancePour(sample.timeStamp, point);
+    }
   }
 });
 
@@ -170,7 +237,8 @@ function endGesture(event) {
   }
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
-    stopPour();
+    const position = event.type === 'pointerup' ? cup.sample(event) : null;
+    stopPour(false, event.timeStamp, position ?? milk.position);
   }
 }
 
@@ -183,7 +251,7 @@ function releaseGesture() {
   if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
   if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
   drawPointerId = pourPointerId = null;
-  if (mode === 'pour') stopPour();
+  if (mode === 'pour') stopPour(true);
   redraw();
 }
 window.addEventListener('resize', releaseGesture);
@@ -234,27 +302,19 @@ $('showHelp').onclick = () => {
   dialog.returnValue = '';
   dialog.showModal();
 };
-$('helpDialog').addEventListener('close', event => {
-  const action = event.currentTarget.returnValue;
-  if (action === 'pour' || action === 'draw') openEditingMode(action);
-  else $('menuButton').focus();
-});
-function openEditingMode(next) {
-  setMode(next);
-  $(next === 'pour' ? 'tilt' : 'widthButton').focus({ preventScroll: true });
+$('helpDialog').addEventListener('close', () => $('menuButton').focus());
+function openDrawing() {
+  if (mode !== 'pour') return;
+  setMode('draw');
+  $('widthButton').focus({ preventScroll: true });
 }
-$('showPour').onclick = () => openEditingMode('pour');
-$('showDraw').onclick = $('next').onclick = () => openEditingMode('draw');
+$('showDraw').onclick = $('next').onclick = openDrawing;
 $('tilt').oninput = () => {
-  updatePour(Number($('tilt').value) / 100);
-  clearTimeout(pourFlowTimer);
-  if (pourPointerId === null) pourFlowTimer = setTimeout(stopPour, 270);
+  if (milk.moving) advancePour(performance.now());
+  pourRate = Number($('tilt').value) / 100;
+  $('tiltValue').value = Math.round(pourRate * 100) + '%';
 };
-$('resetPour').onclick = () => {
-  clearTimeout(pourFlowTimer);
-  $('tilt').value = '0';
-  updatePour(0);
-};
+bindActivation($('pourCenter'), () => beginPour({ x: 0, y: 0 }, 630));
 bindActivation($('undo'), () => {
   drawing.undo();
   queueDraft();
@@ -354,26 +414,27 @@ function openResult() {
 }
 bindActivation($('serving'), openResult, { requireOwnPress: true });
 $('closeResult').onclick = $('editAgain').onclick = () => $('finishPanel').close();
-function returnToDrawing() {
+function returnToEditing() {
   clearTimeout(servingTimer);
   resultCycle++;
   releasePhoto();
-  setMode('draw');
-  $('finish').focus({ preventScroll: true });
+  setMode(returnStage);
+  $(returnStage === 'pour' ? 'tilt' : 'finish').focus({ preventScroll: true });
+  returnStage = 'draw';
 }
-$('finishPanel').addEventListener('close', returnToDrawing);
+$('finishPanel').addEventListener('close', returnToEditing);
 $('serving').addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   event.preventDefault();
-  returnToDrawing();
+  returnToEditing();
 });
 $('restart').onclick = () => {
   drawing.clear();
-  queueDraft();
+  milk.reset();
   invalidatePhoto();
-  pourAmount = 0;
-  $('tilt').value = '0';
-  $('tiltValue').value = '0%';
+  returnStage = 'pour';
+  $('tilt').value = String(DEFAULT_POUR_RATE * 100);
+  $('tilt').oninput();
   $('finishPanel').close();
 };
 $('saveImage').onclick = async () => {
@@ -402,5 +463,5 @@ $('saveImage').onclick = async () => {
   $('saveStatus').textContent = 'PNGの保存を開始しました。';
 };
 
-setMode('draw');
+setMode(stage);
 showPenWidth();

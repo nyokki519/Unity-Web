@@ -1,9 +1,9 @@
 import { paintChocolate } from './drawing.js';
+import { MILK_GRID_SIZE } from './milk-pour.js';
 import { StrokePaintCache } from './stroke-paint-cache.js';
 
 export const PHOTO_SIZE = 1200;
 const ART_SIZE = 1024;
-const PEN_COLORS = { espresso: '#8b4a29', foam: '#f8eee0' };
 
 export function canvasOf(size) {
   const canvas = document.createElement('canvas');
@@ -44,9 +44,13 @@ function cremaTexture() {
   return canvas;
 }
 
-export function createSurface() {
+export function createSurface(milk) {
   const surface = canvasOf(ART_SIZE);
   const base = canvasOf(ART_SIZE);
+  const coffee = canvasOf(ART_SIZE);
+  const foam = canvasOf(MILK_GRID_SIZE);
+  const foamContext = foam.getContext('2d');
+  const foamImage = foamContext.createImageData(MILK_GRID_SIZE, MILK_GRID_SIZE);
   const ink = canvasOf(ART_SIZE);
   const context = surface.getContext('2d');
   const ground = base.getContext('2d');
@@ -77,61 +81,60 @@ export function createSurface() {
       highlight: random() > 0.38,
     };
   });
-  let baseFill = -1;
-  let baseX = 0;
-  let baseY = 0;
-
-  function updateBase(fill, x, y) {
-    const half = ART_SIZE / 2;
-    ground.setTransform(half, 0, 0, half, half, half);
-    ground.fillStyle = PEN_COLORS.espresso;
-    ground.fillRect(-1, -1, 2, 2);
-    const edge = 0.22 + fill * 0.72;
-    const espresso = ground.createRadialGradient(-0.16, -0.19, 0.12, 0, 0, 1.06);
-    espresso.addColorStop(0, '#a8693f');
-    espresso.addColorStop(.78, '#9c5f37');
-    espresso.addColorStop(1, '#6d361c');
-    ground.fillStyle = espresso;
-    ground.fillRect(-1, -1, 2, 2);
-    ground.drawImage(crema, -1, -1, 2, 2);
-    if (fill > 0) {
-      const foam = ground.createRadialGradient(x - .18, y - .2, .04, x, y, edge + .055);
-      foam.addColorStop(0, '#fffdf4');
-      foam.addColorStop(.7, PEN_COLORS.foam);
-      foam.addColorStop(.92, '#e5cfb6');
-      foam.addColorStop(1, '#dec2a100');
-      ground.globalAlpha = Math.min(1, fill * 2.1);
-      ground.fillStyle = foam;
-      ground.fillRect(-1, -1, 2, 2);
-      ground.globalAlpha = 1;
-    }
-    for (const bubble of bubbles) {
-      const insideFoam = fill > 0 && Math.hypot(bubble.x - x, bubble.y - y) < edge;
-      ground.fillStyle = insideFoam
-        ? (bubble.highlight ? '#ffffff8a' : '#8d694525')
-        : (bubble.highlight ? '#ebbc7f3c' : '#522d212e');
-      ground.beginPath();
-      ground.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
-      ground.fill();
-    }
+  const coffeeContext = coffee.getContext('2d');
+  coffeeContext.setTransform(radius, 0, 0, radius, radius, radius);
+  const espresso = coffeeContext.createRadialGradient(-.16, -.19, .12, 0, 0, 1.06);
+  espresso.addColorStop(0, '#994f28');
+  espresso.addColorStop(.78, '#8e4b2a');
+  espresso.addColorStop(1, '#62321b');
+  coffeeContext.fillStyle = espresso;
+  coffeeContext.fillRect(-1, -1, 2, 2);
+  coffeeContext.drawImage(crema, -1, -1, 2, 2);
+  for (const bubble of bubbles) {
+    coffeeContext.fillStyle = bubble.highlight ? '#ebbc7f3c' : '#522d212e';
+    coffeeContext.beginPath();
+    coffeeContext.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+    coffeeContext.fill();
   }
 
-  function paintBase(fill, aim) {
-    const reach = fill > 0 ? .48 * (1 - fill) : 0;
-    const x = (aim?.x ?? 0) * reach;
-    const y = (aim?.y ?? 0) * reach;
-    if (baseFill !== fill || baseX !== x || baseY !== y) {
-      updateBase(fill, x, y);
-      baseFill = fill;
-      baseX = x;
-      baseY = y;
+  let paintedRevision = -1;
+  function updateBase() {
+    ground.drawImage(coffee, 0, 0);
+    if (milk.legacy) {
+      // Drafts from the previous studio already had a full cup of milk.
+      const filled = ground.createRadialGradient(.82 * radius, .80 * radius, .04 * radius,
+        radius, radius, .995 * radius);
+      filled.addColorStop(0, '#fffdf4');
+      filled.addColorStop(.7, '#f8eee0');
+      filled.addColorStop(.92, '#e5cfb6');
+      filled.addColorStop(1, '#dec2a100');
+      ground.fillStyle = filled;
+      ground.fillRect(0, 0, ART_SIZE, ART_SIZE);
+    } else if (milk.amount > 0) {
+      const density = milk.density;
+      for (let i = 0; i < density.length; i++) {
+        const level = density[i];
+        const cream = 1 - Math.exp(-.36 * level);
+        const offset = i * 4;
+        foamImage.data[offset] = 231 + 23 * cream;
+        foamImage.data[offset + 1] = 189 + 60 * cream;
+        foamImage.data[offset + 2] = 144 + 96 * cream;
+        foamImage.data[offset + 3] = 255 * (1 - Math.exp(-.65 * level));
+      }
+      foamContext.putImageData(foamImage, 0, 0);
+      ground.drawImage(foam, 0, 0, ART_SIZE, ART_SIZE);
     }
+    paintedRevision = milk.revision;
+  }
+
+  function paintBase() {
+    if (paintedRevision !== milk.revision) updateBase();
     context.drawImage(base, 0, 0);
   }
 
   return {
     canvas: surface,
-    paintBlank(fill) { paintBase(fill); },
+    paintBlank: paintBase,
     paintInkPreview(layer, strokes, active, clips = []) {
       cache.sync(strokes, active);
       layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
@@ -145,15 +148,15 @@ export function createSurface() {
       if (active) paintInk(layer, [active]);
       layer.restore();
     },
-    paint(fill, strokes, active, aim) {
-      paintBase(fill, aim);
+    paint(strokes, active) {
+      paintBase();
       cache.sync(strokes, active);
       context.drawImage(ink, 0, 0);
       if (active) paintInk(context, [active]);
     },
-    paintPhoto(fill, strokes) {
+    paintPhoto(strokes) {
       // Export always composites strokes in the same order onto the foam itself.
-      paintBase(fill);
+      paintBase();
       paintInk(context, strokes);
     },
   };

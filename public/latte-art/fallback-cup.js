@@ -34,23 +34,26 @@ function paintSpoon(ctx, x, y, scale) {
   ctx.restore();
 }
 
-function paintPitcher(ctx, x, y, scale, aim, fill, flowing) {
+function paintPitcher(ctx, x, y, scale, { position, flow, resting }) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
-  const left = 1.05 + .20 * aim.x;
-  const top = -.80 + .30 * aim.y;
-  if (flowing && fill > .02) {
+  const left = (position.x + .18) * (1 - resting) + .62 * resting;
+  const top = (.88 * position.y - .65) * (1 - resting) - 1.17 * resting;
+  const angle = .10 + .56 * flow;
+  if (flow > .016) {
+    const tipX = left - .12 * Math.cos(angle) - .03 * Math.sin(angle);
+    const tipY = top - .12 * Math.sin(angle) + .03 * Math.cos(angle);
     ctx.strokeStyle = '#fff6e4';
     ctx.lineCap = 'round';
-    ctx.lineWidth = .018 + .026 * fill;
+    ctx.lineWidth = .012 + .036 * flow;
     ctx.beginPath();
-    ctx.moveTo(left - .11, top + .065);
-    ctx.quadraticCurveTo((left + aim.x) * .52, top + .10, aim.x, .88 * aim.y);
+    ctx.moveTo(tipX, tipY);
+    ctx.quadraticCurveTo((tipX + position.x) / 2, tipY + .10, position.x, .88 * position.y);
     ctx.stroke();
   }
   ctx.translate(left, top);
-  ctx.rotate(.12 + (flowing ? .55 * fill : 0));
+  ctx.rotate(angle);
   const steel = ctx.createLinearGradient(-.1, 0, .65, .25);
   steel.addColorStop(0, '#786b5e');
   steel.addColorStop(.22, '#eee7df');
@@ -79,6 +82,28 @@ function paintPitcher(ctx, x, y, scale, aim, fill, flowing) {
   ctx.restore();
 }
 
+function paintChocolatePen(ctx, x, y, scale) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  ctx.rotate(.4);
+  ctx.shadowColor = '#20140d67';
+  ctx.shadowBlur = scale * .08;
+  ctx.shadowOffsetY = scale * .04;
+  const wrapper = ctx.createLinearGradient(0, -.13, 0, .13);
+  wrapper.addColorStop(0, '#9c725d');
+  wrapper.addColorStop(.43, '#c49370');
+  wrapper.addColorStop(1, '#62402d');
+  ctx.fillStyle = wrapper;
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.quadraticCurveTo(.39, -.09, .72, -.12);
+  ctx.quadraticCurveTo(.78, 0, .71, .12);
+  ctx.quadraticCurveTo(.32, .08, 0, 0);
+  ctx.fill();
+  ctx.restore();
+}
+
 export function createCanvasFallback(mainCanvas, canvas, foam, {
   overlay = false, tableImage = createWalnutImages(false).colorCanvas,
 } = {}) {
@@ -91,10 +116,9 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   }
   canvas.hidden = false;
   const context = canvas.getContext('2d');
-  let mode = 'draw';
-  let pourAim = { x: 0, y: 0 };
-  let pouring = false;
-  let artwork = { fill: 1, strokes: [], active: null };
+  let mode = 'pour';
+  let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1 };
+  let artwork = { strokes: [], active: null };
   let width = 1;
   let height = 1;
   let ratio = 1;
@@ -172,11 +196,12 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
-    if (view === 'pour') paintPitcher(ctx, x, y, r, pourAim, artwork.fill, pouring);
+    if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
+    if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
   }
   function draw() {
-    const { fill, strokes, active } = artwork;
-    foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
+    const { strokes, active } = artwork;
+    foam.paint(strokes, active);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     paint(context, width, height, mode);
   }
@@ -203,16 +228,14 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   return {
     input: canvas,
     get drawingClips() { return drawingFoamClips(width / height); },
-    setArtwork(fill, strokes, active) {
-      artwork = { fill, strokes, active };
+    setArtwork(strokes, active) {
+      artwork = { strokes, active };
       invalidate();
     },
     resize,
     setMode(next) { mode = next; invalidate(); },
-    setPour(_fill, point = pourAim, flowing = false) {
-      const length = Math.max(1, Math.hypot(point.x, point.y));
-      pourAim = { x: point.x / length, y: point.y / length };
-      pouring = flowing;
+    setPour(view) {
+      pourView = view;
       if (mode === 'pour') invalidate();
     },
     sample(event) {
@@ -221,7 +244,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       return { x: (event.clientX - rect.left - x) / r, y: (event.clientY - rect.top - y) / (r * .88) };
     },
     photo() {
-      foam.paintPhoto(artwork.fill, artwork.strokes);
+      foam.paintPhoto(artwork.strokes);
       const picture = canvasOf(PHOTO_SIZE);
       paint(picture.getContext('2d'), PHOTO_SIZE, PHOTO_SIZE, 'photo');
       return picture;

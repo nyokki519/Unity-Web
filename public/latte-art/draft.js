@@ -1,4 +1,5 @@
 const DRAFT_KEY = 'unity-mix.latte-art.draft.v1';
+const emptyDraft = () => ({ stage: 'pour', milk: null, strokes: [] });
 
 function validStroke(stroke) {
   return stroke && Number.isFinite(stroke.width) && stroke.width > 0 && stroke.width <= .08
@@ -12,15 +13,22 @@ function validStroke(stroke) {
 export function readDraft(storage) {
   try {
     const draft = JSON.parse(storage?.getItem(DRAFT_KEY) ?? 'null');
-    return Array.isArray(draft) && draft.every(validStroke) ? draft : [];
+    if (Array.isArray(draft) && draft.length && draft.every(validStroke)) {
+      return { stage: 'draw', milk: 'legacy', strokes: draft };
+    }
+    if (draft?.version === 2 && (draft.stage === 'pour' || draft.stage === 'draw')) {
+      const strokes = Array.isArray(draft.strokes) && draft.strokes.every(validStroke) ? draft.strokes : [];
+      return { stage: draft.stage, milk: draft.milk ?? null, strokes: draft.stage === 'draw' ? strokes : [] };
+    }
   } catch {
-    return [];
+    // Storage can be unavailable or contain a partial value.
   }
+  return emptyDraft();
 }
 
-export function writeDraft(storage, strokes) {
+export function writeDraft(storage, draft) {
   try {
-    if (strokes.length) storage?.setItem(DRAFT_KEY, JSON.stringify(strokes));
+    if (draft.stage === 'draw' || draft.milk) storage?.setItem(DRAFT_KEY, JSON.stringify({ version: 2, ...draft }));
     else storage?.removeItem(DRAFT_KEY);
   } catch {
     // Drawing can continue in memory when the browser disables or fills storage.
