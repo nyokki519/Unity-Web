@@ -22,6 +22,9 @@ html, body {
 #studio { position: relative; height: 100dvh; overflow: hidden; }
 #studio[aria-busy="true"] { background: #554a40 url('./cup-wide.webp') center 47% / cover no-repeat; }
 #studio[aria-busy="true"] #scene { visibility: hidden; }
+#studio[aria-busy="true"] #tip,
+#studio:not([aria-busy="true"]) #loadingHint { display: none; }
+#hud[inert] button { opacity: .56; }
 @media (max-aspect-ratio: 17 / 25) {
   #studio[aria-busy="true"] { background-image: url('./cup-portrait.webp'); background-position: 58% 35.5%; }
 }

@@ -370,11 +370,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
     placeCamera(framing, 'photo', 1);
     const oldSize = renderer.getSize(new THREE.Vector2());
     const oldRatio = renderer.getPixelRatio();
+    const originalExposure = renderer.toneMappingExposure;
     const angle = handle.rotation.y;
     const hadSpoon = spoon.visible;
     const displayTexture = disk.material.map;
     try {
       renderer.setDrawingBufferSize(PHOTO_SIZE, PHOTO_SIZE, 1);
+      renderer.toneMappingExposure = .74;
       handle.rotation.y = 0;
       spoon.visible = true;
       disk.material.map = foamTexture;
@@ -387,6 +389,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
       handle.rotation.y = angle;
       spoon.visible = hadSpoon;
       disk.material.map = displayTexture;
+      renderer.toneMappingExposure = originalExposure;
       renderer.setDrawingBufferSize(oldSize.x, oldSize.y, oldRatio);
       renderer.shadowMap.needsUpdate = true;
       backdropDirty = true;

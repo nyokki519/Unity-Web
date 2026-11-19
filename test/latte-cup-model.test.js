@@ -68,7 +68,7 @@ test('passing through the old portrait boundary keeps table framing continuous',
   assert.ok(Math.abs(before.distance - after.distance) < .15);
   assert.ok(Math.abs(before.elevation - after.elevation) < .2);
   assert.ok(Math.abs(before.shiftY - after.shiftY) < .005);
-  assert.equal(tableCameraFraming('photo', 1).distance, 10.9);
+  assert.deepEqual(tableCameraFraming('photo', .6), tableCameraFraming('photo', 1));
 });
 
 test('the milk stream starts at the flared pitcher lip with an unchanged base', () => {

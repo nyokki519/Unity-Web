@@ -2,6 +2,7 @@ import { ChocolateDrawing } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { createSurface } from './surface.js';
+import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
 const drawing = new ChocolateDrawing();
@@ -17,14 +18,19 @@ function revealStudio() {
 async function loadCup() {
   const canvas = $('scene');
   const fallback = $('fallback');
+  let timer;
   try {
-    const { createCupScene } = await import('./cup-scene.js');
-    return createCupScene(canvas, fallback, $('ink'), surface, revealStudio);
+    const deadline = new Promise(resolve => { timer = setTimeout(resolve, 7000, null); });
+    const module = await Promise.race([import('./cup-scene.js'), deadline]);
+    if (module) return module.createCupScene(canvas, fallback, $('ink'), surface, revealStudio);
   } catch {
-    const cup = createCanvasFallback(canvas, fallback, surface);
-    revealStudio();
-    return cup;
+    // A blocked module or unavailable graphics context can use the same drawing tools in 2D.
+  } finally {
+    clearTimeout(timer);
   }
+  const cup = createCanvasFallback(canvas, fallback, surface);
+  revealStudio();
+  return cup;
 }
 
 const cup = await loadCup();
@@ -41,6 +47,29 @@ let sharingFile = null;
 let resultCycle = 0;
 let cachedPhoto = null;
 let photoRevision = 0;
+let draftTimer = 0;
+let draftDirty = false;
+
+function flushDraft() {
+  clearTimeout(draftTimer);
+  if (!draftDirty) return;
+  draftDirty = false;
+  writeDraft(draftStorage, drawing.strokes);
+}
+
+function queueDraft() {
+  if (!draftStorage) return;
+  draftDirty = true;
+  clearTimeout(draftTimer);
+  if (!drawing.strokes.length) {
+    flushDraft();
+    return;
+  }
+  draftTimer = setTimeout(() => {
+    if (drawing.activeStroke) queueDraft();
+    else flushDraft();
+  }, 180);
+}
 
 function invalidatePhoto() {
   cachedPhoto = null;
@@ -67,7 +96,7 @@ function setMode(next, animate = false) {
   clearTimeout(pourFlowTimer);
   mode = next;
   closeMenus();
-  if (drawing.activeStroke) writeDraft(draftStorage, drawing.strokes);
+  if (drawing.activeStroke) queueDraft();
   drawing.cancel();
   drawPointerId = pourPointerId = null;
   $('hud').hidden = next === 'serve';
@@ -137,7 +166,7 @@ function endGesture(event) {
     if (event.type === 'pointerup' && drawing.move(event.pointerId, [cup.sample(event)])) redraw();
     drawing.end(event.pointerId);
     drawPointerId = null;
-    writeDraft(draftStorage, drawing.strokes);
+    queueDraft();
   }
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
@@ -149,7 +178,7 @@ for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
   cup.input.addEventListener(name, endGesture);
 }
 function releaseGesture() {
-  if (drawing.activeStroke) writeDraft(draftStorage, drawing.strokes);
+  if (drawing.activeStroke) queueDraft();
   drawing.cancel();
   if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
   if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
@@ -158,10 +187,14 @@ function releaseGesture() {
   redraw();
 }
 window.addEventListener('resize', releaseGesture);
+function pauseDrawing() {
+  releaseGesture();
+  flushDraft();
+}
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) releaseGesture();
+  if (document.hidden) pauseDrawing();
 });
-window.addEventListener('pagehide', releaseGesture);
+window.addEventListener('pagehide', pauseDrawing);
 for (const event of ['webglcontextlost', 'webglcontextrestored']) {
   cup.input.addEventListener(event, () => {
     invalidatePhoto();
@@ -169,19 +202,19 @@ for (const event of ['webglcontextlost', 'webglcontextrestored']) {
   });
 }
 
-$('menuButton').onclick = () => {
+bindActivation($('menuButton'), () => {
   const open = $('menu').hidden;
   closeMenus();
   $('menu').hidden = !open;
   $('menuButton').setAttribute('aria-expanded', String(open));
-};
-$('widthButton').onclick = () => {
+});
+bindActivation($('widthButton'), () => {
   const open = $('widthPanel').hidden;
   closeMenus();
   $('widthPanel').hidden = !open;
   $('widthButton').setAttribute('aria-expanded', String(open));
   if (open) $('width').focus({ preventScroll: true });
-};
+});
 function showPenWidth() {
   const value = Number($('width').value);
   $('widthButton').querySelector('i').style.setProperty('--dot', (5 + value) + 'px');
@@ -197,17 +230,21 @@ document.addEventListener('keydown', event => {
 });
 $('showHelp').onclick = () => {
   closeMenus();
-  $('helpDialog').showModal();
+  const dialog = $('helpDialog');
+  dialog.returnValue = '';
+  dialog.showModal();
 };
-$('helpDialog').addEventListener('close', () => $('menuButton').focus());
-$('showPour').onclick = () => {
-  setMode('pour');
-  $('tilt').focus({ preventScroll: true });
-};
-$('showDraw').onclick = $('next').onclick = () => {
-  setMode('draw');
-  $('widthButton').focus({ preventScroll: true });
-};
+$('helpDialog').addEventListener('close', event => {
+  const action = event.currentTarget.returnValue;
+  if (action === 'pour' || action === 'draw') openEditingMode(action);
+  else $('menuButton').focus();
+});
+function openEditingMode(next) {
+  setMode(next);
+  $(next === 'pour' ? 'tilt' : 'widthButton').focus({ preventScroll: true });
+}
+$('showPour').onclick = () => openEditingMode('pour');
+$('showDraw').onclick = $('next').onclick = () => openEditingMode('draw');
 $('tilt').oninput = () => {
   updatePour(Number($('tilt').value) / 100);
   clearTimeout(pourFlowTimer);
@@ -218,22 +255,25 @@ $('resetPour').onclick = () => {
   $('tilt').value = '0';
   updatePour(0);
 };
-$('undo').onclick = () => {
+bindActivation($('undo'), () => {
   drawing.undo();
-  writeDraft(draftStorage, drawing.strokes);
+  queueDraft();
   invalidatePhoto();
   redraw();
   updateToolbar('直前の一筆を取り消しました。');
-};
-$('clear').onclick = () => {
+});
+bindActivation($('clear'), () => {
   const dialog = $('clearDialog');
   dialog.returnValue = 'cancel';
   dialog.showModal();
-};
+});
+for (const button of $('clearDialog').querySelectorAll('button')) {
+  bindActivation(button, () => $('clearDialog').close(button.value), { requireOwnPress: true });
+}
 $('clearDialog').addEventListener('close', () => {
   if ($('clearDialog').returnValue === 'clear') {
     drawing.clear();
-    writeDraft(draftStorage, drawing.strokes);
+    queueDraft();
     invalidatePhoto();
     redraw();
     updateToolbar('チョコの線を消しました。');
@@ -300,24 +340,7 @@ function finishDrawing() {
   servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 3000);
 }
 
-const finishButton = $('finish');
-let finishTouch = null;
-finishButton.onclick = finishDrawing;
-finishButton.addEventListener('pointerdown', event => {
-  if (event.pointerType !== 'touch' || !event.isPrimary) return;
-  finishTouch = { id: event.pointerId, x: event.clientX, y: event.clientY };
-});
-finishButton.addEventListener('pointercancel', () => { finishTouch = null; });
-finishButton.addEventListener('pointerup', event => {
-  const touch = finishTouch;
-  if (touch?.id !== event.pointerId) return;
-  finishTouch = null;
-  if (Math.hypot(event.clientX - touch.x, event.clientY - touch.y) > 12) return;
-  if (!finishButton.contains(document.elementFromPoint(event.clientX, event.clientY))) return;
-  // Real taps can lose their synthesized click immediately after a captured canvas drag.
-  // Keep keyboard/mouse clicks and let the mode check make both paths safe.
-  requestAnimationFrame(finishDrawing);
-});
+bindActivation($('finish'), finishDrawing);
 
 function openResult() {
   if (mode !== 'serve' || $('finishPanel').open) return;
@@ -329,17 +352,24 @@ function openResult() {
   const cycle = resultCycle;
   requestAnimationFrame(() => requestAnimationFrame(() => preparePhoto(cycle)));
 }
-$('serving').onclick = openResult;
+bindActivation($('serving'), openResult, { requireOwnPress: true });
 $('closeResult').onclick = $('editAgain').onclick = () => $('finishPanel').close();
-$('finishPanel').addEventListener('close', () => {
+function returnToDrawing() {
+  clearTimeout(servingTimer);
   resultCycle++;
   releasePhoto();
   setMode('draw');
   $('finish').focus({ preventScroll: true });
+}
+$('finishPanel').addEventListener('close', returnToDrawing);
+$('serving').addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  event.preventDefault();
+  returnToDrawing();
 });
 $('restart').onclick = () => {
   drawing.clear();
-  writeDraft(draftStorage, drawing.strokes);
+  queueDraft();
   invalidatePhoto();
   pourAmount = 0;
   $('tilt').value = '0';
@@ -349,6 +379,7 @@ $('restart').onclick = () => {
 $('saveImage').onclick = async () => {
   const file = photoFile;
   if (!file || sharingFile === file) return;
+  $('saveStatus').textContent = '';
   const options = { files: [file], title: 'Unity MIX ラテアート' };
   try {
     if (navigator.share && navigator.canShare?.(options)) {

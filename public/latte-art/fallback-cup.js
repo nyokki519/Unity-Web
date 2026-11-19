@@ -98,9 +98,9 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     const portrait = view === 'draw' || view === 'pour'
       ? 1 - widthBlend ** 2 * (3 - 2 * widthBlend) : 0;
     return {
-      x: w * (.5 + .104 * portrait),
-      y: h * (view === 'photo' ? .455 : .47 - .119 * portrait),
-      r: Math.min(w * (view === 'photo' ? .248 : .34), h * .31),
+      x: w * (view === 'photo' ? .532 : .5 + .104 * portrait),
+      y: h * (view === 'photo' ? .439 : .47 - .119 * portrait),
+      r: Math.min(w * (view === 'photo' ? .277 : .34), h * .31),
     };
   }
   function paint(ctx, w, h, view) {

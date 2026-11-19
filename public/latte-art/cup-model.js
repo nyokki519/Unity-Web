@@ -20,17 +20,18 @@ export const FOAM_PLANE = Object.freeze({ height: foamHeight, radius: radiusAtFo
 
 export function tableCameraFraming(view, aspect) {
   const portrait = 1 - THREE.MathUtils.smoothstep(aspect, .57, .80);
-  const served = view === 'serve' || view === 'photo';
+  const photo = view === 'photo';
+  const served = view === 'serve' || photo;
   const blend = (wide, tall) => THREE.MathUtils.lerp(wide, tall, portrait);
-  const distance = view === 'photo' ? 10.9 : served
+  const distance = photo ? 10.15 : served
     ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
     : blend(11.25, Math.max(11.25, 17.4 * .462 / aspect));
   return {
     distance,
-    elevation: served ? 73 : blend(57, 60),
-    targetX: blend(.18, .02),
+    elevation: photo ? 61 : served ? 64 : blend(57, 60),
+    targetX: photo ? -.18 : blend(.18, .02),
     targetY: served ? .67 : .69,
-    targetZ: served ? .08 : blend(.08, .22),
+    targetZ: photo ? .16 : served ? .08 : blend(.08, .22),
     shiftX: served ? 0 : -.111 * portrait,
     shiftY: served ? 0 : .109 * portrait,
   };

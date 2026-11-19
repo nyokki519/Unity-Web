@@ -14,6 +14,7 @@
     <canvas id="scene" aria-label="カップのミルクフォームに指でチョコを描く"></canvas>
     <canvas id="ink" aria-hidden="true" hidden></canvas>
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
+    <p id="loadingHint" class="hint" role="status">カップを準備中…</p>
     <div id="hud" class="hud" inert>
       <a class="brand" href="/" aria-label="Unity MIX ホーム"><b>UNITY</b> MIX</a>
       <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
@@ -65,18 +66,22 @@
         </div>
       </div>
     </dialog>
-    <dialog id="clearDialog" class="sheet">
-      <h2>チョコの線をすべて消しますか？</h2>
+    <dialog id="clearDialog" class="sheet" aria-labelledby="clearTitle">
+      <h2 id="clearTitle">チョコの線をすべて消しますか？</h2>
       <form method="dialog">
         <button value="cancel" autofocus>キャンセル</button>
         <button value="clear" class="go">全消し</button>
       </form>
     </dialog>
-    <dialog id="helpDialog" class="sheet">
-      <h2>チョコペンの使い方</h2>
-      <p>ピッチャーでミルクフォームを注いだら、チョコペンの先を泡に近づけて描きます。点は軽く触れ、ひげや輪郭は指をすべらせてみましょう。</p>
-      <p>太さを変えたり、一筆ずつ戻したりできます。実際のチョコは温度と粘度で線幅が変わります。</p>
-      <form method="dialog"><button class="go">描く画面へ</button></form>
+    <dialog id="helpDialog" class="sheet" aria-labelledby="helpTitle">
+      <h2 id="helpTitle">ラテアートの手順</h2>
+      <p><strong>ミルクフォームを注ぐ</strong><br>まず細く注いでコーヒーとなじませます。ピッチャーの先を液面に近づけると、泡を表面に広げやすくなります。</p>
+      <p><strong>チョコペンで描く</strong><br>泡の表面にペン先を近づけます。猫の目は軽く触れて一滴、ひげは先をすべらせて一筆ずつ。太さを変えたり、直前の一筆を取り消したりできます。</p>
+      <p>「完成」から、一杯の写真を保存できます。</p>
+      <form method="dialog">
+        <button value="pour">注ぎ方を試す</button>
+        <button class="go" value="draw" autofocus>描く画面へ</button>
+      </form>
     </dialog>
   </main>
   <script type="module" src="./app.js?v=7"></script>
