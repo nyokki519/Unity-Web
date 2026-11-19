@@ -5,6 +5,8 @@
   --glass: rgba(24,16,11,.72);
   --line: rgba(244,237,228,.14);
   --accent: #e8c9a0;
+  --table-still: url('./cup-wide.webp?v=2');
+  --table-position: center 47%;
   color-scheme: dark;
 }
 
@@ -20,13 +22,13 @@ html, body {
   font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
 }
 #studio { position: relative; height: 100dvh; overflow: hidden; }
-#studio[aria-busy="true"] { background: #554a40 url('./cup-wide.webp?v=2') center 47% / cover no-repeat; }
+#studio[aria-busy="true"] { background: #554a40 var(--table-still) var(--table-position) / cover no-repeat; }
 #studio[aria-busy="true"] #scene { visibility: hidden; }
 #studio[aria-busy="true"] #tip,
 #studio:not([aria-busy="true"]) #loadingHint { display: none; }
 #hud[inert] button { opacity: .56; }
 @media (max-aspect-ratio: 17 / 25) {
-  #studio[aria-busy="true"] { background-image: url('./cup-portrait.webp?v=2'); background-position: 58% 35.5%; }
+  :root { --table-still: url('./cup-portrait.webp?v=2'); --table-position: 58% 35.5%; }
 }
 #scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-touch-callout: none; }
 #scene { cursor: crosshair; }
@@ -199,6 +201,13 @@ input[type="range"] { accent-color: var(--accent); }
 }
 dialog { color: var(--ink); }
 dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
+.shot::backdrop {
+  /* The main canvas is resized for the PNG. Keep its cleared buffer behind this overlay. */
+  background: linear-gradient(#100a07d9, #100a07d9), #292018 var(--table-still) var(--table-position) / cover no-repeat;
+  backdrop-filter: none;
+  filter: blur(10px);
+  transform: scale(1.06);
+}
 .shot {
   position: fixed;
   inset: 0;

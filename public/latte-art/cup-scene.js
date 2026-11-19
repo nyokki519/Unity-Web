@@ -375,13 +375,14 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
     const angle = handle.rotation.y;
     const hadSpoon = spoon.visible;
     const displayTexture = disk.material.map;
+    const changedPose = angle !== 0 || !hadSpoon;
     try {
       renderer.setDrawingBufferSize(PHOTO_SIZE, PHOTO_SIZE, 1);
       renderer.toneMappingExposure = .74;
       handle.rotation.y = 0;
       spoon.visible = true;
       disk.material.map = foamTexture;
-      renderer.shadowMap.needsUpdate = true;
+      if (changedPose) renderer.shadowMap.needsUpdate = true;
       renderer.render(scene, framing);
       picture.getContext('2d').drawImage(mainCanvas, 0, 0);
     } catch (error) {
@@ -392,7 +393,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onRe
       disk.material.map = displayTexture;
       renderer.toneMappingExposure = originalExposure;
       renderer.setDrawingBufferSize(oldSize.x, oldSize.y, oldRatio);
-      renderer.shadowMap.needsUpdate = true;
+      if (changedPose) renderer.shadowMap.needsUpdate = true;
       backdropDirty = true;
       invalidate();
     }
