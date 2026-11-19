@@ -26,8 +26,8 @@ export function tableCameraFraming(view, aspect) {
   const blend = (wide, tall) => lerp(wide, tall, portrait);
   const distance = photo ? 10.15 : served
     ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
-    : blend(11.25, Math.max(11.25, 17.4 * .462 / aspect));
-  const elevation = photo ? 61 : served ? 64 : blend(57, 60);
+    : blend(11.25, Math.max(11.25, 18 * .462 / aspect));
+  const elevation = photo ? 61 : served ? 64 : blend(57, 57.5);
   const angle = elevation * Math.PI / 180;
   const targetY = served ? .67 : .69;
   const targetZ = photo ? .16 : served ? .08 : blend(.08, .22);
@@ -35,8 +35,8 @@ export function tableCameraFraming(view, aspect) {
     distance, elevation, targetY, targetZ,
     targetX: photo ? -.18 : blend(.18, .02),
     eye: { x: 0, y: targetY + distance * Math.sin(angle), z: targetZ + distance * Math.cos(angle) },
-    shiftX: served ? 0 : -.111 * portrait,
-    shiftY: served ? 0 : .109 * portrait,
+    shiftX: served ? 0 : -.147 * portrait,
+    shiftY: served ? 0 : .095 * portrait,
   };
 }
 

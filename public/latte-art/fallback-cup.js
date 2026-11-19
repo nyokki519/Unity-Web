@@ -104,9 +104,9 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     const portrait = view === 'draw' || view === 'pour'
       ? 1 - widthBlend ** 2 * (3 - 2 * widthBlend) : 0;
     return {
-      x: w * (view === 'photo' ? .532 : .5 + .104 * portrait),
-      y: h * (view === 'photo' ? .439 : .47 - .119 * portrait),
-      r: Math.min(w * (view === 'photo' ? .277 : .34), h * .31),
+      x: w * (view === 'photo' ? .532 : .5 + .142 * portrait),
+      y: h * (view === 'photo' ? .439 : .47 - .108 * portrait),
+      r: Math.min(w * (view === 'photo' ? .277 : .34 - .022 * portrait), h * .31),
     };
   }
   function paint(ctx, w, h, view) {
@@ -151,8 +151,8 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.strokeStyle = '#b1a99d';
     ctx.lineWidth = r * .21;
     ctx.beginPath();
-    ctx.ellipse(x + r * (front ? .55 : 1.1), y + r * (front ? .94 : .09),
-      r * .32, r * .14, front ? 1 : .08, 0, Math.PI * 2);
+    ctx.ellipse(x + r * (front ? -.12 : 1.1), y + r * (front ? 1.04 : .09),
+      r * .32, r * .14, front ? -1.27 : .08, 0, Math.PI * 2);
     ctx.stroke();
     ctx.strokeStyle = glaze;
     ctx.lineWidth = r * .165;

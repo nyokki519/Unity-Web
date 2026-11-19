@@ -9,7 +9,7 @@ import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 
 const { radius: FOAM_RADIUS, height: FOAM_HEIGHT } = FOAM_PLANE;
-const DRAW_HANDLE_ANGLE = -1.46;
+const DRAW_HANDLE_ANGLE = -1.69;
 
 function walnutTextures() {
   const { colorCanvas, reliefCanvas } = createWalnutImages();
