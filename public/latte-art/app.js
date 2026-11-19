@@ -9,6 +9,7 @@ import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
 const POUR_INPUT_BUFFER_MS = 1000 / 30;
+const CUP_RENDER_WAIT_MS = 4200;
 paintCafeMark($('cafeMark').getContext('2d'), 0, 0, 96, '#f5d9ad');
 const drawing = new ChocolateDrawing();
 let draftStorage;
@@ -34,7 +35,7 @@ async function loadCup() {
   const fallback = $('fallback');
   let timer;
   try {
-    const deadline = new Promise(resolve => { timer = setTimeout(resolve, 7000, null); });
+    const deadline = new Promise(resolve => { timer = setTimeout(resolve, CUP_RENDER_WAIT_MS, null); });
     const module = await Promise.race([import('./cup-scene.js'), deadline]);
     if (module) return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio);
   } catch {
