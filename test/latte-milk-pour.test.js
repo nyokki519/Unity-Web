@@ -38,6 +38,29 @@ test('holding longer builds and spreads the same left-hand pour without whitenin
   assert.ok(long.density.filter(level => level > .45).length > short.density.filter(level => level > .45).length);
 });
 
+test('a strong stationary stream spreads evenly between grid axes and diagonals', () => {
+  const point = { x: .245, y: .032 };
+  const cup = new MilkPour();
+  cup.start(point);
+  cup.advance(1250, point, 1);
+  cup.settle();
+
+  const meanAround = (radius, offset) => [0, 1, 2, 3].reduce((sum, quarter) => {
+    const angle = offset + quarter * Math.PI / 2;
+    const x = point.x + radius * Math.cos(angle);
+    const y = point.y + radius * Math.sin(angle);
+    return sum + at(cup, x, y);
+  }, 0) / 4;
+
+  for (const radius of [.12, .18, .24, .30, .36]) {
+    const axis = meanAround(radius, 0);
+    const diagonal = meanAround(radius, Math.PI / 4);
+    assert.ok(axis > .5 && diagonal > .5);
+    assert.ok(Math.abs(axis - diagonal) / ((axis + diagonal) / 2) < .10,
+      `Uneven spread at radius ${radius}: ${axis}, ${diagonal}`);
+  }
+});
+
 test('a lateral pour leaves a continuous shape and deposits the same dose across frame rates', () => {
   const from = { x: -.67, y: -.20 };
   const to = { x: .67, y: -.20 };

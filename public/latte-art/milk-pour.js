@@ -5,6 +5,8 @@ export const MAX_POUR_RADIUS = .91;
 
 const STEP = 1000 / 60;
 const MAX_FLOW = 58;
+const MAX_SURFACE_DRIFT = .26; // Grid cells per timestep at full flow.
+const JET_REACH_SQUARED = .26;
 const APPROACH_TIME = 100;
 const OPENING_TIME = 138;
 const SETTLE_STEPS = 16;
@@ -209,44 +211,28 @@ export class MilkPour {
       if (!level) continue;
       let remain = level;
       const diffusion = level / (1 + .16 * level);
-      for (let direction = 0; direction < neighbors.length; direction++) {
-        const neighbor = neighbors[direction];
-        if (neighbor === -1) continue;
-        const share = diffusion * (direction < 4 ? .048 : .022);
-        result[neighbor] += share;
-        remain -= share;
-      }
-
-      // A jet spreads the foam already on the surface. Shares that reach the ceramic stay in the cup.
       const dx = x - point.x;
       const dy = y - point.y;
       const distance = dx * dx + dy * dy;
-      const push = pressure * .28 * Math.max(0, 1 - distance / .26);
-      if (push > 0 && distance > 0) {
-        const length = Math.sqrt(distance);
-        const alongX = Math.abs(dx) / length;
-        const alongY = Math.abs(dy) / length;
-        const left = Number(dx < 0);
-        const up = Number(dy < 0);
-        const xNeighbor = neighbors[left];
-        const yNeighbor = neighbors[2 + up];
-        const diagonal = neighbors[4 + left + 2 * up];
-        const mobile = level * push;
-        if (xNeighbor !== -1) {
-          const share = mobile * alongX * (1 - alongY);
-          result[xNeighbor] += share;
-          remain -= share;
+      const mobile = level * pressure * .82 * Math.max(0, 1 - distance / JET_REACH_SQUARED);
+      const drift = mobile && distance ? MAX_SURFACE_DRIFT / Math.sqrt(distance) : 0;
+      const vx = dx * drift;
+      const vy = dy * drift;
+      const radialBase = 1 - 1.5 * (vx * vx + vy * vy);
+      for (let direction = 0; direction < neighbors.length; direction++) {
+        // The cup wall retains shares that would leave the liquid.
+        const neighbor = neighbors[direction];
+        if (neighbor === -1) continue;
+        const cardinal = direction < 4;
+        let share = diffusion * (cardinal ? .048 : .022);
+        if (mobile) {
+          // Isotropic nine-point transport. Axial and diagonal steps have the same spreading moments.
+          const [axisX, axisY] = directions[direction];
+          const alongFlow = vx * axisX + vy * axisY;
+          share += mobile * (radialBase + 3 * alongFlow + 4.5 * alongFlow ** 2) / (cardinal ? 9 : 36);
         }
-        if (yNeighbor !== -1) {
-          const share = mobile * alongY * (1 - alongX);
-          result[yNeighbor] += share;
-          remain -= share;
-        }
-        if (diagonal !== -1) {
-          const share = mobile * alongX * alongY;
-          result[diagonal] += share;
-          remain -= share;
-        }
+        result[neighbor] += share;
+        remain -= share;
       }
       result[index] += remain;
     }
