@@ -113,6 +113,14 @@ function closeMenus() {
   $('widthPanel').hidden = true;
 }
 
+function releaseCapturedPointers() {
+  const captured = [drawPointerId, pourPointerId];
+  drawPointerId = pourPointerId = null;
+  for (const id of captured) {
+    if (id !== null && cup.input.hasPointerCapture(id)) cup.input.releasePointerCapture(id);
+  }
+}
+
 function setMode(next, animate = false) {
   if (mode === 'pour' && next !== 'pour') settlePour();
   mode = next;
@@ -120,8 +128,7 @@ function setMode(next, animate = false) {
   closeMenus();
   if (drawing.activeStroke) queueDraft();
   drawing.cancel();
-  if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
-  drawPointerId = pourPointerId = null;
+  releaseCapturedPointers();
   $('hud').hidden = next === 'serve';
   $('serving').hidden = next !== 'serve';
   $('pourControls').hidden = $('next').hidden = next !== 'pour';
@@ -252,9 +259,7 @@ for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
 function releaseGesture() {
   if (drawing.activeStroke) queueDraft();
   drawing.cancel();
-  if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
-  if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
-  drawPointerId = pourPointerId = null;
+  releaseCapturedPointers();
   if (mode === 'pour') settlePour();
   redraw();
 }

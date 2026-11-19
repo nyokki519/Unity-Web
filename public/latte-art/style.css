@@ -296,6 +296,46 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 .sheet p { color: var(--ink-dim); line-height: 1.7; font-size: 14px; }
 .sheet form { display: flex; justify-content: flex-end; gap: 8px; }
 .sheet button:not(.go) { background: #41342a; }
+.help-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  background: #241913;
+}
+.help-header h2 { margin: 0; }
+.help-header button { white-space: nowrap; }
+.help-steps {
+  margin: 0 0 14px;
+  padding-inline-start: 22px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+.help-steps li + li { margin-top: 8px; }
+.help-steps li::marker { color: var(--accent); }
+.help-steps strong, .help-example strong { display: block; color: var(--ink); }
+.help-example {
+  display: grid;
+  grid-template-columns: minmax(60px, 84px) 1fr;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink-dim);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.help-example img { width: 100%; height: auto; border-radius: 7px; }
+#helpDialog {
+  max-height: calc(100dvh - max(20px, env(safe-area-inset-top)) - max(20px, env(safe-area-inset-bottom)));
+}
 .sr-only { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
 
 @media (max-width: 760px) and (orientation: portrait) {
