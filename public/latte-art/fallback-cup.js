@@ -1,3 +1,4 @@
+import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 import { drawingFoamClips, PHOTO_FOAM_CLIPS, visibleFoamClips } from './foam-geometry.js';
@@ -135,6 +136,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   let height = 1;
   let ratio = 1;
   let pending = 0;
+  const glazeGrain = ceramicGlaze();
   function layout(w, h, view) {
     const widthBlend = Math.max(0, Math.min(1, (w / h - .57) / .23));
     const portrait = view === 'draw' || view === 'pour'
@@ -148,9 +150,10 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   function paint(ctx, w, h, view) {
     const { x, y, r } = layout(w, h, view);
     ctx.drawImage(tableImage, 136, 56, 240, 400, 0, 0, w, h);
-    const backdrop = ctx.createLinearGradient(0, 0, w, h);
-    backdrop.addColorStop(0, '#fff1db20');
-    backdrop.addColorStop(1, '#24150b35');
+    const backdrop = ctx.createRadialGradient(w * .07, h * .19, 0, w * .07, h * .19, Math.hypot(w, h) * .82);
+    backdrop.addColorStop(0, '#ffd8a650');
+    backdrop.addColorStop(.45, '#bd754525');
+    backdrop.addColorStop(1, '#3b190e60');
     ctx.fillStyle = backdrop;
     ctx.fillRect(0, 0, w, h);
     function ellipse(rx, ry, color, offsetY = 0, offsetX = 0) {
@@ -167,11 +170,18 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ellipse(1.58, 1.4, '#c8bfb2', r * .39, -r * .13);
     ctx.restore();
     const saucer = ctx.createRadialGradient(x - .50 * r, y - .24 * r, .34 * r, x - r * .13, y + r * .35, 1.6 * r);
-    saucer.addColorStop(0, '#fffdf5');
-    saucer.addColorStop(.72, '#e9e5dd');
-    saucer.addColorStop(.91, '#d0c7bb');
-    saucer.addColorStop(1, '#f1e9dc');
+    saucer.addColorStop(0, '#fff2dc');
+    saucer.addColorStop(.72, '#e9d6b9');
+    saucer.addColorStop(.94, '#bc8a61');
+    saucer.addColorStop(1, '#d3b493');
     ellipse(1.58, 1.4, saucer, r * .35, -r * .13);
+    paintCafeMark(ctx, x - r * 1.14, y + r * .99, r * .40, '#6b4230');
+    ctx.save();
+    ctx.fillStyle = '#6b4230';
+    ctx.font = `${r * .12}px Georgia, serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Unity', x - r * .94, y + r * 1.44);
+    ctx.restore();
     ctx.save();
     ctx.shadowColor = '#44392752';
     ctx.shadowOffsetX = r * .04;
@@ -181,9 +191,9 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.restore();
     const front = view === 'draw' || view === 'pour';
     const glaze = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
-    glaze.addColorStop(0, '#faf6ee');
-    glaze.addColorStop(.56, '#f0ece4');
-    glaze.addColorStop(1, '#afa598');
+    glaze.addColorStop(0, '#fff3df');
+    glaze.addColorStop(.56, '#e4ceb0');
+    glaze.addColorStop(1, '#b69678');
     ctx.strokeStyle = '#b1a99d';
     ctx.lineWidth = r * .21;
     ctx.beginPath();
@@ -194,7 +204,16 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.lineWidth = r * .165;
     ctx.stroke();
     ellipse(1.068, .935, glaze, r * .085);
-    ellipse(1.074, .949, '#f8f4eb');
+    ellipse(1.074, .949, '#c28c60');
+    ellipse(1.051, .926, '#f3dfbf');
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(x, y + r * .085, r * 1.068, r * .935, 0, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.globalAlpha = .65;
+    ctx.drawImage(glazeGrain, x - 1.08 * r, y - r, 2.16 * r, 2.16 * r);
+    ctx.restore();
     ctx.save();
     ctx.beginPath();
     ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
@@ -210,6 +229,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     }
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
+    paintCafeMark(ctx, x + r * .48, y + r * .834, r * .19, '#68412b');
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
     if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
     if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
@@ -250,9 +270,14 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     },
     resize,
     setMode(next) { mode = next; invalidate(); },
-    setPour(view) {
+    setPour(view, paintNow = false) {
       pourView = view;
-      if (mode === 'pour') invalidate();
+      if (mode !== 'pour') return;
+      if (paintNow) {
+        cancelAnimationFrame(pending);
+        pending = 0;
+        draw();
+      } else invalidate();
     },
     sample(event) {
       const rect = canvas.getBoundingClientRect();

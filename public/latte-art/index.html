@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#292018">
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
-  <link rel="stylesheet" href="./style.css?v=13">
+  <link rel="stylesheet" href="./style.css?v=14">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -19,7 +19,9 @@
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
     <p id="loadingHint" class="hint" role="status">カップを準備中…</p>
     <div id="hud" class="hud" inert>
-      <a class="brand" href="/" aria-label="Unity MIX ホーム"><b>UNITY</b> MIX</a>
+      <a class="brand" href="/" aria-label="Unity MIX ホーム">
+        <canvas id="cafeMark" width="96" height="96" aria-hidden="true"></canvas><span>Unity</span>
+      </a>
       <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
         <button type="button" id="showHelp">遊び方</button>
@@ -94,6 +96,6 @@
       </form>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=10"></script>
+  <script type="module" src="./app.js?v=11"></script>
 </body>
 </html>

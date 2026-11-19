@@ -10,6 +10,7 @@ import { createPitcherLiquid } from './pitcher-liquid.js';
 import { MILK_CAPACITY } from './milk-pour.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
+import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
 
 const { radius: FOAM_RADIUS, height: FOAM_HEIGHT } = FOAM_PLANE;
 const DRAW_HANDLE_ANGLE = -1.69;
@@ -54,29 +55,108 @@ function windowReflection() {
   return map;
 }
 
-function lathe(rows, material) {
+function lathe(rows, material, rimY = Infinity, rimRadius = 0) {
   const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 144), material);
+  if (material.vertexColors) {
+    const glaze = new THREE.Color('#ffffff');
+    const toasted = new THREE.Color('#ac7349');
+    const color = new THREE.Color();
+    const positions = mesh.geometry.attributes.position;
+    const values = new Float32Array(positions.count * 3);
+    for (let i = 0; i < positions.count; i++) {
+      const [radius, height] = rows[i % rows.length];
+      const warmth = THREE.MathUtils.smoothstep(height, rimY - .045, rimY + .005)
+        * THREE.MathUtils.smoothstep(radius, rimRadius - .045, rimRadius + .010);
+      color.copy(glaze).lerp(toasted, warmth * .78).toArray(values, i * 3);
+    }
+    mesh.geometry.setAttribute('color', new THREE.BufferAttribute(values, 3));
+  }
   mesh.castShadow = mesh.receiveShadow = true;
   return mesh;
 }
 
-function buildTableware(scene, foam) {
-  const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#eae7e1', roughness: .30, clearcoat: .83, clearcoatRoughness: .17,
+function stampedMaterial(withWord = false) {
+  const stamp = canvasOf(256);
+  const context = stamp.getContext('2d');
+  paintCafeMark(context, withWord ? 57 : 8, 7, withWord ? 142 : 240, '#5f3824');
+  if (withWord) {
+    context.textAlign = 'center';
+    context.font = '63px Georgia, serif';
+    context.fillStyle = '#5f3824';
+    context.fillText('Unity', 128, 212);
+  }
+  const map = new THREE.CanvasTexture(stamp);
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.anisotropy = 4;
+  return new THREE.MeshPhysicalMaterial({
+    map, transparent: true, depthWrite: false, roughness: .50, clearcoat: .24,
   });
+}
+
+function buildCupMark() {
+  const geometry = new THREE.PlaneGeometry(1, 1, 24, 16);
+  const vertices = geometry.attributes.position;
+  for (let i = 0; i < vertices.count; i++) {
+    const height = 1.02 + (vertices.getY(i) + .5) * .30;
+    const start = CUP_PROFILE.findIndex(([, y]) => y >= height);
+    const [previousRadius, previousHeight] = CUP_PROFILE[start - 1];
+    const [nextRadius, nextHeight] = CUP_PROFILE[start];
+    const radius = THREE.MathUtils.lerp(previousRadius, nextRadius,
+      (height - previousHeight) / (nextHeight - previousHeight)) + .004;
+    const angle = .47 + vertices.getX(i) * .30;
+    vertices.setXYZ(i, Math.sin(angle) * radius, height, Math.cos(angle) * radius);
+  }
+  geometry.computeVertexNormals();
+  const logo = new THREE.Mesh(geometry, stampedMaterial());
+  logo.receiveShadow = true;
+  return logo;
+}
+
+const SAUCER_FACE = [[1.17, .16], [1.41, .17], [1.65, .20], [1.86, .27], [2.04, .35], [2.11, .37]];
+
+function buildSaucerMark() {
+  const geometry = new THREE.PlaneGeometry(.64, .64, 12, 12);
+  geometry.rotateX(-Math.PI / 2);
+  const vertices = geometry.attributes.position;
+  for (let i = 0; i < vertices.count; i++) {
+    const x = vertices.getX(i) - 1.20;
+    const z = vertices.getZ(i) + 1.10;
+    const radius = Math.hypot(x, z);
+    const upper = Math.max(1, SAUCER_FACE.findIndex(([edge]) => edge >= radius));
+    const [innerRadius, innerY] = SAUCER_FACE[upper - 1];
+    const [outerRadius, outerY] = SAUCER_FACE[upper];
+    const fraction = THREE.MathUtils.clamp((radius - innerRadius) / (outerRadius - innerRadius), 0, 1);
+    const height = THREE.MathUtils.lerp(innerY, outerY, fraction);
+    vertices.setXYZ(i, x, height + .003, z);
+  }
+  geometry.computeVertexNormals();
+  const logo = new THREE.Mesh(geometry, stampedMaterial(true));
+  logo.receiveShadow = true;
+  return logo;
+}
+
+function buildTableware(scene, foam) {
+  const map = new THREE.CanvasTexture(ceramicGlaze());
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.anisotropy = 4;
+  const porcelain = new THREE.MeshPhysicalMaterial({
+    color: '#e4d7c3', map, roughness: .43, clearcoat: .51, clearcoatRoughness: .25,
+  });
+  const rimmedGlaze = porcelain.clone();
+  rimmedGlaze.vertexColors = true;
   const saucer = lathe([
     [0, .04], [.78, .04], [.96, .02], [1.12, .02], [1.38, .035], [1.72, .08],
-    [2.02, .16], [2.16, .23], [2.20, .28], [2.20, .31], [2.17, .35], [2.11, .37],
-    [2.04, .35], [1.86, .27], [1.65, .2], [1.41, .17], [1.17, .16], [.96, .16],
+    [2.02, .16], [2.16, .23], [2.20, .28], [2.20, .31], [2.17, .35], ...[...SAUCER_FACE].reverse(), [.96, .16],
     [.89, .13], [.82, .12], [0, .12],
-  ], porcelain);
+  ], rimmedGlaze, .34, 2.04);
   saucer.scale.set(1.08, 1, 1.08);
   saucer.position.set(-.20, 0, .19);
+  saucer.add(buildSaucerMark());
   scene.add(saucer);
 
   const cup = new THREE.Group();
-  const bowl = lathe(CUP_PROFILE, porcelain);
-  cup.add(bowl);
+  const bowl = lathe(CUP_PROFILE, rimmedGlaze, 1.34, 1.37);
+  cup.add(bowl, buildCupMark());
   const handleRing = new THREE.Mesh(createHandleGeometry(), porcelain);
   handleRing.castShadow = handleRing.receiveShadow = true;
   const handle = new THREE.Group();
@@ -144,8 +224,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.shadowMap.autoUpdate = false;
 
-  const atmosphere = new THREE.HemisphereLight('#fff5e8', '#655345', 1.91);
-  const windowLight = new THREE.DirectionalLight('#fff8f1', 3.1);
+  const atmosphere = new THREE.HemisphereLight('#fff2de', '#60443a', 1.63);
+  const windowLight = new THREE.DirectionalLight('#ffe8ce', 3.02);
   windowLight.position.set(-5, 8, -3.4);
   windowLight.castShadow = true;
   windowLight.shadow.mapSize.set(1024, 1024);
@@ -161,11 +241,15 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
 
   const wood = walnutTextures();
   const table = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), new THREE.MeshStandardMaterial({
-    ...wood, bumpScale: .006, color: '#d8d0c7', roughness: .77,
+    ...wood, bumpScale: .009, color: '#e0c6b0', roughness: .63,
   }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
+  const lamp = new THREE.SpotLight('#ffc180', 67, 16, .65, .88, 2);
+  lamp.position.set(-4.6, 4.7, -1.6);
+  lamp.target.position.set(-1.7, 0, 1.7);
+  scene.add(lamp, lamp.target);
   const { disk, foamTexture, handle } = buildTableware(scene, foam);
   const liveFoam = canvasOf(512);
   const liveFoamContext = liveFoam.getContext('2d');
@@ -461,10 +545,11 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     return picture;
   }
 
-  function setPour(view) {
+  function setPour(view, paintNow = false) {
     pourView = view;
+    artworkDirty = true;
     if (contextUnavailable) {
-      substitute.setPour(view);
+      substitute.setPour(view, paintNow);
       return;
     }
     if (mode !== 'pour') return;
@@ -483,7 +568,11 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       spout.getWorldPosition(streamStart);
       updateMilkStream(stream.geometry, streamStart, streamEnd, flow);
     }
-    invalidate();
+    if (paintNow) {
+      cancelAnimationFrame(pending);
+      pending = 0;
+      drawFrame();
+    } else invalidate();
   }
 
   resize();

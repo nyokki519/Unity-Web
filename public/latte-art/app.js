@@ -1,3 +1,4 @@
+import { paintCafeMark } from './cafe-ware.js';
 import { ChocolateDrawing, liquidContains } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
@@ -7,6 +8,7 @@ import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
+paintCafeMark($('cafeMark').getContext('2d'), 0, 0, 96, '#f5d9ad');
 const drawing = new ChocolateDrawing();
 let draftStorage;
 try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled. */ }
@@ -136,14 +138,13 @@ function setMode(next, animate = false) {
   }
 }
 
-function presentPour() {
-  cup.setPour({ position: milk.toolTarget, flow: milk.flow, resting: milk.resting, amount: milk.amount });
+function presentPour(paintNow = false) {
   const amount = `${Math.round(milk.amount)} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
   $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
   if (full) $('tip').textContent = 'カップが満量です。チョコペンで描けます。';
-  redraw();
+  cup.setPour({ position: milk.toolTarget, flow: milk.flow, resting: milk.resting, amount: milk.amount }, paintNow);
 }
 
 function inputTime(timestamp) {
@@ -158,7 +159,7 @@ function paintPourFrame(now) {
   // Leave one simulation step for coalesced motion events near the display frame.
   const inputDelay = pourPointerId !== null && milk.pouring ? 1000 / 60 : 0;
   pourInput.advance(Math.max(0, now - inputDelay), pourRate);
-  presentPour();
+  presentPour(true);
   if (milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
   else queueDraft();
 }

@@ -27,7 +27,7 @@ export function tableCameraFraming(view, aspect) {
   const distance = photo ? 10.15 : served
     ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
     : blend(11.25, Math.max(11.25, 18 * .462 / aspect));
-  const elevation = photo ? 61 : served ? 64 : blend(57, 57.5);
+  const elevation = photo ? 56 : served ? 64 : blend(57, 57.5);
   const angle = elevation * Math.PI / 180;
   const targetY = served ? .67 : .69;
   const targetZ = photo ? .16 : served ? .08 : blend(.08, .22);
