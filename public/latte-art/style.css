@@ -44,8 +44,8 @@ html, body {
   -webkit-backdrop-filter: blur(14px);
 }
 button { color: inherit; font: inherit; cursor: pointer; appearance: none; touch-action: manipulation; }
-button:disabled { cursor: default; opacity: .42; }
-button:not(:disabled):active { transform: scale(.96); }
+button:disabled, button[aria-disabled="true"] { cursor: default; opacity: .42; }
+button:not(:disabled):not([aria-disabled="true"]):active { transform: scale(.96); }
 a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid #ffe6c8; outline-offset: 3px; }
 .brand {
   position: absolute;

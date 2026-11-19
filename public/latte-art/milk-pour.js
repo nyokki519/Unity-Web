@@ -142,6 +142,15 @@ export class MilkPour {
 
   stop(target = this.toolTarget) {
     if (!this.#pouring) return;
+    // Complete the part of the final step before release or before the stream crosses the rim.
+    const endMs = Math.max(0, Math.min(STEP, this.#accumulator));
+    const dose = Math.min(MILK_CAPACITY - this.#amount, endMs / 1000 * MAX_FLOW * this.#flow);
+    if (dose > 1e-6) {
+      this.#deposit(this.#previousTick, this.#position, dose);
+      this.#amount += dose;
+      this.#revision++;
+    }
+    this.#accumulator = 0;
     this.#returnTarget = target;
     this.#stopRest = this.resting;
     this.#pouring = false;

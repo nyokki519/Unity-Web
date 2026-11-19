@@ -490,6 +490,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   return {
     input: mainCanvas,
     get drawingClips() { return contextUnavailable ? substitute.drawingClips : foamClips; },
+    get pouringClips() { return contextUnavailable ? substitute.pouringClips : pourClips; },
     sample, setMode, resize, photo,
     setArtwork(strokes, active) {
       artwork = { strokes, active };

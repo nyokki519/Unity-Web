@@ -1,7 +1,8 @@
-import { ChocolateDrawing } from './drawing.js';
+import { ChocolateDrawing, liquidContains } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { DEFAULT_POUR_RATE, MILK_CAPACITY, MilkPour } from './milk-pour.js';
+import { PourInput } from './pour-input.js';
 import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
@@ -12,6 +13,7 @@ try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled
 const draft = readDraft(draftStorage);
 drawing.strokes = draft.strokes;
 const milk = new MilkPour(draft.milk);
+const pourInput = new PourInput(milk);
 const surface = createSurface(milk);
 function revealStudio() {
   $('studio').removeAttribute('aria-busy');
@@ -43,8 +45,6 @@ let mode = stage;
 let pourRate = DEFAULT_POUR_RATE;
 let pourPointerId = null;
 let pourFrame = 0;
-let pouredAt = 0;
-let centerUntil = 0;
 let drawPointerId = null;
 let servingTimer = 0;
 let returnStage = 'draw';
@@ -106,7 +106,7 @@ function closeMenus() {
 }
 
 function setMode(next, animate = false) {
-  if (mode === 'pour' && next !== 'pour') stopPour(true);
+  if (mode === 'pour' && next !== 'pour') settlePour();
   mode = next;
   $('studio').dataset.stage = next;
   closeMenus();
@@ -141,65 +141,47 @@ function presentPour() {
   const amount = `${Math.round(milk.amount)} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
-  $('pourCenter').disabled = pourPointerId !== null || milk.pouring || full;
+  $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
   if (full) $('tip').textContent = 'カップが満量です。チョコペンで描けます。';
   redraw();
 }
 
-function advancePour(timestamp, position = milk.position) {
+function inputTime(timestamp) {
   const current = performance.now();
-  const eventTime = Number.isFinite(timestamp) ? Math.min(current, timestamp) : current;
-  const now = Math.max(pouredAt, eventTime);
-  if (centerUntil && now >= centerUntil) {
-    milk.advance(centerUntil - pouredAt, position, pourRate);
-    milk.stop();
-    pouredAt = centerUntil;
-    centerUntil = 0;
-  }
-  milk.advance(now - pouredAt, position, pourRate);
-  pouredAt = now;
+  if (!Number.isFinite(timestamp)) return current;
+  const relative = timestamp > current + 1000 ? timestamp - performance.timeOrigin : timestamp;
+  return relative >= 0 ? Math.min(current, relative) : current;
 }
 
 function paintPourFrame(now) {
   pourFrame = 0;
-  advancePour(now);
+  // Leave one simulation step for coalesced motion events near the display frame.
+  const inputDelay = pourPointerId !== null && milk.pouring ? 1000 / 60 : 0;
+  pourInput.advance(Math.max(0, now - inputDelay), pourRate);
   presentPour();
   if (milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
   else queueDraft();
 }
 
-function beginPour(position, duration = 0) {
-  if (!milk.start(position)) return false;
+function beginPour(position, duration = 0, timestamp = performance.now()) {
+  if (!pourInput.start(position, inputTime(timestamp), duration)) return false;
   invalidatePhoto();
-  pouredAt = performance.now();
-  centerUntil = duration ? pouredAt + duration : 0;
   if (!pourFrame) pourFrame = requestAnimationFrame(paintPourFrame);
   return true;
 }
 
-function stopPour(immediately = false, timestamp = performance.now(), position = milk.position) {
+function settlePour() {
   if (!milk.moving && !pourFrame) return;
-  if (milk.moving) advancePour(timestamp, position);
-  centerUntil = 0;
-  milk.stop();
-  if (immediately) {
-    cancelAnimationFrame(pourFrame);
-    pourFrame = 0;
-    milk.settle();
-    presentPour();
-    queueDraft();
-  } else if (!pourFrame) {
-    pourFrame = requestAnimationFrame(paintPourFrame);
-  }
+  pourInput.end(performance.now(), pourRate);
+  cancelAnimationFrame(pourFrame);
+  pourFrame = 0;
+  milk.settle();
+  presentPour();
+  queueDraft();
 }
 
 function penWidth() {
   return 0.008 + Number($('width').value) * 0.0056;
-}
-
-function overLiquid(point) {
-  return point && Math.hypot(point.x, point.y) <= 1 && cup.drawingClips.every(circle =>
-    Math.hypot(point.x - circle.x, point.y - circle.y) <= circle.radius);
 }
 
 cup.input.addEventListener('pointerdown', event => {
@@ -214,7 +196,7 @@ cup.input.addEventListener('pointerdown', event => {
     updateToolbar();
     redraw();
   } else if (mode === 'pour') {
-    if (!overLiquid(point) || !beginPour(point)) return;
+    if (!liquidContains(point, cup.pouringClips) || !beginPour(point, 0, event.timeStamp)) return;
     pourPointerId = event.pointerId;
   } else {
     return;
@@ -231,14 +213,9 @@ cup.input.addEventListener('pointermove', event => {
     const events = event.getCoalescedEvents?.();
     for (const sample of events?.length ? events : [event]) {
       const point = cup.sample(sample);
-      if (!overLiquid(point)) {
-        if (milk.pouring) stopPour(false, sample.timeStamp);
-      } else if (!milk.pouring) {
-        beginPour(point);
-      } else {
-        advancePour(sample.timeStamp, point);
-      }
+      if (pourInput.move(point, inputTime(sample.timeStamp), pourRate, cup.pouringClips)) invalidatePhoto();
     }
+    if (!pourFrame && milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
   }
 });
 
@@ -252,8 +229,9 @@ function endGesture(event) {
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
     const position = event.type === 'pointerup' ? cup.sample(event) : null;
-    stopPour(false, event.timeStamp, overLiquid(position) ? position : milk.position);
+    pourInput.end(inputTime(event.timeStamp), pourRate, position, cup.pouringClips);
     if (!milk.moving) presentPour();
+    else if (!pourFrame) pourFrame = requestAnimationFrame(paintPourFrame);
   }
 }
 
@@ -266,7 +244,7 @@ function releaseGesture() {
   if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
   if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
   drawPointerId = pourPointerId = null;
-  if (mode === 'pour') stopPour(true);
+  if (mode === 'pour') settlePour();
   redraw();
 }
 window.addEventListener('resize', releaseGesture);
@@ -314,6 +292,7 @@ document.addEventListener('keydown', event => {
 });
 $('showHelp').onclick = () => {
   closeMenus();
+  releaseGesture();
   const dialog = $('helpDialog');
   dialog.returnValue = '';
   dialog.showModal();
@@ -327,11 +306,15 @@ function openDrawing() {
 bindActivation($('showDraw'), openDrawing);
 bindActivation($('next'), openDrawing);
 $('tilt').oninput = () => {
-  if (milk.moving) advancePour(performance.now());
+  if (milk.moving) pourInput.advance(performance.now(), pourRate);
   pourRate = Number($('tilt').value) / 100;
-  $('tiltValue').value = Math.round(pourRate * 100) + '%';
+  const display = Math.round(pourRate * 100) + '%';
+  $('tiltValue').value = display;
+  $('tilt').setAttribute('aria-valuetext', display);
 };
-bindActivation($('pourCenter'), () => beginPour({ x: 0, y: 0 }, 630));
+bindActivation($('pourCenter'), () => {
+  if (pourPointerId === null) beginPour({ x: 0, y: 0 }, 630);
+});
 bindActivation($('undo'), () => {
   drawing.undo();
   queueDraft();

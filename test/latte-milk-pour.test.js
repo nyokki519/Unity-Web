@@ -55,10 +55,10 @@ test('release only redistributes the milk and reaching the cup limit stops dosin
   const cup = new MilkPour();
   cup.start(point);
   cup.advance(533, point, .8);
-  const dose = cup.amount;
-  const deposited = cup.density.reduce((sum, density) => sum + density, 0);
   assert.ok(cup.flow > 0);
   cup.stop();
+  const dose = cup.amount;
+  const deposited = cup.density.reduce((sum, density) => sum + density, 0);
   assert.ok(cup.moving);
   cup.advance(750);
   assert.equal(cup.amount, dose);
@@ -173,4 +173,19 @@ test('one fast pointer movement paints a thin continuous trail between sampled p
   assert.ok(cup.amount > before);
   for (const x of [-.45, -.20, 0, .20, .45]) assert.ok(at(cup, x, -.13) > .025, x);
   assert.ok(at(cup, 0, .11) < .03);
+});
+
+test('release deposits the fraction of the final step along the path up to the rim', () => {
+  const cup = new MilkPour();
+  const left = { x: -.64, y: -.13 };
+  cup.start(left);
+  cup.advance(300, left, .60);
+  const amountBeforeMove = cup.amount;
+  cup.advance(9, { x: .88, y: -.13 }, .60);
+  cup.stop();
+  const amountAtRelease = cup.amount;
+  assert.ok(amountAtRelease > amountBeforeMove && amountAtRelease - amountBeforeMove < .4);
+  cup.settle();
+  assert.equal(cup.amount, amountAtRelease);
+  for (const x of [-.3, -.1, .15, .40, .60]) assert.ok(at(cup, x, -.13) > .01, x);
 });

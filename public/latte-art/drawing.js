@@ -2,11 +2,16 @@ const foamDisk = { x: 0, y: 0, radius: 1 };
 const inside = (point, bounds) => bounds.every(circle =>
   (point.x - circle.x) ** 2 + (point.y - circle.y) ** 2 <= circle.radius ** 2);
 
+export function liquidContains(point, clips) {
+  return Boolean(point && inside(point, [foamDisk, ...clips]));
+}
+
 // Exactly one endpoint is on the foam. Keep the part of the gesture that reaches the rim.
-function rimIntersection(interior, exterior, bounds) {
+function exitFraction(interior, exterior, bounds) {
   const dx = exterior.x - interior.x;
   const dy = exterior.y - interior.y;
   const a = dx ** 2 + dy ** 2;
+  if (!a) return 0;
   let t = 1;
   for (const circle of bounds) {
     const x = interior.x - circle.x;
@@ -16,7 +21,20 @@ function rimIntersection(interior, exterior, bounds) {
     const exit = (-b + Math.sqrt(Math.max(0, b * b - a * c))) / a;
     t = Math.min(t, Math.max(0, exit));
   }
-  return { x: interior.x + t * dx, y: interior.y + t * dy };
+  return t;
+}
+
+function pointAlong(from, to, t) {
+  return { x: from.x + (to.x - from.x) * t, y: from.y + (to.y - from.y) * t };
+}
+
+function rimIntersection(interior, exterior, bounds) {
+  return pointAlong(interior, exterior, exitFraction(interior, exterior, bounds));
+}
+
+export function liquidExit(interior, exterior, clips) {
+  const fraction = exitFraction(interior, exterior, [foamDisk, ...clips]);
+  return { position: pointAlong(interior, exterior, fraction), fraction };
 }
 
 export class ChocolateDrawing {

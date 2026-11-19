@@ -30,9 +30,9 @@
       <p id="tip" class="hint">液面を押して注ぎ、そのまま指で位置を動かせます。</p>
       <section id="pourControls" class="glass pour-controls" aria-label="ミルクの注ぎ方" hidden>
         <span>注いだ量 <output id="poured" aria-live="off">0 mL</output></span>
-        <label for="tilt">流量 <output for="tilt" id="tiltValue">62%</output></label>
-        <input id="tilt" type="range" min="8" max="100" value="62">
-        <button id="pourCenter" type="button">中央に注ぐ</button>
+        <label for="tilt">流量 <output for="tilt" id="tiltValue" aria-hidden="true">62%</output></label>
+        <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="62%">
+        <button id="pourCenter" type="button" aria-disabled="false">中央に注ぐ</button>
       </section>
       <div id="bar" class="bar glass" role="group" aria-label="ラテアートの操作">
         <div id="drawControls" class="control-group">

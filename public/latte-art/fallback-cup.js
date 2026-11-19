@@ -1,6 +1,6 @@
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
-import { drawingFoamClips, PHOTO_FOAM_CLIPS } from './foam-geometry.js';
+import { drawingFoamClips, PHOTO_FOAM_CLIPS, visibleFoamClips } from './foam-geometry.js';
 import { MILK_CAPACITY } from './milk-pour.js';
 
 function paintSpoon(ctx, x, y, scale) {
@@ -199,7 +199,10 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.beginPath();
     ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
     ctx.clip();
-    const clips = view === 'photo' ? PHOTO_FOAM_CLIPS : view === 'draw' ? drawingFoamClips(w / h) : [];
+    let clips = [];
+    if (view === 'photo') clips = PHOTO_FOAM_CLIPS;
+    if (view === 'draw') clips = drawingFoamClips(w / h);
+    if (view === 'pour') clips = visibleFoamClips('pour', w / h);
     for (const circle of clips) {
       ctx.beginPath();
       ctx.ellipse(x + r * circle.x, y + r * .88 * circle.y, r * circle.radius, r * .88 * circle.radius, 0, 0, Math.PI * 2);
@@ -240,6 +243,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   return {
     input: canvas,
     get drawingClips() { return drawingFoamClips(width / height); },
+    get pouringClips() { return visibleFoamClips('pour', width / height); },
     setArtwork(strokes, active) {
       artwork = { strokes, active };
       invalidate();
