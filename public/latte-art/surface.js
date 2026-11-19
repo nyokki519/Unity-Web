@@ -131,6 +131,13 @@ export function createSurface() {
 
   return {
     canvas: surface,
+    paintBlank(fill) { paintBase(fill); },
+    paintInkPreview(layer, strokes, active) {
+      cache.sync(strokes, active);
+      layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
+      layer.drawImage(ink, 0, 0);
+      if (active) paintInk(layer, [active]);
+    },
     paint(fill, strokes, active, aim) {
       paintBase(fill, aim);
       cache.sync(strokes, active);

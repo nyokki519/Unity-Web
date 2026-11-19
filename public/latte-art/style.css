@@ -27,6 +27,7 @@ html, body {
 }
 #scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-touch-callout: none; }
 #scene { cursor: crosshair; }
+#ink { position: absolute; inset: 0 auto auto 0; transform-origin: top left; pointer-events: none; }
 #fallback.paint-overlay { pointer-events: none; }
 .hud { pointer-events: none; position: absolute; inset: 0; user-select: none; }
 .hud a, .hud button, .hud nav, .hud input, .hud .bar, .hud .width-panel { pointer-events: auto; }
@@ -142,7 +143,20 @@ button.go, .bar button.go { background: linear-gradient(150deg,#f3d7ae,#d9a774);
   font-size: 13px;
   text-align: center;
 }
-.width-panel input { width: 176px; min-height: 28px; }
+.width-panel input { width: 176px; min-height: 32px; }
+.pen-sample {
+  display: grid;
+  place-items: center;
+  height: 25px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 32% 30%, #fffbef, #eee2d0);
+}
+.pen-sample span {
+  width: 80px;
+  height: var(--line-width, 4px);
+  border-radius: 999px;
+  background: linear-gradient(#7a5140, #4c281b 60%);
+}
 input[type="range"] { accent-color: var(--accent); }
 .pour-controls {
   left: max(12px, env(safe-area-inset-left));
@@ -277,6 +291,14 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 }
 @media (orientation: landscape) and (max-height: 520px) {
   .hint { top: calc(16px + env(safe-area-inset-top)); }
+  .width-panel {
+    left: auto;
+    right: max(12px, env(safe-area-inset-right));
+    width: min(27vw, 204px);
+    padding: 10px 12px;
+    transform: none;
+  }
+  .width-panel input { width: 100%; margin-inline: 0; }
   .result { gap: 16px; }
   .result-photo { width: min(42vw, 65dvh); }
 }

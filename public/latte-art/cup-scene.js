@@ -4,6 +4,7 @@ import {
   shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
+import { projectInkPlane } from './ink-overlay.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 
@@ -116,10 +117,12 @@ function buildSpoon(scene) {
   return spoon;
 }
 
-export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
+export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, foam, onReady) {
   const renderer = new THREE.WebGLRenderer({
-    canvas: mainCanvas, antialias: true, powerPreference: 'low-power', preserveDrawingBuffer: true,
+    canvas: mainCanvas, antialias: true, powerPreference: 'low-power',
   });
+  const ink = inkCanvas.getContext('2d');
+  inkCanvas.width = inkCanvas.height = foam.canvas.width;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#554a40');
   scene.environment = windowReflection();
@@ -175,7 +178,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
   const hit = new THREE.Vector3();
   const coords = new THREE.Vector2();
   const bufferSize = new THREE.Vector2();
-  const foamBounds = new THREE.Vector4();
+  const projection = new THREE.Matrix4();
   const drawingMode = window.matchMedia('(prefers-reduced-motion: reduce)');
   let mode = 'draw';
   let pending = 0;
@@ -211,10 +214,17 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
   }
 
   function paintPendingArtwork() {
-    if (!artworkDirty) return;
+    const drawing = mode === 'draw';
+    if (!artworkDirty && !(drawing && backdropDirty)) return;
     const { fill, strokes, active } = artwork;
-    foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
+    if (drawing) {
+      if (artworkDirty) foam.paintInkPreview(ink, strokes, active);
+      if (backdropDirty) foam.paintBlank(fill);
+    } else {
+      foam.paint(fill, strokes, active, mode === 'pour' ? pourAim : undefined);
+    }
     artworkDirty = false;
+    if (drawing && !backdropDirty) return;
     if (disk.material.map === liveFoamTexture) {
       liveFoamContext.drawImage(foam.canvas, 0, 0, liveFoam.width, liveFoam.height);
       liveFoamTexture.needsUpdate = true;
@@ -225,15 +235,11 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
 
   function drawFrame() {
     if (contextUnavailable) return;
-    const paintRegion = mode === 'draw' && artworkDirty && !backdropDirty;
     paintPendingArtwork();
-    if (paintRegion) {
-      renderer.setScissor(foamBounds);
-      renderer.setScissorTest(true);
-    }
+    if (mode === 'draw' && !backdropDirty) return;
     renderer.render(scene, camera);
-    if (paintRegion) renderer.setScissorTest(false);
     backdropDirty = false;
+    inkCanvas.hidden = mode !== 'draw';
     if (substitute) fallbackCanvas.hidden = true;
     revealControls();
   }
@@ -266,19 +272,9 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
     }
     placeCamera(camera, mode, width / height);
     if (mode === 'draw') {
-      let left = width, right = 0, bottom = height, top = 0;
-      for (const x of [-FOAM_RADIUS, FOAM_RADIUS]) {
-        for (const z of [-FOAM_RADIUS, FOAM_RADIUS]) {
-          const point = new THREE.Vector3(x, FOAM_HEIGHT, z).project(camera);
-          left = Math.min(left, (point.x + 1) * width / 2);
-          right = Math.max(right, (point.x + 1) * width / 2);
-          bottom = Math.min(bottom, (point.y + 1) * height / 2);
-          top = Math.max(top, (point.y + 1) * height / 2);
-        }
-      }
-      left = Math.max(0, Math.floor(left) - 2);
-      bottom = Math.max(0, Math.floor(bottom) - 2);
-      foamBounds.set(left, bottom, Math.min(width, Math.ceil(right) + 2) - left, Math.min(height, Math.ceil(top) + 2) - bottom);
+      projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+      const matrix = projectInkPlane(projection.elements, { width, height }, FOAM_PLANE, inkCanvas.width);
+      inkCanvas.style.transform = `matrix3d(${matrix.join(',')})`;
     }
     invalidate();
   }
@@ -287,6 +283,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, foam, onReady) {
   function activateFallback() {
     contextUnavailable = true;
     animating = false;
+    inkCanvas.hidden = true;
     substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
       overlay: true, tableImage: wood.map.image,
     });

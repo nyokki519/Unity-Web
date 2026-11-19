@@ -12,6 +12,7 @@
 <body>
   <main id="studio" aria-busy="true">
     <canvas id="scene" aria-label="カップのミルクフォームに指でチョコを描く"></canvas>
+    <canvas id="ink" aria-hidden="true" hidden></canvas>
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
     <div id="hud" class="hud" inert>
       <a class="brand" href="/" aria-label="Unity MIX ホーム"><b>UNITY</b> MIX</a>
@@ -40,6 +41,7 @@
       </div>
       <div id="widthPanel" class="glass width-panel" hidden>
         <label for="width">チョコペンの太さ</label>
+        <div class="pen-sample" aria-hidden="true"><span id="widthSample"></span></div>
         <input id="width" type="range" min="1" max="9" value="4">
       </div>
       <span id="status" class="sr-only" role="status" aria-live="polite"></span>

@@ -1,9 +1,13 @@
 import { ChocolateDrawing } from './drawing.js';
+import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
 import { createSurface } from './surface.js';
 
 const $ = id => document.getElementById(id);
 const drawing = new ChocolateDrawing();
+let draftStorage;
+try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled. */ }
+drawing.strokes = readDraft(draftStorage);
 const surface = createSurface();
 function revealStudio() {
   $('studio').removeAttribute('aria-busy');
@@ -15,7 +19,7 @@ async function loadCup() {
   const fallback = $('fallback');
   try {
     const { createCupScene } = await import('./cup-scene.js');
-    return createCupScene(canvas, fallback, surface, revealStudio);
+    return createCupScene(canvas, fallback, $('ink'), surface, revealStudio);
   } catch {
     const cup = createCanvasFallback(canvas, fallback, surface);
     revealStudio();
@@ -63,6 +67,7 @@ function setMode(next, animate = false) {
   clearTimeout(pourFlowTimer);
   mode = next;
   closeMenus();
+  if (drawing.activeStroke) writeDraft(draftStorage, drawing.strokes);
   drawing.cancel();
   drawPointerId = pourPointerId = null;
   $('hud').hidden = next === 'serve';
@@ -132,6 +137,7 @@ function endGesture(event) {
     if (event.type === 'pointerup' && drawing.move(event.pointerId, [cup.sample(event)])) redraw();
     drawing.end(event.pointerId);
     drawPointerId = null;
+    writeDraft(draftStorage, drawing.strokes);
   }
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
@@ -143,6 +149,7 @@ for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
   cup.input.addEventListener(name, endGesture);
 }
 function releaseGesture() {
+  if (drawing.activeStroke) writeDraft(draftStorage, drawing.strokes);
   drawing.cancel();
   if (drawPointerId !== null && cup.input.hasPointerCapture(drawPointerId)) cup.input.releasePointerCapture(drawPointerId);
   if (pourPointerId !== null && cup.input.hasPointerCapture(pourPointerId)) cup.input.releasePointerCapture(pourPointerId);
@@ -154,6 +161,7 @@ window.addEventListener('resize', releaseGesture);
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) releaseGesture();
 });
+window.addEventListener('pagehide', releaseGesture);
 for (const event of ['webglcontextlost', 'webglcontextrestored']) {
   cup.input.addEventListener(event, () => {
     invalidatePhoto();
@@ -174,9 +182,13 @@ $('widthButton').onclick = () => {
   $('widthButton').setAttribute('aria-expanded', String(open));
   if (open) $('width').focus({ preventScroll: true });
 };
-$('width').oninput = () => {
-  $('widthButton').querySelector('i').style.setProperty('--dot', (5 + Number($('width').value)) + 'px');
-};
+function showPenWidth() {
+  const value = Number($('width').value);
+  $('widthButton').querySelector('i').style.setProperty('--dot', (5 + value) + 'px');
+  $('widthSample').style.setProperty('--line-width', (penWidth() * 132).toFixed(2) + 'px');
+  $('width').setAttribute('aria-valuetext', `太さ ${value} / 9`);
+}
+$('width').addEventListener('input', showPenWidth);
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape' || ($('widthPanel').hidden && $('menu').hidden)) return;
   const button = $('widthPanel').hidden ? $('menuButton') : $('widthButton');
@@ -208,6 +220,7 @@ $('resetPour').onclick = () => {
 };
 $('undo').onclick = () => {
   drawing.undo();
+  writeDraft(draftStorage, drawing.strokes);
   invalidatePhoto();
   redraw();
   updateToolbar('直前の一筆を取り消しました。');
@@ -220,6 +233,7 @@ $('clear').onclick = () => {
 $('clearDialog').addEventListener('close', () => {
   if ($('clearDialog').returnValue === 'clear') {
     drawing.clear();
+    writeDraft(draftStorage, drawing.strokes);
     invalidatePhoto();
     redraw();
     updateToolbar('チョコの線を消しました。');
@@ -325,6 +339,7 @@ $('finishPanel').addEventListener('close', () => {
 });
 $('restart').onclick = () => {
   drawing.clear();
+  writeDraft(draftStorage, drawing.strokes);
   invalidatePhoto();
   pourAmount = 0;
   $('tilt').value = '0';
@@ -357,3 +372,4 @@ $('saveImage').onclick = async () => {
 };
 
 setMode('draw');
+showPenWidth();
