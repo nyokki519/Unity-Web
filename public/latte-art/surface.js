@@ -26,18 +26,20 @@ function cremaTexture() {
   const random = randomFrom(6529);
   for (let row = 0; row < size; row++) {
     for (let column = 0; column < size; column++) {
-      const x = (column - size / 2) / (size / 2);
-      const y = (row - size / 2) / (size / 2);
+      const x = (column - size / 2) / (size / 2) + .13;
+      const y = (row - size / 2) / (size / 2) - .09;
       const radius = Math.hypot(x, y);
-      const flow = Math.atan2(y, x) + 4.5 * radius;
-      const ribbons = .5 + .5 * Math.sin(5 * flow + 2.1 * Math.sin(3.6 * radius));
-      const streaks = .5 + .5 * Math.sin(13 * flow + 3.2 * Math.cos(flow + 8 * radius));
-      const shade = .67 * ribbons + .25 * streaks + .08 * random();
+      const angle = Math.atan2(y, x);
+      const flow = angle + 3 * radius + .33 * Math.sin(3 * angle - 3.4 * radius);
+      const ribbons = (.5 + .5 * Math.sin(3 * flow + 1.4 * Math.sin(4.6 * radius)))
+        * (.70 + .30 * Math.cos(angle + 4 * radius));
+      const streaks = .5 + .5 * Math.sin(11 * flow + 3.2 * Math.cos(flow + 8 * radius));
+      const shade = .64 * ribbons + .21 * streaks + .15 * random();
       const offset = (row * size + column) * 4;
       image.data[offset] = 129 + 89 * shade;
       image.data[offset + 1] = 64 + 85 * shade;
       image.data[offset + 2] = 26 + 49 * shade;
-      image.data[offset + 3] = 62 * Math.min(1, radius * 4);
+      image.data[offset + 3] = (38 + 12 * radius) * Math.min(1, radius * 4);
     }
   }
   ctx.putImageData(image, 0, 0);
@@ -96,6 +98,11 @@ export function createSurface(milk) {
   coffeeContext.fillStyle = espresso;
   coffeeContext.fillRect(-1, -1, 2, 2);
   coffeeContext.drawImage(crema, -1, -1, 2, 2);
+  const windowGlow = coffeeContext.createRadialGradient(-.63, -.67, .02, -.59, -.63, .57);
+  windowGlow.addColorStop(0, '#ffdca437');
+  windowGlow.addColorStop(1, '#ffcf6d00');
+  coffeeContext.fillStyle = windowGlow;
+  coffeeContext.fillRect(-1, -1, 2, 2);
   for (const bubble of bubbles) {
     coffeeContext.fillStyle = bubble.highlight ? '#ebbc7f3c' : '#522d212e';
     coffeeContext.beginPath();

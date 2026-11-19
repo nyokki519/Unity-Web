@@ -22,10 +22,10 @@ html, body {
   font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
 }
 #studio { position: relative; height: 100dvh; overflow: hidden; }
-#studio[aria-busy="true"] { background: #554a40 var(--table-still) var(--table-position) / cover no-repeat; }
-#studio[aria-busy="true"][data-restoring] {
+#studio[aria-busy="true"] {
   background: radial-gradient(ellipse at 19% 23%, #725039, #2c1a13 69%, #180e0b);
 }
+#studio[aria-busy="true"][data-fresh-cup] { background: #554a40 var(--table-still) var(--table-position) / cover no-repeat; }
 #studio[aria-busy="true"] #scene { visibility: hidden; }
 #studio[aria-busy="true"] #tip,
 #studio:not([aria-busy="true"]) #loadingHint { display: none; }

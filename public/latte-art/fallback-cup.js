@@ -208,6 +208,11 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.strokeStyle = glaze;
     ctx.lineWidth = r * .165;
     ctx.stroke();
+    const body = ctx.createLinearGradient(x - r, y + r * .58, x + r, y + r * 1.16);
+    body.addColorStop(0, '#e9d5b7');
+    body.addColorStop(.47, '#c6a178');
+    body.addColorStop(1, '#947358');
+    ellipse(1.028, .872, body, r * .23);
     ellipse(1.068, .935, glaze, r * .085);
     ellipse(1.074, .949, '#c28c60');
     ellipse(1.051, .926, '#f3dfbf');
@@ -234,7 +239,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     }
     ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
     ctx.restore();
-    paintCafeMark(ctx, x + r * .48, y + r * .834, r * .19, '#68412b');
+    paintCafeMark(ctx, x + r * .24, y + r * .895, r * .16, '#68412b');
     if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
     if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
     if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
