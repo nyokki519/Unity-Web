@@ -147,7 +147,7 @@ export function createMilkStreamGeometry() {
   return geometry;
 }
 
-export function updateMilkStream(geometry, start, end, amount) {
+export function updateMilkStream(geometry, start, end, amount, cut = 0) {
   const dx = end.x - start.x;
   const dy = end.y - start.y;
   const dz = end.z - start.z;
@@ -157,9 +157,9 @@ export function updateMilkStream(geometry, start, end, amount) {
   const tangent = new THREE.Vector3();
   const normal = new THREE.Vector3();
   const vertices = geometry.getAttribute('position');
-  const startRadius = .041 * Math.sqrt(.12 + .88 * amount);
+  const startRadius = .044 * Math.sqrt(amount);
   for (let ring = 0; ring <= STREAM_SEGMENTS; ring++) {
-    const t = ring / STREAM_SEGMENTS;
+    const t = THREE.MathUtils.lerp(cut, 1, ring / STREAM_SEGMENTS);
     const center = sampleFallingMilk(start, end, t);
     tangent.set(dx, 2 * Math.max(.001, t) * dy, dz).normalize();
     normal.crossVectors(tangent, across).normalize();

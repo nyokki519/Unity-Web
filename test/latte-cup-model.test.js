@@ -43,6 +43,19 @@ test('the milk stream falls toward the same surface and narrows as it accelerate
   geometry.dispose();
 });
 
+test('after release the last part of the stream clears the spout and reaches the original landing point', () => {
+  const start = { x: 1.3, y: 2.32, z: -.1 };
+  const end = { x: 1.1, y: 1.06, z: .18 };
+  const geometry = createMilkStreamGeometry();
+  updateMilkStream(geometry, start, end, .20, .55);
+  const positions = geometry.getAttribute('position');
+  const firstY = (positions.getY(0) + positions.getY(4)) * .5;
+  const lastY = (positions.getY(positions.count - 8) + positions.getY(positions.count - 4)) * .5;
+  assert.ok(firstY < start.y - .33);
+  assert.ok(Math.abs(lastY - end.y) < .001);
+  geometry.dispose();
+});
+
 test('the spoon stem has a flat cross-section and widens at the grip', () => {
   const stem = createSpoonStemGeometry();
   stem.computeBoundingBox();

@@ -79,13 +79,19 @@ test('release only redistributes the milk and reaching the cup limit stops dosin
   cup.start(point);
   cup.advance(533, point, .8);
   assert.ok(cup.flow > 0);
+  assert.equal(cup.streamCut, 0);
   cup.stop();
   const dose = cup.amount;
   const deposited = cup.density.reduce((sum, density) => sum + density, 0);
   assert.ok(cup.moving);
+  cup.advance(40);
+  assert.ok(cup.streamCut > 0 && cup.streamCut < 1);
+  assert.ok(cup.flow > 0);
+  assert.equal(cup.amount, dose);
   cup.advance(750);
   assert.equal(cup.amount, dose);
   assert.equal(cup.flow, 0);
+  assert.equal(cup.streamCut, 1);
   assert.equal(cup.moving, false);
   assert.ok(Math.abs(deposited - cup.density.reduce((sum, density) => sum + density, 0)) < .01);
 

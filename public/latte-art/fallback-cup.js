@@ -36,7 +36,7 @@ function paintSpoon(ctx, x, y, scale) {
   ctx.restore();
 }
 
-function paintPitcher(ctx, x, y, scale, { position, flow, resting, amount }) {
+function paintPitcher(ctx, x, y, scale, { position, flow, streamCut = 0, resting, amount }) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
@@ -44,15 +44,20 @@ function paintPitcher(ctx, x, y, scale, { position, flow, resting, amount }) {
   const top = (.88 * position.y - .65) * (1 - resting) - 1.17 * resting;
   const used = amount / MILK_CAPACITY;
   const angle = .10 * resting + (.25 + .40 * used + .27 * flow) * (1 - resting);
-  if (flow > .016) {
+  if (flow > .008) {
     const tipX = left - .12 * Math.cos(angle) - .03 * Math.sin(angle);
     const tipY = top - .12 * Math.sin(angle) + .03 * Math.cos(angle);
     ctx.strokeStyle = '#fff6e4';
     ctx.lineCap = 'round';
-    ctx.lineWidth = .012 + .036 * flow;
+    ctx.lineWidth = .043 * Math.sqrt(flow);
     ctx.beginPath();
-    ctx.moveTo(tipX, tipY);
-    ctx.quadraticCurveTo((tipX + position.x) / 2, tipY + .10, position.x, .88 * position.y);
+    const dx = position.x - tipX;
+    const dy = .88 * position.y - tipY;
+    ctx.moveTo(tipX + dx * streamCut, tipY + dy * streamCut ** 2);
+    for (let i = 1; i <= 12; i++) {
+      const fraction = streamCut + (1 - streamCut) * i / 12;
+      ctx.lineTo(tipX + dx * fraction, tipY + dy * fraction ** 2);
+    }
     ctx.stroke();
   }
   ctx.translate(left, top);

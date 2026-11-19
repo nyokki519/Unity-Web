@@ -149,7 +149,10 @@ function presentPour(paintNow = false) {
   const full = milk.amount >= MILK_CAPACITY;
   $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
   if (full) $('tip').textContent = 'カップが満量です。チョコペンで描けます。';
-  cup.setPour({ position: milk.toolTarget, flow: milk.flow, resting: milk.resting, amount: milk.amount }, paintNow);
+  cup.setPour({
+    position: milk.toolTarget, flow: milk.flow, streamCut: milk.streamCut,
+    resting: milk.resting, amount: milk.amount,
+  }, paintNow);
 }
 
 function inputTime(timestamp) {

@@ -571,7 +571,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       return;
     }
     if (mode !== 'pour') return;
-    const { position, flow, resting, amount } = view;
+    const { position, flow, streamCut, resting, amount } = view;
     const used = amount / MILK_CAPACITY;
     const tilt = THREE.MathUtils.lerp(.25 + .40 * used + .27 * flow, .08, resting);
     pitcher.rotation.z = tilt;
@@ -581,10 +581,10 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     pitcher.position.set(streamEnd.x + .11 - streamStart.x,
       streamEnd.y + 1.23 - streamStart.y, streamEnd.z - .31 - streamStart.z).lerp(idlePitcher, resting);
     pitcherMilk.update(pitcher, tilt, used, resting);
-    stream.visible = flow > .016;
+    stream.visible = flow > .008;
     if (stream.visible) {
       spout.getWorldPosition(streamStart);
-      updateMilkStream(stream.geometry, streamStart, streamEnd, flow);
+      updateMilkStream(stream.geometry, streamStart, streamEnd, flow, streamCut);
     }
     if (paintNow) {
       cancelAnimationFrame(pending);

@@ -99,6 +99,7 @@ export class MilkPour {
     };
   }
   get flow() { return this.#flow; }
+  get streamCut() { return this.#pouring ? 0 : 1 - this.#tail / STREAM_TAIL_STEPS; }
   get motionTime() { return this.#age; }
   get resting() {
     if (this.#pouring) return this.#startRest * (1 - smooth(this.#age / APPROACH_TIME));
