@@ -335,12 +335,14 @@ bindActivation($('pourCenter'), () => {
 });
 bindActivation($('undo'), () => {
   drawing.undo();
+  releaseCapturedPointers();
   queueDraft();
   invalidatePhoto();
   redraw();
   updateToolbar('直前の一筆を取り消しました。');
 });
 bindActivation($('clear'), () => {
+  releaseGesture();
   const dialog = $('clearDialog');
   dialog.returnValue = 'cancel';
   dialog.showModal();
