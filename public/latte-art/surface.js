@@ -51,6 +51,9 @@ export function createSurface(milk) {
   const foam = canvasOf(MILK_GRID_SIZE);
   const foamContext = foam.getContext('2d');
   const foamImage = foamContext.createImageData(MILK_GRID_SIZE, MILK_GRID_SIZE);
+  const foamCoat = canvasOf(512);
+  const coat = foamCoat.getContext('2d');
+  const foamGrain = canvasOf(foamCoat.width);
   const ink = canvasOf(ART_SIZE);
   const context = surface.getContext('2d');
   const ground = base.getContext('2d');
@@ -82,6 +85,9 @@ export function createSurface(milk) {
     };
   });
   const coffeeContext = coffee.getContext('2d');
+  const grain = foamGrain.getContext('2d');
+  grain.setTransform(foamGrain.width / 2, 0, 0, foamGrain.height / 2,
+    foamGrain.width / 2, foamGrain.height / 2);
   coffeeContext.setTransform(radius, 0, 0, radius, radius, radius);
   const espresso = coffeeContext.createRadialGradient(-.16, -.19, .12, 0, 0, 1.06);
   espresso.addColorStop(0, '#994f28');
@@ -95,6 +101,10 @@ export function createSurface(milk) {
     coffeeContext.beginPath();
     coffeeContext.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
     coffeeContext.fill();
+    grain.fillStyle = bubble.highlight ? '#fffefa42' : '#a27d5929';
+    grain.beginPath();
+    grain.ellipse(bubble.x, bubble.y, bubble.radius * .87, bubble.radius * .72, .24, 0, Math.PI * 2);
+    grain.fill();
   }
 
   let paintedRevision = -1;
@@ -114,15 +124,22 @@ export function createSurface(milk) {
       const density = milk.density;
       for (let i = 0; i < density.length; i++) {
         const level = density[i];
-        const cream = 1 - Math.exp(-.36 * level);
+        const cream = 1 - Math.exp(-.42 * level);
+        const boundary = Math.max(0, Math.min(1, (level - .21) / 1.45));
+        const cover = .43 * cream + .57 * boundary ** 2 * (3 - 2 * boundary);
         const offset = i * 4;
-        foamImage.data[offset] = 231 + 23 * cream;
-        foamImage.data[offset + 1] = 189 + 60 * cream;
-        foamImage.data[offset + 2] = 144 + 96 * cream;
-        foamImage.data[offset + 3] = 255 * (1 - Math.exp(-.65 * level));
+        foamImage.data[offset] = 233 + 19 * cream;
+        foamImage.data[offset + 1] = 188 + 59 * cream;
+        foamImage.data[offset + 2] = 142 + 94 * cream;
+        foamImage.data[offset + 3] = 255 * cover;
       }
       foamContext.putImageData(foamImage, 0, 0);
-      ground.drawImage(foam, 0, 0, ART_SIZE, ART_SIZE);
+      coat.clearRect(0, 0, foamCoat.width, foamCoat.height);
+      coat.drawImage(foam, 0, 0, foamCoat.width, foamCoat.height);
+      coat.globalCompositeOperation = 'source-atop';
+      coat.drawImage(foamGrain, 0, 0);
+      coat.globalCompositeOperation = 'source-over';
+      ground.drawImage(foamCoat, 0, 0, ART_SIZE, ART_SIZE);
     }
     paintedRevision = milk.revision;
   }
@@ -133,12 +150,13 @@ export function createSurface(milk) {
   }
 
   function clipLayer(layer, clips) {
+    const half = layer.canvas.width / 2;
     layer.beginPath();
-    layer.arc(radius, radius, radius, 0, Math.PI * 2);
+    layer.arc(half, half, half, 0, Math.PI * 2);
     layer.clip();
     for (const circle of clips) {
       layer.beginPath();
-      layer.arc((circle.x + 1) * radius, (circle.y + 1) * radius, circle.radius * radius, 0, Math.PI * 2);
+      layer.arc((circle.x + 1) * half, (circle.y + 1) * half, circle.radius * half, 0, Math.PI * 2);
       layer.clip();
     }
   }
@@ -148,10 +166,11 @@ export function createSurface(milk) {
     paintBlank: paintBase,
     paintPourPreview(layer, clips) {
       if (paintedRevision !== milk.revision) updateBase();
-      layer.clearRect(0, 0, ART_SIZE, ART_SIZE);
+      const size = layer.canvas.width;
+      layer.clearRect(0, 0, size, size);
       layer.save();
       clipLayer(layer, clips);
-      layer.drawImage(base, 0, 0);
+      layer.drawImage(base, 0, 0, size, size);
       layer.restore();
     },
     paintInkPreview(layer, strokes, active, clips = []) {

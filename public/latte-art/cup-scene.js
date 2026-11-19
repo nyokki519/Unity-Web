@@ -128,7 +128,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   const ink = inkCanvas.getContext('2d');
   const still = stillCanvas.getContext('2d', { alpha: false });
   const liquid = pourCanvas.getContext('2d');
-  inkCanvas.width = inkCanvas.height = pourCanvas.width = pourCanvas.height = foam.canvas.width;
+  inkCanvas.width = inkCanvas.height = foam.canvas.width;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#554a40');
   scene.environment = windowReflection();
@@ -275,6 +275,12 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     inkCanvas.hidden = true;
   }
 
+  function discardPourLayers() {
+    if (stillCanvas.hidden) return;
+    stillCanvas.hidden = pourCanvas.hidden = true;
+    stillCanvas.width = stillCanvas.height = pourCanvas.width = pourCanvas.height = 0;
+  }
+
   function drawFrame() {
     if (contextUnavailable) return;
     if (mode === 'pour') {
@@ -284,7 +290,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       if (mode === 'draw' && !backdropDirty) return;
       renderer.render(scene, camera);
       backdropDirty = false;
-      stillCanvas.hidden = pourCanvas.hidden = true;
+      discardPourLayers();
       inkCanvas.hidden = mode !== 'draw';
     }
     if (substitute) fallbackCanvas.hidden = true;
@@ -308,7 +314,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     handle.rotation.y = mode === 'serve' ? 0 : DRAW_HANDLE_ANGLE;
     renderer.shadowMap.needsUpdate = true;
     const ratio = Math.min(devicePixelRatio || 1, 1.75);
-    const texture = Math.min(width, height) * ratio <= 740 ? liveFoamTexture : foamTexture;
+    const compact = Math.min(width, height) * ratio <= 740;
+    const texture = compact ? liveFoamTexture : foamTexture;
     if (disk.material.map !== texture) {
       disk.material.map = texture;
       artworkDirty = true;
@@ -323,6 +330,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       artworkDirty = true;
       projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
       const layer = mode === 'pour' ? pourCanvas : inkCanvas;
+      const size = mode === 'pour' && compact ? liveFoam.width : foam.canvas.width;
+      if (layer.width !== size || layer.height !== size) layer.width = layer.height = size;
       const matrix = projectInkPlane(projection.elements, { width, height }, FOAM_PLANE, layer.width);
       layer.style.transform = `matrix3d(${matrix.join(',')})`;
     }
@@ -334,7 +343,8 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   function activateFallback() {
     contextUnavailable = true;
     animating = false;
-    inkCanvas.hidden = stillCanvas.hidden = pourCanvas.hidden = true;
+    inkCanvas.hidden = true;
+    discardPourLayers();
     substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
       overlay: true, tableImage: wood.map.image,
     });

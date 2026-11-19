@@ -127,3 +127,18 @@ test('the pitcher reaches the cup smoothly before depositing milk and recovers f
   assert.equal(cup.resting, 0);
   assert.ok(cup.flow > 0 && cup.amount > 0);
 });
+
+test('a slow pass lays down more foam than a fast pass on the same stroke', () => {
+  const cup = new MilkPour();
+  const left = { x: -.72, y: .12 };
+  cup.start(left);
+  cup.advance(180, left);
+  cup.advance(1000, { x: -.05, y: .12 });
+  cup.advance(280, { x: .68, y: .12 });
+  cup.stop();
+  cup.settle();
+  const nearby = (x, y) => [-.06, -.03, 0, .03, .06]
+    .reduce((sum, delta) => sum + at(cup, x, y + delta), 0);
+  assert.ok(nearby(-.39, .12) > nearby(.35, .12) * 1.7);
+  assert.ok(nearby(.35, .12) > .07);
+});

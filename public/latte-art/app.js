@@ -141,13 +141,15 @@ function presentPour() {
   const amount = `${Math.round(milk.amount)} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
-  $('pourCenter').disabled = milk.pouring || full;
+  $('pourCenter').disabled = pourPointerId !== null || milk.pouring || full;
   if (full) $('tip').textContent = 'カップが満量です。チョコペンで描けます。';
   redraw();
 }
 
 function advancePour(timestamp, position = milk.position) {
-  const now = Math.max(pouredAt, timestamp);
+  const current = performance.now();
+  const eventTime = Number.isFinite(timestamp) ? Math.min(current, timestamp) : current;
+  const now = Math.max(pouredAt, eventTime);
   if (centerUntil && now >= centerUntil) {
     milk.advance(centerUntil - pouredAt, position, pourRate);
     milk.stop();
@@ -195,6 +197,11 @@ function penWidth() {
   return 0.008 + Number($('width').value) * 0.0056;
 }
 
+function overLiquid(point) {
+  return point && Math.hypot(point.x, point.y) <= 1 && cup.drawingClips.every(circle =>
+    Math.hypot(point.x - circle.x, point.y - circle.y) <= circle.radius);
+}
+
 cup.input.addEventListener('pointerdown', event => {
   if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
   const point = cup.sample(event);
@@ -207,8 +214,7 @@ cup.input.addEventListener('pointerdown', event => {
     updateToolbar();
     redraw();
   } else if (mode === 'pour') {
-    if (Math.hypot(point.x, point.y) > 1 || cup.drawingClips.some(circle =>
-      Math.hypot(point.x - circle.x, point.y - circle.y) > circle.radius) || !beginPour(point)) return;
+    if (!overLiquid(point) || !beginPour(point)) return;
     pourPointerId = event.pointerId;
   } else {
     return;
@@ -225,7 +231,13 @@ cup.input.addEventListener('pointermove', event => {
     const events = event.getCoalescedEvents?.();
     for (const sample of events?.length ? events : [event]) {
       const point = cup.sample(sample);
-      if (point) advancePour(sample.timeStamp, point);
+      if (!overLiquid(point)) {
+        if (milk.pouring) stopPour(false, sample.timeStamp);
+      } else if (!milk.pouring) {
+        beginPour(point);
+      } else {
+        advancePour(sample.timeStamp, point);
+      }
     }
   }
 });
@@ -240,7 +252,8 @@ function endGesture(event) {
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
     const position = event.type === 'pointerup' ? cup.sample(event) : null;
-    stopPour(false, event.timeStamp, position ?? milk.position);
+    stopPour(false, event.timeStamp, overLiquid(position) ? position : milk.position);
+    if (!milk.moving) presentPour();
   }
 }
 
@@ -275,6 +288,7 @@ for (const event of ['webglcontextlost', 'webglcontextrestored']) {
 bindActivation($('menuButton'), () => {
   const open = $('menu').hidden;
   closeMenus();
+  $('newCup').hidden = mode === 'pour' && !milk.amount;
   $('menu').hidden = !open;
   $('menuButton').setAttribute('aria-expanded', String(open));
 });
@@ -343,6 +357,27 @@ $('clearDialog').addEventListener('close', () => {
     $('widthButton').focus();
   } else {
     $('clear').focus();
+  }
+});
+
+bindActivation($('newCup'), () => {
+  closeMenus();
+  releaseGesture();
+  const dialog = $('newCupDialog');
+  dialog.returnValue = 'cancel';
+  dialog.showModal();
+});
+for (const button of $('newCupDialog').querySelectorAll('button')) {
+  bindActivation(button, () => $('newCupDialog').close(button.value), { requireOwnPress: true });
+}
+$('newCupDialog').addEventListener('close', () => {
+  if ($('newCupDialog').returnValue === 'restart') {
+    resetCup();
+    setMode('pour');
+    queueDraft();
+    $('tilt').focus({ preventScroll: true });
+  } else {
+    $('menuButton').focus();
   }
 });
 
@@ -431,13 +466,16 @@ $('serving').addEventListener('keydown', event => {
   event.preventDefault();
   returnToEditing();
 });
-$('restart').onclick = () => {
+function resetCup() {
   drawing.clear();
   milk.reset();
   invalidatePhoto();
-  returnStage = 'pour';
   $('tilt').value = String(DEFAULT_POUR_RATE * 100);
   $('tilt').oninput();
+}
+$('restart').onclick = () => {
+  resetCup();
+  returnStage = 'pour';
   $('finishPanel').close();
 };
 $('saveImage').onclick = async () => {

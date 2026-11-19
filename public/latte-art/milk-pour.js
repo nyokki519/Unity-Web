@@ -178,10 +178,11 @@ export class MilkPour {
       const level = current[index];
       if (!level) continue;
       let remain = level;
+      const diffusion = level / (1 + .16 * level);
       for (let direction = 0; direction < neighbors.length; direction++) {
         const neighbor = neighbors[direction];
         if (neighbor === -1) continue;
-        const share = level * (direction < 4 ? .048 : .022);
+        const share = diffusion * (direction < 4 ? .048 : .022);
         result[neighbor] += share;
         remain -= share;
       }

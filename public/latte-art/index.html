@@ -24,6 +24,7 @@
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
         <button type="button" id="showHelp">遊び方</button>
         <button type="button" id="showDraw">チョコペンで描く</button>
+        <button type="button" id="newCup">もう一杯作る</button>
         <a href="/">Unity MIX ホーム</a>
       </nav>
       <p id="tip" class="hint">液面を押して注ぎ、そのまま指で位置を動かせます。</p>
@@ -73,6 +74,14 @@
       <form method="dialog">
         <button value="cancel" autofocus>キャンセル</button>
         <button value="clear" class="go">全消し</button>
+      </form>
+    </dialog>
+    <dialog id="newCupDialog" class="sheet" aria-labelledby="newCupTitle">
+      <h2 id="newCupTitle">もう一杯作りますか？</h2>
+      <p>今のミルクとチョコを消し、コーヒーから始めます。</p>
+      <form method="dialog">
+        <button value="cancel" autofocus>キャンセル</button>
+        <button value="restart" class="go">もう一杯作る</button>
       </form>
     </dialog>
     <dialog id="helpDialog" class="sheet" aria-labelledby="helpTitle">
