@@ -161,16 +161,40 @@ export function createSurface(milk) {
     }
   }
 
+  function paintImpact(layer) {
+    if (milk.flow < .025) return;
+    const half = layer.canvas.width / 2;
+    const { x, y } = milk.position;
+    layer.save();
+    layer.setTransform(half, 0, 0, half, half, half);
+    layer.lineWidth = .007;
+    for (const offset of [0, .5]) {
+      const phase = (milk.motionTime / 295 + offset) % 1;
+      const radius = .025 + .082 * phase;
+      const shine = (1 - phase) ** 2 * (.10 + .24 * milk.flow);
+      layer.strokeStyle = `rgba(255, 244, 222, ${shine})`;
+      layer.beginPath();
+      layer.arc(x, y, radius, Math.PI * .92, Math.PI * 1.77);
+      layer.stroke();
+      layer.strokeStyle = `rgba(96, 46, 24, ${shine * .46})`;
+      layer.beginPath();
+      layer.arc(x, y, radius, Math.PI * .05, Math.PI * .78);
+      layer.stroke();
+    }
+    layer.restore();
+  }
+
   return {
     canvas: surface,
     paintBlank: paintBase,
-    paintPourPreview(layer, clips) {
+    paintPourPreview(layer, clips, showImpact) {
       if (paintedRevision !== milk.revision) updateBase();
       const size = layer.canvas.width;
       layer.clearRect(0, 0, size, size);
       layer.save();
       clipLayer(layer, clips);
       layer.drawImage(base, 0, 0, size, size);
+      if (showImpact) paintImpact(layer);
       layer.restore();
     },
     paintInkPreview(layer, strokes, active, clips = []) {
@@ -182,8 +206,9 @@ export function createSurface(milk) {
       if (active) paintInk(layer, [active]);
       layer.restore();
     },
-    paint(strokes, active) {
+    paint(strokes, active, showImpact = false) {
       paintBase();
+      if (showImpact) paintImpact(context);
       cache.sync(strokes, active);
       context.drawImage(ink, 0, 0);
       if (active) paintInk(context, [active]);

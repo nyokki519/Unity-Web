@@ -127,6 +127,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   }
   canvas.hidden = false;
   const context = canvas.getContext('2d');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let mode = 'pour';
   let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1, amount: 0 };
   let artwork = { strokes: [], active: null };
@@ -212,7 +213,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   }
   function draw() {
     const { strokes, active } = artwork;
-    foam.paint(strokes, active);
+    foam.paint(strokes, active, mode === 'pour' && !reducedMotion.matches);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     paint(context, width, height, mode);
   }

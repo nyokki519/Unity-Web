@@ -137,7 +137,7 @@ function setMode(next, animate = false) {
 }
 
 function presentPour() {
-  cup.setPour({ position: milk.position, flow: milk.flow, resting: milk.resting, amount: milk.amount });
+  cup.setPour({ position: milk.toolTarget, flow: milk.flow, resting: milk.resting, amount: milk.amount });
   const amount = `${Math.round(milk.amount)} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;

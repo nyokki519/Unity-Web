@@ -267,7 +267,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
         renderer.setDrawingBufferSize(size.x, size.y, LIVE_TOOL_PIXEL_RATIO);
       }
     }
-    if (artworkDirty || backdropDirty) foam.paintPourPreview(liquid, pourClips);
+    if (artworkDirty || backdropDirty) foam.paintPourPreview(liquid, pourClips, !drawingMode.matches);
     renderer.render(pourScene, camera);
     artworkDirty = false;
     backdropDirty = false;

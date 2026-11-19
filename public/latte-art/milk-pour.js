@@ -55,11 +55,17 @@ function decode(state) {
 export class MilkPour {
   #density;
   #scratch = new Float32Array(CELL_COUNT);
+  #kernelX = new Float64Array(SIZE);
+  #kernelY = new Float64Array(SIZE);
   #position = CENTER;
+  #previousTick = CENTER;
+  #approachFrom = CENTER;
+  #returnTarget = CENTER;
   #accumulator = 0;
   #age = 0;
   #tail = 0;
   #stopFlow = 0;
+  #startRest = 1;
   #stopRest = 0;
   #settling = 0;
   #pouring = false;
@@ -81,9 +87,19 @@ export class MilkPour {
   get revision() { return this.#revision; }
   get legacy() { return this.#legacy; }
   get position() { return this.#position; }
+  get toolTarget() {
+    if (!this.#pouring) return this.#returnTarget;
+    const progress = smooth(this.#age / APPROACH_TIME);
+    if (progress === 1) return this.#position;
+    return {
+      x: this.#approachFrom.x + progress * (this.#position.x - this.#approachFrom.x),
+      y: this.#approachFrom.y + progress * (this.#position.y - this.#approachFrom.y),
+    };
+  }
   get flow() { return this.#flow; }
+  get motionTime() { return this.#age; }
   get resting() {
-    if (this.#pouring) return 1 - smooth(this.#age / APPROACH_TIME);
+    if (this.#pouring) return this.#startRest * (1 - smooth(this.#age / APPROACH_TIME));
     return 1 - (1 - this.#stopRest) * smooth(this.#settling / SETTLE_STEPS);
   }
   get pouring() { return this.#pouring; }
@@ -91,7 +107,10 @@ export class MilkPour {
 
   start(position) {
     if (this.#pouring || this.#amount >= MILK_CAPACITY) return false;
+    this.#approachFrom = this.toolTarget;
+    this.#startRest = this.resting;
     this.#position = boundedPoint(position);
+    this.#previousTick = this.#position;
     this.#accumulator = 0;
     this.#age = 0;
     this.#tail = this.#settling = 0;
@@ -121,8 +140,9 @@ export class MilkPour {
     if (!this.moving) this.#accumulator = 0;
   }
 
-  stop() {
+  stop(target = this.toolTarget) {
     if (!this.#pouring) return;
+    this.#returnTarget = target;
     this.#stopRest = this.resting;
     this.#pouring = false;
     this.#stopFlow = this.#flow;
@@ -140,7 +160,7 @@ export class MilkPour {
   reset() {
     this.#pouring = this.#legacy = false;
     this.#amount = this.#flow = this.#accumulator = this.#tail = this.#settling = 0;
-    this.#position = CENTER;
+    this.#position = this.#previousTick = this.#approachFrom = this.#returnTarget = CENTER;
     this.#density.fill(0);
     this.#revision++;
   }
@@ -153,20 +173,21 @@ export class MilkPour {
   }
 
   #tick(point, rate) {
+    this.#age += STEP;
     if (this.#pouring) {
-      this.#age += STEP;
       this.#flow = rate * smooth((this.#age - APPROACH_TIME) / OPENING_TIME);
       const dose = Math.min(MILK_CAPACITY - this.#amount, STEP / 1000 * MAX_FLOW * this.#flow);
       this.#spread(point, this.#flow);
-      if (dose > 0) this.#deposit(point, dose);
+      if (dose > 0) this.#deposit(this.#previousTick, point, dose);
       this.#amount += dose;
-      if (this.#amount >= MILK_CAPACITY) this.stop();
+      if (this.#amount >= MILK_CAPACITY) this.stop(point);
     } else {
       this.#settling--;
       this.#tail = Math.max(0, this.#tail - 1);
       this.#flow = this.#stopFlow * (this.#tail / STREAM_TAIL_STEPS) ** 2;
       this.#spread(point, 0);
     }
+    this.#previousTick = point;
     this.#revision++;
   }
 
@@ -224,27 +245,47 @@ export class MilkPour {
     this.#scratch = current;
   }
 
-  #deposit(point, dose) {
+  #deposit(from, point, dose) {
+    const dx = point.x - from.x;
+    const dy = point.y - from.y;
+    const samples = Math.ceil(Math.hypot(dx, dy) / .042);
+    if (samples <= 1) {
+      this.#stamp(point, dose);
+      return;
+    }
+    // Treat a fast movement as one thin continuous jet path with the same volume.
+    for (let i = 0; i < samples; i++) {
+      const fraction = (i + .5) / samples;
+      this.#stamp({ x: from.x + dx * fraction, y: from.y + dy * fraction }, dose / samples);
+    }
+  }
+
+  #stamp(point, dose) {
     const sigma = .037 + this.#flow * .029;
     const extent = sigma * 3;
     const left = Math.max(0, Math.floor((1 + point.x - extent) * SIZE / 2));
     const right = Math.min(SIZE - 1, Math.floor((1 + point.x + extent) * SIZE / 2));
     const top = Math.max(0, Math.floor((1 + point.y - extent) * SIZE / 2));
     const bottom = Math.min(SIZE - 1, Math.floor((1 + point.y + extent) * SIZE / 2));
-    const weights = [];
+    const divisor = 2 * sigma * sigma;
+    for (let column = left; column <= right; column++) {
+      this.#kernelX[column] = Math.exp(-((coordinate(column) - point.x) ** 2) / divisor);
+    }
+    for (let row = top; row <= bottom; row++) {
+      this.#kernelY[row] = Math.exp(-((coordinate(row) - point.y) ** 2) / divisor);
+    }
     let sum = 0;
     for (let row = top; row <= bottom; row++) {
-      const dy = coordinate(row) - point.y;
       for (let column = left; column <= right; column++) {
-        const index = row * SIZE + column;
-        if (!active[index]) continue;
-        const dx = coordinate(column) - point.x;
-        const weight = Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma));
-        weights.push([index, weight]);
-        sum += weight;
+        if (active[row * SIZE + column]) sum += this.#kernelX[column] * this.#kernelY[row];
       }
     }
     const scale = dose * 69 / sum;
-    for (const [index, weight] of weights) this.#density[index] += weight * scale;
+    for (let row = top; row <= bottom; row++) {
+      for (let column = left; column <= right; column++) {
+        const index = row * SIZE + column;
+        if (active[index]) this.#density[index] += this.#kernelX[column] * this.#kernelY[row] * scale;
+      }
+    }
   }
 }

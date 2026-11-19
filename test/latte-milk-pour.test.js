@@ -142,3 +142,35 @@ test('a slow pass lays down more foam than a fast pass on the same stroke', () =
   assert.ok(nearby(-.39, .12) > nearby(.35, .12) * 1.7);
   assert.ok(nearby(.35, .12) > .07);
 });
+
+test('retapping during the return carries the pitcher from its current position to the new point', () => {
+  const cup = new MilkPour();
+  cup.start({ x: -.55, y: 0 });
+  cup.advance(250);
+  cup.stop();
+  cup.advance(66);
+  const from = cup.toolTarget;
+  const resting = cup.resting;
+  cup.start({ x: .53, y: .12 });
+  assert.deepEqual(cup.toolTarget, from);
+  assert.equal(cup.resting, resting);
+  cup.advance(50);
+  assert.ok(cup.toolTarget.x > from.x && cup.toolTarget.x < .53);
+  cup.advance(125);
+  assert.deepEqual(cup.toolTarget, { x: .53, y: .12 });
+});
+
+test('one fast pointer movement paints a thin continuous trail between sampled positions', () => {
+  const cup = new MilkPour();
+  const left = { x: -.64, y: -.13 };
+  const before = cup.amount;
+  cup.start(left);
+  cup.advance(300, left, .60);
+  const atStart = cup.amount;
+  cup.advance(17, { x: .64, y: -.13 }, .60);
+  assert.ok(cup.amount - atStart < 1.3);
+  cup.settle();
+  assert.ok(cup.amount > before);
+  for (const x of [-.45, -.20, 0, .20, .45]) assert.ok(at(cup, x, -.13) > .025, x);
+  assert.ok(at(cup, 0, .11) < .03);
+});
