@@ -122,6 +122,33 @@ export class MilkPour {
     return true;
   }
 
+  savePreviewCheckpoint(saved = { density: new Float32Array(CELL_COUNT) }) {
+    saved.density.set(this.#density);
+    return Object.assign(saved, {
+      position: this.#position, previousTick: this.#previousTick, returnTarget: this.#returnTarget,
+      accumulator: this.#accumulator, age: this.#age, amount: this.#amount,
+      flow: this.#flow, tail: this.#tail, stopFlow: this.#stopFlow, stopRest: this.#stopRest,
+      settling: this.#settling, pouring: this.#pouring,
+    });
+  }
+
+  restorePreviewCheckpoint(saved) {
+    this.#density.set(saved.density);
+    this.#position = saved.position;
+    this.#previousTick = saved.previousTick;
+    this.#returnTarget = saved.returnTarget;
+    this.#accumulator = saved.accumulator;
+    this.#age = saved.age;
+    this.#amount = saved.amount;
+    this.#flow = saved.flow;
+    this.#tail = saved.tail;
+    this.#stopFlow = saved.stopFlow;
+    this.#stopRest = saved.stopRest;
+    this.#settling = saved.settling;
+    this.#pouring = saved.pouring;
+    this.#revision++;
+  }
+
   // Temporal interpolation keeps the deposited path and amount independent of the render cadence.
   advance(milliseconds, position = this.#position, rate = DEFAULT_POUR_RATE) {
     if (!this.moving) return;
