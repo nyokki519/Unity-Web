@@ -83,7 +83,12 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   overlay = false, tableImage = createWalnutImages(false).colorCanvas,
 } = {}) {
   if (overlay) canvas.classList.add('paint-overlay');
-  else mainCanvas.hidden = true;
+  else {
+    mainCanvas.hidden = true;
+    canvas.removeAttribute('aria-hidden');
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', mainCanvas.getAttribute('aria-label'));
+  }
   canvas.hidden = false;
   const context = canvas.getContext('2d');
   let mode = 'draw';
