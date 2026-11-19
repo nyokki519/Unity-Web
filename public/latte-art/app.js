@@ -8,6 +8,7 @@ import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
+const POUR_INPUT_BUFFER_MS = 1000 / 30;
 paintCafeMark($('cafeMark').getContext('2d'), 0, 0, 96, '#f5d9ad');
 const drawing = new ChocolateDrawing();
 let draftStorage;
@@ -173,8 +174,9 @@ function inputTime(timestamp) {
 
 function paintPourFrame(now) {
   pourFrame = 0;
-  // Leave one simulation step for coalesced motion events near the display frame.
-  const inputDelay = pourPointerId !== null && milk.pouring ? 1000 / 60 : 0;
+  // Keep two fixed steps open for late pointer samples. Motion events themselves
+  // still advance directly to their recorded time and position.
+  const inputDelay = pourPointerId !== null && milk.pouring ? POUR_INPUT_BUFFER_MS : 0;
   pourInput.advance(Math.max(0, now - inputDelay), pourRate);
   presentPour(true);
   if (milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
