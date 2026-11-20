@@ -508,7 +508,7 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 }
 @media (orientation: landscape) and (max-height: 520px) {
   .hint { top: calc(16px + env(safe-area-inset-top)); }
-  .pour-controls { width: min(24vw, 180px); padding-inline: 10px; }
+  .pour-controls { width: min(24vw, 180px); padding: 7px 10px; gap: 4px; }
   .pour-controls input { width: 100%; margin-inline: 0; }
   .width-panel {
     left: auto;
