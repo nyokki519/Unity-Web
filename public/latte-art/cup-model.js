@@ -122,6 +122,16 @@ export function shapePitcherSpout(geometry) {
 const STREAM_SEGMENTS = 20;
 const STREAM_SIDES = 8;
 
+export function pourJetPose(flow, used) {
+  const established = THREE.MathUtils.smoothstep(flow, .02, .64);
+  return {
+    angle: .70 + .16 * established + .13 * used,
+    height: THREE.MathUtils.lerp(.80, .41, established),
+    reach: THREE.MathUtils.lerp(.16, .40, established),
+    depth: -.19 - .18 * established,
+  };
+}
+
 export function sampleFallingMilk(start, end, t) {
   return {
     x: THREE.MathUtils.lerp(start.x, end.x, t),
@@ -157,17 +167,19 @@ export function updateMilkStream(geometry, start, end, amount, cut = 0) {
   const tangent = new THREE.Vector3();
   const normal = new THREE.Vector3();
   const vertices = geometry.getAttribute('position');
-  const startRadius = .044 * Math.sqrt(amount);
+  const startRadius = .052 * Math.sqrt(amount);
   for (let ring = 0; ring <= STREAM_SEGMENTS; ring++) {
     const t = THREE.MathUtils.lerp(cut, 1, ring / STREAM_SEGMENTS);
     const center = sampleFallingMilk(start, end, t);
     tangent.set(dx, 2 * Math.max(.001, t) * dy, dz).normalize();
     normal.crossVectors(tangent, across).normalize();
     const radius = startRadius / Math.sqrt(1 + 2 * t);
+    // At the lip the stream is a short ribbon that gathers into a round jet.
+    const spread = 1 + .42 * (1 - THREE.MathUtils.smoothstep(t, 0, .35));
     for (let side = 0; side < STREAM_SIDES; side++) {
       const angle = Math.PI * 2 * side / STREAM_SIDES;
-      const a = radius * Math.cos(angle);
-      const b = radius * Math.sin(angle);
+      const a = radius * spread * Math.cos(angle);
+      const b = radius / spread * Math.sin(angle);
       vertices.setXYZ(
         ring * STREAM_SIDES + side,
         center.x + across.x * a + normal.x * b,

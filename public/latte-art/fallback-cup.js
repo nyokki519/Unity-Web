@@ -4,27 +4,33 @@ import { createWalnutImages } from './walnut.js';
 import { drawingFoamClips, PHOTO_FOAM_CLIPS, visibleFoamClips } from './foam-geometry.js';
 import { MILK_CAPACITY } from './milk-pour.js';
 
-function paintSpoon(ctx, x, y, scale) {
+function paintSpoon(ctx, x, y, scale, angle) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
-  ctx.rotate(-.065);
+  ctx.rotate(angle);
   const steel = ctx.createLinearGradient(0, -.15, 0, .15);
   steel.addColorStop(0, '#f4ede4');
   steel.addColorStop(.43, '#d6cfc5');
   steel.addColorStop(.74, '#9b9184');
   steel.addColorStop(1, '#eee5d9');
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = steel;
-  ctx.lineWidth = .07;
-  ctx.beginPath();
-  ctx.moveTo(-.4, 0);
-  ctx.lineTo(.76, 0);
-  ctx.stroke();
+  ctx.save();
+  ctx.shadowColor = '#47302375';
+  ctx.shadowBlur = scale * .036;
+  ctx.shadowOffsetX = scale * .019;
+  ctx.shadowOffsetY = scale * .028;
   ctx.fillStyle = steel;
+  ctx.beginPath();
+  ctx.moveTo(-.45, -.035);
+  ctx.bezierCurveTo(-.08, -.024, .43, -.062, .72, -.065);
+  ctx.quadraticCurveTo(.83, 0, .72, .065);
+  ctx.bezierCurveTo(.42, .061, -.08, .025, -.45, .035);
+  ctx.closePath();
+  ctx.fill();
   ctx.beginPath();
   ctx.ellipse(-.64, 0, .32, .17, 0, 0, Math.PI * 2);
   ctx.fill();
+  ctx.restore();
   const well = ctx.createRadialGradient(-.71, .046, .02, -.64, 0, .3);
   well.addColorStop(0, '#f7eee2');
   well.addColorStop(.62, '#a69c8c');
@@ -36,29 +42,49 @@ function paintSpoon(ctx, x, y, scale) {
   ctx.restore();
 }
 
-function paintPitcher(ctx, x, y, scale, { position, flow, streamCut = 0, resting, amount }) {
+function pitcherPose({ position, flow, resting, amount, pitcherOffset }) {
+  const used = amount / MILK_CAPACITY;
+  const establishing = Math.min(1, flow / .64);
+  const established = establishing ** 2 * (3 - 2 * establishing);
+  return {
+    left: (position.x + .30 + .22 * established) * (1 - resting) + (.48 + (pitcherOffset?.x ?? 0)) * resting,
+    top: (.88 * position.y - .51 + .24 * established) * (1 - resting) + (-1.17 + .88 * (pitcherOffset?.y ?? 0)) * resting,
+    angle: .10 * resting + (.55 + .13 * used + .18 * established) * (1 - resting),
+    used,
+  };
+}
+
+function pitcherLip({ left, top, angle }) {
+  return {
+    x: left - .12 * Math.cos(angle) - .03 * Math.sin(angle),
+    y: top - .12 * Math.sin(angle) + .03 * Math.cos(angle),
+  };
+}
+
+function paintPitcher(ctx, x, y, scale, view) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
-  const left = (position.x + .18) * (1 - resting) + .48 * resting;
-  const top = (.88 * position.y - .65) * (1 - resting) - 1.17 * resting;
-  const used = amount / MILK_CAPACITY;
-  const angle = .10 * resting + (.25 + .40 * used + .27 * flow) * (1 - resting);
+  const { position, flow, streamCut = 0 } = view;
+  const { left, top, angle, used } = pitcherPose(view);
   if (flow > .008) {
-    const tipX = left - .12 * Math.cos(angle) - .03 * Math.sin(angle);
-    const tipY = top - .12 * Math.sin(angle) + .03 * Math.cos(angle);
-    ctx.strokeStyle = '#fff6e4';
-    ctx.lineCap = 'round';
-    ctx.lineWidth = .043 * Math.sqrt(flow);
-    ctx.beginPath();
+    const { x: tipX, y: tipY } = view.jetOrigin ?? pitcherLip({ left, top, angle });
     const dx = position.x - tipX;
     const dy = .88 * position.y - tipY;
-    ctx.moveTo(tipX + dx * streamCut, tipY + dy * streamCut ** 2);
-    for (let i = 1; i <= 12; i++) {
-      const fraction = streamCut + (1 - streamCut) * i / 12;
-      ctx.lineTo(tipX + dx * fraction, tipY + dy * fraction ** 2);
-    }
-    ctx.stroke();
+    const edge = (step, side) => {
+      const t = streamCut + (1 - streamCut) * step / 12;
+      const speed = Math.hypot(dx, 2 * t * dy) || 1;
+      const radius = side * .032 * Math.sqrt(flow / (1 + 2 * t));
+      return [tipX + dx * t - radius * (2 * t * dy) / speed,
+        tipY + dy * t ** 2 + radius * dx / speed];
+    };
+    ctx.fillStyle = '#fff6e4';
+    ctx.beginPath();
+    ctx.moveTo(...edge(0, 1));
+    for (let i = 1; i <= 12; i++) ctx.lineTo(...edge(i, 1));
+    for (let i = 12; i >= 0; i--) ctx.lineTo(...edge(i, -1));
+    ctx.closePath();
+    ctx.fill();
   }
   ctx.translate(left, top);
   ctx.rotate(angle);
@@ -209,8 +235,13 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     body.addColorStop(1, '#947358');
     ellipse(1.028, .872, body, r * .23);
     ellipse(1.068, .935, glaze, r * .085);
-    ellipse(1.074, .949, '#c28c60');
-    ellipse(1.051, .926, '#f3dfbf');
+    ellipse(1.074, .949, '#d5a782');
+    const inner = ctx.createLinearGradient(x, y - .92 * r, x, y + .64 * r);
+    inner.addColorStop(0, '#c5b19c');
+    inner.addColorStop(.20, '#ddccb5');
+    inner.addColorStop(.48, '#fff0d9');
+    inner.addColorStop(1, '#f8e2c2');
+    ellipse(1.051, .926, inner);
     ctx.save();
     ctx.beginPath();
     ctx.ellipse(x, y + r * .085, r * 1.068, r * .935, 0, 0, Math.PI * 2);
@@ -249,7 +280,8 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.fillText('Unity', x - r * .94, y + r * 1.44);
     ctx.restore();
     paintCafeMark(ctx, x + r * .24, y + r * .895, r * .16, '#68412b');
-    if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r);
+    if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r, -.065);
+    else paintSpoon(ctx, x - r * 1.23, y + r * .31, r * .71, 1.50);
     if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
     if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
   }
@@ -322,7 +354,9 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       invalidate();
     },
     setPour(view, paintNow = false) {
-      pourView = view;
+      const jetOrigin = view.flow > .008
+        ? (view.streamCut && pourView.jetOrigin) || pitcherLip(pitcherPose(view)) : null;
+      pourView = { ...view, jetOrigin };
       if (mode !== 'pour') return;
       if (paintNow) {
         cancelAnimationFrame(pending);
@@ -334,6 +368,16 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       const rect = canvas.getBoundingClientRect();
       const { x, y, r } = layout(width, height, mode);
       return { x: (event.clientX - rect.left - x) / r, y: (event.clientY - rect.top - y) / (r * .88) };
+    },
+    hitsPitcher(event) {
+      const rect = canvas.getBoundingClientRect();
+      const { x, y, r } = layout(width, height, 'pour');
+      const { left, top, angle } = pitcherPose(pourView);
+      const dx = (event.clientX - rect.left - x) / r - left;
+      const dy = (event.clientY - rect.top - y) / r - top;
+      const across = dx * Math.cos(angle) + dy * Math.sin(angle);
+      const down = -dx * Math.sin(angle) + dy * Math.cos(angle);
+      return across > -.16 && across < .73 && down > -.10 && down < .59;
     },
     photo() {
       foam.paintPhoto(artwork.strokes);

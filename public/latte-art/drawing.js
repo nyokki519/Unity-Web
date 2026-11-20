@@ -105,20 +105,34 @@ function formsCorner(previous, point, next) {
   return ax * bx + ay * by <= 0;
 }
 
-function trace(context, points, offset) {
+function trace(context, points, dx = 0, dy = 0) {
   context.beginPath();
-  context.moveTo(points[0].x, points[0].y - offset);
+  context.moveTo(points[0].x + dx, points[0].y + dy);
   for (let i = 1; i < points.length - 1; i++) {
     const from = points[i];
     const to = points[i + 1];
     if (formsCorner(points[i - 1], from, to)) {
-      context.lineTo(from.x, from.y - offset);
+      context.lineTo(from.x + dx, from.y + dy);
     } else {
-      context.quadraticCurveTo(from.x, from.y - offset, (from.x + to.x) / 2, (from.y + to.y) / 2 - offset);
+      context.quadraticCurveTo(from.x + dx, from.y + dy, (from.x + to.x) / 2 + dx, (from.y + to.y) / 2 + dy);
     }
   }
   const end = points.at(-1);
-  context.lineTo(end.x, end.y - offset);
+  context.lineTo(end.x + dx, end.y + dy);
+}
+
+function roundDrop(context, { x, y }, width, color, onLine = false) {
+  const scale = onLine ? .53 : .58;
+  const gloss = context.createRadialGradient(x - width * .18, y - width * .21, 0, x, y, width * scale);
+  gloss.addColorStop(0, '#bb8c72');
+  gloss.addColorStop(.14, '#916048');
+  gloss.addColorStop(.40, '#744533');
+  gloss.addColorStop(.72, color);
+  gloss.addColorStop(1, onLine ? color : '#381b13');
+  context.fillStyle = gloss;
+  context.beginPath();
+  context.arc(x, y, width * scale, 0, Math.PI * 2);
+  context.fill();
 }
 
 export function paintChocolate(context, strokes) {
@@ -127,28 +141,26 @@ export function paintChocolate(context, strokes) {
   for (const { paths, width, color } of strokes) {
     for (const points of paths) {
       if (points.length === 1) {
-        const { x, y } = points[0];
-        const drop = context.createRadialGradient(x - width * 0.18, y - width * 0.2, 0, x, y, width * 0.56);
-        drop.addColorStop(0, '#936657');
-        drop.addColorStop(0.46, color);
-        drop.addColorStop(1, color);
-        context.fillStyle = drop;
-        context.beginPath();
-        context.arc(x, y, width * 0.56, 0, Math.PI * 2);
-        context.fill();
+        roundDrop(context, points[0], width, color);
         continue;
       }
-      trace(context, points, -width * 0.09);
-      context.strokeStyle = '#46231c35';
-      context.lineWidth = width * 1.12;
+      trace(context, points, width * .035, width * .10);
+      context.strokeStyle = '#30150669';
+      context.lineWidth = width * 1.11;
       context.stroke();
-      trace(context, points, 0);
+      trace(context, points);
       context.strokeStyle = color;
       context.lineWidth = width;
       context.stroke();
-      trace(context, points, width * 0.18);
-      context.strokeStyle = '#fff0d435';
-      context.lineWidth = width * 0.26;
+      roundDrop(context, points[0], width, color, true);
+      // A soft reflection over the rounded sauce with a narrower, warm highlight.
+      trace(context, points, -width * .075, -width * .11);
+      context.strokeStyle = '#d69b755e';
+      context.lineWidth = width * .52;
+      context.stroke();
+      trace(context, points, -width * .125, -width * .17);
+      context.strokeStyle = '#ffe5c56b';
+      context.lineWidth = width * .16;
       context.stroke();
     }
   }

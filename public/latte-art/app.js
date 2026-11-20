@@ -1,4 +1,3 @@
-import { paintCafeMark } from './cafe-ware.js';
 import { ChocolateDrawing, liquidContains } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
@@ -10,8 +9,7 @@ import { bindActivation } from './touch-activation.js';
 const $ = id => document.getElementById(id);
 const POUR_INPUT_BUFFER_MS = 1000 / 30;
 const CUP_RENDER_WAIT_MS = 4200;
-const POUR_HINT = '液面を押して注ぎ、そのまま指で位置を動かせます。';
-paintCafeMark($('cafeMark').getContext('2d'), 0, 0, 96, '#f5d9ad');
+const POUR_HINT = 'ピッチャーを液面へドラッグ。または液面を長押し。';
 const drawing = new ChocolateDrawing();
 let draftStorage;
 try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled. */ }
@@ -19,15 +17,25 @@ const draft = readDraft(draftStorage);
 drawing.strokes = draft.strokes;
 const milk = new MilkPour(draft.milk);
 if (draft.stage === 'draw' || milk.amount || drawing.strokes.length) {
-  $('studio').dataset.restoring = 'true';
   $('loadingHint').textContent = '作りかけの一杯を復元中…';
-} else $('studio').dataset.freshCup = 'true';
+}
 const pourInput = new PourInput(milk);
 const surface = createSurface(milk);
+let firstFrameReady = false;
+let controlsReady = false;
+
+function showLoadingPhase(phase) {
+  $('studio').dataset.loadPhase = String(phase);
+  $('loadingProgress').setAttribute('aria-valuenow', phase);
+}
+
+showLoadingPhase(2);
 function revealStudio() {
+  firstFrameReady = true;
+  if (!controlsReady) return;
+  showLoadingPhase(3);
   $('studio').removeAttribute('aria-busy');
-  delete $('studio').dataset.restoring;
-  delete $('studio').dataset.freshCup;
+  $('studioLoader').setAttribute('aria-hidden', 'true');
   $('hud').inert = false;
 }
 
@@ -55,6 +63,8 @@ let stage = draft.stage;
 let mode = stage;
 let pourRate = DEFAULT_POUR_RATE;
 let pourPointerId = null;
+let pitcherPickup = null;
+let pitcherOffset = null;
 let pourFrame = 0;
 let drawPointerId = null;
 let servingTimer = 0;
@@ -119,6 +129,8 @@ function closeMenus() {
 function releaseCapturedPointers() {
   const captured = [drawPointerId, pourPointerId];
   drawPointerId = pourPointerId = null;
+  pitcherPickup = pitcherOffset = null;
+  $('pourAim').hidden = true;
   for (const id of captured) {
     if (id !== null && cup.input.hasPointerCapture(id)) cup.input.releasePointerCapture(id);
   }
@@ -140,7 +152,7 @@ function setMode(next, animate = false) {
   $('tip').textContent = next === 'pour'
     ? POUR_HINT
     : '泡に触れて一滴。指を動かして一筆。';
-  const label = next === 'pour' ? 'カップの液面を押してミルクを注ぐ' : 'カップの液面に指でチョコを描く';
+  const label = next === 'pour' ? 'ピッチャーを動かすか、液面を押してミルクを注ぐ' : 'カップの液面に指でチョコを描く';
   $('scene').setAttribute('aria-label', label);
   $('fallback').setAttribute('aria-label', label);
   cup.setMode(next, animate);
@@ -160,11 +172,14 @@ function presentPour(paintNow = false) {
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
   $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
-  const hint = full ? 'カップが満量です。チョコペンで描けます。' : POUR_HINT;
+  const hint = full ? 'カップが満量です。チョコペンで描けます。'
+    : pourPointerId === null ? POUR_HINT
+    : milk.pouring ? '指を動かすと着地点が移動。離すと止まります。' : '液面へ指を動かすと注ぎ始めます。';
   if ($('tip').textContent !== hint) $('tip').textContent = hint;
+  if (full || !isAimingPour()) $('pourAim').hidden = true;
   cup.setPour({
     position: milk.toolTarget, flow: milk.flow, streamCut: milk.streamCut,
-    resting: milk.resting, amount: milk.amount,
+    resting: milk.resting, amount: milk.amount, pitcherOffset,
   }, paintNow);
 }
 
@@ -207,6 +222,22 @@ function penWidth() {
   return 0.008 + Number($('width').value) * 0.0056;
 }
 
+function isAimingPour() {
+  return milk.pouring && milk.flow <= Math.min(.11, pourRate * .35);
+}
+
+function showPourAim(event) {
+  const aim = $('pourAim');
+  if (!isAimingPour()) {
+    aim.hidden = true;
+    return;
+  }
+  const bounds = $('studio').getBoundingClientRect();
+  aim.style.left = `${event.clientX - bounds.left}px`;
+  aim.style.top = `${event.clientY - bounds.top}px`;
+  aim.hidden = false;
+}
+
 cup.input.addEventListener('pointerdown', event => {
   if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
   const point = cup.sample(event);
@@ -219,8 +250,16 @@ cup.input.addEventListener('pointerdown', event => {
     updateToolbar();
     redraw();
   } else if (mode === 'pour') {
-    if (!liquidContains(point, cup.pouringClips) || !beginPour(point, 0, event.timeStamp)) return;
-    pourPointerId = event.pointerId;
+    if (milk.pouring || milk.amount >= MILK_CAPACITY) return;
+    if (cup.hitsPitcher(event)) {
+      pourPointerId = event.pointerId;
+      pitcherPickup = point;
+      presentPour();
+    } else {
+      if (!liquidContains(point, cup.pouringClips) || !beginPour(point, 0, event.timeStamp)) return;
+      pourPointerId = event.pointerId;
+      showPourAim(event);
+    }
   } else {
     return;
   }
@@ -236,9 +275,17 @@ cup.input.addEventListener('pointermove', event => {
     const events = event.getCoalescedEvents?.();
     for (const sample of events?.length ? events : [event]) {
       const point = cup.sample(sample);
+      if (pitcherPickup && point && !milk.pouring) {
+        const x = point.x - pitcherPickup.x;
+        const y = point.y - pitcherPickup.y;
+        const gain = Math.min(1, .9 / (Math.hypot(x, y) || 1));
+        pitcherOffset = { x: x * gain, y: y * gain };
+      }
       if (pourInput.move(point, inputTime(sample.timeStamp), pourRate, cup.pouringClips)) invalidatePhoto();
     }
+    showPourAim(event);
     if (!pourFrame && milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
+    else if (!pourFrame) presentPour();
   }
 });
 
@@ -251,6 +298,8 @@ function endGesture(event) {
   }
   if (event.pointerId === pourPointerId) {
     pourPointerId = null;
+    pitcherPickup = pitcherOffset = null;
+    $('pourAim').hidden = true;
     const position = event.type === 'pointerup' ? cup.sample(event) : null;
     pourInput.end(inputTime(event.timeStamp), pourRate, position, cup.pouringClips);
     if (!milk.moving) {
@@ -268,7 +317,10 @@ function releaseGesture() {
   if (drawing.activeStroke) queueDraft();
   drawing.cancel();
   releaseCapturedPointers();
-  if (mode === 'pour') settlePour();
+  if (mode === 'pour') {
+    if (milk.moving || pourFrame) settlePour();
+    else presentPour();
+  }
   redraw();
 }
 window.addEventListener('resize', releaseGesture);
@@ -332,7 +384,7 @@ bindActivation($('next'), openDrawing);
 $('tilt').oninput = event => {
   if (milk.moving || pourPointerId !== null) pourInput.advance(inputTime(event?.timeStamp), pourRate);
   pourRate = Number($('tilt').value) / 100;
-  const display = Math.round(pourRate * 100) + '%';
+  const display = pourRate <= .36 ? '細く' : pourRate >= .75 ? 'たっぷり' : 'ふつう';
   $('tiltValue').value = display;
   $('tilt').setAttribute('aria-valuetext', display);
   if (!pourFrame && milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
@@ -516,3 +568,5 @@ $('saveImage').onclick = async () => {
 
 setMode(stage);
 showPenWidth();
+controlsReady = true;
+if (firstFrameReady) revealStudio();

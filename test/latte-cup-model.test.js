@@ -4,7 +4,7 @@ import { LatheGeometry, PerspectiveCamera, Vector2, Vector3 } from '../public/ve
 import { CUP_PROFILE } from '../public/latte-art/foam-geometry.js';
 import {
   createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
-  FOAM_PLANE, PITCHER_LIP, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
+  FOAM_PLANE, PITCHER_LIP, pourJetPose, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from '../public/latte-art/cup-model.js';
 
 test('handle opens around a ceramic grip without crossing into milk', () => {
@@ -42,6 +42,16 @@ test('the milk stream falls toward the same surface and narrows as it accelerate
   );
   assert.ok(thickness(vertices.count - 8) < thickness(0));
   geometry.dispose();
+});
+
+test('an established pour lowers the pitcher lip and tips farther over the same point', () => {
+  const firstDrops = pourJetPose(.04, .1);
+  const steadyPour = pourJetPose(.62, .1);
+  const nearEmpty = pourJetPose(.62, .94);
+  assert.ok(firstDrops.height > steadyPour.height + .15);
+  assert.ok(steadyPour.height >= .4 && steadyPour.height < .64);
+  assert.ok(steadyPour.angle > firstDrops.angle && nearEmpty.angle > steadyPour.angle);
+  assert.ok(nearEmpty.angle <= 1);
 });
 
 test('after release the last part of the stream clears the spout and reaches the original landing point', () => {

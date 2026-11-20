@@ -21,3 +21,12 @@ test('drawing controls stay hidden until the studio selects a stage', async () =
   const html = await readFile(new URL('index.html', root), 'utf8');
   assert.match(html, /<div id="drawControls"[^>]*\bhidden\b/);
 });
+
+test('the first response contains the loading art and an accessible three-stage progress indicator', async () => {
+  const html = await readFile(new URL('index.html', root), 'utf8');
+  const loading = html.match(/<section id="studioLoader"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(loading);
+  assert.match(loading, /src="\.\/loading-cup\.webp"/);
+  assert.match(loading, /role="progressbar"[\s\S]*aria-valuemax="3"/);
+  assert.match(html, /<div id="hud"[^>]*\binert\b/);
+});

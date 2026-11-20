@@ -48,6 +48,9 @@ test('painted acute corners go through the finger position', () => {
     lineTo: (x, y) => segments.push([x, y]),
     quadraticCurveTo() {},
     stroke() {},
+    createRadialGradient: () => ({ addColorStop() {} }),
+    arc() {},
+    fill() {},
   };
   paintChocolate(context, [{
     paths: [[{ x: -.2, y: .14 }, { x: 0, y: .4 }, { x: .2, y: .14 }]],
@@ -65,6 +68,9 @@ test('gradual folds keep their rounded brush motion', () => {
     lineTo() {},
     quadraticCurveTo: (x, y) => controls.push([x, y]),
     stroke() {},
+    createRadialGradient: () => ({ addColorStop() {} }),
+    arc() {},
+    fill() {},
   };
   paintChocolate(context, [{
     paths: [[{ x: -.2, y: .14 }, { x: 0, y: .30 }, { x: .2, y: .14 }]],

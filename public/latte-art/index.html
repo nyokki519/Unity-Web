@@ -6,21 +6,35 @@
   <meta name="theme-color" content="#292018">
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
-  <link rel="stylesheet" href="./style.css?v=15">
+  <style>html{background:#1c120d;color-scheme:dark}</style>
+  <link rel="stylesheet" href="./style.css?v=17">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
 <body>
-  <main id="studio" aria-busy="true">
+  <main id="studio" data-load-phase="1" aria-busy="true">
     <canvas id="pourStill" aria-hidden="true" hidden></canvas>
     <canvas id="pourSurface" aria-hidden="true" hidden></canvas>
     <canvas id="scene" role="img" aria-label="カップの液面を押してミルクを注ぐ"></canvas>
     <canvas id="ink" aria-hidden="true" hidden></canvas>
     <canvas id="fallback" aria-hidden="true" hidden></canvas>
-    <p id="loadingHint" class="hint" role="status">カップを準備中…</p>
+    <span id="pourAim" class="pour-aim" aria-hidden="true" hidden></span>
+    <section id="studioLoader" class="studio-loader" aria-label="ラテアートの準備">
+      <div class="studio-loader-card">
+        <div class="studio-loader-cup" aria-hidden="true">
+          <img src="./loading-cup.webp" width="434" height="317" alt="" fetchpriority="high">
+          <span class="studio-loader-milk"></span>
+          <span class="studio-loader-foam"></span>
+          <span class="studio-loader-ink"></span>
+        </div>
+        <p class="studio-loader-title"><img src="./loading-mark.webp" width="71" height="112" alt="">Unity<span>チョコペン・ラテアート</span></p>
+        <div id="loadingProgress" class="studio-loader-progress" role="progressbar" aria-label="準備状況" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"></div>
+        <p id="loadingHint" class="studio-loader-hint" role="status">カップを準備中…</p>
+      </div>
+    </section>
     <div id="hud" class="hud" inert>
       <a class="brand" href="/" aria-label="Unity MIX ホーム">
-        <canvas id="cafeMark" width="96" height="96" aria-hidden="true"></canvas><span>Unity</span>
+        <img src="./loading-mark.webp" width="71" height="112" alt=""><span>Unity</span>
       </a>
       <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
@@ -29,11 +43,11 @@
         <button type="button" id="newCup">もう一杯作る</button>
         <a href="/">Unity MIX ホーム</a>
       </nav>
-      <p id="tip" class="hint">液面を押して注ぎ、そのまま指で位置を動かせます。</p>
+      <p id="tip" class="hint">ピッチャーを液面へドラッグ。または液面を長押し。</p>
       <section id="pourControls" class="glass pour-controls" aria-label="ミルクの注ぎ方" hidden>
         <span>注いだ量 <output id="poured" aria-live="off">0 mL</output></span>
-        <label for="tilt">流量 <output for="tilt" id="tiltValue" aria-hidden="true">62%</output></label>
-        <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="62%">
+        <label for="tilt">ミルクの勢い <output for="tilt" id="tiltValue" aria-hidden="true">ふつう</output></label>
+        <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="ふつう">
         <button id="pourCenter" type="button" aria-disabled="false">中央に注ぐ</button>
       </section>
       <div id="bar" class="bar glass" role="group" aria-label="ラテアートの操作">
@@ -94,7 +108,7 @@
         </form>
       </header>
       <ol class="help-steps">
-        <li><strong>ミルクを注ぐ</strong> 液面を押したままだと泡が広がり、指をすべらせると跡が伸びます。コーヒー色を残して次へ進めます。</li>
+        <li><strong>ミルクを注ぐ</strong> ピッチャーを液面へドラッグするか、液面を長押しします。指をゆっくり動かすと跡が太くなり、離すと止まります。</li>
         <li><strong>チョコペンで描く</strong> タップで一滴、指をすべらせて一筆。チョコを消してもミルクは残ります。</li>
         <li><strong>完成写真を保存</strong> 完成した一杯を画像で持ち帰れます。</li>
       </ol>
@@ -104,6 +118,6 @@
       </figure>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=12"></script>
+  <script type="module" src="./app.js?v=14"></script>
 </body>
 </html>
