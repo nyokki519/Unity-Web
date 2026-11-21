@@ -105,63 +105,86 @@ function formsCorner(previous, point, next) {
   return ax * bx + ay * by <= 0;
 }
 
-function trace(context, points, dx = 0, dy = 0) {
-  context.beginPath();
-  context.moveTo(points[0].x + dx, points[0].y + dy);
-  for (let i = 1; i < points.length - 1; i++) {
-    const from = points[i];
-    const to = points[i + 1];
-    if (formsCorner(points[i - 1], from, to)) {
-      context.lineTo(from.x + dx, from.y + dy);
-    } else {
-      context.quadraticCurveTo(from.x + dx, from.y + dy, (from.x + to.x) / 2 + dx, (from.y + to.y) / 2 + dy);
+// Sample the smoothed centerline closely enough for adjacent deposits to merge.
+function chocolateDeposits(points, width) {
+  const spacing = Math.max(.0025, width * .16);
+  const samples = [{ ...points[0], distance: 0 }];
+  function append(end, control) {
+    const start = samples.at(-1);
+    const length = Math.hypot(end.x - start.x, end.y - start.y);
+    const controlLength = control && (Math.hypot(control.x - start.x, control.y - start.y)
+      + Math.hypot(end.x - control.x, end.y - control.y));
+    const steps = Math.max(1, Math.ceil((controlLength ?? length) / spacing));
+    for (let index = 1; index <= steps; index++) {
+      const t = index / steps;
+      const point = control
+        ? pointAlong(pointAlong(start, control, t), pointAlong(control, end, t), t)
+        : pointAlong(start, end, t);
+      const previous = samples.at(-1);
+      point.distance = previous.distance + Math.hypot(point.x - previous.x, point.y - previous.y);
+      samples.push(point);
     }
   }
-  const end = points.at(-1);
-  context.lineTo(end.x + dx, end.y + dy);
+  for (let index = 1; index < points.length - 1; index++) {
+    const point = points[index];
+    if (formsCorner(points[index - 1], point, points[index + 1])) append(point);
+    else append(pointAlong(point, points[index + 1], .5), point);
+  }
+  append(points.at(-1));
+  const total = samples.at(-1).distance;
+  const taperLength = Math.min(width * 3.4, total * .42);
+  for (const point of samples) {
+    const contact = .37 * Math.exp(-point.distance / (width * .78));
+    const lift = taperLength ? Math.min(1, (total - point.distance) / taperLength) : 1;
+    const variation = .07 * Math.sin(point.distance * 39) + .045 * Math.sin(point.distance * 91);
+    point.radius = width * .5 * (1 + contact + variation) * (.37 + .63 * Math.sqrt(lift));
+  }
+  return samples;
 }
 
-function roundDrop(context, { x, y }, width, color, onLine = false) {
-  const scale = onLine ? .53 : .58;
-  const gloss = context.createRadialGradient(x - width * .18, y - width * .21, 0, x, y, width * scale);
-  gloss.addColorStop(0, '#bb8c72');
-  gloss.addColorStop(.14, '#916048');
-  gloss.addColorStop(.40, '#744533');
-  gloss.addColorStop(.72, color);
-  gloss.addColorStop(1, onLine ? color : '#381b13');
-  context.fillStyle = gloss;
+function paintDepositLayer(context, samples, color, scale, offsetX = 0, offsetY = 0) {
+  context.fillStyle = color;
   context.beginPath();
-  context.arc(x, y, width * scale, 0, Math.PI * 2);
+  for (const point of samples) {
+    const x = point.x + point.radius * offsetX;
+    const y = point.y + point.radius * offsetY;
+    const radius = point.radius * scale;
+    context.moveTo(x + radius, y);
+    context.arc(x, y, radius, 0, Math.PI * 2);
+  }
+  context.fill();
+}
+
+function roundDrop(context, { x, y }, width, color) {
+  const radius = width * .77;
+  const chocolate = context.createRadialGradient(x - radius * .24, y - radius * .29, 0, x, y, radius);
+  chocolate.addColorStop(0, '#d8ac89');
+  chocolate.addColorStop(.17, '#956249');
+  chocolate.addColorStop(.44, '#633a29');
+  chocolate.addColorStop(.74, color);
+  chocolate.addColorStop(.88, '#70452eca');
+  chocolate.addColorStop(1, '#8e613c00');
+  context.fillStyle = chocolate;
+  context.beginPath();
+  context.arc(x, y, radius, 0, Math.PI * 2);
   context.fill();
 }
 
 export function paintChocolate(context, strokes) {
-  context.lineCap = 'round';
-  context.lineJoin = 'round';
   for (const { paths, width, color } of strokes) {
     for (const points of paths) {
       if (points.length === 1) {
         roundDrop(context, points[0], width, color);
         continue;
       }
-      trace(context, points, width * .035, width * .10);
-      context.strokeStyle = '#30150669';
-      context.lineWidth = width * 1.11;
-      context.stroke();
-      trace(context, points);
-      context.strokeStyle = color;
-      context.lineWidth = width;
-      context.stroke();
-      roundDrop(context, points[0], width, color, true);
-      // A soft reflection over the rounded sauce with a narrower, warm highlight.
-      trace(context, points, -width * .075, -width * .11);
-      context.strokeStyle = '#d69b755e';
-      context.lineWidth = width * .52;
-      context.stroke();
-      trace(context, points, -width * .125, -width * .17);
-      context.strokeStyle = '#ffe5c56b';
-      context.lineWidth = width * .16;
-      context.stroke();
+      const deposits = chocolateDeposits(points, width);
+      paintDepositLayer(context, deposits, '#a16a4236', 1.23, .045, .10);
+      paintDepositLayer(context, deposits, '#663b2758', 1.09, .025, .07);
+      paintDepositLayer(context, deposits, color, .94);
+      paintDepositLayer(context, deposits, '#c28b6358', .55, -.16, -.22);
+      const shine = deposits.filter(point => point.radius > width * .43
+        && Math.sin(point.distance * 68) + .45 * Math.sin(point.distance * 157) > .48);
+      paintDepositLayer(context, shine, '#efd4b878', .17, -.29, -.36);
     }
   }
 }

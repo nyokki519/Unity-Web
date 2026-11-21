@@ -45,11 +45,11 @@ test('painted acute corners go through the finger position', () => {
   const context = {
     beginPath() {},
     moveTo() {},
-    lineTo: (x, y) => segments.push([x, y]),
+    lineTo() {},
     quadraticCurveTo() {},
     stroke() {},
     createRadialGradient: () => ({ addColorStop() {} }),
-    arc() {},
+    arc: (x, y) => segments.push([x, y]),
     fill() {},
   };
   paintChocolate(context, [{
@@ -66,10 +66,10 @@ test('gradual folds keep their rounded brush motion', () => {
     beginPath() {},
     moveTo() {},
     lineTo() {},
-    quadraticCurveTo: (x, y) => controls.push([x, y]),
+    quadraticCurveTo() {},
     stroke() {},
     createRadialGradient: () => ({ addColorStop() {} }),
-    arc() {},
+    arc: (x, y) => controls.push([x, y]),
     fill() {},
   };
   paintChocolate(context, [{
@@ -77,5 +77,24 @@ test('gradual folds keep their rounded brush motion', () => {
     width: .024,
     color: '#4c281b',
   }]);
-  assert.ok(controls.some(([x, y]) => x === 0 && y === .30));
+  assert.ok(controls.some(([x, y]) => Math.abs(x) < .005 && y > .24 && y < .28));
+  assert.ok(controls.every(([, y]) => y < .29));
+});
+
+test('the chocolate footprint has a fuller start and a finer lifted end', () => {
+  const deposits = [];
+  const context = {
+    beginPath() {}, moveTo() {}, lineTo() {}, quadraticCurveTo() {}, stroke() {}, fill() {},
+    createRadialGradient: () => ({ addColorStop() {} }),
+    arc(x, y, radius) { deposits.push({ x, y, radius }); },
+  };
+  paintChocolate(context, [{
+    paths: [[{ x: -.35, y: 0 }, { x: .35, y: 0 }]],
+    width: .04,
+    color: '#4c281b',
+  }]);
+  const radiusAt = x => Math.max(0, ...deposits.filter(point => Math.abs(point.x - x) < .009).map(point => point.radius));
+  assert.ok(radiusAt(0) > .015, 'there is a continuous body');
+  assert.ok(radiusAt(-.35) > radiusAt(0), 'chocolate pools on contact');
+  assert.ok(radiusAt(.35) > 0 && radiusAt(.35) < radiusAt(0) * .65, 'lifting leaves a visible fine tip');
 });
