@@ -17,10 +17,18 @@ export function pitcherLiquidLevel(tilt, used, resting) {
   return Math.min(1.12 * cosine, THREE.MathUtils.lerp(lipHeight + .005, neutral, resting));
 }
 
+function sectionCenter(level, tilt) {
+  const c = Math.cos(tilt);
+  // At a steep tilt the level intersects only the lower, spout-facing wall.
+  // Pick a point inside that section rather than the extrapolated center axis.
+  if (level / c < .3) return (level * c - .3) / Math.sin(tilt);
+  return -level * Math.tan(tilt);
+}
+
 export function pitcherLiquidEdge(angle, level, tilt) {
   const cosine = Math.cos(tilt);
   const sine = Math.sin(tilt);
-  const center = -level * sine / cosine;
+  const center = sectionCenter(level, tilt);
   const dx = Math.cos(angle);
   const dz = Math.sin(angle);
   let low = 0;
@@ -58,7 +66,7 @@ export function createPitcherLiquid() {
     mesh,
     update(pitcher, tilt, used, resting) {
       const level = pitcherLiquidLevel(tilt, used, resting);
-      positions.setXYZ(0, -level * Math.tan(tilt), level, 0);
+      positions.setXYZ(0, sectionCenter(level, tilt), level, 0);
       for (let i = 0; i < count; i++) {
         const point = pitcherLiquidEdge(i / count * Math.PI * 2, level, tilt);
         positions.setXYZ(i + 1, point.x, point.y, point.z);

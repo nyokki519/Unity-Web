@@ -5,12 +5,15 @@ export const MAX_POUR_RADIUS = .91;
 
 const STEP = 1000 / 60;
 const MAX_FLOW = 58;
+export const FOAM_DENSITY_PER_ML = 69;
 const MAX_SURFACE_DRIFT = .26; // Grid cells per timestep at full flow.
 const JET_REACH_SQUARED = .26;
 const APPROACH_TIME = 82;
 const OPENING_TIME = 111;
 const SETTLE_STEPS = 16;
-const STREAM_TAIL_STEPS = 7;
+// Four simulation steps approximate a 2 cm fall. The same clock drives the
+// visible head, the detached tail and the arrival of each emitted milk dose.
+const FLIGHT_STEPS = 4;
 const SIZE = MILK_GRID_SIZE;
 const CELL_COUNT = SIZE * SIZE;
 const CENTER = { x: 0, y: 0 };
@@ -66,6 +69,10 @@ export class MilkPour {
   #accumulator = 0;
   #age = 0;
   #tail = 0;
+  #flight = [];
+  #tickIndex = 0;
+  #impactPosition = CENTER;
+  #impactFlow = 0;
   #stopFlow = 0;
   #startRest = 1;
   #stopRest = 0;
@@ -86,6 +93,7 @@ export class MilkPour {
 
   get density() { return this.#density; }
   get amount() { return this.#amount; }
+  get landedAmount() { return this.#amount - this.#flight.reduce((sum, packet) => sum + packet.dose, 0); }
   get revision() { return this.#revision; }
   get legacy() { return this.#legacy; }
   get position() { return this.#position; }
@@ -99,7 +107,10 @@ export class MilkPour {
     };
   }
   get flow() { return this.#flow; }
-  get streamCut() { return this.#pouring ? 0 : 1 - this.#tail / STREAM_TAIL_STEPS; }
+  get impactPosition() { return this.#impactPosition; }
+  get impactFlow() { return this.#impactFlow; }
+  get streamHead() { return Math.min(1, Math.max(0, (this.#age - APPROACH_TIME) / (FLIGHT_STEPS * STEP))); }
+  get streamCut() { return this.#pouring ? 0 : 1 - this.#tail / FLIGHT_STEPS; }
   get motionTime() { return this.#age; }
   get resting() {
     if (this.#pouring) return this.#startRest * (1 - smooth(this.#age / APPROACH_TIME));
@@ -114,6 +125,7 @@ export class MilkPour {
     this.#startRest = this.resting;
     this.#position = boundedPoint(position);
     this.#previousTick = this.#position;
+    if (!this.#flight.length) this.#impactPosition = this.#position;
     this.#accumulator = 0;
     this.#age = 0;
     this.#tail = this.#settling = 0;
@@ -125,6 +137,8 @@ export class MilkPour {
   savePreviewCheckpoint(saved = { density: new Float32Array(CELL_COUNT) }) {
     saved.density.set(this.#density);
     return Object.assign(saved, {
+      flight: this.#flight.slice(), tickIndex: this.#tickIndex,
+      impactPosition: this.#impactPosition, impactFlow: this.#impactFlow,
       position: this.#position, previousTick: this.#previousTick, returnTarget: this.#returnTarget,
       accumulator: this.#accumulator, age: this.#age, amount: this.#amount,
       flow: this.#flow, tail: this.#tail, stopFlow: this.#stopFlow, stopRest: this.#stopRest,
@@ -134,6 +148,10 @@ export class MilkPour {
 
   restorePreviewCheckpoint(saved) {
     this.#density.set(saved.density);
+    this.#flight = saved.flight.slice();
+    this.#tickIndex = saved.tickIndex;
+    this.#impactPosition = saved.impactPosition;
+    this.#impactFlow = saved.impactFlow;
     this.#position = saved.position;
     this.#previousTick = saved.previousTick;
     this.#returnTarget = saved.returnTarget;
@@ -176,8 +194,7 @@ export class MilkPour {
     const endMs = Math.max(0, Math.min(STEP, this.#accumulator));
     const dose = Math.min(MILK_CAPACITY - this.#amount, endMs / 1000 * MAX_FLOW * this.#flow);
     if (dose > 1e-6) {
-      this.#deposit(this.#previousTick, this.#position, dose);
-      this.#amount += dose;
+      this.#emit(this.#position, dose);
       this.#revision++;
     }
     this.#accumulator = 0;
@@ -185,8 +202,8 @@ export class MilkPour {
     this.#stopRest = this.resting;
     this.#pouring = false;
     this.#stopFlow = this.#flow;
-    this.#tail = STREAM_TAIL_STEPS;
-    this.#settling = this.#age > 0 ? SETTLE_STEPS : 0;
+    this.#tail = FLIGHT_STEPS;
+    this.#settling = this.#age > 0 || this.#flight.length ? SETTLE_STEPS : 0;
     if (!this.#settling) this.#flow = 0;
   }
 
@@ -200,6 +217,9 @@ export class MilkPour {
     this.#pouring = this.#legacy = false;
     this.#amount = this.#flow = this.#accumulator = this.#tail = this.#settling = 0;
     this.#position = this.#previousTick = this.#approachFrom = this.#returnTarget = CENTER;
+    this.#flight.length = 0;
+    this.#impactPosition = CENTER;
+    this.#impactFlow = 0;
     this.#density.fill(0);
     this.#revision++;
   }
@@ -213,18 +233,24 @@ export class MilkPour {
 
   #tick(point, rate) {
     this.#age += STEP;
+    this.#tickIndex++;
+    this.#impactFlow = 0;
+    while (this.#flight.length && this.#flight[0].arrival <= this.#tickIndex) {
+      const { from, to, surfaceDose, flow } = this.#flight.shift();
+      this.#impactPosition = to;
+      this.#impactFlow = flow;
+      this.#deposit(from, to, surfaceDose, flow);
+    }
+    this.#spread(this.#impactPosition, this.#impactFlow);
     if (this.#pouring) {
       this.#flow = rate * smooth((this.#age - APPROACH_TIME) / OPENING_TIME);
       const dose = Math.min(MILK_CAPACITY - this.#amount, STEP / 1000 * MAX_FLOW * this.#flow);
-      this.#spread(point, this.#flow);
-      if (dose > 0) this.#deposit(this.#previousTick, point, dose);
-      this.#amount += dose;
+      if (dose > 0) this.#emit(point, dose);
       if (this.#amount >= MILK_CAPACITY) this.stop(point);
     } else {
       this.#settling--;
       this.#tail = Math.max(0, this.#tail - 1);
-      this.#flow = this.#stopFlow * (this.#tail / STREAM_TAIL_STEPS) ** 2;
-      this.#spread(point, 0);
+      this.#flow = this.#tail ? this.#stopFlow : 0;
     }
     this.#previousTick = point;
     this.#revision++;
@@ -234,6 +260,7 @@ export class MilkPour {
     const current = this.#density;
     const result = this.#scratch;
     result.fill(0);
+    const mobility = this.#pouring ? 1 : smooth(this.#settling / SETTLE_STEPS);
     for (const { index, x, y, neighbors } of cells) {
       const level = current[index];
       if (!level) continue;
@@ -252,7 +279,7 @@ export class MilkPour {
         const neighbor = neighbors[direction];
         if (neighbor === -1) continue;
         const cardinal = direction < 4;
-        let share = diffusion * (cardinal ? .048 : .022);
+        let share = diffusion * mobility * (cardinal ? .048 : .022);
         if (mobile) {
           // Isotropic nine-point transport. Axial and diagonal steps have the same spreading moments.
           const [axisX, axisY] = directions[direction];
@@ -268,23 +295,33 @@ export class MilkPour {
     this.#scratch = current;
   }
 
-  #deposit(from, point, dose) {
+  #emit(point, dose) {
+    // Even at a low spout height, part of the incoming milk blends under the foam.
+    const floating = .29 + .51 * smooth((this.#flow - .14) / .48);
+    this.#flight.push({
+      arrival: this.#tickIndex + FLIGHT_STEPS, from: this.#previousTick, to: point,
+      dose, surfaceDose: dose * floating, flow: this.#flow,
+    });
+    this.#amount += dose;
+  }
+
+  #deposit(from, point, dose, flow) {
     const dx = point.x - from.x;
     const dy = point.y - from.y;
     const samples = Math.ceil(Math.hypot(dx, dy) / .042);
     if (samples <= 1) {
-      this.#stamp(point, dose);
+      this.#stamp(point, dose, flow);
       return;
     }
     // Treat a fast movement as one thin continuous jet path with the same volume.
     for (let i = 0; i < samples; i++) {
       const fraction = (i + .5) / samples;
-      this.#stamp({ x: from.x + dx * fraction, y: from.y + dy * fraction }, dose / samples);
+      this.#stamp({ x: from.x + dx * fraction, y: from.y + dy * fraction }, dose / samples, flow);
     }
   }
 
-  #stamp(point, dose) {
-    const sigma = .037 + this.#flow * .029;
+  #stamp(point, dose, flow) {
+    const sigma = .026 + flow * .047;
     const extent = sigma * 3;
     const left = Math.max(0, Math.floor((1 + point.x - extent) * SIZE / 2));
     const right = Math.min(SIZE - 1, Math.floor((1 + point.x + extent) * SIZE / 2));
@@ -303,7 +340,7 @@ export class MilkPour {
         if (active[row * SIZE + column]) sum += this.#kernelX[column] * this.#kernelY[row];
       }
     }
-    const scale = dose * 69 / sum;
+    const scale = dose * FOAM_DENSITY_PER_ML / sum;
     for (let row = top; row <= bottom; row++) {
       for (let column = left; column <= right; column++) {
         const index = row * SIZE + column;

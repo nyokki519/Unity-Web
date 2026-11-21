@@ -5,6 +5,9 @@ export function bindActivation(button, activate, { requireOwnPress = false } = {
   button.addEventListener('pointerdown', event => {
     if (!event.isPrimary) return;
     handled = null;
+    // Guide buttons open or dismiss a modal on pointerup. A compatibility
+    // mousedown on the element exposed underneath can steal its restored focus.
+    if (requireOwnPress && event.pointerType === 'touch') event.preventDefault();
     const supportedPointer = event.pointerType === 'touch' || (requireOwnPress && event.button === 0);
     pressed = supportedPointer && !button.disabled
       ? { id: event.pointerId, x: event.clientX, y: event.clientY }

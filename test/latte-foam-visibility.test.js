@@ -28,3 +28,16 @@ test('a swipe through the obscured edge ends on the first visible boundary and r
     assert.ok(bounds.some(circle => Math.abs(Math.hypot(point.x-circle.x,point.y-circle.y)-circle.radius) < 1e-9));
   }
 });
+
+test('milk raises and widens the surface while leaving room below the lip', async () => {
+  const { liquidPlaneAtFill, CUP_PROFILE } = await import('../public/latte-art/foam-geometry.js');
+  let previous = liquidPlaneAtFill(0);
+  for (let step = 1; step <= 100; step++) {
+    const plane = liquidPlaneAtFill(step / 100);
+    assert.ok(plane.height > previous.height && plane.radius >= previous.radius);
+    previous = plane;
+  }
+  assert.ok(previous.height < Math.max(...CUP_PROFILE.map(([, height]) => height)));
+  assert.deepEqual(liquidPlaneAtFill(2), previous);
+  assert.deepEqual(liquidPlaneAtFill(-1), liquidPlaneAtFill(0));
+});

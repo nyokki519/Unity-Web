@@ -20,18 +20,18 @@ export function ceramicGlaze() {
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = 512;
   const context = canvas.getContext('2d');
-  context.fillStyle = '#fff6e8';
+  context.fillStyle = '#fffdf8';
   context.fillRect(0, 0, 512, 512);
   let state = 1079;
   const next = () => {
     state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
     return state / 4294967296;
   };
-  for (let i = 0; i < 5700; i++) {
+  for (let i = 0; i < 1650; i++) {
     const x = next() * 512;
     const y = next() * 512;
-    const radius = .35 + next() ** 3 * 1.45;
-    context.fillStyle = next() > .2 ? '#82573353' : '#6a45227d';
+    const radius = .28 + next() ** 3 * .65;
+    context.fillStyle = next() > .2 ? '#8c7e6a21' : '#8c7e6a30';
     context.beginPath();
     context.ellipse(x, y, radius, radius * .70, next() * Math.PI, 0, 2 * Math.PI);
     context.fill();

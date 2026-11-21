@@ -18,7 +18,8 @@ export function readDraft(storage) {
     }
     if (draft?.version === 2 && (draft.stage === 'pour' || draft.stage === 'draw')) {
       const strokes = Array.isArray(draft.strokes) && draft.strokes.every(validStroke) ? draft.strokes : [];
-      return { stage: draft.stage, milk: draft.milk ?? null, strokes: draft.stage === 'draw' ? strokes : [] };
+      return { stage: draft.stage, milk: draft.milk ?? null, strokes: draft.stage === 'draw' ? strokes : [],
+        ...(typeof draft.volumeSurface === 'boolean' ? { volumeSurface: draft.volumeSurface } : {}) };
     }
   } catch {
     // Storage can be unavailable or contain a partial value.

@@ -1,8 +1,74 @@
+import { pourJetPose } from './pour-jet.js';
 import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
-import { drawingFoamClips, PHOTO_FOAM_CLIPS, visibleFoamClips } from './foam-geometry.js';
+import { CUP_OUTER_WALL, CUP_PROFILE, FOAM_PLANE, drawingFoamClips, projectedLiquidEllipse, tableCameraFraming, visibleFoamClips } from './foam-geometry.js';
+import { HANDLE_ANGLE, SAUCER_RIM, SPOON_REST, handleCrossSection, handleProfile } from './tableware-profile.js';
 import { MILK_CAPACITY } from './milk-pour.js';
+
+// Express the porcelain in liquid-plane radii so it follows the same
+// framing as the touch surface. Lower sections recede towards the table.
+function tablewareView(view, aspect) {
+  const { eye } = tableCameraFraming(view, aspect);
+  const distance = Math.hypot(eye.y - FOAM_PLANE.height, eye.z);
+  const sine = (eye.y - FOAM_PLANE.height) / distance;
+  const cosine = eye.z / distance;
+  const foamRadius = FOAM_PLANE.radius;
+  function project({ x, y, z }) {
+    const belowFoam = FOAM_PLANE.height - y;
+    const scale = distance / (distance + belowFoam * sine - z * cosine);
+    return { x: x * scale / foamRadius, y: (belowFoam * cosine + z * sine) * scale / foamRadius };
+  }
+  // The projected center of a circle lies slightly in front of its world center.
+  const front = project({ x: 0, y: FOAM_PLANE.height, z: foamRadius });
+  const back = project({ x: 0, y: FOAM_PLANE.height, z: -foamRadius });
+  const foamCenter = (front.y + back.y) / 2;
+  function point(x, y, z) {
+    const p = project({ x, y, z });
+    return { x: p.x, y: p.y - foamCenter };
+  }
+  function ring(radius, height) {
+    const front = point(0, height, radius), back = point(0, height, -radius);
+    const depth = distance + (FOAM_PLANE.height - height) * sine;
+    const rx = distance / Math.sqrt(depth ** 2 - (radius * cosine) ** 2) * radius / foamRadius;
+    return { rx, ry: (front.y - back.y) / 2, y: (front.y + back.y) / 2 };
+  }
+  function projectHandle(p) {
+    const x = p.x * Math.cos(HANDLE_ANGLE) + p.z * Math.sin(HANDLE_ANGLE);
+    const z = -p.x * Math.sin(HANDLE_ANGLE) + p.z * Math.cos(HANDLE_ANGLE);
+    return point(x, p.y, z);
+  }
+  return { ring, point, sine, handleBands: buildHandleBands(projectHandle) };
+}
+
+function buildHandleBands(projectHandle) {
+  const rings = Array.from({ length: 49 }, (_, i) => {
+    const profile = handleProfile(i / 48);
+    return { center: projectHandle(profile), depth: projectHandle(handleCrossSection(profile, 0)),
+      width: projectHandle(handleCrossSection(profile, Math.PI / 2)) };
+  });
+  const outlines = rings.map(({ center, depth, width }, i) => {
+    const previous = rings[Math.max(0, i - 1)].center;
+    const next = rings[Math.min(rings.length - 1, i + 1)].center;
+    const dx = next.x - previous.x, dy = next.y - previous.y;
+    const length = Math.hypot(dx, dy);
+    const nx = -dy / length, ny = dx / length;
+    // Project both axes of the oval strap onto the screen-space normal.
+    const radius = Math.hypot(nx * (depth.x - center.x) + ny * (depth.y - center.y),
+      nx * (width.x - center.x) + ny * (width.y - center.y));
+    return { center, dx: nx * radius, dy: ny * radius };
+  });
+  function band(low, high) {
+    const path = new Path2D();
+    const point = (ring, side) => [ring.center.x + side * ring.dx, ring.center.y + side * ring.dy];
+    path.moveTo(...point(outlines[0], low));
+    for (const ring of outlines) path.lineTo(...point(ring, low));
+    for (let i = outlines.length - 1; i >= 0; i--) path.lineTo(...point(outlines[i], high));
+    path.closePath();
+    return path;
+  }
+  return [band(-1, 1), band(-.76, .94)];
+}
 
 function paintSpoon(ctx, x, y, scale, angle) {
   ctx.save();
@@ -42,14 +108,21 @@ function paintSpoon(ctx, x, y, scale, angle) {
   ctx.restore();
 }
 
-function pitcherPose({ position, flow, resting, amount, pitcherOffset }) {
+function pitcherPose({ position, flow, resting, amount, pitcherOffset }, plane, projection) {
   const used = amount / MILK_CAPACITY;
-  const establishing = Math.min(1, flow / .64);
-  const established = establishing ** 2 * (3 - 2 * establishing);
+  const jet = pourJetPose(flow, used, position, plane);
+  // Down is positive on canvas: the spout at the left must dip below the handle.
+  const angle = -(.10 * resting + jet.angle * (1 - resting));
+  const lipX = projection.x + projection.rx * (position.x + jet.reach / plane.radius);
+  const lipY = projection.y + projection.ry * (position.y + jet.depth / plane.radius) - .53 * jet.height / FOAM_PLANE.radius;
+  // Translate the same spout point drawn by paintPitcher to the projected jet origin.
   return {
-    left: (position.x + .30 + .22 * established) * (1 - resting) + (.48 + (pitcherOffset?.x ?? 0)) * resting,
-    top: (.88 * position.y - .51 + .24 * established) * (1 - resting) + (-1.17 + .88 * (pitcherOffset?.y ?? 0)) * resting,
-    angle: .10 * resting + (.55 + .13 * used + .18 * established) * (1 - resting),
+    left: (lipX + .12 * Math.cos(angle) + .03 * Math.sin(angle)) * (1 - resting)
+      + (.48 + (pitcherOffset?.x ?? 0)) * resting,
+    top: (lipY + .12 * Math.sin(angle) - .03 * Math.cos(angle)) * (1 - resting)
+      + (-1.17 + .88 * (pitcherOffset?.y ?? 0)) * resting,
+    angle,
+    drop: .53 * jet.height / FOAM_PLANE.radius,
     used,
   };
 }
@@ -61,22 +134,24 @@ function pitcherLip({ left, top, angle }) {
   };
 }
 
-function paintPitcher(ctx, x, y, scale, view) {
+function paintPitcher(ctx, x, y, scale, view, plane, projection) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
-  const { position, flow, streamCut = 0 } = view;
-  const { left, top, angle, used } = pitcherPose(view);
-  if (flow > .008) {
-    const { x: tipX, y: tipY } = view.jetOrigin ?? pitcherLip({ left, top, angle });
-    const dx = position.x - tipX;
-    const dy = .88 * position.y - tipY;
+  const { position, impact = position, flow, streamCut = 0, streamHead = 1 } = view;
+  const { left, top, angle, used, drop } = pitcherPose(view, plane, projection);
+  if (flow > .001 && streamHead > streamCut) {
+    const source = streamCut ? pitcherPose({ ...view, resting: 0 }, plane, projection) : { left, top, angle };
+    const { x: tipX, y: tipY } = pitcherLip(source);
+    const dx = projection.x + projection.rx * impact.x - tipX;
+    const dy = projection.y + projection.ry * impact.y - tipY;
     const edge = (step, side) => {
-      const t = streamCut + (1 - streamCut) * step / 12;
-      const speed = Math.hypot(dx, 2 * t * dy) || 1;
+      const t = streamCut + (streamHead - streamCut) * step / 12;
+      const verticalSpeed = dy - drop + 2 * t * drop;
+      const speed = Math.hypot(dx, verticalSpeed) || 1;
       const radius = side * .032 * Math.sqrt(flow / (1 + 2 * t));
-      return [tipX + dx * t - radius * (2 * t * dy) / speed,
-        tipY + dy * t ** 2 + radius * dx / speed];
+      return [tipX + dx * t - radius * verticalSpeed / speed,
+        tipY + (dy - drop) * t + drop * t ** 2 + radius * dx / speed];
     };
     ctx.fillStyle = '#fff6e4';
     ctx.beginPath();
@@ -115,11 +190,12 @@ function paintPitcher(ctx, x, y, scale, view) {
   ctx.stroke();
   ctx.save();
   ctx.clip();
-  ctx.translate(.25, .025 + .06 * used);
+  const leaned = 1 - view.resting;
+  ctx.translate(.25 - .23 * leaned, .025 + .06 * used * view.resting);
   ctx.rotate(-angle);
   ctx.fillStyle = '#f7eddd';
   ctx.beginPath();
-  ctx.ellipse(0, 0, .33 - .09 * used, .075, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, .33 - .09 * used - .045 * leaned, .075 + .025 * leaned, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
   ctx.restore();
@@ -168,15 +244,36 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   let ratio = 1;
   let pending = 0;
   const glazeGrain = ceramicGlaze();
-  const drawingBackdrop = canvasOf(0);
-  function layout(w, h, view) {
-    const widthBlend = Math.max(0, Math.min(1, (w / h - .57) / .23));
-    const portrait = view === 'draw' || view === 'pour'
-      ? 1 - widthBlend ** 2 * (3 - 2 * widthBlend) : 0;
+  let ware, wareView, wareAspect;
+  function getTableware(view, aspect) {
+    if (view !== wareView || aspect !== wareAspect) {
+      ware = tablewareView(view, aspect);
+      wareView = view;
+      wareAspect = aspect;
+    }
+    return ware;
+  }
+  const tableBackdrop = canvasOf(0);
+  const pourSurface = canvasOf(512);
+  const pourLayer = pourSurface.getContext('2d');
+  const ceramicViews = new Map();
+  const surfaceViews = new Map();
+  function layout(w, h, view, plane = FOAM_PLANE) {
+    const cache = plane === FOAM_PLANE ? ceramicViews : surfaceViews;
+    let entry = cache.get(view);
+    if (!entry || entry.w !== w || entry.h !== h || entry.plane !== plane) {
+      entry = { w, h, plane, ellipse: projectedLiquidEllipse(w, h, view, plane) };
+      cache.set(view, entry);
+    }
+    return entry.ellipse;
+  }
+
+  function pitcherProjection(w, h) {
+    const base = layout(w, h, 'pour');
+    const liquid = layout(w, h, 'pour', foam.plane);
     return {
-      x: w * (view === 'photo' ? .532 : .5 + .121 * portrait),
-      y: h * (view === 'photo' ? .439 : .47 - .108 * portrait),
-      r: Math.min(w * (view === 'photo' ? .277 : .34 - .022 * portrait), h * .31),
+      x: (liquid.x - base.x) / base.r, y: (liquid.y - base.y) / base.r,
+      rx: liquid.r / base.r, ry: liquid.ry / base.r,
     };
   }
   function paintBackdrop(ctx, w, h, view) {
@@ -194,95 +291,115 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       ctx.ellipse(x + offsetX, y + offsetY, r * rx, r * ry, 0, 0, Math.PI * 2);
       ctx.fill();
     }
+    const ware = getTableware(view, w / h);
+    const plate = ware.ring(...SAUCER_RIM);
+    const saucerY = plate.y * r;
     ctx.save();
-    ctx.shadowColor = '#1c130a80';
-    ctx.shadowBlur = r * .15;
-    ctx.shadowOffsetX = r * .09;
-    ctx.shadowOffsetY = r * .17;
-    ellipse(1.58, 1.4, '#c8bfb2', r * .39, -r * .13);
+    ctx.shadowColor = '#392a235c';
+    ctx.shadowBlur = r * .085;
+    ctx.shadowOffsetX = r * .06;
+    ctx.shadowOffsetY = r * .075;
+    ellipse(plate.rx, plate.ry, '#c8c0ad', saucerY + .032 * r);
     ctx.restore();
-    const saucer = ctx.createRadialGradient(x - .50 * r, y - .24 * r, .34 * r, x - r * .13, y + r * .35, 1.6 * r);
-    saucer.addColorStop(0, '#fff2dc');
-    saucer.addColorStop(.72, '#e9d6b9');
-    saucer.addColorStop(.94, '#bc8a61');
-    saucer.addColorStop(1, '#d3b493');
-    ellipse(1.58, 1.4, saucer, r * .35, -r * .13);
-    paintCafeMark(ctx, x - r * 1.14, y + r * .99, r * .40, '#6b4230');
+    const saucer = ctx.createRadialGradient(x - .62 * r, y - .49 * r, .36 * r, x, y + saucerY, 1.82 * r);
+    saucer.addColorStop(0, '#f5f2e8');
+    saucer.addColorStop(.70, '#e9e5d6');
+    saucer.addColorStop(.90, '#f1ede0');
+    saucer.addColorStop(1, '#d4cdbc');
+    ellipse(plate.rx, plate.ry, saucer, saucerY);
+    paintCafeMark(ctx, x - r * 1.13, y + r * .89, r * .32, '#79664d');
     ctx.save();
-    ctx.shadowColor = '#44392752';
-    ctx.shadowOffsetX = r * .04;
-    ctx.shadowOffsetY = r * .09;
-    ctx.shadowBlur = r * .09;
-    ellipse(.91, .77, '#c9c1b5', .20 * r);
+    ctx.fillStyle = '#79664d';
+    ctx.font = `${r * .095}px Georgia, serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Unity', x - r * .97, y + r * 1.24);
     ctx.restore();
-    const front = view === 'draw' || view === 'pour';
-    const glaze = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
-    glaze.addColorStop(0, '#fff3df');
-    glaze.addColorStop(.56, '#e4ceb0');
-    glaze.addColorStop(1, '#b69678');
-    ctx.strokeStyle = '#b1a99d';
-    ctx.lineWidth = r * .21;
-    ctx.beginPath();
-    ctx.ellipse(x + r * (front ? -.12 : 1.1), y + r * (front ? 1.04 : .09),
-      r * .32, r * .14, front ? -1.27 : .08, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.strokeStyle = glaze;
-    ctx.lineWidth = r * .165;
-    ctx.stroke();
-    const body = ctx.createLinearGradient(x - r, y + r * .58, x + r, y + r * 1.16);
-    body.addColorStop(0, '#e9d5b7');
-    body.addColorStop(.47, '#c6a178');
-    body.addColorStop(1, '#947358');
-    ellipse(1.028, .872, body, r * .23);
-    ellipse(1.068, .935, glaze, r * .085);
-    ellipse(1.074, .949, '#d5a782');
-    const inner = ctx.createLinearGradient(x, y - .92 * r, x, y + .64 * r);
-    inner.addColorStop(0, '#c5b19c');
-    inner.addColorStop(.20, '#ddccb5');
-    inner.addColorStop(.48, '#fff0d9');
-    inner.addColorStop(1, '#f8e2c2');
-    ellipse(1.051, .926, inner);
+    const spoon = ware.point(SPOON_REST.x, SPOON_REST.y, SPOON_REST.z);
+    const tip = ware.point(SPOON_REST.x + Math.cos(SPOON_REST.yaw), SPOON_REST.y + Math.sin(SPOON_REST.pitch),
+      SPOON_REST.z - Math.sin(SPOON_REST.yaw));
+    const sx = tip.x - spoon.x, sy = tip.y - spoon.y;
+    paintSpoon(ctx, x + (spoon.x + .21 * sx * SPOON_REST.scale) * r, y + (spoon.y + .21 * sy * SPOON_REST.scale) * r,
+      r * Math.hypot(sx, sy) * 1.35 * SPOON_REST.scale, Math.atan2(sy, sx));
+    ctx.save();
+    ctx.translate(x + r * .10, y + r * .42);
+    ctx.scale(1, ware.sine);
+    const shadow = ctx.createRadialGradient(0, 0, .49 * r, 0, 0, 1.13 * r);
+    shadow.addColorStop(0, '#66574566');
+    shadow.addColorStop(.75, '#796b5538');
+    shadow.addColorStop(1, '#796b5500');
+    ctx.fillStyle = shadow;
+    ctx.fillRect(-1.14 * r, -1.14 * r, 2.28 * r, 2.28 * r);
+    ctx.restore();
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(r, r);
+    const grip = ctx.createLinearGradient(-1.6, -.15, -1.12, .99);
+    grip.addColorStop(0, '#fffdf1');
+    grip.addColorStop(.44, '#ede9dc');
+    grip.addColorStop(1, '#b9b09f');
+    ctx.fillStyle = '#b0a591';
+    ctx.fill(ware.handleBands[0]);
+    ctx.fillStyle = grip;
+    ctx.fill(ware.handleBands[1]);
+    ctx.restore();
+
+    const body = ctx.createLinearGradient(x - .85 * r, y, x + .8 * r, y + 1.14 * r);
+    body.addColorStop(0, '#f3efe3');
+    body.addColorStop(.52, '#d9d4c6');
+    body.addColorStop(.85, '#c1b9a9');
+    body.addColorStop(1, '#b7ac9b');
+    for (const [radius, height] of CUP_OUTER_WALL) {
+      if (!radius) continue;
+      const section = ware.ring(radius, height);
+      ellipse(section.rx, section.ry, body, section.y * r);
+    }
+    const rim = ctx.createLinearGradient(x - r, y - .8 * r, x + r, y + .94 * r);
+    rim.addColorStop(0, '#fffef5');
+    rim.addColorStop(.49, '#f0eee0');
+    rim.addColorStop(1, '#cdc4b1');
+    const [rimRadius, rimHeight] = CUP_OUTER_WALL.at(-2);
+    const crown = ware.ring(rimRadius, rimHeight);
+    ellipse(crown.rx, crown.ry, rim, crown.y * r);
+    const inner = ctx.createLinearGradient(x, y - r, x - .13 * r, y + .78 * r);
+    inner.addColorStop(0, '#c3bcad');
+    inner.addColorStop(.30, '#e7e4d8');
+    inner.addColorStop(1, '#f5f1e4');
+    const [innerRadius, innerHeight] = CUP_PROFILE[CUP_OUTER_WALL.length];
+    const lip = ware.ring(innerRadius, innerHeight);
+    ellipse(lip.rx, lip.ry, inner, lip.y * r);
     ctx.save();
     ctx.beginPath();
-    ctx.ellipse(x, y + r * .085, r * 1.068, r * .935, 0, 0, Math.PI * 2);
+    ctx.ellipse(x, y + crown.y * r, r * crown.rx, r * crown.ry, 0, 0, Math.PI * 2);
     ctx.clip();
     ctx.globalCompositeOperation = 'multiply';
-    ctx.globalAlpha = .65;
+    ctx.globalAlpha = .4;
     ctx.drawImage(glazeGrain, x - 1.08 * r, y - r, 2.16 * r, 2.16 * r);
     ctx.restore();
   }
 
-  function paintLiquid(ctx, w, h, view) {
-    const { x, y, r } = layout(w, h, view);
+  function paintLiquid(ctx, w, h, view, texture = foam.canvas) {
+    const { x, y, r, ry } = layout(w, h, view, foam.plane);
     ctx.save();
     ctx.beginPath();
-    ctx.ellipse(x, y, r, r * .88, 0, 0, Math.PI * 2);
+    ctx.ellipse(x, y, r, ry, 0, 0, Math.PI * 2);
     ctx.clip();
     let clips = [];
-    if (view === 'photo') clips = PHOTO_FOAM_CLIPS;
-    if (view === 'draw') clips = drawingFoamClips(w / h);
-    if (view === 'pour') clips = visibleFoamClips('pour', w / h);
+    if (view === 'photo') clips = visibleFoamClips('photo', 1, foam.plane);
+    if (view === 'draw') clips = drawingFoamClips(w / h, foam.plane);
+    if (view === 'pour') clips = visibleFoamClips('pour', w / h, foam.plane);
     for (const circle of clips) {
       ctx.beginPath();
-      ctx.ellipse(x + r * circle.x, y + r * .88 * circle.y, r * circle.radius, r * .88 * circle.radius, 0, 0, Math.PI * 2);
+      ctx.ellipse(x + r * circle.x, y + ry * circle.y, r * circle.radius, ry * circle.radius, 0, 0, Math.PI * 2);
       ctx.clip();
     }
-    ctx.drawImage(foam.canvas, x - r, y - r * .88, r * 2, r * 1.76);
+    ctx.drawImage(texture, x - r, y - ry, r * 2, ry * 2);
     ctx.restore();
   }
 
   function paintTools(ctx, w, h, view) {
     const { x, y, r } = layout(w, h, view);
-    ctx.save();
-    ctx.fillStyle = '#6b4230';
-    ctx.font = `${r * .12}px Georgia, serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText('Unity', x - r * .94, y + r * 1.44);
-    ctx.restore();
-    paintCafeMark(ctx, x + r * .24, y + r * .895, r * .16, '#68412b');
-    if (view === 'serve' || view === 'photo') paintSpoon(ctx, x, y + r * 1.13, r, -.065);
-    else paintSpoon(ctx, x - r * 1.23, y + r * .31, r * .71, 1.50);
-    if (view === 'pour') paintPitcher(ctx, x, y, r, pourView);
+    paintCafeMark(ctx, x + r * .24, y + r * .887, r * .14, '#766648');
+    if (view === 'pour') paintPitcher(ctx, x, y, r, pourView, foam.plane, pitcherProjection(w, h));
     if (view === 'draw') paintChocolatePen(ctx, x + r * .14, y + r * 2, r);
   }
 
@@ -295,24 +412,21 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   function draw() {
     if (canvas.hidden) return;
     const { strokes, active } = artwork;
-    foam.paint(strokes, active, mode === 'pour' && !reducedMotion.matches);
+    if (mode === 'pour') foam.paintPourPreview(pourLayer, [], !reducedMotion.matches);
+    else foam.paint(strokes, active);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    if (mode !== 'draw') {
-      paint(context, width, height, mode);
-      return;
-    }
-    if (drawingBackdrop.width !== canvas.width || drawingBackdrop.height !== canvas.height) {
-      drawingBackdrop.width = canvas.width;
-      drawingBackdrop.height = canvas.height;
-      const backdrop = drawingBackdrop.getContext('2d');
+    if (tableBackdrop.width !== canvas.width || tableBackdrop.height !== canvas.height) {
+      tableBackdrop.width = canvas.width;
+      tableBackdrop.height = canvas.height;
+      const backdrop = tableBackdrop.getContext('2d');
       backdrop.setTransform(ratio, 0, 0, ratio, 0, 0);
       paintBackdrop(backdrop, width, height, mode);
     }
     context.save();
     context.setTransform(1, 0, 0, 1, 0, 0);
-    context.drawImage(drawingBackdrop, 0, 0);
+    context.drawImage(tableBackdrop, 0, 0);
     context.restore();
-    paintLiquid(context, width, height, mode);
+    paintLiquid(context, width, height, mode, mode === 'pour' ? pourSurface : foam.canvas);
     paintTools(context, width, height, mode);
   }
   function invalidate() {
@@ -325,7 +439,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   function resize() {
     const rect = canvas.getBoundingClientRect();
     if (!rect.width || !rect.height) {
-      drawingBackdrop.width = drawingBackdrop.height = 0;
+      tableBackdrop.width = tableBackdrop.height = 0;
       return;
     }
     const nextRatio = Math.min(devicePixelRatio || 1, 1.75);
@@ -334,29 +448,27 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ratio = nextRatio;
     canvas.width = width * ratio;
     canvas.height = height * ratio;
-    if (drawingBackdrop.width) drawingBackdrop.width = drawingBackdrop.height = 0;
+    if (tableBackdrop.width) tableBackdrop.width = tableBackdrop.height = 0;
     draw();
   }
   new ResizeObserver(resize).observe(canvas);
   resize();
   return {
     input: canvas,
-    get drawingClips() { return drawingFoamClips(width / height); },
-    get pouringClips() { return visibleFoamClips('pour', width / height); },
+    get drawingClips() { return drawingFoamClips(width / height, foam.plane); },
+    get pouringClips() { return visibleFoamClips('pour', width / height, foam.plane); },
     setArtwork(strokes, active) {
       artwork = { strokes, active };
       invalidate();
     },
     resize,
     setMode(next) {
+      if (mode !== next && tableBackdrop.width) tableBackdrop.width = tableBackdrop.height = 0;
       mode = next;
-      if (next !== 'draw' && drawingBackdrop.width) drawingBackdrop.width = drawingBackdrop.height = 0;
       invalidate();
     },
     setPour(view, paintNow = false) {
-      const jetOrigin = view.flow > .008
-        ? (view.streamCut && pourView.jetOrigin) || pitcherLip(pitcherPose(view)) : null;
-      pourView = { ...view, jetOrigin };
+      pourView = view;
       if (mode !== 'pour') return;
       if (paintNow) {
         cancelAnimationFrame(pending);
@@ -366,13 +478,13 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     },
     sample(event) {
       const rect = canvas.getBoundingClientRect();
-      const { x, y, r } = layout(width, height, mode);
-      return { x: (event.clientX - rect.left - x) / r, y: (event.clientY - rect.top - y) / (r * .88) };
+      const { x, y, r, ry } = layout(width, height, mode, foam.plane);
+      return { x: (event.clientX - rect.left - x) / r, y: (event.clientY - rect.top - y) / ry };
     },
     hitsPitcher(event) {
       const rect = canvas.getBoundingClientRect();
       const { x, y, r } = layout(width, height, 'pour');
-      const { left, top, angle } = pitcherPose(pourView);
+      const { left, top, angle } = pitcherPose(pourView, foam.plane, pitcherProjection(width, height));
       const dx = (event.clientX - rect.left - x) / r - left;
       const dy = (event.clientY - rect.top - y) / r - top;
       const across = dx * Math.cos(angle) + dy * Math.sin(angle);

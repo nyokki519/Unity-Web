@@ -2,45 +2,25 @@ import * as THREE from '../vendor/three/three.module.js';
 
 export { CUP_PROFILE, FOAM_PLANE, tableCameraFraming } from './foam-geometry.js';
 
-// Two ceramic roots joined by a rounded, tapered strap.
-const LEAN = .58;
-const rootTop = new THREE.Vector2(1.355, 1.045);
-const outside = new THREE.Vector2(2.035, .782);
-const rootBottom = new THREE.Vector2(1.075, .515);
-const upper = new THREE.CubicBezierCurve(rootTop, new THREE.Vector2(1.665, 1.136),
-  new THREE.Vector2(2.040, 1.101), outside);
-const lower = new THREE.CubicBezierCurve(outside, new THREE.Vector2(2.026, .414),
-  new THREE.Vector2(1.683, .372), rootBottom);
-
-export function handleProfile(t) {
-  const curve = t <= .5 ? upper : lower;
-  const local = t <= .5 ? t * 2 : (t - .5) * 2;
-  const { x, y } = curve.getPoint(local);
-  const tangent = curve.getTangent(local);
-  const narrow = Math.sin(Math.PI * t);
-  return {
-    x, y, z: LEAN * (y - outside.y), nx: tangent.y, ny: -tangent.x,
-    depth: .094 - .022 * narrow,
-    width: .135 - .035 * narrow,
-  };
-}
+import { handleProfile, handleCrossSection } from './tableware-profile.js';
+export { handleProfile } from './tableware-profile.js';
 
 export function createHandleGeometry() {
   const segments = 48;
   const sides = 18;
   const positions = [];
+  const colors = [];
   const indices = [];
   for (let ring = 0; ring <= segments; ring++) {
     const profile = handleProfile(ring / segments);
     for (let side = 0; side < sides; side++) {
       const angle = 2 * Math.PI * side / sides;
-      const alongNormal = Math.cos(angle) * profile.depth;
-      const across = Math.sin(angle) * profile.width;
-      positions.push(
-        profile.x + profile.nx * alongNormal,
-        profile.y + profile.ny * alongNormal - across * .32,
-        profile.z + LEAN * profile.ny * alongNormal + across,
-      );
+      const { x, y, z } = handleCrossSection(profile, angle);
+      positions.push(x, y, z);
+      // The inward face receives less diffuse room light through the narrow opening.
+      const occlusion = Math.max(0, Math.cos(angle)) ** 1.5;
+      const light = 1 - .38 * occlusion;
+      colors.push(light, light, light);
       if (ring === segments) continue;
       const a = ring * sides + side;
       const b = ring * sides + (side + 1) % sides;
@@ -49,9 +29,20 @@ export function createHandleGeometry() {
   }
   const mesh = new THREE.BufferGeometry();
   mesh.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  mesh.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
   mesh.setIndex(indices);
   mesh.computeVertexNormals();
   return mesh;
+}
+
+export function createSpoonBowlGeometry() {
+  const profile = [
+    [0, .035], [.10, .036], [.18, .044], [.24, .069], [.275, .098],
+    [.286, .111], [.285, .119], [.275, .124], [.266, .119],
+    [.235, .094], [.177, .070], [.093, .055], [0, .051],
+  ];
+  return new THREE.LatheGeometry(profile.map(([r, y]) => new THREE.Vector2(r, y)), 80)
+    .scale(1.6, 1, 1).translate(-.61, 0, 0);
 }
 
 export function createSpoonStemGeometry() {
@@ -102,7 +93,7 @@ export function createChocolatePen() {
   return pen;
 }
 
-export const PITCHER_LIP = Object.freeze({ x: -.67, y: 1.17, z: 0 });
+export { PITCHER_LIP, pourJetPose } from './pour-jet.js';
 
 export function shapePitcherSpout(geometry) {
   const positions = geometry.getAttribute('position');
@@ -121,16 +112,6 @@ export function shapePitcherSpout(geometry) {
 
 const STREAM_SEGMENTS = 20;
 const STREAM_SIDES = 8;
-
-export function pourJetPose(flow, used) {
-  const established = THREE.MathUtils.smoothstep(flow, .02, .64);
-  return {
-    angle: .70 + .16 * established + .13 * used,
-    height: THREE.MathUtils.lerp(.80, .41, established),
-    reach: THREE.MathUtils.lerp(.16, .40, established),
-    depth: -.19 - .18 * established,
-  };
-}
 
 export function sampleFallingMilk(start, end, t) {
   return {
@@ -157,7 +138,7 @@ export function createMilkStreamGeometry() {
   return geometry;
 }
 
-export function updateMilkStream(geometry, start, end, amount, cut = 0) {
+export function updateMilkStream(geometry, start, end, amount, cut = 0, head = 1) {
   const dx = end.x - start.x;
   const dy = end.y - start.y;
   const dz = end.z - start.z;
@@ -169,7 +150,7 @@ export function updateMilkStream(geometry, start, end, amount, cut = 0) {
   const vertices = geometry.getAttribute('position');
   const startRadius = .052 * Math.sqrt(amount);
   for (let ring = 0; ring <= STREAM_SEGMENTS; ring++) {
-    const t = THREE.MathUtils.lerp(cut, 1, ring / STREAM_SEGMENTS);
+    const t = THREE.MathUtils.lerp(cut, head, ring / STREAM_SEGMENTS);
     const center = sampleFallingMilk(start, end, t);
     tangent.set(dx, 2 * Math.max(.001, t) * dy, dz).normalize();
     normal.crossVectors(tangent, across).normalize();

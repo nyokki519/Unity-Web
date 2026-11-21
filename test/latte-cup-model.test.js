@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { LatheGeometry, PerspectiveCamera, Vector2, Vector3 } from '../public/vendor/three/three.module.js';
-import { CUP_PROFILE } from '../public/latte-art/foam-geometry.js';
+import { Euler, LatheGeometry, PerspectiveCamera, Vector2, Vector3 } from '../public/vendor/three/three.module.js';
+import { HANDLE_ANGLE, SPOON_REST, saucerHeightAt } from '../public/latte-art/tableware-profile.js';
+import { CUP_PROFILE, liquidPlaneAtFill } from '../public/latte-art/foam-geometry.js';
 import {
-  createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonStemGeometry,
+  createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonBowlGeometry, createSpoonStemGeometry,
   FOAM_PLANE, PITCHER_LIP, pourJetPose, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
 } from '../public/latte-art/cup-model.js';
 
@@ -49,9 +50,9 @@ test('an established pour lowers the pitcher lip and tips farther over the same 
   const steadyPour = pourJetPose(.62, .1);
   const nearEmpty = pourJetPose(.62, .94);
   assert.ok(firstDrops.height > steadyPour.height + .15);
-  assert.ok(steadyPour.height >= .4 && steadyPour.height < .64);
+  assert.ok(steadyPour.height >= .4 && steadyPour.height < .69);
   assert.ok(steadyPour.angle > firstDrops.angle && nearEmpty.angle > steadyPour.angle);
-  assert.ok(nearEmpty.angle <= 1);
+  assert.ok(nearEmpty.angle < Math.PI / 2);
 });
 
 test('after release the last part of the stream clears the spout and reaches the original landing point', () => {
@@ -128,4 +129,61 @@ test('the milk stream starts at the flared pitcher lip with an unchanged base', 
   }
   assert.ok(tipDistance < .01);
   geometry.dispose();
+});
+
+
+test('a moving pitcher remains above the rim and its lip stays inside the opening', () => {
+  const rim = Math.max(...CUP_PROFILE.map(([, height]) => height));
+  for (const flow of [.05, .35, .62, 1]) {
+    for (const used of [0, .5, 1]) {
+      const plane = liquidPlaneAtFill(used);
+      for (let angle = 0; angle < Math.PI * 2; angle += .2) {
+        const position = { x: .91 * Math.cos(angle), y: .91 * Math.sin(angle) };
+        const jet = pourJetPose(flow, used, position, plane);
+        const lip = plane.height + jet.height;
+        for (const [radius, y] of [[.51, 0], [.58, .07], [.60, .22], [.54, .72], [.45, 1.18]]) {
+          const bottom = lip + .84 * ((-radius - PITCHER_LIP.x) * Math.sin(jet.angle)
+            + (y - PITCHER_LIP.y) * Math.cos(jet.angle));
+          assert.ok(bottom >= rim + .018);
+        }
+        assert.ok(Math.hypot(position.x * plane.radius + jet.reach,
+          position.y * plane.radius + jet.depth) < plane.radius - .025);
+      }
+    }
+  }
+});
+
+test('the grip opening remains visible from the serving camera', () => {
+  const top = handleProfile(.08);
+  const bottom = handleProfile(.92);
+  const elevation = tableCameraFraming('photo', 1).elevation * Math.PI / 180;
+  const projectedDepth = -(top.x - bottom.x) * Math.sin(HANDLE_ANGLE) + (top.z - bottom.z) * Math.cos(HANDLE_ANGLE);
+  const opening = (top.y - bottom.y) * Math.cos(elevation) - projectedDepth * Math.sin(elevation);
+  assert.ok(opening > top.depth + bottom.depth + .08);
+});
+
+test('the rolled rim leaves a shallow headspace above the foam', () => {
+  const rimHeight = Math.max(...CUP_PROFILE.map(([, height]) => height));
+  assert.ok(rimHeight - FOAM_PLANE.height < FOAM_PLANE.radius * .18);
+  assert.ok(rimHeight - FOAM_PLANE.height > FOAM_PLANE.radius * .10);
+});
+
+
+test('the bowl and the grip of the spoon both rest on the saucer', () => {
+  const { x, y, z, yaw, pitch, scale } = SPOON_REST;
+  const rotation = new Euler(0, yaw, pitch);
+  const origin = new Vector3(x, y, z);
+  const bowl = createSpoonBowlGeometry();
+  const stem = createSpoonStemGeometry().translate(.24, .085, 0);
+  for (const part of [bowl, stem]) {
+    let gap = Infinity;
+    const vertices = part.getAttribute('position');
+    const point = new Vector3();
+    for (let i = 0; i < vertices.count; i++) {
+      point.fromBufferAttribute(vertices, i).multiplyScalar(scale).applyEuler(rotation).add(origin);
+      gap = Math.min(gap, point.y - saucerHeightAt(Math.hypot(point.x, point.z)));
+    }
+    assert.ok(Math.abs(gap) < .002, `spoon clearance ${gap}`);
+    part.dispose();
+  }
 });

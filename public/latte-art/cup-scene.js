@@ -1,19 +1,20 @@
+import { POURING_PITCHER_SCALE } from './pour-jet.js';
 import * as THREE from '../vendor/three/three.module.js';
 import {
-  createChocolatePen, createHandleGeometry, createMilkStreamGeometry, createSpoonStemGeometry,
+  createChocolatePen, createHandleGeometry, createMilkStreamGeometry, createSpoonBowlGeometry, createSpoonStemGeometry,
   PITCHER_LIP, pourJetPose, shapePitcherSpout, updateMilkStream,
 } from './cup-model.js';
 import { createCanvasFallback } from './fallback-cup.js';
-import { CUP_PROFILE, drawingFoamClips, FOAM_PLANE, tableCameraFraming, visibleFoamClips } from './foam-geometry.js';
+import { CUP_OUTER_WALL, CUP_PROFILE, drawingFoamClips, FOAM_PLANE, tableCameraFraming, visibleFoamClips } from './foam-geometry.js';
 import { projectInkPlane } from './ink-overlay.js';
 import { createPitcherLiquid } from './pitcher-liquid.js';
 import { MILK_CAPACITY } from './milk-pour.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
+import { HANDLE_ANGLE, SAUCER_PROFILE, SPOON_REST, saucerHeightAt } from './tableware-profile.js';
 import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
 
 const { radius: FOAM_RADIUS, height: FOAM_HEIGHT } = FOAM_PLANE;
-const DRAW_HANDLE_ANGLE = -1.69;
 const LIVE_TOOL_PIXEL_RATIO = .82;
 
 function walnutTextures() {
@@ -76,8 +77,8 @@ function lathe(rows, material, rimY = Infinity, rimRadius = 0, interiorStart = r
   const mesh = new THREE.Mesh(new THREE.LatheGeometry(rows.map(([r, y]) => new THREE.Vector2(r, y)), 144), material);
   if (material.vertexColors) {
     const glaze = new THREE.Color('#ffffff');
-    const toasted = new THREE.Color('#ac7349');
-    const shadedGlaze = new THREE.Color('#81736d');
+    const toasted = new THREE.Color('#d7cdbb');
+    const shadedGlaze = new THREE.Color('#968a7d');
     const color = new THREE.Color();
     const positions = mesh.geometry.attributes.position;
     const values = new Float32Array(positions.count * 3);
@@ -88,7 +89,7 @@ function lathe(rows, material, rimY = Infinity, rimRadius = 0, interiorStart = r
         * THREE.MathUtils.smoothstep(radius, rimRadius - .045, rimRadius + .010);
       color.copy(glaze).lerp(toasted, warmth * (interiorStart === rows.length ? .60 : .36));
       if (row >= interiorStart) {
-        const depth = 1 - THREE.MathUtils.smoothstep(height, FOAM_HEIGHT - .03, 1.36);
+        const depth = 1 - THREE.MathUtils.smoothstep(height, FOAM_HEIGHT - .03, 1.26);
         color.lerp(shadedGlaze, depth * .48);
       }
       color.toArray(values, i * 3);
@@ -121,7 +122,7 @@ function buildCupMark() {
   const geometry = new THREE.PlaneGeometry(1, 1, 24, 16);
   const vertices = geometry.attributes.position;
   for (let i = 0; i < vertices.count; i++) {
-    const height = 1.02 + (vertices.getY(i) + .5) * .30;
+    const height = .92 + (vertices.getY(i) + .5) * .28;
     const start = CUP_PROFILE.findIndex(([, y]) => y >= height);
     const [previousRadius, previousHeight] = CUP_PROFILE[start - 1];
     const [nextRadius, nextHeight] = CUP_PROFILE[start];
@@ -136,8 +137,6 @@ function buildCupMark() {
   return logo;
 }
 
-const SAUCER_FACE = [[1.17, .16], [1.41, .17], [1.65, .20], [1.86, .27], [2.04, .35], [2.11, .37]];
-
 function buildSaucerMark() {
   const geometry = new THREE.PlaneGeometry(.64, .64, 12, 12);
   geometry.rotateX(-Math.PI / 2);
@@ -145,13 +144,7 @@ function buildSaucerMark() {
   for (let i = 0; i < vertices.count; i++) {
     const x = vertices.getX(i) - 1.20;
     const z = vertices.getZ(i) + 1.10;
-    const radius = Math.hypot(x, z);
-    const upper = Math.max(1, SAUCER_FACE.findIndex(([edge]) => edge >= radius));
-    const [innerRadius, innerY] = SAUCER_FACE[upper - 1];
-    const [outerRadius, outerY] = SAUCER_FACE[upper];
-    const fraction = THREE.MathUtils.clamp((radius - innerRadius) / (outerRadius - innerRadius), 0, 1);
-    const height = THREE.MathUtils.lerp(innerY, outerY, fraction);
-    vertices.setXYZ(i, x, height + .003, z);
+    vertices.setXYZ(i, x, saucerHeightAt(Math.hypot(x, z)) + .003, z);
   }
   geometry.computeVertexNormals();
   const logo = new THREE.Mesh(geometry, stampedMaterial(true));
@@ -164,29 +157,30 @@ function buildTableware(scene, foam) {
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 4;
   const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#ede4d6', map, roughness: .38, clearcoat: .57, clearcoatRoughness: .22,
+    color: '#f5f2e9', map, roughness: .28, clearcoat: .65, clearcoatRoughness: .17,
   });
   const rimmedGlaze = porcelain.clone();
   rimmedGlaze.vertexColors = true;
-  const saucer = lathe([
-    [0, .04], [.78, .04], [.96, .02], [1.12, .02], [1.38, .035], [1.72, .08],
-    [2.02, .16], [2.16, .23], [2.20, .28], [2.20, .31], [2.17, .35], ...[...SAUCER_FACE].reverse(), [.96, .16],
-    [.89, .13], [.82, .12], [0, .12],
-  ], rimmedGlaze, .34, 2.04);
-  saucer.scale.set(1.08, 1, 1.08);
-  saucer.position.set(-.20, 0, .19);
+  const saucer = lathe(SAUCER_PROFILE, rimmedGlaze, .267, 2.08);
+  // Diffuse contact shading around the recessed seat softens the cup's
+  // connection to the saucer, including the side away from the key light.
+  const colors = saucer.geometry.getAttribute('color');
+  const vertices = saucer.geometry.getAttribute('position');
+  for (let i = 0; i < vertices.count; i++) {
+    const radius = Math.hypot(vertices.getX(i), vertices.getZ(i));
+    const light = .72 + .28 * THREE.MathUtils.smoothstep(radius, .65, 1.62);
+    colors.setXYZ(i, colors.getX(i) * light, colors.getY(i) * light, colors.getZ(i) * light);
+  }
   saucer.add(buildSaucerMark());
   scene.add(saucer);
 
   const cup = new THREE.Group();
-  const innerWall = CUP_PROFILE.findIndex(([, height]) => height >= 1.38) + 1;
-  const bowl = lathe(CUP_PROFILE, rimmedGlaze, 1.34, 1.37, innerWall);
+  const bowl = lathe(CUP_PROFILE, rimmedGlaze, 1.25, 1.35, CUP_OUTER_WALL.length);
   cup.add(bowl, buildCupMark());
-  const handleRing = new THREE.Mesh(createHandleGeometry(), porcelain);
+  const handleRing = new THREE.Mesh(createHandleGeometry(), rimmedGlaze);
   handleRing.castShadow = handleRing.receiveShadow = true;
-  const handle = new THREE.Group();
-  handle.add(handleRing);
-  cup.add(handle);
+  handleRing.rotation.y = HANDLE_ANGLE;
+  cup.add(handleRing);
   const foamTexture = new THREE.CanvasTexture(foam.canvas);
   foamTexture.colorSpace = THREE.SRGBColorSpace;
   foamTexture.anisotropy = 4;
@@ -198,7 +192,7 @@ function buildTableware(scene, foam) {
   disk.position.y = FOAM_HEIGHT;
   cup.add(disk);
   scene.add(cup);
-  return { disk, foamTexture, handle };
+  return { disk, foamTexture };
 }
 
 function buildSpoon(scene) {
@@ -207,26 +201,17 @@ function buildSpoon(scene) {
     color: '#e2e5e5', metalness: .86, roughness: .19, envMapIntensity: 1.38,
   });
   // A rolled edge and a shallow concavity catch separate reflections.
-  const bowl = lathe([
-    [0, .035], [.10, .036], [.18, .044], [.24, .069], [.275, .098],
-    [.286, .111], [.285, .119], [.275, .124], [.266, .119],
-    [.235, .094], [.177, .070], [.093, .055], [0, .051],
-  ], material);
-  bowl.scale.x = 1.6;
-  bowl.position.x = -.61;
+  const bowl = new THREE.Mesh(createSpoonBowlGeometry(), material);
+  bowl.castShadow = bowl.receiveShadow = true;
   spoon.add(bowl);
   const handle = new THREE.Mesh(createSpoonStemGeometry(), material);
   handle.position.set(.24, .085, 0);
   handle.castShadow = handle.receiveShadow = true;
   spoon.add(handle);
+  spoon.position.set(SPOON_REST.x, SPOON_REST.y, SPOON_REST.z);
+  spoon.rotation.set(0, SPOON_REST.yaw, SPOON_REST.pitch);
+  spoon.scale.setScalar(SPOON_REST.scale);
   scene.add(spoon);
-  return spoon;
-}
-
-function placeSpoon(spoon, serving) {
-  spoon.position.set(serving ? -.07 : -1.68, serving ? .25 : .155, serving ? 1.54 : .10);
-  spoon.rotation.y = serving ? -.06 : -1.58;
-  spoon.scale.setScalar(serving ? 1 : .8);
 }
 
 export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanvas, pourCanvas, foam, onReady) {
@@ -253,16 +238,16 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.shadowMap.autoUpdate = false;
 
-  const atmosphere = new THREE.HemisphereLight('#fff2de', '#60443a', 1.63);
-  const windowLight = new THREE.DirectionalLight('#ffe8ce', 3.02);
+  const atmosphere = new THREE.HemisphereLight('#fff7e9', '#675548', 1.38);
+  const windowLight = new THREE.DirectionalLight('#fff2e1', 2.8);
   windowLight.position.set(-5, 8, -3.4);
   windowLight.castShadow = true;
   windowLight.shadow.mapSize.set(1024, 1024);
   Object.assign(windowLight.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 16 });
-  windowLight.shadow.normalBias = .022;
+  windowLight.shadow.normalBias = .012;
   windowLight.shadow.bias = -.0002;
   windowLight.shadow.intensity = .66;
-  windowLight.shadow.radius = 2.5;
+  windowLight.shadow.radius = 5.5;
   scene.add(atmosphere, windowLight);
   const pouringLight = windowLight.clone();
   pouringLight.castShadow = false;
@@ -280,14 +265,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   lamp.target.position.set(-1.7, 0, 1.7);
   lamp.map = windowLightMask();
   scene.add(lamp, lamp.target);
-  const { disk, foamTexture, handle } = buildTableware(scene, foam);
+  const { disk, foamTexture } = buildTableware(scene, foam);
   const liveFoam = canvasOf(512);
   const liveFoamContext = liveFoam.getContext('2d');
   const liveFoamTexture = new THREE.CanvasTexture(liveFoam);
   liveFoamTexture.colorSpace = THREE.SRGBColorSpace;
   liveFoamTexture.anisotropy = foamTexture.anisotropy;
-  const spoon = buildSpoon(scene);
-  placeSpoon(spoon, false);
+  buildSpoon(scene);
   const { pitcher, spout, pitcherMilk } = buildPitcher(pourScene);
   const chocolatePen = createChocolatePen();
   chocolatePen.visible = false;
@@ -302,7 +286,6 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   const streamStart = new THREE.Vector3();
   const streamEnd = new THREE.Vector3();
   const jetOrigin = new THREE.Vector3();
-  let hasJetOrigin = false;
   const idlePitcher = new THREE.Vector3(.54, 1.52, -1.52);
   let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1, amount: 0 };
   const camera = new THREE.PerspectiveCamera(28, 1, .1, 80);
@@ -317,6 +300,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   let mode = 'pour';
   let pending = 0;
   let artwork = { strokes: [], active: null };
+  let surfacePlane = null;
   let foamClips = [];
   let pourClips = [];
   let artworkDirty = false;
@@ -375,7 +359,9 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     if (backdropDirty) {
       foam.paintBlank();
       uploadSurface();
+      disk.visible = false;
       renderer.render(scene, camera);
+      disk.visible = true;
       stillCanvas.width = mainCanvas.width;
       stillCanvas.height = mainCanvas.height;
       still.drawImage(mainCanvas, 0, 0);
@@ -422,13 +408,31 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     });
   }
 
+  function updateSurfaceGeometry(width, height) {
+    if (!width || !height) return;
+    surfacePlane = foam.plane;
+    plane.constant = -surfacePlane.height;
+    disk.position.y = surfacePlane.height;
+    disk.scale.setScalar(surfacePlane.radius / FOAM_RADIUS);
+    foamClips = drawingFoamClips(width / height, surfacePlane);
+    if (mode === 'pour' || mode === 'draw') {
+      artworkDirty = true;
+      projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+      const layer = mode === 'pour' ? pourCanvas : inkCanvas;
+      const size = mode === 'pour' && disk.material.map === liveFoamTexture ? liveFoam.width : foam.canvas.width;
+      if (layer.width !== size || layer.height !== size) layer.width = layer.height = size;
+      const matrix = projectInkPlane(projection.elements, { width, height }, surfacePlane, layer.width);
+      layer.style.transform = `matrix3d(${matrix.join(',')})`;
+    }
+    if (mode === 'pour') pourClips = visibleFoamClips('pour', width / height, surfacePlane);
+  }
+
   function resize() {
     if (contextUnavailable) return;
     const { width, height } = mainCanvas.getBoundingClientRect();
     if (!width || !height) return;
     cameraMotion = null;
     backdropDirty = true;
-    handle.rotation.y = mode === 'serve' ? 0 : DRAW_HANDLE_ANGLE;
     renderer.shadowMap.needsUpdate = true;
     const ratio = Math.min(devicePixelRatio || 1, 1.75);
     const compact = Math.min(width, height) * ratio <= 740;
@@ -442,17 +446,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       renderer.setDrawingBufferSize(width, height, ratio);
     }
     placeCamera(camera, mode, width / height);
-    foamClips = drawingFoamClips(width / height);
-    if (mode === 'pour' || mode === 'draw') {
-      artworkDirty = true;
-      projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-      const layer = mode === 'pour' ? pourCanvas : inkCanvas;
-      const size = mode === 'pour' && compact ? liveFoam.width : foam.canvas.width;
-      if (layer.width !== size || layer.height !== size) layer.width = layer.height = size;
-      const matrix = projectInkPlane(projection.elements, { width, height }, FOAM_PLANE, layer.width);
-      layer.style.transform = `matrix3d(${matrix.join(',')})`;
-    }
-    if (mode === 'pour') pourClips = visibleFoamClips('pour', width / height);
+    updateSurfaceGeometry(width, height);
     invalidate();
   }
   new ResizeObserver(resize).observe(mainCanvas);
@@ -489,16 +483,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       return;
     }
     chocolatePen.visible = next === 'draw';
-    placeSpoon(spoon, next === 'serve');
     if (next !== 'pour') stream.visible = false;
     const { width, height } = mainCanvas.getBoundingClientRect();
-    const handleAngle = next === 'serve' ? 0 : DRAW_HANDLE_ANGLE;
     if (animate && !drawingMode.matches) {
       const from = camera.clone();
       const to = camera.clone();
       placeCamera(to, next, width / height);
       const start = performance.now();
-      const fromAngle = handle.rotation.y;
       cancelAnimationFrame(pending);
       pending = 0;
       function move(now) {
@@ -512,7 +503,6 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
         } else if (camera.view?.enabled) {
           camera.clearViewOffset();
         }
-        handle.rotation.y = THREE.MathUtils.lerp(fromAngle, handleAngle, ease);
         renderer.shadowMap.needsUpdate = true;
         camera.updateMatrixWorld(true);
         drawFrame();
@@ -523,7 +513,6 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       requestAnimationFrame(move);
     } else {
       cameraMotion = null;
-      handle.rotation.y = handleAngle;
       resize();
     }
   }
@@ -540,7 +529,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     if (contextUnavailable) return substitute.sample(event);
     if (!pointRay(event)) return null;
     if (!ray.ray.intersectPlane(plane, hit)) return null;
-    return { x: hit.x / FOAM_RADIUS, y: hit.z / FOAM_RADIUS };
+    return { x: hit.x / surfacePlane.radius, y: hit.z / surfacePlane.radius };
   }
 
   function hitsPitcher(event) {
@@ -562,27 +551,19 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     const oldSize = renderer.getSize(new THREE.Vector2());
     const oldRatio = renderer.getPixelRatio();
     const originalExposure = renderer.toneMappingExposure;
-    const angle = handle.rotation.y;
     const displayTexture = disk.material.map;
-    const changedPose = mode !== 'serve' || angle !== 0;
     try {
       renderer.setDrawingBufferSize(PHOTO_SIZE, PHOTO_SIZE, 1);
       renderer.toneMappingExposure = .74;
-      handle.rotation.y = 0;
-      placeSpoon(spoon, true);
       disk.material.map = foamTexture;
-      if (changedPose) renderer.shadowMap.needsUpdate = true;
       renderer.render(scene, framing);
       picture.getContext('2d').drawImage(mainCanvas, 0, 0);
     } catch (error) {
       if (!gl.isContextLost()) throw error;
     } finally {
-      handle.rotation.y = angle;
-      placeSpoon(spoon, mode === 'serve');
       disk.material.map = displayTexture;
       renderer.toneMappingExposure = originalExposure;
       renderer.setDrawingBufferSize(oldSize.x, oldSize.y, oldRatio);
-      if (changedPose) renderer.shadowMap.needsUpdate = true;
       backdropDirty = true;
       invalidate();
     }
@@ -598,17 +579,20 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       return;
     }
     if (mode !== 'pour') return;
-    const { position, flow, streamCut, resting, amount, pitcherOffset } = view;
+    const { position, impact = position, flow, streamHead = 1, streamCut = 0, resting, amount, pitcherOffset } = view;
     const used = amount / MILK_CAPACITY;
-    const jet = pourJetPose(flow, used);
+    if (surfacePlane !== foam.plane) {
+      updateSurfaceGeometry(mainCanvas.clientWidth, mainCanvas.clientHeight);
+    }
+    const jet = pourJetPose(flow, used, position, surfacePlane);
     const tilt = THREE.MathUtils.lerp(jet.angle, .08, resting);
     const yaw = .47 * (1 - resting);
     pitcher.rotation.set(0, yaw, tilt, 'YXZ');
-    pitcher.scale.setScalar(.84 + .16 * resting);
+    pitcher.scale.setScalar(THREE.MathUtils.lerp(POURING_PITCHER_SCALE, 1, resting));
     pitcherMilk.mesh.scale.copy(pitcher.scale);
     pitcherMilk.mesh.rotation.y = yaw;
     pitcher.position.set(0, 0, 0);
-    streamEnd.set(position.x * FOAM_RADIUS, FOAM_HEIGHT, position.y * FOAM_RADIUS);
+    streamEnd.set(position.x * surfacePlane.radius, surfacePlane.height, position.y * surfacePlane.radius);
     spout.getWorldPosition(streamStart);
     pitcher.position.set(streamEnd.x + jet.reach - streamStart.x,
       streamEnd.y + jet.height - streamStart.y, streamEnd.z + jet.depth - streamStart.z).lerp(idlePitcher, resting);
@@ -617,14 +601,14 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       pitcher.position.z += pitcherOffset.y * FOAM_RADIUS * resting;
     }
     pitcherMilk.update(pitcher, tilt, used, resting);
-    stream.visible = flow > .008;
+    stream.visible = flow > .001 && streamHead > streamCut;
     if (stream.visible) {
-      if (!streamCut || !hasJetOrigin) {
-        spout.getWorldPosition(jetOrigin);
-        hasJetOrigin = true;
-      }
-      updateMilkStream(stream.geometry, jetOrigin, streamEnd, flow, streamCut);
-    } else hasJetOrigin = false;
+      if (streamCut) {
+        jetOrigin.set(streamEnd.x + jet.reach, streamEnd.y + jet.height, streamEnd.z + jet.depth);
+      } else spout.getWorldPosition(jetOrigin);
+      streamEnd.set(impact.x * surfacePlane.radius, surfacePlane.height, impact.y * surfacePlane.radius);
+      updateMilkStream(stream.geometry, jetOrigin, streamEnd, flow, streamCut, streamHead);
+    }
     if (paintNow) {
       cancelAnimationFrame(pending);
       pending = 0;

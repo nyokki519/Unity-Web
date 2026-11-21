@@ -1,5 +1,6 @@
+import { FOAM_PLANE, liquidPlaneAtFill } from './foam-geometry.js';
 import { paintChocolate } from './drawing.js';
-import { MILK_GRID_SIZE } from './milk-pour.js';
+import { FOAM_DENSITY_PER_ML, MILK_CAPACITY, MILK_GRID_SIZE } from './milk-pour.js';
 import { StrokePaintCache } from './stroke-paint-cache.js';
 
 export const PHOTO_SIZE = 1200;
@@ -46,6 +47,25 @@ function cremaTexture() {
   return canvas;
 }
 
+// Extend the edge color past the round simulation boundary by one filter
+// footprint. The final cup mask supplies the curved edge at display resolution.
+function foamBorder(size) {
+  const border = [];
+  const half = size / 2;
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      const x = col + .5 - half, y = row + .5 - half;
+      const distance = Math.hypot(x, y);
+      if (distance < half || distance > half + Math.SQRT2) continue;
+      const scale = (half - .8) / distance;
+      const sourceX = Math.floor(half + x * scale);
+      const sourceY = Math.floor(half + y * scale);
+      border.push([row * size + col, sourceY * size + sourceX]);
+    }
+  }
+  return border;
+}
+
 export function createSurface(milk) {
   const surface = canvasOf(ART_SIZE);
   const base = canvasOf(ART_SIZE);
@@ -53,6 +73,8 @@ export function createSurface(milk) {
   const foam = canvasOf(MILK_GRID_SIZE);
   const foamContext = foam.getContext('2d');
   const foamImage = foamContext.createImageData(MILK_GRID_SIZE, MILK_GRID_SIZE);
+  const pixels = new Uint32Array(foamImage.data.buffer);
+  const border = foamBorder(MILK_GRID_SIZE);
   const foamCoat = canvasOf(512);
   const coat = foamCoat.getContext('2d');
   const foamGrain = canvasOf(foamCoat.width);
@@ -115,6 +137,7 @@ export function createSurface(milk) {
   }
 
   let coatRevision = -1;
+  let mixedOpacity = 0;
   let paintedRevision = -1;
   function compositeBase(layer, size) {
     layer.drawImage(coffee, 0, 0, size, size);
@@ -131,6 +154,8 @@ export function createSurface(milk) {
       layer.fillRect(0, 0, size, size);
     } else if (milk.amount > 0) {
       updateFoam();
+      layer.fillStyle = `rgba(223, 171, 117, ${mixedOpacity})`;
+      layer.fillRect(0, 0, size, size);
       layer.drawImage(foamCoat, 0, 0, size, size);
     }
   }
@@ -138,22 +163,26 @@ export function createSurface(milk) {
   function updateFoam() {
     if (coatRevision !== milk.revision) {
       const density = milk.density;
+      let floatingDensity = 0;
       for (let i = 0; i < density.length; i++) {
         const level = density[i];
+        floatingDensity += level;
         const offset = i * 4;
         // Below this level the foam's eight-bit alpha rounds to zero.
         if (level <= .001) {
           foamImage.data[offset + 3] = 0;
           continue;
         }
-        const cream = 1 - Math.exp(-.42 * level);
-        const boundary = Math.max(0, Math.min(1, (level - .21) / 1.45));
-        const cover = .43 * cream + .57 * boundary ** 2 * (3 - 2 * boundary);
+        const cream = 1 - Math.exp(-.30 * level);
+        const cover = 1 - Math.exp(-.46 * level);
         foamImage.data[offset] = 233 + 19 * cream;
         foamImage.data[offset + 1] = 188 + 59 * cream;
         foamImage.data[offset + 2] = 142 + 94 * cream;
         foamImage.data[offset + 3] = 255 * cover;
       }
+      const mixedVolume = Math.max(0, milk.landedAmount - floatingDensity / FOAM_DENSITY_PER_ML);
+      mixedOpacity = .72 * (1 - Math.exp(-mixedVolume / 45));
+      for (const [edge, inside] of border) pixels[edge] = pixels[inside];
       foamContext.putImageData(foamImage, 0, 0);
       coat.clearRect(0, 0, foamCoat.width, foamCoat.height);
       coat.drawImage(foam, 0, 0, foamCoat.width, foamCoat.height);
@@ -185,16 +214,16 @@ export function createSurface(milk) {
   }
 
   function paintImpact(layer) {
-    if (milk.flow < .025) return;
+    if (milk.impactFlow < .025) return;
     const half = layer.canvas.width / 2;
-    const { x, y } = milk.position;
+    const { x, y } = milk.impactPosition;
     layer.save();
     layer.setTransform(half, 0, 0, half, half, half);
     layer.lineWidth = .007;
     for (const offset of [0, .5]) {
       const phase = (milk.motionTime / 295 + offset) % 1;
       const radius = .025 + .082 * phase;
-      const shine = (1 - phase) ** 2 * (.10 + .24 * milk.flow);
+      const shine = (1 - phase) ** 2 * (.10 + .24 * milk.impactFlow);
       layer.strokeStyle = `rgba(255, 244, 222, ${shine})`;
       layer.beginPath();
       layer.arc(x, y, radius, Math.PI * .92, Math.PI * 1.77);
@@ -207,7 +236,19 @@ export function createSurface(milk) {
     layer.restore();
   }
 
+  let lastAmount = -1;
+  let lastPlane = FOAM_PLANE;
   return {
+    fixedLevel: false,
+    get plane() {
+      if (this.fixedLevel) return FOAM_PLANE;
+      const amount = milk.landedAmount;
+      if (amount !== lastAmount) {
+        lastPlane = liquidPlaneAtFill(amount / MILK_CAPACITY);
+        lastAmount = amount;
+      }
+      return lastPlane;
+    },
     canvas: surface,
     paintBlank: paintBase,
     paintPourPreview(layer, clips, showImpact) {

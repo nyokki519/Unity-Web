@@ -21,6 +21,8 @@ if (draft.stage === 'draw' || milk.amount || drawing.strokes.length) {
 }
 const pourInput = new PourInput(milk);
 const surface = createSurface(milk);
+// Retain the original rim clipping of artwork made on the old fixed plane.
+surface.fixedLevel = draft.volumeSurface === false || (draft.volumeSurface === undefined && draft.strokes.length > 0);
 let firstFrameReady = false;
 let controlsReady = false;
 
@@ -63,6 +65,7 @@ let stage = draft.stage;
 let mode = stage;
 let pourRate = DEFAULT_POUR_RATE;
 let pourPointerId = null;
+let lastPourTouch = null;
 let pitcherPickup = null;
 let pitcherOffset = null;
 let pourFrame = 0;
@@ -88,7 +91,7 @@ function flushDraft() {
     savedMilk = milk.snapshot();
     savedMilkRevision = milk.revision;
   }
-  writeDraft(draftStorage, { stage, milk: savedMilk, strokes: drawing.strokes });
+  writeDraft(draftStorage, { stage, milk: savedMilk, strokes: drawing.strokes, volumeSurface: !surface.fixedLevel });
 }
 
 function queueDraft() {
@@ -129,6 +132,7 @@ function closeMenus() {
 function releaseCapturedPointers() {
   const captured = [drawPointerId, pourPointerId];
   drawPointerId = pourPointerId = null;
+  lastPourTouch = null;
   pitcherPickup = pitcherOffset = null;
   $('pourAim').hidden = true;
   for (const id of captured) {
@@ -178,7 +182,8 @@ function presentPour(paintNow = false) {
   if ($('tip').textContent !== hint) $('tip').textContent = hint;
   if (full || !isAimingPour()) $('pourAim').hidden = true;
   cup.setPour({
-    position: milk.toolTarget, flow: milk.flow, streamCut: milk.streamCut,
+    position: milk.toolTarget, impact: milk.impactPosition, flow: milk.flow,
+    streamCut: milk.streamCut, streamHead: milk.streamHead,
     resting: milk.resting, amount: milk.amount, pitcherOffset,
   }, paintNow);
 }
@@ -260,11 +265,16 @@ cup.input.addEventListener('pointerdown', event => {
       pourPointerId = event.pointerId;
       showPourAim(event);
     }
+    lastPourTouch = { x: event.clientX, y: event.clientY };
   } else {
     return;
   }
   cup.input.setPointerCapture(event.pointerId);
 });
+
+function movedPourTouch(event) {
+  return event.clientX !== lastPourTouch?.x || event.clientY !== lastPourTouch?.y;
+}
 
 cup.input.addEventListener('pointermove', event => {
   if (mode === 'draw' && event.pointerId === drawPointerId) {
@@ -274,6 +284,8 @@ cup.input.addEventListener('pointermove', event => {
   } else if (mode === 'pour' && event.pointerId === pourPointerId) {
     const events = event.getCoalescedEvents?.();
     for (const sample of events?.length ? events : [event]) {
+      if (!movedPourTouch(sample)) continue;
+      lastPourTouch = { x: sample.clientX, y: sample.clientY };
       const point = cup.sample(sample);
       if (pitcherPickup && point && !milk.pouring) {
         const x = point.x - pitcherPickup.x;
@@ -300,7 +312,10 @@ function endGesture(event) {
     pourPointerId = null;
     pitcherPickup = pitcherOffset = null;
     $('pourAim').hidden = true;
-    const position = event.type === 'pointerup' ? cup.sample(event) : null;
+    // The surface rises under a held finger. Reprojecting an unchanged touch at
+    // release would deposit a last sideways streak as though the finger moved.
+    const position = event.type === 'pointerup' && movedPourTouch(event) ? cup.sample(event) : null;
+    lastPourTouch = null;
     pourInput.end(inputTime(event.timeStamp), pourRate, position, cup.pouringClips);
     if (!milk.moving) {
       presentPour();
@@ -540,6 +555,7 @@ $('serving').addEventListener('keydown', event => {
   returnToEditing();
 });
 function resetCup() {
+  surface.fixedLevel = false;
   drawing.clear();
   milk.reset();
   invalidatePhoto();

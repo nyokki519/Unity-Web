@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { pitcherLiquidLevel, pitcherLiquidEdge, PITCHER_LIQUID_SEGMENTS } from '../public/latte-art/pitcher-liquid.js';
 
 test('the milk inside a tilted pitcher lies on a level plane with a bounded outline', () => {
-  for (const tilt of [.08, .39, .67]) {
+  for (const tilt of [.08, .39, .67, 1.16, 1.24]) {
     const level = pitcherLiquidLevel(tilt, .4, .2);
     const edges = Array.from({ length: PITCHER_LIQUID_SEGMENTS }, (_, index) =>
       pitcherLiquidEdge(index / PITCHER_LIQUID_SEGMENTS * Math.PI * 2, level, tilt));

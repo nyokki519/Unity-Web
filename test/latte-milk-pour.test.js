@@ -73,7 +73,7 @@ test('a lateral pour leaves a continuous shape and deposits the same dose across
   assert.ok(at(takePour(1400, 25, from), .5, -.20) < .02);
 });
 
-test('release only redistributes the milk and reaching the cup limit stops dosing', () => {
+test('release lands only the remaining flight and reaching the cup limit stops dosing', () => {
   const point = { x: .24, y: -.41 };
   const cup = new MilkPour();
   cup.start(point);
@@ -93,7 +93,11 @@ test('release only redistributes the milk and reaching the cup limit stops dosin
   assert.equal(cup.flow, 0);
   assert.equal(cup.streamCut, 1);
   assert.equal(cup.moving, false);
-  assert.ok(Math.abs(deposited - cup.density.reduce((sum, density) => sum + density, 0)) < .01);
+  const finalDensity = cup.density.reduce((sum, density) => sum + density, 0);
+  assert.ok(finalDensity > deposited, 'the last airborne milk has reached the surface');
+  assert.equal(cup.landedAmount, dose);
+  cup.advance(500);
+  assert.equal(cup.density.reduce((sum, density) => sum + density, 0), finalDensity);
 
   cup.start({ x: 2, y: 2 });
   cup.advance(8000, { x: 2, y: 2 }, 1);
@@ -229,4 +233,32 @@ test('release deposits the fraction of the final step along the path up to the r
   cup.settle();
   assert.equal(cup.amount, amountAtRelease);
   for (const x of [-.3, -.1, .15, .40, .60]) assert.ok(at(cup, x, -.13) > .01, x);
+});
+
+test('the stream grows out of the lip before reaching the foam and landing follows a moving hand', () => {
+  const cup = new MilkPour();
+  const left = { x: -.5, y: .15 };
+  const right = { x: .4, y: .15 };
+  cup.start(left);
+  cup.advance(115, left);
+  assert.ok(cup.flow > 0 && cup.streamHead > 0 && cup.streamHead < 1);
+  assert.ok(cup.amount > 0 && cup.density.every(value => value === 0));
+  cup.advance(250, left);
+  cup.advance(22, right);
+  assert.deepEqual(cup.toolTarget, right);
+  assert.ok(cup.impactPosition.x < -.4);
+  cup.stop();
+  cup.settle();
+  assert.ok(at(cup, .33, .15) > 0);
+});
+
+test('a thin pour mixes below the surface and a strong pour floats more foam per mL', () => {
+  function visibleMilk(rate) {
+    const cup = new MilkPour();
+    cup.start({ x: .2, y: -.2 });
+    cup.advance(800, cup.position, rate);
+    cup.settle();
+    return cup.density.reduce((sum, value) => sum + value, 0) / cup.amount;
+  }
+  assert.ok(visibleMilk(.15) < visibleMilk(.85) * .4);
 });
