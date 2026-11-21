@@ -7,7 +7,7 @@
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
   <style>html{background:#1c120d;color-scheme:dark}</style>
-  <link rel="stylesheet" href="./style.css?v=18">
+  <link rel="stylesheet" href="./style.css?v=19">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -55,8 +55,10 @@
           <button id="widthButton" type="button" class="pen-button on" aria-expanded="false" aria-controls="widthPanel"><i aria-hidden="true"></i> 太さ</button>
           <button id="undo" type="button" disabled>戻す</button>
           <button id="clear" type="button" disabled>全消し</button>
+          <button id="drawGuide" type="button" aria-haspopup="dialog" aria-controls="drawGuideDialog">描くコツ</button>
           <button id="finish" class="go" type="button">完成</button>
         </div>
+        <button id="pourGuide" type="button" aria-haspopup="dialog" aria-controls="pourGuideDialog" hidden>注ぐコツ</button>
         <button id="next" class="go" type="button" hidden>チョコペンで描く</button>
       </div>
       <div id="widthPanel" class="glass width-panel" hidden>
@@ -100,6 +102,38 @@
         <button value="restart" class="go">もう一杯作る</button>
       </form>
     </dialog>
+    <dialog id="pourGuideDialog" class="sheet guide-sheet" aria-labelledby="pourGuideTitle">
+      <header class="help-header">
+        <h2 id="pourGuideTitle">注ぐコツ</h2>
+        <form method="dialog"><button class="go" autofocus>閉じる</button></form>
+      </header>
+      <h3>実物のミルク</h3>
+      <ol class="help-steps">
+        <li>ピッチャーを液面より高めに構え、細く注ぎます。ミルクがコーヒーに混ざり、茶色い下地になじみます。</li>
+        <li>注ぎ口を液面すれすれまで下げ、流量を少し増やします。白い泡が表面に浮いて模様になります。</li>
+      </ol>
+      <h3>スマホでの操作</h3>
+      <p>「ミルクの勢い」を左に寄せ、狙った液面を長押しして細く注ぎます。白い模様を出したいところで指を離し、勢いを少し上げてから、もう一度長押しします。注ぐ高さは実物でのコツです。</p>
+      <footer>出典：<a href="https://home.lamarzoccousa.com/pro-tips-for-latte-art/" target="_blank" rel="noopener">La Marzocco Home「Pro Tips for Latte Art」</a></footer>
+    </dialog>
+    <dialog id="drawGuideDialog" class="sheet guide-sheet" aria-labelledby="drawGuideTitle">
+      <header class="help-header">
+        <h2 id="drawGuideTitle">描くコツ</h2>
+        <form method="dialog"><button class="go" autofocus>閉じる</button></form>
+      </header>
+      <h3>実物のチョコペン</h3>
+      <ul class="help-steps">
+        <li><strong>試し描き</strong> 別のオーブンシートで、点と線を試し描きして出る量を確かめます。</li>
+        <li><strong>目</strong> 一滴だけ絞り、力を抜いてからペン先を離します。</li>
+        <li><strong>ひげ</strong> 泡にペン先を刺さず、表面のすぐ上から細く一定の速さで引きます。</li>
+      </ul>
+      <h3>スマホでの操作</h3>
+      <p>目は泡の上を軽くタップ。ひげは「太さ」を細めにして、指を一定の速さですべらせます。</p>
+      <footer>
+        出典：共立食品「今さら聞けないデコペンの使い方！」、Wilton「How to Pipe Dots」<br>
+        目の点絞りは、Wiltonのアイシング技法をチョコペンに応用しています。
+      </footer>
+    </dialog>
     <dialog id="helpDialog" class="sheet" aria-labelledby="helpTitle">
       <header class="help-header">
         <h2 id="helpTitle">ラテアートの手順</h2>
@@ -118,6 +152,6 @@
       </figure>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=14"></script>
+  <script type="module" src="./app.js?v=15"></script>
 </body>
 </html>

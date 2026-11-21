@@ -146,7 +146,7 @@ function setMode(next, animate = false) {
   releaseCapturedPointers();
   $('hud').hidden = next === 'serve';
   $('serving').hidden = next !== 'serve';
-  $('pourControls').hidden = $('next').hidden = next !== 'pour';
+  $('pourControls').hidden = $('pourGuide').hidden = $('next').hidden = next !== 'pour';
   $('showDraw').hidden = next !== 'pour';
   $('drawControls').hidden = next !== 'draw';
   $('tip').textContent = next === 'pour'
@@ -374,6 +374,17 @@ $('showHelp').onclick = () => {
   dialog.showModal();
 };
 $('helpDialog').addEventListener('close', () => $('menuButton').focus());
+for (const id of ['pourGuide', 'drawGuide']) {
+  const button = $(id);
+  const dialog = $(button.getAttribute('aria-controls'));
+  bindActivation(button, () => {
+    closeMenus();
+    releaseGesture();
+    dialog.showModal();
+  }, { requireOwnPress: true });
+  bindActivation(dialog.querySelector('button'), () => dialog.close(), { requireOwnPress: true });
+  dialog.addEventListener('close', () => button.focus({ preventScroll: true }));
+}
 function openDrawing() {
   if (mode !== 'pour') return;
   setMode('draw');
