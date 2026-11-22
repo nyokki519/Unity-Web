@@ -1,5 +1,5 @@
 import { milkJetRadius, pourJetPose } from './pour-jet.js';
-import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
+import { ceramicGlaze } from './cafe-ware.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
 import { CUP_OUTER_WALL, CUP_PROFILE, FOAM_PLANE, drawingFoamClips, projectedLiquidEllipse, tableCameraFraming, visibleFoamClips } from './foam-geometry.js';
@@ -228,8 +228,10 @@ function paintChocolatePen(ctx, x, y, scale) {
 }
 
 export function createCanvasFallback(mainCanvas, canvas, foam, {
-  overlay = false, tableImage = createWalnutImages(false).colorCanvas,
+  overlay = false, materials,
 } = {}) {
+  const tableImage = materials?.timber.colorCanvas ?? createWalnutImages(false).colorCanvas;
+  const stampImage = materials?.stamp;
   if (overlay) canvas.classList.add('paint-overlay');
   else {
     mainCanvas.hidden = true;
@@ -282,11 +284,15 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
   }
   function paintBackdrop(ctx, w, h, view) {
     const { x, y, r } = layout(w, h, view);
-    ctx.drawImage(tableImage, 136, 56, 240, 400, 0, 0, w, h);
+    const sample = tableImage.width * .74;
+    const cropWidth = sample * Math.min(1, w / h);
+    const cropHeight = sample * Math.min(1, h / w);
+    ctx.drawImage(tableImage, (tableImage.width - cropWidth) * .57,
+      (tableImage.height - cropHeight) * .44, cropWidth, cropHeight, 0, 0, w, h);
     const backdrop = ctx.createRadialGradient(w * .07, h * .19, 0, w * .07, h * .19, Math.hypot(w, h) * .82);
-    backdrop.addColorStop(0, '#ffe1b148');
-    backdrop.addColorStop(.45, '#b37f4e1d');
-    backdrop.addColorStop(1, '#35231967');
+    backdrop.addColorStop(0, '#ffe9cc43');
+    backdrop.addColorStop(.49, '#a06b3614');
+    backdrop.addColorStop(1, '#22181154');
     ctx.fillStyle = backdrop;
     ctx.fillRect(0, 0, w, h);
     function ellipse(rx, ry, color, offsetY = 0, offsetX = 0) {
@@ -328,12 +334,44 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     saucer.addColorStop(.93, '#e7ddcb');
     saucer.addColorStop(1, '#d0c5b3');
     ellipse(plate.rx, plate.ry, saucer, saucerY);
+    // Reflections along the curved glaze fall away before the near edge.
     ctx.save();
-    const stamp = ware.point(-1.05, .223, 1.38);
-    ctx.translate(x + stamp.x * r, y + stamp.y * r);
-    ctx.scale(1, ware.sine);
-    paintCafeMark(ctx, -.14 * r, -.14 * r, .28 * r, '#78634e');
+    ctx.translate(x, y + saucerY);
+    ctx.scale(1, plate.ry / plate.rx);
+    ctx.beginPath();
+    ctx.arc(0, 0, plate.rx * r, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.save();
+    ctx.translate(-1.16 * r, .18 * r);
+    ctx.rotate(-.53);
+    ctx.scale(.24 * r, .43 * r);
+    const windowSheen = ctx.createRadialGradient(0, 0, .08, 0, 0, 1);
+    windowSheen.addColorStop(0, '#fffffc9d');
+    windowSheen.addColorStop(.43, '#fffffc46');
+    windowSheen.addColorStop(1, '#fffffc00');
+    ctx.fillStyle = windowSheen;
+    ctx.fillRect(-1, -1, 2, 2);
     ctx.restore();
+    const reflection = ctx.createLinearGradient(-r, -r, r, r * .56);
+    reflection.addColorStop(0, '#ffffffef');
+    reflection.addColorStop(.56, '#fffaf151');
+    reflection.addColorStop(1, '#fffaf100');
+    ctx.strokeStyle = reflection;
+    ctx.lineWidth = .012 * r;
+    ctx.beginPath();
+    ctx.arc(0, 0, .986 * plate.rx * r, Math.PI * .87, Math.PI * 1.79);
+    ctx.stroke();
+    ctx.restore();
+    if (stampImage) {
+      const stamp = ware.point(-1.05, .223, 1.38);
+      const height = .40 * r;
+      const width = height * stampImage.width / stampImage.height;
+      ctx.save();
+      ctx.translate(x + stamp.x * r, y + stamp.y * r);
+      ctx.scale(1, ware.sine);
+      ctx.drawImage(stampImage, -width / 2, -height / 2, width, height);
+      ctx.restore();
+    }
     const spoon = ware.point(SPOON_REST.x, SPOON_REST.y, SPOON_REST.z);
     const tip = ware.point(SPOON_REST.x + Math.cos(SPOON_REST.yaw), SPOON_REST.y + Math.sin(SPOON_REST.pitch),
       SPOON_REST.z - Math.sin(SPOON_REST.yaw));
@@ -394,6 +432,19 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     const [rimRadius, rimHeight] = CUP_OUTER_WALL.at(-2);
     const crown = ware.ring(rimRadius, rimHeight);
     ellipse(crown.rx, crown.ry, rim, crown.y * r);
+    ctx.save();
+    ctx.translate(x, y + crown.y * r);
+    ctx.scale(1, crown.ry / crown.rx);
+    const lipLight = ctx.createLinearGradient(-r, -.65 * r, r, r);
+    lipLight.addColorStop(0, '#fffefa');
+    lipLight.addColorStop(.56, '#fffdf757');
+    lipLight.addColorStop(1, '#fffdf700');
+    ctx.strokeStyle = lipLight;
+    ctx.lineWidth = .015 * r;
+    ctx.beginPath();
+    ctx.arc(0, 0, .994 * crown.rx * r, Math.PI * .78, Math.PI * 1.89);
+    ctx.stroke();
+    ctx.restore();
     const inner = ctx.createLinearGradient(x - .46 * r, y - r, x + .5 * r, y + .78 * r);
     inner.addColorStop(0, '#bcac95');
     inner.addColorStop(.24, '#d2c3ad');

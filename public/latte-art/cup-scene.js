@@ -10,25 +10,24 @@ import { projectInkPlane } from './ink-overlay.js';
 import { createPitcherLiquid } from './pitcher-liquid.js';
 import { MILK_CAPACITY } from './milk-pour.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
-import { createWalnutImages } from './walnut.js';
 import { HANDLE_ANGLE, SAUCER_FOOT_RADIUS, SAUCER_PROFILE, SPOON_REST, saucerHeightAt } from './tableware-profile.js';
-import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
+import { ceramicGlaze } from './cafe-ware.js';
 
 const { radius: FOAM_RADIUS, height: FOAM_HEIGHT } = FOAM_PLANE;
 const LIVE_TOOL_PIXEL_RATIO = .82;
 
-function walnutTextures() {
-  const { colorCanvas, reliefCanvas } = createWalnutImages();
+function walnutTextures({ colorCanvas, reliefCanvas }) {
   function repeatingTexture(canvas) {
     const texture = new THREE.CanvasTexture(canvas);
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(3.5, 3.5);
+    texture.repeat.set(4.2, 4.2);
+    texture.offset.set(.34, .18);
     texture.anisotropy = 4;
     return texture;
   }
   const map = repeatingTexture(colorCanvas);
   map.colorSpace = THREE.SRGBColorSpace;
-  return { map, bumpMap: repeatingTexture(reliefCanvas) };
+  return { map, bumpMap: reliefCanvas ? repeatingTexture(reliefCanvas) : null };
 }
 
 function windowReflection() {
@@ -46,11 +45,17 @@ function windowReflection() {
   // Broad daylight and room bounce give the glaze reflections that still
   // look like porcelain at the thumbnail size of the saved picture.
   const reflection = context.createRadialGradient(74, 38, 9, 74, 38, 43);
-  reflection.addColorStop(0, '#fffaf4');
-  reflection.addColorStop(.44, '#fbf2e4c8');
+  reflection.addColorStop(0, '#fffdf8');
+  reflection.addColorStop(.40, '#fbf2e4dc');
   reflection.addColorStop(1, '#fbf2e400');
   context.fillStyle = reflection;
   context.fillRect(28, 0, 92, 82);
+  const panes = context.createLinearGradient(58, 13, 92, 61);
+  panes.addColorStop(0, '#fffcf9f0');
+  panes.addColorStop(.64, '#fff6ebb5');
+  panes.addColorStop(1, '#fff6eb20');
+  context.fillStyle = panes;
+  for (const x of [56, 76]) context.fillRect(x, 20, 17, 32);
   const bounce = context.createRadialGradient(187, 44, 5, 187, 44, 37);
   bounce.addColorStop(0, '#d8c9b88a');
   bounce.addColorStop(1, '#d8c9b800');
@@ -106,10 +111,7 @@ function lathe(rows, material, rimY = Infinity, rimRadius = 0, interiorStart = r
   return mesh;
 }
 
-function stampedMaterial() {
-  const stamp = canvasOf(256);
-  const context = stamp.getContext('2d');
-  paintCafeMark(context, 8, 5, 240, '#735846');
+function stampedMaterial(stamp) {
   const map = new THREE.CanvasTexture(stamp);
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 4;
@@ -118,8 +120,9 @@ function stampedMaterial() {
   });
 }
 
-function buildSaucerMark() {
-  const geometry = new THREE.PlaneGeometry(.38, .38, 10, 10);
+function buildSaucerMark(stamp) {
+  const height = .56;
+  const geometry = new THREE.PlaneGeometry(height * stamp.width / stamp.height, height, 10, 10);
   geometry.rotateX(-Math.PI / 2);
   const vertices = geometry.attributes.position;
   for (let i = 0; i < vertices.count; i++) {
@@ -128,17 +131,18 @@ function buildSaucerMark() {
     vertices.setXYZ(i, x, saucerHeightAt(Math.hypot(x, z)) + .003, z);
   }
   geometry.computeVertexNormals();
-  const logo = new THREE.Mesh(geometry, stampedMaterial());
+  const logo = new THREE.Mesh(geometry, stampedMaterial(stamp));
   logo.receiveShadow = true;
   return logo;
 }
 
-function buildTableware(scene, foam) {
+function buildTableware(scene, foam, stamp) {
   const map = new THREE.CanvasTexture(ceramicGlaze());
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 4;
   const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#fbf7ef', map, roughness: .32, clearcoat: .72, clearcoatRoughness: .18,
+    color: '#faf6ed', map, roughness: .23, clearcoat: .90, clearcoatRoughness: .12,
+    envMapIntensity: 1.15,
   });
   const rimmedGlaze = porcelain.clone();
   rimmedGlaze.vertexColors = true;
@@ -156,7 +160,7 @@ function buildTableware(scene, foam) {
     const light = 1 - seatShadow - bowlShadow;
     colors.setXYZ(i, colors.getX(i) * light, colors.getY(i) * light, colors.getZ(i) * light);
   }
-  saucer.add(buildSaucerMark());
+  if (stamp) saucer.add(buildSaucerMark(stamp));
   scene.add(saucer);
 
   const cup = new THREE.Group();
@@ -219,7 +223,7 @@ function buildSaucerContact(scene) {
   scene.add(shadowPlane);
 }
 
-export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanvas, pourCanvas, foam, onReady) {
+export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanvas, pourCanvas, foam, onReady, materials) {
   const renderer = new THREE.WebGLRenderer({
     canvas: mainCanvas, alpha: true, antialias: true, powerPreference: 'low-power',
   });
@@ -258,9 +262,9 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   pouringLight.castShadow = false;
   pourScene.add(atmosphere.clone(), pouringLight);
 
-  const wood = walnutTextures();
+  const wood = walnutTextures(materials.timber);
   const table = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), new THREE.MeshStandardMaterial({
-    ...wood, bumpScale: .009, color: '#e0c6b0', roughness: .63,
+    ...wood, bumpScale: .016, color: '#f2e5d9', roughness: .69,
   }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
@@ -271,7 +275,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   lamp.target.position.set(-1.7, 0, 1.7);
   lamp.map = windowLightMask();
   scene.add(lamp, lamp.target);
-  const { disk, foamTexture } = buildTableware(scene, foam);
+  const { disk, foamTexture } = buildTableware(scene, foam, materials.stamp);
   const liveFoam = canvasOf(512);
   const liveFoamContext = liveFoam.getContext('2d');
   const liveFoamTexture = new THREE.CanvasTexture(liveFoam);
@@ -463,7 +467,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     inkCanvas.hidden = true;
     discardPourLayers();
     substitute ??= createCanvasFallback(mainCanvas, fallbackCanvas, foam, {
-      overlay: true, tableImage: wood.map.image,
+      overlay: true, materials,
     });
     fallbackCanvas.hidden = false;
     substitute.resize();

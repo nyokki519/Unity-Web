@@ -1,3 +1,4 @@
+import { loadCafeMaterials } from './cafe-ware.js';
 import { ChocolateDrawing, liquidContains } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
@@ -45,16 +46,19 @@ async function loadCup() {
   const canvas = $('scene');
   const fallback = $('fallback');
   let timer;
+  let materials;
   try {
     const deadline = new Promise(resolve => { timer = setTimeout(resolve, CUP_RENDER_WAIT_MS, null); });
-    const module = await Promise.race([import('./cup-scene.js'), deadline]);
-    if (module) return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio);
+    const sceneModule = Promise.race([import('./cup-scene.js'), deadline]).catch(() => null);
+    const [module, decoded] = await Promise.all([sceneModule, loadCafeMaterials()]);
+    materials = decoded;
+    if (module) return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio, materials);
   } catch {
     // A blocked module or unavailable graphics context can use the same drawing tools in 2D.
   } finally {
     clearTimeout(timer);
   }
-  const cup = createCanvasFallback(canvas, fallback, surface);
+  const cup = createCanvasFallback(canvas, fallback, surface, { materials });
   revealStudio();
   return cup;
 }

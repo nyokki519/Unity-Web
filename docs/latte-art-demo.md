@@ -25,3 +25,7 @@ Chromiumタッチエミュレーションで375×844、390×844、414×844、PC�
 ラテアートの描画・操作を変更するときは、毎回 [Latte Studio](https://lattestudio.pages.dev/play) をスマホ幅で開き、確認できる範囲で指への追従、描き始めと終わり、細線の視認性を比較する。実プレイまで進めなかった場合は、確認できた画面と比較できなかった項目を記録する。
 
 チョコの質感は提供写真の丸い溜まり、線の太さの変化、泡になじむ縁、部分的な艶を基準にする。Unity MIXでは375px・390pxで泡の端に点と細線を描き、保存PNGを開いて反映を確認する。編集に戻った後も同じ一杯を編集できることを確認する。
+
+## 卓上の素材
+
+卓上の木目と凹凸は [Poly Haven「Wood Table 001」](https://polyhaven.com/a/wood_table_001)（CC0、撮影 Dimitrios Savva、処理 Rico Cilliers）。木目の向きと色を調整し、配信用にWebPへ圧縮した。ソーサーの印はUnity MIXのホームで使用している `public/assets/unity-mark.webp` のインク部分を使い、背景を透過して焼き付けの色に合わせた。
