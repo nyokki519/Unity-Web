@@ -1,8 +1,8 @@
 // A pulled porcelain strap with broad joins and a narrower grip.
 export const HANDLE_ANGLE = -2.78;
 const lean = .52;
-const top = [[1.35, 1.064], [1.61, 1.105], [2.124, 1.156], [2.13, .843]];
-const bottom = [[2.13, .843], [2.13, .47], [1.64, .367], [1.061, .505]];
+const top = [[1.336, 1.064], [1.57, 1.105], [2.025, 1.15], [2.03, .843]];
+const bottom = [[2.03, .843], [2.03, .485], [1.66, .389], [1.053, .505]];
 
 export function handleProfile(t) {
   const upper = t <= .5;
@@ -17,8 +17,8 @@ export function handleProfile(t) {
   const narrow = Math.sin(Math.PI * t);
   return {
     x: coordinate(0), y, z: lean * (y - .843), nx: dy / length, ny: -dx / length,
-    depth: .101 - .038 * narrow,
-    width: .162 - .056 * narrow,
+    depth: .108 - .029 * narrow,
+    width: .162 - .045 * narrow,
   };
 }
 
@@ -34,13 +34,14 @@ export function handleCrossSection(profile, angle) {
 
 
 export const CUP_SEAT_HEIGHT = .13;
+export const SAUCER_FOOT_RADIUS = .92;
 export const SAUCER_RIM = [2.203, .26];
 export const SAUCER_FACE = [
   [0, CUP_SEAT_HEIGHT], [.74, CUP_SEAT_HEIGHT], [.81, .134], [.91, .146], [1.10, .15],
   [1.35, .162], [1.58, .183], [1.81, .221], [2.02, .271], [2.15, .287], [2.184, .285], [2.20, .276], SAUCER_RIM,
 ];
 export const SAUCER_PROFILE = [
-  [0, .035], [.78, .035], [.81, .003], [.92, .003], [.95, .025], [1.30, .053],
+  [0, .035], [.78, .035], [.81, .003], [SAUCER_FOOT_RADIUS, .003], [.95, .025], [1.30, .053],
   [1.65, .106], [1.96, .176], [2.15, .225], [2.19, .242], ...[...SAUCER_FACE].reverse(),
 ];
 export const SPOON_REST = Object.freeze({ x: -1.37, y: .244, z: -1.46, yaw: .72, pitch: -.0254, scale: .86 });

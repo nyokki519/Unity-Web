@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#292018">
+  <meta name="theme-color" content="#272019">
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
   <style>html{background:#1c120d;color-scheme:dark}</style>
-  <link rel="stylesheet" href="./style.css?v=19">
+  <link rel="stylesheet" href="./style.css?v=20">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -33,34 +33,42 @@
       </div>
     </section>
     <div id="hud" class="hud" inert>
-      <a class="brand" href="/" aria-label="Unity MIX ホーム">
-        <img src="./loading-mark.webp" width="71" height="112" alt=""><span>Unity</span>
-      </a>
-      <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー">☰</button>
+      <header class="studio-header">
+        <a class="brand" href="/" aria-label="Unity MIX ホーム">
+          <img src="./loading-mark.webp" width="71" height="112" alt="">
+          <span>Unity MIX</span>
+        </a>
+        <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー"><span aria-hidden="true"></span></button>
+      </header>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
         <button type="button" id="showHelp">遊び方</button>
         <button type="button" id="showDraw">チョコペンで描く</button>
         <button type="button" id="newCup">もう一杯作る</button>
         <a href="/">Unity MIX ホーム</a>
       </nav>
-      <p id="tip" class="hint">ピッチャーを液面へドラッグ。または液面を長押し。</p>
-      <section id="pourControls" class="glass pour-controls" aria-label="ミルクの注ぎ方" hidden>
-        <span>注いだ量 <output id="poured" aria-live="off">0 mL</output></span>
-        <label for="tilt">ミルクの勢い <output for="tilt" id="tiltValue" aria-hidden="true">ふつう</output></label>
-        <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="ふつう">
-        <button id="pourCenter" type="button" aria-disabled="false">中央に注ぐ</button>
-      </section>
-      <div id="bar" class="bar glass" role="group" aria-label="ラテアートの操作">
-        <div id="drawControls" class="control-group" hidden>
-          <button id="widthButton" type="button" class="pen-button on" aria-expanded="false" aria-controls="widthPanel"><i aria-hidden="true"></i> 太さ</button>
-          <button id="undo" type="button" disabled>戻す</button>
-          <button id="clear" type="button" disabled>全消し</button>
-          <button id="drawGuide" type="button" aria-haspopup="dialog" aria-controls="drawGuideDialog">描くコツ</button>
-          <button id="finish" class="go" type="button">完成</button>
+      <div class="stage-caption">
+        <h1 class="stage-title"><span class="pour-title">ミルクを注ぐ</span><span class="draw-title">チョコペンで描く</span></h1>
+        <p id="tip" class="hint">ピッチャーを液面へドラッグ。または液面を長押し。</p>
+      </div>
+      <div class="studio-dock">
+        <section id="pourControls" class="pour-controls" aria-label="ミルクの注ぎ方" hidden>
+          <label for="tilt">ミルクの勢い <output for="tilt" id="tiltValue" aria-hidden="true">ふつう</output></label>
+          <span class="pour-volume"><span class="sr-only">注いだ量 </span><output id="poured" aria-live="off">0 mL</output></span>
+          <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="ふつう">
+          <button id="pourCenter" type="button" aria-disabled="false">中央に注ぐ</button>
+        </section>
+        <div id="bar" class="bar" role="group" aria-label="ラテアートの操作">
+          <div id="drawControls" class="control-group" hidden>
+            <button id="widthButton" type="button" class="pen-button on" aria-expanded="false" aria-controls="widthPanel"><i aria-hidden="true"></i> 太さ</button>
+            <button id="undo" type="button" disabled>戻す</button>
+            <button id="clear" type="button" disabled>全消し</button>
+            <button id="drawGuide" type="button" aria-haspopup="dialog" aria-controls="drawGuideDialog">描くコツ</button>
+            <button id="finish" class="go" type="button">完成</button>
+          </div>
+          <button id="pourGuide" type="button" aria-haspopup="dialog" aria-controls="pourGuideDialog" hidden>注ぐコツ</button>
+          <button id="resetMilk" type="button" aria-disabled="true" hidden>ミルクを入れ直す</button>
+          <button id="next" class="go" type="button" hidden>チョコペンで描く</button>
         </div>
-        <button id="pourGuide" type="button" aria-haspopup="dialog" aria-controls="pourGuideDialog" hidden>注ぐコツ</button>
-        <button id="resetMilk" type="button" aria-disabled="true" hidden>ミルクを入れ直す</button>
-        <button id="next" class="go" type="button" hidden>チョコペンで描く</button>
       </div>
       <div id="widthPanel" class="glass width-panel" hidden>
         <label for="width">チョコペンの太さ</label>

@@ -20,8 +20,7 @@ export function createHandleGeometry() {
       positions.push(x, y, z);
       // The inward face receives less diffuse room light through the narrow opening.
       const occlusion = Math.max(0, Math.cos(angle)) ** 1.5;
-      const light = 1 - .38 * occlusion;
-      colors.push(light, light, light);
+      colors.push(1 - .18 * occlusion, 1 - .20 * occlusion, 1 - .23 * occlusion);
       if (ring === segments) continue;
       const a = ring * sides + side;
       const b = ring * sides + (side + 1) % sides;

@@ -32,20 +32,36 @@ function cremaTexture() {
       const y = (row - size / 2) / (size / 2) - .09;
       const radius = Math.hypot(x, y);
       const angle = Math.atan2(y, x);
-      const flow = angle + 3 * radius + .33 * Math.sin(3 * angle - 3.4 * radius);
-      const ribbons = (.5 + .5 * Math.sin(3 * flow + 1.4 * Math.sin(4.6 * radius)))
+      const flow = angle + 3.8 * radius + .35 * Math.sin(3 * angle - 3.4 * radius);
+      const ribbons = (.5 + .5 * Math.sin(3 * flow + 1.7 * Math.sin(5.8 * radius)))
         * (.70 + .30 * Math.cos(angle + 4 * radius));
       const streaks = .5 + .5 * Math.sin(11 * flow + 3.2 * Math.cos(flow + 8 * radius));
-      const shade = .64 * ribbons + .21 * streaks + .15 * random();
+      const islands = .5 + .5 * Math.sin(21 * x + 14 * y + 1.9 * Math.sin(14 * y - 7 * x));
+      const shade = .53 * ribbons + .17 * streaks + .18 * islands + .12 * random();
       const offset = (row * size + column) * 4;
       image.data[offset] = 129 + 89 * shade;
       image.data[offset + 1] = 64 + 85 * shade;
       image.data[offset + 2] = 26 + 49 * shade;
-      image.data[offset + 3] = (38 + 12 * radius) * Math.min(1, radius * 4);
+      image.data[offset + 3] = (50 + 16 * radius) * Math.min(1, radius * 3.8);
     }
   }
   ctx.putImageData(image, 0, 0);
   return canvas;
+}
+
+// Keep the diffuse window reflection anchored to the cup while foam moves.
+function reflectWindow(context, opacity) {
+  context.save();
+  context.translate(-.41, -.39);
+  context.rotate(-.54);
+  context.scale(.78, .31);
+  const reflection = context.createRadialGradient(0, 0, .02, 0, 0, 1);
+  reflection.addColorStop(0, `rgba(255, 244, 220, ${opacity})`);
+  reflection.addColorStop(.42, `rgba(255, 244, 220, ${opacity * .55})`);
+  reflection.addColorStop(1, 'rgba(255, 244, 220, 0)');
+  context.fillStyle = reflection;
+  context.fillRect(-1, -1, 2, 2);
+  context.restore();
 }
 
 // Extend the edge color past the round simulation boundary by one filter
@@ -101,14 +117,13 @@ export function createSurface(milk) {
     append: strokes => paintInk(inkContext, strokes),
   });
   const random = randomFrom(7123);
-  const bubbles = Array.from({ length: 2500 }, () => {
+  const bubbles = Array.from({ length: 3400 }, () => {
     const angle = random() * Math.PI * 2;
     const distance = Math.sqrt(random());
     return {
       x: Math.cos(angle) * distance,
       y: Math.sin(angle) * distance,
-      radius: (0.4 + random() ** 4 * 3.2) / (ART_SIZE / 2),
-      highlight: random() > 0.38,
+      radius: (0.43 + random() ** 5 * 2.7) / (ART_SIZE / 2),
     };
   });
   // A fixed, fine pore texture survives compositing into the export and never
@@ -121,7 +136,7 @@ export function createSurface(milk) {
     pores.data[i] = shadow ? 128 : 255;
     pores.data[i + 1] = shadow ? 105 : 250;
     pores.data[i + 2] = shadow ? 82 : 237;
-    pores.data[i + 3] = Math.abs(value) * (shadow ? 60 : 80);
+    pores.data[i + 3] = Math.abs(value) * (shadow ? 35 : 52);
   }
   const structure = Float32Array.from({ length: MILK_GRID_SIZE ** 2 }, () => .90 + .20 * random());
   const coffeeContext = coffee.getContext('2d');
@@ -130,26 +145,35 @@ export function createSurface(milk) {
   grain.setTransform(foamGrain.width / 2, 0, 0, foamGrain.height / 2,
     foamGrain.width / 2, foamGrain.height / 2);
   coffeeContext.setTransform(radius, 0, 0, radius, radius, radius);
-  const espresso = coffeeContext.createRadialGradient(-.16, -.19, .12, 0, 0, 1.06);
-  espresso.addColorStop(0, '#994f28');
-  espresso.addColorStop(.78, '#8e4b2a');
-  espresso.addColorStop(1, '#62321b');
+  const espresso = coffeeContext.createRadialGradient(-.29, -.23, .09, 0, 0, 1.05);
+  espresso.addColorStop(0, '#a76739');
+  espresso.addColorStop(.58, '#955633');
+  espresso.addColorStop(.88, '#8a4d2c');
+  espresso.addColorStop(1, '#60321e');
   coffeeContext.fillStyle = espresso;
   coffeeContext.fillRect(-1, -1, 2, 2);
   coffeeContext.drawImage(crema, -1, -1, 2, 2);
-  const windowGlow = coffeeContext.createRadialGradient(-.63, -.67, .02, -.59, -.63, .57);
-  windowGlow.addColorStop(0, '#ffdca437');
-  windowGlow.addColorStop(1, '#ffcf6d00');
-  coffeeContext.fillStyle = windowGlow;
+  reflectWindow(coffeeContext, .17);
+  reflectWindow(grain, .11);
+  // The liquid darkens against the cup wall, with a narrow lit shoulder.
+  const meniscus = coffeeContext.createRadialGradient(0, 0, .9, 0, 0, 1);
+  meniscus.addColorStop(0, '#41201600');
+  meniscus.addColorStop(.67, '#dca46d23');
+  meniscus.addColorStop(1, '#41201666');
+  coffeeContext.fillStyle = meniscus;
   coffeeContext.fillRect(-1, -1, 2, 2);
-  for (const bubble of bubbles) {
-    coffeeContext.fillStyle = bubble.highlight ? '#ebbc7f3c' : '#522d212e';
+  for (const { x, y, radius: pore } of bubbles) {
+    coffeeContext.fillStyle = '#45231731';
     coffeeContext.beginPath();
-    coffeeContext.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+    coffeeContext.ellipse(x, y, pore, .83 * pore, -.52, 0, Math.PI * 2);
     coffeeContext.fill();
-    grain.fillStyle = bubble.highlight ? '#fffefa42' : '#a27d5929';
+    grain.fillStyle = '#997a6226';
     grain.beginPath();
-    grain.ellipse(bubble.x, bubble.y, bubble.radius * .87, bubble.radius * .72, .24, 0, Math.PI * 2);
+    grain.ellipse(x, y, pore, .83 * pore, -.52, 0, Math.PI * 2);
+    grain.fill();
+    grain.fillStyle = '#fffaf04a';
+    grain.beginPath();
+    grain.ellipse(x - .42 * pore, y - .52 * pore, .66 * pore, .36 * pore, -.52, 0, Math.PI * 2);
     grain.fill();
   }
 
@@ -171,7 +195,7 @@ export function createSurface(milk) {
       layer.fillRect(0, 0, size, size);
     } else if (milk.amount > 0) {
       updateFoam();
-      layer.fillStyle = `rgba(223, 171, 117, ${mixedOpacity})`;
+      layer.fillStyle = `rgba(223, 178, 125, ${mixedOpacity})`;
       layer.fillRect(0, 0, size, size);
       layer.drawImage(foamCoat, 0, 0, size, size);
     }
@@ -201,8 +225,8 @@ export function createSurface(milk) {
         const slope = visibleFoam[i] - (visibleFoam[i - MILK_GRID_SIZE - 1] ?? visibleFoam[i]);
         const relief = 2.4 * slope / (1 + Math.abs(slope));
         foamImage.data[offset] = 228 + 22 * cream + relief;
-        foamImage.data[offset + 1] = 186 + 57 * cream + relief;
-        foamImage.data[offset + 2] = 144 + 88 * cream + relief;
+        foamImage.data[offset + 1] = 190 + 54 * cream + relief;
+        foamImage.data[offset + 2] = 152 + 82 * cream + relief;
         foamImage.data[offset + 3] = 255 * cover;
       }
       const mixedVolume = Math.max(0, milk.landedAmount - floatingDensity / FOAM_DENSITY_PER_ML);
@@ -239,23 +263,32 @@ export function createSurface(milk) {
   }
 
   function paintImpact(layer) {
-    if (milk.impactFlow < .025) return;
+    const flow = milk.impactFlow;
+    if (flow < .025) return;
     const half = layer.canvas.width / 2;
     const { x, y } = milk.impactPosition;
     layer.save();
     layer.setTransform(half, 0, 0, half, half, half);
-    layer.lineWidth = .007;
+    const dimpleRadius = .026 + .029 * flow;
+    const dimple = layer.createRadialGradient(x, y, 0, x, y, dimpleRadius);
+    dimple.addColorStop(0, `rgba(71, 39, 24, ${.08 + .13 * flow})`);
+    dimple.addColorStop(.48, `rgba(105, 61, 37, ${.07 * flow})`);
+    dimple.addColorStop(1, 'rgba(105, 61, 37, 0)');
+    layer.fillStyle = dimple;
+    layer.fillRect(x - dimpleRadius, y - dimpleRadius, 2 * dimpleRadius, 2 * dimpleRadius);
+    layer.lineCap = 'round';
     for (const offset of [0, .5]) {
-      const phase = (milk.motionTime / 295 + offset) % 1;
-      const radius = .025 + .082 * phase;
-      const shine = (1 - phase) ** 2 * (.10 + .24 * milk.impactFlow);
+      const phase = (milk.motionTime / (340 - 85 * flow) + offset) % 1;
+      const radius = .028 + (.05 + .060 * flow) * phase;
+      const shine = Math.sin(Math.PI * phase) * (1 - phase) * (.17 + .38 * flow);
+      layer.lineWidth = .0035 + .006 * (1 - phase) * flow;
       layer.strokeStyle = `rgba(255, 244, 222, ${shine})`;
       layer.beginPath();
-      layer.arc(x, y, radius, Math.PI * .92, Math.PI * 1.77);
+      layer.ellipse(x, y, radius, radius * .91, -.38, Math.PI * 1.02, Math.PI * 1.75);
       layer.stroke();
       layer.strokeStyle = `rgba(96, 46, 24, ${shine * .46})`;
       layer.beginPath();
-      layer.arc(x, y, radius, Math.PI * .05, Math.PI * .78);
+      layer.ellipse(x, y, radius, radius * .91, -.38, Math.PI * .04, Math.PI * .73);
       layer.stroke();
     }
     layer.restore();
