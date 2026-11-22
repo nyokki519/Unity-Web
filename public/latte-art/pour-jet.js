@@ -24,3 +24,12 @@ export function pourJetPose(flow, used, position = { x: 0, y: 0 }, plane = FOAM_
   const fit = Math.min(1, (plane.radius - .035) / Math.hypot(lipX, lipZ));
   return { angle, height, reach: lipX * fit - x, depth: lipZ * fit - z };
 }
+
+// Volume continuity narrows the accelerating jet on its way to the liquid.
+// The free ends round off while the column opens or breaks away from the lip.
+export function milkJetRadius(flow, t, cut = 0, head = 1) {
+  const radius = .055 * flow ** .45 / (1 + 5 * t * t) ** .25;
+  const distance = Math.min(cut > 0 ? t - cut : 1, head < 1 ? head - t : 1);
+  const cap = Math.max(0, 1 - Math.max(0, distance) / .055);
+  return radius * Math.sqrt(1 - cap * cap);
+}

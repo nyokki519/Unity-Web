@@ -182,7 +182,7 @@ function presentPour(paintNow = false) {
   if ($('tip').textContent !== hint) $('tip').textContent = hint;
   if (full || !isAimingPour()) $('pourAim').hidden = true;
   cup.setPour({
-    position: milk.toolTarget, impact: milk.impactPosition, flow: milk.flow,
+    position: milk.toolTarget, impact: milk.streamTarget, flow: milk.flow,
     streamCut: milk.streamCut, streamHead: milk.streamHead,
     resting: milk.resting, amount: milk.amount, pitcherOffset,
   }, paintNow);
@@ -243,6 +243,10 @@ function showPourAim(event) {
   aim.hidden = false;
 }
 
+// Keep native gestures available in the guide, toolbar and saved photo.
+for (const name of ['contextmenu', 'selectstart', 'dragstart']) {
+  cup.input.addEventListener(name, event => event.preventDefault());
+}
 cup.input.addEventListener('pointerdown', event => {
   if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
   const point = cup.sample(event);
@@ -256,19 +260,22 @@ cup.input.addEventListener('pointerdown', event => {
     redraw();
   } else if (mode === 'pour') {
     if (milk.pouring || milk.amount >= MILK_CAPACITY) return;
-    if (cup.hitsPitcher(event)) {
+    // A returning pitcher can overlap the liquid on a quick second press.
+    // A press inside the cup always starts a pour, including a stationary hold.
+    if (liquidContains(point, cup.pouringClips)) {
+      if (!beginPour(point, 0, event.timeStamp)) return;
+      pourPointerId = event.pointerId;
+      showPourAim(event);
+    } else if (cup.hitsPitcher(event)) {
       pourPointerId = event.pointerId;
       pitcherPickup = point;
       presentPour();
-    } else {
-      if (!liquidContains(point, cup.pouringClips) || !beginPour(point, 0, event.timeStamp)) return;
-      pourPointerId = event.pointerId;
-      showPourAim(event);
-    }
+    } else return;
     lastPourTouch = { x: event.clientX, y: event.clientY };
   } else {
     return;
   }
+  event.preventDefault();
   cup.input.setPointerCapture(event.pointerId);
 });
 
@@ -338,7 +345,13 @@ function releaseGesture() {
   }
   redraw();
 }
-window.addEventListener('resize', releaseGesture);
+// A mobile browser can resize its toolbar while the finger is still down.
+let layoutWidth = document.documentElement.clientWidth;
+window.addEventListener('resize', () => {
+  const width = document.documentElement.clientWidth;
+  if (width !== layoutWidth) releaseGesture();
+  layoutWidth = width;
+});
 function pauseDrawing() {
   releaseGesture();
   flushDraft();

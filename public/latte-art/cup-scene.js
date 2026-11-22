@@ -278,7 +278,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   scene.add(chocolatePen);
   const stream = new THREE.Mesh(
     createMilkStreamGeometry(),
-    new THREE.MeshStandardMaterial({ color: '#fff6de', roughness: .24 }),
+    new THREE.MeshStandardMaterial({ color: '#f3e9d6', roughness: .36 }),
   );
   stream.visible = false;
   stream.frustumCulled = false;

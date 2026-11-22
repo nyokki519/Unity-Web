@@ -126,7 +126,7 @@ html, body {
 @media (max-aspect-ratio: 17 / 25) {
   :root { --table-still: url('./cup-portrait.webp?v=4'); --table-position: 58% 35.5%; }
 }
-#scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-touch-callout: none; }
+#scene, #fallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 #scene { cursor: crosshair; }
 #pourStill { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 #ink, #pourSurface { position: absolute; inset: 0 auto auto 0; transform-origin: top left; pointer-events: none; }
@@ -148,7 +148,7 @@ html, body {
   border-radius: 50%;
   background: #fff5de;
 }
-.hud { pointer-events: none; position: absolute; inset: 0; user-select: none; }
+.hud { pointer-events: none; position: absolute; inset: 0; -webkit-user-select: none; user-select: none; }
 .hud a, .hud button, .hud nav, .hud input, .hud .bar, .hud .width-panel { pointer-events: auto; }
 .glass {
   background: var(--glass);
@@ -452,6 +452,36 @@ dialog::backdrop { background: rgba(10,7,5,.82); backdrop-filter: blur(8px); }
 .guide-sheet p { margin: 0 0 12px; }
 .guide-sheet footer { color: var(--ink-dim); font-size: 12px; line-height: 1.6; }
 .guide-sheet a { color: var(--accent); }
+.guide-techniques {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 6px 10px;
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.guide-techniques dt { color: var(--accent); font-weight: 650; }
+.guide-techniques dd { margin: 0; }
+.guide-workflow { margin: 0 0 16px; padding-inline-start: 1.65em; }
+.guide-workflow > li::marker { color: var(--accent); font-variant-numeric: tabular-nums; }
+.guide-workflow details { border-bottom: 1px solid var(--line); }
+.guide-workflow summary, .guide-sources summary {
+  min-height: 44px;
+  padding: 11px 0;
+  cursor: pointer;
+  line-height: 1.5;
+  font-size: 14px;
+  font-weight: 650;
+  scroll-margin-block-start: 64px;
+}
+.guide-workflow summary::marker, .guide-sources summary::marker { color: var(--accent); }
+.guide-workflow ul, .guide-sources ul { margin: 0 0 12px; padding-inline-start: 1.2em; }
+.guide-workflow ul { font-size: 14px; line-height: 1.65; color: var(--ink-dim); }
+.guide-workflow li li + li, .guide-sources li + li { margin-top: 5px; }
+.guide-workflow strong { color: var(--ink); }
+.guide-sources { font-size: 13px; line-height: 1.65; color: var(--ink-dim); }
+.guide-sources a { text-underline-offset: .15em; }
+.guide-sheet summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
 
 @media (max-width: 760px) and (orientation: portrait) {

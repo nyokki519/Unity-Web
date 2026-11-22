@@ -107,6 +107,9 @@ export class MilkPour {
     };
   }
   get flow() { return this.#flow; }
+  // The oldest airborne packet begins at the last landing, except when a new
+  // stream starts elsewhere and none of its milk has reached the surface yet.
+  get streamTarget() { return this.#flight[0]?.from ?? this.#impactPosition; }
   get impactPosition() { return this.#impactPosition; }
   get impactFlow() { return this.#impactFlow; }
   get streamHead() { return Math.min(1, Math.max(0, (this.#age - APPROACH_TIME) / (FLIGHT_STEPS * STEP))); }
@@ -260,16 +263,21 @@ export class MilkPour {
     const current = this.#density;
     const result = this.#scratch;
     result.fill(0);
+    const mixing = .20 * smooth(pressure / .16) * (1 - smooth((pressure - .32) / .22));
+    const centralPool = .45 * smooth((pressure - .55) / .45);
     const mobility = this.#pouring ? 1 : smooth(this.#settling / SETTLE_STEPS);
     for (const { index, x, y, neighbors } of cells) {
-      const level = current[index];
-      if (!level) continue;
-      let remain = level;
-      const diffusion = level / (1 + .16 * level);
+      if (!current[index]) continue;
       const dx = x - point.x;
       const dy = y - point.y;
       const distance = dx * dx + dy * dy;
-      const mobile = level * pressure * .82 * Math.max(0, 1 - distance / JET_REACH_SQUARED);
+      // A narrow, high jet draws some of the foam at its point of impact into
+      // the coffee. Its volume is still accounted for in the mixed base color.
+      const core = Math.max(0, 1 - distance / .037);
+      const level = current[index] * (1 - mixing * core * core);
+      let remain = level;
+      const diffusion = level / (1 + .16 * level);
+      const mobile = level * pressure * .82 * (1 - centralPool * core * core) * Math.max(0, 1 - distance / JET_REACH_SQUARED);
       const drift = mobile && distance ? MAX_SURFACE_DRIFT / Math.sqrt(distance) : 0;
       const vx = dx * drift;
       const vy = dy * drift;
@@ -297,7 +305,7 @@ export class MilkPour {
 
   #emit(point, dose) {
     // Even at a low spout height, part of the incoming milk blends under the foam.
-    const floating = .29 + .51 * smooth((this.#flow - .14) / .48);
+    const floating = .29 + .54 * smooth((this.#flow - .26) / .34) + .14 * smooth((this.#flow - .62) / .32);
     this.#flight.push({
       arrival: this.#tickIndex + FLIGHT_STEPS, from: this.#previousTick, to: point,
       dose, surfaceDose: dose * floating, flow: this.#flow,

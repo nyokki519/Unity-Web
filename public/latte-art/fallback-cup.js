@@ -1,4 +1,4 @@
-import { pourJetPose } from './pour-jet.js';
+import { milkJetRadius, pourJetPose } from './pour-jet.js';
 import { ceramicGlaze, paintCafeMark } from './cafe-ware.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
@@ -149,11 +149,11 @@ function paintPitcher(ctx, x, y, scale, view, plane, projection) {
       const t = streamCut + (streamHead - streamCut) * step / 12;
       const verticalSpeed = dy - drop + 2 * t * drop;
       const speed = Math.hypot(dx, verticalSpeed) || 1;
-      const radius = side * .032 * Math.sqrt(flow / (1 + 2 * t));
+      const radius = side * milkJetRadius(flow, t, streamCut, streamHead) / FOAM_PLANE.radius;
       return [tipX + dx * t - radius * verticalSpeed / speed,
         tipY + (dy - drop) * t + drop * t ** 2 + radius * dx / speed];
     };
-    ctx.fillStyle = '#fff6e4';
+    ctx.fillStyle = '#f4ead7';
     ctx.beginPath();
     ctx.moveTo(...edge(0, 1));
     for (let i = 1; i <= 12; i++) ctx.lineTo(...edge(i, 1));

@@ -1,3 +1,4 @@
+import { milkJetRadius } from './pour-jet.js';
 import * as THREE from '../vendor/three/three.module.js';
 
 export { CUP_PROFILE, FOAM_PLANE, tableCameraFraming } from './foam-geometry.js';
@@ -148,13 +149,12 @@ export function updateMilkStream(geometry, start, end, amount, cut = 0, head = 1
   const tangent = new THREE.Vector3();
   const normal = new THREE.Vector3();
   const vertices = geometry.getAttribute('position');
-  const startRadius = .052 * Math.sqrt(amount);
   for (let ring = 0; ring <= STREAM_SEGMENTS; ring++) {
     const t = THREE.MathUtils.lerp(cut, head, ring / STREAM_SEGMENTS);
     const center = sampleFallingMilk(start, end, t);
     tangent.set(dx, 2 * Math.max(.001, t) * dy, dz).normalize();
     normal.crossVectors(tangent, across).normalize();
-    const radius = startRadius / Math.sqrt(1 + 2 * t);
+    const radius = milkJetRadius(amount, t, cut, head);
     // At the lip the stream is a short ribbon that gathers into a round jet.
     const spread = 1 + .42 * (1 - THREE.MathUtils.smoothstep(t, 0, .35));
     for (let side = 0; side < STREAM_SIDES; side++) {

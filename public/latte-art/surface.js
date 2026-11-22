@@ -108,8 +108,22 @@ export function createSurface(milk) {
       highlight: random() > 0.38,
     };
   });
+  // A fixed, fine pore texture survives compositing into the export and never
+  // crawls as foam spreads. The lower-resolution field breaks up the wet edge.
+  const grainSize = foamGrain.width;
+  const pores = new ImageData(grainSize, grainSize);
+  for (let i = 0; i < pores.data.length; i += 4) {
+    const value = random() - .46;
+    const shadow = value < 0;
+    pores.data[i] = shadow ? 128 : 255;
+    pores.data[i + 1] = shadow ? 105 : 250;
+    pores.data[i + 2] = shadow ? 82 : 237;
+    pores.data[i + 3] = Math.abs(value) * (shadow ? 60 : 80);
+  }
+  const structure = Float32Array.from({ length: MILK_GRID_SIZE ** 2 }, () => .90 + .20 * random());
   const coffeeContext = coffee.getContext('2d');
   const grain = foamGrain.getContext('2d');
+  grain.putImageData(pores, 0, 0);
   grain.setTransform(foamGrain.width / 2, 0, 0, foamGrain.height / 2,
     foamGrain.width / 2, foamGrain.height / 2);
   coffeeContext.setTransform(radius, 0, 0, radius, radius, radius);
@@ -173,11 +187,14 @@ export function createSurface(milk) {
           foamImage.data[offset + 3] = 0;
           continue;
         }
-        const cream = 1 - Math.exp(-.30 * level);
-        const cover = 1 - Math.exp(-.46 * level);
-        foamImage.data[offset] = 233 + 19 * cream;
-        foamImage.data[offset + 1] = 188 + 59 * cream;
-        foamImage.data[offset + 2] = 142 + 94 * cream;
+        const thickness = level * structure[i];
+        const cream = 1 - Math.exp(-.38 * thickness);
+        const cover = 1 - Math.exp(-.62 * thickness);
+        const slope = level - (density[i - MILK_GRID_SIZE - 1] ?? level);
+        const relief = 2.4 * slope / (1 + Math.abs(slope));
+        foamImage.data[offset] = 228 + 22 * cream + relief;
+        foamImage.data[offset + 1] = 186 + 57 * cream + relief;
+        foamImage.data[offset + 2] = 144 + 88 * cream + relief;
         foamImage.data[offset + 3] = 255 * cover;
       }
       const mixedVolume = Math.max(0, milk.landedAmount - floatingDensity / FOAM_DENSITY_PER_ML);

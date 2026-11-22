@@ -262,3 +262,34 @@ test('a thin pour mixes below the surface and a strong pour floats more foam per
   }
   assert.ok(visibleMilk(.15) < visibleMilk(.85) * .4);
 });
+
+test('an opening stream after a quick second tap aims at the new stream even as old milk lands', () => {
+  const cup = new MilkPour();
+  const left = { x: -.65, y: -.1 };
+  const right = { x: .7, y: .2 };
+  cup.start(left);
+  cup.advance(500, left, .18);
+  cup.stop();
+  cup.advance(18);
+  cup.start(right);
+  cup.advance(117, right, .18);
+  assert.ok(cup.streamHead > 0 && cup.streamHead < 1 && cup.flow > 0);
+  assert.deepEqual(cup.streamTarget, right);
+});
+
+test('a thin pour incorporates foam locally while a full stream builds a wider dense center', () => {
+  const point = { x: -.4, y: 0 };
+  function measure(rate, time) {
+    const cup = new MilkPour();
+    cup.start(point);
+    cup.advance(time, point, rate);
+    cup.settle();
+    return { thickCells: cup.density.filter(d => d > 5).length, peak: Math.max(...cup.density) };
+  }
+  assert.equal(measure(.36, 1800).thickCells, 0);
+  const regular = measure(.62, 850);
+  const full = measure(1, 850);
+  assert.ok(regular.thickCells > 60);
+  assert.ok(full.thickCells > regular.thickCells * 1.2);
+  assert.ok(full.peak > regular.peak);
+});
