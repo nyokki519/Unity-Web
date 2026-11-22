@@ -188,8 +188,12 @@ export function createSurface(milk) {
           continue;
         }
         const thickness = level * structure[i];
-        const cream = 1 - Math.exp(-.38 * thickness);
-        const cover = 1 - Math.exp(-.62 * thickness);
+        // Where adjacent pours build a shared foam layer, let it turn white
+        // sooner while keeping the thinnest fringe translucent.
+        const densitySquared = thickness * thickness;
+        const coating = thickness + 3.1 * densitySquared / (5 + densitySquared);
+        const cream = 1 - Math.exp(-.38 * coating);
+        const cover = 1 - Math.exp(-.62 * coating);
         const slope = level - (density[i - MILK_GRID_SIZE - 1] ?? level);
         const relief = 2.4 * slope / (1 + Math.abs(slope));
         foamImage.data[offset] = 228 + 22 * cream + relief;

@@ -150,7 +150,7 @@ function setMode(next, animate = false) {
   releaseCapturedPointers();
   $('hud').hidden = next === 'serve';
   $('serving').hidden = next !== 'serve';
-  $('pourControls').hidden = $('pourGuide').hidden = $('next').hidden = next !== 'pour';
+  $('pourControls').hidden = $('pourGuide').hidden = $('resetMilk').hidden = $('next').hidden = next !== 'pour';
   $('showDraw').hidden = next !== 'pour';
   $('drawControls').hidden = next !== 'draw';
   $('tip').textContent = next === 'pour'
@@ -176,6 +176,7 @@ function presentPour(paintNow = false) {
   if ($('poured').value !== amount) $('poured').value = amount;
   const full = milk.amount >= MILK_CAPACITY;
   $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
+  $('resetMilk').setAttribute('aria-disabled', String(!milk.amount && !milk.moving));
   const hint = full ? 'カップが満量です。チョコペンで描けます。'
     : pourPointerId === null ? POUR_HINT
     : milk.pouring ? '指を動かすと着地点が移動。離すと止まります。' : '液面へ指を動かすと注ぎ始めます。';
@@ -419,7 +420,7 @@ function openDrawing() {
   $('widthButton').focus({ preventScroll: true });
 }
 bindActivation($('showDraw'), openDrawing);
-bindActivation($('next'), openDrawing);
+bindActivation($('next'), openDrawing, { requireOwnPress: true });
 $('tilt').oninput = event => {
   if (milk.moving || pourPointerId !== null) pourInput.advance(inputTime(event?.timeStamp), pourRate);
   pourRate = Number($('tilt').value) / 100;
@@ -431,6 +432,16 @@ $('tilt').oninput = event => {
 bindActivation($('pourCenter'), () => {
   if (pourPointerId === null) beginPour({ x: 0, y: 0 }, 630);
 });
+bindActivation($('resetMilk'), () => {
+  if (mode !== 'pour' || (!milk.amount && !milk.moving)) return;
+  closeMenus();
+  releaseGesture();
+  milk.reset();
+  invalidatePhoto();
+  presentPour(true);
+  queueDraft();
+  updateToolbar('ミルクを入れ直せます。');
+}, { requireOwnPress: true });
 bindActivation($('undo'), () => {
   drawing.undo();
   releaseCapturedPointers();
@@ -539,7 +550,7 @@ function finishDrawing() {
   servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 3000);
 }
 
-bindActivation($('finish'), finishDrawing);
+bindActivation($('finish'), finishDrawing, { requireOwnPress: true });
 
 function openResult() {
   if (mode !== 'serve' || $('finishPanel').open) return;
