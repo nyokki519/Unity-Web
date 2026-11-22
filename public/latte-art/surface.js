@@ -1,3 +1,4 @@
+import { joinedFoamLevels } from './foam-coating.js';
 import { FOAM_PLANE, liquidPlaneAtFill } from './foam-geometry.js';
 import { paintChocolate } from './drawing.js';
 import { FOAM_DENSITY_PER_ML, MILK_CAPACITY, MILK_GRID_SIZE } from './milk-pour.js';
@@ -75,6 +76,8 @@ export function createSurface(milk) {
   const foamImage = foamContext.createImageData(MILK_GRID_SIZE, MILK_GRID_SIZE);
   const pixels = new Uint32Array(foamImage.data.buffer);
   const border = foamBorder(MILK_GRID_SIZE);
+  const seamCorrection = new Float32Array(pixels.length);
+  const visibleFoam = new Float32Array(pixels.length);
   const foamCoat = canvasOf(512);
   const coat = foamCoat.getContext('2d');
   const foamGrain = canvasOf(foamCoat.width);
@@ -177,6 +180,7 @@ export function createSurface(milk) {
   function updateFoam() {
     if (coatRevision !== milk.revision) {
       const density = milk.density;
+      joinedFoamLevels(density, MILK_GRID_SIZE, seamCorrection, visibleFoam);
       let floatingDensity = 0;
       for (let i = 0; i < density.length; i++) {
         const level = density[i];
@@ -187,14 +191,14 @@ export function createSurface(milk) {
           foamImage.data[offset + 3] = 0;
           continue;
         }
-        const thickness = level * structure[i];
+        const thickness = visibleFoam[i] * structure[i];
         // Where adjacent pours build a shared foam layer, let it turn white
         // sooner while keeping the thinnest fringe translucent.
         const densitySquared = thickness * thickness;
         const coating = thickness + 3.1 * densitySquared / (5 + densitySquared);
         const cream = 1 - Math.exp(-.38 * coating);
         const cover = 1 - Math.exp(-.62 * coating);
-        const slope = level - (density[i - MILK_GRID_SIZE - 1] ?? level);
+        const slope = visibleFoam[i] - (visibleFoam[i - MILK_GRID_SIZE - 1] ?? visibleFoam[i]);
         const relief = 2.4 * slope / (1 + Math.abs(slope));
         foamImage.data[offset] = 228 + 22 * cream + relief;
         foamImage.data[offset + 1] = 186 + 57 * cream + relief;
