@@ -252,6 +252,21 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .sound-state { float: right; font-size: 12px; color: var(--ink-dim); }
 .menu button[aria-pressed="true"] .sound-state::after { content: 'オン'; }
 .menu button[aria-pressed="false"] .sound-state::after { content: 'オフ'; }
+.music-volume {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 8px 7px 0;
+  color: var(--ink-dim);
+  font-size: 12px;
+}
+.music-volume input, .music-volume p { grid-column: 1 / -1; }
+.music-volume input {
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  accent-color: #cfa578;
+}
+.music-volume p { max-width: 163px; margin: 0 0 9px; line-height: 1.5; }
 .menu .music-credit { padding: 9px 7px; color: var(--ink-dim); font-size: 11px; line-height: 1.55; }
 .menu .music-credit span { display: block; }
 .menu .music-credit a { min-height: 0; padding: 0; font-size: inherit; text-decoration: underline; }

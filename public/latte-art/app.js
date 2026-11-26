@@ -407,7 +407,13 @@ bindActivation($('menuButton'), () => {
   $('menuButton').setAttribute('aria-expanded', String(open));
 });
 const soundButton = $('soundButton');
-bindCafeMusic($('musicButton'), $('cafeMusic'));
+bindCafeMusic({
+  button: $('musicButton'),
+  track: $('cafeMusic'),
+  slider: $('musicVolume'),
+  readout: $('musicVolumeValue'),
+  status: $('musicStatus'),
+});
 soundButton.hidden = !cafeSound.supported;
 soundButton.setAttribute('aria-pressed', String(cafeSound.enabled));
 soundButton.addEventListener('click', () => {
