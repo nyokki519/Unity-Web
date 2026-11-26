@@ -1,6 +1,8 @@
+import { cafeAudioContext } from './cafe-audio.js';
+
 const MUSIC_KEY = 'unity-mix.latte-art.music';
 const VOLUME_KEY = 'unity-mix.latte-art.music-volume';
-const DEFAULT_VOLUME = 80;
+const DEFAULT_VOLUME = 100;
 
 export function bindCafeMusic({ button, track, slider, readout, status }) {
   let enabled = true;
@@ -8,20 +10,24 @@ export function bindCafeMusic({ button, track, slider, readout, status }) {
   let interacted = false;
   let context;
   let gain;
+  let buffer;
+  let loading;
+  let source;
+  let startedAt = 0;
+  let offset = 0;
+  let nativePlayback = false;
   try {
     enabled = localStorage.getItem(MUSIC_KEY) !== 'off';
     const saved = Number(localStorage.getItem(VOLUME_KEY));
     if (Number.isInteger(saved) && saved >= 1 && saved <= 100) volume = saved;
   } catch { /* Use the defaults for this tab. */ }
 
-  // Some mobile browsers leave HTMLMediaElement.volume fixed at 1.
-  track.volume = .5;
-  const nativeVolume = track.volume === .5;
+  const canPlay = () => enabled && interacted && !document.hidden;
 
   function applyVolume() {
     const level = enabled ? volume / 100 : 0;
-    if (nativeVolume) track.volume = level;
-    else if (gain) gain.gain.value = level;
+    if (gain) gain.gain.value = level;
+    if (nativePlayback) track.volume = level;
   }
 
   function render() {
@@ -34,35 +40,77 @@ export function bindCafeMusic({ button, track, slider, readout, status }) {
   }
 
   function playbackFailed(error) {
-    if (enabled && !document.hidden && error.name !== 'AbortError') status.hidden = false;
+    if (canPlay() && error.name !== 'AbortError') status.hidden = false;
+  }
+
+  function stop() {
+    if (nativePlayback) track.pause();
+    if (!source) return;
+    offset = (offset + Math.max(0, context.currentTime - startedAt)) % buffer.duration;
+    source.stop();
+    source.disconnect();
+    source = undefined;
+  }
+
+  function playBuffer() {
+    if (!canPlay() || nativePlayback || !buffer || source || context.state !== 'running') return;
+    const next = context.createBufferSource();
+    next.buffer = buffer;
+    next.loop = true;
+    next.connect(gain);
+    startedAt = context.currentTime;
+    next.start(startedAt, offset);
+    source = next;
+    status.hidden = true;
+  }
+
+  function useNativePlayback() {
+    if (source) stop();
+    nativePlayback = true;
+    applyVolume();
+    if (canPlay() && track.paused) track.play().catch(playbackFailed);
+  }
+
+  async function loadBuffer() {
+    const response = await fetch(track.src);
+    if (!response.ok) throw new Error('BGM download failed');
+    buffer = await context.decodeAudioData(await response.arrayBuffer());
   }
 
   function syncPlayback(retry = false) {
-    if (!enabled || document.hidden || !interacted) {
-      track.pause();
+    if (!canPlay()) {
+      stop();
       return;
     }
-    if (!nativeVolume) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!gain && AudioContext) {
-        try {
-          context = new AudioContext();
-          const volumeNode = context.createGain();
-          context.createMediaElementSource(track).connect(volumeNode).connect(context.destination);
-          gain = volumeNode;
-          applyVolume();
-        } catch { /* Keep native playback available if audio routing is unsupported. */ }
-      }
-      if (gain && context.state !== 'running') context.resume().catch(playbackFailed);
+    if (nativePlayback) {
+      if (retry && track.error) track.load();
+      useNativePlayback();
+      return;
     }
-    if (retry && track.error) track.load();
-    if (track.paused) {
-      track.play().catch(playbackFailed);
+    try {
+      context ??= cafeAudioContext();
+      if (!context) {
+        useNativePlayback();
+        return;
+      }
+      if (!gain) {
+        gain = context.createGain();
+        gain.connect(context.destination);
+        applyVolume();
+      }
+      // Request permission inside the user gesture, before downloading the recording.
+      if (context.state !== 'running') context.resume().then(playBuffer).catch(playbackFailed);
+      if (!loading) {
+        loading = loadBuffer().then(playBuffer).catch(useNativePlayback);
+      }
+      playBuffer();
+    } catch {
+      useNativePlayback();
     }
   }
 
   function start(event) {
-    if (event.composedPath().includes(button)) return;
+    if (!event.isTrusted || event.composedPath().includes(button)) return;
     interacted = true;
     syncPlayback();
   }
@@ -78,11 +126,11 @@ export function bindCafeMusic({ button, track, slider, readout, status }) {
   }
 
   render();
-  document.addEventListener('pointerup', start, { passive: true, capture: true });
-  document.addEventListener('click', start, { capture: true });
-  document.addEventListener('keydown', start, { capture: true });
+  for (const event of ['pointerdown', 'pointerup', 'click', 'keydown']) {
+    document.addEventListener(event, start, { passive: true, capture: true });
+  }
   document.addEventListener('visibilitychange', () => syncPlayback());
-  window.addEventListener('pagehide', () => track.pause());
+  window.addEventListener('pagehide', stop);
   window.addEventListener('pageshow', () => syncPlayback());
   track.addEventListener('playing', () => { status.hidden = true; });
   button.addEventListener('click', () => {

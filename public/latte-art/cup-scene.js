@@ -242,6 +242,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   const renderer = new THREE.WebGLRenderer({
     canvas: mainCanvas, alpha: true, antialias: true, powerPreference: 'low-power',
   });
+  const gl = renderer.getContext();
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  if (debugInfo && /SwiftShader|llvmpipe|softpipe|software rasterizer/i.test(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL))) {
+    // Software WebGL may block the UI compiling the first frame for several seconds.
+    renderer.dispose();
+    throw new Error('Use the lightweight cup renderer for software WebGL');
+  }
   renderer.setClearAlpha(0);
   const ink = inkCanvas.getContext('2d');
   const still = stillCanvas.getContext('2d', { alpha: false });

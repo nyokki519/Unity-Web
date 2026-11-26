@@ -11,9 +11,19 @@ import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
+const introDuration = 3000 + Math.floor(Math.random() * 2001);
+$('studioLoader').style.setProperty('--intro-duration', `${introDuration}ms`);
 const cafeSound = createCafeSound();
+bindCafeMusic({
+  button: $('musicButton'),
+  track: $('cafeMusic'),
+  slider: $('musicVolume'),
+  readout: $('musicVolumeValue'),
+  status: $('musicStatus'),
+});
 const POUR_INPUT_BUFFER_MS = 1000 / 30;
-const CUP_RENDER_WAIT_MS = 4200;
+const CUP_MODULE_WAIT_MS = 1000;
+const CUP_RENDER_HEADROOM_MS = 1500;
 const POUR_HINT = 'ピッチャーを液面へドラッグ。または液面を長押し。';
 const drawing = new ChocolateDrawing();
 let draftStorage;
@@ -33,6 +43,7 @@ const surface = createSurface(milk);
 surface.fixedLevel = draft.volumeSurface === false || (draft.volumeSurface === undefined && draft.strokes.length > 0);
 let firstFrameReady = false;
 let controlsReady = false;
+let revealTimer;
 
 function showLoadingPhase(phase) {
   $('studio').dataset.loadPhase = String(phase);
@@ -43,6 +54,11 @@ showLoadingPhase(2);
 function revealStudio() {
   firstFrameReady = true;
   if (!controlsReady) return;
+  clearTimeout(revealTimer);
+  revealTimer = setTimeout(finishIntro, Math.max(0, Math.ceil(introDuration - performance.now())));
+}
+
+function finishIntro() {
   showLoadingPhase(3);
   $('studio').removeAttribute('aria-busy');
   $('studioLoader').setAttribute('aria-hidden', 'true');
@@ -55,11 +71,14 @@ async function loadCup() {
   let timer;
   let materials;
   try {
-    const deadline = new Promise(resolve => { timer = setTimeout(resolve, CUP_RENDER_WAIT_MS, null); });
+    const graphicsBudget = Math.min(CUP_MODULE_WAIT_MS, Math.max(0, introDuration - CUP_RENDER_HEADROOM_MS - performance.now()));
+    const deadline = new Promise(resolve => { timer = setTimeout(resolve, graphicsBudget, null); });
     const sceneModule = Promise.race([import('./cup-scene.js'), deadline]).catch(() => null);
     const [module, decoded] = await Promise.all([sceneModule, loadCafeMaterials()]);
     materials = decoded;
-    if (module) return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio, materials);
+    if (module && performance.now() <= introDuration - CUP_RENDER_HEADROOM_MS) {
+      return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio, materials);
+    }
   } catch {
     // A blocked module or unavailable graphics context can use the same drawing tools in 2D.
   } finally {
@@ -407,13 +426,6 @@ bindActivation($('menuButton'), () => {
   $('menuButton').setAttribute('aria-expanded', String(open));
 });
 const soundButton = $('soundButton');
-bindCafeMusic({
-  button: $('musicButton'),
-  track: $('cafeMusic'),
-  slider: $('musicVolume'),
-  readout: $('musicVolumeValue'),
-  status: $('musicStatus'),
-});
 soundButton.hidden = !cafeSound.supported;
 soundButton.setAttribute('aria-pressed', String(cafeSound.enabled));
 soundButton.addEventListener('click', () => {

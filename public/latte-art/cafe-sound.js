@@ -1,3 +1,5 @@
+import { cafeAudioContext, cafeAudioSupported } from './cafe-audio.js';
+
 const SOUND_KEY = 'unity-mix.latte-art.sound';
 const STEAM_TONES = {
   surface: { frequency: 5600, level: .18 },
@@ -7,9 +9,8 @@ const STEAM_TONES = {
 };
 
 export function createCafeSound() {
-  const Audio = window.AudioContext || window.webkitAudioContext;
   let enabled = false;
-  try { enabled = Boolean(Audio) && localStorage.getItem(SOUND_KEY) === 'on'; } catch { /* Audio stays optional. */ }
+  try { enabled = cafeAudioSupported && localStorage.getItem(SOUND_KEY) === 'on'; } catch { /* Audio stays optional. */ }
   let context;
   let filter;
   let volume;
@@ -17,10 +18,10 @@ export function createCafeSound() {
   let lastLevel;
 
   function unlock() {
-    if (!enabled || !Audio) return;
+    if (!enabled || !cafeAudioSupported) return;
     try {
       if (!context) {
-        context = new Audio();
+        context = cafeAudioContext();
         const frames = Math.round(context.sampleRate * 2);
         const buffer = context.createBuffer(1, frames, context.sampleRate);
         const samples = buffer.getChannelData(0);
@@ -72,5 +73,5 @@ export function createCafeSound() {
     else update();
   }
 
-  return { supported: Boolean(Audio), get enabled() { return enabled; }, unlock, update, toggle };
+  return { supported: cafeAudioSupported, get enabled() { return enabled; }, unlock, update, toggle };
 }

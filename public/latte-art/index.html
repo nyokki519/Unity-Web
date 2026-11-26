@@ -7,7 +7,7 @@
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
   <style>html{background:#1c120d;color-scheme:dark}</style>
-  <link rel="stylesheet" href="./style.css?v=bgm-volume-1">
+  <link rel="stylesheet" href="./style.css?v=audio-intro-1">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -50,8 +50,8 @@
         <button type="button" id="musicButton" aria-pressed="true">BGM <span class="sound-state" aria-hidden="true"></span></button>
         <div class="music-volume">
           <label for="musicVolume">BGM音量</label>
-          <span id="musicVolumeValue" aria-hidden="true">80%</span>
-          <input id="musicVolume" type="range" min="0" max="100" value="80">
+          <span id="musicVolumeValue" aria-hidden="true">100%</span>
+          <input id="musicVolume" type="range" min="0" max="100" value="100">
           <p id="musicStatus" role="status" hidden>再生できませんでした。BGMをタップして再試行できます。</p>
         </div>
         <button type="button" id="soundButton" aria-pressed="false" hidden>効果音 <span class="sound-state" aria-hidden="true"></span></button>
@@ -242,6 +242,6 @@
       </figure>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=bgm-volume-1"></script>
+  <script type="module" src="./app.js?v=audio-intro-1"></script>
 </body>
 </html>
