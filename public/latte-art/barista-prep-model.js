@@ -3,7 +3,7 @@ export const MIN_MILK_TEMPERATURE = 32;
 export const MAX_STEAM_TEMPERATURE = 78;
 export const ESPRESSO_DENSITY = 0.95;
 
-const MAX_ESPRESSO_ML = 52;
+export const MAX_ESPRESSO_ML = 52;
 const BASE_MILK_ML = 120;
 const HEATING_RATE = 8.1;
 const MAX_FOAM = 0.4375;

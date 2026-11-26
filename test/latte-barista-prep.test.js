@@ -6,7 +6,9 @@ import {
   createExtraction,
   createSteam,
   getPreparedIngredients,
+  MAX_ESPRESSO_ML,
 } from '../public/latte-art/barista-prep-model.js';
+import { espressoSurface } from '../public/latte-art/barista-prep-scene.js';
 
 function advance(state, update, seconds, hz = 60, ...inputs) {
   for (let i = 0; i < Math.round(seconds * hz); i++) {
@@ -25,6 +27,21 @@ test('pre-infusion releases no espresso and ends in a drop phase before steady f
   assert.ok(drops.volume > 0 && drops.volume < 4);
   assert.equal(flow.phase, 'flow');
   assert.ok(flow.volume > drops.volume + 8);
+});
+
+test('espresso rises from the bottom as the cup widens and the stream lands on that same surface', () => {
+  const levels = [0, .2, 2, 18, 36, MAX_ESPRESSO_ML].map(espressoSurface);
+  assert.equal(levels[0].width, 0);
+  assert.ok(levels[1].width < levels[2].width * .6);
+  for (let i = 1; i < levels.length; i++) {
+    const before = levels[i - 1];
+    const surface = levels[i];
+    assert.ok(surface.width > before.width);
+    assert.ok(surface.y < before.y && surface.landingY < before.landingY);
+    assert.ok(Math.abs(surface.landingY - surface.y) < surface.height);
+  }
+  assert.ok(levels[0].y - levels.at(-1).y >= 28);
+  assert.deepEqual(espressoSurface(MAX_ESPRESSO_ML + 1), levels.at(-1));
 });
 
 test('overrunning the shot blondes and lowers extraction quality', () => {

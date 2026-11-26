@@ -1,3 +1,5 @@
+import { MAX_ESPRESSO_ML } from './barista-prep-model.js';
+
 const WIDTH = 1024;
 const HEIGHT = 650;
 const SHOT_X = 435;
@@ -5,6 +7,9 @@ const STEAM_X = 700;
 const PI2 = Math.PI * 2;
 
 const SHOT_BOWL = 'M339 438 C344 475 360 504 391 523 C413 536 457 537 481 523 C508 507 525 475 532 438 Z';
+const SHOT_FLOOR_RADIUS = 28;
+const SHOT_FULL_RADIUS = 86;
+const SHOT_SPOUTS = [420, 449];
 const PITCHER_BOWL = 'M601 435 C617 469 618 509 638 532 C657 554 712 564 746 538 C768 521 778 472 783 428 Z';
 const PITCHER_RIM = 'M600 435 C600 425 621 426 633 411 C653 387 696 386 734 393 C768 399 784 412 783 428 C783 448 746 475 701 478 C655 479 624 453 600 435 Z';
 const MACHINE = 'M213 181 Q213 155 245 149 L806 149 Q848 150 868 179 L881 227 L881 431 L205 444 L205 202 Z';
@@ -244,6 +249,17 @@ function makeParticles(count, seed) {
   }));
 }
 
+export function espressoSurface(volume) {
+  const fill = Math.max(0, Math.min(1, volume / MAX_ESPRESSO_ML));
+  // For a widening bowl, the volume below a level is proportional to the
+  // difference of the cubed radii of the bottom and the surface.
+  const radius = Math.cbrt(SHOT_FLOOR_RADIUS ** 3 + (SHOT_FULL_RADIUS ** 3 - SHOT_FLOOR_RADIUS ** 3) * fill);
+  const depth = (radius - SHOT_FLOOR_RADIUS) / (SHOT_FULL_RADIUS - SHOT_FLOOR_RADIUS);
+  const y = 464 - 32 * depth;
+  const width = radius * Math.sqrt(Math.max(0, Math.min(1, volume / .75)));
+  return { y, width, height: width * .445, landingY: y + radius * .054 };
+}
+
 function paintCup(ctx, shot, clock, extracting, reduced) {
   shadeEllipse(ctx, SHOT_X + 6, 531, 144, 27, '#14180fe8');
   const handle = 'M516 454 C570 427 587 447 578 473 C571 497 535 508 510 500 L512 485 C545 488 560 466 559 458 C552 453 542 456 524 467 Z';
@@ -261,65 +277,68 @@ function paintCup(ctx, shot, clock, extracting, reduced) {
   }
   ctx.restore();
   ellipse(ctx, SHOT_X, 437, 97, 49, linear(ctx, 349, 409, 532, 459, [[0, '#c5a277'], [0.23, '#fff2ce'], [0.58, '#f3dfba'], [0.77, '#d2b087'], [1, '#a28363']]), '#866c51', 1.4);
-  ellipse(ctx, SHOT_X, 434, 91, 43, radial(ctx, 405, 413, 4, 432, 433, 94, [[0, '#cbb28a'], [0.46, '#a2805c'], [0.71, '#b49a70'], [1, '#f1dfb3']]), '#fff2ce', 1.35);
-  // The visible pool widens and rises as the small bowl fills.
-  const level = shot.volume / 52;
-  if (level > 0.001) paintCrema(ctx, shot, level, clock, extracting, reduced);
-  stroke(ctx, 'M342 440 C348 466 388 484 433 485 C473 486 515 467 528 444', '#fff0c9c0', 2.2);
-  stroke(ctx, 'M352 437 C355 411 396 394 438 394 C468 394 492 402 509 415', '#fff6d895', 1.4);
-  if (extracting && (shot.phase === 'flow' || shot.phase === 'drops')) paintStreams(ctx, shot, clock, level, reduced);
-}
-
-function paintCrema(ctx, shot, level, clock, extracting, reduced) {
-  const y = 449 - 15 * level;
-  const width = 19 + 68 * Math.pow(level, 0.47);
-  const height = 6 + 32 * Math.pow(level, 0.55);
-  const golden = Math.round(shot.blonding * 36);
-  ellipse(ctx, SHOT_X, y, width, height, radial(ctx, 418, y - 4, 0, 446, y + 3, width, [
-    [0, `rgb(${168 + golden} ${81 + golden} ${27 + golden * 0.55})`],
-    [0.36, `rgb(${135 + golden} ${60 + golden} ${21 + golden * 0.57})`],
-    [0.73, `rgb(${115 + golden} ${43 + golden} ${15 + golden * 0.5})`],
-    [0.94, `rgb(${93 + golden} ${39 + golden} ${14 + golden * 0.42})`], [1, '#66351c'],
-  ]), '#794124', 1.1);
+  ellipse(ctx, SHOT_X, 434, 91, 43, linear(ctx, 424, 394, 449, 476, [
+    [0, '#bda37c'], [.23, '#e5cea8'], [.53, '#bb9b75'], [.81, '#846446'], [1, '#d9bf93'],
+  ]), '#fff2ce', 1.35);
   ctx.save();
   ctx.clip();
-  ctx.fillStyle = radial(ctx, SHOT_X - 32, y - 13, 2, SHOT_X - 18, y - 8, width * .82,
-    [[0, '#ffe7b64c'], [.47, '#f8ba6849'], [1, '#f8ba6800']]);
+  shadeEllipse(ctx, 444, 459, 69, 23, '#4e321d6f');
+  shadeEllipse(ctx, SHOT_X - 3, 464, 31, 12, '#dcc194b5');
+  const surface = espressoSurface(shot.volume);
+  if (surface.width > .15) paintCrema(ctx, shot, surface, clock, extracting, reduced);
+  ctx.restore();
+  stroke(ctx, 'M342 440 C348 466 388 484 433 485 C473 486 515 467 528 444', '#fff0c9c0', 2.2);
+  stroke(ctx, 'M352 437 C355 411 396 394 438 394 C468 394 492 402 509 415', '#fff6d895', 1.4);
+  if (extracting && (shot.phase === 'flow' || shot.phase === 'drops')) paintStreams(ctx, shot, clock, surface, reduced);
+}
+
+function paintCrema(ctx, shot, { y, width, height, landingY }, clock, extracting, reduced) {
+  const golden = Math.round(shot.blonding * 36);
+  ellipse(ctx, SHOT_X, y, width, height, linear(ctx, SHOT_X - width * .30, y - height, SHOT_X + width * .25, y + height, [
+    [0, `rgb(${95 + golden * .6} ${48 + golden * .6} 24)`],
+    [.27, `rgb(${152 + golden} ${76 + golden} ${36 + golden * .48})`],
+    [.60, `rgb(${155 + golden} ${83 + golden} ${43 + golden * .44})`],
+    [1, `rgb(${108 + golden} ${53 + golden * .72} ${28 + golden * .43})`],
+  ]));
+  ctx.save();
+  ctx.clip();
+  ctx.fillStyle = radial(ctx, SHOT_X - width * .31, y - height * .4, 0, SHOT_X - width * .2, y - height * .2, width * .65,
+    [[0, '#ffe1b14d'], [.47, '#f8ba6828'], [1, '#f8ba6800']]);
   ctx.fillRect(SHOT_X - width, y - height, width * 2, height * 2);
-  const spin = extracting && !reduced ? clock * 0.41 : 0;
+  const spin = reduced ? 0 : shot.time * .38;
   for (const p of cremaParticles) {
     const angle = p.angle + spin * (1 - p.radial);
     const x = SHOT_X + Math.cos(angle) * p.radial * width;
     const py = y + Math.sin(angle) * p.radial * height;
-    ellipse(ctx, x, py, 0.22 + p.size * (0.6 + level), 0.19 + p.size * 0.42,
-      p.tone < 0.7 ? '#f7bd744e' : '#581f143e');
+    ellipse(ctx, x, py, .22 + p.size * 1.3, .14 + p.size * .49, p.tone < .7 ? '#f7bd7452' : '#581f1452');
   }
-  ctx.translate(SHOT_X - 18, y - 2);
-  ctx.scale(1, 0.39);
-  for (let i = 0; i < 10; i++) {
-    const ring = (i * 12 + (extracting && !reduced ? clock * 19 : 3)) % Math.max(15, width * 1.55);
-    ctx.beginPath();
-    ctx.arc(13, 0, ring + 1, spin + i * 0.63, spin + i * 0.63 + Math.PI * 0.95);
-    ctx.strokeStyle = i % 2 ? '#e3a36025' : '#fcce7930';
-    ctx.lineWidth = 1.4 + i / 7;
-    ctx.stroke();
-  }
-  ctx.restore();
-  if (extracting) {
-    for (const x of [SHOT_X - 14, SHOT_X + 13]) {
-      const pulse = reduced ? 0.5 : (clock * 3.1 + x * 0.017) % 1;
-      ellipse(ctx, x, y + 2, (4 + pulse * 12) * Math.min(1, level * 4), 1 + pulse * 3, '#f3b46821', '#efd49149', 0.8);
+  // The dark contact line and the lit front crescent follow the same level as the coffee.
+  ctx.beginPath();
+  ctx.ellipse(SHOT_X, y, width, height, 0, 0, PI2);
+  ctx.lineWidth = Math.min(3, width * .18);
+  ctx.strokeStyle = '#522d1ca2';
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(SHOT_X, y, width * .98, height * .96, 0, .18, 2.74);
+  ctx.lineWidth = Math.min(1.5, width * .12);
+  ctx.strokeStyle = '#f3bd797a';
+  ctx.stroke();
+  if (extracting && shot.phase === 'flow') {
+    for (const [index, x] of SHOT_SPOUTS.entries()) {
+      const pulse = reduced ? .4 : (clock * 3.05 + index * .32) % 1;
+      ellipse(ctx, x, landingY, 3 + pulse * 12, 1 + pulse * 4.5, '#542d1b40', '#f5c38c54', .8);
+      ellipse(ctx, x, landingY, 2.3, 1.05, '#633218be');
     }
   }
+  ctx.restore();
 }
 
-function paintStreams(ctx, shot, clock, level, reduced) {
-  const landingY = 451 - level * 15;
+function paintStreams(ctx, shot, clock, { landingY }, reduced) {
   const pale = shot.blonding;
   const tea = `rgb(${132 + pale * 62} ${56 + pale * 56} ${21 + pale * 27})`;
   const amber = `rgb(${193 + pale * 47} ${101 + pale * 52} ${44 + pale * 30})`;
   ctx.lineCap = 'round';
-  for (const [index, x] of [420, 449].entries()) {
+  for (const [index, x] of SHOT_SPOUTS.entries()) {
     const shimmer = reduced ? 0 : Math.sin(clock * 23 + index) * 1.6;
     if (shot.phase === 'drops') {
       const fraction = reduced ? 0.48 : (clock * 3.1 + index * 0.27) % 1;
@@ -331,7 +350,7 @@ function paintStreams(ctx, shot, clock, level, reduced) {
     const width = 3.3 + Math.sin(clock * 19 + index) * 0.44 - pale * 0.5;
     ctx.beginPath();
     ctx.moveTo(x, 364);
-    ctx.bezierCurveTo(x + shimmer, 394, x - shimmer, 430, x - index * 2, landingY);
+    ctx.bezierCurveTo(x + shimmer, 394, x - shimmer, landingY - 15, x, landingY);
     ctx.strokeStyle = '#32190d7e';
     ctx.lineWidth = width + 2;
     ctx.stroke();
