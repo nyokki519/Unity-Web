@@ -43,6 +43,7 @@ const surface = createSurface(milk);
 surface.fixedLevel = draft.volumeSurface === false || (draft.volumeSurface === undefined && draft.strokes.length > 0);
 let firstFrameReady = false;
 let controlsReady = false;
+let introDeadline;
 let revealTimer;
 
 function showLoadingPhase(phase) {
@@ -51,11 +52,21 @@ function showLoadingPhase(phase) {
 }
 
 showLoadingPhase(2);
+requestAnimationFrame(() => {
+  $('studioLoader').dataset.intro = 'playing';
+  introDeadline = performance.now() + introDuration;
+  scheduleReveal();
+});
+
 function revealStudio() {
   firstFrameReady = true;
-  if (!controlsReady) return;
+  scheduleReveal();
+}
+
+function scheduleReveal() {
+  if (!introDeadline || !firstFrameReady || !controlsReady) return;
   clearTimeout(revealTimer);
-  revealTimer = setTimeout(finishIntro, Math.max(0, Math.ceil(introDuration - performance.now())));
+  revealTimer = setTimeout(finishIntro, Math.max(0, Math.ceil(introDeadline - performance.now())));
 }
 
 function finishIntro() {
@@ -71,12 +82,11 @@ async function loadCup() {
   let timer;
   let materials;
   try {
-    const graphicsBudget = Math.min(CUP_MODULE_WAIT_MS, Math.max(0, introDuration - CUP_RENDER_HEADROOM_MS - performance.now()));
-    const deadline = new Promise(resolve => { timer = setTimeout(resolve, graphicsBudget, null); });
+    const deadline = new Promise(resolve => { timer = setTimeout(resolve, CUP_MODULE_WAIT_MS, null); });
     const sceneModule = Promise.race([import('./cup-scene.js'), deadline]).catch(() => null);
     const [module, decoded] = await Promise.all([sceneModule, loadCafeMaterials()]);
     materials = decoded;
-    if (module && performance.now() <= introDuration - CUP_RENDER_HEADROOM_MS) {
+    if (module && (!introDeadline || performance.now() <= introDeadline - CUP_RENDER_HEADROOM_MS)) {
       return module.createCupScene(canvas, fallback, $('ink'), $('pourStill'), $('pourSurface'), surface, revealStudio, materials);
     }
   } catch {

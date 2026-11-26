@@ -60,7 +60,7 @@ html, body {
   background:
     radial-gradient(ellipse at 49% 46%, #f9d69a36, #edbe7c20 54%, transparent 70%),
     radial-gradient(ellipse at 50% 52%, transparent 51%, #f0c18c74 54%, #f0c18c23 59%, transparent 63%);
-  animation: loading-ripple calc(var(--intro-duration) * .71) calc(var(--intro-duration) * .12) ease-out both;
+  opacity: 0;
 }
 .studio-loader-foam {
   position: absolute;
@@ -69,7 +69,7 @@ html, body {
   background: linear-gradient(162deg, #fffaf0 7%, #fff6df 56%, #eac99e 96%);
   -webkit-mask: url('./loading-mark.webp') center / 100% 100% no-repeat;
   mask: url('./loading-mark.webp') center / 100% 100% no-repeat;
-  animation: loading-foam calc(var(--intro-duration) * .57) calc(var(--intro-duration) * .19) cubic-bezier(.18,.65,.27,1) both;
+  opacity: 0;
 }
 .studio-loader-stream {
   position: absolute;
@@ -80,7 +80,15 @@ html, body {
   transform-origin: bottom center;
   border-radius: 50%;
   background: linear-gradient(#f4dfc400, #f6e3c7c2 40%, #fff6de 85%);
-  animation: loading-stream calc(var(--intro-duration) * .58) ease-in-out both;
+  opacity: 0;
+}
+[data-intro="playing"] .studio-loader-cup { animation: loading-cup-window var(--intro-duration) step-end both; }
+[data-intro="playing"] .studio-loader-ripple { animation: loading-ripple calc(var(--intro-duration) * .77) calc(var(--intro-duration) * .12) ease-out both; }
+[data-intro="playing"] .studio-loader-foam { animation: loading-foam calc(var(--intro-duration) * .57) calc(var(--intro-duration) * .19) cubic-bezier(.18,.65,.27,1) both; }
+[data-intro="playing"] .studio-loader-stream { animation: loading-stream calc(var(--intro-duration) * .58) ease-in-out both; }
+@keyframes loading-cup-window {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 @keyframes loading-stream {
   0% { opacity: 0; transform: translate(-50%, -100%) rotate(13deg) scaleY(.4); }
@@ -130,7 +138,8 @@ html, body {
 [data-load-phase="3"] .studio-loader-progress::before { width: 100%; }
 .studio-loader-hint { margin: 11px 0 0; color: #dcc3a9; font-size: 12px; }
 @media (prefers-reduced-motion: reduce) {
-  .studio-loader, .studio-loader-cup span, .studio-loader-progress::before { animation: none; transition: none; }
+  .studio-loader, [data-intro="playing"] .studio-loader-cup, [data-intro="playing"] .studio-loader-cup span, .studio-loader-progress::before { animation: none; transition: none; }
+  .studio-loader-foam { opacity: 1; }
   .studio-loader-stream { display: none; }
 }
 @media (max-aspect-ratio: 17 / 25) {
