@@ -21,7 +21,7 @@ function walnutTextures({ colorCanvas, reliefCanvas }) {
     const texture = new THREE.CanvasTexture(canvas);
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set(4.2, 4.2);
-    texture.offset.set(.34, .18);
+    texture.offset.set(.34, .28);
     texture.anisotropy = 4;
     return texture;
   }
@@ -31,39 +31,55 @@ function walnutTextures({ colorCanvas, reliefCanvas }) {
 }
 
 function windowReflection() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 256;
+  const canvas = canvasOf(256);
   canvas.height = 128;
   const context = canvas.getContext('2d');
   const room = context.createLinearGradient(0, 0, 0, 128);
-  room.addColorStop(0, '#b9afa0');
-  room.addColorStop(.43, '#8a7e70');
-  room.addColorStop(.64, '#5a4c40');
-  room.addColorStop(1, '#41342a');
+  room.addColorStop(0, '#9d9a92');
+  room.addColorStop(.39, '#676a68');
+  room.addColorStop(.55, '#383834');
+  room.addColorStop(.69, '#594a3c');
+  room.addColorStop(1, '#45382e');
   context.fillStyle = room;
   context.fillRect(0, 0, 256, 128);
-  // Broad daylight and room bounce give the glaze reflections that still
-  // look like porcelain at the thumbnail size of the saved picture.
-  const reflection = context.createRadialGradient(74, 38, 9, 74, 38, 43);
-  reflection.addColorStop(0, '#fffdf8');
-  reflection.addColorStop(.40, '#fbf2e4dc');
-  reflection.addColorStop(1, '#fbf2e400');
-  context.fillStyle = reflection;
-  context.fillRect(28, 0, 92, 82);
-  const panes = context.createLinearGradient(58, 13, 92, 61);
-  panes.addColorStop(0, '#fffcf9f0');
-  panes.addColorStop(.64, '#fff6ebb5');
-  panes.addColorStop(1, '#fff6eb20');
+  const dawn = context.createRadialGradient(55, 38, 8, 55, 38, 44);
+  dawn.addColorStop(0, '#bfced7');
+  dawn.addColorStop(.58, '#96aeb38c');
+  dawn.addColorStop(1, '#96aeb300');
+  context.fillStyle = dawn;
+  context.fillRect(9, 0, 96, 84);
+  const panes = context.createLinearGradient(0, 14, 0, 61);
+  panes.addColorStop(0, '#fbfeff');
+  panes.addColorStop(.56, '#f3fafc');
+  panes.addColorStop(1, '#e1e5db');
   context.fillStyle = panes;
-  for (const x of [56, 76]) context.fillRect(x, 20, 17, 32);
-  const bounce = context.createRadialGradient(187, 44, 5, 187, 44, 37);
-  bounce.addColorStop(0, '#d8c9b88a');
-  bounce.addColorStop(1, '#d8c9b800');
+  for (const x of [39, 56]) {
+    context.fillRect(x, 16, 14, 18);
+    context.fillRect(x, 36, 14, 23);
+  }
+  const bounce = context.createRadialGradient(171, 43, 7, 171, 43, 44);
+  bounce.addColorStop(0, '#e8d8b8');
+  bounce.addColorStop(.43, '#dfc6a18c');
+  bounce.addColorStop(1, '#bfae9100');
   context.fillStyle = bounce;
-  context.fillRect(147, 4, 80, 80);
-  const map = new THREE.CanvasTexture(canvas);
-  map.colorSpace = THREE.SRGBColorSpace;
+  context.fillRect(127, 0, 89, 87);
+  // Store the window as radiance so the steel can reflect a bright pane and a dark room at once.
+  const bytes = context.getImageData(0, 0, canvas.width, canvas.height).data;
+  const values = new Uint16Array(bytes.length);
+  const linear = Array.from({ length: 256 }, (_, i) => (i / 255) ** 2.2);
+  for (let i = 0; i < bytes.length; i += 4) {
+    const value = (bytes[i] + bytes[i + 1] + bytes[i + 2]) / (255 * 3);
+    const exposure = .80 + 5.6 * Math.max(0, (value - .66) / .34) ** 2;
+    for (let channel = 0; channel < 3; channel++) {
+      values[i + channel] = THREE.DataUtils.toHalfFloat(exposure * linear[bytes[i + channel]]);
+    }
+    values[i + 3] = 0x3c00;
+  }
+  const map = new THREE.DataTexture(values, canvas.width, canvas.height, THREE.RGBAFormat, THREE.HalfFloatType);
+  map.flipY = true;
+  map.minFilter = map.magFilter = THREE.LinearFilter;
   map.mapping = THREE.EquirectangularReflectionMapping;
+  map.needsUpdate = true;
   return map;
 }
 
@@ -141,8 +157,7 @@ function buildTableware(scene, foam, stamp) {
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 4;
   const porcelain = new THREE.MeshPhysicalMaterial({
-    color: '#faf6ed', map, roughness: .23, clearcoat: .90, clearcoatRoughness: .12,
-    envMapIntensity: 1.15,
+    color: '#f7f4ec', map, roughness: .31, clearcoat: .76, clearcoatRoughness: .19,
   });
   const rimmedGlaze = porcelain.clone();
   rimmedGlaze.vertexColors = true;
@@ -154,9 +169,9 @@ function buildTableware(scene, foam, stamp) {
   for (let i = 0; i < vertices.count; i++) {
     const x = vertices.getX(i), z = vertices.getZ(i);
     const radius = Math.hypot(x, z);
-    const seatShadow = .20 * (1 - THREE.MathUtils.smoothstep(radius, .63, .94));
-    const penumbra = Math.hypot(x - .23, z - .27);
-    const bowlShadow = .15 * (1 - THREE.MathUtils.smoothstep(penumbra, .70, 1.64));
+    const seatShadow = .29 * (1 - THREE.MathUtils.smoothstep(radius, .61, .91));
+    const penumbra = Math.hypot(x - .20, z - .28);
+    const bowlShadow = .21 * (1 - THREE.MathUtils.smoothstep(penumbra, .72, 1.63));
     const light = 1 - seatShadow - bowlShadow;
     colors.setXYZ(i, colors.getX(i) * light, colors.getY(i) * light, colors.getZ(i) * light);
   }
@@ -187,7 +202,7 @@ function buildTableware(scene, foam, stamp) {
 function buildSpoon(scene) {
   const spoon = new THREE.Group();
   const material = new THREE.MeshStandardMaterial({
-    color: '#e5e3df', metalness: .94, roughness: .22, envMapIntensity: 1.17,
+    color: '#d6dbd9', metalness: .94, roughness: .24,
   });
   // A rolled edge and a shallow concavity catch separate reflections.
   const bowl = new THREE.Mesh(createSpoonBowlGeometry(), material);
@@ -216,7 +231,7 @@ function buildSaucerContact(scene) {
   ctx.fillRect(0, 0, 64, 64);
   const span = SAUCER_FOOT_RADIUS * 3.25;
   const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(span, span), new THREE.MeshBasicMaterial({
-    color: '#382b23', map: new THREE.CanvasTexture(mask), transparent: true, opacity: .45, depthWrite: false,
+    color: '#251d17', map: new THREE.CanvasTexture(mask), transparent: true, opacity: .54, depthWrite: false,
   }));
   shadowPlane.rotation.x = -Math.PI / 2;
   shadowPlane.position.set(.022, .0015, .041);
@@ -233,30 +248,30 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   const liquid = pourCanvas.getContext('2d');
   inkCanvas.width = inkCanvas.height = foam.canvas.width;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#554a40');
+  scene.background = new THREE.Color('#4b4138');
   scene.environment = windowReflection();
-  scene.environmentIntensity = .58;
-  scene.environmentRotation.y = .32;
+  scene.environmentIntensity = .68;
+  scene.environmentRotation.y = .15;
   const pourScene = new THREE.Scene();
   pourScene.environment = scene.environment;
-  pourScene.environmentIntensity = scene.environmentIntensity;
+  pourScene.environmentIntensity = .87;
   pourScene.environmentRotation.copy(scene.environmentRotation);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.13;
+  renderer.toneMappingExposure = 1.04;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.shadowMap.autoUpdate = false;
 
-  const atmosphere = new THREE.HemisphereLight('#fff9f1', '#a28e7a', 1.56);
-  const windowLight = new THREE.DirectionalLight('#fff5ea', 2.38);
+  const atmosphere = new THREE.HemisphereLight('#f5f8ff', '#9a8065', 1.13);
+  const windowLight = new THREE.DirectionalLight('#fffbf3', 2.42);
   windowLight.position.set(-5, 8, -3.4);
   windowLight.castShadow = true;
   windowLight.shadow.mapSize.set(1024, 1024);
   Object.assign(windowLight.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 16 });
-  windowLight.shadow.normalBias = .012;
+  windowLight.shadow.normalBias = .022;
   windowLight.shadow.bias = -.0002;
-  windowLight.shadow.intensity = .58;
-  windowLight.shadow.radius = 5.5;
+  windowLight.shadow.intensity = .64;
+  windowLight.shadow.radius = 6;
   scene.add(atmosphere, windowLight);
   const pouringLight = windowLight.clone();
   pouringLight.castShadow = false;
@@ -264,13 +279,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
 
   const wood = walnutTextures(materials.timber);
   const table = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), new THREE.MeshStandardMaterial({
-    ...wood, bumpScale: .016, color: '#f2e5d9', roughness: .69,
+    ...wood, bumpScale: .009, color: '#d1cbc3', roughness: .66,
   }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
   buildSaucerContact(scene);
-  const lamp = new THREE.SpotLight('#ffd6ac', 64, 16, .65, .88, 2);
+  const lamp = new THREE.SpotLight('#ffe5c8', 49, 16, .65, .88, 2);
   lamp.position.set(-4.6, 4.7, -1.6);
   lamp.target.position.set(-1.7, 0, 1.7);
   lamp.map = windowLightMask();
@@ -288,7 +303,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   scene.add(chocolatePen);
   const stream = new THREE.Mesh(
     createMilkStreamGeometry(),
-    new THREE.MeshStandardMaterial({ color: '#f3e9d6', roughness: .36 }),
+    new THREE.MeshPhysicalMaterial({ color: '#fff6e9', roughness: .26, clearcoat: .27, clearcoatRoughness: .23 }),
   );
   stream.visible = false;
   stream.frustumCulled = false;
@@ -296,7 +311,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
   const streamStart = new THREE.Vector3();
   const streamEnd = new THREE.Vector3();
   const jetOrigin = new THREE.Vector3();
-  const idlePitcher = new THREE.Vector3(.54, 1.52, -1.52);
+  const idlePitcher = new THREE.Vector3(.70, 1.52, -1.52);
   let pourView = { position: { x: 0, y: 0 }, flow: 0, resting: 1, amount: 0 };
   const camera = new THREE.PerspectiveCamera(28, 1, .1, 80);
   const target = new THREE.Vector3();
@@ -502,6 +517,9 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       const start = performance.now();
       cancelAnimationFrame(pending);
       pending = 0;
+      // The pen was hidden for serving. The light and table stay fixed while
+      // the camera moves, so one updated shadow map is enough for the shot.
+      renderer.shadowMap.needsUpdate = true;
       function move(now) {
         if (cameraMotion !== move || mode !== next) return;
         const t = Math.min(1, (now - start) / 680);
@@ -513,7 +531,6 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
         } else if (camera.view?.enabled) {
           camera.clearViewOffset();
         }
-        renderer.shadowMap.needsUpdate = true;
         camera.updateMatrixWorld(true);
         drawFrame();
         if (t < 1) requestAnimationFrame(move);
@@ -564,7 +581,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
     const displayTexture = disk.material.map;
     try {
       renderer.setDrawingBufferSize(PHOTO_SIZE, PHOTO_SIZE, 1);
-      renderer.toneMappingExposure = .74;
+      renderer.toneMappingExposure = .80;
       disk.material.map = foamTexture;
       renderer.render(scene, framing);
       picture.getContext('2d').drawImage(mainCanvas, 0, 0);
@@ -589,12 +606,13 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       return;
     }
     if (mode !== 'pour') return;
-    const { position, impact = position, flow, streamHead = 1, streamCut = 0, resting, amount, pitcherOffset } = view;
-    const used = amount / MILK_CAPACITY;
+    const { position, impact = position, flow, streamHead = 1, streamCut = 0, resting, amount, pitcherOffset,
+      heightCm, stockMl = MILK_CAPACITY, remainingMl = Math.max(0, stockMl - amount) } = view;
+    const used = stockMl > 0 ? 1 - remainingMl / stockMl : 1;
     if (surfacePlane !== foam.plane) {
       updateSurfaceGeometry(mainCanvas.clientWidth, mainCanvas.clientHeight);
     }
-    const jet = pourJetPose(flow, used, position, surfacePlane);
+    const jet = pourJetPose(flow, used, position, surfacePlane, heightCm);
     const tilt = THREE.MathUtils.lerp(jet.angle, .08, resting);
     const yaw = .47 * (1 - resting);
     pitcher.rotation.set(0, yaw, tilt, 'YXZ');
@@ -610,7 +628,7 @@ export function createCupScene(mainCanvas, fallbackCanvas, inkCanvas, stillCanva
       pitcher.position.x += pitcherOffset.x * FOAM_RADIUS * resting;
       pitcher.position.z += pitcherOffset.y * FOAM_RADIUS * resting;
     }
-    pitcherMilk.update(pitcher, tilt, used, resting);
+    pitcherMilk.update(pitcher, tilt, used, resting, stockMl, remainingMl);
     stream.visible = flow > .001 && streamHead > streamCut;
     if (stream.visible) {
       if (streamCut) {
@@ -646,12 +664,14 @@ function buildPitcher(scene) {
   const pivot = new THREE.Group();
   pivot.position.set(1.9, 1.43, -.5);
   const steel = new THREE.MeshPhysicalMaterial({
-    color: '#c9c2b7', metalness: .84, roughness: .26,
-    anisotropy: .49, anisotropyRotation: Math.PI / 2, envMapIntensity: 1.46,
+    color: '#dbdede', metalness: .98, roughness: .24,
+    anisotropy: .76, anisotropyRotation: Math.PI / 2,
   });
   const pitcher = lathe([
-    [0, 0], [.51, 0], [.58, .07], [.60, .22], [.54, .72], [.47, 1.13],
-    [.45, 1.18], [.43, 1.16], [.47, .65], [.52, .2], [0, .10],
+    [0, 0], [.43, 0], [.51, 0], [.55, .019], [.58, .07], [.592, .13], [.60, .22],
+    [.585, .37], [.565, .54], [.54, .72], [.513, .88], [.483, 1.07], [.47, 1.13],
+    [.461, 1.169], [.45, 1.18], [.441, 1.177], [.43, 1.16], [.432, 1.13],
+    [.446, .91], [.47, .65], [.495, .43], [.52, .2], [.50, .16], [.46, .13], [0, .10],
   ], steel);
   pitcher.castShadow = false;
   shapePitcherSpout(pitcher.geometry);

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { Euler, LatheGeometry, PerspectiveCamera, Vector2, Vector3 } from '../public/vendor/three/three.module.js';
 import { HANDLE_ANGLE, SPOON_REST, saucerHeightAt } from '../public/latte-art/tableware-profile.js';
 import { CUP_PROFILE, liquidPlaneAtFill } from '../public/latte-art/foam-geometry.js';
+import { POURING_PITCHER_SCALE } from '../public/latte-art/pour-jet.js';
 import {
   createHandleGeometry, handleProfile, createMilkStreamGeometry, createSpoonBowlGeometry, createSpoonStemGeometry,
   FOAM_PLANE, PITCHER_LIP, pourJetPose, sampleFallingMilk, shapePitcherSpout, tableCameraFraming, updateMilkStream,
@@ -53,6 +54,19 @@ test('an established pour lowers the pitcher lip and tips farther over the same 
   assert.ok(steadyPour.height >= .4 && steadyPour.height < .69);
   assert.ok(steadyPour.angle > firstDrops.angle && nearEmpty.angle > steadyPour.angle);
   assert.ok(nearEmpty.angle < Math.PI / 2);
+});
+
+test('an explicit height controls the stream independently of flow when rim clearance allows', () => {
+  const plane = liquidPlaneAtFill(.95);
+  const center = { x: 0, y: 0 };
+  const near = pourJetPose(.62, .5, center, plane, 1);
+  const high = pourJetPose(.62, .5, center, plane, 8);
+  const thinner = pourJetPose(.22, .5, center, plane, 8);
+  assert.ok(high.height > near.height + 1.5);
+  assert.ok(near.height < .39);
+  assert.equal(high.height, thinner.height);
+  assert.ok(high.reach > near.reach, 'a high pour has room for a longer horizontal lead');
+  assert.deepEqual(pourJetPose(.62, .5, center, plane, null), pourJetPose(.62, .5, center, plane));
 });
 
 test('after release the last part of the stream clears the spout and reaches the original landing point', () => {
@@ -115,6 +129,32 @@ test('the cup rim has breathing room on narrow portrait screens without trimming
   }
 });
 
+test('the high pour leaves room around its pitcher on a phone and on a desktop', () => {
+  const plane = liquidPlaneAtFill(.75);
+  const jet = pourJetPose(.58, .5, { x: 0, y: 0 }, plane, 8);
+  const rotation = new Euler(0, .47, jet.angle, 'YXZ');
+  const place = (x, y, z) => new Vector3(x, y, z)
+    .sub(new Vector3(PITCHER_LIP.x, PITCHER_LIP.y, PITCHER_LIP.z))
+    .multiplyScalar(POURING_PITCHER_SCALE)
+    .applyEuler(rotation)
+    .add(new Vector3(jet.reach, plane.height + jet.height, jet.depth));
+  const grip = place(.98, .79, 0);
+  const base = place(.31, 0, .40);
+  const viewports = [[320, 568, 52], [375, 812, 52], [390, 844, 52], [1280, 800, 16]];
+  for (const [width, height, topInset] of viewports) {
+    const framing = tableCameraFraming('pour', width / height);
+    const camera = new PerspectiveCamera(28, width / height, .1, 80);
+    camera.setViewOffset(width, height, width * framing.shiftX, height * framing.shiftY, width, height);
+    camera.position.copy(framing.eye);
+    camera.lookAt(framing.targetX, framing.targetY, framing.targetZ);
+    camera.updateMatrixWorld();
+    const y = (1 - grip.clone().project(camera).y) * height / 2;
+    const x = (1 + base.clone().project(camera).x) * width / 2;
+    assert.ok(y > topInset, `the pitcher meets the upper controls at ${width} pixels`);
+    assert.ok(x < width - 4, `the pitcher meets the right edge at ${width} pixels`);
+  }
+});
+
 test('the milk stream starts at the flared pitcher lip with an unchanged base', () => {
   const geometry = new LatheGeometry([new Vector2(.58, .2), new Vector2(.45, 1.18)], 144);
   shapePitcherSpout(geometry);
@@ -139,15 +179,17 @@ test('a moving pitcher remains above the rim and its lip stays inside the openin
       const plane = liquidPlaneAtFill(used);
       for (let angle = 0; angle < Math.PI * 2; angle += .2) {
         const position = { x: .91 * Math.cos(angle), y: .91 * Math.sin(angle) };
-        const jet = pourJetPose(flow, used, position, plane);
-        const lip = plane.height + jet.height;
-        for (const [radius, y] of [[.51, 0], [.58, .07], [.60, .22], [.54, .72], [.45, 1.18]]) {
-          const bottom = lip + .84 * ((-radius - PITCHER_LIP.x) * Math.sin(jet.angle)
-            + (y - PITCHER_LIP.y) * Math.cos(jet.angle));
-          assert.ok(bottom >= rim + .018);
+        for (const height of [undefined, .6, 1, 3.4, 8]) {
+          const jet = pourJetPose(flow, used, position, plane, height);
+          const lip = plane.height + jet.height;
+          for (const [radius, y] of [[.51, 0], [.58, .07], [.60, .22], [.54, .72], [.45, 1.18]]) {
+            const bottom = lip + .84 * ((-radius - PITCHER_LIP.x) * Math.sin(jet.angle)
+              + (y - PITCHER_LIP.y) * Math.cos(jet.angle));
+            assert.ok(bottom >= rim + .018);
+          }
+          assert.ok(Math.hypot(position.x * plane.radius + jet.reach,
+            position.y * plane.radius + jet.depth) < plane.radius - .025);
         }
-        assert.ok(Math.hypot(position.x * plane.radius + jet.reach,
-          position.y * plane.radius + jet.depth) < plane.radius - .025);
       }
     }
   }

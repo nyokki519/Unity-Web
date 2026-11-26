@@ -1,5 +1,6 @@
 import * as THREE from '../vendor/three/three.module.js';
-import { PITCHER_LIP } from './cup-model.js';
+import { PITCHER_LIP, pitcherFill } from './pour-jet.js';
+import { MILK_CAPACITY } from './milk-pour.js';
 
 export const PITCHER_LIQUID_SEGMENTS = 56;
 const TOP = 1.157;
@@ -10,9 +11,10 @@ function innerRadius(height) {
   return .52 * (height - .10) / .10;
 }
 
-export function pitcherLiquidLevel(tilt, used, resting) {
+export function pitcherLiquidLevel(tilt, used, resting, stockMl = MILK_CAPACITY,
+  remainingMl = stockMl * (1 - used)) {
   const cosine = Math.cos(tilt);
-  const neutral = .94 - .41 * used;
+  const neutral = .16 + .95 * pitcherFill(remainingMl) ** .89;
   const lipHeight = PITCHER_LIP.x * Math.sin(tilt) + PITCHER_LIP.y * cosine;
   return Math.min(1.12 * cosine, THREE.MathUtils.lerp(lipHeight + .005, neutral, resting));
 }
@@ -59,13 +61,17 @@ export function createPitcherLiquid() {
   const normals = Array.from({ length: (count + 1) * 3 }, (_, i) => i % 3 === 1 ? 1 : 0);
   geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
   geometry.setIndex(Array.from({ length: count }, (_, i) => [0, 1 + (i + 1) % count, 1 + i]).flat());
-  const material = new THREE.MeshStandardMaterial({ color: '#f4e7d4', roughness: .49 });
+  const material = new THREE.MeshPhysicalMaterial({
+    color: '#f9f2e3', roughness: .32, clearcoat: .25, clearcoatRoughness: .28,
+  });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.frustumCulled = false;
   return {
     mesh,
-    update(pitcher, tilt, used, resting) {
-      const level = pitcherLiquidLevel(tilt, used, resting);
+    update(pitcher, tilt, used, resting, stockMl, remainingMl) {
+      mesh.visible = remainingMl > .03;
+      if (!mesh.visible) return;
+      const level = pitcherLiquidLevel(tilt, used, resting, stockMl, remainingMl);
       positions.setXYZ(0, sectionCenter(level, tilt), level, 0);
       for (let i = 0; i < count; i++) {
         const point = pitcherLiquidEdge(i / count * Math.PI * 2, level, tilt);

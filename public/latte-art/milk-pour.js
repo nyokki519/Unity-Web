@@ -1,5 +1,7 @@
+import { CUP_CAPACITY_ML, DEFAULT_ESPRESSO_ML } from './foam-geometry.js';
+
 export const MILK_GRID_SIZE = 80;
-export const MILK_CAPACITY = 160;
+export const MILK_CAPACITY = CUP_CAPACITY_ML - DEFAULT_ESPRESSO_ML;
 export const DEFAULT_POUR_RATE = .62;
 export const MAX_POUR_RADIUS = .91;
 
@@ -17,6 +19,8 @@ const FLIGHT_STEPS = 4;
 const SIZE = MILK_GRID_SIZE;
 const CELL_COUNT = SIZE * SIZE;
 const CENTER = { x: 0, y: 0 };
+const bounded = (value, low, high, fallback) => Number.isFinite(value)
+  ? Math.max(low, Math.min(high, value)) : fallback;
 const smooth = value => {
   const t = Math.max(0, Math.min(1, value));
   return t * t * (3 - 2 * t);
@@ -43,12 +47,30 @@ function boundedPoint({ x, y }) {
   return { x: x / divisor, y: y / divisor };
 }
 
-function decode(state) {
+function preparation(profile) {
+  if (!profile || typeof profile !== 'object') return null;
+  return Object.freeze({
+    espressoMl: bounded(profile.espressoMl, 0, CUP_CAPACITY_ML, DEFAULT_ESPRESSO_ML),
+    milkMl: bounded(profile.milkMl, 0, 320, MILK_CAPACITY),
+    temperatureC: bounded(profile.temperatureC, 4, 95, 60),
+    aeration: bounded(profile.aeration, 0, 1, .23),
+    coarseness: bounded(profile.coarseness, 0, 1, .13),
+    separation: bounded(profile.separation, 0, 1, .05),
+    crema: bounded(profile.crema, 0, 1, .72),
+    seed: bounded(profile.seed, 0, 0xffffffff, 6529) >>> 0,
+  });
+}
+
+export function spoutFlightSteps(heightCm) {
+  const height = bounded(heightCm, .5, 12, 2);
+  return Math.round(FLIGHT_STEPS * Math.sqrt(height / 2));
+}
+
+function decode(cells) {
   const bytes = CELL_COUNT * Float32Array.BYTES_PER_ELEMENT;
-  if (!state || !Number.isFinite(state.amount) || state.amount <= 0 || state.amount > MILK_CAPACITY
-    || typeof state.cells !== 'string' || state.cells.length !== 4 * Math.ceil(bytes / 3)) return null;
+  if (typeof cells !== 'string' || cells.length !== 4 * Math.ceil(bytes / 3)) return null;
   try {
-    const buffer = Uint8Array.from(atob(state.cells), char => char.charCodeAt(0));
+    const buffer = Uint8Array.from(atob(cells), char => char.charCodeAt(0));
     const density = new Float32Array(buffer.buffer);
     return density.length === CELL_COUNT && density.every((level, index) =>
       Number.isFinite(level) && level >= 0 && level <= 15000 && (active[index] || level === 0)) ? density : null;
@@ -57,8 +79,14 @@ function decode(state) {
   }
 }
 
+function encode(density) {
+  const bytes = new Uint8Array(density.buffer);
+  return btoa(String.fromCharCode(...bytes));
+}
+
 export class MilkPour {
   #density;
+  #mixedDensity = null;
   #scratch = new Float32Array(CELL_COUNT);
   #kernelX = new Float64Array(SIZE);
   #kernelY = new Float64Array(SIZE);
@@ -69,10 +97,14 @@ export class MilkPour {
   #accumulator = 0;
   #age = 0;
   #tail = 0;
+  #tailSteps = FLIGHT_STEPS;
   #flight = [];
   #tickIndex = 0;
+  #startTick = 0;
+  #firstArrival = Infinity;
   #impactPosition = CENTER;
   #impactFlow = 0;
+  #impactMix = null;
   #stopFlow = 0;
   #startRest = 1;
   #stopRest = 0;
@@ -82,16 +114,33 @@ export class MilkPour {
   #amount = 0;
   #revision = 0;
   #legacy;
+  #profile = null;
+  #foamRetention = 1;
+  #spoutHeightCm = null;
 
-  constructor(saved) {
-    const density = decode(saved);
+  constructor(saved, profile = saved?.profile) {
+    this.configure(profile);
     this.#legacy = saved === 'legacy';
+    const limit = saved?.profile ? CUP_CAPACITY_ML : MILK_CAPACITY;
+    const density = Number.isFinite(saved?.amount) && saved.amount > 0 && saved.amount <= limit
+      ? decode(saved.cells) : null;
     this.#density = density ?? new Float32Array(CELL_COUNT);
     if (this.#legacy) this.#amount = MILK_CAPACITY;
-    else if (density) this.#amount = saved.amount;
+    else if (density) {
+      this.#amount = saved.amount;
+      this.#mixedDensity = decode(saved.mixedCells);
+    }
   }
 
   get density() { return this.#density; }
+  get mixedDensity() { return this.#mixedDensity; }
+  get profile() { return this.#profile; }
+  get espressoMl() { return this.#profile?.espressoMl ?? DEFAULT_ESPRESSO_ML; }
+  get milkMl() { return this.#profile?.milkMl ?? MILK_CAPACITY; }
+  get capacity() { return Math.min(this.milkMl, CUP_CAPACITY_ML - this.espressoMl); }
+  get remaining() { return Math.max(0, this.milkMl - this.#amount); }
+  get full() { return this.#amount >= this.capacity; }
+  get spoutHeightCm() { return this.#spoutHeightCm; }
   get amount() { return this.#amount; }
   get landedAmount() { return this.#amount - this.#flight.reduce((sum, packet) => sum + packet.dose, 0); }
   get revision() { return this.#revision; }
@@ -109,11 +158,21 @@ export class MilkPour {
   get flow() { return this.#flow; }
   // The oldest airborne packet begins at the last landing, except when a new
   // stream starts elsewhere and none of its milk has reached the surface yet.
-  get streamTarget() { return this.#flight[0]?.from ?? this.#impactPosition; }
+  get streamTarget() {
+    const current = this.#flight.find(packet => packet.emitted >= this.#startTick);
+    if (this.#pouring && this.#firstArrival > this.#tickIndex) return current?.from ?? this.#position;
+    return this.#flight[0]?.from ?? this.#impactPosition;
+  }
   get impactPosition() { return this.#impactPosition; }
   get impactFlow() { return this.#impactFlow; }
-  get streamHead() { return Math.min(1, Math.max(0, (this.#age - APPROACH_TIME) / (FLIGHT_STEPS * STEP))); }
-  get streamCut() { return this.#pouring ? 0 : 1 - this.#tail / FLIGHT_STEPS; }
+  get streamHead() {
+    const time = this.#age - APPROACH_TIME;
+    const flight = this.#spoutHeightCm === null ? FLIGHT_STEPS :
+      (this.#firstArrival < Infinity ? this.#firstArrival - this.#startTick - APPROACH_TIME / STEP
+        : spoutFlightSteps(this.#spoutHeightCm));
+    return Math.min(1, Math.max(0, time / (flight * STEP)));
+  }
+  get streamCut() { return this.#pouring ? 0 : 1 - this.#tail / this.#tailSteps; }
   get motionTime() { return this.#age; }
   get resting() {
     if (this.#pouring) return this.#startRest * (1 - smooth(this.#age / APPROACH_TIME));
@@ -122,8 +181,25 @@ export class MilkPour {
   get pouring() { return this.#pouring; }
   get moving() { return this.#pouring || this.#settling > 0; }
 
+  configure(profile) {
+    this.#profile = preparation(profile);
+    const recipe = this.#profile;
+    if (recipe) {
+      const foam = .58 + .49 * smooth(recipe.aeration / .23) - .14 * smooth((recipe.aeration - .30) / .28);
+      const temperature = 1 - .22 * smooth((Math.abs(recipe.temperatureC - 60) - 6) / 22);
+      this.#foamRetention = foam * temperature * (1 - .39 * recipe.coarseness) * (1 - .26 * recipe.separation);
+    } else {
+      this.#foamRetention = 1;
+    }
+    this.#revision++;
+  }
+
+  setSpoutHeightCm(height) {
+    this.#spoutHeightCm = bounded(height, .5, 12, null);
+  }
+
   start(position) {
-    if (this.#pouring || this.#amount >= MILK_CAPACITY) return false;
+    if (this.#pouring || this.full) return false;
     this.#approachFrom = this.toolTarget;
     this.#startRest = this.resting;
     this.#position = boundedPoint(position);
@@ -131,6 +207,8 @@ export class MilkPour {
     if (!this.#flight.length) this.#impactPosition = this.#position;
     this.#accumulator = 0;
     this.#age = 0;
+    this.#startTick = this.#tickIndex;
+    this.#firstArrival = Infinity;
     this.#tail = this.#settling = 0;
     this.#flow = 0;
     this.#pouring = true;
@@ -139,22 +217,37 @@ export class MilkPour {
 
   savePreviewCheckpoint(saved = { density: new Float32Array(CELL_COUNT) }) {
     saved.density.set(this.#density);
+    if (this.#mixedDensity) {
+      saved.mixedBuffer ??= new Float32Array(CELL_COUNT);
+      saved.mixedBuffer.set(this.#mixedDensity);
+    }
     return Object.assign(saved, {
-      flight: this.#flight.slice(), tickIndex: this.#tickIndex,
-      impactPosition: this.#impactPosition, impactFlow: this.#impactFlow,
+      hasMixed: this.#mixedDensity !== null, flight: this.#flight.slice(), tickIndex: this.#tickIndex,
+      startTick: this.#startTick, firstArrival: this.#firstArrival,
+      impactPosition: this.#impactPosition, impactFlow: this.#impactFlow, impactMix: this.#impactMix,
       position: this.#position, previousTick: this.#previousTick, returnTarget: this.#returnTarget,
       accumulator: this.#accumulator, age: this.#age, amount: this.#amount,
-      flow: this.#flow, tail: this.#tail, stopFlow: this.#stopFlow, stopRest: this.#stopRest,
+      flow: this.#flow, tail: this.#tail, tailSteps: this.#tailSteps,
+      stopFlow: this.#stopFlow, stopRest: this.#stopRest,
       settling: this.#settling, pouring: this.#pouring,
     });
   }
 
   restorePreviewCheckpoint(saved) {
     this.#density.set(saved.density);
+    if (saved.hasMixed) {
+      this.#mixedDensity ??= new Float32Array(CELL_COUNT);
+      this.#mixedDensity.set(saved.mixedBuffer);
+    } else {
+      this.#mixedDensity = null;
+    }
     this.#flight = saved.flight.slice();
     this.#tickIndex = saved.tickIndex;
+    this.#startTick = saved.startTick;
+    this.#firstArrival = saved.firstArrival;
     this.#impactPosition = saved.impactPosition;
     this.#impactFlow = saved.impactFlow;
+    this.#impactMix = saved.impactMix;
     this.#position = saved.position;
     this.#previousTick = saved.previousTick;
     this.#returnTarget = saved.returnTarget;
@@ -163,6 +256,7 @@ export class MilkPour {
     this.#amount = saved.amount;
     this.#flow = saved.flow;
     this.#tail = saved.tail;
+    this.#tailSteps = saved.tailSteps;
     this.#stopFlow = saved.stopFlow;
     this.#stopRest = saved.stopRest;
     this.#settling = saved.settling;
@@ -195,7 +289,7 @@ export class MilkPour {
     if (!this.#pouring) return;
     // Complete the part of the final step before release or before the stream crosses the rim.
     const endMs = Math.max(0, Math.min(STEP, this.#accumulator));
-    const dose = Math.min(MILK_CAPACITY - this.#amount, endMs / 1000 * MAX_FLOW * this.#flow);
+    const dose = Math.min(this.capacity - this.#amount, endMs / 1000 * MAX_FLOW * this.#flow);
     if (dose > 1e-6) {
       this.#emit(this.#position, dose);
       this.#revision++;
@@ -205,7 +299,8 @@ export class MilkPour {
     this.#stopRest = this.resting;
     this.#pouring = false;
     this.#stopFlow = this.#flow;
-    this.#tail = FLIGHT_STEPS;
+    const lastArrival = this.#flight.at(-1)?.arrival ?? this.#tickIndex + FLIGHT_STEPS;
+    this.#tailSteps = this.#tail = Math.max(1, lastArrival - this.#tickIndex);
     this.#settling = this.#age > 0 || this.#flight.length ? SETTLE_STEPS : 0;
     if (!this.#settling) this.#flow = 0;
   }
@@ -223,6 +318,8 @@ export class MilkPour {
     this.#flight.length = 0;
     this.#impactPosition = CENTER;
     this.#impactFlow = 0;
+    this.#impactMix = null;
+    this.#mixedDensity = null;
     this.#density.fill(0);
     this.#revision++;
   }
@@ -230,8 +327,10 @@ export class MilkPour {
   snapshot() {
     if (this.#legacy) return 'legacy';
     if (!this.#amount) return null;
-    const bytes = new Uint8Array(this.#density.buffer);
-    return { amount: this.#amount, cells: btoa(String.fromCharCode(...bytes)) };
+    return { amount: this.#amount, cells: encode(this.#density),
+      ...(this.#profile && { profile: this.#profile }),
+      ...(this.#mixedDensity && { mixedCells: encode(this.#mixedDensity) }),
+    };
   }
 
   #tick(point, rate) {
@@ -239,17 +338,22 @@ export class MilkPour {
     this.#tickIndex++;
     this.#impactFlow = 0;
     while (this.#flight.length && this.#flight[0].arrival <= this.#tickIndex) {
-      const { from, to, surfaceDose, flow } = this.#flight.shift();
+      const { from, to, dose, surfaceDose, flow, mix } = this.#flight.shift();
       this.#impactPosition = to;
       this.#impactFlow = flow;
-      this.#deposit(from, to, surfaceDose, flow);
+      this.#impactMix = mix;
+      this.#deposit(from, to, surfaceDose, .026 + flow * .047, this.#density);
+      if (mix !== null) {
+        this.#mixedDensity ??= new Float32Array(CELL_COUNT);
+        this.#deposit(from, to, dose - surfaceDose, .105 + .085 * mix, this.#mixedDensity);
+      }
     }
-    this.#spread(this.#impactPosition, this.#impactFlow);
+    this.#spread(this.#impactPosition, this.#impactFlow, this.#impactMix);
     if (this.#pouring) {
       this.#flow = rate * smooth((this.#age - APPROACH_TIME) / OPENING_TIME);
-      const dose = Math.min(MILK_CAPACITY - this.#amount, STEP / 1000 * MAX_FLOW * this.#flow);
+      const dose = Math.min(this.capacity - this.#amount, STEP / 1000 * MAX_FLOW * this.#flow);
       if (dose > 0) this.#emit(point, dose);
-      if (this.#amount >= MILK_CAPACITY) this.stop(point);
+      if (this.full) this.stop(point);
     } else {
       this.#settling--;
       this.#tail = Math.max(0, this.#tail - 1);
@@ -259,11 +363,14 @@ export class MilkPour {
     this.#revision++;
   }
 
-  #spread(point, pressure) {
+  #spread(point, pressure, impactMix) {
     const current = this.#density;
     const result = this.#scratch;
     result.fill(0);
-    const mixing = .20 * smooth(pressure / .16) * (1 - smooth((pressure - .32) / .22));
+    const mixing = impactMix === null
+      ? .20 * smooth(pressure / .16) * (1 - smooth((pressure - .32) / .22))
+      : (.003 + .21 * impactMix) * smooth(pressure / .46);
+    const localMix = impactMix !== null && mixing > 0 ? this.#mixedDensity : null;
     const centralPool = .45 * smooth((pressure - .55) / .45);
     const mobility = this.#pouring ? 1 : smooth(this.#settling / SETTLE_STEPS);
     for (const { index, x, y, neighbors } of cells) {
@@ -271,10 +378,10 @@ export class MilkPour {
       const dx = x - point.x;
       const dy = y - point.y;
       const distance = dx * dx + dy * dy;
-      // A narrow, high jet draws some of the foam at its point of impact into
-      // the coffee. Its volume is still accounted for in the mixed base color.
+      // A penetrating jet incorporates some of the existing foam at impact.
       const core = Math.max(0, 1 - distance / .037);
       const level = current[index] * (1 - mixing * core * core);
+      if (localMix && core > 0) localMix[index] += current[index] - level;
       let remain = level;
       const diffusion = level / (1 + .16 * level);
       const mobile = level * pressure * .82 * (1 - centralPool * core * core) * Math.max(0, 1 - distance / JET_REACH_SQUARED);
@@ -304,32 +411,40 @@ export class MilkPour {
   }
 
   #emit(point, dose) {
-    // Even at a low spout height, part of the incoming milk blends under the foam.
-    const floating = .29 + .54 * smooth((this.#flow - .26) / .34) + .14 * smooth((this.#flow - .62) / .32);
-    this.#flight.push({
-      arrival: this.#tickIndex + FLIGHT_STEPS, from: this.#previousTick, to: point,
-      dose, surfaceDose: dose * floating, flow: this.#flow,
-    });
+    const height = this.#spoutHeightCm;
+    const mix = height !== null ? smooth((height - 1) / 6.5) : null;
+    const floating = mix === null
+      ? .29 + .54 * smooth((this.#flow - .26) / .34) + .14 * smooth((this.#flow - .62) / .32)
+      : (.82 + .13 * smooth(this.#flow / .75)) * (1 - .966 * mix);
+    const arrival = this.#tickIndex + spoutFlightSteps(height);
+    const packet = { arrival, emitted: this.#tickIndex, from: this.#previousTick, to: point,
+      dose, surfaceDose: dose * Math.min(.985, floating * this.#foamRetention), flow: this.#flow, mix,
+    };
+    // Lowering the spout can bring newly emitted milk to the cup before older
+    // milk. Keep every dose on its own flight clock.
+    const index = this.#flight.findLastIndex(previous => previous.arrival <= arrival);
+    this.#flight.splice(index + 1, 0, packet);
+    if (this.#firstArrival > this.#tickIndex) this.#firstArrival = Math.min(this.#firstArrival, arrival);
     this.#amount += dose;
   }
 
-  #deposit(from, point, dose, flow) {
+  #deposit(from, point, dose, sigma, density) {
+    if (!(dose > 0)) return;
     const dx = point.x - from.x;
     const dy = point.y - from.y;
     const samples = Math.ceil(Math.hypot(dx, dy) / .042);
     if (samples <= 1) {
-      this.#stamp(point, dose, flow);
+      this.#stamp(point, dose, sigma, density);
       return;
     }
     // Treat a fast movement as one thin continuous jet path with the same volume.
     for (let i = 0; i < samples; i++) {
       const fraction = (i + .5) / samples;
-      this.#stamp({ x: from.x + dx * fraction, y: from.y + dy * fraction }, dose / samples, flow);
+      this.#stamp({ x: from.x + dx * fraction, y: from.y + dy * fraction }, dose / samples, sigma, density);
     }
   }
 
-  #stamp(point, dose, flow) {
-    const sigma = .026 + flow * .047;
+  #stamp(point, dose, sigma, density) {
     const extent = sigma * 3;
     const left = Math.max(0, Math.floor((1 + point.x - extent) * SIZE / 2));
     const right = Math.min(SIZE - 1, Math.floor((1 + point.x + extent) * SIZE / 2));
@@ -352,7 +467,7 @@ export class MilkPour {
     for (let row = top; row <= bottom; row++) {
       for (let column = left; column <= right; column++) {
         const index = row * SIZE + column;
-        if (active[index]) this.#density[index] += this.#kernelX[column] * this.#kernelY[row] * scale;
+        if (active[index]) density[index] += this.#kernelX[column] * this.#kernelY[row] * scale;
       }
     }
   }

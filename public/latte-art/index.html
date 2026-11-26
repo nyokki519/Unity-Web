@@ -7,7 +7,7 @@
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
   <style>html{background:#1c120d;color-scheme:dark}</style>
-  <link rel="stylesheet" href="./style.css?v=20">
+  <link rel="stylesheet" href="./style.css?v=barista-1">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -38,12 +38,14 @@
           <img src="./loading-mark.webp" width="71" height="112" alt="">
           <span>Unity MIX</span>
         </a>
-        <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー"><span aria-hidden="true"></span></button>
+        <div class="header-actions"><button id="openBarista" class="prep-entry" type="button" aria-haspopup="dialog" aria-controls="prepDialog">豆から淹れる</button>
+        <button id="menuButton" class="round menu-button" type="button" aria-expanded="false" aria-controls="menu" aria-label="メニュー"><span aria-hidden="true"></span></button></div>
       </header>
       <nav id="menu" class="menu glass" hidden aria-label="ラテアートのメニュー">
         <button type="button" id="showHelp">遊び方</button>
         <button type="button" id="showDraw">チョコペンで描く</button>
         <button type="button" id="newCup">もう一杯作る</button>
+        <button type="button" id="soundButton" aria-pressed="false" hidden>効果音 <span class="sound-state" aria-hidden="true"></span></button>
         <a href="/">Unity MIX ホーム</a>
       </nav>
       <div class="stage-caption">
@@ -56,6 +58,15 @@
           <span class="pour-volume"><span class="sr-only">注いだ量 </span><output id="poured" aria-live="off">0 mL</output></span>
           <input id="tilt" type="range" min="8" max="100" value="62" aria-valuetext="ふつう">
           <button id="pourCenter" type="button" aria-disabled="false">中央に注ぐ</button>
+          <fieldset id="pourHeights" class="pour-heights">
+            <legend>注ぐ高さ</legend>
+            <div class="height-options">
+              <label><input type="radio" name="pourHeight" value="auto" checked><span>おまかせ</span></label>
+              <label><input type="radio" name="pourHeight" value="8"><span>高め</span></label>
+              <label><input type="radio" name="pourHeight" value="3.4"><span>中間</span></label>
+              <label><input type="radio" name="pourHeight" value="1"><span>液面近く</span></label>
+            </div>
+          </fieldset>
         </section>
         <div id="bar" class="bar" role="group" aria-label="ラテアートの操作">
           <div id="drawControls" class="control-group" hidden>
@@ -77,6 +88,9 @@
       </div>
       <span id="status" class="sr-only" role="status" aria-live="polite"></span>
     </div>
+    <dialog id="prepDialog" class="prep-dialog" aria-label="エスプレッソとミルクの準備">
+      <div id="prepHost"></div>
+    </dialog>
     <button id="serving" class="serve-overlay" type="button" hidden aria-label="完成写真へ進む"><span>お待たせしました</span></button>
     <dialog id="finishPanel" class="shot" aria-labelledby="resultTitle">
       <div class="result">
@@ -87,6 +101,14 @@
         </div>
         <div class="result-info">
           <h1 id="resultTitle">できあがり</h1>
+          <div id="brewNote" class="brew-note" hidden>
+            <dl>
+              <div><dt>エスプレッソ</dt><dd id="noteEspresso"></dd></div>
+              <div><dt>ミルク</dt><dd id="noteMilk"></dd></div>
+              <div><dt>泡の質感</dt><dd id="noteFoam"></dd></div>
+            </dl>
+            <p id="brewTip"></p>
+          </div>
           <div class="result-actions">
             <button id="saveImage" class="primary" type="button">画像を保存</button>
             <button id="editAgain" class="go" type="button">編集に戻る</button>
@@ -111,6 +133,14 @@
         <button value="restart" class="go">もう一杯作る</button>
       </form>
     </dialog>
+    <dialog id="replaceRecipeDialog" class="sheet" aria-labelledby="replaceRecipeTitle">
+      <h2 id="replaceRecipeTitle">新しい材料で始めますか？</h2>
+      <p>準備を終えて注ぎ始めると、今の一杯と入れ替わります。作品を残す場合は先に完成写真を保存してください。</p>
+      <form method="dialog">
+        <button value="cancel" autofocus>戻る</button>
+        <button value="replace" class="go">新しい一杯へ</button>
+      </form>
+    </dialog>
     <dialog id="pourGuideDialog" class="sheet guide-sheet" aria-labelledby="pourGuideTitle">
       <header class="help-header">
         <h2 id="pourGuideTitle">注ぐコツ</h2>
@@ -122,7 +152,8 @@
         <li>注ぎ口を液面すれすれまで下げ、流量を少し増やします。白い泡が表面に浮いて模様になります。</li>
       </ol>
       <h3>スマホでの操作</h3>
-      <p>「ミルクの勢い」を左に寄せ、狙った液面を長押しして細く注ぎます。白い模様を出したいところで指を離し、勢いを少し上げてから、もう一度長押しします。ピッチャーの高さと傾きは、勢いに合わせて自動で変わります。</p>
+      <p>「高め」と細い勢いを選び、狙った液面を長押しするとコーヒーになじみます。白い模様を作るときは一度指を離し、「液面近く」を選んで勢いを少し上げます。「おまかせ」では勢いに応じて高さが変わります。</p>
+      <p>「豆から淹れる」では、スチームで整えた泡を使って注げます。</p>
       <footer>出典：<a href="https://home.lamarzoccousa.com/pro-tips-for-latte-art/" target="_blank" rel="noopener">La Marzocco Home「Pro Tips for Latte Art」</a></footer>
     </dialog>
     <dialog id="drawGuideDialog" class="sheet guide-sheet" aria-labelledby="drawGuideTitle">
@@ -197,6 +228,6 @@
       </figure>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=17"></script>
+  <script type="module" src="./app.js?v=barista-1"></script>
 </body>
 </html>

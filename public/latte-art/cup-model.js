@@ -1,4 +1,4 @@
-import { milkJetRadius } from './pour-jet.js';
+import { milkJetRadius, sampleFallingMilk } from './pour-jet.js';
 import * as THREE from '../vendor/three/three.module.js';
 
 export { CUP_PROFILE, FOAM_PLANE, tableCameraFraming } from './foam-geometry.js';
@@ -93,7 +93,7 @@ export function createChocolatePen() {
   return pen;
 }
 
-export { PITCHER_LIP, pourJetPose } from './pour-jet.js';
+export { PITCHER_LIP, pourJetPose, sampleFallingMilk } from './pour-jet.js';
 
 export function shapePitcherSpout(geometry) {
   const positions = geometry.getAttribute('position');
@@ -112,14 +112,6 @@ export function shapePitcherSpout(geometry) {
 
 const STREAM_SEGMENTS = 20;
 const STREAM_SIDES = 8;
-
-export function sampleFallingMilk(start, end, t) {
-  return {
-    x: THREE.MathUtils.lerp(start.x, end.x, t),
-    y: THREE.MathUtils.lerp(start.y, end.y, t * t),
-    z: THREE.MathUtils.lerp(start.z, end.z, t),
-  };
-}
 
 export function createMilkStreamGeometry() {
   const geometry = new THREE.BufferGeometry();
@@ -153,9 +145,9 @@ export function updateMilkStream(geometry, start, end, amount, cut = 0, head = 1
     const center = sampleFallingMilk(start, end, t);
     tangent.set(dx, 2 * Math.max(.001, t) * dy, dz).normalize();
     normal.crossVectors(tangent, across).normalize();
-    const radius = milkJetRadius(amount, t, cut, head);
+    const radius = milkJetRadius(amount, t, cut, head, Math.max(0, -dy));
     // At the lip the stream is a short ribbon that gathers into a round jet.
-    const spread = 1 + .42 * (1 - THREE.MathUtils.smoothstep(t, 0, .35));
+    const spread = 1 + .45 * (1 - THREE.MathUtils.smoothstep(t, 0, .26));
     for (let side = 0; side < STREAM_SIDES; side++) {
       const angle = Math.PI * 2 * side / STREAM_SIDES;
       const a = radius * spread * Math.cos(angle);

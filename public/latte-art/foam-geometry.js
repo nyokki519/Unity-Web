@@ -45,11 +45,17 @@ function volumeBelow(level) {
   return volume;
 }
 const fullVolume = volumeBelow(fullHeight);
-// A double shot in a cup with room for the pitcher's 160 mL.
-const initialFraction = 60 / (60 + 160);
+export const CUP_CAPACITY_ML = 220;
+export const DEFAULT_ESPRESSO_ML = 60;
+
 export function liquidPlaneAtFill(fraction) {
   const filled = Math.max(0, Math.min(1, fraction));
-  const target = fullVolume * lerp(initialFraction, 1, filled);
+  return liquidPlaneAtVolume(lerp(DEFAULT_ESPRESSO_ML, CUP_CAPACITY_ML, filled));
+}
+
+export function liquidPlaneAtVolume(volumeMl) {
+  const fraction = Math.max(0, Math.min(1, volumeMl / CUP_CAPACITY_ML));
+  const target = fullVolume * fraction;
   let lower = levels[0][1], upper = fullHeight;
   for (let step = 0; step < 16; step++) {
     const middle = (lower + upper) * .5;
@@ -64,9 +70,11 @@ export function tableCameraFraming(view, aspect) {
   const portrait = 1 - relative ** 2 * (3 - 2 * relative);
   const photo = view === 'photo';
   const served = view === 'serve' || photo;
+  const pouring = view === 'pour';
   const blend = (wide, tall) => lerp(wide, tall, portrait);
-  const distance = photo ? 10.15 : served
-    ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
+  const distance = photo ? 10.15
+    : served ? blend(10.6, 12.2 * Math.max(.9, .462 / aspect))
+    : pouring ? blend(14.55, Math.max(18.2, 20.5 * .462 / aspect))
     : blend(11.25, Math.max(11.25, 18 * .462 / aspect));
   const elevation = photo ? 56 : served ? 64 : blend(57, 57.5);
   const angle = elevation * Math.PI / 180;
@@ -76,8 +84,8 @@ export function tableCameraFraming(view, aspect) {
     distance, elevation, targetY, targetZ,
     targetX: photo ? -.18 : blend(.18, .02),
     eye: { x: 0, y: targetY + distance * Math.sin(angle), z: targetZ + distance * Math.cos(angle) },
-    shiftX: served ? 0 : -.126 * portrait,
-    shiftY: served ? 0 : .095 * portrait,
+    shiftX: served ? 0 : (pouring ? -.086 : -.126) * portrait,
+    shiftY: served ? 0 : (pouring ? .038 : .095) * portrait,
   };
 }
 

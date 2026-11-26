@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { cupNotes, milkProfile, readRecipe } from '../public/latte-art/barista-profile.js';
 import { readDraft, writeDraft } from '../public/latte-art/draft.js';
 import { MilkPour } from '../public/latte-art/milk-pour.js';
 
@@ -44,4 +45,31 @@ test('invalid coordinates or unavailable storage leave a usable empty cup', () =
   };
   assert.deepEqual(readDraft(disabled), fresh);
   assert.doesNotThrow(() => writeDraft(disabled, { ...fresh, strokes: [stroke] }));
+});
+
+const prepared = {
+  espressoMl: 34.5, milkMl: 105, temperature: 62.3, foam: .2,
+  fineness: .75, extraction: .84, separation: .03, espressoTemperature: 70, seed: 241,
+};
+
+test('the prepared recipe and chosen height survive a reload before pouring', () => {
+  const storage = tabStorage();
+  const preparation = { ...fresh, recipe: prepared, pourHeight: 8 };
+  writeDraft(storage, preparation);
+  assert.deepEqual(readDraft(storage), preparation);
+  assert.deepEqual(milkProfile(readDraft(storage).recipe), {
+    espressoMl: 34.5, milkMl: 105, temperatureC: 62.3, aeration: .2,
+    coarseness: .25, crema: .84, separation: .03, seed: 241,
+  });
+  writeDraft(storage, fresh);
+  assert.deepEqual(readDraft(storage), fresh);
+});
+
+test('invalid preparation fields fall back to direct pouring while valid recipes give specific feedback', () => {
+  const storage = tabStorage();
+  writeDraft(storage, { ...fresh, recipe: { ...prepared, temperature: 120 }, pourHeight: 2 });
+  assert.deepEqual(readDraft(storage), fresh);
+  assert.equal(readRecipe({ ...prepared, milkMl: '105' }), null);
+  assert.equal(cupNotes(prepared, 60).foamLabel, 'なめらか');
+  assert.match(cupNotes({ ...prepared, temperature: 71 }, 60).tip, /60〜65℃/);
 });

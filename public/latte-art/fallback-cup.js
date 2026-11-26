@@ -1,4 +1,4 @@
-import { milkJetRadius, pourJetPose } from './pour-jet.js';
+import { milkJetRadius, pitcherFill, pourJetPose, sampleFallingMilk } from './pour-jet.js';
 import { ceramicGlaze } from './cafe-ware.js';
 import { canvasOf, PHOTO_SIZE } from './surface.js';
 import { createWalnutImages } from './walnut.js';
@@ -97,35 +97,47 @@ function paintSpoon(ctx, x, y, scale, angle) {
   ctx.ellipse(-.64, 0, .32, .17, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
-  const well = ctx.createRadialGradient(-.71, .046, .02, -.64, 0, .3);
-  well.addColorStop(0, '#f7eee2');
-  well.addColorStop(.62, '#a69c8c');
-  well.addColorStop(1, '#e7ddd1');
+  const well = ctx.createLinearGradient(-.76, -.16, -.51, .16);
+  well.addColorStop(0, '#555a58');
+  well.addColorStop(.39, '#a2a39e');
+  well.addColorStop(.61, '#e3e4db');
+  well.addColorStop(.77, '#acad9f');
+  well.addColorStop(1, '#78746a');
   ctx.fillStyle = well;
   ctx.beginPath();
   ctx.ellipse(-.64, 0, .28, .135, 0, 0, Math.PI * 2);
   ctx.fill();
+  ctx.clip();
+  const gleam = ctx.createRadialGradient(-.72, .055, .012, -.72, .055, .16);
+  gleam.addColorStop(0, '#fffdf1a0');
+  gleam.addColorStop(.42, '#fffdf150');
+  gleam.addColorStop(1, '#fffdf100');
+  ctx.fillStyle = gleam;
+  ctx.fillRect(-.98, -.17, .68, .34);
   ctx.restore();
 }
 
-function pitcherPose({ position, flow, resting, amount, pitcherOffset }, plane, projection) {
-  const used = amount / MILK_CAPACITY;
-  const jet = pourJetPose(flow, used, position, plane);
+function pitcherPose({ position, flow, resting, amount, pitcherOffset, heightCm,
+  stockMl = MILK_CAPACITY, remainingMl = Math.max(0, stockMl - amount) }, plane, projection) {
+  const used = stockMl > 0 ? 1 - remainingMl / stockMl : 1;
+  const jet = pourJetPose(flow, used, position, plane, heightCm);
   // Down is positive on canvas: the spout at the left must dip below the handle.
   const angle = -(.10 * resting + jet.angle * (1 - resting));
-  const scale = 1 + .27 * resting;
+  const scale = 1.12 + .33 * resting;
+  const drop = .55 * jet.height / FOAM_PLANE.radius;
   const lipX = projection.x + projection.rx * (position.x + jet.reach / plane.radius);
-  const lipY = projection.y + projection.ry * (position.y + jet.depth / plane.radius) - .53 * jet.height / FOAM_PLANE.radius;
+  const lipY = projection.y + projection.ry * (position.y + jet.depth / plane.radius) - drop;
   // Translate the same spout point drawn by paintPitcher to the projected jet origin.
   return {
     left: (lipX + scale * (.12 * Math.cos(angle) + .03 * Math.sin(angle))) * (1 - resting)
-      + (.44 + (pitcherOffset?.x ?? 0)) * resting,
+      + (.11 + (pitcherOffset?.x ?? 0)) * resting,
     top: (lipY + scale * (.12 * Math.sin(angle) - .03 * Math.cos(angle))) * (1 - resting)
-      + (-1.40 + .88 * (pitcherOffset?.y ?? 0)) * resting,
+      + (-1.74 + .88 * (pitcherOffset?.y ?? 0)) * resting,
     angle,
     scale,
-    drop: .53 * jet.height / FOAM_PLANE.radius,
-    used,
+    drop,
+    height: jet.height,
+    fill: pitcherFill(remainingMl),
   };
 }
 
@@ -142,66 +154,102 @@ function paintPitcher(ctx, x, y, scale, view, plane, projection) {
   ctx.scale(scale, scale);
   const { position, impact = position, flow, streamCut = 0, streamHead = 1 } = view;
   const pose = pitcherPose(view, plane, projection);
-  const { left, top, angle, used, drop } = pose;
+  const { left, top, angle, fill } = pose;
   if (flow > .001 && streamHead > streamCut) {
     const source = streamCut ? pitcherPose({ ...view, resting: 0 }, plane, projection) : pose;
-    const { x: tipX, y: tipY } = pitcherLip(source);
-    const dx = projection.x + projection.rx * impact.x - tipX;
-    const dy = projection.y + projection.ry * impact.y - tipY;
-    const edge = (step, side) => {
-      const t = streamCut + (streamHead - streamCut) * step / 12;
-      const verticalSpeed = dy - drop + 2 * t * drop;
-      const speed = Math.hypot(dx, verticalSpeed) || 1;
-      const radius = side * milkJetRadius(flow, t, streamCut, streamHead) / FOAM_PLANE.radius;
-      return [tipX + dx * t - radius * verticalSpeed / speed,
-        tipY + (dy - drop) * t + drop * t ** 2 + radius * dx / speed];
+    const tip = { ...pitcherLip(source), z: 0 };
+    // Project the vertical fall and the forward drift onto the screen separately.
+    const landing = {
+      x: projection.x + projection.rx * impact.x,
+      y: tip.y + source.drop,
+      z: projection.y + projection.ry * impact.y - tip.y - source.drop,
     };
-    ctx.fillStyle = '#f4ead7';
+    const dx = landing.x - tip.x;
+    const edge = (step, side) => {
+      const t = streamCut + (streamHead - streamCut) * step / 18;
+      const point = sampleFallingMilk(tip, landing, t);
+      const verticalSpeed = landing.z + 2 * t * source.drop;
+      const speed = Math.hypot(dx, verticalSpeed) || 1;
+      const radius = side * milkJetRadius(flow, t, streamCut, streamHead, source.height) / FOAM_PLANE.radius;
+      return [point.x - radius * verticalSpeed / speed, point.y + point.z + radius * dx / speed];
+    };
+    ctx.fillStyle = '#fff2dd';
     ctx.beginPath();
     ctx.moveTo(...edge(0, 1));
-    for (let i = 1; i <= 12; i++) ctx.lineTo(...edge(i, 1));
-    for (let i = 12; i >= 0; i--) ctx.lineTo(...edge(i, -1));
+    for (let i = 1; i <= 18; i++) ctx.lineTo(...edge(i, 1));
+    for (let i = 18; i >= 0; i--) ctx.lineTo(...edge(i, -1));
     ctx.closePath();
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = .008;
+    ctx.strokeStyle = '#9e887e70';
+    ctx.stroke();
     ctx.fill();
   }
   ctx.translate(left, top);
   ctx.rotate(angle);
   ctx.scale(pose.scale, pose.scale);
-  const steel = ctx.createLinearGradient(-.1, 0, .65, .25);
-  steel.addColorStop(0, '#80766b');
-  steel.addColorStop(.21, '#e9e0d6');
-  steel.addColorStop(.43, '#b6ada2');
-  steel.addColorStop(.77, '#746d62');
-  steel.addColorStop(1, '#c9bfb3');
+  const steel = ctx.createLinearGradient(-.1, .06, .69, .32);
+  steel.addColorStop(0, '#636361');
+  steel.addColorStop(.17, '#a4a5a4');
+  steel.addColorStop(.29, '#ebeae5');
+  steel.addColorStop(.38, '#bfc5c5');
+  steel.addColorStop(.57, '#879093');
+  steel.addColorStop(.80, '#555e61');
+  steel.addColorStop(1, '#a4a8a7');
   ctx.strokeStyle = steel;
-  ctx.lineWidth = .06;
+  ctx.lineWidth = .075;
+  ctx.lineJoin = 'round';
   ctx.beginPath();
-  ctx.ellipse(.53, .21, .16, .19, .12, 0, Math.PI * 2);
+  ctx.moveTo(.55, .06);
+  ctx.bezierCurveTo(.75, .02, .81, .06, .76, .22);
+  ctx.quadraticCurveTo(.72, .35, .58, .37);
   ctx.stroke();
+  const handleGlint = ctx.createLinearGradient(.52, 0, .70, .37);
+  handleGlint.addColorStop(0, '#f7f8f3a0');
+  handleGlint.addColorStop(.67, '#f7f8f339');
+  handleGlint.addColorStop(1, '#f7f8f300');
+  ctx.strokeStyle = handleGlint;
+  ctx.lineWidth = .018;
+  ctx.stroke();
+  ctx.strokeStyle = steel;
   ctx.fillStyle = steel;
   ctx.beginPath();
   ctx.moveTo(-.12, .03);
   ctx.quadraticCurveTo(.06, .12, .02, .25);
   ctx.quadraticCurveTo(.01, .57, .36, .56);
-  ctx.quadraticCurveTo(.65, .55, .57, 0);
+  ctx.quadraticCurveTo(.66, .55, .60, .025);
   ctx.closePath();
   ctx.fill();
-  ctx.fillStyle = '#685c4c';
+  const inside = ctx.createLinearGradient(.09, -.08, .40, .14);
+  inside.addColorStop(0, '#3e4547');
+  inside.addColorStop(.54, '#616665');
+  inside.addColorStop(1, '#93999a');
+  ctx.fillStyle = inside;
   ctx.beginPath();
-  ctx.ellipse(.25, .025, .35, .10, 0, 0, Math.PI * 2);
+  ctx.moveTo(-.12, .03);
+  ctx.bezierCurveTo(-.045, -.01, .014, -.112, .29, -.113);
+  ctx.bezierCurveTo(.69, -.119, .71, .125, .31, .133);
+  ctx.bezierCurveTo(.115, .14, -.073, .099, -.12, .03);
+  ctx.closePath();
   ctx.fill();
-  ctx.lineWidth = .032;
+  ctx.lineWidth = .026;
   ctx.stroke();
-  ctx.save();
-  ctx.clip();
-  const leaned = 1 - view.resting;
-  ctx.translate(.25 - .23 * leaned, .025 + .06 * used * view.resting);
-  ctx.rotate(-angle);
-  ctx.fillStyle = '#f7eddd';
-  ctx.beginPath();
-  ctx.ellipse(0, 0, .33 - .09 * used - .045 * leaned, .075 + .025 * leaned, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
+  if (fill > 0) {
+    ctx.save();
+    ctx.clip();
+    const leaned = 1 - view.resting;
+    ctx.translate(.27 - .17 * leaned, .025 + .135 * (1 - fill) * view.resting);
+    ctx.rotate(-angle);
+    const milk = ctx.createLinearGradient(0, -.08, 0, .10);
+    milk.addColorStop(0, '#dcd4c8');
+    milk.addColorStop(.57, '#fff7e9');
+    milk.addColorStop(1, '#e9dfd0');
+    ctx.fillStyle = milk;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, .23 + .105 * fill - .045 * leaned, .060 + .025 * fill + .025 * leaned, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
   ctx.restore();
 }
 
@@ -328,11 +376,11 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ellipse(plate.rx, plate.ry, baseGlaze, saucerY + .029 * r);
     ctx.restore();
     const saucer = ctx.createRadialGradient(x - .82 * r, y - .52 * r, .34 * r, x + .27 * r, y + .64 * r, 2.14 * r);
-    saucer.addColorStop(0, '#fff9ec');
-    saucer.addColorStop(.46, '#f4eee1');
-    saucer.addColorStop(.72, '#ded5c4');
-    saucer.addColorStop(.93, '#e7ddcb');
-    saucer.addColorStop(1, '#d0c5b3');
+    saucer.addColorStop(0, '#faf8ef');
+    saucer.addColorStop(.46, '#eeeae1');
+    saucer.addColorStop(.72, '#d8d4c9');
+    saucer.addColorStop(.93, '#e6e2d9');
+    saucer.addColorStop(1, '#c8c1b5');
     ellipse(plate.rx, plate.ry, saucer, saucerY);
     // Reflections along the curved glaze fall away before the near edge.
     ctx.save();
@@ -341,6 +389,13 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.beginPath();
     ctx.arc(0, 0, plate.rx * r, 0, Math.PI * 2);
     ctx.clip();
+    const lipCurve = ctx.createRadialGradient(0, 0, plate.rx * r * .77, 0, 0, plate.rx * r);
+    lipCurve.addColorStop(0, '#5a504600');
+    lipCurve.addColorStop(.78, '#6d615326');
+    lipCurve.addColorStop(.95, '#fffdf194');
+    lipCurve.addColorStop(1, '#beb1a36c');
+    ctx.fillStyle = lipCurve;
+    ctx.fill();
     ctx.save();
     ctx.translate(-1.16 * r, .18 * r);
     ctx.rotate(-.53);
@@ -445,11 +500,12 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
     ctx.arc(0, 0, .994 * crown.rx * r, Math.PI * .78, Math.PI * 1.89);
     ctx.stroke();
     ctx.restore();
-    const inner = ctx.createLinearGradient(x - .46 * r, y - r, x + .5 * r, y + .78 * r);
-    inner.addColorStop(0, '#bcac95');
-    inner.addColorStop(.24, '#d2c3ad');
-    inner.addColorStop(.59, '#e7dbca');
-    inner.addColorStop(1, '#f6edde');
+    const inner = ctx.createRadialGradient(x - .32 * r, y - .40 * r, .11 * r,
+      x + .40 * r, y + .24 * r, 1.58 * r);
+    inner.addColorStop(0, '#b5ab99');
+    inner.addColorStop(.36, '#c9c0b0');
+    inner.addColorStop(.72, '#ded7ca');
+    inner.addColorStop(1, '#f5f0e7');
     const [innerRadius, innerHeight] = CUP_PROFILE[CUP_OUTER_WALL.length];
     const lip = ware.ring(innerRadius, innerHeight);
     ellipse(lip.rx, lip.ry, inner, lip.y * r);
@@ -574,7 +630,7 @@ export function createCanvasFallback(mainCanvas, canvas, foam, {
       const dy = (event.clientY - rect.top - y) / r - top;
       const across = (dx * Math.cos(angle) + dy * Math.sin(angle)) / scale;
       const down = (-dx * Math.sin(angle) + dy * Math.cos(angle)) / scale;
-      return across > -.16 && across < .73 && down > -.10 && down < .59;
+      return across > -.16 && across < .83 && down > -.14 && down < .59;
     },
     photo() {
       foam.paintPhoto(artwork.strokes);

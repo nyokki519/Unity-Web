@@ -17,3 +17,10 @@ test('the level of a resting pitcher drops as milk enters the cup', () => {
   assert.ok(pitcherLiquidLevel(.08, 0, 1) > pitcherLiquidLevel(.08, .6, 1));
   assert.ok(pitcherLiquidLevel(.08, .6, 1) > pitcherLiquidLevel(.08, 1, 1));
 });
+
+test('the prepared milk amount controls the visible fill of the resting pitcher', () => {
+  const smaller = pitcherLiquidLevel(.08, 0, 1, 80);
+  const larger = pitcherLiquidLevel(.08, 0, 1, 160);
+  assert.ok(larger > smaller + .18);
+  assert.equal(pitcherLiquidLevel(.08, .5, 1, 160), smaller);
+});

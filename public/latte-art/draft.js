@@ -1,3 +1,5 @@
+import { POUR_HEIGHTS, readRecipe } from './barista-profile.js';
+
 const DRAFT_KEY = 'unity-mix.latte-art.draft.v1';
 const emptyDraft = () => ({ stage: 'pour', milk: null, strokes: [] });
 
@@ -18,8 +20,12 @@ export function readDraft(storage) {
     }
     if (draft?.version === 2 && (draft.stage === 'pour' || draft.stage === 'draw')) {
       const strokes = Array.isArray(draft.strokes) && draft.strokes.every(validStroke) ? draft.strokes : [];
+      const recipe = readRecipe(draft.recipe);
       return { stage: draft.stage, milk: draft.milk ?? null, strokes: draft.stage === 'draw' ? strokes : [],
-        ...(typeof draft.volumeSurface === 'boolean' ? { volumeSurface: draft.volumeSurface } : {}) };
+        ...(typeof draft.volumeSurface === 'boolean' ? { volumeSurface: draft.volumeSurface } : {}),
+        ...(recipe ? { recipe } : {}),
+        ...(POUR_HEIGHTS.includes(draft.pourHeight) ? { pourHeight: draft.pourHeight } : {}),
+      };
     }
   } catch {
     // Storage can be unavailable or contain a partial value.
@@ -29,7 +35,7 @@ export function readDraft(storage) {
 
 export function writeDraft(storage, draft) {
   try {
-    if (draft.stage === 'draw' || draft.milk) storage?.setItem(DRAFT_KEY, JSON.stringify({ version: 2, ...draft }));
+    if (draft.stage === 'draw' || draft.milk || draft.recipe || draft.pourHeight) storage?.setItem(DRAFT_KEY, JSON.stringify({ version: 2, ...draft }));
     else storage?.removeItem(DRAFT_KEY);
   } catch {
     // Drawing can continue in memory when the browser disables or fills storage.

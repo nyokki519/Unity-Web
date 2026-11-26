@@ -1,13 +1,16 @@
+import { POUR_HEIGHTS, cupNotes, milkProfile, readRecipe } from './barista-profile.js';
+import { createCafeSound } from './cafe-sound.js';
 import { loadCafeMaterials } from './cafe-ware.js';
 import { ChocolateDrawing, liquidContains } from './drawing.js';
 import { readDraft, writeDraft } from './draft.js';
 import { createCanvasFallback } from './fallback-cup.js';
-import { DEFAULT_POUR_RATE, MILK_CAPACITY, MilkPour } from './milk-pour.js';
+import { DEFAULT_POUR_RATE, MilkPour } from './milk-pour.js';
 import { PourInput } from './pour-input.js';
 import { createSurface } from './surface.js';
 import { bindActivation } from './touch-activation.js';
 
 const $ = id => document.getElementById(id);
+const cafeSound = createCafeSound();
 const POUR_INPUT_BUFFER_MS = 1000 / 30;
 const CUP_RENDER_WAIT_MS = 4200;
 const POUR_HINT = 'ピッチャーを液面へドラッグ。または液面を長押し。';
@@ -16,7 +19,10 @@ let draftStorage;
 try { draftStorage = window.sessionStorage; } catch { /* Storage may be disabled. */ }
 const draft = readDraft(draftStorage);
 drawing.strokes = draft.strokes;
-const milk = new MilkPour(draft.milk);
+let recipe = draft.recipe ?? null;
+let pourHeight = draft.pourHeight ?? null;
+const milk = new MilkPour(draft.milk, milkProfile(recipe));
+milk.setSpoutHeightCm(pourHeight);
 if (draft.stage === 'draw' || milk.amount || drawing.strokes.length) {
   $('loadingHint').textContent = '作りかけの一杯を復元中…';
 }
@@ -86,6 +92,10 @@ let draftTimer = 0;
 let draftDirty = false;
 let savedMilkRevision = -1;
 let savedMilk;
+let prepCleanup;
+let prepRequest = 0;
+let preparedRecipe = null;
+let prepStyles;
 
 function flushDraft() {
   clearTimeout(draftTimer);
@@ -95,7 +105,10 @@ function flushDraft() {
     savedMilk = milk.snapshot();
     savedMilkRevision = milk.revision;
   }
-  writeDraft(draftStorage, { stage, milk: savedMilk, strokes: drawing.strokes, volumeSurface: !surface.fixedLevel });
+  writeDraft(draftStorage, {
+    stage, milk: savedMilk, strokes: drawing.strokes, volumeSurface: !surface.fixedLevel,
+    ...(recipe ? { recipe } : {}), ...(pourHeight ? { pourHeight } : {}),
+  });
 }
 
 function queueDraft() {
@@ -174,22 +187,34 @@ function setMode(next, animate = false) {
   }
 }
 
+function setButtonAvailability(button, available) {
+  const disabled = String(!available);
+  if (button.getAttribute('aria-disabled') !== disabled) button.setAttribute('aria-disabled', disabled);
+}
+
 function presentPour(paintNow = false) {
+  if (!$('prepDialog').open) cafeSound.update({ kind: 'pour', flow: milk.flow });
   const volume = milk.amount >= .05 && milk.amount < 1 ? milk.amount.toFixed(1) : Math.round(milk.amount);
   const amount = `${volume} mL`;
   if ($('poured').value !== amount) $('poured').value = amount;
-  const full = milk.amount >= MILK_CAPACITY;
-  $('pourCenter').setAttribute('aria-disabled', String(pourPointerId !== null || milk.pouring || full));
-  $('resetMilk').setAttribute('aria-disabled', String(!milk.amount && !milk.moving));
-  const hint = full ? 'カップが満量です。チョコペンで描けます。'
-    : pourPointerId === null ? POUR_HINT
+  const full = milk.full;
+  setButtonAvailability($('pourCenter'), pourPointerId === null && !milk.pouring && !full);
+  setButtonAvailability($('resetMilk'), milk.amount > 0 || milk.moving);
+  const heightHint = pourHeight === 8 ? '高めから細く注ぐと、コーヒーになじみます。'
+    : pourHeight === 1 ? '液面近くから注ぐと、白い泡が浮きます。' : POUR_HINT;
+  const fullHint = milk.remaining > .01 ? 'カップが満量です。チョコペンで描けます。'
+    : 'ピッチャーが空になりました。チョコペンで描けます。';
+  const hint = full ? fullHint
+    : pourPointerId === null ? heightHint
     : milk.pouring ? '指を動かすと着地点が移動。離すと止まります。' : '液面へ指を動かすと注ぎ始めます。';
   if ($('tip').textContent !== hint) $('tip').textContent = hint;
-  if (full || !isAimingPour()) $('pourAim').hidden = true;
+  const aim = $('pourAim');
+  if (!aim.hidden && (full || !isAimingPour())) aim.hidden = true;
   cup.setPour({
     position: milk.toolTarget, impact: milk.streamTarget, flow: milk.flow,
     streamCut: milk.streamCut, streamHead: milk.streamHead,
     resting: milk.resting, amount: milk.amount, pitcherOffset,
+    heightCm: pourHeight, stockMl: milk.milkMl, remainingMl: milk.remaining,
   }, paintNow);
 }
 
@@ -264,7 +289,7 @@ cup.input.addEventListener('pointerdown', event => {
     updateToolbar();
     redraw();
   } else if (mode === 'pour') {
-    if (milk.pouring || milk.amount >= MILK_CAPACITY) return;
+    if (milk.pouring || milk.full) return;
     // A returning pitcher can overlap the liquid on a quick second press.
     // A press inside the cup always starts a pour, including a stationary hold.
     if (liquidContains(point, cup.pouringClips)) {
@@ -360,6 +385,7 @@ window.addEventListener('resize', () => {
 function pauseDrawing() {
   releaseGesture();
   flushDraft();
+  cafeSound.update();
 }
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) pauseDrawing();
@@ -375,10 +401,19 @@ for (const event of ['webglcontextlost', 'webglcontextrestored']) {
 bindActivation($('menuButton'), () => {
   const open = $('menu').hidden;
   closeMenus();
-  $('newCup').hidden = mode === 'pour' && !milk.amount;
+  $('newCup').hidden = mode === 'pour' && !milk.amount && !recipe;
   $('menu').hidden = !open;
   $('menuButton').setAttribute('aria-expanded', String(open));
 });
+const soundButton = $('soundButton');
+soundButton.hidden = !cafeSound.supported;
+soundButton.setAttribute('aria-pressed', String(cafeSound.enabled));
+soundButton.addEventListener('click', () => {
+  cafeSound.toggle();
+  soundButton.setAttribute('aria-pressed', String(cafeSound.enabled));
+});
+document.addEventListener('pointerdown', cafeSound.unlock, { passive: true, capture: true });
+document.addEventListener('keydown', cafeSound.unlock);
 bindActivation($('widthButton'), () => {
   const open = $('widthPanel').hidden;
   closeMenus();
@@ -433,6 +468,25 @@ $('tilt').oninput = event => {
   $('tilt').setAttribute('aria-valuetext', display);
   if (!pourFrame && milk.moving) pourFrame = requestAnimationFrame(paintPourFrame);
 };
+
+function syncPourHeight() {
+  const value = pourHeight === null ? 'auto' : String(pourHeight);
+  $('pourHeights').querySelector(`[value="${value}"]`).checked = true;
+}
+function setPourHeight(height, timestamp) {
+  const nextHeight = POUR_HEIGHTS.includes(height) ? height : null;
+  if (nextHeight === pourHeight) return;
+  if (milk.moving || pourPointerId !== null) pourInput.advance(inputTime(timestamp), pourRate);
+  pourHeight = nextHeight;
+  milk.setSpoutHeightCm(nextHeight);
+  syncPourHeight();
+  presentPour();
+  queueDraft();
+}
+$('pourHeights').addEventListener('change', event => {
+  if (event.target.name === 'pourHeight') setPourHeight(Number(event.target.value), event.timeStamp);
+});
+
 bindActivation($('pourCenter'), () => {
   if (pourPointerId === null) beginPour({ x: 0, y: 0 }, 630);
 });
@@ -497,6 +551,95 @@ $('newCupDialog').addEventListener('close', () => {
   }
 });
 
+
+function loadPrepStyles() {
+  prepStyles ??= new Promise((resolve, reject) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = new URL('./barista-prep.css?v=barista-1', import.meta.url);
+    link.onload = resolve;
+    link.onerror = () => {
+      link.remove();
+      prepStyles = null;
+      reject(new Error('Barista preparation stylesheet unavailable'));
+    };
+    document.head.append(link);
+  });
+  return prepStyles;
+}
+
+async function openPrep() {
+  const dialog = $('prepDialog');
+  if (dialog.open) return;
+  const request = ++prepRequest;
+  preparedRecipe = null;
+  const loading = document.createElement('div');
+  loading.className = 'prep-loading';
+  const status = document.createElement('p');
+  status.setAttribute('role', 'status');
+  status.textContent = '抽出器具を準備中…';
+  const back = document.createElement('button');
+  back.className = 'go';
+  back.type = 'button';
+  back.textContent = '戻る';
+  back.onclick = () => dialog.close();
+  loading.append(status, back);
+  $('prepHost').replaceChildren(loading);
+  dialog.showModal();
+  try {
+    const [{ mountBaristaPrep }] = await Promise.all([import('./barista-prep.js?v=barista-1'), loadPrepStyles()]);
+    if (!dialog.open || request !== prepRequest) return;
+    prepCleanup = mountBaristaPrep($('prepHost'), {
+      onExit: () => dialog.close(),
+      onSound: state => cafeSound.update(state),
+      onReady: candidate => {
+        const next = readRecipe(candidate);
+        if (!next || !dialog.open || request !== prepRequest) return;
+        preparedRecipe = next;
+        dialog.close();
+      },
+    });
+  } catch {
+    if (!dialog.open || request !== prepRequest) return;
+    $('prepHost').replaceChildren(loading);
+    status.textContent = '抽出器具を開けませんでした。戻ると今の一杯から続けられます。';
+  }
+}
+bindActivation($('openBarista'), () => {
+  if (mode !== 'pour' && mode !== 'draw') return;
+  closeMenus();
+  releaseGesture();
+  if (!milk.amount && !drawing.strokes.length && !recipe) {
+    openPrep();
+    return;
+  }
+  const confirm = $('replaceRecipeDialog');
+  confirm.returnValue = 'cancel';
+  confirm.showModal();
+}, { requireOwnPress: true });
+for (const button of $('replaceRecipeDialog').querySelectorAll('button')) {
+  bindActivation(button, () => $('replaceRecipeDialog').close(button.value), { requireOwnPress: true });
+}
+$('replaceRecipeDialog').addEventListener('close', () => {
+  if ($('replaceRecipeDialog').returnValue === 'replace') openPrep();
+  else $('openBarista').focus({ preventScroll: true });
+});
+$('prepDialog').addEventListener('close', () => {
+  prepRequest++;
+  prepCleanup?.();
+  cafeSound.update();
+  prepCleanup = null;
+  $('prepHost').replaceChildren();
+  if (preparedRecipe) {
+    resetCup(preparedRecipe);
+    preparedRecipe = null;
+    setMode('pour');
+    queueDraft();
+    updateToolbar('抽出とスチームが完了しました。高さを選んで注げます。');
+    $('tilt').focus({ preventScroll: true });
+  } else $('openBarista').focus({ preventScroll: true });
+});
+
 function releasePhoto() {
   if (photoUrl) URL.revokeObjectURL(photoUrl);
   photoUrl = '';
@@ -538,6 +681,17 @@ function preparePhoto(cycle) {
   }
 }
 
+
+function updateBrewNote() {
+  $('brewNote').hidden = !recipe;
+  if (!recipe) return;
+  const note = cupNotes(recipe, milk.amount);
+  $('noteEspresso').textContent = `${recipe.espressoMl.toFixed(1)} mL`;
+  $('noteMilk').textContent = `${Math.round(recipe.temperature)} ℃ · ${Math.round(milk.amount)} mL`;
+  $('noteFoam').textContent = note.foamLabel;
+  $('brewTip').textContent = note.tip;
+}
+
 function finishDrawing() {
   if (mode !== 'draw') return;
   resultCycle++;
@@ -551,7 +705,7 @@ function finishDrawing() {
   releasePhoto();
   setMode('serve', true);
   if (!reducedMotion.matches) $('serving').focus({ preventScroll: true });
-  servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 3000);
+  servingTimer = setTimeout(openResult, reducedMotion.matches ? 0 : 1250);
 }
 
 bindActivation($('finish'), finishDrawing, { requireOwnPress: true });
@@ -560,6 +714,7 @@ function openResult() {
   if (mode !== 'serve' || $('finishPanel').open) return;
   clearTimeout(servingTimer);
   $('serving').hidden = true;
+  updateBrewNote();
   $('finishPanel').showModal();
   $('editAgain').focus({ preventScroll: true });
   // Open the controls before the high-resolution render can block the next tap.
@@ -582,10 +737,16 @@ $('serving').addEventListener('keydown', event => {
   event.preventDefault();
   returnToEditing();
 });
-function resetCup() {
+function resetCup(nextRecipe = null) {
   surface.fixedLevel = false;
   drawing.clear();
   milk.reset();
+  recipe = nextRecipe;
+  milk.configure(milkProfile(recipe));
+  pourHeight = recipe ? 8 : null;
+  milk.setSpoutHeightCm(pourHeight);
+  syncPourHeight();
+  savedMilkRevision = -1;
   invalidatePhoto();
   $('tilt').value = String(DEFAULT_POUR_RATE * 100);
   $('tilt').oninput();
@@ -621,6 +782,7 @@ $('saveImage').onclick = async () => {
   $('saveStatus').textContent = 'PNGの保存を開始しました。';
 };
 
+syncPourHeight();
 setMode(stage);
 showPenWidth();
 controlsReady = true;
