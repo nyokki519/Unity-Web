@@ -7,7 +7,7 @@
   <title>チョコペン・ラテアート｜Unity MIX</title>
   <link rel="icon" href="/assets/icon-32.png">
   <style>html{background:#1c120d;color-scheme:dark}</style>
-  <link rel="stylesheet" href="./style.css?v=barista-1">
+  <link rel="stylesheet" href="./style.css?v=foam-mark-1">
   <link rel="modulepreload" href="../vendor/three/three.module.js">
   <link rel="modulepreload" href="../vendor/three/three.core.js">
 </head>
@@ -23,9 +23,11 @@
       <div class="studio-loader-card">
         <div class="studio-loader-cup" aria-hidden="true">
           <img src="./loading-cup.webp" width="434" height="317" alt="" fetchpriority="high">
-          <span class="studio-loader-milk"></span>
-          <span class="studio-loader-foam"></span>
-          <span class="studio-loader-ink"></span>
+          <span class="studio-loader-surface">
+            <span class="studio-loader-ripple"></span>
+            <span class="studio-loader-foam"></span>
+          </span>
+          <span class="studio-loader-stream"></span>
         </div>
         <p class="studio-loader-title"><img src="./loading-mark.webp" width="71" height="112" alt="">Unity<span>チョコペン・ラテアート</span></p>
         <div id="loadingProgress" class="studio-loader-progress" role="progressbar" aria-label="準備状況" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"></div>
@@ -45,9 +47,15 @@
         <button type="button" id="showHelp">遊び方</button>
         <button type="button" id="showDraw">チョコペンで描く</button>
         <button type="button" id="newCup">もう一杯作る</button>
+        <button type="button" id="musicButton" aria-pressed="true">BGM <span class="sound-state" aria-hidden="true"></span></button>
         <button type="button" id="soundButton" aria-pressed="false" hidden>効果音 <span class="sound-state" aria-hidden="true"></span></button>
+        <div class="music-credit">
+          <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100860">Avec Soin — Kevin MacLeod</a>
+          <span><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · 音量・形式調整</span>
+        </div>
         <a href="/">Unity MIX ホーム</a>
       </nav>
+      <audio id="cafeMusic" src="./avec-soin.mp3" preload="none" loop></audio>
       <div class="stage-caption">
         <h1 class="stage-title"><span class="pour-title">ミルクを注ぐ</span><span class="draw-title">チョコペンで描く</span></h1>
         <p id="tip" class="hint">ピッチャーを液面へドラッグ。または液面を長押し。</p>
@@ -228,6 +236,6 @@
       </figure>
     </dialog>
   </main>
-  <script type="module" src="./app.js?v=barista-1"></script>
+  <script type="module" src="./app.js?v=foam-mark-1"></script>
 </body>
 </html>

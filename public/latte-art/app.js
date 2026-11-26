@@ -1,4 +1,5 @@
 import { POUR_HEIGHTS, cupNotes, milkProfile, readRecipe } from './barista-profile.js';
+import { bindCafeMusic } from './cafe-music.js';
 import { createCafeSound } from './cafe-sound.js';
 import { loadCafeMaterials } from './cafe-ware.js';
 import { ChocolateDrawing, liquidContains } from './drawing.js';
@@ -406,6 +407,7 @@ bindActivation($('menuButton'), () => {
   $('menuButton').setAttribute('aria-expanded', String(open));
 });
 const soundButton = $('soundButton');
+bindCafeMusic($('musicButton'), $('cafeMusic'));
 soundButton.hidden = !cafeSound.supported;
 soundButton.setAttribute('aria-pressed', String(cafeSound.enabled));
 soundButton.addEventListener('click', () => {

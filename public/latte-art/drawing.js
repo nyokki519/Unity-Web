@@ -134,20 +134,19 @@ function chocolateDeposits(points, width) {
   const total = samples.at(-1).distance;
   const taperLength = Math.min(width * 3.4, total * .42);
   for (const point of samples) {
-    const contact = .37 * Math.exp(-point.distance / (width * .78));
+    const contact = .16 * Math.exp(-point.distance / (width * .78));
     const lift = taperLength ? Math.min(1, (total - point.distance) / taperLength) : 1;
     const variation = .056 * Math.sin(point.distance * 37) + .035 * Math.sin(point.distance * 103 + .6);
-    point.radius = width * .5 * (1 + contact + variation) * (.37 + .63 * Math.sqrt(lift));
+    point.radius = width * .5 * (1 + contact + variation) * (.44 + .56 * Math.sqrt(lift));
   }
   return samples;
 }
 
-function paintDepositLayer(context, samples, color, scale, offsetX = 0, offsetY = 0) {
+function paintDepositLayer(context, samples, color, scale) {
   context.fillStyle = color;
   context.beginPath();
   for (const point of samples) {
-    const x = point.x + point.radius * offsetX;
-    const y = point.y + point.radius * offsetY;
+    const { x, y } = point;
     const radius = point.radius * scale;
     context.moveTo(x + radius, y);
     context.arc(x, y, radius, 0, Math.PI * 2);
@@ -156,26 +155,16 @@ function paintDepositLayer(context, samples, color, scale, offsetX = 0, offsetY 
 }
 
 function roundDrop(context, { x, y }, width, color) {
-  const radius = width * .77;
-  const chocolate = context.createRadialGradient(x - radius * .19, y - radius * .26, 0, x, y, radius);
-  chocolate.addColorStop(0, '#aa8064');
-  chocolate.addColorStop(.17, '#764f3b');
-  chocolate.addColorStop(.44, color);
-  chocolate.addColorStop(.77, color);
-  chocolate.addColorStop(.89, '#73492ecc');
-  chocolate.addColorStop(1, '#93603b00');
+  const radius = width * .66;
+  const chocolate = context.createRadialGradient(x - radius * .04, y - radius * .06, 0, x, y, radius);
+  chocolate.addColorStop(0, color + 'ed');
+  chocolate.addColorStop(.52, color + 'de');
+  chocolate.addColorStop(.76, '#78452dbd');
+  chocolate.addColorStop(.9, '#96663b57');
+  chocolate.addColorStop(1, '#96663b00');
   context.fillStyle = chocolate;
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2);
-  context.fill();
-  const lightX = x - .27 * radius;
-  const lightY = y - .29 * radius;
-  const glint = context.createRadialGradient(lightX, lightY, 0, lightX, lightY, .30 * radius);
-  glint.addColorStop(0, '#f3dfc88c');
-  glint.addColorStop(1, '#f3dfc800');
-  context.fillStyle = glint;
-  context.beginPath();
-  context.ellipse(lightX, lightY, .29 * radius, .13 * radius, -.56, 0, Math.PI * 2);
   context.fill();
 }
 
@@ -187,13 +176,11 @@ export function paintChocolate(context, strokes) {
         continue;
       }
       const deposits = chocolateDeposits(points, width);
-      paintDepositLayer(context, deposits, '#96663b28', 1.21, .035, .07);
-      paintDepositLayer(context, deposits, '#59331f67', 1.06, .025, .07);
-      paintDepositLayer(context, deposits, color, .94);
-      paintDepositLayer(context, deposits, '#bd9a7750', .42, -.20, -.26);
-      const shine = deposits.filter(point => point.radius > width * .43
-        && Math.sin(point.distance * 68) + .45 * Math.sin(point.distance * 157) > .48);
-      paintDepositLayer(context, shine, '#f5e1c77a', .125, -.29, -.36);
+      // The milk remains visible through the sauce, particularly where it wets the foam.
+      paintDepositLayer(context, deposits, '#9d643b21', 1.24);
+      paintDepositLayer(context, deposits, '#89563946', 1.07);
+      paintDepositLayer(context, deposits, color + '42', .96);
+      paintDepositLayer(context, deposits, color + 'b8', .82);
     }
   }
 }

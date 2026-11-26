@@ -81,7 +81,24 @@ export function createApp({database=process.env.DATA_PATH||resolve('.data/rooms.
       try{let info=await stat(file);if(info.isDirectory()){file=resolve(file,'index.html');info=await stat(file);}if(!info.isFile())throw new Error('not file');}catch{return failResponse(res,'ROOM_NOT_FOUND',404);}
       const data=await readFile(file);
       const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.webp':'image/webp','.woff':'font/woff','.mp3':'audio/mpeg','.svg':'image/svg+xml'};
-      res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':['.html','.js','.mjs','.css'].includes(extname(file))?'no-cache':'public, max-age=3600'});
+      const ext=extname(file);
+      const headers={'Content-Type':types[ext]||'application/octet-stream','Cache-Control':['.html','.js','.mjs','.css'].includes(ext)?'no-cache':'public, max-age=3600'};
+      if(ext==='.mp3'&&pathname.startsWith('/latte-art/')){
+        headers['Accept-Ranges']='bytes';
+        headers['Content-Length']=data.length;
+        const range=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range||'');
+        if(range&&(range[1]||range[2])){
+          const start=range[1]?Number(range[1]):Math.max(0,data.length-Number(range[2]));
+          const end=range[1]&&range[2]?Math.min(Number(range[2]),data.length-1):data.length-1;
+          if(start>end||start>=data.length){
+            return res.writeHead(416,{'Content-Range':`bytes */${data.length}`}).end();
+          }
+          headers['Content-Range']=`bytes ${start}-${end}/${data.length}`;
+          headers['Content-Length']=end-start+1;
+          return res.writeHead(206,headers).end(req.method==='HEAD'?undefined:data.subarray(start,end+1));
+        }
+      }
+      res.writeHead(200,headers);
       res.end(req.method==='HEAD'?undefined:data);
     }catch(error){if(error instanceof MahjongError)return json(res,{error:error.code,message:MAHJONG_ERROR_TEXT[error.code]||MAHJONG_ERROR_TEXT.BAD_COMMAND},error.code==='ROOM_NOT_FOUND'?404:400);failResponse(res,error instanceof GameError?error.code:'SERVER_ERROR',error.code==='ROOM_NOT_FOUND'?404:400);}
   });
